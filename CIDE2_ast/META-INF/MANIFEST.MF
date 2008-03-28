@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: CIDE_ast Plug-in
+Bundle-SymbolicName: de.ovgu.cide.ast
+Bundle-Version: 1.0.0
+Export-Package: cide.features,
+ cide.gast,
+ cide.gparser;uses:="cide.gast",
+ cide.greferences,
+ cide.languages;uses:="cide.gast"
