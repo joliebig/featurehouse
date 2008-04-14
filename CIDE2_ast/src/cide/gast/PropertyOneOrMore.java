@@ -6,7 +6,7 @@ import java.util.List;
 
 public class PropertyOneOrMore<T extends ASTNode> extends PropertyZeroOrMore<T> {
 
-	public PropertyOneOrMore(String name, List<T> value) {
+	public PropertyOneOrMore(String name, ArrayList<T> value) {
 		super(name, value);
 	}
 

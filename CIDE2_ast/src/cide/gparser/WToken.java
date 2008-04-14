@@ -9,7 +9,7 @@ public class WToken implements IToken {
 	public WToken(Token token) {
 		offset = token.offset;
 		length = token.length;
-		if (token.image==null || token.image.length()==0) length=0;
+//		if (token.image==null || token.image.length()==0) length=0;
 		image = token.image;
 	}
 

@@ -8,24 +8,24 @@ import cide.gast.Property.PropertyType;
 
 public class PropertyZeroOrMore<T extends ASTNode> extends Property {
 
-	protected final List<T> valueList;
+	protected final ArrayList<T> valueList;
 	/**
 	 * the indexlist keeps a list of all values including removed ones so that
 	 * the generated ID is permanent and does not change if a value is removed
 	 */
 	protected final List<T> indexList = new ArrayList<T>();
 
-	public PropertyZeroOrMore(String name, List<T> value) {
+	public PropertyZeroOrMore(String name, ArrayList<T> value) {
 		this(name, value, PropertyType.ZEROORMORE);
 	}
 
-	protected PropertyZeroOrMore(String name, List<T> value, PropertyType type) {
+	protected PropertyZeroOrMore(String name, ArrayList<T> value, PropertyType type) {
 		super(name, type);
 		this.valueList = value;
 		this.indexList.addAll(value);
 	}
 
-	public List<T> getValue() {
+	public ArrayList<T> getValue() {
 		return /*Collections.unmodifiableList*/(valueList);
 	}
 

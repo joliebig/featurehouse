@@ -38,8 +38,11 @@ public class AbstractPrintVisitor extends ASTVisitor {
 	protected void hintNewLine() {
 		closeLine();
 	}
+	protected void hintSingleSpace() {
+		printToken(" ");
+	}
 
-	protected boolean generateSpaces = true;
+	public boolean generateSpaces = true;
 
 	private void closeLine() {
 		for (int i = 0; i < indentInCurrentLine; i++)
