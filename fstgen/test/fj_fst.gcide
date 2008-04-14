@@ -1,0 +1,243 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(FJParser)
+package tmp.generated_fj;
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+
+public class FJParser extends AbstractFSTParser
+{
+}
+
+PARSER_END(FJParser)
+
+/* WHITE SPACE */
+
+SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+/* COMMENTS */
+
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
+}
+
+/* RESERVED WORDS AND LITERALS */
+
+TOKEN :
+{
+  < THIS: "this" >
+| < OBJECT: "Object" >
+| < CLASS: "class" >| < EXTENDS: "extends" >| < INT: "int" >| < NEW: "new" >| < RETURN: "return" >| < SUPER: "super" >}
+
+/* LITERALS */
+
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be7"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
+
+/* SEPARATORS */
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < COMMA: "," >
+| < DOT: "." >
+}
+
+/* OPERATORS */
+
+TOKEN :
+{
+  < PLUS: "+" >| < MINUS: "-" >| < STAR: "*" >| < SLASH: "/" >}
+
+
+
+
+
+GRAMMARSTART
+
+
+@FSTNonTerminal(name="{Name}")
+TypeDeclaration : 
+	"class"  Name "extends" ExtendedType "{" ( LL(2) VarDeclaration )*
+	ClassConstructor ( MethodDeclaration )* "}" <EOF>;
+
+@FSTExportName("{<IDENTIFIER>}")
+Name: <IDENTIFIER>;
+
+ExtendedType : 
+	<IDENTIFIER>
+	| "Object";
+	
+@FSTTerminal(name="{<IDENTIFIER>}")
+VarDeclaration : Type <IDENTIFIER> ";";
+
+ClassConstructor : 
+	Type "(" ( FormalParameterList )? ")" "{" "super"
+	"(" ( ExpressionList )? ")" ";" ( FieldAssign )* "}";
+	
+FieldAssign : "this" "." <IDENTIFIER> "=" <IDENTIFIER> ";";
+
+@FSTTerminal(name="{<IDENTIFIER>}")
+MethodDeclaration : 
+	Type <IDENTIFIER> "(" ( FormalParameterList )? ")" "{" "return"
+	Expression ";" "}";
+	
+BinaryOperator : 
+	"+"
+	| "-"
+	| "*"
+	| "/";
+
+FormalParameterList : 
+	FormalParameter ( FormalParameterRest )*;
+
+FormalParameter : 
+	Type <IDENTIFIER>;
+	
+FormalParameterRest : 
+	"," FormalParameter;
+	
+Type : 
+	"int"
+	| <IDENTIFIER>
+	| "Object";
+
+Expression : Term ( PlusOrMinus )*;
+PlusOrMinus: PlusExpressionRest | MinusExpressionRest;
+
+PlusExpressionRest : "+" Term;
+MinusExpressionRest : "-" Term;
+Term : 
+	PrimaryExpression ( TimesOrDivide )*;
+TimesOrDivide: TimesExpressionRest | DivideExpressionRest;
+	
+TimesExpressionRest : "*" PrimaryExpression;
+DivideExpressionRest : "/" PrimaryExpression;
+
+PrimaryExpression : 
+	<INTEGER_LITERAL>
+	| LL(2147483647) MethodInvoke
+	| LL(2147483647) FieldInvoke
+	| <IDENTIFIER>
+	| LL(2147483647) AllocationExpression
+	| LL(2147483647) CastExpression
+	| NestedExpression;
+	
+MethodInvoke : 
+	InvokeTarget "." <IDENTIFIER> "(" ( ExpressionList )? ")";
+	
+FieldInvoke : 
+	InvokeTarget "." <IDENTIFIER>;
+	
+InvokeTarget:  AllocationExpression | NestedExpression | <IDENTIFIER> | "this";
+	
+AllocationExpression : "new" <IDENTIFIER> "(" ( ExpressionList )? ")";
+
+CastExpression : "(" Type ")" PrimaryExpression;
+
+NestedExpression : "(" Expression ")";
+
+ExpressionList : &LI Expression (  "," &LI Expression )*;
+

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     13.03.2008 18:00:55                                                        
+
+     test_fstgen    
+     description
+                   
+     ckaestne                                                                
+     ====================================================================== -->
+<project name="test_fstgen" default="testJava">
+	<echo>${java.class.path}</echo>
+	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
+	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
+	<eclipse.convertPath resourcePath="CIDE_generateAST/bin" property="astgen_dir" />
+
+	<taskdef name="fstgen" classname="de.ovgu.cide.fstgen.FSTgenTask">
+		<classpath>
+			<pathelement path="${fstgen_dir}/bin" />
+			<pathelement path="${ast_dir}" />
+			<pathelement path="${astgen_dir}" />
+		</classpath>
+	</taskdef>
+	<taskdef name="jcc" classname="cide.astgen.ant.JavaCCTask">
+		<classpath>
+			<pathelement path="${fstgen_dir}/bin" />
+			<pathelement path="${ast_dir}" />
+			<pathelement path="${astgen_dir}" />
+		</classpath>
+	</taskdef>
+	
+	<target name="all" depends="testFJ,testJava,testJavaCC,testXML"></target>
+
+	<target name="testFJ">
+		<antcall target="testGrammar">
+			<param name="language" value="fj" />
+			<param name="parserClass" value="FJParser" />
+			<param name="mainProduction" value="TypeDeclaration" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Complex.fj" />
+		</antcall>
+	</target>	
+
+	<target name="testJava">
+		<antcall target="testGrammar">
+			<param name="language" value="java15" />
+			<param name="parserClass" value="Java15Parser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.java" />
+		</antcall>
+	</target>
+
+	<target name="testXML">
+		<antcall target="testGrammar">
+			<param name="language" value="xml" />
+			<param name="parserClass" value="XMLParser" />
+			<param name="mainProduction" value="Document" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="test.xml" />
+			<param name="autoSpacingPrettyPrinter" value="false" />
+		</antcall>
+	</target>
+
+	<target name="testJavaCC">
+		<antcall target="testGrammar">
+			<param name="language" value="javacc" />
+			<param name="parserClass" value="JavaCCParser" />
+			<param name="mainProduction" value="javacc_input" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="C.jj" />
+		</antcall>
+	</target>
+
+	<target name="testGrammar" description="--> description">
+		<mkdir dir="${directory}/tmp/generated_${language}" />
+
+		<fstgen grammarFileName="${directory}/${language}_fst.gcide" targetJJFile="${directory}/tmp/generated_${language}/${language}.jj" targetPackage="tmp.generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
+		<jcc grammarFileName="${directory}/tmp/generated_${language}/${language}.jj" targetDirectory="${directory}/tmp/generated_${language}" />
+		<eclipse.refreshLocal resource="fstgen" depth="infinite" />
+		<eclipse.incrementalBuild project="fstgen" />
+		<java classname="de.ovgu.cide.fstgen.GenericParserStarter">
+			<arg value="tmp.generated_${language}.${parserClass}" />
+			<arg value="${mainProduction}" />
+			<arg value="${fstgen_dir}/test/${testFile}" />
+			<classpath>
+				<pathelement path="${fstgen_dir}/bin" />
+				<pathelement path="${ast_dir}" />
+				<pathelement path="${astgen_dir}" />
+			</classpath>
+		</java>
+	</target>
+
+</project>

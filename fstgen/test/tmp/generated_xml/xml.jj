@@ -1,0 +1,183 @@
+options{
+  STATIC = false;
+}
+PARSER_BEGIN(XMLParser)
+package tmp.generated_xml;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+
+public class XMLParser extends AbstractFSTParser{
+}
+PARSER_END(XMLParser)
+
+
+
+
+<*> TOKEN :
+{
+  <#ALPHA_CHAR: ["a"-"z", "A"-"Z"] >
+| <#NUM_CHAR:   ["0"-"9"] >
+| <#ALPHANUM_CHAR: [ "a"-"z", "A"-"Z", "0"-"9" ] >
+| <#IDENTIFIER_CHAR: [ "a"-"z", "A"-"Z", "0"-"9", "_", "-", "." ] >
+| <#IDENTIFIER_PART: <ALPHA_CHAR> (<IDENTIFIER_CHAR>)* >
+| <#IDENTIFIER: <IDENTIFIER_PART> (":" <IDENTIFIER_PART>)? >
+| <#QUOTED_STRING_NB: ( "'" ( ~["'", "\r", "\n"] )* "'" ) 
+                    | ( "\"" ( ~["\"", "\r", "\n"] )* "\"" ) >
+| <#QUOTED_STRING: ( "'" ( ~["'"] )* "'" ) | ( "\"" ( ~["\""] )* "\"" ) >
+| <#WHITESPACE: ( " " | "\t" | "\n" | "\r" ) >
+| <#NEWLINE:    ( "\r\n" | "\r" | "\n" ) >
+| <#QUOTE:      ( "'" | "\"" )>
+| <#CPB:		">">
+}
+
+<DEFAULT> TOKEN : 
+{
+  <XMLOPEN:"<?xml">				: LexElement_Inside
+| <SELEMENT_START:      "<"       > : LexElement_Start
+| <EELEMENT_START:      "</"       > : LexElement_Start
+| <PI_START:      "<?"       > : LexPI
+| <COMMENT_START:  "<!--"    > : LexComment
+| <CDSTART: 		"<![CDATA["> : LexCDATA
+//| <DECL_START:     "<!DOCTYPE"      > : LexDecl
+| <PCDATA:         ( ~["<"] )+ >
+}
+
+<LexElement_Start> TOKEN :
+{
+  <ELEMENT_ID: <IDENTIFIER> > : LexElement_Inside
+}
+
+<LexElement_Inside> SPECIAL_TOKEN :
+{
+  < (<WHITESPACE>)+ >
+}
+
+<LexElement_Inside> TOKEN :
+{
+  <ATTR_NAME: <IDENTIFIER> >		
+| <ELEMENT_END: <CPB> >                       : DEFAULT
+| <QEND: "?>" >                     		: DEFAULT
+| <SLASHEND: "/>" >                       : DEFAULT
+| <ATTR_EQ: "=" >                       
+| <ATTR_VAL: <QUOTED_STRING>>			
+}
+
+
+<LexComment> MORE : { <~[] > } 
+<LexComment> TOKEN : 
+{
+  < COMMENT_END:  "-->" > : DEFAULT 
+}
+
+<LexPI> MORE : { <~[] > } 
+<LexPI> TOKEN : 
+{
+  < PI_END:  "?>" > : DEFAULT 
+}
+
+<LexCDATA> MORE : { <~[] > } 
+<LexCDATA> TOKEN : 
+{
+  < CDEND:  "]]>" > : DEFAULT 
+}
+String Document(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	Prolog(inTerminal) Element(inTerminal) (Misc(inTerminal))* {return productionEndNonTerminal("Document","-","-");}
+
+ )  }
+
+String Misc(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	Comment(true) {return productionEndTerminal("Misc1","{AUTO}","{AUTO}","error",first,token);}
+ |
+	LOOKAHEAD({getToken(1).image.trim().equals("")}) <PCDATA> {return productionEndTerminal("Misc2","{AUTO}","{AUTO}","error",first,token);}
+ |
+	PI(true) {return productionEndTerminal("Misc3","{AUTO}","{AUTO}","error",first,token);}
+
+ )  }
+
+String PI(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<?" <PI_END> {return productionEndTerminal("PI","-","-","error",first,token);}
+
+ )  }
+
+String Prolog(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	XMLDecl(true) (Misc(true))* {return productionEndTerminal("Prolog","-","-","error",first,token);}
+
+ )  }
+
+String XMLDecl(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<?xml" (Attribute(true))+ <QEND> {return productionEndTerminal("XMLDecl","-","-","error",first,token);}
+
+ )  }
+
+String CDSect(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<![CDATA[" <CDEND> {return productionEndTerminal("CDSect","-","-","error",first,token);}
+
+ )  }
+
+String Comment(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<!--" <COMMENT_END> {return productionEndTerminal("Comment","-","-","error",first,token);}
+
+ )  }
+
+String Element(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(EmptyElemTag()) n=EmptyElemTag(inTerminal){ replaceName("EmptyElemTag",n);} {return productionEndNonTerminal("ElementContainer1","-","{EmptyElemTag}");}
+ |
+	n=STag(inTerminal){ replaceName("STag",n);} (Content(inTerminal))* ETag(inTerminal) {return productionEndNonTerminal("ElementContainer2","-","{STag}");}
+
+ )  }
+
+String ElementId(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ELEMENT_ID>{ replaceName("<ELEMENT_ID>",t.toString());} {return productionEndTerminal("ElementId","{<ELEMENT_ID>}","{<ELEMENT_ID>}","error",first,token);}
+
+ )  }
+
+String EmptyElemTag(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" n=ElementId(inTerminal){ replaceName("ElementId",n);} (Attribute(inTerminal))* <SLASHEND> {return productionEndNonTerminal("EmptyElemTag","{ElementId}","{ElementId}");}
+
+ )  }
+
+String STag(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" n=ElementId(inTerminal){ replaceName("ElementId",n);} (Attribute(inTerminal))* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}");}
+
+ )  }
+
+String ETag(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"</" ElementId(true) <ELEMENT_END> {return productionEndTerminal("ETag","-","-","error",first,token);}
+
+ )  }
+
+String Attribute(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ATTR_NAME>{ replaceName("<ATTR_NAME>",t.toString());} <ATTR_EQ> <ATTR_VAL> {return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","error",first,token);}
+
+ )  }
+
+String Content(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Element(inTerminal){ replaceName("Element",n);} {return productionEndNonTerminal("ElementContent","{Element}","{Element}");}
+ |
+	Comment(true) {return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","error",first,token);}
+ |
+	CDSect(true) {return productionEndTerminal("CDSectContent","{AUTO}","{AUTO}","error",first,token);}
+ |
+	<PCDATA> {return productionEndTerminal("PCDataContent","{AUTO}","{AUTO}","error",first,token);}
+
+ )  }
+

@@ -1,0 +1,11 @@
+<?xml version=""?>
+<!--DOCTYPE people_list SYSTEM "example.dtd"-->
+
+<!-- Edited &#2322;with XML Spy v2007 (http://www.altova.com) -->
+<note>
+  <to from="x" to ='y'>Tove</to>
+  <from>Jani</from><![CDATA[test x ' " <df> ]]><!-- declarations for <head> & <body> -->
+  <xml:heading>Reminder</xml:heading>
+  <body xml:lang="en">Don't forget me this weekend!</body>  
+  <heading/>
+</note>
