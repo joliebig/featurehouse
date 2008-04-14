@@ -1,0 +1,127 @@
+
+MethodDeclaration MethodDeclaration() : { 
+	Type type;
+	ASTTextNode text1 = null;
+	Token t;
+	ASTStringNode identifier;
+	ParameterList parameterList = null;
+	NameList nameList = null;
+	Token firstToken=token;
+} { (
+	type=Type() ["static" {text1=new ASTTextNode("static",new WToken(token));}] t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} "(" [parameterList=ParameterList()] ")" ["throws" nameList=NameList()] "{" "}" 
+	{return new MethodDeclaration(type, text1, identifier, parameterList, nameList, firstToken.next,token);}
+ ) }
+
+Type Type() : { 
+	Token firstToken=token;
+} { (
+	"void"  
+	{return new Type1(firstToken.next,token);} |
+	"int"  
+	{return new Type2(firstToken.next,token);}
+ ) }
+
+ParameterList ParameterList() : { 
+	Parameter parameter;
+	ArrayList<Parameter> list0=new ArrayList<Parameter>();
+	Parameter parameter1;
+	ArrayList<Parameter> parameter1List = new ArrayList<Parameter>();
+	Token firstToken=token;
+} { (
+	parameter=Parameter(){list0.add(parameter);} ("," parameter1=Parameter(){list0.add(parameter1);})* 
+	{return new ParameterList(list0, firstToken.next,token);}
+ ) }
+
+Parameter Parameter() : { 
+	Type type;
+	Token t;
+	ASTStringNode identifier;
+	Token firstToken=token;
+} { (
+	type=Type() t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} 
+	{return new Parameter(type, identifier, firstToken.next,token);}
+ ) }
+
+NameList NameList() : { 
+	Name name;
+	ArrayList<Name> list0=new ArrayList<Name>();
+	Name name1;
+	ArrayList<Name> name1List = new ArrayList<Name>();
+	Token firstToken=token;
+} { (
+	name=Name(){list0.add(name);} ("," name1=Name(){list0.add(name1);})* 
+	{return new NameList(list0, firstToken.next,token);}
+ ) }
+
+Name Name() : { 
+	Token t;
+	ASTStringNode identifier;
+	Token firstToken=token;
+} { (
+	t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} 
+	{return new Name(identifier, firstToken.next,token);}
+ ) }
+
+Statement Statement() : { 
+	Token t;
+	ASTStringNode identifier;
+	ASTNode ifStatement;
+	Token firstToken=token;
+} { (
+	LOOKAHEAD(2) t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} ";" 
+	{return new Statement1(identifier, firstToken.next,token);} |
+	ifStatement=IfStatement() 
+	{return new Statement2(ifStatement, firstToken.next,token);}
+ ) }
+
+IfStatement IfStatement() : { 
+	Token t;
+	ASTStringNode expression;
+	Statement statement;
+	Statement statement1 = null;
+	Token firstToken=token;
+} { (
+	"if" "(" t=<EXPRESSION>{expression=new ASTStringNode(t.toString(),new WToken(token));} ")" statement=Statement() ["else" statement1=Statement()] 
+	{return new IfStatement(expression, statement, statement1, firstToken.next,token);}
+ ) }
+
+Production Production() : { 
+	Token t;
+	ASTStringNode identifier;
+	Units units;
+	Token firstToken=token;
+} { (
+	t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} ":" units=Units() ";" 
+	{return new Production(identifier, units, firstToken.next,token);}
+ ) }
+
+Units Units() : { 
+	Unit unit;
+	ArrayList<Unit> unitList = new ArrayList<Unit>();
+	Token firstToken=token;
+} { (
+	(unit=Unit(){unitList.add(unit);})* 
+	{return new Units(unitList, firstToken.next,token);}
+ ) }
+
+Unit Unit() : { 
+	Token t;
+	ASTStringNode string_literal;
+	NonTerminal nonTerminal;
+	Token firstToken=token;
+} { (
+	t=<STRING_LITERAL>{string_literal=new ASTStringNode(t.toString(),new WToken(token));} 
+	{return new Unit1(string_literal, firstToken.next,token);} |
+	nonTerminal=NonTerminal() 
+	{return new Unit2(nonTerminal, firstToken.next,token);}
+ ) }
+
+NonTerminal NonTerminal() : { 
+	Token t;
+	ASTStringNode identifier;
+	Token firstToken=token;
+} { (
+	t=<IDENTIFIER>{identifier=new ASTStringNode(t.toString(),new WToken(token));} 
+	{return new NonTerminal(identifier, firstToken.next,token);}
+ ) }
+
