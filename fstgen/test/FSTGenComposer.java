@@ -7,6 +7,7 @@ import tmp.generated_java15.Java15Parser;
 import cide.gparser.OffsetCharStream;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenComposer {
 	public static void main(String[] args) {
@@ -28,9 +29,9 @@ public class FSTGenComposer {
 			System.out.println(comp.printFST(0));
 			
 			String result = new String();
-			SimplePrintVisitor printer = new SimplePrintVisitor(new PrintStream("./ttt.java"));
+			SimplePrintVisitor printer = new SimplePrintVisitor(new PrintStream("./test/ttt.java"));
 			printer.visit((FSTNonTerminal)comp);
-			System.out.println(result);
+			printer.getResult();
 			
 		} catch (Exception e1) {
 			e1.printStackTrace();
@@ -82,6 +83,29 @@ public class FSTGenComposer {
 					if(childB == null) {
 						// no compatible child, FST-node only in A
 						nonterminalComp.addChild(childA.clone()); }
+				}
+			} else if(nodeA instanceof FSTTerminal && nodeB instanceof FSTTerminal) {
+				FSTTerminal terminalA = (FSTTerminal)nodeA;
+				FSTTerminal terminalB = (FSTTerminal)nodeB;
+				FSTTerminal terminalComp = (FSTTerminal)compNode;
+				
+				if(terminalA.getBody().length() > 0 && terminalB.getBody().length() > 0 && !terminalA.getBody().equals(terminalB.getBody())) {
+					System.out.println("name: " + terminalA.getName());
+					System.out.println("type: " + terminalA.getType());
+					System.out.println("body: " + terminalA.getBody());
+					System.out.println("comp: " + terminalA.getCompositionMechanism());
+					
+					if(terminalA.getCompositionMechanism().equals("error")) {
+						System.err.println("Error: terminal replacement: " + terminalB.toString() + " replaces " + terminalA.toString());
+					} else if(terminalA.getCompositionMechanism().equals("concatenation")) {
+						
+					} else if(terminalA.getCompositionMechanism().equals("overriding")) {
+
+					} else if(terminalA.getCompositionMechanism().equals("warning")) {
+						System.err.println("Warning: terminal replacement: " + terminalB.toString() + " replaces " + terminalA.toString());
+					} else {
+						System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
+					}
 				}
 			}
 			return compNode;
