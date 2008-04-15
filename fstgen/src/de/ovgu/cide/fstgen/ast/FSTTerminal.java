@@ -1,5 +1,7 @@
 package de.ovgu.cide.fstgen.ast;
 
+import java.util.LinkedList;
+
 public class FSTTerminal extends FSTNode {
 
 	private String body;
@@ -15,6 +17,12 @@ public class FSTTerminal extends FSTNode {
 		this(type, name, body);
 		this.compose = compositionMechanism;
 	}
+	
+	@Override
+	public FSTNode clone() {
+		return new FSTTerminal(getType(), getName(), getBody());
+	}
+
 
 	public String getBody() {
 		return body;

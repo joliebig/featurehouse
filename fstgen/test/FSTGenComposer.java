@@ -1,24 +1,44 @@
 import java.io.FileInputStream;
+import java.io.PrintStream;
+import java.util.LinkedList;
 import java.util.List;
 
 import tmp.generated_java15.Java15Parser;
 import cide.gparser.OffsetCharStream;
 import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class FSTGenComposer {
 	public static void main(String[] args) {
 		
 		try {
-			Java15Parser p = new Java15Parser(new OffsetCharStream( new FileInputStream("examples/GraphJava/BasicGraph/Graph.java")));
+			Java15Parser p = new Java15Parser(new OffsetCharStream( new FileInputStream("../FeatureAlgebra/examples/GraphJava/BasicGraph/Graph/Edge.java")));
 			p.CompilationUnit(false);
 			System.out.println(p.getRoot().printFST(0));
+			
+			Java15Parser q = new Java15Parser(new OffsetCharStream( new FileInputStream("../FeatureAlgebra/examples/GraphJava/Weight/Graph/Edge.java")));
+			q.CompilationUnit(false);
+			System.out.println(q.getRoot().printFST(0));
+			
+			LinkedList<FSTNode> features = new LinkedList<FSTNode>();
+			features.add(p.getRoot());
+			features.add(q.getRoot());
+			
+			FSTNode comp = compose(features); 
+			System.out.println(comp.printFST(0));
+			
+			String result = new String();
+			SimplePrintVisitor printer = new SimplePrintVisitor(new PrintStream("./ttt.java"));
+			printer.visit((FSTNonTerminal)comp);
+			System.out.println(result);
+			
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 
 	}
 	
-	private FSTNode compose(List<FSTNode> tl) {
+	private static FSTNode compose(List<FSTNode> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {
 			//Tree.traverse(current);
@@ -30,49 +50,41 @@ public class FSTGenComposer {
 		return composed;
 	}
 	
-	public FSTNode compose(FSTNode treeA, FSTNode treeB) {
+	public static FSTNode compose(FSTNode treeA, FSTNode treeB) {
 		return compose(treeA, treeB, null);
 	}
 
-	public FSTNode compose(FSTNode treeA, FSTNode treeB, FSTNode composedParent) {
-		//FSTNode compVertex = treeA.root().compose(treeB.root(), composedParent);
+	public static FSTNode compose(FSTNode nodeA, FSTNode nodeB, FSTNode compParent) {
 		
-		if(treeA.getName().equals(treeB.getName()) && treeA.getName().equals(treeB.getName()))
-			FSTNode compVertex = treeA.getClass().newInstance();
-		
-		if(compVertex != null) {
-			// roots have been composed
-			FSTNode compTree = new FSTNode(compVertex);
-			compTree.setParent(composedParent);
+		if(nodeA.compatibleWith(nodeB)) {
+			FSTNode compNode = nodeA.clone();
+			compNode.setParent(compParent);
+
 			// composed SubTree-stub is integrated in the new Tree, needs children
-			for(FSTNode childB : treeB.children()) { 
-				FSTNode childA = treeA.getCompatibleChild(childB);
-				//for each child of B get the first compatible child of A (CompatibleChild means a Child which root equals B's root)
-				if(childA == null) {
-					// no compatible child, FST-node only in B 
-					compTree.addChild(childB.getGroupIndex(), childB.getClone());
-				} else {
-					int ga = childA.getGroupIndex();
-					int gb = childB.getGroupIndex();
-					assert (ga == gb) : "Child GroupIndizes differ: " + ga + " " + gb;
-					// childA and childB are compatible, they should be composable
-					// this method might throw a NotComposableException, if e.g. the children have conflicting, compatible children
-					try {
-						compTree.addChild(ga, compose(childA, childB, compTree));
-					} catch (NotComposableException e) {
-						// implement a "Tree-Trace" so the user can see where the exception occured
-						e.insertAtBeginningOfVertexTrace(childA.root.getType() + " : " + childA.root.getName() + "\n");
-						throw e;
+			if(nodeA instanceof FSTNonTerminal && nodeB instanceof FSTNonTerminal) {
+				FSTNonTerminal nonterminalA = (FSTNonTerminal)nodeA;
+				FSTNonTerminal nonterminalB = (FSTNonTerminal)nodeB;
+				FSTNonTerminal nonterminalComp = (FSTNonTerminal)compNode;
+				
+				for(FSTNode childB : nonterminalB.getChildren()) { 
+					FSTNode childA = nonterminalA.getCompatibleChild(childB);
+					//for each child of B get the first compatible child of A (CompatibleChild means a Child which root equals B's root)
+					if(childA == null) {
+						// no compatible child, FST-node only in B
+						FSTNode newChild = childB.clone();
+						nonterminalComp.addChild(newChild);
+					} else {
+						nonterminalComp.addChild(compose(childA, childB, nonterminalComp));
 					}
 				}
+				for(FSTNode childA : nonterminalA.getChildren()) {
+					FSTNode childB = nonterminalB.getCompatibleChild(childA);
+					if(childB == null) {
+						// no compatible child, FST-node only in A
+						nonterminalComp.addChild(childA.clone()); }
+				}
 			}
-			for(FSTNode childA : treeA.children()) {
-				FSTNode childB = treeB.getCompatibleChild(childA);
-				if(childB == null) {
-					// no compatible child, FST-node only in A
-					compTree.addChild(childA.getGroupIndex(), childA.getClone()); }
-			}
-			return compTree;
+			return compNode;
 		}
 		else
 			return null;

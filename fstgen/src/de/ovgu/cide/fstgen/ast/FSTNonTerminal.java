@@ -1,5 +1,6 @@
 package de.ovgu.cide.fstgen.ast;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class FSTNonTerminal extends FSTNode {
@@ -10,11 +11,29 @@ public class FSTNonTerminal extends FSTNode {
 		super(type, name);
 		this.children = children;
 	}
-
+	
+	@Override
+	public FSTNode clone() {
+		return new FSTNonTerminal(getType(), getName(), new LinkedList<FSTNode>());
+	}
+	
 	public List<FSTNode> getChildren() {
 		return children;
 	}
 
+	public void addChild(FSTNode child) {
+		child.setParent(this);
+		children.add(child);
+	}
+	
+	public FSTNode getCompatibleChild(FSTNode node) {
+		for(FSTNode child : getChildren()) {
+			if(child.compatibleWith(node))
+				return child;
+		}
+		return null;
+	}
+	
 	public String toStringShort() {
 		return "[N: " + getType() + "/" + getName() + "]";
 	}
