@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class FSTTerminal extends FSTNode {
 
 	private String body;
-	private String compose = "error";
+	private String compose = "replacement";
 
 	public FSTTerminal(String type, String name, String body) {
 		super(type, name);
@@ -19,10 +19,18 @@ public class FSTTerminal extends FSTNode {
 	}
 	
 	@Override
-	public FSTNode clone() {
-		return new FSTTerminal(getType(), getName(), getBody());
+	public FSTNode getShallowClone() {
+		return new FSTTerminal(getType(), getName(), getBody(), getCompositionMechanism());
 	}
 
+	@Override
+	public FSTNode getDeepClone() {
+		return new FSTTerminal(getType(), getName(), getBody(), getCompositionMechanism());
+	}
+
+	public void setBody(String b) {
+		body = b;
+	}
 
 	public String getBody() {
 		return body;
@@ -34,7 +42,7 @@ public class FSTTerminal extends FSTNode {
 
 	@Override
 	public String toString() {
-		return "[T: " + getType() + "/" + getName() + " \""
+		return "[T -> " + getName() + " : " + getType() + " \""
 				+ body.replaceAll("\\s", " ") + "\" compose:"+compose+"]";
 	}
 

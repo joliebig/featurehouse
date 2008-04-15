@@ -38,7 +38,8 @@ public abstract class FSTNode {
 		return this.getType().equals(node.getType()) && this.getName().equals(node.getName());
 	}
 	
-	public abstract FSTNode clone() ;
+	public abstract FSTNode getShallowClone() ;
+	public abstract FSTNode getDeepClone() ;
 	
 	public abstract String printFST(int i) ;
 	

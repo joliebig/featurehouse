@@ -483,7 +483,7 @@ ClassOrInterfaceBodyDeclaration:
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers FieldDeclaration :: FieldDecl
 |
-  	@FSTTerminal(name="{MethodDeclaration}")
+  	@FSTTerminal(name="{MethodDeclaration}",compose="overriding")
 	LOOK_AHEAD(2)
   	Modifiers MethodDeclaration :: MethodDecl
 |

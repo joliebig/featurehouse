@@ -7,14 +7,29 @@ public class FSTNonTerminal extends FSTNode {
 
 	private List<FSTNode> children;
 
+	public FSTNonTerminal(String type, String name) {
+		super(type, name);
+		this.children = new LinkedList<FSTNode>();
+	}
+		
 	public FSTNonTerminal(String type, String name, List<FSTNode> children) {
 		super(type, name);
 		this.children = children;
+		for(FSTNode child : children)
+			child.setParent(this);
 	}
 	
 	@Override
-	public FSTNode clone() {
+	public FSTNode getShallowClone() {
 		return new FSTNonTerminal(getType(), getName(), new LinkedList<FSTNode>());
+	}
+
+	@Override
+	public FSTNode getDeepClone() {
+		LinkedList<FSTNode> cloneChildren = new LinkedList<FSTNode>();
+		for(FSTNode child : getChildren())
+			cloneChildren.add(child.getDeepClone());
+		return new FSTNonTerminal(getType(), getName(), cloneChildren);
 	}
 	
 	public List<FSTNode> getChildren() {
@@ -35,23 +50,22 @@ public class FSTNonTerminal extends FSTNode {
 	}
 	
 	public String toStringShort() {
-		return "[N: " + getType() + "/" + getName() + "]";
+		return "[NT -> " + getName() + " : " + getType() + "]";
 	}
 
 	@Override
 	public String toString() {
 		String shortS = toStringShort();
 		return shortS.substring(0, shortS.length() - 1) + " "
-				+ printChildrenList() + "]";
+				+ printChildrenList();
 	}
 
 	private String printChildrenList() {
-		String result = "[";
+		String result = "";
 		for (int idx = 0; idx < children.size(); idx++) {
 			if (idx != 0)
 				result += ", ";
-			result += children.get(idx).getType() + "/"
-					+ children.get(idx).getName();
+			result += children.get(idx).toString();
 		}
 		return result + "]";
 	}

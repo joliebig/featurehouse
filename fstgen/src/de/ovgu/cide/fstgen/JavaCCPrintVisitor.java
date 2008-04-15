@@ -144,7 +144,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 			String compositionMechanism = c.findAnnotationValue("FSTTerminal",
 					"compose");
 			if (compositionMechanism == null)
-				compositionMechanism = "\"error\"";
+				compositionMechanism = "\"replacement\"";
 
 			out.println("{return productionEndTerminal(" + getFSTType(c) + ","
 					+ fstNamePattern + "," + fstExportNamePattern + ","

@@ -77,7 +77,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(PACKAGE);
     Name(true);
     jj_consume_token(SEMICOLON);
-                                  {if (true) return productionEndTerminal("PackageDeclaration","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PackageDeclaration","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -105,7 +105,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                                                                                                                  {if (true) return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","error",first,token);}
+                                                                                                                                  {if (true) return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -114,7 +114,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DOT);
     jj_consume_token(STAR);
-                  {if (true) return productionEndTerminal("ImportPackage","-",".*","error",first,token);}
+                  {if (true) return productionEndTerminal("ImportPackage","-",".*","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -130,7 +130,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       Modifier(true);
     }
-                                        {if (true) return productionEndTerminal("Modifiers","-","-","error",first,token);}
+                                        {if (true) return productionEndTerminal("Modifiers","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -140,51 +140,51 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PUBLIC:
       jj_consume_token(PUBLIC);
-                   {if (true) return productionEndTerminal("Modifier1","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("Modifier1","-","-","replacement",first,token);}
       break;
     case STATIC:
       jj_consume_token(STATIC);
-                   {if (true) return productionEndTerminal("Modifier2","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("Modifier2","-","-","replacement",first,token);}
       break;
     case PROTECTED:
       jj_consume_token(PROTECTED);
-                      {if (true) return productionEndTerminal("Modifier3","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("Modifier3","-","-","replacement",first,token);}
       break;
     case PRIVATE:
       jj_consume_token(PRIVATE);
-                    {if (true) return productionEndTerminal("Modifier4","-","-","error",first,token);}
+                    {if (true) return productionEndTerminal("Modifier4","-","-","replacement",first,token);}
       break;
     case FINAL:
       jj_consume_token(FINAL);
-                  {if (true) return productionEndTerminal("Modifier5","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("Modifier5","-","-","replacement",first,token);}
       break;
     case ABSTRACT:
       jj_consume_token(ABSTRACT);
-                     {if (true) return productionEndTerminal("Modifier6","-","-","error",first,token);}
+                     {if (true) return productionEndTerminal("Modifier6","-","-","replacement",first,token);}
       break;
     case SYNCHRONIZED:
       jj_consume_token(SYNCHRONIZED);
-                         {if (true) return productionEndTerminal("Modifier7","-","-","error",first,token);}
+                         {if (true) return productionEndTerminal("Modifier7","-","-","replacement",first,token);}
       break;
     case NATIVE:
       jj_consume_token(NATIVE);
-                   {if (true) return productionEndTerminal("Modifier8","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("Modifier8","-","-","replacement",first,token);}
       break;
     case TRANSIENT:
       jj_consume_token(TRANSIENT);
-                      {if (true) return productionEndTerminal("Modifier9","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("Modifier9","-","-","replacement",first,token);}
       break;
     case VOLATILE:
       jj_consume_token(VOLATILE);
-                     {if (true) return productionEndTerminal("Modifier10","-","-","error",first,token);}
+                     {if (true) return productionEndTerminal("Modifier10","-","-","replacement",first,token);}
       break;
     case STRICTFP:
       jj_consume_token(STRICTFP);
-                     {if (true) return productionEndTerminal("Modifier11","-","-","error",first,token);}
+                     {if (true) return productionEndTerminal("Modifier11","-","-","replacement",first,token);}
       break;
     case AT:
       Annotation(true);
-                          {if (true) return productionEndTerminal("Modifier12","-","-","error",first,token);}
+                          {if (true) return productionEndTerminal("Modifier12","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[5] = jj_gen;
@@ -199,7 +199,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     t = jj_consume_token(IDENTIFIER);
                         replaceName("<IDENTIFIER>",t.toString());
-                                                                    {if (true) return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","error",first,token);}
+                                                                    {if (true) return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -209,7 +209,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SEMICOLON:
       jj_consume_token(SEMICOLON);
-              {if (true) return productionEndTerminal("EmptyTypeDecl","{AUTO}","{AUTO}","error",first,token);}
+              {if (true) return productionEndTerminal("EmptyTypeDecl","{AUTO}","{AUTO}","replacement",first,token);}
       break;
     default:
       jj_la1[14] = jj_gen;
@@ -382,7 +382,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(INTERFACE);
     Id(true);
     AnnotationTypeBody(true);
-                                                           {if (true) return productionEndTerminal("AnnotationTypeDeclaration","-","-","error",first,token);}
+                                                           {if (true) return productionEndTerminal("AnnotationTypeDeclaration","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -416,7 +416,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     ClassOrInterfaceBody(true);
-                                                                                                                                      {if (true) return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","error",first,token);}
+                                                                                                                                      {if (true) return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -426,11 +426,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CLASS:
       jj_consume_token(CLASS);
-                  {if (true) return productionEndTerminal("ClassOrInterface1","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("ClassOrInterface1","-","-","replacement",first,token);}
       break;
     case INTERFACE:
       jj_consume_token(INTERFACE);
-                      {if (true) return productionEndTerminal("ClassOrInterface2","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("ClassOrInterface2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -458,7 +458,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       ClassOrInterfaceType(true);
     }
-                                                                                {if (true) return productionEndTerminal("ExtendsList","-","-","error",first,token);}
+                                                                                {if (true) return productionEndTerminal("ExtendsList","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -480,7 +480,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       ClassOrInterfaceType(true);
     }
-                                                                                   {if (true) return productionEndTerminal("ImplementsList","-","-","error",first,token);}
+                                                                                   {if (true) return productionEndTerminal("ImplementsList","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -498,7 +498,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     EnumBody(true);
-                                                               {if (true) return productionEndTerminal("EnumDeclaration","-","-","error",first,token);}
+                                                               {if (true) return productionEndTerminal("EnumDeclaration","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -529,7 +529,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RBRACE);
-                                                                                       {if (true) return productionEndTerminal("EnumBody","-","-","error",first,token);}
+                                                                                       {if (true) return productionEndTerminal("EnumBody","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -600,7 +600,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[26] = jj_gen;
       ;
     }
-                                                                     {if (true) return productionEndTerminal("EnumConstant","-","-","error",first,token);}
+                                                                     {if (true) return productionEndTerminal("EnumConstant","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -623,7 +623,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       TypeParameter(true);
     }
     jj_consume_token(GT);
-                                                                {if (true) return productionEndTerminal("TypeParameters","-","-","error",first,token);}
+                                                                {if (true) return productionEndTerminal("TypeParameters","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -639,7 +639,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[28] = jj_gen;
       ;
     }
-                                        {if (true) return productionEndTerminal("TypeParameter","-","-","error",first,token);}
+                                        {if (true) return productionEndTerminal("TypeParameter","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -661,7 +661,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(BIT_AND);
       ClassOrInterfaceType(true);
     }
-                                                                                {if (true) return productionEndTerminal("TypeBound","-","-","error",first,token);}
+                                                                                {if (true) return productionEndTerminal("TypeBound","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -709,7 +709,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ClassOrInterfaceBodyDeclaration(true);
     }
     jj_consume_token(RBRACE);
-                                                          {if (true) return productionEndTerminal("ClassOrInterfaceBody","-","-","error",first,token);}
+                                                          {if (true) return productionEndTerminal("ClassOrInterfaceBody","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -718,7 +718,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_5(2)) {
       Initializer(true);
-                                        {if (true) return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","error",first,token);}
+                                        {if (true) return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","replacement",first,token);}
     } else if (jj_2_6(2147483647)) {
       Modifiers(inTerminal);
       ClassOrInterface(inTerminal);
@@ -829,22 +829,22 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     } else if (jj_2_8(2147483647)) {
       Modifiers(true);
       ConstructorDeclaration(true);
-                                                                                                                    {if (true) return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","error",first,token);}
+                                                                                                                    {if (true) return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
     } else if (jj_2_9(2147483647)) {
       Modifiers(true);
       n = FieldDeclaration(true);
                                                                                                                                replaceName("FieldDeclaration",n);
-                                                                                                                                                                    {if (true) return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","error",first,token);}
+                                                                                                                                                                    {if (true) return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","replacement",first,token);}
     } else if (jj_2_10(2)) {
       Modifiers(true);
       n = MethodDeclaration(true);
                                                                 replaceName("MethodDeclaration",n);
-                                                                                                      {if (true) return productionEndTerminal("MethodDecl","{MethodDeclaration}","{MethodDeclaration}","error",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("MethodDecl","{MethodDeclaration}","{MethodDeclaration}","overriding",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SEMICOLON:
         jj_consume_token(SEMICOLON);
-              {if (true) return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","error",first,token);}
+              {if (true) return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","replacement",first,token);}
         break;
       default:
         jj_la1[38] = jj_gen;
@@ -877,7 +877,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                                                                                                                                  replaceName("VariableDeclarator",n);
     }
     jj_consume_token(SEMICOLON);
-                                                                                                                                                                                              {if (true) return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","error",first,token);}
+                                                                                                                                                                                              {if (true) return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -895,7 +895,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[40] = jj_gen;
       ;
     }
-                                                                                                               {if (true) return productionEndTerminal("VariableDeclarator","-","{VariableDeclaratorId}","error",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("VariableDeclarator","-","{VariableDeclaratorId}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -917,7 +917,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
     }
-                                                                                {if (true) return productionEndTerminal("VariableDeclaratorId","-","{<IDENTIFIER>}","error",first,token);}
+                                                                                {if (true) return productionEndTerminal("VariableDeclaratorId","-","{<IDENTIFIER>}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -927,7 +927,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
       ArrayInitializer(true);
-                                {if (true) return productionEndTerminal("VariableInitializer1","-","-","error",first,token);}
+                                {if (true) return productionEndTerminal("VariableInitializer1","-","-","replacement",first,token);}
       break;
     case BOOLEAN:
     case BYTE:
@@ -957,7 +957,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case PLUS:
     case MINUS:
       Expression(true);
-                          {if (true) return productionEndTerminal("VariableInitializer2","-","-","error",first,token);}
+                          {if (true) return productionEndTerminal("VariableInitializer2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[42] = jj_gen;
@@ -1015,7 +1015,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RBRACE);
-                                                         {if (true) return productionEndTerminal("ArrayInitializer","-","-","error",first,token);}
+                                                         {if (true) return productionEndTerminal("ArrayInitializer","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1033,7 +1033,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       VariableInitializer(true);
     }
-                                                                                 {if (true) return productionEndTerminal("ArrayInitializerInternal","-","-","error",first,token);}
+                                                                                 {if (true) return productionEndTerminal("ArrayInitializerInternal","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1061,7 +1061,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     MethodDeclarationBody(true);
-                                                                                                                                                                     {if (true) return productionEndTerminal("MethodDeclaration","-","{MethodDeclarator}","error",first,token);}
+                                                                                                                                                                     {if (true) return productionEndTerminal("MethodDeclaration","-","{MethodDeclarator}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1071,11 +1071,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
       Block(true);
-                     {if (true) return productionEndTerminal("MethodDeclarationBody1","-","-","error",first,token);}
+                     {if (true) return productionEndTerminal("MethodDeclarationBody1","-","-","replacement",first,token);}
       break;
     case SEMICOLON:
       jj_consume_token(SEMICOLON);
-              {if (true) return productionEndTerminal("MethodDeclarationBody2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("MethodDeclarationBody2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[47] = jj_gen;
@@ -1105,7 +1105,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
     }
-                                                                                                                                              {if (true) return productionEndTerminal("MethodDeclarator","-","{<IDENTIFIER>}({FormalParameters})","error",first,token);}
+                                                                                                                                              {if (true) return productionEndTerminal("MethodDeclarator","-","{<IDENTIFIER>}({FormalParameters})","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1132,7 +1132,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                                 {if (true) return productionEndTerminal("FormalParameters","-","{FormalParametersInternal}","error",first,token);}
+                                                                                                 {if (true) return productionEndTerminal("FormalParameters","-","{FormalParametersInternal}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1155,7 +1155,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       n = FormalParameter(true);
                                                                                                   replaceName("FormalParameter",n);
     }
-                                                                                                                                        {if (true) return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","error",first,token);}
+                                                                                                                                        {if (true) return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1181,7 +1181,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     VariableDeclaratorId(true);
-                                                                                              {if (true) return productionEndTerminal("FormalParameter","-","{Type}","error",first,token);}
+                                                                                              {if (true) return productionEndTerminal("FormalParameter","-","{Type}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1267,7 +1267,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       BlockStatement(true);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                    {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","error",first,token);}
+                                                                                                                                                                                                                                                                                                    {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1278,7 +1278,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(THIS);
       Arguments(true);
       jj_consume_token(SEMICOLON);
-                                                                      {if (true) return productionEndTerminal("ExplicitConstructorInvocation1","-","-","error",first,token);}
+                                                                      {if (true) return productionEndTerminal("ExplicitConstructorInvocation1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -1311,7 +1311,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_consume_token(SUPER);
         Arguments(true);
         jj_consume_token(SEMICOLON);
-                                                                                {if (true) return productionEndTerminal("ExplicitConstructorInvocation2","-","-","error",first,token);}
+                                                                                {if (true) return productionEndTerminal("ExplicitConstructorInvocation2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[56] = jj_gen;
@@ -1334,7 +1334,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     Block(true);
-                                 {if (true) return productionEndTerminal("Initializer","-","-","error",first,token);}
+                                 {if (true) return productionEndTerminal("Initializer","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1343,7 +1343,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_15(2)) {
       ReferenceTypeP(true);
-                                           {if (true) return productionEndTerminal("Type1","-","{TOSTRING}","error",first,token);}
+                                           {if (true) return productionEndTerminal("Type1","-","{TOSTRING}","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -1355,7 +1355,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       case LONG:
       case SHORT:
         PrimitiveType(true);
-                             {if (true) return productionEndTerminal("Type2","-","{TOSTRING}","error",first,token);}
+                             {if (true) return productionEndTerminal("Type2","-","{TOSTRING}","replacement",first,token);}
         break;
       default:
         jj_la1[58] = jj_gen;
@@ -1389,7 +1389,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           break label_22;
         }
       }
-                                                      {if (true) return productionEndTerminal("ReferenceTypeP1","-","-","error",first,token);}
+                                                      {if (true) return productionEndTerminal("ReferenceTypeP1","-","-","replacement",first,token);}
       break;
     case IDENTIFIER:
       ClassOrInterfaceType(true);
@@ -1403,7 +1403,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_consume_token(LBRACKET);
         jj_consume_token(RBRACKET);
       }
-                                                             {if (true) return productionEndTerminal("ReferenceTypeP2","-","-","error",first,token);}
+                                                             {if (true) return productionEndTerminal("ReferenceTypeP2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[59] = jj_gen;
@@ -1431,7 +1431,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       ClassOrInterfaceTypeIntern(true);
     }
-                                                                                                          {if (true) return productionEndTerminal("ClassOrInterfaceType","-","-","error",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("ClassOrInterfaceType","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1445,7 +1445,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     } else {
       ;
     }
-                                                             {if (true) return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","error",first,token);}
+                                                             {if (true) return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1468,7 +1468,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       TypeArgument(true);
     }
     jj_consume_token(GT);
-                                                              {if (true) return productionEndTerminal("TypeArguments","-","-","error",first,token);}
+                                                              {if (true) return productionEndTerminal("TypeArguments","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1486,7 +1486,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case SHORT:
     case IDENTIFIER:
       ReferenceTypeP(true);
-                              {if (true) return productionEndTerminal("TypeArgument1","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("TypeArgument1","-","-","replacement",first,token);}
       break;
     case HOOK:
       jj_consume_token(HOOK);
@@ -1499,7 +1499,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_la1[61] = jj_gen;
         ;
       }
-                                    {if (true) return productionEndTerminal("TypeArgument2","-","-","error",first,token);}
+                                    {if (true) return productionEndTerminal("TypeArgument2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[62] = jj_gen;
@@ -1516,12 +1516,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case EXTENDS:
       jj_consume_token(EXTENDS);
       ReferenceTypeP(true);
-                                        {if (true) return productionEndTerminal("WildcardBounds1","-","-","error",first,token);}
+                                        {if (true) return productionEndTerminal("WildcardBounds1","-","-","replacement",first,token);}
       break;
     case SUPER:
       jj_consume_token(SUPER);
       ReferenceTypeP(true);
-                                      {if (true) return productionEndTerminal("WildcardBounds2","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("WildcardBounds2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[63] = jj_gen;
@@ -1537,35 +1537,35 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BOOLEAN:
       jj_consume_token(BOOLEAN);
-                    {if (true) return productionEndTerminal("PrimitiveType1","-","-","error",first,token);}
+                    {if (true) return productionEndTerminal("PrimitiveType1","-","-","replacement",first,token);}
       break;
     case CHAR:
       jj_consume_token(CHAR);
-                 {if (true) return productionEndTerminal("PrimitiveType2","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("PrimitiveType2","-","-","replacement",first,token);}
       break;
     case BYTE:
       jj_consume_token(BYTE);
-                 {if (true) return productionEndTerminal("PrimitiveType3","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("PrimitiveType3","-","-","replacement",first,token);}
       break;
     case SHORT:
       jj_consume_token(SHORT);
-                  {if (true) return productionEndTerminal("PrimitiveType4","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("PrimitiveType4","-","-","replacement",first,token);}
       break;
     case INT:
       jj_consume_token(INT);
-                {if (true) return productionEndTerminal("PrimitiveType5","-","-","error",first,token);}
+                {if (true) return productionEndTerminal("PrimitiveType5","-","-","replacement",first,token);}
       break;
     case LONG:
       jj_consume_token(LONG);
-                 {if (true) return productionEndTerminal("PrimitiveType6","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("PrimitiveType6","-","-","replacement",first,token);}
       break;
     case FLOAT:
       jj_consume_token(FLOAT);
-                  {if (true) return productionEndTerminal("PrimitiveType7","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("PrimitiveType7","-","-","replacement",first,token);}
       break;
     case DOUBLE:
       jj_consume_token(DOUBLE);
-                   {if (true) return productionEndTerminal("PrimitiveType8","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("PrimitiveType8","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[64] = jj_gen;
@@ -1581,7 +1581,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case VOID:
       jj_consume_token(VOID);
-                 {if (true) return productionEndTerminal("ResultType1","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("ResultType1","-","-","replacement",first,token);}
       break;
     case BOOLEAN:
     case BYTE:
@@ -1593,7 +1593,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case SHORT:
     case IDENTIFIER:
       Type(true);
-                    {if (true) return productionEndTerminal("ResultType2","-","-","error",first,token);}
+                    {if (true) return productionEndTerminal("ResultType2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[65] = jj_gen;
@@ -1619,7 +1619,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       t = jj_consume_token(IDENTIFIER);
                                                                                                      replaceName("<IDENTIFIER>",t.toString());
     }
-                                                                                                                                                   {if (true) return productionEndTerminal("Name","-","{<IDENTIFIER>}^.","error",first,token);}
+                                                                                                                                                   {if (true) return productionEndTerminal("Name","-","{<IDENTIFIER>}^.","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1640,7 +1640,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       Name(true);
     }
-                                      {if (true) return productionEndTerminal("NameList","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("NameList","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1653,7 +1653,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     } else {
       ;
     }
-                                                                    {if (true) return productionEndTerminal("Expression","-","-","error",first,token);}
+                                                                    {if (true) return productionEndTerminal("Expression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1662,7 +1662,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     AssignmentOperator(true);
     Expression(true);
-                                                   {if (true) return productionEndTerminal("AssignExp","-","-","error",first,token);}
+                                                   {if (true) return productionEndTerminal("AssignExp","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1672,51 +1672,51 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSIGN:
       jj_consume_token(ASSIGN);
-              {if (true) return productionEndTerminal("AssignmentOperator1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("AssignmentOperator1","-","-","replacement",first,token);}
       break;
     case STARASSIGN:
       jj_consume_token(STARASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator2","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator2","-","-","replacement",first,token);}
       break;
     case SLASHASSIGN:
       jj_consume_token(SLASHASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator3","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator3","-","-","replacement",first,token);}
       break;
     case REMASSIGN:
       jj_consume_token(REMASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator4","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator4","-","-","replacement",first,token);}
       break;
     case PLUSASSIGN:
       jj_consume_token(PLUSASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator5","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator5","-","-","replacement",first,token);}
       break;
     case MINUSASSIGN:
       jj_consume_token(MINUSASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator6","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator6","-","-","replacement",first,token);}
       break;
     case LSHIFTASSIGN:
       jj_consume_token(LSHIFTASSIGN);
-                {if (true) return productionEndTerminal("AssignmentOperator7","-","-","error",first,token);}
+                {if (true) return productionEndTerminal("AssignmentOperator7","-","-","replacement",first,token);}
       break;
     case RSIGNEDSHIFTASSIGN:
       jj_consume_token(RSIGNEDSHIFTASSIGN);
-                {if (true) return productionEndTerminal("AssignmentOperator8","-","-","error",first,token);}
+                {if (true) return productionEndTerminal("AssignmentOperator8","-","-","replacement",first,token);}
       break;
     case RUNSIGNEDSHIFTASSIGN:
       jj_consume_token(RUNSIGNEDSHIFTASSIGN);
-                 {if (true) return productionEndTerminal("AssignmentOperator9","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("AssignmentOperator9","-","-","replacement",first,token);}
       break;
     case ANDASSIGN:
       jj_consume_token(ANDASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator10","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator10","-","-","replacement",first,token);}
       break;
     case XORASSIGN:
       jj_consume_token(XORASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator11","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator11","-","-","replacement",first,token);}
       break;
     case ORASSIGN:
       jj_consume_token(ORASSIGN);
-               {if (true) return productionEndTerminal("AssignmentOperator12","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("AssignmentOperator12","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[67] = jj_gen;
@@ -1731,7 +1731,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_23(2147483647)) {
       ConditionalExpressionFull(true);
-                                                                                  {if (true) return productionEndTerminal("ConditionalExpression1","-","-","error",first,token);}
+                                                                                  {if (true) return productionEndTerminal("ConditionalExpression1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -1762,7 +1762,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       case PLUS:
       case MINUS:
         ConditionalOrExpression(true);
-                                       {if (true) return productionEndTerminal("ConditionalExpression2","-","-","error",first,token);}
+                                       {if (true) return productionEndTerminal("ConditionalExpression2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[68] = jj_gen;
@@ -1781,7 +1781,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     Expression(true);
     jj_consume_token(COLON);
     Expression(true);
-                                                                                 {if (true) return productionEndTerminal("ConditionalExpressionFull","-","-","error",first,token);}
+                                                                                 {if (true) return productionEndTerminal("ConditionalExpressionFull","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1802,7 +1802,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(SC_OR);
       ConditionalAndExpression(true);
     }
-                                                                               {if (true) return productionEndTerminal("ConditionalOrExpression","-","-","error",first,token);}
+                                                                               {if (true) return productionEndTerminal("ConditionalOrExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1823,7 +1823,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(SC_AND);
       InclusiveOrExpression(true);
     }
-                                                                         {if (true) return productionEndTerminal("ConditionalAndExpression","-","-","error",first,token);}
+                                                                         {if (true) return productionEndTerminal("ConditionalAndExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1844,7 +1844,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(BIT_OR);
       ExclusiveOrExpression(true);
     }
-                                                                        {if (true) return productionEndTerminal("InclusiveOrExpression","-","-","error",first,token);}
+                                                                        {if (true) return productionEndTerminal("InclusiveOrExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1865,7 +1865,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(XOR);
       AndExpression(true);
     }
-                                                        {if (true) return productionEndTerminal("ExclusiveOrExpression","-","-","error",first,token);}
+                                                        {if (true) return productionEndTerminal("ExclusiveOrExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1886,7 +1886,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(BIT_AND);
       EqualityExpression(true);
     }
-                                                                  {if (true) return productionEndTerminal("AndExpression","-","-","error",first,token);}
+                                                                  {if (true) return productionEndTerminal("AndExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1907,7 +1907,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       EqualityExpressionIntern(true);
     }
-                                                                      {if (true) return productionEndTerminal("EqualityExpression","-","-","error",first,token);}
+                                                                      {if (true) return productionEndTerminal("EqualityExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1916,7 +1916,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     EqualityOp(true);
     InstanceOfExpression(true);
-                                                     {if (true) return productionEndTerminal("EqualityExpressionIntern","-","-","error",first,token);}
+                                                     {if (true) return productionEndTerminal("EqualityExpressionIntern","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1926,11 +1926,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EQ:
       jj_consume_token(EQ);
-               {if (true) return productionEndTerminal("EqualityOp1","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("EqualityOp1","-","-","replacement",first,token);}
       break;
     case NE:
       jj_consume_token(NE);
-               {if (true) return productionEndTerminal("EqualityOp2","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("EqualityOp2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[75] = jj_gen;
@@ -1953,7 +1953,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[76] = jj_gen;
       ;
     }
-                                                              {if (true) return productionEndTerminal("InstanceOfExpression","-","-","error",first,token);}
+                                                              {if (true) return productionEndTerminal("InstanceOfExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1976,7 +1976,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       RelationalExpressionIntern(true);
     }
-                                                                   {if (true) return productionEndTerminal("RelationalExpression","-","-","error",first,token);}
+                                                                   {if (true) return productionEndTerminal("RelationalExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1985,7 +1985,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     RelationalOp(true);
     ShiftExpression(true);
-                                                  {if (true) return productionEndTerminal("RelationalExpressionIntern","-","-","error",first,token);}
+                                                  {if (true) return productionEndTerminal("RelationalExpressionIntern","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1995,19 +1995,19 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
       jj_consume_token(LT);
-              {if (true) return productionEndTerminal("RelationalOp1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("RelationalOp1","-","-","replacement",first,token);}
       break;
     case GT:
       jj_consume_token(GT);
-              {if (true) return productionEndTerminal("RelationalOp2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("RelationalOp2","-","-","replacement",first,token);}
       break;
     case LE:
       jj_consume_token(LE);
-               {if (true) return productionEndTerminal("RelationalOp3","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("RelationalOp3","-","-","replacement",first,token);}
       break;
     case GE:
       jj_consume_token(GE);
-               {if (true) return productionEndTerminal("RelationalOp4","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("RelationalOp4","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[78] = jj_gen;
@@ -2030,7 +2030,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       ShiftExpressionRight(true);
     }
-                                                                             {if (true) return productionEndTerminal("ShiftExpression","-","-","error",first,token);}
+                                                                             {if (true) return productionEndTerminal("ShiftExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2039,7 +2039,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     ShiftOp(true);
     AdditiveExpression(true);
-                                                {if (true) return productionEndTerminal("ShiftExpressionRight","-","-","error",first,token);}
+                                                {if (true) return productionEndTerminal("ShiftExpressionRight","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2049,7 +2049,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LSHIFT:
       jj_consume_token(LSHIFT);
-               {if (true) return productionEndTerminal("ShiftOp1","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("ShiftOp1","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[79] = jj_gen;
@@ -2057,11 +2057,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_consume_token(GT);
         jj_consume_token(GT);
         jj_consume_token(GT);
-                                   {if (true) return productionEndTerminal("ShiftOp2","-","-","error",first,token);}
+                                   {if (true) return productionEndTerminal("ShiftOp2","-","-","replacement",first,token);}
       } else if (jj_2_26(2)) {
         jj_consume_token(GT);
         jj_consume_token(GT);
-                               {if (true) return productionEndTerminal("ShiftOp3","-","-","error",first,token);}
+                               {if (true) return productionEndTerminal("ShiftOp3","-","-","replacement",first,token);}
       } else {
         jj_consume_token(-1);
         throw new ParseException();
@@ -2087,7 +2087,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       AdditiveExpressionIntern(true);
     }
-                                                                          {if (true) return productionEndTerminal("AdditiveExpression","-","-","error",first,token);}
+                                                                          {if (true) return productionEndTerminal("AdditiveExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2096,7 +2096,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     AdditiveOp(true);
     MultiplicativeExpression(true);
-                                                         {if (true) return productionEndTerminal("AdditiveExpressionIntern","-","-","error",first,token);}
+                                                         {if (true) return productionEndTerminal("AdditiveExpressionIntern","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2106,11 +2106,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("AdditiveOp1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("AdditiveOp1","-","-","replacement",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("AdditiveOp2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("AdditiveOp2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[81] = jj_gen;
@@ -2138,7 +2138,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       MultiplicativeExpressionIntern(true);
     }
-                                                                       {if (true) return productionEndTerminal("MultiplicativeExpression","-","-","error",first,token);}
+                                                                       {if (true) return productionEndTerminal("MultiplicativeExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2147,7 +2147,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     MultiplicativeOp(true);
     UnaryExpression(true);
-                                                      {if (true) return productionEndTerminal("MultiplicativeExpressionIntern","-","-","error",first,token);}
+                                                      {if (true) return productionEndTerminal("MultiplicativeExpressionIntern","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2157,15 +2157,15 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("MultiplicativeOp1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("MultiplicativeOp1","-","-","replacement",first,token);}
       break;
     case SLASH:
       jj_consume_token(SLASH);
-              {if (true) return productionEndTerminal("MultiplicativeOp2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("MultiplicativeOp2","-","-","replacement",first,token);}
       break;
     case REM:
       jj_consume_token(REM);
-              {if (true) return productionEndTerminal("MultiplicativeOp3","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("MultiplicativeOp3","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[83] = jj_gen;
@@ -2183,15 +2183,15 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case MINUS:
       AdditiveOp(true);
       UnaryExpression(true);
-                                                {if (true) return productionEndTerminal("UnaryExpression1","-","-","error",first,token);}
+                                                {if (true) return productionEndTerminal("UnaryExpression1","-","-","replacement",first,token);}
       break;
     case INCR:
       PreIncrementExpression(true);
-                                      {if (true) return productionEndTerminal("UnaryExpression2","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("UnaryExpression2","-","-","replacement",first,token);}
       break;
     case DECR:
       PreDecrementExpression(true);
-                                      {if (true) return productionEndTerminal("UnaryExpression3","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("UnaryExpression3","-","-","replacement",first,token);}
       break;
     case BOOLEAN:
     case BYTE:
@@ -2217,7 +2217,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case BANG:
     case TILDE:
       UnaryExpressionNotPlusMinus(true);
-                                           {if (true) return productionEndTerminal("UnaryExpression4","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("UnaryExpression4","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[84] = jj_gen;
@@ -2232,7 +2232,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INCR);
     PrimaryExpression(true);
-                                      {if (true) return productionEndTerminal("PreIncrementExpression","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("PreIncrementExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2241,7 +2241,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DECR);
     PrimaryExpression(true);
-                                      {if (true) return productionEndTerminal("PreDecrementExpression","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("PreDecrementExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2253,13 +2253,13 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case TILDE:
       UnaryOp(true);
       UnaryExpression(true);
-                                             {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","error",first,token);}
+                                             {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[85] = jj_gen;
       if (jj_2_27(2147483647)) {
         CastExpression(true);
-                                                         {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","error",first,token);}
+                                                         {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case BOOLEAN:
@@ -2284,7 +2284,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         case IDENTIFIER:
         case LPAREN:
           PostfixExpression(true);
-                                 {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","error",first,token);}
+                                 {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","replacement",first,token);}
           break;
         default:
           jj_la1[86] = jj_gen;
@@ -2302,11 +2302,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TILDE:
       jj_consume_token(TILDE);
-              {if (true) return productionEndTerminal("UnaryOp1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("UnaryOp1","-","-","replacement",first,token);}
       break;
     case BANG:
       jj_consume_token(BANG);
-              {if (true) return productionEndTerminal("UnaryOp2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("UnaryOp2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[87] = jj_gen;
@@ -2322,13 +2322,13 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     if (jj_2_28(2)) {
       jj_consume_token(LPAREN);
       PrimitiveType(true);
-                                              {if (true) return productionEndTerminal("CastLookahead1","-","-","error",first,token);}
+                                              {if (true) return productionEndTerminal("CastLookahead1","-","-","replacement",first,token);}
     } else if (jj_2_29(2147483647)) {
       jj_consume_token(LPAREN);
       Type(true);
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
-                                                          {if (true) return productionEndTerminal("CastLookahead2","-","-","error",first,token);}
+                                                          {if (true) return productionEndTerminal("CastLookahead2","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
@@ -2336,7 +2336,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         Type(true);
         jj_consume_token(RPAREN);
         CastLAOp(true);
-                                           {if (true) return productionEndTerminal("CastLookahead3","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("CastLookahead3","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[88] = jj_gen;
@@ -2353,31 +2353,31 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TILDE:
       jj_consume_token(TILDE);
-              {if (true) return productionEndTerminal("CastLAOp1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("CastLAOp1","-","-","replacement",first,token);}
       break;
     case BANG:
       jj_consume_token(BANG);
-              {if (true) return productionEndTerminal("CastLAOp2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("CastLAOp2","-","-","replacement",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
-              {if (true) return productionEndTerminal("CastLAOp3","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("CastLAOp3","-","-","replacement",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("CastLAOp4","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("CastLAOp4","-","-","replacement",first,token);}
       break;
     case SUPER:
       jj_consume_token(SUPER);
-                  {if (true) return productionEndTerminal("CastLAOp5","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("CastLAOp5","-","-","replacement",first,token);}
       break;
     case NEW:
       jj_consume_token(NEW);
-                {if (true) return productionEndTerminal("CastLAOp6","-","-","error",first,token);}
+                {if (true) return productionEndTerminal("CastLAOp6","-","-","replacement",first,token);}
       break;
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("CastLAOp7","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("CastLAOp7","-","-","replacement",first,token);}
       break;
     case FALSE:
     case NULL:
@@ -2387,7 +2387,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case CHARACTER_LITERAL:
     case STRING_LITERAL:
       Literal(true);
-                       {if (true) return productionEndTerminal("CastLAOp8","-","-","error",first,token);}
+                       {if (true) return productionEndTerminal("CastLAOp8","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[89] = jj_gen;
@@ -2410,7 +2410,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[90] = jj_gen;
       ;
     }
-                                                   {if (true) return productionEndTerminal("PostfixExpression","-","-","error",first,token);}
+                                                   {if (true) return productionEndTerminal("PostfixExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2420,11 +2420,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
       jj_consume_token(INCR);
-               {if (true) return productionEndTerminal("PostfixOp1","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("PostfixOp1","-","-","replacement",first,token);}
       break;
     case DECR:
       jj_consume_token(DECR);
-               {if (true) return productionEndTerminal("PostfixOp2","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("PostfixOp2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[91] = jj_gen;
@@ -2442,7 +2442,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       Type(true);
       jj_consume_token(RPAREN);
       UnaryExpression(true);
-                                                                                 {if (true) return productionEndTerminal("CastExpression1","-","-","error",first,token);}
+                                                                                 {if (true) return productionEndTerminal("CastExpression1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
@@ -2450,7 +2450,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         Type(true);
         jj_consume_token(RPAREN);
         UnaryExpressionNotPlusMinus(true);
-                                                              {if (true) return productionEndTerminal("CastExpression2","-","-","error",first,token);}
+                                                              {if (true) return productionEndTerminal("CastExpression2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[92] = jj_gen;
@@ -2474,7 +2474,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       PrimarySuffix(true);
     }
-                                                                 {if (true) return productionEndTerminal("PrimaryExpression","-","-","error",first,token);}
+                                                                 {if (true) return productionEndTerminal("PrimaryExpression","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2484,7 +2484,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(DOT);
     TypeArguments(true);
     jj_consume_token(IDENTIFIER);
-                                              {if (true) return productionEndTerminal("MemberSelector","-","-","error",first,token);}
+                                              {if (true) return productionEndTerminal("MemberSelector","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2500,27 +2500,27 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case CHARACTER_LITERAL:
     case STRING_LITERAL:
       Literal(true);
-                       {if (true) return productionEndTerminal("PrimaryPrefix1","-","-","error",first,token);}
+                       {if (true) return productionEndTerminal("PrimaryPrefix1","-","-","replacement",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("PrimaryPrefix2","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("PrimaryPrefix2","-","-","replacement",first,token);}
       break;
     case SUPER:
       jj_consume_token(SUPER);
       jj_consume_token(DOT);
       jj_consume_token(IDENTIFIER);
-                                  {if (true) return productionEndTerminal("PrimaryPrefix3","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PrimaryPrefix3","-","-","replacement",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
       Expression(true);
       jj_consume_token(RPAREN);
-                                  {if (true) return productionEndTerminal("PrimaryPrefix4","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PrimaryPrefix4","-","-","replacement",first,token);}
       break;
     case NEW:
       AllocationExpression(true);
-                                    {if (true) return productionEndTerminal("PrimaryPrefix5","-","-","error",first,token);}
+                                    {if (true) return productionEndTerminal("PrimaryPrefix5","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[93] = jj_gen;
@@ -2528,12 +2528,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         ResultType(true);
         jj_consume_token(DOT);
         jj_consume_token(CLASS);
-                                                                           {if (true) return productionEndTerminal("PrimaryPrefix6","-","-","error",first,token);}
+                                                                           {if (true) return productionEndTerminal("PrimaryPrefix6","-","-","replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
           Name(true);
-                    {if (true) return productionEndTerminal("PrimaryPrefix7","-","-","error",first,token);}
+                    {if (true) return productionEndTerminal("PrimaryPrefix7","-","-","replacement",first,token);}
           break;
         default:
           jj_la1[94] = jj_gen;
@@ -2551,30 +2551,30 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     if (jj_2_33(2)) {
       jj_consume_token(DOT);
       jj_consume_token(THIS);
-                                  {if (true) return productionEndTerminal("PrimarySuffix1","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PrimarySuffix1","-","-","replacement",first,token);}
     } else if (jj_2_34(2)) {
       jj_consume_token(DOT);
       AllocationExpression(true);
-                                                     {if (true) return productionEndTerminal("PrimarySuffix2","-","-","error",first,token);}
+                                                     {if (true) return productionEndTerminal("PrimarySuffix2","-","-","replacement",first,token);}
     } else if (jj_2_35(3)) {
       MemberSelector(true);
-                                           {if (true) return productionEndTerminal("PrimarySuffix3","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("PrimarySuffix3","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACKET:
         jj_consume_token(LBRACKET);
         Expression(true);
         jj_consume_token(RBRACKET);
-                                  {if (true) return productionEndTerminal("PrimarySuffix4","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PrimarySuffix4","-","-","replacement",first,token);}
         break;
       case DOT:
         jj_consume_token(DOT);
         jj_consume_token(IDENTIFIER);
-                          {if (true) return productionEndTerminal("PrimarySuffix5","-","-","error",first,token);}
+                          {if (true) return productionEndTerminal("PrimarySuffix5","-","-","replacement",first,token);}
         break;
       case LPAREN:
         Arguments(true);
-                         {if (true) return productionEndTerminal("PrimarySuffix6","-","-","error",first,token);}
+                         {if (true) return productionEndTerminal("PrimarySuffix6","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[95] = jj_gen;
@@ -2591,28 +2591,28 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER_LITERAL:
       jj_consume_token(INTEGER_LITERAL);
-                           {if (true) return productionEndTerminal("Literal1","-","-","error",first,token);}
+                           {if (true) return productionEndTerminal("Literal1","-","-","replacement",first,token);}
       break;
     case FLOATING_POINT_LITERAL:
       jj_consume_token(FLOATING_POINT_LITERAL);
-                                  {if (true) return productionEndTerminal("Literal2","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("Literal2","-","-","replacement",first,token);}
       break;
     case CHARACTER_LITERAL:
       jj_consume_token(CHARACTER_LITERAL);
-                             {if (true) return productionEndTerminal("Literal3","-","-","error",first,token);}
+                             {if (true) return productionEndTerminal("Literal3","-","-","replacement",first,token);}
       break;
     case STRING_LITERAL:
       jj_consume_token(STRING_LITERAL);
-                          {if (true) return productionEndTerminal("Literal4","-","-","error",first,token);}
+                          {if (true) return productionEndTerminal("Literal4","-","-","replacement",first,token);}
       break;
     case FALSE:
     case TRUE:
       BooleanLiteral(true);
-                              {if (true) return productionEndTerminal("Literal5","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Literal5","-","-","replacement",first,token);}
       break;
     case NULL:
       NullLiteral(true);
-                           {if (true) return productionEndTerminal("Literal6","-","-","error",first,token);}
+                           {if (true) return productionEndTerminal("Literal6","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[96] = jj_gen;
@@ -2628,11 +2628,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TRUE:
       jj_consume_token(TRUE);
-                 {if (true) return productionEndTerminal("BooleanLiteral1","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("BooleanLiteral1","-","-","replacement",first,token);}
       break;
     case FALSE:
       jj_consume_token(FALSE);
-                  {if (true) return productionEndTerminal("BooleanLiteral2","-","-","error",first,token);}
+                  {if (true) return productionEndTerminal("BooleanLiteral2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[97] = jj_gen;
@@ -2646,7 +2646,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                            Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(NULL);
-                 {if (true) return productionEndTerminal("NullLiteral","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("NullLiteral","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2689,7 +2689,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RPAREN);
-                                      {if (true) return productionEndTerminal("Arguments","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("Arguments","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2710,7 +2710,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       Expression(true);
     }
-                                                  {if (true) return productionEndTerminal("ArgumentList","-","-","error",first,token);}
+                                                  {if (true) return productionEndTerminal("ArgumentList","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2721,7 +2721,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(NEW);
       PrimitiveType(true);
       ArrayDimsAndInits(true);
-                                                                        {if (true) return productionEndTerminal("AllocationExpression1","-","-","error",first,token);}
+                                                                        {if (true) return productionEndTerminal("AllocationExpression1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NEW:
@@ -2736,7 +2736,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           ;
         }
         AllocationExpressionInit(true);
-                                                                                               {if (true) return productionEndTerminal("AllocationExpression2","-","-","error",first,token);}
+                                                                                               {if (true) return productionEndTerminal("AllocationExpression2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[101] = jj_gen;
@@ -2753,7 +2753,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
       ArrayDimsAndInits(true);
-                                 {if (true) return productionEndTerminal("AllocationExpressionInit1","-","-","error",first,token);}
+                                 {if (true) return productionEndTerminal("AllocationExpressionInit1","-","-","replacement",first,token);}
       break;
     case LPAREN:
       Arguments(true);
@@ -2765,7 +2765,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_la1[102] = jj_gen;
         ;
       }
-                                                      {if (true) return productionEndTerminal("AllocationExpressionInit2","-","-","error",first,token);}
+                                                      {if (true) return productionEndTerminal("AllocationExpressionInit2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[103] = jj_gen;
@@ -2803,7 +2803,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_consume_token(LBRACKET);
         jj_consume_token(RBRACKET);
       }
-                                                                                                                 {if (true) return productionEndTerminal("ArrayDimsAndInits1","-","-","error",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("ArrayDimsAndInits1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACKET:
@@ -2821,7 +2821,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           }
         }
         ArrayInitializer(true);
-                                            {if (true) return productionEndTerminal("ArrayDimsAndInits2","-","-","error",first,token);}
+                                            {if (true) return productionEndTerminal("ArrayDimsAndInits2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[105] = jj_gen;
@@ -2837,20 +2837,20 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_40(2)) {
       LabeledStatement(true);
-                                             {if (true) return productionEndTerminal("Statement1","-","-","error",first,token);}
+                                             {if (true) return productionEndTerminal("Statement1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASSERT:
         AssertStatement(true);
-                               {if (true) return productionEndTerminal("Statement2","-","-","error",first,token);}
+                               {if (true) return productionEndTerminal("Statement2","-","-","replacement",first,token);}
         break;
       case LBRACE:
         Block(true);
-                     {if (true) return productionEndTerminal("Statement3","-","-","error",first,token);}
+                     {if (true) return productionEndTerminal("Statement3","-","-","replacement",first,token);}
         break;
       case SEMICOLON:
         EmptyStatement(true);
-                              {if (true) return productionEndTerminal("Statement4","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Statement4","-","-","replacement",first,token);}
         break;
       case BOOLEAN:
       case BYTE:
@@ -2877,51 +2877,51 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       case DECR:
         StatementExpression(true);
         jj_consume_token(SEMICOLON);
-                                       {if (true) return productionEndTerminal("Statement5","-","-","error",first,token);}
+                                       {if (true) return productionEndTerminal("Statement5","-","-","replacement",first,token);}
         break;
       case SWITCH:
         SwitchStatement(true);
-                               {if (true) return productionEndTerminal("Statement6","-","-","error",first,token);}
+                               {if (true) return productionEndTerminal("Statement6","-","-","replacement",first,token);}
         break;
       case IF:
         IfStatement(true);
-                           {if (true) return productionEndTerminal("Statement7","-","-","error",first,token);}
+                           {if (true) return productionEndTerminal("Statement7","-","-","replacement",first,token);}
         break;
       case WHILE:
         WhileStatement(true);
-                              {if (true) return productionEndTerminal("Statement8","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Statement8","-","-","replacement",first,token);}
         break;
       case DO:
         DoStatement(true);
-                           {if (true) return productionEndTerminal("Statement9","-","-","error",first,token);}
+                           {if (true) return productionEndTerminal("Statement9","-","-","replacement",first,token);}
         break;
       case FOR:
         ForStatement(true);
-                            {if (true) return productionEndTerminal("Statement10","-","-","error",first,token);}
+                            {if (true) return productionEndTerminal("Statement10","-","-","replacement",first,token);}
         break;
       case BREAK:
         BreakStatement(true);
-                              {if (true) return productionEndTerminal("Statement11","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Statement11","-","-","replacement",first,token);}
         break;
       case CONTINUE:
         ContinueStatement(true);
-                                 {if (true) return productionEndTerminal("Statement12","-","-","error",first,token);}
+                                 {if (true) return productionEndTerminal("Statement12","-","-","replacement",first,token);}
         break;
       case RETURN:
         ReturnStatement(true);
-                               {if (true) return productionEndTerminal("Statement13","-","-","error",first,token);}
+                               {if (true) return productionEndTerminal("Statement13","-","-","replacement",first,token);}
         break;
       case THROW:
         ThrowStatement(true);
-                              {if (true) return productionEndTerminal("Statement14","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Statement14","-","-","replacement",first,token);}
         break;
       case SYNCHRONIZED:
         SynchronizedStatement(true);
-                                     {if (true) return productionEndTerminal("Statement15","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("Statement15","-","-","replacement",first,token);}
         break;
       case TRY:
         TryStatement(true);
-                            {if (true) return productionEndTerminal("Statement16","-","-","error",first,token);}
+                            {if (true) return productionEndTerminal("Statement16","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[106] = jj_gen;
@@ -2947,7 +2947,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                                              {if (true) return productionEndTerminal("AssertStatement","-","-","error",first,token);}
+                                                              {if (true) return productionEndTerminal("AssertStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2957,7 +2957,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(IDENTIFIER);
     jj_consume_token(COLON);
     Statement(true);
-                                          {if (true) return productionEndTerminal("LabeledStatement","-","-","error",first,token);}
+                                          {if (true) return productionEndTerminal("LabeledStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3017,7 +3017,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       BlockStatement(true);
     }
     jj_consume_token(RBRACE);
-                                         {if (true) return productionEndTerminal("Block","-","-","error",first,token);}
+                                         {if (true) return productionEndTerminal("Block","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3027,7 +3027,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     if (jj_2_41(2147483647)) {
       LocalVariableDeclaration(true);
       jj_consume_token(SEMICOLON);
-                                                                                       {if (true) return productionEndTerminal("BlockStatement1","-","-","error",first,token);}
+                                                                                       {if (true) return productionEndTerminal("BlockStatement1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASSERT:
@@ -3068,12 +3068,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       case INCR:
       case DECR:
         Statement(true);
-                         {if (true) return productionEndTerminal("BlockStatement2","-","-","error",first,token);}
+                         {if (true) return productionEndTerminal("BlockStatement2","-","-","replacement",first,token);}
         break;
       case CLASS:
       case INTERFACE:
         ClassOrInterfaceDeclaration(true);
-                                           {if (true) return productionEndTerminal("BlockStatement3","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("BlockStatement3","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[109] = jj_gen;
@@ -3110,7 +3110,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       VariableDeclarator(true);
     }
-                                                                                        {if (true) return productionEndTerminal("LocalVariableDeclaration","-","-","error",first,token);}
+                                                                                        {if (true) return productionEndTerminal("LocalVariableDeclaration","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3118,7 +3118,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                               Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SEMICOLON);
-              {if (true) return productionEndTerminal("EmptyStatement","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("EmptyStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3128,11 +3128,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
       PreIncrementExpression(true);
-                                      {if (true) return productionEndTerminal("StatementExpression1","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("StatementExpression1","-","-","replacement",first,token);}
       break;
     case DECR:
       PreDecrementExpression(true);
-                                      {if (true) return productionEndTerminal("StatementExpression2","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("StatementExpression2","-","-","replacement",first,token);}
       break;
     case BOOLEAN:
     case BYTE:
@@ -3177,7 +3177,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_la1[112] = jj_gen;
         ;
       }
-                                                                       {if (true) return productionEndTerminal("StatementExpression3","-","-","error",first,token);}
+                                                                       {if (true) return productionEndTerminal("StatementExpression3","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[113] = jj_gen;
@@ -3193,11 +3193,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
       jj_consume_token(INCR);
-               {if (true) return productionEndTerminal("StatementExpressionAssignment1","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("StatementExpressionAssignment1","-","-","replacement",first,token);}
       break;
     case DECR:
       jj_consume_token(DECR);
-               {if (true) return productionEndTerminal("StatementExpressionAssignment2","-","-","error",first,token);}
+               {if (true) return productionEndTerminal("StatementExpressionAssignment2","-","-","replacement",first,token);}
       break;
     case ASSIGN:
     case PLUSASSIGN:
@@ -3213,7 +3213,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case RUNSIGNEDSHIFTASSIGN:
       AssignmentOperator(true);
       Expression(true);
-                                                   {if (true) return productionEndTerminal("StatementExpressionAssignment3","-","-","error",first,token);}
+                                                   {if (true) return productionEndTerminal("StatementExpressionAssignment3","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[114] = jj_gen;
@@ -3245,7 +3245,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       SwitchStatementLabel(true);
     }
     jj_consume_token(RBRACE);
-                                                                                 {if (true) return productionEndTerminal("SwitchStatement","-","-","error",first,token);}
+                                                                                 {if (true) return productionEndTerminal("SwitchStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3304,7 +3304,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       BlockStatement(true);
     }
-                                                   {if (true) return productionEndTerminal("SwitchStatementLabel","-","-","error",first,token);}
+                                                   {if (true) return productionEndTerminal("SwitchStatementLabel","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3316,12 +3316,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(CASE);
       Expression(true);
       jj_consume_token(COLON);
-                                     {if (true) return productionEndTerminal("SwitchLabel1","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("SwitchLabel1","-","-","replacement",first,token);}
       break;
     case _DEFAULT:
       jj_consume_token(_DEFAULT);
       jj_consume_token(COLON);
-                        {if (true) return productionEndTerminal("SwitchLabel2","-","-","error",first,token);}
+                        {if (true) return productionEndTerminal("SwitchLabel2","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[117] = jj_gen;
@@ -3348,7 +3348,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_la1[118] = jj_gen;
       ;
     }
-                                                                                             {if (true) return productionEndTerminal("IfStatement","-","-","error",first,token);}
+                                                                                             {if (true) return productionEndTerminal("IfStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3360,7 +3360,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     Expression(true);
     jj_consume_token(RPAREN);
     Statement(true);
-                                                          {if (true) return productionEndTerminal("WhileStatement","-","-","error",first,token);}
+                                                          {if (true) return productionEndTerminal("WhileStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3374,7 +3374,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     Expression(true);
     jj_consume_token(RPAREN);
     jj_consume_token(SEMICOLON);
-                                                                   {if (true) return productionEndTerminal("DoStatement","-","-","error",first,token);}
+                                                                   {if (true) return productionEndTerminal("DoStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3386,7 +3386,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     ForStatementInternal(true);
     jj_consume_token(RPAREN);
     Statement(true);
-                                                                  {if (true) return productionEndTerminal("ForStatement","-","-","error",first,token);}
+                                                                  {if (true) return productionEndTerminal("ForStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3398,7 +3398,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(IDENTIFIER);
       jj_consume_token(COLON);
       Expression(true);
-                                                                                         {if (true) return productionEndTerminal("ForStatementInternal1","-","-","error",first,token);}
+                                                                                         {if (true) return productionEndTerminal("ForStatementInternal1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -3523,7 +3523,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           jj_la1[121] = jj_gen;
           ;
         }
-                                                                      {if (true) return productionEndTerminal("ForStatementInternal2","-","-","error",first,token);}
+                                                                      {if (true) return productionEndTerminal("ForStatementInternal2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[122] = jj_gen;
@@ -3539,7 +3539,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_43(2147483647)) {
       LocalVariableDeclaration(true);
-                                                                                   {if (true) return productionEndTerminal("ForInit1","-","-","error",first,token);}
+                                                                                   {if (true) return productionEndTerminal("ForInit1","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -3566,7 +3566,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       case INCR:
       case DECR:
         StatementExpressionList(true);
-                                       {if (true) return productionEndTerminal("ForInit2","-","-","error",first,token);}
+                                       {if (true) return productionEndTerminal("ForInit2","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[123] = jj_gen;
@@ -3594,7 +3594,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       StatementExpression(true);
     }
-                                                                    {if (true) return productionEndTerminal("StatementExpressionList","-","-","error",first,token);}
+                                                                    {if (true) return productionEndTerminal("StatementExpressionList","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3602,7 +3602,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                          Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     StatementExpressionList(true);
-                                       {if (true) return productionEndTerminal("ForUpdate","-","-","error",first,token);}
+                                       {if (true) return productionEndTerminal("ForUpdate","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3619,7 +3619,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                    {if (true) return productionEndTerminal("BreakStatement","-","-","error",first,token);}
+                                    {if (true) return productionEndTerminal("BreakStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3636,7 +3636,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                       {if (true) return productionEndTerminal("ContinueStatement","-","-","error",first,token);}
+                                       {if (true) return productionEndTerminal("ContinueStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3679,7 +3679,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                         {if (true) return productionEndTerminal("ReturnStatement","-","-","error",first,token);}
+                                         {if (true) return productionEndTerminal("ReturnStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3689,7 +3689,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(THROW);
     Expression(true);
     jj_consume_token(SEMICOLON);
-                                      {if (true) return productionEndTerminal("ThrowStatement","-","-","error",first,token);}
+                                      {if (true) return productionEndTerminal("ThrowStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3701,7 +3701,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     Expression(true);
     jj_consume_token(RPAREN);
     Block(true);
-                                                             {if (true) return productionEndTerminal("SynchronizedStatement","-","-","error",first,token);}
+                                                             {if (true) return productionEndTerminal("SynchronizedStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3711,7 +3711,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(TRY);
     Block(true);
     TryStatementEnd(true);
-                                                 {if (true) return productionEndTerminal("TryStatement","-","-","error",first,token);}
+                                                 {if (true) return productionEndTerminal("TryStatement","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3732,12 +3732,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           break label_48;
         }
       }
-                             {if (true) return productionEndTerminal("TryStatementEnd1","-","-","error",first,token);}
+                             {if (true) return productionEndTerminal("TryStatementEnd1","-","-","replacement",first,token);}
       break;
     case FINALLY:
       jj_consume_token(FINALLY);
       Block(true);
-                               {if (true) return productionEndTerminal("FinallyBlock","-","-","error",first,token);}
+                               {if (true) return productionEndTerminal("FinallyBlock","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[129] = jj_gen;
@@ -3755,7 +3755,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     FormalParameter(true);
     jj_consume_token(RPAREN);
     Block(true);
-                                                           {if (true) return productionEndTerminal("CatchBlock","-","-","error",first,token);}
+                                                           {if (true) return productionEndTerminal("CatchBlock","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3764,15 +3764,15 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_44(2147483647)) {
       NormalAnnotation(true);
-                                                                                     {if (true) return productionEndTerminal("Annotation1","-","-","error",first,token);}
+                                                                                     {if (true) return productionEndTerminal("Annotation1","-","-","replacement",first,token);}
     } else if (jj_2_45(2147483647)) {
       SingleMemberAnnotation(true);
-                                                                {if (true) return productionEndTerminal("Annotation2","-","-","error",first,token);}
+                                                                {if (true) return productionEndTerminal("Annotation2","-","-","replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case AT:
         MarkerAnnotation(true);
-                                {if (true) return productionEndTerminal("Annotation3","-","-","error",first,token);}
+                                {if (true) return productionEndTerminal("Annotation3","-","-","replacement",first,token);}
         break;
       default:
         jj_la1[130] = jj_gen;
@@ -3798,7 +3798,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RPAREN);
-                                                         {if (true) return productionEndTerminal("NormalAnnotation","-","-","error",first,token);}
+                                                         {if (true) return productionEndTerminal("NormalAnnotation","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3807,7 +3807,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(AT);
     Name(true);
-                        {if (true) return productionEndTerminal("MarkerAnnotation","-","-","error",first,token);}
+                        {if (true) return productionEndTerminal("MarkerAnnotation","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3819,7 +3819,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(LPAREN);
     MemberValue(true);
     jj_consume_token(RPAREN);
-                                                  {if (true) return productionEndTerminal("SingleMemberAnnotation","-","-","error",first,token);}
+                                                  {if (true) return productionEndTerminal("SingleMemberAnnotation","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3840,7 +3840,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(COMMA);
       MemberValuePair(true);
     }
-                                                            {if (true) return productionEndTerminal("MemberValuePairs","-","-","error",first,token);}
+                                                            {if (true) return productionEndTerminal("MemberValuePairs","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3850,7 +3850,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_consume_token(IDENTIFIER);
     jj_consume_token(ASSIGN);
     MemberValue(true);
-                                            {if (true) return productionEndTerminal("MemberValuePair","-","-","error",first,token);}
+                                            {if (true) return productionEndTerminal("MemberValuePair","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3860,11 +3860,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case AT:
       Annotation(true);
-                          {if (true) return productionEndTerminal("MemberValue1","-","-","error",first,token);}
+                          {if (true) return productionEndTerminal("MemberValue1","-","-","replacement",first,token);}
       break;
     case LBRACE:
       MemberValueArrayInitializer(true);
-                                           {if (true) return productionEndTerminal("MemberValue2","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("MemberValue2","-","-","replacement",first,token);}
       break;
     case BOOLEAN:
     case BYTE:
@@ -3894,7 +3894,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     case PLUS:
     case MINUS:
       ConditionalExpression(true);
-                                     {if (true) return productionEndTerminal("MemberValue3","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("MemberValue3","-","-","replacement",first,token);}
       break;
     default:
       jj_la1[133] = jj_gen;
@@ -3928,7 +3928,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       ;
     }
     jj_consume_token(RBRACE);
-                                                                                {if (true) return productionEndTerminal("MemberValueArrayInitializer","-","-","error",first,token);}
+                                                                                {if (true) return productionEndTerminal("MemberValueArrayInitializer","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3973,7 +3973,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       AnnotationTypeMemberDeclaration(true);
     }
     jj_consume_token(RBRACE);
-                                                          {if (true) return productionEndTerminal("AnnotationTypeBody","-","-","error",first,token);}
+                                                          {if (true) return productionEndTerminal("AnnotationTypeBody","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3996,7 +3996,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         ;
       }
       jj_consume_token(SEMICOLON);
-                                                                                                                                                                               {if (true) return productionEndTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","error",first,token);}
+                                                                                                                                                                               {if (true) return productionEndTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
     } else if (jj_2_48(2147483647)) {
       Modifiers(inTerminal);
       jj_consume_token(AT);
@@ -4192,11 +4192,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
             Modifiers(true);
             n = FieldDeclaration(true);
                                                                replaceName("FieldDeclaration",n);
-                                                                                                    {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","error",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","replacement",first,token);}
             break;
           case SEMICOLON:
             jj_consume_token(SEMICOLON);
-              {if (true) return productionEndTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}","error",first,token);}
+              {if (true) return productionEndTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}","replacement",first,token);}
             break;
           default:
             jj_la1[146] = jj_gen;
@@ -4214,7 +4214,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_DEFAULT);
     MemberValue(true);
-                                     {if (true) return productionEndTerminal("DefaultValue","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("DefaultValue","-","-","replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
