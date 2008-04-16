@@ -4,7 +4,10 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import composer.rules.Overriding;
+import composer.rules.ConstructorConcatenation;
+import composer.rules.ImplementsListMerging;
+import composer.rules.StringConcatenation;
+import composer.rules.MethodOverriding;
 
 import builder.java.JavaBuilder;
 import printer.FeaturePrintVisitor;
@@ -25,8 +28,6 @@ public class FSTGenComposer {
 		try {
 			fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
 			LinkedList<FSTNonTerminal> features = javaBuilder.getFeatures();
-			//for(FSTNonTerminal node : features)
-			//	System.err.println(node.toString());
 			FSTNode composition = compose(features);
 			
 			String outputDir = cmd.equationBaseDirectoryName;
@@ -91,15 +92,20 @@ public class FSTGenComposer {
 				
 				if(terminalA.getBody().length() > 0 && terminalB.getBody().length() > 0 && !terminalA.getBody().equals(terminalB.getBody())) {
 					
-					if(terminalA.getCompositionMechanism().equals("replacement")) {
+					if(terminalA.getCompositionMechanism().equals("Replacement")) {
 						System.out.println("Terminal replacement: " + terminalA.toString() + " replaces " + terminalB.toString());
-					} else if(terminalA.getCompositionMechanism().equals("concatenation")) {
-						
-					} else if(terminalA.getCompositionMechanism().equals("overriding")) {
-						System.out.println("Terminal overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
-						new Overriding().compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else if(terminalA.getCompositionMechanism().equals("warning")) {
-						System.out.println("Warning: terminal replacement: " + terminalB.toString() + " replaces " + terminalA.toString());
+					} else if(terminalA.getCompositionMechanism().equals("StringConcatenation")) {
+						System.out.println("Terminal concatenation: " + terminalA.toString() + " is concatenated to " + terminalB.toString());
+						new StringConcatenation().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					} else if(terminalA.getCompositionMechanism().equals("ImplementsListMerging")) {
+						System.out.println("Implements list merging: " + terminalA.toString() + " extends " + terminalB.toString());
+						new ImplementsListMerging().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					} else if(terminalA.getCompositionMechanism().equals("MethodOverriding")) {
+						System.out.println("Method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
+						new MethodOverriding().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					} else if(terminalA.getCompositionMechanism().equals("ConstructorConcatenation")) {
+						System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
+						new ConstructorConcatenation().compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else {
 						System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
 					}

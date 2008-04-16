@@ -21,7 +21,9 @@ public class FeaturePrintVisitor {
 	}
 	
 	public void visit(FSTNonTerminal nonterminal) throws FileNotFoundException {
-		if (nonterminal.getType().equals("JavaFile")) {
+		if(nonterminal == null) {
+			System.err.println("Nonterminal with null value encountered");
+		} else if (nonterminal.getType().equals("JavaFile")) {
 			for(FSTNode child : nonterminal.getChildren()) {
 				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
 				SimplePrintVisitor javaVisitor = new SimplePrintVisitor(new PrintStream(fileName));

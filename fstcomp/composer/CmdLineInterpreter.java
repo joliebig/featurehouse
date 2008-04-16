@@ -3,7 +3,6 @@ package composer;
 
 import java.io.File;
 
-
 public class CmdLineInterpreter {
 	
 	public static final String INPUT_OPTION_EQUATIONFILE = "--expression";
