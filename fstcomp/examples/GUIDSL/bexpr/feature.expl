@@ -1,0 +1,30 @@
+This is a set of classes that will translate arbitrary propositional
+logic predicates into conjunctive normal form (CNF)
+
+Please note that although transation into CNF is possible, there
+may be disjunctive clauses that are always satisfied (i.e., A v -A v ...).
+At present, no such clauses are generated (to my knowledge).
+
+The boolean operators all have 2 parameters, except negation:
+
+* and
+* or
+* not
+* implies
+* iff
+* onlyone  (note: onlyone( a, onlyone(b,c)) is the same as
+  choose1( a, b, c ).
+
+A boolean expression is constructed by composing and, or, ... 
+objects with terminals (term.jak).  There are 2 test programs, 
+test and test2.  Look at them to see how expressions are constructed.
+
+Given a boolean expression in an internal form, you can:
+
+* toString() -- convert the expression into a string (for printing)
+* simplify() -- reduce the expression to only and, or, and not operations
+* cnf() -- convert a simplified expression into CNF
+* cnf2String() -- convert a CNF expression into a printable string
+
+You might want to start with file node.jak, which defines the
+root of a hierarchy, of which and.jak, or.jak, etc. belong.

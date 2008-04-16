@@ -1,16 +1,13 @@
 package composer.rules;
 
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
-
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class ImplementsListMerging implements CompositionRule {
+public class ImplementsListMerging {
 
-	public void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		String interfaceListA = terminalA.getBody().replaceFirst("implements", ", ");
 		String interfaceListB = terminalB.getBody().replaceFirst("implements", ", ");
 		String concatenatedList = interfaceListB + interfaceListA;

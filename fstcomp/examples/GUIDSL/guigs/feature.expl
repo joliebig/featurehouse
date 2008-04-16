@@ -1,0 +1,75 @@
+The guigs layer does the work of traversing a gspec database and
+creating a panel hierarchy that is displayed in the Swing application Gui.jak.
+
+I could have defined a visitor to walk the different types of gspec
+objects, but found it easier to add a draw method to every gspec
+class directly.
+
+The idea is to invoke draw() on the root production; it will return
+a nested set of panels that defines the nesting defined in the
+grammar.  draw is recursive, and walks productions, patterns, collecting
+and stiching together panels in a hopefully obvious way.
+the parameter of draw is a boolean called "several" -- the idea
+is if several=true, this means that the panel will contain a set
+of checkboxes, where 0 or more could be selected.  if several=false,
+then radio buttons are used, where precisely ONE option should be
+selected.
+
+In addition, the enterGspec visitor is extended, so that now options
+("hidden" or "disp=<string>") are processed.  Hidden means don't
+show the generated panel -- actually hidden panels should never be
+generated.  the "disp" option specifies the string for this variable
+that is to be displayed in the GUI.
+
+Gui.jak is the gui program, which is what you see when you run
+guidsl.
+
+propcons.jak is extended, to make sure that display strings are
+added to their corresponding variables.
+
+Here are a set of things that still need to be done;
+
+(1) there needs to be a new annotation for "tab" -- instead of generating
+one humongous GUI panel, a set of overlapping tabbed panels could be
+shown, reducing the size of the ultimate GUI panel.
+
+(2) the GUI must keep a list of user-defined selections 
+(grammar.UserSelections).  When a variable is deselected, then 
+this variable is removed the list of selections.  THIS LIST IS 
+CRITICAL -- as the LTMS will need it to propagate changes.
+Note: although the variable UserSelections was defined in LTMS,
+the GUI layer will maintain the value of this list.
+
+(3) Once the LTMS has been called, the values of all GUI checkboxes
+and radio buttons must be updated.  This should be a simple procedure
+by which one iterates through the list of all variables (that can
+be done now!) and checks to see if there is a widget associated
+with the variable.  If so, if it is a settable widget, then its
+value is set.
+
+(4) There is a Swing class called ButtonGroup which makes sure
+that only one button (radiobutton or checkbox) is selected at
+a time.  We need a generalization of this, called ChooseGroup(n,m).
+n is the smallest# of buttons that can be simultaneously selected,
+m is the largest #.  The way it will work is that ChooseGroup
+will need to maintain a list of up to m buttons.  When the m+1
+(unique) button is selected, the very first button in the list
+is deselected.  deleting the nth button will not be permitted
+(once there is an nth button).
+
+(5) using the ChooseGroup, all buttons/options on a panel will
+need to be unified so that selecting options within a panel
+will be coordinated.  (They are not right now).
+
+(6) there will need to be a new panel (added to GUI.jak)
+that will display either an explanation of a feature or 
+an explanation of why a feature was selected.  I think that
+we could have the GUI running in modes, where an explanation
+mode will display the meaning of features (which would require
+YET another variable option to be added), or it would shown
+an explanation for why a variable is set or not set.  Such
+explanations would come from the LTMS.
+
+(7) of course, eventually we will have to output something, so
+a toolbar or menu will need to be added.  This will need to be
+designed.

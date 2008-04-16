@@ -1,0 +1,3 @@
+This layer contains a parser for a satisfiability file specification.
+The output of a parse is a SATTest object, which contains the contents
+of the file.

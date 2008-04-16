@@ -8,30 +8,29 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
-
-import builder.ArtifactBuilder;
+import builder.ArtifactBuilderInterface;
 
 public class FileLoader {
 
-  private LinkedList<ArtifactBuilder> builderList;
+  private LinkedList<ArtifactBuilderInterface> builderList;
 
   private MyFileFilter fileFilter = new MyFileFilter();
 
   private DirectoryFileFilter directoryFileFilter = new DirectoryFileFilter();
 
   public FileLoader() {
-    builderList = new LinkedList<ArtifactBuilder>();
+    builderList = new LinkedList<ArtifactBuilderInterface>();
   }
 
-  public void registerArtifactBuilder(ArtifactBuilder builder) {
+  public void registerArtifactBuilder(ArtifactBuilderInterface builder) {
     builderList.add(builder);
   }
 
-  public void unregisterArtifactBuilder(ArtifactBuilder builder) {
+  public void unregisterArtifactBuilder(ArtifactBuilderInterface builder) {
     builderList.remove(builder);
   }
 
-  public LinkedList<ArtifactBuilder> getArtifactBuilders() {
+  public LinkedList<ArtifactBuilderInterface> getArtifactBuilders() {
     return builderList;
   }
 
@@ -68,7 +67,7 @@ public class FileLoader {
       // features = equationFileContent.split(" ");
       // }
       // System.out.println("BaseDirectory: " + baseDirectoryName);
-      Iterator<ArtifactBuilder> iterator = builderList.iterator();
+      Iterator<ArtifactBuilderInterface> iterator = builderList.iterator();
       if (!equationBaseDirectoryName.trim().endsWith("" + File.separatorChar)) {
         equationBaseDirectoryName = equationBaseDirectoryName.trim()
             + File.separatorChar;
@@ -91,9 +90,9 @@ public class FileLoader {
       File[] files = directory.listFiles(fileFilter);
       if (files != null) {
         for (int i = 0; i < files.length; i++) {
-          Iterator<ArtifactBuilder> iterator = builderList.iterator();
+          Iterator<ArtifactBuilderInterface> iterator = builderList.iterator();
           while (iterator.hasNext()) {
-            ArtifactBuilder builder = iterator.next();
+            ArtifactBuilderInterface builder = iterator.next();
             if (builder.acceptFile(files[i])) {
               builder.processFile(files[i]);
             }
@@ -110,9 +109,9 @@ public class FileLoader {
       File[] files = directory.listFiles(fileFilter);
       if (files != null) {
         for (int i = 0; i < files.length; i++) {
-          Iterator<ArtifactBuilder> iterator = builderList.iterator();
+          Iterator<ArtifactBuilderInterface> iterator = builderList.iterator();
           while (iterator.hasNext()) {
-            ArtifactBuilder builder = iterator.next();
+            ArtifactBuilderInterface builder = iterator.next();
             if (builder.acceptFile(files[i])) {
               builder.processFile(files[i]);
             }

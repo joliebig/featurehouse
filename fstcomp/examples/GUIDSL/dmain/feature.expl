@@ -1,0 +1,22 @@
+The files in this directory/feature add a Main class and 
+extentions to the AST class hierarchy produced in the dgram layer.
+
+Specifically, to the root classes AstNode (and anything starting with "Ast")
+of this hierarchy are added a method called harvest( Visitor v).
+Invoking this method on the root of an AST, will traverse each
+node of the tree, and at each node n, invoke the v.action(this)
+method.
+
+So, if you need to traverse the AST to collect some information,
+You need to write a class that implements the Visitor.jak interface,
+which is a set of action methods, one per class in the AST inheritance
+hierarchy.  Each action encapsulates a task that is to be performed
+on nodes of the designated type.  E.g. action(Strlit x) is the action
+to be performed when a Strlit node is encountered.
+
+The only code that is subject to editing at this point in this
+layer is Main.jak.  The rest of the files are boilerplate, and 
+shouldn't be modified.  If you want to create an actual visitor
+class, you do so in another layer.  An example of this is layer fillgs.
+
+The next layer to consider is gspec.

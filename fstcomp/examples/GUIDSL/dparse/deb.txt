@@ -1,0 +1,7 @@
+#true t3
+#end
+
+#file debug.txt
+
+#false t4
+#end

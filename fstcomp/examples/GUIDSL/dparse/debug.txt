@@ -1,0 +1,19 @@
+#true t1
+# this is a comment
+alpha beta gamma
+delta
+#end
+
+#false t2
+delta gamma
+#end
+
+#false t3
+# comments
+don 
+batory
+alex
+# comment
+#end
+
+

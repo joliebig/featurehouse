@@ -8,7 +8,7 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 
-public class FeaturePrintVisitor {
+public class FeaturePrintVisitor implements PrintVisitorInterface {
 	private String workingDir;
 	private String expressionName;
 	private File featurePath;
@@ -20,15 +20,21 @@ public class FeaturePrintVisitor {
 		this.expressionName = expressionName;
 	}
 	
-	public void visit(FSTNonTerminal nonterminal) throws FileNotFoundException {
+	public void visit(FSTNonTerminal nonterminal) throws PrintVisitorException {
 		if(nonterminal == null) {
 			System.err.println("Nonterminal with null value encountered");
 		} else if (nonterminal.getType().equals("JavaFile")) {
 			for(FSTNode child : nonterminal.getChildren()) {
 				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
-				SimplePrintVisitor javaVisitor = new SimplePrintVisitor(new PrintStream(fileName));
-				javaVisitor.visit((FSTNonTerminal)child);
-				javaVisitor.getResult();
+				
+				SimplePrintVisitor javaVisitor;
+				try {
+					javaVisitor = new SimplePrintVisitor(new PrintStream(fileName));
+					javaVisitor.visit((FSTNonTerminal)child);
+					javaVisitor.getResult();
+				} catch (FileNotFoundException e) {
+					throw new PrintVisitorException(e.getMessage());
+				}
 			}
 			
 		} else if(nonterminal.getType().equals("Feature")) {

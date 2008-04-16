@@ -11,6 +11,7 @@ import composer.rules.MethodOverriding;
 
 import builder.java.JavaBuilder;
 import printer.FeaturePrintVisitor;
+import printer.PrintVisitorException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -35,9 +36,12 @@ public class FSTGenComposer {
 				outputDir=cmd.outputDirectoryName;
 			FeaturePrintVisitor featurePrintVisitor = new FeaturePrintVisitor(outputDir, cmd.equationFileName);
 			featurePrintVisitor.visit((FSTNonTerminal)composition);
+		} catch (PrintVisitorException e) {
+			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	private static FSTNode compose(List<FSTNonTerminal> tl) {
@@ -96,16 +100,16 @@ public class FSTGenComposer {
 						System.out.println("Terminal replacement: " + terminalA.toString() + " replaces " + terminalB.toString());
 					} else if(terminalA.getCompositionMechanism().equals("StringConcatenation")) {
 						System.out.println("Terminal concatenation: " + terminalA.toString() + " is concatenated to " + terminalB.toString());
-						new StringConcatenation().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+						StringConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else if(terminalA.getCompositionMechanism().equals("ImplementsListMerging")) {
 						System.out.println("Implements list merging: " + terminalA.toString() + " extends " + terminalB.toString());
-						new ImplementsListMerging().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+						ImplementsListMerging.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else if(terminalA.getCompositionMechanism().equals("MethodOverriding")) {
 						System.out.println("Method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
-						new MethodOverriding().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+						MethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else if(terminalA.getCompositionMechanism().equals("ConstructorConcatenation")) {
 						System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
-						new ConstructorConcatenation().compose(terminalA, terminalB, terminalComp, nonterminalParent);
+						ConstructorConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else {
 						System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
 					}

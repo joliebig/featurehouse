@@ -6,25 +6,37 @@ import java.util.StringTokenizer;
 import de.ovgu.cide.fstgen.ast.FSTFeatureNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
-public abstract class ArtifactBuilder {
+public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 
   private String baseDirectoryName;
 
   private LinkedList<FSTNonTerminal> featureNodes= new LinkedList<FSTNonTerminal>();
   
-  public abstract boolean acceptFile(File inputFile);
+  /* (non-Javadoc)
+ * @see builder.ArtifactBuilderInterface#acceptFile(java.io.File)
+ */
+public abstract boolean acceptFile(File inputFile);
 
-  public LinkedList<FSTNonTerminal> getFeatures() {
+  /* (non-Javadoc)
+ * @see builder.ArtifactBuilderInterface#getFeatures()
+ */
+public LinkedList<FSTNonTerminal> getFeatures() {
 	return featureNodes;
   }
 
   public abstract void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException;
   
-  public void setBaseDirectoryName(String baseDirectoryName) {
+  /* (non-Javadoc)
+ * @see builder.ArtifactBuilderInterface#setBaseDirectoryName(java.lang.String)
+ */
+public void setBaseDirectoryName(String baseDirectoryName) {
     this.baseDirectoryName = baseDirectoryName;
   }
 
-  public String getBaseDirectoryName() {
+  /* (non-Javadoc)
+ * @see builder.ArtifactBuilderInterface#getBaseDirectoryName()
+ */
+public String getBaseDirectoryName() {
     return this.baseDirectoryName;
   }
   
@@ -43,7 +55,10 @@ public abstract class ArtifactBuilder {
 		return newFeatureNode;
 	}
 
-  public void processFile(File inputFile) throws FileNotFoundException {
+  /* (non-Javadoc)
+ * @see builder.ArtifactBuilderInterface#processFile(java.io.File)
+ */
+public void processFile(File inputFile) throws FileNotFoundException {
 	  System.out.println("processing: " + inputFile.getPath());
 	  FSTNonTerminal parent = null;
 	  StringTokenizer st = new StringTokenizer(inputFile.getPath(), File.separator);

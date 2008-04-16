@@ -1,0 +1,1 @@
+cd guidsl && javac -cp .:../../Jakarta/jakarta.jar:../../Jakarta/jdom.jar:../../Jakarta/sat4j.jar defaultpackage/*.java && cd ..

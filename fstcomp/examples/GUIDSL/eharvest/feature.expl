@@ -1,0 +1,5 @@
+Besides a model grammar, there are additional predicates
+that can be defined in a .m file.  This layer harvests these
+predicates and converts them into node expressions.  The
+set of these expressions (or formulas) are stored in a CTable
+(constraints table).

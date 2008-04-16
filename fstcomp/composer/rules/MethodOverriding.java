@@ -4,9 +4,9 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class MethodOverriding implements CompositionRule {
+public class MethodOverriding {
 
-	public void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		FSTTerminal terminalComp2 = (FSTTerminal)terminalB.getDeepClone();
 		nonterminalParent.addChild(terminalComp2);
 		
