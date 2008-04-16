@@ -418,6 +418,7 @@ ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
 ;
 
+@FSTTerminal(compose="ImplementsListMerging")
 ImplementsList:
    "implements" &LI ClassOrInterfaceType  ( "," &LI ClassOrInterfaceType )*
 ;
@@ -475,7 +476,7 @@ ClassOrInterfaceBodyDeclaration:
   	LOOK_AHEAD("Modifiers() \"enum\"")
   	Modifiers EnumDeclaration :: InnerEnumDecl
 |
-  	@FSTTerminal(name="{<IDENTIFIER>}")
+  	@FSTTerminal(name="{<IDENTIFIER>}",compose="ConstructorConcatenation")
     LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
 	Modifiers ConstructorDeclaration :: ConstructorDecl
 |
@@ -483,7 +484,7 @@ ClassOrInterfaceBodyDeclaration:
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers FieldDeclaration :: FieldDecl
 |
-  	@FSTTerminal(name="{MethodDeclaration}",compose="overriding")
+  	@FSTTerminal(name="{MethodDeclaration}",compose="MethodOverriding")
 	LOOK_AHEAD(2)
   	Modifiers MethodDeclaration :: MethodDecl
 |

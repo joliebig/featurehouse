@@ -323,65 +323,65 @@ String CompilationUnit(boolean inTerminal) : { Token first=null,t;String n;
 
 String PackageDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"package" Name(true) ";" {return productionEndTerminal("PackageDeclaration","-","-","replacement",first,token);}
+	"package" Name(true) ";" {return productionEndTerminal("PackageDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
 String ImportDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["static" ] n=Name(true){ replaceName("Name",n);} [n=ImportPackage(true){ replaceName("ImportPackage",n);}] ";" {return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","replacement",first,token);}
+	"import" ["static" ] n=Name(true){ replaceName("Name",n);} [n=ImportPackage(true){ replaceName("ImportPackage",n);}] ";" {return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement",first,token);}
 
  )  }
 
 String ImportPackage(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	 "." "*" {return productionEndTerminal("ImportPackage","-",".*","replacement",first,token);}
+	 "." "*" {return productionEndTerminal("ImportPackage","-",".*","Replacement",first,token);}
 
  )  }
 
 String Modifiers(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(LOOKAHEAD(2) Modifier(true))* {return productionEndTerminal("Modifiers","-","-","replacement",first,token);}
+	(LOOKAHEAD(2) Modifier(true))* {return productionEndTerminal("Modifiers","-","-","Replacement",first,token);}
 
  )  }
 
 String Modifier(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"public"  {return productionEndTerminal("Modifier1","-","-","replacement",first,token);}
+	"public"  {return productionEndTerminal("Modifier1","-","-","Replacement",first,token);}
  |
-	"static"  {return productionEndTerminal("Modifier2","-","-","replacement",first,token);}
+	"static"  {return productionEndTerminal("Modifier2","-","-","Replacement",first,token);}
  |
-	"protected"  {return productionEndTerminal("Modifier3","-","-","replacement",first,token);}
+	"protected"  {return productionEndTerminal("Modifier3","-","-","Replacement",first,token);}
  |
-	"private"  {return productionEndTerminal("Modifier4","-","-","replacement",first,token);}
+	"private"  {return productionEndTerminal("Modifier4","-","-","Replacement",first,token);}
  |
-	"final"  {return productionEndTerminal("Modifier5","-","-","replacement",first,token);}
+	"final"  {return productionEndTerminal("Modifier5","-","-","Replacement",first,token);}
  |
-	"abstract"  {return productionEndTerminal("Modifier6","-","-","replacement",first,token);}
+	"abstract"  {return productionEndTerminal("Modifier6","-","-","Replacement",first,token);}
  |
-	"synchronized"  {return productionEndTerminal("Modifier7","-","-","replacement",first,token);}
+	"synchronized"  {return productionEndTerminal("Modifier7","-","-","Replacement",first,token);}
  |
-	"native"  {return productionEndTerminal("Modifier8","-","-","replacement",first,token);}
+	"native"  {return productionEndTerminal("Modifier8","-","-","Replacement",first,token);}
  |
-	"transient"  {return productionEndTerminal("Modifier9","-","-","replacement",first,token);}
+	"transient"  {return productionEndTerminal("Modifier9","-","-","Replacement",first,token);}
  |
-	"volatile"  {return productionEndTerminal("Modifier10","-","-","replacement",first,token);}
+	"volatile"  {return productionEndTerminal("Modifier10","-","-","Replacement",first,token);}
  |
-	"strictfp"  {return productionEndTerminal("Modifier11","-","-","replacement",first,token);}
+	"strictfp"  {return productionEndTerminal("Modifier11","-","-","Replacement",first,token);}
  |
-	Annotation(true) {return productionEndTerminal("Modifier12","-","-","replacement",first,token);}
+	Annotation(true) {return productionEndTerminal("Modifier12","-","-","Replacement",first,token);}
 
  )  }
 
 String Id(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} {return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
+	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} {return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 
 String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	";"  {return productionEndTerminal("EmptyTypeDecl","{AUTO}","{AUTO}","replacement",first,token);}
+	";"  {return productionEndTerminal("EmptyTypeDecl","{AUTO}","{AUTO}","Replacement",first,token);}
  |
 	LOOKAHEAD(Modifiers() "@" "interface") Modifiers(inTerminal) "@" "interface" n=Id(inTerminal){ replaceName("Id",n);} "{" (AnnotationTypeMemberDeclaration(inTerminal))* "}" {return productionEndNonTerminal("AnnotationTypeDeclaration","{Id}","{Id}");}
  |
@@ -393,45 +393,45 @@ String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n;
 
 String AnnotationTypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"@" "interface" Id(true) AnnotationTypeBody(true) {return productionEndTerminal("AnnotationTypeDeclaration","-","-","replacement",first,token);}
+	"@" "interface" Id(true) AnnotationTypeBody(true) {return productionEndTerminal("AnnotationTypeDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterfaceDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ClassOrInterface(true) Id(true) [TypeParameters(true)] [ExtendsList(true)] [ImplementsList(true)] ClassOrInterfaceBody(true) {return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","replacement",first,token);}
+	ClassOrInterface(true) Id(true) [TypeParameters(true)] [ExtendsList(true)] [ImplementsList(true)] ClassOrInterfaceBody(true) {return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterface(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"class"  {return productionEndTerminal("ClassOrInterface1","-","-","replacement",first,token);}
+	"class"  {return productionEndTerminal("ClassOrInterface1","-","-","Replacement",first,token);}
  |
-	"interface"  {return productionEndTerminal("ClassOrInterface2","-","-","replacement",first,token);}
+	"interface"  {return productionEndTerminal("ClassOrInterface2","-","-","Replacement",first,token);}
 
  )  }
 
 String ExtendsList(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"extends" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ExtendsList","-","-","replacement",first,token);}
+	"extends" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ExtendsList","-","-","Replacement",first,token);}
 
  )  }
 
 String ImplementsList(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"implements" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ImplementsList","-","-","replacement",first,token);}
+	"implements" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ImplementsList","-","-","ImplementsListMerging",first,token);}
 
  )  }
 
 String EnumDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"enum" Id(true) [ImplementsList(true)] EnumBody(true) {return productionEndTerminal("EnumDeclaration","-","-","replacement",first,token);}
+	"enum" Id(true) [ImplementsList(true)] EnumBody(true) {return productionEndTerminal("EnumDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
 String EnumBody(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" EnumConstant(true) ("," EnumConstant(true))* [EnumBodyInternal(true)] "}" {return productionEndTerminal("EnumBody","-","-","replacement",first,token);}
+	"{" EnumConstant(true) ("," EnumConstant(true))* [EnumBodyInternal(true)] "}" {return productionEndTerminal("EnumBody","-","-","Replacement",first,token);}
 
  )  }
 
@@ -443,925 +443,925 @@ String EnumBodyInternal(boolean inTerminal) : { Token first=null,t;String n;
 
 String EnumConstant(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> [Arguments(true)] [ClassOrInterfaceBody(true)] {return productionEndTerminal("EnumConstant","-","-","replacement",first,token);}
+	<IDENTIFIER> [Arguments(true)] [ClassOrInterfaceBody(true)] {return productionEndTerminal("EnumConstant","-","-","Replacement",first,token);}
 
  )  }
 
 String TypeParameters(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<" TypeParameter(true) ("," TypeParameter(true))* ">" {return productionEndTerminal("TypeParameters","-","-","replacement",first,token);}
+	"<" TypeParameter(true) ("," TypeParameter(true))* ">" {return productionEndTerminal("TypeParameters","-","-","Replacement",first,token);}
 
  )  }
 
 String TypeParameter(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> [TypeBound(true)] {return productionEndTerminal("TypeParameter","-","-","replacement",first,token);}
+	<IDENTIFIER> [TypeBound(true)] {return productionEndTerminal("TypeParameter","-","-","Replacement",first,token);}
 
  )  }
 
 String TypeBound(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"extends" ClassOrInterfaceType(true) ("&" ClassOrInterfaceType(true))* {return productionEndTerminal("TypeBound","-","-","replacement",first,token);}
+	"extends" ClassOrInterfaceType(true) ("&" ClassOrInterfaceType(true))* {return productionEndTerminal("TypeBound","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterfaceBody(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (ClassOrInterfaceBodyDeclaration(true))* "}" {return productionEndTerminal("ClassOrInterfaceBody","-","-","replacement",first,token);}
+	"{" (ClassOrInterfaceBodyDeclaration(true))* "}" {return productionEndTerminal("ClassOrInterfaceBody","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) Initializer(true) {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","replacement",first,token);}
+	LOOKAHEAD(2) Initializer(true) {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement",first,token);}
  |
 	LOOKAHEAD(Modifiers() ClassOrInterface()) Modifiers(inTerminal) ClassOrInterface(inTerminal) Id(inTerminal) [TypeParameters(inTerminal)] [ExtendsList(inTerminal)] [ImplementsList(inTerminal)] "{" (ClassOrInterfaceBodyDeclaration(inTerminal))* "}" {return productionEndNonTerminal("InnerClassDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
  |
 	LOOKAHEAD(Modifiers() "enum") Modifiers(inTerminal) "enum" Id(inTerminal) [ImplementsList(inTerminal)] "{" EnumConstant(inTerminal) ("," EnumConstant(inTerminal))* [EnumBodyInternal(inTerminal)] "}" {return productionEndNonTerminal("InnerEnumDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
  |
-	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") Modifiers(true) ConstructorDeclaration(true) {return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
+	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") Modifiers(true) ConstructorDeclaration(true) {return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","ConstructorConcatenation",first,token);}
  |
-	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) Modifiers(true) n=FieldDeclaration(true){ replaceName("FieldDeclaration",n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","replacement",first,token);}
+	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) Modifiers(true) n=FieldDeclaration(true){ replaceName("FieldDeclaration",n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
  |
-	LOOKAHEAD(2) Modifiers(true) n=MethodDeclaration(true){ replaceName("MethodDeclaration",n);} {return productionEndTerminal("MethodDecl","{MethodDeclaration}","{MethodDeclaration}","overriding",first,token);}
+	LOOKAHEAD(2) Modifiers(true) n=MethodDeclaration(true){ replaceName("MethodDeclaration",n);} {return productionEndTerminal("MethodDecl","{MethodDeclaration}","{MethodDeclaration}","MethodOverriding",first,token);}
  |
-	";"  {return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","replacement",first,token);}
+	";"  {return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
 String FieldDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Type(true){ replaceName("Type",n);} n=VariableDeclarator(true){ replaceName("VariableDeclarator",n);} ("," n=VariableDeclarator(true){ replaceName("VariableDeclarator",n);})* ";" {return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","replacement",first,token);}
+	n=Type(true){ replaceName("Type",n);} n=VariableDeclarator(true){ replaceName("VariableDeclarator",n);} ("," n=VariableDeclarator(true){ replaceName("VariableDeclarator",n);})* ";" {return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","Replacement",first,token);}
 
  )  }
 
 String VariableDeclarator(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=VariableDeclaratorId(true){ replaceName("VariableDeclaratorId",n);} ["=" VariableInitializer(true)] {return productionEndTerminal("VariableDeclarator","-","{VariableDeclaratorId}","replacement",first,token);}
+	n=VariableDeclaratorId(true){ replaceName("VariableDeclaratorId",n);} ["=" VariableInitializer(true)] {return productionEndTerminal("VariableDeclarator","-","{VariableDeclaratorId}","Replacement",first,token);}
 
  )  }
 
 String VariableDeclaratorId(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} ("[" "]" )* {return productionEndTerminal("VariableDeclaratorId","-","{<IDENTIFIER>}","replacement",first,token);}
+	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} ("[" "]" )* {return productionEndTerminal("VariableDeclaratorId","-","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 
 String VariableInitializer(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ArrayInitializer(true) {return productionEndTerminal("VariableInitializer1","-","-","replacement",first,token);}
+	ArrayInitializer(true) {return productionEndTerminal("VariableInitializer1","-","-","Replacement",first,token);}
  |
-	Expression(true) {return productionEndTerminal("VariableInitializer2","-","-","replacement",first,token);}
+	Expression(true) {return productionEndTerminal("VariableInitializer2","-","-","Replacement",first,token);}
 
  )  }
 
 String ArrayInitializer(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" [ArrayInitializerInternal(true)] ["," ] "}" {return productionEndTerminal("ArrayInitializer","-","-","replacement",first,token);}
+	"{" [ArrayInitializerInternal(true)] ["," ] "}" {return productionEndTerminal("ArrayInitializer","-","-","Replacement",first,token);}
 
  )  }
 
 String ArrayInitializerInternal(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	VariableInitializer(true) (LOOKAHEAD(2) "," VariableInitializer(true))* {return productionEndTerminal("ArrayInitializerInternal","-","-","replacement",first,token);}
+	VariableInitializer(true) (LOOKAHEAD(2) "," VariableInitializer(true))* {return productionEndTerminal("ArrayInitializerInternal","-","-","Replacement",first,token);}
 
  )  }
 
 String MethodDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[TypeParameters(true)] ResultType(true) n=MethodDeclarator(true){ replaceName("MethodDeclarator",n);} ["throws" NameList(true)] MethodDeclarationBody(true) {return productionEndTerminal("MethodDeclaration","-","{MethodDeclarator}","replacement",first,token);}
+	[TypeParameters(true)] ResultType(true) n=MethodDeclarator(true){ replaceName("MethodDeclarator",n);} ["throws" NameList(true)] MethodDeclarationBody(true) {return productionEndTerminal("MethodDeclaration","-","{MethodDeclarator}","Replacement",first,token);}
 
  )  }
 
 String MethodDeclarationBody(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Block(true) {return productionEndTerminal("MethodDeclarationBody1","-","-","replacement",first,token);}
+	Block(true) {return productionEndTerminal("MethodDeclarationBody1","-","-","Replacement",first,token);}
  |
-	";"  {return productionEndTerminal("MethodDeclarationBody2","-","-","replacement",first,token);}
+	";"  {return productionEndTerminal("MethodDeclarationBody2","-","-","Replacement",first,token);}
 
  )  }
 
 String MethodDeclarator(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} n=FormalParameters(true){ replaceName("FormalParameters",n);} ("[" "]" )* {return productionEndTerminal("MethodDeclarator","-","{<IDENTIFIER>}({FormalParameters})","replacement",first,token);}
+	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} n=FormalParameters(true){ replaceName("FormalParameters",n);} ("[" "]" )* {return productionEndTerminal("MethodDeclarator","-","{<IDENTIFIER>}({FormalParameters})","Replacement",first,token);}
 
  )  }
 
 String FormalParameters(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [n=FormalParametersInternal(true){ replaceName("FormalParametersInternal",n);}] ")" {return productionEndTerminal("FormalParameters","-","{FormalParametersInternal}","replacement",first,token);}
+	"(" [n=FormalParametersInternal(true){ replaceName("FormalParametersInternal",n);}] ")" {return productionEndTerminal("FormalParameters","-","{FormalParametersInternal}","Replacement",first,token);}
 
  )  }
 
 String FormalParametersInternal(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=FormalParameter(true){ replaceName("FormalParameter",n);} ("," n=FormalParameter(true){ replaceName("FormalParameter",n);})* {return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","replacement",first,token);}
+	n=FormalParameter(true){ replaceName("FormalParameter",n);} ("," n=FormalParameter(true){ replaceName("FormalParameter",n);})* {return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","Replacement",first,token);}
 
  )  }
 
 String FormalParameter(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["final" ] n=Type(true){ replaceName("Type",n);} ["..." ] VariableDeclaratorId(true) {return productionEndTerminal("FormalParameter","-","{Type}","replacement",first,token);}
+	["final" ] n=Type(true){ replaceName("Type",n);} ["..." ] VariableDeclaratorId(true) {return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
 
  )  }
 
 String ConstructorDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[TypeParameters(true)] t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} n=FormalParameters(true){ replaceName("FormalParameters",n);} ["throws" NameList(true)] "{" [LOOKAHEAD(ExplicitConstructorInvocation()) ExplicitConstructorInvocation(true)] (BlockStatement(true))* "}" {return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","replacement",first,token);}
+	[TypeParameters(true)] t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} n=FormalParameters(true){ replaceName("FormalParameters",n);} ["throws" NameList(true)] "{" [LOOKAHEAD(ExplicitConstructorInvocation()) ExplicitConstructorInvocation(true)] (BlockStatement(true))* "}" {return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","Replacement",first,token);}
 
  )  }
 
 String ExplicitConstructorInvocation(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD("this" Arguments() ";") "this" Arguments(true) ";" {return productionEndTerminal("ExplicitConstructorInvocation1","-","-","replacement",first,token);}
+	LOOKAHEAD("this" Arguments() ";") "this" Arguments(true) ";" {return productionEndTerminal("ExplicitConstructorInvocation1","-","-","Replacement",first,token);}
  |
-	[LOOKAHEAD(2) PrimaryExpression(true) "."] "super" Arguments(true) ";" {return productionEndTerminal("ExplicitConstructorInvocation2","-","-","replacement",first,token);}
+	[LOOKAHEAD(2) PrimaryExpression(true) "."] "super" Arguments(true) ";" {return productionEndTerminal("ExplicitConstructorInvocation2","-","-","Replacement",first,token);}
 
  )  }
 
 String Initializer(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["static" ] Block(true) {return productionEndTerminal("Initializer","-","-","replacement",first,token);}
+	["static" ] Block(true) {return productionEndTerminal("Initializer","-","-","Replacement",first,token);}
 
  )  }
 
 String Type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) ReferenceTypeP(true) {return productionEndTerminal("Type1","-","{TOSTRING}","replacement",first,token);}
+	LOOKAHEAD(2) ReferenceTypeP(true) {return productionEndTerminal("Type1","-","{TOSTRING}","Replacement",first,token);}
  |
-	PrimitiveType(true) {return productionEndTerminal("Type2","-","{TOSTRING}","replacement",first,token);}
+	PrimitiveType(true) {return productionEndTerminal("Type2","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 String ReferenceTypeP(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	PrimitiveType(true) (LOOKAHEAD(2) "[" "]" )+ {return productionEndTerminal("ReferenceTypeP1","-","-","replacement",first,token);}
+	PrimitiveType(true) (LOOKAHEAD(2) "[" "]" )+ {return productionEndTerminal("ReferenceTypeP1","-","-","Replacement",first,token);}
  |
-	ClassOrInterfaceType(true) (LOOKAHEAD(2) "[" "]" )* {return productionEndTerminal("ReferenceTypeP2","-","-","replacement",first,token);}
+	ClassOrInterfaceType(true) (LOOKAHEAD(2) "[" "]" )* {return productionEndTerminal("ReferenceTypeP2","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterfaceType(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> [LOOKAHEAD(2) TypeArguments(true)] (LOOKAHEAD(2) ClassOrInterfaceTypeIntern(true))* {return productionEndTerminal("ClassOrInterfaceType","-","-","replacement",first,token);}
+	<IDENTIFIER> [LOOKAHEAD(2) TypeArguments(true)] (LOOKAHEAD(2) ClassOrInterfaceTypeIntern(true))* {return productionEndTerminal("ClassOrInterfaceType","-","-","Replacement",first,token);}
 
  )  }
 
 String ClassOrInterfaceTypeIntern(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"." <IDENTIFIER> [LOOKAHEAD(2) TypeArguments(true)] {return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","replacement",first,token);}
+	"." <IDENTIFIER> [LOOKAHEAD(2) TypeArguments(true)] {return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","Replacement",first,token);}
 
  )  }
 
 String TypeArguments(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<" TypeArgument(true) ("," TypeArgument(true))* ">" {return productionEndTerminal("TypeArguments","-","-","replacement",first,token);}
+	"<" TypeArgument(true) ("," TypeArgument(true))* ">" {return productionEndTerminal("TypeArguments","-","-","Replacement",first,token);}
 
  )  }
 
 String TypeArgument(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ReferenceTypeP(true) {return productionEndTerminal("TypeArgument1","-","-","replacement",first,token);}
+	ReferenceTypeP(true) {return productionEndTerminal("TypeArgument1","-","-","Replacement",first,token);}
  |
-	"?" [WildcardBounds(true)] {return productionEndTerminal("TypeArgument2","-","-","replacement",first,token);}
+	"?" [WildcardBounds(true)] {return productionEndTerminal("TypeArgument2","-","-","Replacement",first,token);}
 
  )  }
 
 String WildcardBounds(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"extends" ReferenceTypeP(true) {return productionEndTerminal("WildcardBounds1","-","-","replacement",first,token);}
+	"extends" ReferenceTypeP(true) {return productionEndTerminal("WildcardBounds1","-","-","Replacement",first,token);}
  |
-	"super" ReferenceTypeP(true) {return productionEndTerminal("WildcardBounds2","-","-","replacement",first,token);}
+	"super" ReferenceTypeP(true) {return productionEndTerminal("WildcardBounds2","-","-","Replacement",first,token);}
 
  )  }
 
 String PrimitiveType(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"boolean"  {return productionEndTerminal("PrimitiveType1","-","-","replacement",first,token);}
+	"boolean"  {return productionEndTerminal("PrimitiveType1","-","-","Replacement",first,token);}
  |
-	"char"  {return productionEndTerminal("PrimitiveType2","-","-","replacement",first,token);}
+	"char"  {return productionEndTerminal("PrimitiveType2","-","-","Replacement",first,token);}
  |
-	"byte"  {return productionEndTerminal("PrimitiveType3","-","-","replacement",first,token);}
+	"byte"  {return productionEndTerminal("PrimitiveType3","-","-","Replacement",first,token);}
  |
-	"short"  {return productionEndTerminal("PrimitiveType4","-","-","replacement",first,token);}
+	"short"  {return productionEndTerminal("PrimitiveType4","-","-","Replacement",first,token);}
  |
-	"int"  {return productionEndTerminal("PrimitiveType5","-","-","replacement",first,token);}
+	"int"  {return productionEndTerminal("PrimitiveType5","-","-","Replacement",first,token);}
  |
-	"long"  {return productionEndTerminal("PrimitiveType6","-","-","replacement",first,token);}
+	"long"  {return productionEndTerminal("PrimitiveType6","-","-","Replacement",first,token);}
  |
-	"float"  {return productionEndTerminal("PrimitiveType7","-","-","replacement",first,token);}
+	"float"  {return productionEndTerminal("PrimitiveType7","-","-","Replacement",first,token);}
  |
-	"double"  {return productionEndTerminal("PrimitiveType8","-","-","replacement",first,token);}
+	"double"  {return productionEndTerminal("PrimitiveType8","-","-","Replacement",first,token);}
 
  )  }
 
 String ResultType(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"void"  {return productionEndTerminal("ResultType1","-","-","replacement",first,token);}
+	"void"  {return productionEndTerminal("ResultType1","-","-","Replacement",first,token);}
  |
-	Type(true) {return productionEndTerminal("ResultType2","-","-","replacement",first,token);}
+	Type(true) {return productionEndTerminal("ResultType2","-","-","Replacement",first,token);}
 
  )  }
 
 String Name(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} (LOOKAHEAD(2) "." t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());})* {return productionEndTerminal("Name","-","{<IDENTIFIER>}^.","replacement",first,token);}
+	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} (LOOKAHEAD(2) "." t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());})* {return productionEndTerminal("Name","-","{<IDENTIFIER>}^.","Replacement",first,token);}
 
  )  }
 
 String NameList(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Name(true) ("," Name(true))* {return productionEndTerminal("NameList","-","-","replacement",first,token);}
+	Name(true) ("," Name(true))* {return productionEndTerminal("NameList","-","-","Replacement",first,token);}
 
  )  }
 
 String Expression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ConditionalExpression(true) [LOOKAHEAD(2) AssignExp(true)] {return productionEndTerminal("Expression","-","-","replacement",first,token);}
+	ConditionalExpression(true) [LOOKAHEAD(2) AssignExp(true)] {return productionEndTerminal("Expression","-","-","Replacement",first,token);}
 
  )  }
 
 String AssignExp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	AssignmentOperator(true) Expression(true) {return productionEndTerminal("AssignExp","-","-","replacement",first,token);}
+	AssignmentOperator(true) Expression(true) {return productionEndTerminal("AssignExp","-","-","Replacement",first,token);}
 
  )  }
 
 String AssignmentOperator(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"="  {return productionEndTerminal("AssignmentOperator1","-","-","replacement",first,token);}
+	"="  {return productionEndTerminal("AssignmentOperator1","-","-","Replacement",first,token);}
  |
-	"*="  {return productionEndTerminal("AssignmentOperator2","-","-","replacement",first,token);}
+	"*="  {return productionEndTerminal("AssignmentOperator2","-","-","Replacement",first,token);}
  |
-	"/="  {return productionEndTerminal("AssignmentOperator3","-","-","replacement",first,token);}
+	"/="  {return productionEndTerminal("AssignmentOperator3","-","-","Replacement",first,token);}
  |
-	"%="  {return productionEndTerminal("AssignmentOperator4","-","-","replacement",first,token);}
+	"%="  {return productionEndTerminal("AssignmentOperator4","-","-","Replacement",first,token);}
  |
-	"+="  {return productionEndTerminal("AssignmentOperator5","-","-","replacement",first,token);}
+	"+="  {return productionEndTerminal("AssignmentOperator5","-","-","Replacement",first,token);}
  |
-	"-="  {return productionEndTerminal("AssignmentOperator6","-","-","replacement",first,token);}
+	"-="  {return productionEndTerminal("AssignmentOperator6","-","-","Replacement",first,token);}
  |
-	"<<="  {return productionEndTerminal("AssignmentOperator7","-","-","replacement",first,token);}
+	"<<="  {return productionEndTerminal("AssignmentOperator7","-","-","Replacement",first,token);}
  |
-	">>="  {return productionEndTerminal("AssignmentOperator8","-","-","replacement",first,token);}
+	">>="  {return productionEndTerminal("AssignmentOperator8","-","-","Replacement",first,token);}
  |
-	">>>="  {return productionEndTerminal("AssignmentOperator9","-","-","replacement",first,token);}
+	">>>="  {return productionEndTerminal("AssignmentOperator9","-","-","Replacement",first,token);}
  |
-	"&="  {return productionEndTerminal("AssignmentOperator10","-","-","replacement",first,token);}
+	"&="  {return productionEndTerminal("AssignmentOperator10","-","-","Replacement",first,token);}
  |
-	"^="  {return productionEndTerminal("AssignmentOperator11","-","-","replacement",first,token);}
+	"^="  {return productionEndTerminal("AssignmentOperator11","-","-","Replacement",first,token);}
  |
-	"|="  {return productionEndTerminal("AssignmentOperator12","-","-","replacement",first,token);}
+	"|="  {return productionEndTerminal("AssignmentOperator12","-","-","Replacement",first,token);}
 
  )  }
 
 String ConditionalExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(ConditionalOrExpression() "?") ConditionalExpressionFull(true) {return productionEndTerminal("ConditionalExpression1","-","-","replacement",first,token);}
+	LOOKAHEAD(ConditionalOrExpression() "?") ConditionalExpressionFull(true) {return productionEndTerminal("ConditionalExpression1","-","-","Replacement",first,token);}
  |
-	ConditionalOrExpression(true) {return productionEndTerminal("ConditionalExpression2","-","-","replacement",first,token);}
+	ConditionalOrExpression(true) {return productionEndTerminal("ConditionalExpression2","-","-","Replacement",first,token);}
 
  )  }
 
 String ConditionalExpressionFull(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ConditionalOrExpression(true) "?" Expression(true) ":" Expression(true) {return productionEndTerminal("ConditionalExpressionFull","-","-","replacement",first,token);}
+	ConditionalOrExpression(true) "?" Expression(true) ":" Expression(true) {return productionEndTerminal("ConditionalExpressionFull","-","-","Replacement",first,token);}
 
  )  }
 
 String ConditionalOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ConditionalAndExpression(true) ("||" ConditionalAndExpression(true))* {return productionEndTerminal("ConditionalOrExpression","-","-","replacement",first,token);}
+	ConditionalAndExpression(true) ("||" ConditionalAndExpression(true))* {return productionEndTerminal("ConditionalOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String ConditionalAndExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	InclusiveOrExpression(true) ("&&" InclusiveOrExpression(true))* {return productionEndTerminal("ConditionalAndExpression","-","-","replacement",first,token);}
+	InclusiveOrExpression(true) ("&&" InclusiveOrExpression(true))* {return productionEndTerminal("ConditionalAndExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String InclusiveOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ExclusiveOrExpression(true) ("|" ExclusiveOrExpression(true))* {return productionEndTerminal("InclusiveOrExpression","-","-","replacement",first,token);}
+	ExclusiveOrExpression(true) ("|" ExclusiveOrExpression(true))* {return productionEndTerminal("InclusiveOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String ExclusiveOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	AndExpression(true) ("^" AndExpression(true))* {return productionEndTerminal("ExclusiveOrExpression","-","-","replacement",first,token);}
+	AndExpression(true) ("^" AndExpression(true))* {return productionEndTerminal("ExclusiveOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String AndExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	EqualityExpression(true) ("&" EqualityExpression(true))* {return productionEndTerminal("AndExpression","-","-","replacement",first,token);}
+	EqualityExpression(true) ("&" EqualityExpression(true))* {return productionEndTerminal("AndExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String EqualityExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	InstanceOfExpression(true) (EqualityExpressionIntern(true))* {return productionEndTerminal("EqualityExpression","-","-","replacement",first,token);}
+	InstanceOfExpression(true) (EqualityExpressionIntern(true))* {return productionEndTerminal("EqualityExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String EqualityExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	EqualityOp(true) InstanceOfExpression(true) {return productionEndTerminal("EqualityExpressionIntern","-","-","replacement",first,token);}
+	EqualityOp(true) InstanceOfExpression(true) {return productionEndTerminal("EqualityExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
 String EqualityOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"=="  {return productionEndTerminal("EqualityOp1","-","-","replacement",first,token);}
+	"=="  {return productionEndTerminal("EqualityOp1","-","-","Replacement",first,token);}
  |
-	"!="  {return productionEndTerminal("EqualityOp2","-","-","replacement",first,token);}
+	"!="  {return productionEndTerminal("EqualityOp2","-","-","Replacement",first,token);}
 
  )  }
 
 String InstanceOfExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	RelationalExpression(true) ["instanceof" Type(true)] {return productionEndTerminal("InstanceOfExpression","-","-","replacement",first,token);}
+	RelationalExpression(true) ["instanceof" Type(true)] {return productionEndTerminal("InstanceOfExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String RelationalExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ShiftExpression(true) (RelationalExpressionIntern(true))* {return productionEndTerminal("RelationalExpression","-","-","replacement",first,token);}
+	ShiftExpression(true) (RelationalExpressionIntern(true))* {return productionEndTerminal("RelationalExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String RelationalExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	RelationalOp(true) ShiftExpression(true) {return productionEndTerminal("RelationalExpressionIntern","-","-","replacement",first,token);}
+	RelationalOp(true) ShiftExpression(true) {return productionEndTerminal("RelationalExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
 String RelationalOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<"  {return productionEndTerminal("RelationalOp1","-","-","replacement",first,token);}
+	"<"  {return productionEndTerminal("RelationalOp1","-","-","Replacement",first,token);}
  |
-	">"  {return productionEndTerminal("RelationalOp2","-","-","replacement",first,token);}
+	">"  {return productionEndTerminal("RelationalOp2","-","-","Replacement",first,token);}
  |
-	"<="  {return productionEndTerminal("RelationalOp3","-","-","replacement",first,token);}
+	"<="  {return productionEndTerminal("RelationalOp3","-","-","Replacement",first,token);}
  |
-	">="  {return productionEndTerminal("RelationalOp4","-","-","replacement",first,token);}
+	">="  {return productionEndTerminal("RelationalOp4","-","-","Replacement",first,token);}
 
  )  }
 
 String ShiftExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	AdditiveExpression(true) (LOOKAHEAD(2) ShiftExpressionRight(true))* {return productionEndTerminal("ShiftExpression","-","-","replacement",first,token);}
+	AdditiveExpression(true) (LOOKAHEAD(2) ShiftExpressionRight(true))* {return productionEndTerminal("ShiftExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String ShiftExpressionRight(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ShiftOp(true) AdditiveExpression(true) {return productionEndTerminal("ShiftExpressionRight","-","-","replacement",first,token);}
+	ShiftOp(true) AdditiveExpression(true) {return productionEndTerminal("ShiftExpressionRight","-","-","Replacement",first,token);}
 
  )  }
 
 String ShiftOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<<"  {return productionEndTerminal("ShiftOp1","-","-","replacement",first,token);}
+	"<<"  {return productionEndTerminal("ShiftOp1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(3) ">" ">" ">"  {return productionEndTerminal("ShiftOp2","-","-","replacement",first,token);}
+	LOOKAHEAD(3) ">" ">" ">"  {return productionEndTerminal("ShiftOp2","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(2) ">" ">"  {return productionEndTerminal("ShiftOp3","-","-","replacement",first,token);}
+	LOOKAHEAD(2) ">" ">"  {return productionEndTerminal("ShiftOp3","-","-","Replacement",first,token);}
 
  )  }
 
 String AdditiveExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	MultiplicativeExpression(true) (AdditiveExpressionIntern(true))* {return productionEndTerminal("AdditiveExpression","-","-","replacement",first,token);}
+	MultiplicativeExpression(true) (AdditiveExpressionIntern(true))* {return productionEndTerminal("AdditiveExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String AdditiveExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	AdditiveOp(true) MultiplicativeExpression(true) {return productionEndTerminal("AdditiveExpressionIntern","-","-","replacement",first,token);}
+	AdditiveOp(true) MultiplicativeExpression(true) {return productionEndTerminal("AdditiveExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
 String AdditiveOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"+"  {return productionEndTerminal("AdditiveOp1","-","-","replacement",first,token);}
+	"+"  {return productionEndTerminal("AdditiveOp1","-","-","Replacement",first,token);}
  |
-	"-"  {return productionEndTerminal("AdditiveOp2","-","-","replacement",first,token);}
+	"-"  {return productionEndTerminal("AdditiveOp2","-","-","Replacement",first,token);}
 
  )  }
 
 String MultiplicativeExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	UnaryExpression(true) (MultiplicativeExpressionIntern(true))* {return productionEndTerminal("MultiplicativeExpression","-","-","replacement",first,token);}
+	UnaryExpression(true) (MultiplicativeExpressionIntern(true))* {return productionEndTerminal("MultiplicativeExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String MultiplicativeExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	MultiplicativeOp(true) UnaryExpression(true) {return productionEndTerminal("MultiplicativeExpressionIntern","-","-","replacement",first,token);}
+	MultiplicativeOp(true) UnaryExpression(true) {return productionEndTerminal("MultiplicativeExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
 String MultiplicativeOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"*"  {return productionEndTerminal("MultiplicativeOp1","-","-","replacement",first,token);}
+	"*"  {return productionEndTerminal("MultiplicativeOp1","-","-","Replacement",first,token);}
  |
-	"/"  {return productionEndTerminal("MultiplicativeOp2","-","-","replacement",first,token);}
+	"/"  {return productionEndTerminal("MultiplicativeOp2","-","-","Replacement",first,token);}
  |
-	"%"  {return productionEndTerminal("MultiplicativeOp3","-","-","replacement",first,token);}
+	"%"  {return productionEndTerminal("MultiplicativeOp3","-","-","Replacement",first,token);}
 
  )  }
 
 String UnaryExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	AdditiveOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpression1","-","-","replacement",first,token);}
+	AdditiveOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpression1","-","-","Replacement",first,token);}
  |
-	PreIncrementExpression(true) {return productionEndTerminal("UnaryExpression2","-","-","replacement",first,token);}
+	PreIncrementExpression(true) {return productionEndTerminal("UnaryExpression2","-","-","Replacement",first,token);}
  |
-	PreDecrementExpression(true) {return productionEndTerminal("UnaryExpression3","-","-","replacement",first,token);}
+	PreDecrementExpression(true) {return productionEndTerminal("UnaryExpression3","-","-","Replacement",first,token);}
  |
-	UnaryExpressionNotPlusMinus(true) {return productionEndTerminal("UnaryExpression4","-","-","replacement",first,token);}
+	UnaryExpressionNotPlusMinus(true) {return productionEndTerminal("UnaryExpression4","-","-","Replacement",first,token);}
 
  )  }
 
 String PreIncrementExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"++" PrimaryExpression(true) {return productionEndTerminal("PreIncrementExpression","-","-","replacement",first,token);}
+	"++" PrimaryExpression(true) {return productionEndTerminal("PreIncrementExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String PreDecrementExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"--" PrimaryExpression(true) {return productionEndTerminal("PreDecrementExpression","-","-","replacement",first,token);}
+	"--" PrimaryExpression(true) {return productionEndTerminal("PreDecrementExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String UnaryExpressionNotPlusMinus(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	UnaryOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","replacement",first,token);}
+	UnaryOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(CastLookahead()) CastExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","replacement",first,token);}
+	LOOKAHEAD(CastLookahead()) CastExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","Replacement",first,token);}
  |
-	PostfixExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","replacement",first,token);}
+	PostfixExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","Replacement",first,token);}
 
  )  }
 
 String UnaryOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"~"  {return productionEndTerminal("UnaryOp1","-","-","replacement",first,token);}
+	"~"  {return productionEndTerminal("UnaryOp1","-","-","Replacement",first,token);}
  |
-	"!"  {return productionEndTerminal("UnaryOp2","-","-","replacement",first,token);}
+	"!"  {return productionEndTerminal("UnaryOp2","-","-","Replacement",first,token);}
 
  )  }
 
 String CastLookahead(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "(" PrimitiveType(true) {return productionEndTerminal("CastLookahead1","-","-","replacement",first,token);}
+	LOOKAHEAD(2) "(" PrimitiveType(true) {return productionEndTerminal("CastLookahead1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD("(" Type() "[") "(" Type(true) "[" "]" {return productionEndTerminal("CastLookahead2","-","-","replacement",first,token);}
+	LOOKAHEAD("(" Type() "[") "(" Type(true) "[" "]" {return productionEndTerminal("CastLookahead2","-","-","Replacement",first,token);}
  |
-	"(" Type(true) ")" CastLAOp(true) {return productionEndTerminal("CastLookahead3","-","-","replacement",first,token);}
+	"(" Type(true) ")" CastLAOp(true) {return productionEndTerminal("CastLookahead3","-","-","Replacement",first,token);}
 
  )  }
 
 String CastLAOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"~"  {return productionEndTerminal("CastLAOp1","-","-","replacement",first,token);}
+	"~"  {return productionEndTerminal("CastLAOp1","-","-","Replacement",first,token);}
  |
-	"!"  {return productionEndTerminal("CastLAOp2","-","-","replacement",first,token);}
+	"!"  {return productionEndTerminal("CastLAOp2","-","-","Replacement",first,token);}
  |
-	"("  {return productionEndTerminal("CastLAOp3","-","-","replacement",first,token);}
+	"("  {return productionEndTerminal("CastLAOp3","-","-","Replacement",first,token);}
  |
-	"this"  {return productionEndTerminal("CastLAOp4","-","-","replacement",first,token);}
+	"this"  {return productionEndTerminal("CastLAOp4","-","-","Replacement",first,token);}
  |
-	"super"  {return productionEndTerminal("CastLAOp5","-","-","replacement",first,token);}
+	"super"  {return productionEndTerminal("CastLAOp5","-","-","Replacement",first,token);}
  |
-	"new"  {return productionEndTerminal("CastLAOp6","-","-","replacement",first,token);}
+	"new"  {return productionEndTerminal("CastLAOp6","-","-","Replacement",first,token);}
  |
-	<IDENTIFIER> {return productionEndTerminal("CastLAOp7","-","-","replacement",first,token);}
+	<IDENTIFIER> {return productionEndTerminal("CastLAOp7","-","-","Replacement",first,token);}
  |
-	Literal(true) {return productionEndTerminal("CastLAOp8","-","-","replacement",first,token);}
+	Literal(true) {return productionEndTerminal("CastLAOp8","-","-","Replacement",first,token);}
 
  )  }
 
 String PostfixExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	PrimaryExpression(true) [PostfixOp(true)] {return productionEndTerminal("PostfixExpression","-","-","replacement",first,token);}
+	PrimaryExpression(true) [PostfixOp(true)] {return productionEndTerminal("PostfixExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String PostfixOp(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"++"  {return productionEndTerminal("PostfixOp1","-","-","replacement",first,token);}
+	"++"  {return productionEndTerminal("PostfixOp1","-","-","Replacement",first,token);}
  |
-	"--"  {return productionEndTerminal("PostfixOp2","-","-","replacement",first,token);}
+	"--"  {return productionEndTerminal("PostfixOp2","-","-","Replacement",first,token);}
 
  )  }
 
 String CastExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD("(" PrimitiveType()) "(" Type(true) ")" UnaryExpression(true) {return productionEndTerminal("CastExpression1","-","-","replacement",first,token);}
+	LOOKAHEAD("(" PrimitiveType()) "(" Type(true) ")" UnaryExpression(true) {return productionEndTerminal("CastExpression1","-","-","Replacement",first,token);}
  |
-	"(" Type(true) ")" UnaryExpressionNotPlusMinus(true) {return productionEndTerminal("CastExpression2","-","-","replacement",first,token);}
+	"(" Type(true) ")" UnaryExpressionNotPlusMinus(true) {return productionEndTerminal("CastExpression2","-","-","Replacement",first,token);}
 
  )  }
 
 String PrimaryExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	PrimaryPrefix(true) (LOOKAHEAD(2) PrimarySuffix(true))* {return productionEndTerminal("PrimaryExpression","-","-","replacement",first,token);}
+	PrimaryPrefix(true) (LOOKAHEAD(2) PrimarySuffix(true))* {return productionEndTerminal("PrimaryExpression","-","-","Replacement",first,token);}
 
  )  }
 
 String MemberSelector(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"." TypeArguments(true) <IDENTIFIER> {return productionEndTerminal("MemberSelector","-","-","replacement",first,token);}
+	"." TypeArguments(true) <IDENTIFIER> {return productionEndTerminal("MemberSelector","-","-","Replacement",first,token);}
 
  )  }
 
 String PrimaryPrefix(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Literal(true) {return productionEndTerminal("PrimaryPrefix1","-","-","replacement",first,token);}
+	Literal(true) {return productionEndTerminal("PrimaryPrefix1","-","-","Replacement",first,token);}
  |
-	"this"  {return productionEndTerminal("PrimaryPrefix2","-","-","replacement",first,token);}
+	"this"  {return productionEndTerminal("PrimaryPrefix2","-","-","Replacement",first,token);}
  |
-	"super" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix3","-","-","replacement",first,token);}
+	"super" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix3","-","-","Replacement",first,token);}
  |
-	"(" Expression(true) ")" {return productionEndTerminal("PrimaryPrefix4","-","-","replacement",first,token);}
+	"(" Expression(true) ")" {return productionEndTerminal("PrimaryPrefix4","-","-","Replacement",first,token);}
  |
-	AllocationExpression(true) {return productionEndTerminal("PrimaryPrefix5","-","-","replacement",first,token);}
+	AllocationExpression(true) {return productionEndTerminal("PrimaryPrefix5","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD( ResultType() "." "class") ResultType(true) "." "class" {return productionEndTerminal("PrimaryPrefix6","-","-","replacement",first,token);}
+	LOOKAHEAD( ResultType() "." "class") ResultType(true) "." "class" {return productionEndTerminal("PrimaryPrefix6","-","-","Replacement",first,token);}
  |
-	Name(true) {return productionEndTerminal("PrimaryPrefix7","-","-","replacement",first,token);}
+	Name(true) {return productionEndTerminal("PrimaryPrefix7","-","-","Replacement",first,token);}
 
  )  }
 
 String PrimarySuffix(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "." "this"  {return productionEndTerminal("PrimarySuffix1","-","-","replacement",first,token);}
+	LOOKAHEAD(2) "." "this"  {return productionEndTerminal("PrimarySuffix1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(2) "." AllocationExpression(true) {return productionEndTerminal("PrimarySuffix2","-","-","replacement",first,token);}
+	LOOKAHEAD(2) "." AllocationExpression(true) {return productionEndTerminal("PrimarySuffix2","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(3) MemberSelector(true) {return productionEndTerminal("PrimarySuffix3","-","-","replacement",first,token);}
+	LOOKAHEAD(3) MemberSelector(true) {return productionEndTerminal("PrimarySuffix3","-","-","Replacement",first,token);}
  |
-	"[" Expression(true) "]" {return productionEndTerminal("PrimarySuffix4","-","-","replacement",first,token);}
+	"[" Expression(true) "]" {return productionEndTerminal("PrimarySuffix4","-","-","Replacement",first,token);}
  |
-	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix5","-","-","replacement",first,token);}
+	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix5","-","-","Replacement",first,token);}
  |
-	Arguments(true) {return productionEndTerminal("PrimarySuffix6","-","-","replacement",first,token);}
+	Arguments(true) {return productionEndTerminal("PrimarySuffix6","-","-","Replacement",first,token);}
 
  )  }
 
 String Literal(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<INTEGER_LITERAL> {return productionEndTerminal("Literal1","-","-","replacement",first,token);}
+	<INTEGER_LITERAL> {return productionEndTerminal("Literal1","-","-","Replacement",first,token);}
  |
-	<FLOATING_POINT_LITERAL> {return productionEndTerminal("Literal2","-","-","replacement",first,token);}
+	<FLOATING_POINT_LITERAL> {return productionEndTerminal("Literal2","-","-","Replacement",first,token);}
  |
-	<CHARACTER_LITERAL> {return productionEndTerminal("Literal3","-","-","replacement",first,token);}
+	<CHARACTER_LITERAL> {return productionEndTerminal("Literal3","-","-","Replacement",first,token);}
  |
-	<STRING_LITERAL> {return productionEndTerminal("Literal4","-","-","replacement",first,token);}
+	<STRING_LITERAL> {return productionEndTerminal("Literal4","-","-","Replacement",first,token);}
  |
-	BooleanLiteral(true) {return productionEndTerminal("Literal5","-","-","replacement",first,token);}
+	BooleanLiteral(true) {return productionEndTerminal("Literal5","-","-","Replacement",first,token);}
  |
-	NullLiteral(true) {return productionEndTerminal("Literal6","-","-","replacement",first,token);}
+	NullLiteral(true) {return productionEndTerminal("Literal6","-","-","Replacement",first,token);}
 
  )  }
 
 String BooleanLiteral(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"true"  {return productionEndTerminal("BooleanLiteral1","-","-","replacement",first,token);}
+	"true"  {return productionEndTerminal("BooleanLiteral1","-","-","Replacement",first,token);}
  |
-	"false"  {return productionEndTerminal("BooleanLiteral2","-","-","replacement",first,token);}
+	"false"  {return productionEndTerminal("BooleanLiteral2","-","-","Replacement",first,token);}
 
  )  }
 
 String NullLiteral(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"null"  {return productionEndTerminal("NullLiteral","-","-","replacement",first,token);}
+	"null"  {return productionEndTerminal("NullLiteral","-","-","Replacement",first,token);}
 
  )  }
 
 String Arguments(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [ArgumentList(true)] ")" {return productionEndTerminal("Arguments","-","-","replacement",first,token);}
+	"(" [ArgumentList(true)] ")" {return productionEndTerminal("Arguments","-","-","Replacement",first,token);}
 
  )  }
 
 String ArgumentList(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Expression(true) ("," Expression(true))* {return productionEndTerminal("ArgumentList","-","-","replacement",first,token);}
+	Expression(true) ("," Expression(true))* {return productionEndTerminal("ArgumentList","-","-","Replacement",first,token);}
 
  )  }
 
 String AllocationExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "new" PrimitiveType(true) ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpression1","-","-","replacement",first,token);}
+	LOOKAHEAD(2) "new" PrimitiveType(true) ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpression1","-","-","Replacement",first,token);}
  |
-	"new" ClassOrInterfaceType(true) [TypeArguments(true)] AllocationExpressionInit(true) {return productionEndTerminal("AllocationExpression2","-","-","replacement",first,token);}
+	"new" ClassOrInterfaceType(true) [TypeArguments(true)] AllocationExpressionInit(true) {return productionEndTerminal("AllocationExpression2","-","-","Replacement",first,token);}
 
  )  }
 
 String AllocationExpressionInit(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpressionInit1","-","-","replacement",first,token);}
+	ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpressionInit1","-","-","Replacement",first,token);}
  |
-	Arguments(true) [ClassOrInterfaceBody(true)] {return productionEndTerminal("AllocationExpressionInit2","-","-","replacement",first,token);}
+	Arguments(true) [ClassOrInterfaceBody(true)] {return productionEndTerminal("AllocationExpressionInit2","-","-","Replacement",first,token);}
 
  )  }
 
 String ArrayDimsAndInits(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "[" Expression(true) "]" (LOOKAHEAD(2) "[" Expression(true) "]")* (LOOKAHEAD(2) "[" "]" )* {return productionEndTerminal("ArrayDimsAndInits1","-","-","replacement",first,token);}
+	LOOKAHEAD(2) "[" Expression(true) "]" (LOOKAHEAD(2) "[" Expression(true) "]")* (LOOKAHEAD(2) "[" "]" )* {return productionEndTerminal("ArrayDimsAndInits1","-","-","Replacement",first,token);}
  |
-	("[" "]" )+ ArrayInitializer(true) {return productionEndTerminal("ArrayDimsAndInits2","-","-","replacement",first,token);}
+	("[" "]" )+ ArrayInitializer(true) {return productionEndTerminal("ArrayDimsAndInits2","-","-","Replacement",first,token);}
 
  )  }
 
 String Statement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) LabeledStatement(true) {return productionEndTerminal("Statement1","-","-","replacement",first,token);}
+	LOOKAHEAD(2) LabeledStatement(true) {return productionEndTerminal("Statement1","-","-","Replacement",first,token);}
  |
-	AssertStatement(true) {return productionEndTerminal("Statement2","-","-","replacement",first,token);}
+	AssertStatement(true) {return productionEndTerminal("Statement2","-","-","Replacement",first,token);}
  |
-	Block(true) {return productionEndTerminal("Statement3","-","-","replacement",first,token);}
+	Block(true) {return productionEndTerminal("Statement3","-","-","Replacement",first,token);}
  |
-	EmptyStatement(true) {return productionEndTerminal("Statement4","-","-","replacement",first,token);}
+	EmptyStatement(true) {return productionEndTerminal("Statement4","-","-","Replacement",first,token);}
  |
-	StatementExpression(true) ";" {return productionEndTerminal("Statement5","-","-","replacement",first,token);}
+	StatementExpression(true) ";" {return productionEndTerminal("Statement5","-","-","Replacement",first,token);}
  |
-	SwitchStatement(true) {return productionEndTerminal("Statement6","-","-","replacement",first,token);}
+	SwitchStatement(true) {return productionEndTerminal("Statement6","-","-","Replacement",first,token);}
  |
-	IfStatement(true) {return productionEndTerminal("Statement7","-","-","replacement",first,token);}
+	IfStatement(true) {return productionEndTerminal("Statement7","-","-","Replacement",first,token);}
  |
-	WhileStatement(true) {return productionEndTerminal("Statement8","-","-","replacement",first,token);}
+	WhileStatement(true) {return productionEndTerminal("Statement8","-","-","Replacement",first,token);}
  |
-	DoStatement(true) {return productionEndTerminal("Statement9","-","-","replacement",first,token);}
+	DoStatement(true) {return productionEndTerminal("Statement9","-","-","Replacement",first,token);}
  |
-	ForStatement(true) {return productionEndTerminal("Statement10","-","-","replacement",first,token);}
+	ForStatement(true) {return productionEndTerminal("Statement10","-","-","Replacement",first,token);}
  |
-	BreakStatement(true) {return productionEndTerminal("Statement11","-","-","replacement",first,token);}
+	BreakStatement(true) {return productionEndTerminal("Statement11","-","-","Replacement",first,token);}
  |
-	ContinueStatement(true) {return productionEndTerminal("Statement12","-","-","replacement",first,token);}
+	ContinueStatement(true) {return productionEndTerminal("Statement12","-","-","Replacement",first,token);}
  |
-	ReturnStatement(true) {return productionEndTerminal("Statement13","-","-","replacement",first,token);}
+	ReturnStatement(true) {return productionEndTerminal("Statement13","-","-","Replacement",first,token);}
  |
-	ThrowStatement(true) {return productionEndTerminal("Statement14","-","-","replacement",first,token);}
+	ThrowStatement(true) {return productionEndTerminal("Statement14","-","-","Replacement",first,token);}
  |
-	SynchronizedStatement(true) {return productionEndTerminal("Statement15","-","-","replacement",first,token);}
+	SynchronizedStatement(true) {return productionEndTerminal("Statement15","-","-","Replacement",first,token);}
  |
-	TryStatement(true) {return productionEndTerminal("Statement16","-","-","replacement",first,token);}
+	TryStatement(true) {return productionEndTerminal("Statement16","-","-","Replacement",first,token);}
 
  )  }
 
 String AssertStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"assert" Expression(true) [":" Expression(true)] ";" {return productionEndTerminal("AssertStatement","-","-","replacement",first,token);}
+	"assert" Expression(true) [":" Expression(true)] ";" {return productionEndTerminal("AssertStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String LabeledStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> ":" Statement(true) {return productionEndTerminal("LabeledStatement","-","-","replacement",first,token);}
+	<IDENTIFIER> ":" Statement(true) {return productionEndTerminal("LabeledStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String Block(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (BlockStatement(true))* "}" {return productionEndTerminal("Block","-","-","replacement",first,token);}
+	"{" (BlockStatement(true))* "}" {return productionEndTerminal("Block","-","-","Replacement",first,token);}
 
  )  }
 
 String BlockStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD([ "final" ] Type() <IDENTIFIER>) LocalVariableDeclaration(true) ";" {return productionEndTerminal("BlockStatement1","-","-","replacement",first,token);}
+	LOOKAHEAD([ "final" ] Type() <IDENTIFIER>) LocalVariableDeclaration(true) ";" {return productionEndTerminal("BlockStatement1","-","-","Replacement",first,token);}
  |
-	Statement(true) {return productionEndTerminal("BlockStatement2","-","-","replacement",first,token);}
+	Statement(true) {return productionEndTerminal("BlockStatement2","-","-","Replacement",first,token);}
  |
-	ClassOrInterfaceDeclaration(true) {return productionEndTerminal("BlockStatement3","-","-","replacement",first,token);}
+	ClassOrInterfaceDeclaration(true) {return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
 
  )  }
 
 String LocalVariableDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["final" ] Type(true) VariableDeclarator(true) ("," VariableDeclarator(true))* {return productionEndTerminal("LocalVariableDeclaration","-","-","replacement",first,token);}
+	["final" ] Type(true) VariableDeclarator(true) ("," VariableDeclarator(true))* {return productionEndTerminal("LocalVariableDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
 String EmptyStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	";"  {return productionEndTerminal("EmptyStatement","-","-","replacement",first,token);}
+	";"  {return productionEndTerminal("EmptyStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String StatementExpression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	PreIncrementExpression(true) {return productionEndTerminal("StatementExpression1","-","-","replacement",first,token);}
+	PreIncrementExpression(true) {return productionEndTerminal("StatementExpression1","-","-","Replacement",first,token);}
  |
-	PreDecrementExpression(true) {return productionEndTerminal("StatementExpression2","-","-","replacement",first,token);}
+	PreDecrementExpression(true) {return productionEndTerminal("StatementExpression2","-","-","Replacement",first,token);}
  |
-	PrimaryExpression(true) [StatementExpressionAssignment(true)] {return productionEndTerminal("StatementExpression3","-","-","replacement",first,token);}
+	PrimaryExpression(true) [StatementExpressionAssignment(true)] {return productionEndTerminal("StatementExpression3","-","-","Replacement",first,token);}
 
  )  }
 
 String StatementExpressionAssignment(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"++"  {return productionEndTerminal("StatementExpressionAssignment1","-","-","replacement",first,token);}
+	"++"  {return productionEndTerminal("StatementExpressionAssignment1","-","-","Replacement",first,token);}
  |
-	"--"  {return productionEndTerminal("StatementExpressionAssignment2","-","-","replacement",first,token);}
+	"--"  {return productionEndTerminal("StatementExpressionAssignment2","-","-","Replacement",first,token);}
  |
-	AssignmentOperator(true) Expression(true) {return productionEndTerminal("StatementExpressionAssignment3","-","-","replacement",first,token);}
+	AssignmentOperator(true) Expression(true) {return productionEndTerminal("StatementExpressionAssignment3","-","-","Replacement",first,token);}
 
  )  }
 
 String SwitchStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"switch" "(" Expression(true) ")" "{" (SwitchStatementLabel(true))* "}" {return productionEndTerminal("SwitchStatement","-","-","replacement",first,token);}
+	"switch" "(" Expression(true) ")" "{" (SwitchStatementLabel(true))* "}" {return productionEndTerminal("SwitchStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String SwitchStatementLabel(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	SwitchLabel(true) (BlockStatement(true))* {return productionEndTerminal("SwitchStatementLabel","-","-","replacement",first,token);}
+	SwitchLabel(true) (BlockStatement(true))* {return productionEndTerminal("SwitchStatementLabel","-","-","Replacement",first,token);}
 
  )  }
 
 String SwitchLabel(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"case" Expression(true) ":" {return productionEndTerminal("SwitchLabel1","-","-","replacement",first,token);}
+	"case" Expression(true) ":" {return productionEndTerminal("SwitchLabel1","-","-","Replacement",first,token);}
  |
-	"default" ":"  {return productionEndTerminal("SwitchLabel2","-","-","replacement",first,token);}
+	"default" ":"  {return productionEndTerminal("SwitchLabel2","-","-","Replacement",first,token);}
 
  )  }
 
 String IfStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"if" "(" Expression(true) ")" Statement(true) [LOOKAHEAD(1) "else" Statement(true)] {return productionEndTerminal("IfStatement","-","-","replacement",first,token);}
+	"if" "(" Expression(true) ")" Statement(true) [LOOKAHEAD(1) "else" Statement(true)] {return productionEndTerminal("IfStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String WhileStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"while" "(" Expression(true) ")" Statement(true) {return productionEndTerminal("WhileStatement","-","-","replacement",first,token);}
+	"while" "(" Expression(true) ")" Statement(true) {return productionEndTerminal("WhileStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String DoStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"do" Statement(true) "while" "(" Expression(true) ")" ";" {return productionEndTerminal("DoStatement","-","-","replacement",first,token);}
+	"do" Statement(true) "while" "(" Expression(true) ")" ";" {return productionEndTerminal("DoStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String ForStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"for" "(" ForStatementInternal(true) ")" Statement(true) {return productionEndTerminal("ForStatement","-","-","replacement",first,token);}
+	"for" "(" ForStatementInternal(true) ")" Statement(true) {return productionEndTerminal("ForStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String ForStatementInternal(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(Type() <IDENTIFIER> ":") Type(true) <IDENTIFIER> ":" Expression(true) {return productionEndTerminal("ForStatementInternal1","-","-","replacement",first,token);}
+	LOOKAHEAD(Type() <IDENTIFIER> ":") Type(true) <IDENTIFIER> ":" Expression(true) {return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
  |
-	[ForInit(true)] ";" [Expression(true)] ";" [ForUpdate(true)] {return productionEndTerminal("ForStatementInternal2","-","-","replacement",first,token);}
+	[ForInit(true)] ";" [Expression(true)] ";" [ForUpdate(true)] {return productionEndTerminal("ForStatementInternal2","-","-","Replacement",first,token);}
 
  )  }
 
 String ForInit(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD([ "final" ] Type() <IDENTIFIER>) LocalVariableDeclaration(true) {return productionEndTerminal("ForInit1","-","-","replacement",first,token);}
+	LOOKAHEAD([ "final" ] Type() <IDENTIFIER>) LocalVariableDeclaration(true) {return productionEndTerminal("ForInit1","-","-","Replacement",first,token);}
  |
-	StatementExpressionList(true) {return productionEndTerminal("ForInit2","-","-","replacement",first,token);}
+	StatementExpressionList(true) {return productionEndTerminal("ForInit2","-","-","Replacement",first,token);}
 
  )  }
 
 String StatementExpressionList(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	StatementExpression(true) ("," StatementExpression(true))* {return productionEndTerminal("StatementExpressionList","-","-","replacement",first,token);}
+	StatementExpression(true) ("," StatementExpression(true))* {return productionEndTerminal("StatementExpressionList","-","-","Replacement",first,token);}
 
  )  }
 
 String ForUpdate(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	StatementExpressionList(true) {return productionEndTerminal("ForUpdate","-","-","replacement",first,token);}
+	StatementExpressionList(true) {return productionEndTerminal("ForUpdate","-","-","Replacement",first,token);}
 
  )  }
 
 String BreakStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"break" [<IDENTIFIER>] ";" {return productionEndTerminal("BreakStatement","-","-","replacement",first,token);}
+	"break" [<IDENTIFIER>] ";" {return productionEndTerminal("BreakStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String ContinueStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"continue" [<IDENTIFIER>] ";" {return productionEndTerminal("ContinueStatement","-","-","replacement",first,token);}
+	"continue" [<IDENTIFIER>] ";" {return productionEndTerminal("ContinueStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String ReturnStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"return" [Expression(true)] ";" {return productionEndTerminal("ReturnStatement","-","-","replacement",first,token);}
+	"return" [Expression(true)] ";" {return productionEndTerminal("ReturnStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String ThrowStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"throw" Expression(true) ";" {return productionEndTerminal("ThrowStatement","-","-","replacement",first,token);}
+	"throw" Expression(true) ";" {return productionEndTerminal("ThrowStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String SynchronizedStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"synchronized" "(" Expression(true) ")" Block(true) {return productionEndTerminal("SynchronizedStatement","-","-","replacement",first,token);}
+	"synchronized" "(" Expression(true) ")" Block(true) {return productionEndTerminal("SynchronizedStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String TryStatement(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"try" Block(true) TryStatementEnd(true) {return productionEndTerminal("TryStatement","-","-","replacement",first,token);}
+	"try" Block(true) TryStatementEnd(true) {return productionEndTerminal("TryStatement","-","-","Replacement",first,token);}
 
  )  }
 
 String TryStatementEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(CatchBlock(true))+ {return productionEndTerminal("TryStatementEnd1","-","-","replacement",first,token);}
+	(CatchBlock(true))+ {return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
  |
-	"finally" Block(true) {return productionEndTerminal("FinallyBlock","-","-","replacement",first,token);}
+	"finally" Block(true) {return productionEndTerminal("FinallyBlock","-","-","Replacement",first,token);}
 
  )  }
 
 String CatchBlock(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"catch" "(" FormalParameter(true) ")" Block(true) {return productionEndTerminal("CatchBlock","-","-","replacement",first,token);}
+	"catch" "(" FormalParameter(true) ")" Block(true) {return productionEndTerminal("CatchBlock","-","-","Replacement",first,token);}
 
  )  }
 
 String Annotation(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD("@" Name() "(" ( <IDENTIFIER> "=" | ")" )) NormalAnnotation(true) {return productionEndTerminal("Annotation1","-","-","replacement",first,token);}
+	LOOKAHEAD("@" Name() "(" ( <IDENTIFIER> "=" | ")" )) NormalAnnotation(true) {return productionEndTerminal("Annotation1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD("@" Name() "(") SingleMemberAnnotation(true) {return productionEndTerminal("Annotation2","-","-","replacement",first,token);}
+	LOOKAHEAD("@" Name() "(") SingleMemberAnnotation(true) {return productionEndTerminal("Annotation2","-","-","Replacement",first,token);}
  |
-	MarkerAnnotation(true) {return productionEndTerminal("Annotation3","-","-","replacement",first,token);}
+	MarkerAnnotation(true) {return productionEndTerminal("Annotation3","-","-","Replacement",first,token);}
 
  )  }
 
 String NormalAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"@" Name(true) "(" [MemberValuePairs(true)] ")" {return productionEndTerminal("NormalAnnotation","-","-","replacement",first,token);}
+	"@" Name(true) "(" [MemberValuePairs(true)] ")" {return productionEndTerminal("NormalAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
 String MarkerAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"@" Name(true) {return productionEndTerminal("MarkerAnnotation","-","-","replacement",first,token);}
+	"@" Name(true) {return productionEndTerminal("MarkerAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
 String SingleMemberAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"@" Name(true) "(" MemberValue(true) ")" {return productionEndTerminal("SingleMemberAnnotation","-","-","replacement",first,token);}
+	"@" Name(true) "(" MemberValue(true) ")" {return productionEndTerminal("SingleMemberAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
 String MemberValuePairs(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	MemberValuePair(true) ("," MemberValuePair(true))* {return productionEndTerminal("MemberValuePairs","-","-","replacement",first,token);}
+	MemberValuePair(true) ("," MemberValuePair(true))* {return productionEndTerminal("MemberValuePairs","-","-","Replacement",first,token);}
 
  )  }
 
 String MemberValuePair(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> "=" MemberValue(true) {return productionEndTerminal("MemberValuePair","-","-","replacement",first,token);}
+	<IDENTIFIER> "=" MemberValue(true) {return productionEndTerminal("MemberValuePair","-","-","Replacement",first,token);}
 
  )  }
 
 String MemberValue(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Annotation(true) {return productionEndTerminal("MemberValue1","-","-","replacement",first,token);}
+	Annotation(true) {return productionEndTerminal("MemberValue1","-","-","Replacement",first,token);}
  |
-	MemberValueArrayInitializer(true) {return productionEndTerminal("MemberValue2","-","-","replacement",first,token);}
+	MemberValueArrayInitializer(true) {return productionEndTerminal("MemberValue2","-","-","Replacement",first,token);}
  |
-	ConditionalExpression(true) {return productionEndTerminal("MemberValue3","-","-","replacement",first,token);}
+	ConditionalExpression(true) {return productionEndTerminal("MemberValue3","-","-","Replacement",first,token);}
 
  )  }
 
 String MemberValueArrayInitializer(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" MemberValue(true) (LOOKAHEAD(2) "," MemberValue(true))* ["," ] "}" {return productionEndTerminal("MemberValueArrayInitializer","-","-","replacement",first,token);}
+	"{" MemberValue(true) (LOOKAHEAD(2) "," MemberValue(true))* ["," ] "}" {return productionEndTerminal("MemberValueArrayInitializer","-","-","Replacement",first,token);}
 
  )  }
 
 String AnnotationTypeBody(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (AnnotationTypeMemberDeclaration(true))* "}" {return productionEndTerminal("AnnotationTypeBody","-","-","replacement",first,token);}
+	"{" (AnnotationTypeMemberDeclaration(true))* "}" {return productionEndTerminal("AnnotationTypeBody","-","-","Replacement",first,token);}
 
  )  }
 
 String AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> "(") Modifiers(true) Type(true) t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} "(" ")" [DefaultValue(true)] ";" {return productionEndTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","replacement",first,token);}
+	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> "(") Modifiers(true) Type(true) t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} "(" ")" [DefaultValue(true)] ";" {return productionEndTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
  |
 	LOOKAHEAD(Modifiers() "@" "interface") Modifiers(inTerminal) "@" "interface" Id(inTerminal) "{" (AnnotationTypeMemberDeclaration(inTerminal))* "}" {return productionEndNonTerminal("AnnotationInnerAnnotation","{<IDENTIFIER>}","{<IDENTIFIER>}");}
  |
@@ -1369,15 +1369,15 @@ String AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,
  |
 	LOOKAHEAD(2) Modifiers(inTerminal) "enum" Id(inTerminal) [ImplementsList(inTerminal)] "{" EnumConstant(inTerminal) ("," EnumConstant(inTerminal))* [EnumBodyInternal(inTerminal)] "}" {return productionEndNonTerminal("AnnotationInnerEnum","{<IDENTIFIER>}","{<IDENTIFIER>}");}
  |
-	LOOKAHEAD(1) Modifiers(true) n=FieldDeclaration(true){ replaceName("FieldDeclaration",n);} {return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","replacement",first,token);}
+	LOOKAHEAD(1) Modifiers(true) n=FieldDeclaration(true){ replaceName("FieldDeclaration",n);} {return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
  |
-	";"  {return productionEndTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}","replacement",first,token);}
+	";"  {return productionEndTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
 String DefaultValue(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"default" MemberValue(true) {return productionEndTerminal("DefaultValue","-","-","replacement",first,token);}
+	"default" MemberValue(true) {return productionEndTerminal("DefaultValue","-","-","Replacement",first,token);}
 
  )  }
 

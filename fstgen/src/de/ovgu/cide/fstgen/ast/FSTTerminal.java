@@ -3,9 +3,11 @@ package de.ovgu.cide.fstgen.ast;
 import java.util.LinkedList;
 
 public class FSTTerminal extends FSTNode {
-
+	
+	public final static String defaultCompositionMechanism = "Replacement"; 
+	
 	private String body;
-	private String compose = "replacement";
+	private String compose = defaultCompositionMechanism;
 
 	public FSTTerminal(String type, String name, String body) {
 		super(type, name);

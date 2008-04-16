@@ -16,6 +16,7 @@ import cide.astgen.nparser.ast.NTextOnly;
 import cide.astgen.nparser.ast.NValue;
 import cide.astgen.nparser.ast.NAbstractValue.Type;
 import cide.astgen.nparser.visitor.NVisitor;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaCCPrintVisitor extends NVisitor {
 
@@ -144,7 +145,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 			String compositionMechanism = c.findAnnotationValue("FSTTerminal",
 					"compose");
 			if (compositionMechanism == null)
-				compositionMechanism = "\"replacement\"";
+				compositionMechanism = "\"" + FSTTerminal.defaultCompositionMechanism + "\"";
 
 			out.println("{return productionEndTerminal(" + getFSTType(c) + ","
 					+ fstNamePattern + "," + fstExportNamePattern + ","
