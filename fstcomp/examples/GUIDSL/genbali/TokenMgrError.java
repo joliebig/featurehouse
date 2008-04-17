@@ -110,7 +110,7 @@ public class TokenMgrError extends Error
     * from this method for such cases in the release version of your parser.
     */
    public String getMessage() {
-      return original();
+      return super.getMessage();
    }
 
    /*

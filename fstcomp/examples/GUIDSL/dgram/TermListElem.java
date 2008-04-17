@@ -12,7 +12,7 @@ public class TermListElem extends AstListNode {
 
     public TermListElem setParms (GTerm arg0) {
         
-        original(arg0) ;     /* GTerm */
+        super.setParms(arg0) ;     /* GTerm */
         return (TermListElem) this ;
     }
 

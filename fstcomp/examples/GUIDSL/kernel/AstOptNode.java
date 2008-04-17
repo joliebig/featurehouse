@@ -64,7 +64,7 @@ public class AstOptNode extends  AstNode {
 
     public  AstNode Replace( AstNode withnode ) {
         if ( withnode instanceof  AstOptNode )
-            return ( original( withnode ) );
+            return ( super.Replace( withnode ) );
         if ( arg[0] != null )
             arg[0].up   = null;
         arg[0]         = withnode;

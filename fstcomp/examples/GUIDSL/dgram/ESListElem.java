@@ -12,7 +12,7 @@ public class ESListElem extends AstListNode {
 
     public ESListElem setParms (ExprStmt arg0) {
         
-        original(arg0) ;     /* ExprStmt */
+        super.setParms(arg0) ;     /* ExprStmt */
         return (ESListElem) this ;
     }
 

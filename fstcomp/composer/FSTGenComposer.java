@@ -6,6 +6,7 @@ import java.util.List;
 
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ImplementsListMerging;
+import composer.rules.ModifierListSpecification;
 import composer.rules.StringConcatenation;
 import composer.rules.MethodOverriding;
 
@@ -65,6 +66,14 @@ public class FSTGenComposer {
 			FSTNode compNode = nodeA.getShallowClone();
 			compNode.setParent(compParent);
 
+/*			System.err.println("nodeA: " + nodeA.getName());
+			System.err.println("nodeB: " + nodeB.getName());
+			System.err.println(".............................");
+			
+			if(nodeA.getName().equals("Foo"))
+				{System.err.println(nodeA.toString());System.err.println(nodeB.toString());}
+*/
+			
 			// composed SubTree-stub is integrated in the new Tree, needs children
 			if(nodeA instanceof FSTNonTerminal && nodeB instanceof FSTNonTerminal) {
 				FSTNonTerminal nonterminalA = (FSTNonTerminal)nodeA;
@@ -94,7 +103,7 @@ public class FSTGenComposer {
 				FSTTerminal terminalComp = (FSTTerminal)compNode;
 				FSTNonTerminal nonterminalParent = (FSTNonTerminal)compParent;
 				
-				if(terminalA.getBody().length() > 0 && terminalB.getBody().length() > 0 && !terminalA.getBody().equals(terminalB.getBody())) {
+				if(!terminalA.getBody().trim().equals(terminalB.getBody().trim())) {
 					
 					if(terminalA.getCompositionMechanism().equals("Replacement")) {
 						System.out.println("Terminal replacement: " + terminalA.toString() + " replaces " + terminalB.toString());
@@ -110,6 +119,9 @@ public class FSTGenComposer {
 					} else if(terminalA.getCompositionMechanism().equals("ConstructorConcatenation")) {
 						System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
 						ConstructorConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					} else if(terminalA.getCompositionMechanism().equals("ModifierListSpecialization")) {
+						System.out.println("Modifier list specification: " + terminalA.toString() + " specializes " + terminalB.toString());
+						ModifierListSpecification.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 					} else {
 						System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
 					}

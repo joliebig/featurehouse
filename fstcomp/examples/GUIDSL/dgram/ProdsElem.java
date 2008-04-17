@@ -12,7 +12,7 @@ public class ProdsElem extends AstListNode {
 
     public ProdsElem setParms (GProd arg0) {
         
-        original(arg0) ;     /* GProd */
+        super.setParms(arg0) ;     /* GProd */
         return (ProdsElem) this ;
     }
 

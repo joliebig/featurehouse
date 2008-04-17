@@ -64,7 +64,7 @@ public abstract class AstListNode extends  AstNode
             System.err.println( "Can't clone "+getClass() );
             System.exit( 1 );
         }
-        original( copy ); // copy child
+        super.initClone( copy ); // copy child
         initClone( copy ); // copy right
         return ( copy );
     }

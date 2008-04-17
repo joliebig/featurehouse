@@ -1,5 +1,3 @@
-//created on: Thu Oct 13 18:52:42 CDT 2005
-
 class Main {
 
     //Gets gramamr and constraints as XML and joins them up

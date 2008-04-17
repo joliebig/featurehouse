@@ -12,7 +12,7 @@ public class AvarListElem extends AstListNode {
 
     public AvarListElem setParms (Avar arg0) {
         
-        original(arg0) ;     /* Avar */
+        super.setParms(arg0) ;     /* Avar */
         return (AvarListElem) this ;
     }
 

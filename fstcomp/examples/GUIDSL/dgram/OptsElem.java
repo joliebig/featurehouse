@@ -12,7 +12,7 @@ public class OptsElem extends AstListNode {
 
     public OptsElem setParms (Opt arg0) {
         
-        original(arg0) ;     /* Opt */
+        super.setParms(arg0) ;     /* Opt */
         return (OptsElem) this ;
     }
 

@@ -1,9 +1,9 @@
 package examples;
 
-public class Bar {
+class Bar {
 	static { int k = 0; }
 	{ int p = 0;}
-	final public class X {
+	class X {
 	}
 	Bar() {
 		int i = 0;

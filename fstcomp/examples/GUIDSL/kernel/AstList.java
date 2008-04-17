@@ -47,7 +47,7 @@ public abstract class AstList extends  AstNode {
         catch ( Exception e ) {
             fatalError( "Can't clone "+getClass() + e.getMessage() );
         }
-        original( copy );
+        super.initClone( copy );
         initClone( copy ); // last + element up pointers
         return ( copy );
     }
@@ -93,7 +93,7 @@ public abstract class AstList extends  AstNode {
     public void dumpnode() { // dump list head node
         AstNode l;
 
-        original();
+        super.dumpnode();
 
         //         if (last == null)
         //             ps.println("\tlast:*");

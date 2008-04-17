@@ -98,7 +98,8 @@ public class kernelConstants {
     static {
         String klassName = new kernelConstants().getClass().getName();
         int dot = klassName.indexOf( '.' );
-        PackageName = klassName.substring( 0,dot );
+        
+        PackageName = dot >= 0 ? klassName.substring( 0,dot ) : "";
         LangName = ( classFound( PackageName + ".Lang" ) ) ? "Lang." : "";
     }
 

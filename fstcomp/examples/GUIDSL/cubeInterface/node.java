@@ -1,5 +1,5 @@
 
 
-class node {
+abstract class node {
     public abstract String toXMLString();
 }

@@ -19,7 +19,7 @@ public class PatsElem extends AstListNode {
 
     public PatsElem setParms (Pat arg0) {
         
-        original(arg0) ;     /* Pat */
+        super.setParms(arg0) ;     /* Pat */
         return (PatsElem) this ;
     }
 

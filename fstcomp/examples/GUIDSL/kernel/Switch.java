@@ -36,6 +36,6 @@ public class Switch extends CommandLineArg implements Cloneable {
     }
 
     public Object clone() throws CloneNotSupportedException {
-        return ( original() );
+        return ( super.clone() );
     }
 }

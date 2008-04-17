@@ -63,7 +63,7 @@ public class AstOptToken extends  AstNode
 
     public  AstNode Replace( AstNode withnode ) {
         if ( withnode instanceof  AstOptToken )
-            return ( original( withnode ) );
+            return ( super.Replace( withnode ) );
         System.out.println( "AstNode::Replace - shouldn't be called" );
         return ( withnode );
     }

@@ -1,1 +1,1 @@
-cd guidsl && java -cp ".;..\..\Jakarta\jakarta.jar;..\..\Jakarta\jdom.jar;..\..\Jakarta\sat4j.jar" defaultpackage/Main -d ../../GPL/model.m && cd ..
+cd guidsl && java -cp ".;..\jakarta.jar;..\jdom.jar;..\sat4j.jar" Main ../../GPL/model.m && cd ..

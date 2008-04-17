@@ -19,7 +19,7 @@ public class ExprListElem extends AstListNode {
 
     public ExprListElem setParms (EExpr arg0) {
         
-        original(arg0) ;     /* EExpr */
+        super.setParms(arg0) ;     /* EExpr */
         return (ExprListElem) this ;
     }
 

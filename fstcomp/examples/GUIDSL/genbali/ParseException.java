@@ -94,7 +94,7 @@ public class ParseException extends Exception {
    */
   public String getMessage() {
     if (!specialConstructor) {
-      return original();
+      return super.getMessage();
     }
     StringBuffer expected = new StringBuffer();
     int maxSize = 0;

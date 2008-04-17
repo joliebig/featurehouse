@@ -1,5 +1,3 @@
-//created on: Thu Oct 13 18:36:42 CDT 2005
-
 class atmostone{
     public String toXMLString() {
         //return "atmostone" +array2String( children().toArray(), "," );

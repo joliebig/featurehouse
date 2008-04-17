@@ -1,4 +1,3 @@
-//created on: Thu Oct 13 18:42:54 CDT 2005
 class or{
     public String toXMLString() {
         StringBuffer str=new StringBuffer();
