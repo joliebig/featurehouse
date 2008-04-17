@@ -183,7 +183,7 @@ TOKEN :
       "'"
       (   (~["'","\\","\n","\r"])
         | ("\\"
-            ( ["n","t","b","r","f","\\","'","\""]
+            ( ["n","t","b","r","f","u","\\","'","\""]
             | ["0"-"7"] ( ["0"-"7"] )?
             | ["0"-"3"] ["0"-"7"] ["0"-"7"]
             )
@@ -196,7 +196,7 @@ TOKEN :
       "\""
       (   (~["\"","\\","\n","\r"])
         | ("\\"
-            ( ["n","t","b","r","f","\\","'","\""]
+            ( ["n","t","b","r","f","u","\\","'","\""]
             | ["0"-"7"] ( ["0"-"7"] )?
             | ["0"-"3"] ["0"-"7"] ["0"-"7"]
             )
@@ -311,9 +311,9 @@ TOKEN :
 /* >'s need special attention due to generics syntax. */
 TOKEN :
 {
-  < RUNSIGNEDSHIFT: ">>>" >
-| < RSIGNEDSHIFT: ">>" >
-| < GT: ">" >
+//  < RUNSIGNEDSHIFT: ">>>" >
+//| < RSIGNEDSHIFT: ">>" >
+ < GT: ">" >
 }
 
 
@@ -354,6 +354,7 @@ ImportDeclaration:
 ImportPackage:
 	<NONE> "." "*" ;
 
+@FSTTerminal(compose="ModifierListSpecialization")
 Modifiers:
   (LL(2) Modifier)*
 ;
@@ -1083,8 +1084,8 @@ TryStatement:
 
 TryStatementEnd:
   	(CatchBlock )+
-  |
-   	"finally" Block ::FinallyBlock
+  
+   [	"finally" Block ]
 ;
 
 CatchBlock:

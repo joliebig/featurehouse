@@ -183,7 +183,7 @@ TOKEN :
       "'"
       (   (~["'","\\","\n","\r"])
         | ("\\"
-            ( ["n","t","b","r","f","\\","'","\""]
+            ( ["n","t","b","r","f","u","\\","'","\""]
             | ["0"-"7"] ( ["0"-"7"] )?
             | ["0"-"3"] ["0"-"7"] ["0"-"7"]
             )
@@ -196,7 +196,7 @@ TOKEN :
       "\""
       (   (~["\"","\\","\n","\r"])
         | ("\\"
-            ( ["n","t","b","r","f","\\","'","\""]
+            ( ["n","t","b","r","f","u","\\","'","\""]
             | ["0"-"7"] ( ["0"-"7"] )?
             | ["0"-"3"] ["0"-"7"] ["0"-"7"]
             )
@@ -311,9 +311,9 @@ TOKEN :
 /* >'s need special attention due to generics syntax. */
 TOKEN :
 {
-  < RUNSIGNEDSHIFT: ">>>" >
-| < RSIGNEDSHIFT: ">>" >
-| < GT: ">" >
+//  < RUNSIGNEDSHIFT: ">>>" >
+//| < RSIGNEDSHIFT: ">>" >
+ < GT: ">" >
 }
 String CompilationUnit(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
@@ -341,7 +341,7 @@ String ImportPackage(boolean inTerminal) : { Token first=null,t;String n;
 
 String Modifiers(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(LOOKAHEAD(2) Modifier(true))* {return productionEndTerminal("Modifiers","-","-","Replacement",first,token);}
+	(LOOKAHEAD(2) Modifier(true))* {return productionEndTerminal("Modifiers","-","-","ModifierListSpecialization",first,token);}
 
  )  }
 
@@ -1285,9 +1285,7 @@ String TryStatement(boolean inTerminal) : { Token first=null,t;String n;
 
 String TryStatementEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(CatchBlock(true))+ {return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
- |
-	"finally" Block(true) {return productionEndTerminal("FinallyBlock","-","-","Replacement",first,token);}
+	(CatchBlock(true))+ ["finally" Block(true)] {return productionEndTerminal("TryStatementEnd","-","-","Replacement",first,token);}
 
  )  }
 

@@ -116,9 +116,7 @@ public interface Java15ParserConstants {
   int RSIGNEDSHIFTASSIGN = 119;
   int RUNSIGNEDSHIFTASSIGN = 120;
   int ELLIPSIS = 121;
-  int RUNSIGNEDSHIFT = 122;
-  int RSIGNEDSHIFT = 123;
-  int GT = 124;
+  int GT = 122;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -248,8 +246,6 @@ public interface Java15ParserConstants {
     "\">>=\"",
     "\">>>=\"",
     "\"...\"",
-    "\">>>\"",
-    "\">>\"",
     "\">\"",
   };
 
