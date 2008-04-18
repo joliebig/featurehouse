@@ -44,7 +44,7 @@ public class TextBuilder extends ArtifactBuilder {
 		String docName = st.nextToken();
 		FSTNonTerminal rootDocument = new FSTNonTerminal(suffix + "-File", docName);
 		parent.addChild(rootDocument);
-		FSTTerminal contentNode = new FSTTerminal(suffix + "-Content", docName, content, StringConcatenation.COMPOSITION_RULE_NAME);
+		FSTTerminal contentNode = new FSTTerminal(suffix + "-Content", docName, content, "", StringConcatenation.COMPOSITION_RULE_NAME);
 		rootDocument.addChild(contentNode);
 	}
 }
