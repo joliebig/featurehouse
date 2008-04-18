@@ -1,1 +1,3 @@
-.classpath
+*.classpath
+*.project
+*.class
