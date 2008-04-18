@@ -366,6 +366,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("RelationalOp2") && expectedType.equals("RelationalOp")) return true;
 		if (type.equals("ForInit1") && expectedType.equals("ForInit")) return true;
 		if (type.equals("CastExpression2") && expectedType.equals("CastExpression")) return true;
+		if (type.equals("TryStatementEnd2") && expectedType.equals("TryStatementEnd")) return true;
 		if (type.equals("Annotation3") && expectedType.equals("Annotation")) return true;
 		if (type.equals("UnaryExpression3") && expectedType.equals("UnaryExpression")) return true;
 		if (type.equals("Statement3") && expectedType.equals("Statement")) return true;
@@ -388,6 +389,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("PrimarySuffix6") && expectedType.equals("PrimarySuffix")) return true;
 		if (type.equals("CastExpression1") && expectedType.equals("CastExpression")) return true;
 		if (type.equals("Statement16") && expectedType.equals("Statement")) return true;
+		if (type.equals("TryStatementEnd1") && expectedType.equals("TryStatementEnd")) return true;
 		if (type.equals("AllocationExpression2") && expectedType.equals("AllocationExpression")) return true;
 		if (type.equals("PostfixOp2") && expectedType.equals("PostfixOp")) return true;
 		if (type.equals("Statement2") && expectedType.equals("Statement")) return true;

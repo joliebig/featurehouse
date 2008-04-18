@@ -1285,7 +1285,9 @@ String TryStatement(boolean inTerminal) : { Token first=null,t;String n;
 
 String TryStatementEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(CatchBlock(true))+ ["finally" Block(true)] {return productionEndTerminal("TryStatementEnd","-","-","Replacement",first,token);}
+	(CatchBlock(true))+ ["finally" Block(true)] {return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
+ |
+	"finally" Block(true) {return productionEndTerminal("TryStatementEnd2","-","-","Replacement",first,token);}
 
  )  }
 

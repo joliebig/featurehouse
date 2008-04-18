@@ -1083,9 +1083,9 @@ TryStatement:
 ;
 
 TryStatementEnd:
-  	(CatchBlock )+
-  
-   [	"finally" Block ]
+  	(CatchBlock )+ ["finally" Block ]
+  |
+     "finally" Block 
 ;
 
 CatchBlock:
