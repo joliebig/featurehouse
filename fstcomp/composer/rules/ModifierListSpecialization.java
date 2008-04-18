@@ -6,8 +6,8 @@ import java.util.StringTokenizer;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class ModifierListSpecification {
-
+public class ModifierListSpecialization {
+	public final static String COMPOSITION_RULE_NAME = "ModifierListSpecialization";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		if(terminalA.getBody().length() == 0) {
 			terminalComp.setBody(terminalB.getBody());

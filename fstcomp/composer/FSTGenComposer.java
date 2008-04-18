@@ -6,43 +6,86 @@ import java.util.List;
 
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ImplementsListMerging;
-import composer.rules.ModifierListSpecification;
+import composer.rules.ModifierListSpecialization;
+import composer.rules.Replacement;
 import composer.rules.StringConcatenation;
 import composer.rules.MethodOverriding;
 
+import builder.ArtifactBuilderInterface;
 import builder.java.JavaBuilder;
+import builder.text.TextBuilder;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
+import printer.PrintVisitorInterface;
+import printer.java.JavaPrintVisitor;
+import printer.text.TextPrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenComposer {
-	public static void main(String[] args) {
-		
-		CmdLineInterpreter cmd = new CmdLineInterpreter();
+	private LinkedList<ArtifactBuilderInterface> builders = new LinkedList<ArtifactBuilderInterface>();
+	private CmdLineInterpreter cmd = new CmdLineInterpreter();
+	private FileLoader fileLoader = new FileLoader();
+	private FeaturePrintVisitor featureVisitor = new FeaturePrintVisitor();
+	
+	public void registerArtifactBuilder(ArtifactBuilderInterface builder) {
+		fileLoader.registerArtifactBuilder(builder);
+	}
+	
+	public void unregisterArtifactBuilder(ArtifactBuilderInterface builder) {
+		fileLoader.unregisterArtifactBuilder(builder);
+	}
+
+	public LinkedList<ArtifactBuilderInterface> getArtifactBuilders() {
+		return fileLoader.getArtifactBuilders();
+	}
+	
+	public void registerPrintVisitor(PrintVisitorInterface visitor) {
+		this.featureVisitor.registerPrintVisitor(visitor);
+	}
+
+	public void unregisterPrintVisitor(PrintVisitorInterface visitor) {
+		this.featureVisitor.unregisterPrintVisitor(visitor);
+	}
+
+	public LinkedList<PrintVisitorInterface> getPrintVisitors() {
+		return featureVisitor.getPrintVisitors();
+	}
+	
+	void run(String[] args) {
 		cmd.parseCmdLineArguments(args);
 		
-		FileLoader fileLoader = new FileLoader();
-		JavaBuilder javaBuilder = new JavaBuilder();
-		
-		fileLoader.registerArtifactBuilder(javaBuilder);
 		try {
 			fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
-			LinkedList<FSTNonTerminal> features = javaBuilder.getFeatures();
-			FSTNode composition = compose(features);
-			
 			String outputDir = cmd.equationBaseDirectoryName;
 			if (cmd.outputDirectoryName!=null)
 				outputDir=cmd.outputDirectoryName;
-			FeaturePrintVisitor featurePrintVisitor = new FeaturePrintVisitor(outputDir, cmd.equationFileName);
-			featurePrintVisitor.visit((FSTNonTerminal)composition);
-		} catch (PrintVisitorException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
 		
+			featureVisitor.setWorkingDir(outputDir);
+			featureVisitor.setExpressionName(cmd.equationFileName);
+			
+			for(ArtifactBuilderInterface builder : getArtifactBuilders()) {
+				LinkedList<FSTNonTerminal> features = builder.getFeatures();
+				FSTNode composition = compose(features);
+				try {
+					featureVisitor.visit((FSTNonTerminal)composition);	
+				} catch (PrintVisitorException e) {
+					e.printStackTrace();
+				}
+			}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		FSTGenComposer composer = new FSTGenComposer();
+		composer.registerArtifactBuilder(new JavaBuilder());
+		composer.registerArtifactBuilder(new TextBuilder(".properties"));
+		composer.registerPrintVisitor(new JavaPrintVisitor());
+		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
+		composer.run(args);
 	}
 	
 	private static FSTNode compose(List<FSTNonTerminal> tl) {
@@ -103,28 +146,25 @@ public class FSTGenComposer {
 				FSTTerminal terminalComp = (FSTTerminal)compNode;
 				FSTNonTerminal nonterminalParent = (FSTNonTerminal)compParent;
 				
-				if(!terminalA.getBody().trim().equals(terminalB.getBody().trim())) {
-					
-					if(terminalA.getCompositionMechanism().equals("Replacement")) {
-						System.out.println("Terminal replacement: " + terminalA.toString() + " replaces " + terminalB.toString());
-					} else if(terminalA.getCompositionMechanism().equals("StringConcatenation")) {
-						System.out.println("Terminal concatenation: " + terminalA.toString() + " is concatenated to " + terminalB.toString());
-						StringConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else if(terminalA.getCompositionMechanism().equals("ImplementsListMerging")) {
-						System.out.println("Implements list merging: " + terminalA.toString() + " extends " + terminalB.toString());
-						ImplementsListMerging.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else if(terminalA.getCompositionMechanism().equals("MethodOverriding")) {
-						System.out.println("Method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
-						MethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else if(terminalA.getCompositionMechanism().equals("ConstructorConcatenation")) {
-						System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
-						ConstructorConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else if(terminalA.getCompositionMechanism().equals("ModifierListSpecialization")) {
-						System.out.println("Modifier list specification: " + terminalA.toString() + " specializes " + terminalB.toString());
-						ModifierListSpecification.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-					} else {
-						System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
-					}
+				if(terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME)) {
+					System.out.println("Terminal replacement: " + terminalA.toString() + " replaces " + terminalB.toString());
+				} else if(terminalA.getCompositionMechanism().equals(StringConcatenation.COMPOSITION_RULE_NAME)) {
+					System.out.println("Terminal concatenation: " + terminalA.toString() + " is concatenated to " + terminalB.toString());
+					StringConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(ImplementsListMerging.COMPOSITION_RULE_NAME)) {
+					System.out.println("Implements list merging: " + terminalA.toString() + " extends " + terminalB.toString());
+					ImplementsListMerging.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(MethodOverriding.COMPOSITION_RULE_NAME)) {
+					System.out.println("Method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
+					MethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(ConstructorConcatenation.COMPOSITION_RULE_NAME)) {
+					System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
+					ConstructorConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
+					System.out.println("Modifier list specification: " + terminalA.toString() + " specializes " + terminalB.toString());
+					ModifierListSpecialization.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else {
+					System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
 				}
 				return terminalComp;
 			}

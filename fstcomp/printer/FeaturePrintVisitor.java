@@ -2,60 +2,90 @@ package printer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.LinkedList;
 
 import tmp.generated_java15.SimplePrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 
-public class FeaturePrintVisitor implements PrintVisitorInterface {
-	private String workingDir;
-	private String expressionName;
+public class FeaturePrintVisitor {
+	private String workingDir = ".";
+	private String expressionName = "default.expression";
 	private File featurePath;
 	private File folderPath;
 	private File oldFolderPath;
+	private LinkedList<PrintVisitorInterface> visitors = new LinkedList<PrintVisitorInterface>();
+	
+	public FeaturePrintVisitor() {	}
 	
 	public FeaturePrintVisitor(String workingDir, String expressionName) {
+		this.setWorkingDir(workingDir);
+		this.setExpressionName(expressionName);
+	}
+	
+	public void setWorkingDir(String workingDir) {
 		this.workingDir = workingDir;
+	}
+
+	public String getWorkingDir() {
+		return workingDir;
+	}
+
+	public void setExpressionName(String expressionName) {
 		this.expressionName = expressionName;
+	}
+
+	public String getExpressionName() {
+		return expressionName;
+	}
+
+	public void registerPrintVisitor(PrintVisitorInterface visitor) {
+		this.visitors.add(visitor);
+	}
+
+	public void unregisterPrintVisitor(PrintVisitorInterface visitor) {
+		this.visitors.remove(visitor);
+	}
+
+	public LinkedList<PrintVisitorInterface> getPrintVisitors() {
+		return visitors;
 	}
 	
 	public void visit(FSTNonTerminal nonterminal) throws PrintVisitorException {
-		if(nonterminal == null) {
-			System.err.println("Nonterminal with null value encountered");
-		} else if (nonterminal.getType().equals("JavaFile")) {
-			for(FSTNode child : nonterminal.getChildren()) {
-				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
-				
-				SimplePrintVisitor javaVisitor;
-				try {
-					javaVisitor = new SimplePrintVisitor(new PrintStream(fileName));
-					javaVisitor.visit((FSTNonTerminal)child);
-					javaVisitor.getResult();
-				} catch (FileNotFoundException e) {
-					throw new PrintVisitorException(e.getMessage());
+		if(nonterminal != null) {
+			if(nonterminal.getType().equals("Feature")) {
+				StringBuffer sb = new StringBuffer(getExpressionName());
+				sb.setLength(sb.lastIndexOf("."));
+				sb.delete(0, sb.lastIndexOf(File.separator) + 1);
+				featurePath = new File(getWorkingDir() + sb.toString());
+				featurePath.mkdir();
+				folderPath = featurePath;
+				for(FSTNode child : nonterminal.getChildren()) {
+					assert(!(child instanceof FSTNonTerminal));
+					visit((FSTNonTerminal)child);
 				}
+			} else if(nonterminal.getType().equals("Folder")) {
+				oldFolderPath = folderPath;
+				folderPath = new File(folderPath, nonterminal.getName());
+				folderPath.mkdir();
+				for(FSTNode child : nonterminal.getChildren()) {
+					assert(!(child instanceof FSTNonTerminal));
+					visit((FSTNonTerminal)child);
+				}
+				folderPath = oldFolderPath;
+			} else {
+				boolean processed = false;
+				for(PrintVisitorInterface visitor : getPrintVisitors()) {
+
+					if(visitor.acceptNode(nonterminal)) {
+						visitor.processNode(nonterminal, folderPath);
+						processed = true;
+					}
+				}
+				if(!processed)
+					System.err.println("Nonterminal type not supported: " + nonterminal.getType());
 			}
-			
-		} else if(nonterminal.getType().equals("Feature")) {
-			StringBuffer sb = new StringBuffer(expressionName);
-			sb.setLength(sb.lastIndexOf("."));
-			sb.delete(0, sb.lastIndexOf(File.separator) + 1);
-			featurePath = new File(workingDir + sb.toString());
-			featurePath.mkdir();
-			folderPath = featurePath;
-			for(FSTNode child : nonterminal.getChildren())
-				visit((FSTNonTerminal)child);
-			
-		} else if(nonterminal.getType().equals("Folder")) {
-			oldFolderPath = folderPath;
-			folderPath = new File(folderPath, nonterminal.getName());
-			folderPath.mkdir();
-			for(FSTNode child : nonterminal.getChildren())
-				visit((FSTNonTerminal)child);
-			folderPath = oldFolderPath;
-		} else {
-			System.err.println("Nonterminal type not supported: " + nonterminal.getType());
 		}
 	}
 }

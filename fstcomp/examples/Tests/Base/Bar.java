@@ -6,6 +6,5 @@ class Bar {
 	class X {
 	}
 	Bar() {
-		int i = 0;
 	}
 }

@@ -59,11 +59,10 @@ public class EditorFrame {
             try
             {
                saveImage(graph, out, format);
+            } catch(Exception e) {
+            	e.printStackTrace();
             }
-            finally
-            {
-               out.close();
-            }
+            out.close();
          }
       }
       catch (Exception exception)

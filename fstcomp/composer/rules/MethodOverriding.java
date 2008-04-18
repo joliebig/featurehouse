@@ -7,7 +7,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class MethodOverriding {
-
+	public final static String COMPOSITION_RULE_NAME = "MethodOverriding";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		String toReplace = "original\\s*\\(";
 		if(terminalA.getBody().matches(".*\\s*original\\s*.*")){

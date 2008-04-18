@@ -6,7 +6,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class ImplementsListMerging {
-
+	public final static String COMPOSITION_RULE_NAME = "ImplementsListMerging";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		String interfaceListA = terminalA.getBody().replaceFirst("implements", ", ");
 		String interfaceListB = terminalB.getBody().replaceFirst("implements", ", ");

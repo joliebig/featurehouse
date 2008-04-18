@@ -4,7 +4,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class ConstructorConcatenation {
-
+	public final static String COMPOSITION_RULE_NAME = "ConstructorConcatenation";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		String constructorA = terminalA.getBody();
 		String constructorB = terminalB.getBody();

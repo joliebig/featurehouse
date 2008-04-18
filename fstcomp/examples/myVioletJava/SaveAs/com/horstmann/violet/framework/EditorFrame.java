@@ -39,11 +39,10 @@ public class EditorFrame {
             try
             {
                saveFile(graph, out);
+            } catch (Exception e) {
+            	e.printStackTrace();
             }
-            finally
-            {
-               out.close();
-            }
+            out.close();
             frame.setFileName(save.getName());
             setTitle();
             frame.getGraphPanel().setModified(false);

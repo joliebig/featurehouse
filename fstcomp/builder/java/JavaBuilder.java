@@ -27,7 +27,6 @@ public class JavaBuilder extends ArtifactBuilder {
 	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
 		FSTNonTerminal rootDocument = new FSTNonTerminal("JavaFile", st.nextToken());
 		parent.addChild(rootDocument);
-		parent = rootDocument;
 		Java15Parser p = new Java15Parser(new OffsetCharStream( new FileInputStream(inputFile)));
 		try {
 			p.CompilationUnit(false);
