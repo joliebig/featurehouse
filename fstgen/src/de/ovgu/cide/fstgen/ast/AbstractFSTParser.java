@@ -107,9 +107,11 @@ public class AbstractFSTParser {
 	}
 
 	protected String productionEndTerminal(String type, String namePattern,
-			String exportNamePattern, String compositionMechanism, Token first, Token last) {
+			String exportNamePattern, String compositionMechanism, Token first,
+			Token last) {
 		AbstractFSTParser.Context c = currentContext.pop();
 
+		String prefix = getPrefix(first);
 		String body = getBody(first, last);
 		c.replacements.add(new NameReplacement("TOSTRING",
 				stripWhitespace(body)));
@@ -123,7 +125,8 @@ public class AbstractFSTParser {
 
 			cc().children.addAll(c.children);
 			if (first != null)
-				cc().children.add(new FSTTerminal(type, name, body, compositionMechanism));
+				cc().children.add(new FSTTerminal(type, name, body, prefix,
+						compositionMechanism));
 		}
 		return exportName;
 	}
@@ -132,23 +135,38 @@ public class AbstractFSTParser {
 		return body.replaceAll("\\s", "");
 	}
 
+	/**
+	 * returns the text between first and last token, but NOT the special tokens
+	 * of first
+	 * 
+	 * @param token
+	 * @param last
+	 * @return
+	 */
 	private String getBody(Token first, Token last) {
 		StringBuffer body = new StringBuffer();
-		if (first != null) {
-			while (first != null && first != last.next) {
-				if (first.specialToken != null) {
-					Token t = first.specialToken;
-					while (t != null) {
-						body.append(t.image);
-						t = t.next;
-					}
+		Token token = first;
+		if (token != null) {
+			while (token != null && token != last.next) {
+				if (token.specialToken != null && token != first) {
+					body.append(getPrefix(token));
 				}
-				body.append(first.image);
+				body.append(token.image);
 
-				first = first.next;
+				token = token.next;
 			}
 		}
 		return body.toString();
+	}
+
+	private String getPrefix(Token token) {
+		StringBuffer result = new StringBuffer();
+		Token t = token.specialToken;
+		while (t != null) {
+			result.append(t.image);
+			t = t.next;
+		}
+		return result.toString();
 	}
 
 	protected void replaceName(String choiceName, String value) {

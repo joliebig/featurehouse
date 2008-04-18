@@ -8,26 +8,32 @@ public class FSTTerminal extends FSTNode {
 	
 	private String body;
 	private String compose = defaultCompositionMechanism;
-
-	public FSTTerminal(String type, String name, String body) {
+	private String prefix;
+	
+	public FSTTerminal(String type, String name, String body, String prefix) {
 		super(type, name);
 		this.body = body;
+		this.prefix = prefix;
 	}
 
-	public FSTTerminal(String type, String name, String body,
+	public FSTTerminal(String type, String name, String body, String prefix,
 			String compositionMechanism) {
-		this(type, name, body);
+		this(type, name, body, prefix);
 		this.compose = compositionMechanism;
+	}
+	
+	public String getSpecialTokenPrefix() {
+		return prefix;
 	}
 	
 	@Override
 	public FSTNode getShallowClone() {
-		return new FSTTerminal(getType(), getName(), getBody(), getCompositionMechanism());
+		return new FSTTerminal(getType(), getName(), getBody(), getSpecialTokenPrefix(), getCompositionMechanism());
 	}
 
 	@Override
 	public FSTNode getDeepClone() {
-		return new FSTTerminal(getType(), getName(), getBody(), getCompositionMechanism());
+		return new FSTTerminal(getType(), getName(), getBody(), getSpecialTokenPrefix(), getCompositionMechanism());
 	}
 
 	public void setBody(String b) {
@@ -44,8 +50,14 @@ public class FSTTerminal extends FSTNode {
 
 	@Override
 	public String toString() {
-		return "[T -> " + getName() + " : " + getType() + " \""
-				+ body.replaceAll("\\s", " ") + "\" compose:"+compose+"]";
+		return "[T: "
+				+ getType()
+				+ "/"
+				+ getName()
+				+ " \""
+				+ (prefix.length() != 0 ? prefix.replaceAll("\\s", " ")
+						+ "\" \"" : "") + body.replaceAll("\\s", " ")
+				+ "\" compose:" + compose + "]";
 	}
 
 	public String printFST(int indent) {

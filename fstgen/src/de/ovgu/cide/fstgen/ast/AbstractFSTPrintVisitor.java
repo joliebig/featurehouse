@@ -147,7 +147,7 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	
 	@Override
 	public boolean visit(FSTTerminal terminal) {
-		printToken(terminal.getBody());
+		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
 //		hintNewLine();
 		return false;
 	}
