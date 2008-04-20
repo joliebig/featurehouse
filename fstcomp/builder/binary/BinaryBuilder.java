@@ -1,4 +1,4 @@
-package builder.text;
+package builder.binary;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -8,31 +8,23 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 
 import composer.FSTGenComposer;
+import composer.rules.CompositionError;
 import composer.rules.StringConcatenation;
 
 import builder.ArtifactBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class TextBuilder extends ArtifactBuilder {
-	public TextBuilder(String suffix) {
+public class BinaryBuilder extends ArtifactBuilder {
+	public BinaryBuilder(String suffix) {
 		super(suffix);
 	}
 	
 	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
-		BufferedReader bufRead = new BufferedReader(new FileReader(inputFile));
-		String content = "";
-		try {
-			while(bufRead.ready()) {
-				content += bufRead.readLine() + "\n";
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		String docName = st.nextToken();
 		FSTNonTerminal rootDocument = new FSTNonTerminal(getSuffix() + "-File", docName);
 		parent.addChild(rootDocument);
-		FSTTerminal contentNode = new FSTTerminal(getSuffix() + "-Content", docName, content, "", StringConcatenation.COMPOSITION_RULE_NAME);
+		FSTTerminal contentNode = new FSTTerminal(getSuffix() + "-Content", docName, inputFile.getAbsolutePath(), "", CompositionError.COMPOSITION_RULE_NAME);
 		rootDocument.addChild(contentNode);
 	}
 }

@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
+import composer.rules.CompositionError;
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ImplementsListMerging;
 import composer.rules.ModifierListSpecialization;
@@ -12,11 +13,13 @@ import composer.rules.StringConcatenation;
 import composer.rules.MethodOverriding;
 
 import builder.ArtifactBuilderInterface;
+import builder.binary.BinaryBuilder;
 import builder.java.JavaBuilder;
 import builder.text.TextBuilder;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
+import printer.binary.BinaryPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.text.TextPrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -83,8 +86,10 @@ public class FSTGenComposer {
 		FSTGenComposer composer = new FSTGenComposer();
 		composer.registerArtifactBuilder(new JavaBuilder());
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
+		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
 		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
+		composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		composer.run(args);
 	}
 	
@@ -109,14 +114,6 @@ public class FSTGenComposer {
 			FSTNode compNode = nodeA.getShallowClone();
 			compNode.setParent(compParent);
 
-/*			System.err.println("nodeA: " + nodeA.getName());
-			System.err.println("nodeB: " + nodeB.getName());
-			System.err.println(".............................");
-			
-			if(nodeA.getName().equals("Foo"))
-				{System.err.println(nodeA.toString());System.err.println(nodeB.toString());}
-*/
-			
 			// composed SubTree-stub is integrated in the new Tree, needs children
 			if(nodeA instanceof FSTNonTerminal && nodeB instanceof FSTNonTerminal) {
 				FSTNonTerminal nonterminalA = (FSTNonTerminal)nodeA;
@@ -163,6 +160,8 @@ public class FSTGenComposer {
 				} else if(terminalA.getCompositionMechanism().equals(ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
 					System.out.println("Modifier list specification: " + terminalA.toString() + " specializes " + terminalB.toString());
 					ModifierListSpecialization.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(CompositionError.COMPOSITION_RULE_NAME)) {
+					CompositionError.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else {
 					System.err.println("Error: don't know how to compose terminals: " + terminalB.toString() + " replaces " + terminalA.toString());
 				}

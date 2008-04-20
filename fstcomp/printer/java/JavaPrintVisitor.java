@@ -6,19 +6,16 @@ import java.io.PrintStream;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
 import tmp.generated_java15.SimplePrintVisitor;
 
-public class JavaPrintVisitor implements PrintVisitorInterface {
+public class JavaPrintVisitor extends ArtifactPrintVisitor {
 
-	public boolean acceptNode(FSTNode node) {
-		if (node.getType().equals("JavaFile")) 
-			return true;
-		else
-			return false;
+	public JavaPrintVisitor() {
+		super("Java-File");
 	}
-
 	public void processNode(FSTNode node, File folderPath) throws PrintVisitorException {
 		if(node instanceof FSTNonTerminal) {
 			FSTNonTerminal nonterminal = (FSTNonTerminal)node;

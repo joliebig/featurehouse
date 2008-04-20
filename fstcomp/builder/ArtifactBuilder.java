@@ -12,10 +12,15 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 
 	private LinkedList<FSTNonTerminal> featureNodes= new LinkedList<FSTNonTerminal>();
 
-	/* (non-Javadoc)
-	 * @see builder.ArtifactBuilderInterface#acceptFile(java.io.File)
-	 */
-	public abstract boolean acceptFile(File inputFile);
+	private String suffix;
+
+	public ArtifactBuilder(String suffix) {
+		this.suffix = suffix;
+	}
+
+	protected String getSuffix() {
+		return suffix;
+	}
 
 	/* (non-Javadoc)
 	 * @see builder.ArtifactBuilderInterface#getFeatures()
@@ -100,5 +105,15 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean acceptFile(File inputFile) {
+		if (inputFile.isFile()) {
+		      if (inputFile.getName().endsWith(getSuffix())) {
+		        return true;
+		      }
+		    }
+		    return false;
 	}
 }
