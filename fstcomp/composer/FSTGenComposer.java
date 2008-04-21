@@ -14,6 +14,7 @@ import composer.rules.MethodOverriding;
 
 import builder.ArtifactBuilderInterface;
 import builder.binary.BinaryBuilder;
+import builder.csharp.CSharpBuilder;
 import builder.java.JavaBuilder;
 import builder.text.TextBuilder;
 import printer.FeaturePrintVisitor;
@@ -27,7 +28,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenComposer {
-	private LinkedList<ArtifactBuilderInterface> builders = new LinkedList<ArtifactBuilderInterface>();
+
 	private CmdLineInterpreter cmd = new CmdLineInterpreter();
 	private FileLoader fileLoader = new FileLoader();
 	private FeaturePrintVisitor featureVisitor = new FeaturePrintVisitor();
@@ -85,6 +86,7 @@ public class FSTGenComposer {
 	public static void main(String[] args) {
 		FSTGenComposer composer = new FSTGenComposer();
 		composer.registerArtifactBuilder(new JavaBuilder());
+		composer.registerArtifactBuilder(new CSharpBuilder());
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
 		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
