@@ -65,11 +65,11 @@ TOKEN : {
 	<IN			:	"in"> |				<UNSAFE		:	"unsafe"> |
 	<INT			:	"int"> |		<USHORT		:	"ushort"> |
 	<INTERFACE	:	"interface"> |		<USING		:	"using"> |
-	<INTERNAL	:	"internal"> |		<VIRTUAL		:	"virtual"> |
+	<INTERNAL	:	"internal"> |		<VIRTUAL	:	"virtual"> |
 	<IS			:	"is"> |				<VOID		:	"void"> |
-	<LOCK		:	"lock"> |				<WHILE		:	"while"> |
-	<VOLATILE : "volatile"> |	<MODULE : "module"> |
-	<ASSEMBLY : "assembly">
+	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
+	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
+	<ASSEMBLY	:	"assembly"> |		<MODULE : "module">
 }
 
 TOKEN : {
@@ -107,8 +107,6 @@ TOKEN : {
 <ARROW		:	"->"	> 
 }
 
-
-
 TOKEN:{
 		<#UNICODE_ESCAPE_SEQUENCE
 	:	("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
@@ -116,17 +114,15 @@ TOKEN:{
 					<HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)
 	>
 
-|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
-|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
-|	<NUMERIC_LITERAL
-	:	"." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-	|	(<DECIMAL_DIGIT>)+ 
-			("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-		|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
-		|	(<REAL_TYPE_SUFFIX>)
-		| 	(<INTEGER_TYPE_SUFFIX>)?
-		)		
+	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
+	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
+	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
+	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
+	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
+	|	(<REAL_TYPE_SUFFIX>)
+	| 	(<INTEGER_TYPE_SUFFIX>)?
+	)		
 	>
 |	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
 |	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
@@ -155,7 +151,7 @@ TOKEN:{
 |	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>	)>
-|	<#SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
+|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
 |	<#SIMPLE_ESCAPE_SEQUENCE: (
 		"\\'" | "\\\"" | "\\\\" | "\\0" | "\\a"  
 	|	"\\b" | "\\f"  | "\\n"  | "\\r" | "\\t" | "\\v")>
@@ -211,9 +207,18 @@ boolean_literal
 
 @FSTExportName("{identifier}.{identifier}^")
 type_name
-	:	identifier
-		("." identifier)*	
+	:	type_name_part
+		("." type_name_part)*	
 	;
+	
+
+type_name_part
+	:	identifier [type_argument_list]
+	;
+	
+type_argument_list
+	:	"<"  type	(","	type)*	">"
+	;	
 
 //***********************************************************************************************************************************/
 //C.2.2 Types
@@ -420,6 +425,11 @@ primary_expression_start
 	|	sizeof_expression						//SIZEOF   "("   unmanaged_type   ")"	
 	|	checked_expression					//CHECKED   "("   expression   ")"
 	|	unchecked_expression				//UNCHECKED   "("   expression   ")"
+	|	default_value_expression
+	;
+
+default_value_expression
+	:	"default"	"("	type	")"
 	;
 	
 primary_expression_postfix
@@ -462,11 +472,11 @@ parenthesized_expression
 	;
 
 member_access //assumes a predefined type or a primaryexpression came before this rule
-	:	"."	identifier
+	:	"."	identifier [type_argument_list]
 	;
 
 invocation_expression //assumes a predefined type or a primaryexpression came before this rule
-	:	"("	( argument_list )?	")"
+	:	[type_argument_list] "("	( argument_list )?	")"
 	;
 	
 argument_list 
@@ -797,9 +807,50 @@ type_modifier
 
 @FSTNonTerminal(name="{identifier}")	
 class_declaration
-	:	"class" identifier   (class_base)?   class_body	(";"<NONE>)? 
+	:	"class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body	(";"<NONE>)? 
 	;
 
+type_parameter_list
+	:	"<"	type_parameter	(	","	type_parameter	)*	">"
+	;
+
+type_parameter
+	:	[attributes]	identifier
+	;
+	
+type_parameter_constraint_clauses
+	:	type_parameter_constraint_clause (type_parameter_constraint_clause)*
+	;
+
+type_parameter_constraint_clause
+	:	<WHERE>	type_parameter	":"	type_parameter_constraints
+	;
+
+type_parameter_constraints
+	:	primary_constraint	["," secondary_constraint] ["," constructor_constraint]
+	|	secondary_constraint	["," constructor_constraint]
+	|	constructor_constraint
+	;
+
+primary_constraint
+	:	class_type
+	|	"class"
+	|	"struct"
+	;
+	
+secondary_constraint
+	:	type_name_or_paramenter	(","	type_name_or_paramenter)*
+	;
+
+type_name_or_paramenter
+	:	type_name
+	|	type_parameter
+	;
+
+constructor_constraint
+	:	"new" "(" ")" <NONE>
+	;
+	
 class_base 
 	:	":" class_type ("," type_name)*	
 	;
@@ -890,7 +941,7 @@ variable_initializer
 	;
 
 method_declaration
-	:	"("	(formal_parameter_list)?	")"	body 
+	: [type_parameter_list] "("	(formal_parameter_list)? [type_parameter_constraint_clauses] ")"	body 
 	;
 
 body 
@@ -1034,7 +1085,7 @@ destructor_declaration
 
 @FSTNonTerminal(name="{identifier}")	
 struct_declaration
-	:	"struct"   identifier   (base_interfaces)?   class_body   (";"<NONE>)? 
+	:	"struct"   identifier  [type_parameter_list] (base_interfaces)?  [type_parameter_constraint_clauses] class_body   (";"<NONE>)? 
 	;
 
 base_interfaces 
@@ -1059,7 +1110,7 @@ rest_of_array_initializerEnd:	"}" |  ","	rest_of_array_initializer;
 
 @FSTNonTerminal(name="{identifier}")	
 interface_declaration
-	:	"interface"	identifier	(base_interfaces)?	interface_body   (";"<NONE>)?
+	:	"interface"	identifier	[type_parameter_list]	(base_interfaces)?	[type_parameter_constraint_clauses]	interface_body   (";"<NONE>)?
 			
 	;
 	
@@ -1096,7 +1147,7 @@ interface_indexer_declaration
 	;
 	
 interface_method_declaration
-	:	"("	(formal_parameter_list)?	")"	";" @! 
+	:	[type_parameter_list]	"("	(formal_parameter_list)?	[type_parameter_constraint_clauses]	")"	";" @! 
 	;
 
 interface_property_declaration
@@ -1149,7 +1200,7 @@ enum_member_assignment
 
 @FSTNonTerminal(name="{identifier}")	
 delegate_declaration
-	:	"delegate"   type   identifier   "("   (formal_parameter_list)?   ")"   ";" @! 
+	:	"delegate"   type   identifier	[type_parameter_list]  "("   (formal_parameter_list)?	[type_parameter_constraint_clauses]   ")"   ";" @! 
 	;
 
 //***********************************************************************************************************************************/	

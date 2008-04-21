@@ -187,7 +187,19 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
 				FSTNode v=getChild(nonTerminal, "class_base");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_constraint_clauses");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -209,7 +221,19 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
 				FSTNode v=getChild(nonTerminal, "base_interfaces");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_constraint_clauses");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -231,7 +255,19 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
 				FSTNode v=getChild(nonTerminal, "base_interfaces");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_constraint_clauses");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -280,9 +316,21 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			printToken("(");
 			{
 				FSTNode v=getChild(nonTerminal, "formal_parameter_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_parameter_constraint_clauses");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -302,6 +350,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("predefined_type2") && expectedType.equals("predefined_type")) return true;
 		if (type.equals("unary_operator6") && expectedType.equals("unary_operator")) return true;
 		if (type.equals("primary_expression2") && expectedType.equals("primary_expression")) return true;
+		if (type.equals("primary_constraint1") && expectedType.equals("primary_constraint")) return true;
 		if (type.equals("primary_expression_start1") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("numeric_type3") && expectedType.equals("numeric_type")) return true;
 		if (type.equals("assignment_operator2") && expectedType.equals("assignment_operator")) return true;
@@ -314,6 +363,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("member_modifier13") && expectedType.equals("member_modifier")) return true;
 		if (type.equals("predefined_type1") && expectedType.equals("predefined_type")) return true;
 		if (type.equals("embedded_statement13") && expectedType.equals("embedded_statement")) return true;
+		if (type.equals("primary_expression_start11") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("unary_operator7") && expectedType.equals("unary_operator")) return true;
 		if (type.equals("primary_expression_start2") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("creation_expressionPostFix1") && expectedType.equals("creation_expressionPostFix")) return true;
@@ -328,6 +378,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("catch_clauseEnd2") && expectedType.equals("catch_clauseEnd")) return true;
 		if (type.equals("attribute_target3") && expectedType.equals("attribute_target")) return true;
 		if (type.equals("namespace_member_declaration_no_attr2") && expectedType.equals("namespace_member_declaration_no_attr")) return true;
+		if (type.equals("type_name_or_paramenter2") && expectedType.equals("type_name_or_paramenter")) return true;
 		if (type.equals("type_modifier6") && expectedType.equals("type_modifier")) return true;
 		if (type.equals("assignment_operator4") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("assignment_operator12") && expectedType.equals("assignment_operator")) return true;
@@ -342,8 +393,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("goto_statementEnd3") && expectedType.equals("goto_statementEnd")) return true;
 		if (type.equals("body2") && expectedType.equals("body")) return true;
 		if (type.equals("integral_type5") && expectedType.equals("integral_type")) return true;
-		if (type.equals("unary_expression2") && expectedType.equals("unary_expression")) return true;
 		if (type.equals("member_modifier10") && expectedType.equals("member_modifier")) return true;
+		if (type.equals("unary_expression2") && expectedType.equals("unary_expression")) return true;
 		if (type.equals("primary_expression_start5") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("event_declarationInt1") && expectedType.equals("event_declarationInt")) return true;
 		if (type.equals("overloadable_unary_operator1") && expectedType.equals("overloadable_unary_operator")) return true;
@@ -475,6 +526,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("namespace_member_declaration1") && expectedType.equals("namespace_member_declaration")) return true;
 		if (type.equals("resource_acquisition2") && expectedType.equals("resource_acquisition")) return true;
 		if (type.equals("shift_operator2") && expectedType.equals("shift_operator")) return true;
+		if (type.equals("type_parameter_constraints3") && expectedType.equals("type_parameter_constraints")) return true;
 		if (type.equals("interface_member_declarationEndTypeIdentifier2") && expectedType.equals("interface_member_declarationEndTypeIdentifier")) return true;
 		if (type.equals("relational_expressionInternal1") && expectedType.equals("relational_expressionInternal")) return true;
 		if (type.equals("overloadable_binary_operator16") && expectedType.equals("overloadable_binary_operator")) return true;
@@ -490,6 +542,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("primary_expression_postfixInternal4") && expectedType.equals("primary_expression_postfixInternal")) return true;
 		if (type.equals("equality_operator1") && expectedType.equals("equality_operator")) return true;
 		if (type.equals("attribute_sectionEnd3") && expectedType.equals("attribute_sectionEnd")) return true;
+		if (type.equals("type_parameter_constraints2") && expectedType.equals("type_parameter_constraints")) return true;
 		if (type.equals("rest_of_enum_bodyEnd1") && expectedType.equals("rest_of_enum_bodyEnd")) return true;
 		if (type.equals("overloadable_binary_operator9") && expectedType.equals("overloadable_binary_operator")) return true;
 		if (type.equals("multiplicative_operator1") && expectedType.equals("multiplicative_operator")) return true;
@@ -497,6 +550,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("interface_member_declarationEndTypeIdentifier1") && expectedType.equals("interface_member_declarationEndTypeIdentifier")) return true;
 		if (type.equals("class_member_declarationEnd6") && expectedType.equals("class_member_declarationEnd")) return true;
 		if (type.equals("overloadable_binary_operator15") && expectedType.equals("overloadable_binary_operator")) return true;
+		if (type.equals("type_name_or_paramenter1") && expectedType.equals("type_name_or_paramenter")) return true;
 		if (type.equals("typeEnd5") && expectedType.equals("typeEnd")) return true;
 		if (type.equals("relational_expressionInternal2") && expectedType.equals("relational_expressionInternal")) return true;
 		if (type.equals("jump_statement3") && expectedType.equals("jump_statement")) return true;
@@ -509,13 +563,14 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("statement4") && expectedType.equals("statement")) return true;
 		if (type.equals("parameter_modifier1") && expectedType.equals("parameter_modifier")) return true;
 		if (type.equals("variable_initializer1") && expectedType.equals("variable_initializer")) return true;
-		if (type.equals("assignment_operator9") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("member_modifier8") && expectedType.equals("member_modifier")) return true;
+		if (type.equals("assignment_operator9") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("attribute_sectionEnd2") && expectedType.equals("attribute_sectionEnd")) return true;
 		if (type.equals("formal_parameter_listEnd1") && expectedType.equals("formal_parameter_listEnd")) return true;
 		if (type.equals("rest_of_enum_bodyEnd2") && expectedType.equals("rest_of_enum_bodyEnd")) return true;
 		if (type.equals("argumentPrefix1") && expectedType.equals("argumentPrefix")) return true;
 		if (type.equals("primary_expression_postfixInternal5") && expectedType.equals("primary_expression_postfixInternal")) return true;
+		if (type.equals("type_parameter_constraints1") && expectedType.equals("type_parameter_constraints")) return true;
 		if (type.equals("multiplicative_operator2") && expectedType.equals("multiplicative_operator")) return true;
 		if (type.equals("additive_operator1") && expectedType.equals("additive_operator")) return true;
 		if (type.equals("assignment_operator10") && expectedType.equals("assignment_operator")) return true;
@@ -532,6 +587,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("assignment_operator5") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("relational_operator2I1") && expectedType.equals("relational_operator2I")) return true;
 		if (type.equals("class_type3") && expectedType.equals("class_type")) return true;
+		if (type.equals("primary_constraint3") && expectedType.equals("primary_constraint")) return true;
 		if (type.equals("primary_expression_start10") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("attribute_sectionEnd1") && expectedType.equals("attribute_sectionEnd")) return true;
 		if (type.equals("embedded_statement10") && expectedType.equals("embedded_statement")) return true;
@@ -549,13 +605,14 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("non_array_type2") && expectedType.equals("non_array_type")) return true;
 		if (type.equals("attribute_section_start2") && expectedType.equals("attribute_section_start")) return true;
 		if (type.equals("constructor_initializerInt2") && expectedType.equals("constructor_initializerInt")) return true;
-		if (type.equals("array_creation_postfix_expressionInternal3") && expectedType.equals("array_creation_postfix_expressionInternal")) return true;
+		if (type.equals("primary_constraint2") && expectedType.equals("primary_constraint")) return true;
 		if (type.equals("relational_operator2I2") && expectedType.equals("relational_operator2I")) return true;
 		if (type.equals("assignment_operator6") && expectedType.equals("assignment_operator")) return true;
+		if (type.equals("array_creation_postfix_expressionInternal3") && expectedType.equals("array_creation_postfix_expressionInternal")) return true;
 		if (type.equals("literal3") && expectedType.equals("literal")) return true;
 		if (type.equals("jump_statement5") && expectedType.equals("jump_statement")) return true;
-		if (type.equals("assignment_operator7") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("member_modifier6") && expectedType.equals("member_modifier")) return true;
+		if (type.equals("assignment_operator7") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("variable_initializer3") && expectedType.equals("variable_initializer")) return true;
 		if (type.equals("embedded_statement11") && expectedType.equals("embedded_statement")) return true;
 		if (type.equals("interface_member_declarationEndType2") && expectedType.equals("interface_member_declarationEndType")) return true;

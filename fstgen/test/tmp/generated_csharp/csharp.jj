@@ -65,11 +65,11 @@ TOKEN : {
 	<IN			:	"in"> |				<UNSAFE		:	"unsafe"> |
 	<INT			:	"int"> |		<USHORT		:	"ushort"> |
 	<INTERFACE	:	"interface"> |		<USING		:	"using"> |
-	<INTERNAL	:	"internal"> |		<VIRTUAL		:	"virtual"> |
+	<INTERNAL	:	"internal"> |		<VIRTUAL	:	"virtual"> |
 	<IS			:	"is"> |				<VOID		:	"void"> |
-	<LOCK		:	"lock"> |				<WHILE		:	"while"> |
-	<VOLATILE : "volatile"> |	<MODULE : "module"> |
-	<ASSEMBLY : "assembly">
+	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
+	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
+	<ASSEMBLY	:	"assembly"> |		<MODULE : "module">
 }
 
 TOKEN : {
@@ -107,8 +107,6 @@ TOKEN : {
 <ARROW		:	"->"	> 
 }
 
-
-
 TOKEN:{
 		<#UNICODE_ESCAPE_SEQUENCE
 	:	("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
@@ -116,17 +114,15 @@ TOKEN:{
 					<HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)
 	>
 
-|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
-|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
-|	<NUMERIC_LITERAL
-	:	"." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-	|	(<DECIMAL_DIGIT>)+ 
-			("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-		|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
-		|	(<REAL_TYPE_SUFFIX>)
-		| 	(<INTEGER_TYPE_SUFFIX>)?
-		)		
+	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
+	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
+	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
+	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
+	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
+	|	(<REAL_TYPE_SUFFIX>)
+	| 	(<INTEGER_TYPE_SUFFIX>)?
+	)		
 	>
 |	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
 |	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
@@ -155,7 +151,7 @@ TOKEN:{
 |	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>	)>
-|	<#SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
+|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
 |	<#SIMPLE_ESCAPE_SEQUENCE: (
 		"\\'" | "\\\"" | "\\\\" | "\\0" | "\\a"  
 	|	"\\b" | "\\f"  | "\\n"  | "\\r" | "\\t" | "\\v")>
@@ -212,7 +208,19 @@ String boolean_literal(boolean inTerminal) : { Token first=null,t;String n;
 
 String type_name(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=identifier(true){ replaceName("identifier",n);} ("." n=identifier(true){ replaceName("identifier",n);})* {return productionEndTerminal("type_name","-","{identifier}.{identifier}^","Replacement",first,token);}
+	type_name_part(true) ("." type_name_part(true))* {return productionEndTerminal("type_name","-","{identifier}.{identifier}^","Replacement",first,token);}
+
+ )  }
+
+String type_name_part(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) [type_argument_list(true)] {return productionEndTerminal("type_name_part","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_argument_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" type(true) ("," type(true))* ">" {return productionEndTerminal("type_argument_list","-","-","Replacement",first,token);}
 
  )  }
 
@@ -579,6 +587,14 @@ String primary_expression_start(boolean inTerminal) : { Token first=null,t;Strin
 	checked_expression(true) {return productionEndTerminal("primary_expression_start9","-","-","Replacement",first,token);}
  |
 	unchecked_expression(true) {return productionEndTerminal("primary_expression_start10","-","-","Replacement",first,token);}
+ |
+	default_value_expression(true) {return productionEndTerminal("primary_expression_start11","-","-","Replacement",first,token);}
+
+ )  }
+
+String default_value_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"default" "(" type(true) ")" {return productionEndTerminal("default_value_expression","-","-","Replacement",first,token);}
 
  )  }
 
@@ -648,13 +664,13 @@ String parenthesized_expression(boolean inTerminal) : { Token first=null,t;Strin
 
 String member_access(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"." identifier(true) {return productionEndTerminal("member_access","-","-","Replacement",first,token);}
+	"." identifier(true) [type_argument_list(true)] {return productionEndTerminal("member_access","-","-","Replacement",first,token);}
 
  )  }
 
 String invocation_expression(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [argument_list(true)] ")" {return productionEndTerminal("invocation_expression","-","-","Replacement",first,token);}
+	[type_argument_list(true)] "(" [argument_list(true)] ")" {return productionEndTerminal("invocation_expression","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1138,7 +1154,71 @@ String type_modifier(boolean inTerminal) : { Token first=null,t;String n;
 
 String class_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"class" n=identifier(inTerminal){ replaceName("identifier",n);} [class_base(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("class_declaration","{identifier}","{identifier}");}
+	"class" n=identifier(inTerminal){ replaceName("identifier",n);} [type_parameter_list(inTerminal)] [class_base(inTerminal)] [type_parameter_constraint_clauses(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("class_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String type_parameter_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" type_parameter(true) ("," type_parameter(true))* ">" {return productionEndTerminal("type_parameter_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_parameter(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] identifier(true) {return productionEndTerminal("type_parameter","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_parameter_constraint_clauses(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_parameter_constraint_clause(true) (type_parameter_constraint_clause(true))* {return productionEndTerminal("type_parameter_constraint_clauses","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_parameter_constraint_clause(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<WHERE> type_parameter(true) ":" type_parameter_constraints(true) {return productionEndTerminal("type_parameter_constraint_clause","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_parameter_constraints(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	primary_constraint(true) ["," secondary_constraint(true)] ["," constructor_constraint(true)] {return productionEndTerminal("type_parameter_constraints1","-","-","Replacement",first,token);}
+ |
+	secondary_constraint(true) ["," constructor_constraint(true)] {return productionEndTerminal("type_parameter_constraints2","-","-","Replacement",first,token);}
+ |
+	constructor_constraint(true) {return productionEndTerminal("type_parameter_constraints3","-","-","Replacement",first,token);}
+
+ )  }
+
+String primary_constraint(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	class_type(true) {return productionEndTerminal("primary_constraint1","-","-","Replacement",first,token);}
+ |
+	"class"  {return productionEndTerminal("primary_constraint2","-","-","Replacement",first,token);}
+ |
+	"struct"  {return productionEndTerminal("primary_constraint3","-","-","Replacement",first,token);}
+
+ )  }
+
+String secondary_constraint(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_name_or_paramenter(true) ("," type_name_or_paramenter(true))* {return productionEndTerminal("secondary_constraint","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_name_or_paramenter(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_name(true) {return productionEndTerminal("type_name_or_paramenter1","-","-","Replacement",first,token);}
+ |
+	type_parameter(true) {return productionEndTerminal("type_name_or_paramenter2","-","-","Replacement",first,token);}
+
+ )  }
+
+String constructor_constraint(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new" "(" ")"  {return productionEndTerminal("constructor_constraint","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1296,7 +1376,7 @@ String variable_initializer(boolean inTerminal) : { Token first=null,t;String n;
 
 String method_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [formal_parameter_list(true)] ")" body(true) {return productionEndTerminal("method_declaration","-","-","Replacement",first,token);}
+	[type_parameter_list(true)] "(" [formal_parameter_list(true)] [type_parameter_constraint_clauses(true)] ")" body(true) {return productionEndTerminal("method_declaration","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1544,7 +1624,7 @@ String destructor_declaration(boolean inTerminal) : { Token first=null,t;String 
 
 String struct_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"struct" n=identifier(inTerminal){ replaceName("identifier",n);} [base_interfaces(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("struct_declaration","{identifier}","{identifier}");}
+	"struct" n=identifier(inTerminal){ replaceName("identifier",n);} [type_parameter_list(inTerminal)] [base_interfaces(inTerminal)] [type_parameter_constraint_clauses(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("struct_declaration","{identifier}","{identifier}");}
 
  )  }
 
@@ -1578,7 +1658,7 @@ String rest_of_array_initializerEnd(boolean inTerminal) : { Token first=null,t;S
 
 String interface_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"interface" n=identifier(inTerminal){ replaceName("identifier",n);} [base_interfaces(inTerminal)] interface_body(inTerminal) [";" ] {return productionEndNonTerminal("interface_declaration","{identifier}","{identifier}");}
+	"interface" n=identifier(inTerminal){ replaceName("identifier",n);} [type_parameter_list(inTerminal)] [base_interfaces(inTerminal)] [type_parameter_constraint_clauses(inTerminal)] interface_body(inTerminal) [";" ] {return productionEndNonTerminal("interface_declaration","{identifier}","{identifier}");}
 
  )  }
 
@@ -1640,7 +1720,7 @@ String interface_indexer_declaration(boolean inTerminal) : { Token first=null,t;
 
 String interface_method_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [formal_parameter_list(true)] ")" ";" {return productionEndTerminal("interface_method_declaration","-","-","Replacement",first,token);}
+	[type_parameter_list(true)] "(" [formal_parameter_list(true)] [type_parameter_constraint_clauses(true)] ")" ";" {return productionEndTerminal("interface_method_declaration","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1710,7 +1790,7 @@ String enum_member_assignment(boolean inTerminal) : { Token first=null,t;String 
 
 String delegate_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"delegate" type(inTerminal) n=identifier(inTerminal){ replaceName("identifier",n);} "(" [formal_parameter_list(inTerminal)] ")" ";" {return productionEndNonTerminal("delegate_declaration","{identifier}","{identifier}");}
+	"delegate" type(inTerminal) n=identifier(inTerminal){ replaceName("identifier",n);} [type_parameter_list(inTerminal)] "(" [formal_parameter_list(inTerminal)] [type_parameter_constraint_clauses(inTerminal)] ")" ";" {return productionEndNonTerminal("delegate_declaration","{identifier}","{identifier}");}
 
  )  }
 
