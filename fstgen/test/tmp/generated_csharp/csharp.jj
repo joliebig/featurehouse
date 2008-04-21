@@ -1184,11 +1184,17 @@ String type_parameter_constraint_clause(boolean inTerminal) : { Token first=null
 
 String type_parameter_constraints(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	primary_constraint(true) ["," secondary_constraint(true)] ["," constructor_constraint(true)] {return productionEndTerminal("type_parameter_constraints1","-","-","Replacement",first,token);}
+	primary_constraint(true) ["," remaining_constraints(true)] {return productionEndTerminal("type_parameter_constraints1","-","-","Replacement",first,token);}
  |
 	secondary_constraint(true) ["," constructor_constraint(true)] {return productionEndTerminal("type_parameter_constraints2","-","-","Replacement",first,token);}
  |
 	constructor_constraint(true) {return productionEndTerminal("type_parameter_constraints3","-","-","Replacement",first,token);}
+
+ )  }
+
+String remaining_constraints(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	secondary_constraint(true) ["," constructor_constraint(true)] {return productionEndTerminal("remaining_constraints","-","-","Replacement",first,token);}
 
  )  }
 

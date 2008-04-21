@@ -827,9 +827,13 @@ type_parameter_constraint_clause
 	;
 
 type_parameter_constraints
-	:	primary_constraint	["," secondary_constraint] ["," constructor_constraint]
+	:	primary_constraint	["," remaining_constraints]
 	|	secondary_constraint	["," constructor_constraint]
 	|	constructor_constraint
+	;
+	
+remaining_constraints
+	: secondary_constraint ["," constructor_constraint]
 	;
 
 primary_constraint
