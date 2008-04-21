@@ -69,11 +69,11 @@ import de.ovgu.cide.fstgen.ast.*;
       break;
     case MODULE:
       jj_consume_token(MODULE);
-                   {if (true) return productionEndTerminal("identifier2","-","{<NONE>}","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("identifier2","-","module","Replacement",first,token);}
       break;
     case ASSEMBLY:
       jj_consume_token(ASSEMBLY);
-                     {if (true) return productionEndTerminal("identifier3","-","{<NONE>}","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("identifier3","-","assembly","Replacement",first,token);}
       break;
     default:
       jj_la1[3] = jj_gen;
@@ -147,7 +147,8 @@ import de.ovgu.cide.fstgen.ast.*;
   final public String type_name(boolean inTerminal) throws ParseException {
                                          Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
-    type_name_part(true);
+    n = type_name_part(true);
+                                replaceName("type_name_part",n);
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -159,16 +160,18 @@ import de.ovgu.cide.fstgen.ast.*;
         break label_2;
       }
       jj_consume_token(DOT);
-      type_name_part(true);
+      n = type_name_part(true);
+                                                                                               replaceName("type_name_part",n);
     }
-                                                          {if (true) return productionEndTerminal("type_name","-","{identifier}.{identifier}^","Replacement",first,token);}
+                                                                                                                                    {if (true) return productionEndTerminal("type_name","-","{type_name_part}^.","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public String type_name_part(boolean inTerminal) throws ParseException {
                                               Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
-    identifier(true);
+    n = identifier(true);
+                            replaceName("identifier",n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LTHAN:
       type_argument_list(true);
@@ -177,7 +180,7 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_la1[7] = jj_gen;
       ;
     }
-                                                     {if (true) return productionEndTerminal("type_name_part","-","-","Replacement",first,token);}
+                                                                                      {if (true) return productionEndTerminal("type_name_part","-","{identifier}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -207,10 +210,12 @@ import de.ovgu.cide.fstgen.ast.*;
   final public String type(boolean inTerminal) throws ParseException {
                                     Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
-    non_array_type(true);
+    n = non_array_type(true);
+                                replaceName("non_array_type",n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACK:
-      rank_specifiers(true);
+      n = rank_specifiers(true);
+                                                                                            replaceName("rank_specifiers",n);
       break;
     default:
       jj_la1[9] = jj_gen;
@@ -224,7 +229,7 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_la1[10] = jj_gen;
       ;
     }
-                                                             {if (true) return productionEndTerminal("type","-","-","Replacement",first,token);}
+                                                                                                                                        {if (true) return productionEndTerminal("type","-","{non_array_type}{rank_specifiers}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -233,7 +238,8 @@ import de.ovgu.cide.fstgen.ast.*;
      first=getToken(1); productionStart(inTerminal);
     label_4:
     while (true) {
-      rank_specifier(true);
+      n = rank_specifier(true);
+                                 replaceName("rank_specifier",n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACK:
         ;
@@ -243,7 +249,7 @@ import de.ovgu.cide.fstgen.ast.*;
         break label_4;
       }
     }
-                                 {if (true) return productionEndTerminal("rank_specifiers","-","-","Replacement",first,token);}
+                                                                      {if (true) return productionEndTerminal("rank_specifiers","-","{rank_specifier}^ ","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -264,7 +270,7 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_consume_token(COMMA);
     }
     jj_consume_token(RBRACK);
-                         {if (true) return productionEndTerminal("rank_specifier","-","-","Replacement",first,token);}
+                         {if (true) return productionEndTerminal("rank_specifier","-","[]","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -288,14 +294,16 @@ import de.ovgu.cide.fstgen.ast.*;
     case INT:
     case USHORT:
     case VOID:
-      predefined_type(true);
-                               {if (true) return productionEndTerminal("non_array_type1","-","-","Replacement",first,token);}
+      n = predefined_type(true);
+                                 replaceName("predefined_type",n);
+                                                                     {if (true) return productionEndTerminal("non_array_type1","-","{predefined_type}","Replacement",first,token);}
       break;
     case ASSEMBLY:
     case MODULE:
     case IDENTIFIER:
-      type_name(true);
-                         {if (true) return productionEndTerminal("non_array_type2","-","-","Replacement",first,token);}
+      n = type_name(true);
+                           replaceName("type_name",n);
+                                                         {if (true) return productionEndTerminal("non_array_type2","-","{type_name}","Replacement",first,token);}
       break;
     default:
       jj_la1[13] = jj_gen;
@@ -322,20 +330,21 @@ import de.ovgu.cide.fstgen.ast.*;
     case ULONG:
     case INT:
     case USHORT:
-      simple_type(true);
-                           {if (true) return productionEndTerminal("predefined_type1","-","-","Replacement",first,token);}
+      n = simple_type(true);
+                             replaceName("simple_type",n);
+                                                             {if (true) return productionEndTerminal("predefined_type1","-","{simple_type}","Replacement",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("predefined_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("predefined_type2","-","object","Replacement",first,token);}
       break;
     case STRING:
       jj_consume_token(STRING);
-                   {if (true) return productionEndTerminal("predefined_type3","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("predefined_type3","-","string","Replacement",first,token);}
       break;
     case VOID:
       jj_consume_token(VOID);
-                 {if (true) return productionEndTerminal("predefined_type4","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("predefined_type4","-","void","Replacement",first,token);}
       break;
     default:
       jj_la1[14] = jj_gen;
@@ -361,12 +370,13 @@ import de.ovgu.cide.fstgen.ast.*;
     case ULONG:
     case INT:
     case USHORT:
-      numeric_type(true);
-                            {if (true) return productionEndTerminal("simple_type1","-","-","Replacement",first,token);}
+      n = numeric_type(true);
+                              replaceName("numeric_type",n);
+                                                               {if (true) return productionEndTerminal("simple_type1","-","{numeric_type}","Replacement",first,token);}
       break;
     case BOOL:
       jj_consume_token(BOOL);
-                 {if (true) return productionEndTerminal("simple_type2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("simple_type2","-","bool","Replacement",first,token);}
       break;
     default:
       jj_la1[15] = jj_gen;
@@ -389,17 +399,19 @@ import de.ovgu.cide.fstgen.ast.*;
     case ULONG:
     case INT:
     case USHORT:
-      integral_type(true);
-                             {if (true) return productionEndTerminal("numeric_type1","-","-","Replacement",first,token);}
+      n = integral_type(true);
+                               replaceName("integral_type",n);
+                                                                 {if (true) return productionEndTerminal("numeric_type1","-","{integral_type}","Replacement",first,token);}
       break;
     case DOUBLE:
     case FLOAT:
-      floating_point_type(true);
-                                   {if (true) return productionEndTerminal("numeric_type2","-","-","Replacement",first,token);}
+      n = floating_point_type(true);
+                                     replaceName("floating_point_type",n);
+                                                                             {if (true) return productionEndTerminal("numeric_type2","-","{floating_point_type}","Replacement",first,token);}
       break;
     case DECIMAL:
       jj_consume_token(DECIMAL);
-                    {if (true) return productionEndTerminal("numeric_type3","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("numeric_type3","-","decimal","Replacement",first,token);}
       break;
     default:
       jj_la1[16] = jj_gen;
@@ -415,39 +427,39 @@ import de.ovgu.cide.fstgen.ast.*;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SBYTE:
       jj_consume_token(SBYTE);
-                  {if (true) return productionEndTerminal("integral_type1","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type1","-","sbyte","Replacement",first,token);}
       break;
     case BYTE:
       jj_consume_token(BYTE);
-                 {if (true) return productionEndTerminal("integral_type2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type2","-","byte","Replacement",first,token);}
       break;
     case SHORT:
       jj_consume_token(SHORT);
-                  {if (true) return productionEndTerminal("integral_type3","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type3","-","short","Replacement",first,token);}
       break;
     case USHORT:
       jj_consume_token(USHORT);
-                   {if (true) return productionEndTerminal("integral_type4","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("integral_type4","-","ushort","Replacement",first,token);}
       break;
     case INT:
       jj_consume_token(INT);
-                {if (true) return productionEndTerminal("integral_type5","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("integral_type5","-","int","Replacement",first,token);}
       break;
     case UINT:
       jj_consume_token(UINT);
-                 {if (true) return productionEndTerminal("integral_type6","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type6","-","uint","Replacement",first,token);}
       break;
     case LONG:
       jj_consume_token(LONG);
-                 {if (true) return productionEndTerminal("integral_type7","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type7","-","long","Replacement",first,token);}
       break;
     case ULONG:
       jj_consume_token(ULONG);
-                  {if (true) return productionEndTerminal("integral_type8","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type8","-","ulong","Replacement",first,token);}
       break;
     case CHAR:
       jj_consume_token(CHAR);
-                 {if (true) return productionEndTerminal("integral_type9","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type9","-","char","Replacement",first,token);}
       break;
     default:
       jj_la1[17] = jj_gen;
@@ -464,16 +476,17 @@ import de.ovgu.cide.fstgen.ast.*;
     case ASSEMBLY:
     case MODULE:
     case IDENTIFIER:
-      type_name(true);
-                         {if (true) return productionEndTerminal("class_type1","-","-","Replacement",first,token);}
+      n = type_name(true);
+                           replaceName("type_name",n);
+                                                         {if (true) return productionEndTerminal("class_type1","-","{type_name}","Replacement",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("class_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_type2","-","object","Replacement",first,token);}
       break;
     case STRING:
       jj_consume_token(STRING);
-                   {if (true) return productionEndTerminal("class_type3","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_type3","-","string","Replacement",first,token);}
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -489,11 +502,11 @@ import de.ovgu.cide.fstgen.ast.*;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FLOAT:
       jj_consume_token(FLOAT);
-                  {if (true) return productionEndTerminal("floating_point_type1","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("floating_point_type1","-","float","Replacement",first,token);}
       break;
     case DOUBLE:
       jj_consume_token(DOUBLE);
-                   {if (true) return productionEndTerminal("floating_point_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("floating_point_type2","-","double","Replacement",first,token);}
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -3210,9 +3223,10 @@ import de.ovgu.cide.fstgen.ast.*;
                                                      Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(NAMESPACE);
-    type_name(inTerminal);
+    n = type_name(inTerminal);
+                                             replaceName("type_name",n);
     namespace_body(inTerminal);
-                                                                      {if (true) return productionEndNonTerminal("namespace_declaration","type_name","type_name");}
+                                                                                                      {if (true) return productionEndNonTerminal("namespace_declaration","{type_name}","{type_name}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -3277,9 +3291,8 @@ import de.ovgu.cide.fstgen.ast.*;
     jj_consume_token(USING);
     n = type_name(true);
                                    replaceName("type_name",n);
-    n = using_directiveEnd(true);
-                                                                                            replaceName("using_directiveEnd",n);
-                                                                                                                                   {if (true) return productionEndTerminal("using_directive","{type_name}={using_directiveEnd}","{type_name}={using_directiveEnd}","Replacement",first,token);}
+    using_directiveEnd(true);
+                                                                                          {if (true) return productionEndTerminal("using_directive","{type_name}","{type_name}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3291,11 +3304,11 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_consume_token(ASSIGN);
       type_name(true);
       jj_consume_token(SEMI);
-                                 {if (true) return productionEndTerminal("using_directiveEnd1","-","type_name","Replacement",first,token);}
+                                 {if (true) return productionEndTerminal("using_directiveEnd1","-","-","Replacement",first,token);}
       break;
     case SEMI:
       jj_consume_token(SEMI);
-              {if (true) return productionEndTerminal("using_directiveEnd2","-","type_name","Replacement",first,token);}
+              {if (true) return productionEndTerminal("using_directiveEnd2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[98] = jj_gen;
@@ -3778,7 +3791,8 @@ import de.ovgu.cide.fstgen.ast.*;
                                           Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COLON);
-    class_type(true);
+    n = class_type(true);
+                                replaceName("class_type",n);
     label_22:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3790,16 +3804,18 @@ import de.ovgu.cide.fstgen.ast.*;
         break label_22;
       }
       jj_consume_token(COMMA);
-      type_name(true);
+      n = type_name(true);
+                                                                                      replaceName("type_name",n);
     }
-                                                     {if (true) return productionEndTerminal("class_base","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("class_base","{class_type}{type_name}^,","{class_type}{type_name}^,","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public String interface_type_list(boolean inTerminal) throws ParseException {
                                                    Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
-    type_name(true);
+    n = type_name(true);
+                           replaceName("type_name",n);
     label_23:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3811,9 +3827,10 @@ import de.ovgu.cide.fstgen.ast.*;
         break label_23;
       }
       jj_consume_token(COMMA);
-      type_name(true);
+      n = type_name(true);
+                                                                                replaceName("type_name",n);
     }
-                                                {if (true) return productionEndTerminal("interface_type_list","-","-","Replacement",first,token);}
+                                                                                                                {if (true) return productionEndTerminal("interface_type_list","{type_name}^,","{type_name}^,","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3873,10 +3890,10 @@ import de.ovgu.cide.fstgen.ast.*;
         jj_la1[123] = jj_gen;
         break label_24;
       }
-      class_member_declaration(true);
+      class_member_declaration(inTerminal);
     }
     jj_consume_token(RBRACE);
-                                                   {if (true) return productionEndTerminal("class_body","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndNonTerminal("class_body","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -3885,7 +3902,7 @@ import de.ovgu.cide.fstgen.ast.*;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACK:
-      attributes(true);
+      attributes(inTerminal);
       break;
     default:
       jj_la1[124] = jj_gen;
@@ -3905,14 +3922,14 @@ import de.ovgu.cide.fstgen.ast.*;
     case UNSAFE:
     case INTERNAL:
     case VIRTUAL:
-      member_modifiers(true);
+      member_modifiers(inTerminal);
       break;
     default:
       jj_la1[125] = jj_gen;
       ;
     }
-    class_member_declarationEnd(true);
-                                                                                       {if (true) return productionEndTerminal("class_member_declaration","-","-","Replacement",first,token);}
+    class_member_declarationEnd(inTerminal);
+                                                                                                         {if (true) return productionEndNonTerminal("class_member_declaration","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -3921,29 +3938,29 @@ import de.ovgu.cide.fstgen.ast.*;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CONST:
-      constant_declaration(true);
-                                    {if (true) return productionEndTerminal("class_member_declarationEnd1","-","-","Replacement",first,token);}
+      constant_declaration(inTerminal);
+                                          {if (true) return productionEndNonTerminal("class_member_declarationEnd1","-","-");}
       break;
     case EVENT:
-      event_declaration(true);
-                                 {if (true) return productionEndTerminal("class_member_declarationEnd2","-","-","Replacement",first,token);}
+      event_declaration(inTerminal);
+                                       {if (true) return productionEndNonTerminal("class_member_declarationEnd2","-","-");}
       break;
     case TILDE:
-      destructor_declaration(true);
-                                      {if (true) return productionEndTerminal("class_member_declarationEnd3","-","-","Replacement",first,token);}
+      destructor_declaration(inTerminal);
+                                            {if (true) return productionEndNonTerminal("class_member_declarationEnd3","-","-");}
       break;
     case EXPLICIT:
     case IMPLICIT:
-      conversion_operator_declaration(true);
-                                               {if (true) return productionEndTerminal("class_member_declarationEnd4","-","-","Replacement",first,token);}
+      conversion_operator_declaration(inTerminal);
+                                                     {if (true) return productionEndNonTerminal("class_member_declarationEnd4","-","-");}
       break;
     case CLASS:
     case DELEGATE:
     case ENUM:
     case STRUCT:
     case INTERFACE:
-      type_declaration(true);
-                                {if (true) return productionEndTerminal("class_member_declarationEnd5","-","-","Replacement",first,token);}
+      type_declaration(inTerminal);
+                                      {if (true) return productionEndNonTerminal("class_member_declarationEnd5","-","-");}
       break;
     case LONG:
     case BOOL:
@@ -3964,9 +3981,11 @@ import de.ovgu.cide.fstgen.ast.*;
     case ASSEMBLY:
     case MODULE:
     case IDENTIFIER:
-      type(true);
-      typeEnd(true);
-                                  {if (true) return productionEndTerminal("class_member_declarationEnd6","-","-","Replacement",first,token);}
+      n = type(inTerminal);
+                            replaceName("type",n);
+      n = typeEnd(inTerminal);
+                                                                           replaceName("typeEnd",n);
+                                                                                                       {if (true) return productionEndNonTerminal("class_member_declarationEnd6","{type}{typeEnd}","{type}{typeEnd}");}
       break;
     default:
       jj_la1[126] = jj_gen;
@@ -3981,30 +4000,36 @@ import de.ovgu.cide.fstgen.ast.*;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LPAREN:
-      constructor_declaration(true);
-                                       {if (true) return productionEndTerminal("typeEnd1","-","-","Replacement",first,token);}
+      n = constructor_declaration(true);
+                                         replaceName("constructor_declaration",n);
+                                                                                     {if (true) return productionEndTerminal("typeEnd1","{constructor_declaration}","{constructor_declaration}","Replacement",first,token);}
       break;
     case THIS:
-      indexer_declaration_no_interface(true);
-                                                {if (true) return productionEndTerminal("typeEnd2","-","-","Replacement",first,token);}
+      n = indexer_declaration_no_interface(true);
+                                                  replaceName("indexer_declaration_no_interface",n);
+                                                                                                       {if (true) return productionEndTerminal("typeEnd2","{indexer_declaration_no_interface}","{indexer_declaration_no_interface}","Replacement",first,token);}
       break;
     case OPERATOR:
-      operator_declaration(true);
-                                    {if (true) return productionEndTerminal("typeEnd3","-","-","Replacement",first,token);}
+      n = operator_declaration(true);
+                                      replaceName("operator_declaration",n);
+                                                                               {if (true) return productionEndTerminal("typeEnd3","{operator_declaration}","{operator_declaration}","Replacement",first,token);}
       break;
     default:
       jj_la1[127] = jj_gen;
       if (jj_2_8(2147483647)) {
-        indexer_declaration_interface(true);
-                                                                           {if (true) return productionEndTerminal("typeEnd4","-","-","Replacement",first,token);}
+        n = indexer_declaration_interface(true);
+                                                                             replaceName("indexer_declaration_interface",n);
+                                                                                                                               {if (true) return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case ASSEMBLY:
         case MODULE:
         case IDENTIFIER:
-          type_name(true);
-          type_nameEnd(true);
-                                            {if (true) return productionEndTerminal("typeEnd5","-","-","Replacement",first,token);}
+          n = type_name(true);
+                           replaceName("type_name",n);
+          n = type_nameEnd(true);
+                                                                              replaceName("type_nameEnd",n);
+                                                                                                               {if (true) return productionEndTerminal("typeEnd5","{type_name}-{type_nameEnd}","{type_name}-{type_nameEnd}","Replacement",first,token);}
           break;
         default:
           jj_la1[128] = jj_gen;
@@ -4022,18 +4047,21 @@ import de.ovgu.cide.fstgen.ast.*;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LPAREN:
     case LTHAN:
-      method_declaration(true);
-                                  {if (true) return productionEndTerminal("type_nameEnd1","-","-","Replacement",first,token);}
+      n = method_declaration(true);
+                                    replaceName("method_declaration",n);
+                                                                           {if (true) return productionEndTerminal("type_nameEnd1","-","{method_declaration}","Replacement",first,token);}
       break;
     case LBRACE:
-      property_declaration(true);
-                                    {if (true) return productionEndTerminal("type_nameEnd2","-","-","Replacement",first,token);}
+      n = property_declaration(true);
+                                      replaceName("property_declaration",n);
+                                                                               {if (true) return productionEndTerminal("type_nameEnd2","-","{property_declaration}","Replacement",first,token);}
       break;
     case ASSIGN:
     case COMMA:
     case SEMI:
-      field_declaration(true);
-                                 {if (true) return productionEndTerminal("type_nameEnd3","-","-","Replacement",first,token);}
+      n = field_declaration(true);
+                                   replaceName("field_declaration",n);
+                                                                         {if (true) return productionEndTerminal("type_nameEnd3","-","{field_declaration}","Replacement",first,token);}
       break;
     default:
       jj_la1[129] = jj_gen;
@@ -4354,7 +4382,8 @@ import de.ovgu.cide.fstgen.ast.*;
     case MODULE:
     case LBRACK:
     case IDENTIFIER:
-      formal_parameter_list(true);
+      n = formal_parameter_list(true);
+                                                                        replaceName("formal_parameter_list",n);
       break;
     default:
       jj_la1[139] = jj_gen;
@@ -4370,7 +4399,7 @@ import de.ovgu.cide.fstgen.ast.*;
     }
     jj_consume_token(RPAREN);
     body(true);
-                                                                                                                                {if (true) return productionEndTerminal("method_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                            {if (true) return productionEndTerminal("method_declaration","-","({formal_parameter_list})","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4405,8 +4434,9 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_la1[142] = jj_gen;
       ;
     }
-    formal_parameter_listEnd(true);
-                                                           {if (true) return productionEndTerminal("formal_parameter_list","-","-","Replacement",first,token);}
+    n = formal_parameter_listEnd(true);
+                                                             replaceName("formal_parameter_listEnd",n);
+                                                                                                          {if (true) return productionEndTerminal("formal_parameter_list","-","{formal_parameter_listEnd}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4435,7 +4465,8 @@ import de.ovgu.cide.fstgen.ast.*;
     case ASSEMBLY:
     case MODULE:
     case IDENTIFIER:
-      fixed_parameter(true);
+      n = fixed_parameter(true);
+                                 replaceName("fixed_parameter",n);
       label_28:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4446,13 +4477,15 @@ import de.ovgu.cide.fstgen.ast.*;
           jj_la1[143] = jj_gen;
           break label_28;
         }
-        fixed_parameterEnd(true);
+        n = fixed_parameterEnd(true);
+                                                                                                 replaceName("fixed_parameterEnd",n);
       }
-                                                           {if (true) return productionEndTerminal("formal_parameter_listEnd1","-","-","Replacement",first,token);}
+                                                                                                                                          {if (true) return productionEndTerminal("formal_parameter_listEnd1","-","{fixed_parameter}{fixed_parameterEnd}^","Replacement",first,token);}
       break;
     case PARAMS:
-      parameter_array(true);
-                               {if (true) return productionEndTerminal("formal_parameter_listEnd2","-","-","Replacement",first,token);}
+      n = parameter_array(true);
+                                 replaceName("parameter_array",n);
+                                                                     {if (true) return productionEndTerminal("formal_parameter_listEnd2","-","{parameter_array}","Replacement",first,token);}
       break;
     default:
       jj_la1[144] = jj_gen;
@@ -4487,12 +4520,14 @@ import de.ovgu.cide.fstgen.ast.*;
     case ASSEMBLY:
     case MODULE:
     case IDENTIFIER:
-      fixed_parameter(true);
-                               {if (true) return productionEndTerminal("formal_parameter_listEndInt1","-","-","Replacement",first,token);}
+      n = fixed_parameter(true);
+                                 replaceName("fixed_parameter",n);
+                                                                     {if (true) return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter}","Replacement",first,token);}
       break;
     case PARAMS:
-      parameter_array(true);
-                               {if (true) return productionEndTerminal("formal_parameter_listEndInt2","-","-","Replacement",first,token);}
+      n = parameter_array(true);
+                                 replaceName("parameter_array",n);
+                                                                     {if (true) return productionEndTerminal("formal_parameter_listEndInt2","-","{parameter_array}","Replacement",first,token);}
       break;
     default:
       jj_la1[145] = jj_gen;
@@ -4514,8 +4549,9 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_la1[146] = jj_gen;
       ;
     }
-    formal_parameter_listEndInt(true);
-                                                                  {if (true) return productionEndTerminal("fixed_parameterEnd","-","-","Replacement",first,token);}
+    n = formal_parameter_listEndInt(true);
+                                                                    replaceName("formal_parameter_listEndInt",n);
+                                                                                                                    {if (true) return productionEndTerminal("fixed_parameterEnd","-","{formal_parameter_listEndInt}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4531,9 +4567,10 @@ import de.ovgu.cide.fstgen.ast.*;
       jj_la1[147] = jj_gen;
       ;
     }
-    type(true);
+    n = type(true);
+                                                 replaceName("type",n);
     identifier(true);
-                                                                {if (true) return productionEndTerminal("fixed_parameter","-","-","Replacement",first,token);}
+                                                                                           {if (true) return productionEndTerminal("fixed_parameter","-","{type}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4561,9 +4598,10 @@ import de.ovgu.cide.fstgen.ast.*;
                                                Token first=null,t;String n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PARAMS);
-    type(true);
+    n = type(true);
+                               replaceName("type",n);
     identifier(true);
-                                              {if (true) return productionEndTerminal("parameter_array","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("parameter_array","-","{type}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6691,6 +6729,11 @@ import de.ovgu.cide.fstgen.ast.*;
     return false;
   }
 
+  final private boolean jj_3R_50() {
+    if (jj_3R_68()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_183() {
     if (jj_scan_token(BYTE)) return true;
     return false;
@@ -6788,6 +6831,12 @@ import de.ovgu.cide.fstgen.ast.*;
     return false;
   }
 
+  final private boolean jj_3R_53() {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_3R_52()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_128() {
     Token xsp;
     xsp = jj_scanpos;
@@ -6817,6 +6866,11 @@ import de.ovgu.cide.fstgen.ast.*;
 
   final private boolean jj_3R_114() {
     if (jj_scan_token(BOOL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_70() {
+    if (jj_3R_78()) return true;
     return false;
   }
 
@@ -6898,11 +6952,6 @@ import de.ovgu.cide.fstgen.ast.*;
 
   final private boolean jj_3R_219() {
     if (jj_3R_172()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_50() {
-    if (jj_3R_68()) return true;
     return false;
   }
 
@@ -7013,19 +7062,8 @@ import de.ovgu.cide.fstgen.ast.*;
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_3R_78()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_158() {
     if (jj_3R_173()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_53() {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_3R_52()) return true;
     return false;
   }
 

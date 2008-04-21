@@ -179,9 +179,9 @@ compilation_unit
 identifier:
 		@FSTExportName("{<IDENTIFIER>}")	
 		<IDENTIFIER>		
-	|	@FSTExportName("{<NONE>}")	
+	|	@FSTExportName("module")	
 		"module" <NONE>
-	|	@FSTExportName("{<NONE>}")	
+	|	@FSTExportName("assembly")	
 		"assembly"<NONE>
 	;	
 
@@ -205,13 +205,13 @@ boolean_literal
 // ***** C.2.1 Basic concepts *****
 //***********************************************************************************************************************************/
 
-@FSTExportName("{identifier}.{identifier}^")
+@FSTExportName("{type_name_part}^.")
 type_name
 	:	type_name_part
 		("." type_name_part)*	
 	;
 	
-
+@FSTExportName("{identifier}")
 type_name_part
 	:	identifier [type_argument_list]
 	;
@@ -223,62 +223,66 @@ type_argument_list
 //***********************************************************************************************************************************/
 //C.2.2 Types
 //***********************************************************************************************************************************/
+
+@FSTExportName("{non_array_type}{rank_specifiers}")
 type
 	:	non_array_type ( rank_specifiers )? ("*"<NONE>)?
 	;
 
+@FSTExportName("{rank_specifier}^ ")
 rank_specifiers
 	:	(rank_specifier)+
 	;	
 
+@FSTExportName("[]")
 rank_specifier
 	 : "[" ( "," <NONE>)* "]"
    ;
-	
+
 non_array_type
-   :	predefined_type
-   |	type_name
+   :	@FSTExportName("{predefined_type}")	predefined_type
+   |	@FSTExportName("{type_name}")	type_name
    ;
 
 predefined_type
-   :	simple_type
-   |	"object"<NONE>
-   |	"string"<NONE>
-   |	"void"<NONE>
+   :	@FSTExportName("{simple_type}")	simple_type
+   |	@FSTExportName("object") "object"<NONE>
+   |	@FSTExportName("string") "string"<NONE>
+   |	@FSTExportName("void") "void"<NONE>
    ;
 
 simple_type 
-	:	numeric_type
-	|	"bool"<NONE>
+	:	@FSTExportName("{numeric_type}") numeric_type
+	|	@FSTExportName("bool") "bool"<NONE>
 	;
 
 numeric_type 
-	:	integral_type
-	|	floating_point_type
-	|	"decimal"<NONE>
+	:	@FSTExportName("{integral_type}")	integral_type
+	|	@FSTExportName("{floating_point_type}")	floating_point_type
+	|	@FSTExportName("decimal")	"decimal"<NONE>
 	;
 	
 integral_type 
-	:	"sbyte"<NONE>
-	|	"byte"<NONE>
-	|	"short"<NONE>
-	|	"ushort"<NONE>
-	|	"int"<NONE>
-	|	"uint"<NONE>
-	|	"long"<NONE>
-	|	"ulong"<NONE>
-	|	"char"<NONE>
+	:	@FSTExportName("sbyte")	"sbyte"<NONE>
+	|	@FSTExportName("byte")	"byte"<NONE>
+	|	@FSTExportName("short")	"short"<NONE>
+	|	@FSTExportName("ushort")	"ushort"<NONE>
+	|	@FSTExportName("int")	"int"<NONE>
+	|	@FSTExportName("uint")	"uint"<NONE>
+	|	@FSTExportName("long")	"long"<NONE>
+	|	@FSTExportName("ulong")	"ulong"<NONE>
+	|	@FSTExportName("char")	"char"<NONE>
 	;
 
 class_type
-	:	type_name
-	|	"object"<NONE>
-	|	"string"<NONE>
+	:	@FSTExportName("{type_name}")	type_name
+	|	@FSTExportName("object")	"object"<NONE>
+	|	@FSTExportName("string")	"string"<NONE>
 	;
 
 floating_point_type 
-	:	"float"<NONE>
-	|	"double"<NONE>
+	:	@FSTExportName("float")	"float"<NONE>
+	|	@FSTExportName("double")	"double"<NONE>
 	;
 
 //***********************************************************************************************************************************/	
@@ -740,7 +744,7 @@ resource_acquisition
 @FSTNonTerminal()
 compilation_unitEnd:namespace_member_declaration_no_attr (namespace_member_declaration)*;
 
-@FSTNonTerminal(name="type_name")
+@FSTNonTerminal(name="{type_name}")
 namespace_declaration 
 	:	"namespace" type_name   namespace_body    
 	;
@@ -750,15 +754,14 @@ namespace_body
 	:	"{" @+!   (using_directive)*   (namespace_member_declaration)*  @-! "}"	(";"<NONE>)? @!
 	;
 
-@FSTTerminal(name="{type_name}={using_directiveEnd}")
+@FSTTerminal(name="{type_name}")
 using_directive
-	:	"using"  type_name using_directiveEnd
+	:	"using"	type_name	using_directiveEnd
 	;
 
-@FSTExportName("type_name")	
-using_directiveEnd:
-	"=" type_name ";" @!
-				|	";" @!<NONE>;
+using_directiveEnd
+	:	"=" type_name ";" @!
+	|	";" @!<NONE>;
 
 @FSTNonTerminal()	
 namespace_member_declaration_no_attr
@@ -772,7 +775,6 @@ namespace_member_declaration
 	|	(attributes)? (type_modifiers)? type_declaration
 	;
 
-@FSTInline
 type_declaration: 	//Type declaration that assumes parent rule has already looked for attributes and modifiers
 		@FSTNonTerminal(name="{class_declaration}")
 		class_declaration
@@ -854,39 +856,49 @@ type_name_or_paramenter
 constructor_constraint
 	:	"new" "(" ")" <NONE>
 	;
-	
+
+@FSTTerminal(name="{class_type}{type_name}^,")	
 class_base 
 	:	":" class_type ("," type_name)*	
 	;
 
+@FSTTerminal(name="{type_name}^,")
 interface_type_list 
 	:	type_name ("," type_name)*
 	;
 
+@FSTNonTerminal()
 class_body 
 	:	"{" @+!   (class_member_declaration)*   @-! "}" @! 
 	;
-
+@FSTNonTerminal()
 class_member_declaration 
 	:	(attributes)?	(member_modifiers)? class_member_declarationEnd;
-class_member_declarationEnd:
-			constant_declaration		//CONST type   constant_declarators   ";"
-		|	event_declaration		//"event"   type   variable_declarators   ";"
-		|	destructor_declaration		//"~"   identifier   "("   ")"    body
-		|	conversion_operator_declaration		
-		|	type_declaration	
-		|	type	typeEnd	
+
+
+class_member_declarationEnd
+		:	@FSTNonTerminal()	constant_declaration		//CONST type   constant_declarators   ";"
+		|	@FSTNonTerminal()	event_declaration		//"event"   type   variable_declarators   ";"
+		|	@FSTNonTerminal()	destructor_declaration		//"~"   identifier   "("   ")"    body
+		|	@FSTNonTerminal()	conversion_operator_declaration		
+		|	@FSTNonTerminal()	type_declaration
+		|	@FSTNonTerminal(name="{type}{typeEnd}")	type	typeEnd	
 		;
-typeEnd: constructor_declaration
-								|	indexer_declaration_no_interface
-								|	operator_declaration
-								|	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-								|	type_name	type_nameEnd;
+
+typeEnd
+	:	@FSTTerminal(name="{constructor_declaration}")	constructor_declaration
+	|	@FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
+	|	@FSTTerminal(name="{operator_declaration}")	operator_declaration
+	|	@FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
+	|	@FSTTerminal(name="{type_name}-{type_nameEnd}")		
+		type_name	type_nameEnd
+	;
 								
-type_nameEnd: method_declaration
-																	|	property_declaration
-																	|	field_declaration
-																	;
+type_nameEnd
+	:	@FSTExportName("{method_declaration}") method_declaration
+	|	@FSTExportName("{property_declaration}") property_declaration
+	|	@FSTExportName("{field_declaration}") field_declaration
+	;
 
 member_modifiers
 	:	(member_modifier)+	
@@ -944,6 +956,7 @@ variable_initializer
 		
 	;
 
+@FSTInline @FSTExportName("({formal_parameter_list})")
 method_declaration
 	: [type_parameter_list] "("	(formal_parameter_list)? [type_parameter_constraint_clauses] ")"	body 
 	;
@@ -952,15 +965,22 @@ body
 	:	 block | ";" @!<NONE> 
 	;
 
+@FSTExportName("{formal_parameter_listEnd}")
 formal_parameter_list
 	:	( attributes )?	formal_parameter_listEnd;
-formal_parameter_listEnd:
-	  fixed_parameter	( 	fixed_parameterEnd )* 
-														|	parameter_array 
+
+formal_parameter_listEnd
+	:	@FSTExportName("{fixed_parameter}{fixed_parameterEnd}^") fixed_parameter	( 	fixed_parameterEnd )* 
+	|	@FSTExportName("{parameter_array}") parameter_array 
 	;
-formal_parameter_listEndInt: fixed_parameter | parameter_array;
+formal_parameter_listEndInt
+	: @FSTExportName("{fixed_parameter}") fixed_parameter 
+	| @FSTExportName("{parameter_array}") parameter_array;
+
+@FSTExportName("{formal_parameter_listEndInt}")
 fixed_parameterEnd: "," ( attributes )?	 formal_parameter_listEndInt ;
 
+@FSTExportName("{type}")
 fixed_parameter
 	:	(parameter_modifier)?	type	identifier 
 	;
@@ -970,6 +990,7 @@ parameter_modifier
 	|	"out"
 	;
 
+@FSTExportName("{type}")
 parameter_array
 	//:	PARAMS	non_array_type	rank_specifiers	identifier 
 		:	"params"	type	identifier 

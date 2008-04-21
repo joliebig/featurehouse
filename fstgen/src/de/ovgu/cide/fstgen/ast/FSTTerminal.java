@@ -50,13 +50,14 @@ public class FSTTerminal extends FSTNode {
 
 	@Override
 	public String toString() {
-		return "[T: "
-				+ getType()
-				+ "/"
+		return "[T -> "
 				+ getName()
+				+ " : "
+				+ getType()
 				+ " \""
-				+ (prefix.length() != 0 ? prefix.replaceAll("\\s", " ")
-						+ "\" \"" : "") + body.replaceAll("\\s", " ")
+				//+ (prefix.length() != 0 ? prefix.replaceAll("\\s", " ")	: "")
+				//+ "\" \""
+				+ (body.length() != 0 ? body.replaceAll("\\s", " ") : "")
 				+ "\" compose:" + compose + "]";
 	}
 

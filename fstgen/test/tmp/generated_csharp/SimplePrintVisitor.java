@@ -212,6 +212,100 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			return false;
 		}
+		if (nonTerminal.getType().equals("class_body")) {
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"class_member_declaration")) {
+				v.accept(this);
+			}
+			hintDecIndent();
+			hintNewLine();
+			printToken("}");
+			hintNewLine();
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declaration")) {
+			{
+				FSTNode v=getChild(nonTerminal, "attributes");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "member_modifiers");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "class_member_declarationEnd");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd1")) {
+			{
+				FSTNode v=getChild(nonTerminal, "constant_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd2")) {
+			{
+				FSTNode v=getChild(nonTerminal, "event_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd3")) {
+			{
+				FSTNode v=getChild(nonTerminal, "destructor_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd4")) {
+			{
+				FSTNode v=getChild(nonTerminal, "conversion_operator_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd5")) {
+			{
+				FSTNode v=getChild(nonTerminal, "type_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("class_member_declarationEnd6")) {
+			{
+				FSTNode v=getChild(nonTerminal, "type");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "typeEnd");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
 		if (nonTerminal.getType().equals("struct_declaration")) {
 			printToken("struct");
 			{
