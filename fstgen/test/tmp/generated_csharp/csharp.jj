@@ -1,0 +1,1848 @@
+options {
+  STATIC = false;
+  ERROR_REPORTING = true;
+}
+
+PARSER_BEGIN(CSharpParser)
+
+package tmp.generated_csharp;
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+  public class CSharpParser extends AbstractFSTParser {
+	public CSharpParser() {}
+   
+  }
+
+PARSER_END(CSharpParser)
+
+SKIP : {
+ " "
+|  "\t"
+|  "\n"
+|  "\r"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+}
+
+
+TOKEN : {
+	<ABSTRACT	:	"abstract">|			<LONG		:	"long">|
+	<AS			:	"as"> |			<NAMESPACE	:	"namespace"> |
+	<BASE		:	"base"> |		<NEW			:	"new"> |
+	<BOOL		:	"bool"> |		<NULL		:	"null"> |
+	<BREAK		:	"break"> |		<OBJECT		:	"object"> |
+	<BYTE		:	"byte"> |		<OPERATOR	:	"operator"> |
+	<CASE		:	"case"> |		<OUT			:	"out"> |
+	<CATCH		:	"catch"> |		<OVERRIDE	:	"override"> |
+	<CHAR		:	"char"> |		<PARAMS		:	"params"> |
+	<CHECKED		:	"checked"> |	<PRIVATE		:	"private"> |
+	<CLASS		:	"class"> |			<PROTECTED	:	"protected"> |
+	<CONST		:	"const"> |			<PUBLIC		:	"public"> |
+	<CONTINUE	:	"continue"> |		<READONLY	:	"readonly"> |
+	<DECIMAL		:	"decimal"> |	<REF			:	"ref"> |
+	<DEFAULTTOKEN		:	"default"> |	<RETURN		:	"return"> |
+	<DELEGATE	:	"delegate"> |		<SBYTE		:	"sbyte"> |
+	<DO			:	"do"> |				<SEALED		:	"sealed"> |
+	<DOUBLE		:	"double"> |			<SHORT		:	"short"> |
+	<ELSE		:	"else"> |			<SIZEOF		:	"sizeof"> |
+	<ENUM		:	"enum"> |			<STACKALLOC	:	"stackalloc"> |
+	<EVENT		:	"event"> |			<STATIC		:	"static"> |
+	<EXPLICIT	:	"explicit"> |		<STRING		:	"string"> |
+	<EXTERN		:	"extern"> |			<STRUCT		:	"struct"> |
+	<FALSE		:	"false"> |			<SWITCH		:	"switch"> |
+	<FINALLY		:	"finally"> |	<THIS		:	"this"> |
+	<FIXED		:	"fixed"> |			<THROW		:	"throw"> |
+	<FLOAT		:	"float"> |			<TRUE		:	"true"> |
+	<FOR			:	"for"> |		<TRY			:	"try"> |
+	<FOREACH		:	"foreach"> |	<TYPEOF		:	"typeof"> |
+	<GOTO		:	"goto"> |			<UINT		:	"uint"> |
+	<IF			:	"if"> |				<ULONG		:	"ulong"> |
+	<IMPLICIT	:	"implicit"> |		<UNCHECKED	:	"unchecked"> |
+	<IN			:	"in"> |				<UNSAFE		:	"unsafe"> |
+	<INT			:	"int"> |		<USHORT		:	"ushort"> |
+	<INTERFACE	:	"interface"> |		<USING		:	"using"> |
+	<INTERNAL	:	"internal"> |		<VIRTUAL		:	"virtual"> |
+	<IS			:	"is"> |				<VOID		:	"void"> |
+	<LOCK		:	"lock"> |				<WHILE		:	"while"> |
+	<VOLATILE : "volatile"> |	<MODULE : "module"> |
+	<ASSEMBLY : "assembly">
+}
+
+TOKEN : {
+	<DOT		:	"."		>| 
+<LBRACE		:	"{"		> |	<RBRACE		:	"}"		> |
+<LBRACK		:	"["		> |	<RBRACK		:	"]"		> |
+<LPAREN		:	"("		> |	<RPAREN		:	")"		> |
+
+<PLUS		:	"+"		> |		<PLUS_ASN	:	"+="	> |	
+<MINUS		:	"-"		> |		<MINUS_ASN	:	"-="	> |	
+<STAR		:	"*"		> |		<STAR_ASN	:	"*="	> |
+<DIV			:	"/"		> |		<DIV_ASN		:	"/="	> |
+<MOD			:	"%"		> |		<MOD_ASN		:	"%="	> |
+<INC			:	"++"	> |		<DEC			:	"--"	> |
+
+<SL			:	"<<"	> |		<SL_ASN		:	"<<="	> |
+<SR			:	">>"	> |		<SR_ASN		:	">>="	> |
+<BSR			:	">>>"	> |		<BSR_ASN		:	">>>="	> |
+
+<AMPER		:	"&"		> |		<BAND_ASN	:	"&="	> |	
+<BOR			:	"|"		> |	<BOR_ASN		:	"|="	> |	
+<CARET		:	"^"		> |		<BXOR_ASN	:	"^="	> |
+<TILDE		:	"~"		> |
+
+<ASSIGN	:	"="		> |		<EQUAL			:	"=="	> |
+<LTHAN		:	"<"		> |		<LE				:	"<="	> |
+<GTHAN		:	">"		> |		<GE				:	">="	> |
+<BANG		:	"!"		> |		<NOT_EQUAL	:	"!="	> |
+<LOR			:	"||"	> |		<LAND			:	"&&"	> |
+
+<COMMA		:	","		> |		<COLON		:	":"		> |	
+<SEMI		:	";"		> |		<HASH		:	"#"     > |
+<QUOTE		:	"\""  > |		<QMARK		:	"?"		> |
+
+<ARROW		:	"->"	> 
+}
+
+
+
+TOKEN:{
+		<#UNICODE_ESCAPE_SEQUENCE
+	:	("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
+	|	"\\" "U"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>  
+					<HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)
+	>
+
+|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
+|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
+|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
+|	<NUMERIC_LITERAL
+	:	"." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+	|	(<DECIMAL_DIGIT>)+ 
+			("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+		|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
+		|	(<REAL_TYPE_SUFFIX>)
+		| 	(<INTEGER_TYPE_SUFFIX>)?
+		)		
+	>
+|	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
+|	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
+|	<REGULAR_STRING_LITERAL	:	"\""  (<REGULAR_STRING_LITERAL_CHARACTER>)* "\"">
+|	<VERBATIM_STRING_LITERAL:	 "@" "\""  	
+		(	"\"\""		
+		|	"\\"		
+		| "\r"
+		| "\n"
+		| "\u2028"
+		| "\u2029"
+		|  ~["\"","\\","\r","\n","\u2028","\u2029"]	
+		)* 
+		"\"">
+|	<#DECIMAL_DIGIT
+	: 	["0"	,	"1"	,	"2"	,	"3"	,	"4"	,	"5"	,	"6"	,	"7"	,	"8"	,	"9"]>
+| 	<#INTEGER_TYPE_SUFFIX: 	(	"UL"	| "LU" 	| "ul"	| "lu"
+		|	"UL"	| "LU" 	| "uL"	| "lU"
+		|	"U"		| "L"	| "u"	| "l")>
+|	<#HEX_DIGIT	:	["0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , 
+		"A" , "B" , "C" , "D" , "E" , "F"  ,
+		"a" , "b" , "c" , "d" , "e" , "f"]>	
+|	<#EXPONENT_PART:	("e"  (<SIGN>)*  (<DECIMAL_DIGIT>)+ 	|	"E"  (<SIGN>)*  (<DECIMAL_DIGIT>)+)>
+|	<#SIGN	: ["+" , "-" ]>
+|	<#REAL_TYPE_SUFFIX	: ["F" , "f" , "D" , "d" , "M" , "m"]>
+|	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
+	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
+	|	<UNICODE_ESCAPE_SEQUENCE>	)>
+|	<#SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
+|	<#SIMPLE_ESCAPE_SEQUENCE: (
+		"\\'" | "\\\"" | "\\\\" | "\\0" | "\\a"  
+	|	"\\b" | "\\f"  | "\\n"  | "\\r" | "\\t" | "\\v")>
+|	<#HEXADECIMAL_ESCAPE_SEQUENCE: "\\" "x" <HEX_DIGIT> (<HEX_DIGIT>(<HEX_DIGIT>(<HEX_DIGIT>)?)?)?>
+|	<REGULAR_STRING_LITERAL_CHARACTER :	<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>
+	|	<SIMPLE_ESCAPE_SEQUENCE>
+	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
+	|	<UNICODE_ESCAPE_SEQUENCE>>
+|	<#SINGLE_REGULAR_STRING_LITERAL_CHARACTER: ~[ "\"" , "\\" , "\r" , "\n" , "\u2028" , "\u2029"]>
+
+		
+}
+String compilation_unit(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(using_directive(inTerminal))* [attributes_either(inTerminal)] [compilation_unitEnd(inTerminal)] <EOF> {return productionEndNonTerminal("compilation_unit","-","-");}
+
+ )  }
+
+String identifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} {return productionEndTerminal("identifier1","-","{<IDENTIFIER>}","Replacement",first,token);}
+ |
+	"module"  {return productionEndTerminal("identifier2","-","{<NONE>}","Replacement",first,token);}
+ |
+	"assembly"  {return productionEndTerminal("identifier3","-","{<NONE>}","Replacement",first,token);}
+
+ )  }
+
+String literal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	boolean_literal(true) {return productionEndTerminal("literal1","-","-","Replacement",first,token);}
+ |
+	<NUMERIC_LITERAL> {return productionEndTerminal("literal2","-","-","Replacement",first,token);}
+ |
+	<HEXADECIMAL_INTEGER_LITERAL> {return productionEndTerminal("literal3","-","-","Replacement",first,token);}
+ |
+	<CHARACTER_LITERAL> {return productionEndTerminal("literal4","-","-","Replacement",first,token);}
+ |
+	<REGULAR_STRING_LITERAL> {return productionEndTerminal("literal5","-","-","Replacement",first,token);}
+ |
+	<VERBATIM_STRING_LITERAL> {return productionEndTerminal("literal6","-","-","Replacement",first,token);}
+ |
+	"null"  {return productionEndTerminal("literal7","-","-","Replacement",first,token);}
+
+ )  }
+
+String boolean_literal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"true"  {return productionEndTerminal("boolean_literal1","-","-","Replacement",first,token);}
+ |
+	"false"  {return productionEndTerminal("boolean_literal2","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_name(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=identifier(true){ replaceName("identifier",n);} ("." n=identifier(true){ replaceName("identifier",n);})* {return productionEndTerminal("type_name","-","{identifier}.{identifier}^","Replacement",first,token);}
+
+ )  }
+
+String type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	non_array_type(true) [rank_specifiers(true)] ["*" ] {return productionEndTerminal("type","-","-","Replacement",first,token);}
+
+ )  }
+
+String rank_specifiers(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(rank_specifier(true))+ {return productionEndTerminal("rank_specifiers","-","-","Replacement",first,token);}
+
+ )  }
+
+String rank_specifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"[" ("," )* "]" {return productionEndTerminal("rank_specifier","-","-","Replacement",first,token);}
+
+ )  }
+
+String non_array_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	predefined_type(true) {return productionEndTerminal("non_array_type1","-","-","Replacement",first,token);}
+ |
+	type_name(true) {return productionEndTerminal("non_array_type2","-","-","Replacement",first,token);}
+
+ )  }
+
+String predefined_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	simple_type(true) {return productionEndTerminal("predefined_type1","-","-","Replacement",first,token);}
+ |
+	"object"  {return productionEndTerminal("predefined_type2","-","-","Replacement",first,token);}
+ |
+	"string"  {return productionEndTerminal("predefined_type3","-","-","Replacement",first,token);}
+ |
+	"void"  {return productionEndTerminal("predefined_type4","-","-","Replacement",first,token);}
+
+ )  }
+
+String simple_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	numeric_type(true) {return productionEndTerminal("simple_type1","-","-","Replacement",first,token);}
+ |
+	"bool"  {return productionEndTerminal("simple_type2","-","-","Replacement",first,token);}
+
+ )  }
+
+String numeric_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	integral_type(true) {return productionEndTerminal("numeric_type1","-","-","Replacement",first,token);}
+ |
+	floating_point_type(true) {return productionEndTerminal("numeric_type2","-","-","Replacement",first,token);}
+ |
+	"decimal"  {return productionEndTerminal("numeric_type3","-","-","Replacement",first,token);}
+
+ )  }
+
+String integral_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"sbyte"  {return productionEndTerminal("integral_type1","-","-","Replacement",first,token);}
+ |
+	"byte"  {return productionEndTerminal("integral_type2","-","-","Replacement",first,token);}
+ |
+	"short"  {return productionEndTerminal("integral_type3","-","-","Replacement",first,token);}
+ |
+	"ushort"  {return productionEndTerminal("integral_type4","-","-","Replacement",first,token);}
+ |
+	"int"  {return productionEndTerminal("integral_type5","-","-","Replacement",first,token);}
+ |
+	"uint"  {return productionEndTerminal("integral_type6","-","-","Replacement",first,token);}
+ |
+	"long"  {return productionEndTerminal("integral_type7","-","-","Replacement",first,token);}
+ |
+	"ulong"  {return productionEndTerminal("integral_type8","-","-","Replacement",first,token);}
+ |
+	"char"  {return productionEndTerminal("integral_type9","-","-","Replacement",first,token);}
+
+ )  }
+
+String class_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_name(true) {return productionEndTerminal("class_type1","-","-","Replacement",first,token);}
+ |
+	"object"  {return productionEndTerminal("class_type2","-","-","Replacement",first,token);}
+ |
+	"string"  {return productionEndTerminal("class_type3","-","-","Replacement",first,token);}
+
+ )  }
+
+String floating_point_type(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"float"  {return productionEndTerminal("floating_point_type1","-","-","Replacement",first,token);}
+ |
+	"double"  {return productionEndTerminal("floating_point_type2","-","-","Replacement",first,token);}
+
+ )  }
+
+String expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	conditional_expression(true) [expressionInternal(true)] {return productionEndTerminal("expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	assignment_operator(true) expression(true) {return productionEndTerminal("expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String assignment(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	conditional_expression(true) assignment_operator(true) expression(true) {return productionEndTerminal("assignment","-","-","Replacement",first,token);}
+
+ )  }
+
+String assignment_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"="  {return productionEndTerminal("assignment_operator1","-","-","Replacement",first,token);}
+ |
+	"+="  {return productionEndTerminal("assignment_operator2","-","-","Replacement",first,token);}
+ |
+	"-="  {return productionEndTerminal("assignment_operator3","-","-","Replacement",first,token);}
+ |
+	"*="  {return productionEndTerminal("assignment_operator4","-","-","Replacement",first,token);}
+ |
+	"/="  {return productionEndTerminal("assignment_operator5","-","-","Replacement",first,token);}
+ |
+	"%="  {return productionEndTerminal("assignment_operator6","-","-","Replacement",first,token);}
+ |
+	"&="  {return productionEndTerminal("assignment_operator7","-","-","Replacement",first,token);}
+ |
+	"|="  {return productionEndTerminal("assignment_operator8","-","-","Replacement",first,token);}
+ |
+	"^="  {return productionEndTerminal("assignment_operator9","-","-","Replacement",first,token);}
+ |
+	"<<="  {return productionEndTerminal("assignment_operator10","-","-","Replacement",first,token);}
+ |
+	">>="  {return productionEndTerminal("assignment_operator11","-","-","Replacement",first,token);}
+ |
+	">>>="  {return productionEndTerminal("assignment_operator12","-","-","Replacement",first,token);}
+
+ )  }
+
+String conditional_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	conditional_or_expression(true) [conditional_expressionInternal(true)] {return productionEndTerminal("conditional_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String conditional_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"?" expression(true) ":" conditional_expression(true) {return productionEndTerminal("conditional_expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String conditional_or_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	conditional_and_expression(true) ["||" conditional_or_expression(true)] {return productionEndTerminal("conditional_or_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String conditional_and_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	inclusive_or_expression(true) ["&&" conditional_and_expression(true)] {return productionEndTerminal("conditional_and_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String inclusive_or_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	exclusive_or_expression(true) ["|" inclusive_or_expression(true)] {return productionEndTerminal("inclusive_or_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String exclusive_or_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	and_expression(true) ["^" exclusive_or_expression(true)] {return productionEndTerminal("exclusive_or_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String and_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	equality_expression(true) ["&" and_expression(true)] {return productionEndTerminal("and_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String equality_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	relational_expression(true) [equality_expressionInternal(true)] {return productionEndTerminal("equality_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String equality_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	equality_operator(true) equality_expression(true) {return productionEndTerminal("equality_expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String equality_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"=="  {return productionEndTerminal("equality_operator1","-","-","Replacement",first,token);}
+ |
+	"!="  {return productionEndTerminal("equality_operator2","-","-","Replacement",first,token);}
+
+ )  }
+
+String relational_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	shift_expression(true) [relational_expressionInternal(true)] {return productionEndTerminal("relational_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String relational_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	relational_operator(true) relational_expression(true) {return productionEndTerminal("relational_expressionInternal1","-","-","Replacement",first,token);}
+ |
+	relational_operator2I(true) type(true) {return productionEndTerminal("relational_expressionInternal2","-","-","Replacement",first,token);}
+
+ )  }
+
+String relational_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<"  {return productionEndTerminal("relational_operator1","-","-","Replacement",first,token);}
+ |
+	">"  {return productionEndTerminal("relational_operator2","-","-","Replacement",first,token);}
+ |
+	"<="  {return productionEndTerminal("relational_operator3","-","-","Replacement",first,token);}
+ |
+	">="  {return productionEndTerminal("relational_operator4","-","-","Replacement",first,token);}
+
+ )  }
+
+String relational_operator2I(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"is"  {return productionEndTerminal("relational_operator2I1","-","-","Replacement",first,token);}
+ |
+	"as"  {return productionEndTerminal("relational_operator2I2","-","-","Replacement",first,token);}
+
+ )  }
+
+String shift_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	additive_expression(true) [shift_expressionInternal(true)] {return productionEndTerminal("shift_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String shift_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	shift_operator(true) shift_expression(true) {return productionEndTerminal("shift_expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String shift_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<<"  {return productionEndTerminal("shift_operator1","-","-","Replacement",first,token);}
+ |
+	">>"  {return productionEndTerminal("shift_operator2","-","-","Replacement",first,token);}
+
+ )  }
+
+String additive_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	multiplicative_expression(true) [additive_expressionInternal(true)] {return productionEndTerminal("additive_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String additive_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	additive_operator(true) additive_expression(true) {return productionEndTerminal("additive_expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String additive_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"+"  {return productionEndTerminal("additive_operator1","-","-","Replacement",first,token);}
+ |
+	"-"  {return productionEndTerminal("additive_operator2","-","-","Replacement",first,token);}
+
+ )  }
+
+String multiplicative_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	unary_expression(true) [multiplicative_expressionInternal(true)] {return productionEndTerminal("multiplicative_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String multiplicative_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	multiplicative_operator(true) multiplicative_expression(true) {return productionEndTerminal("multiplicative_expressionInternal","-","-","Replacement",first,token);}
+
+ )  }
+
+String multiplicative_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"*"  {return productionEndTerminal("multiplicative_operator1","-","-","Replacement",first,token);}
+ |
+	"/"  {return productionEndTerminal("multiplicative_operator2","-","-","Replacement",first,token);}
+ |
+	"%"  {return productionEndTerminal("multiplicative_operator3","-","-","Replacement",first,token);}
+
+ )  }
+
+String unary_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	unary_operator(true) unary_expression(true) {return productionEndTerminal("unary_expression1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(cast_expression()) cast_expression(true) {return productionEndTerminal("unary_expression2","-","-","Replacement",first,token);}
+ |
+	primary_expression(true) {return productionEndTerminal("unary_expression3","-","-","Replacement",first,token);}
+
+ )  }
+
+String unary_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"+"  {return productionEndTerminal("unary_operator1","-","-","Replacement",first,token);}
+ |
+	"-"  {return productionEndTerminal("unary_operator2","-","-","Replacement",first,token);}
+ |
+	"!"  {return productionEndTerminal("unary_operator3","-","-","Replacement",first,token);}
+ |
+	"~"  {return productionEndTerminal("unary_operator4","-","-","Replacement",first,token);}
+ |
+	"*"  {return productionEndTerminal("unary_operator5","-","-","Replacement",first,token);}
+ |
+	"++"  {return productionEndTerminal("unary_operator6","-","-","Replacement",first,token);}
+ |
+	"--"  {return productionEndTerminal("unary_operator7","-","-","Replacement",first,token);}
+
+ )  }
+
+String cast_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" type(true) ")" unary_expression(true) {return productionEndTerminal("cast_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String primary_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	primary_expression_start(true) [primary_expression_postfix(true)] {return productionEndTerminal("primary_expression1","-","-","Replacement",first,token);}
+ |
+	creation_expression(true) {return productionEndTerminal("primary_expression2","-","-","Replacement",first,token);}
+
+ )  }
+
+String primary_expression_start(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	literal(true) {return productionEndTerminal("primary_expression_start1","-","-","Replacement",first,token);}
+ |
+	identifier(true) {return productionEndTerminal("primary_expression_start2","-","-","Replacement",first,token);}
+ |
+	parenthesized_expression(true) {return productionEndTerminal("primary_expression_start3","-","-","Replacement",first,token);}
+ |
+	predefined_type(true) member_access(true) {return productionEndTerminal("primary_expression_start4","-","-","Replacement",first,token);}
+ |
+	this_access(true) {return productionEndTerminal("primary_expression_start5","-","-","Replacement",first,token);}
+ |
+	base_access(true) {return productionEndTerminal("primary_expression_start6","-","-","Replacement",first,token);}
+ |
+	typeof_expression(true) {return productionEndTerminal("primary_expression_start7","-","-","Replacement",first,token);}
+ |
+	sizeof_expression(true) {return productionEndTerminal("primary_expression_start8","-","-","Replacement",first,token);}
+ |
+	checked_expression(true) {return productionEndTerminal("primary_expression_start9","-","-","Replacement",first,token);}
+ |
+	unchecked_expression(true) {return productionEndTerminal("primary_expression_start10","-","-","Replacement",first,token);}
+
+ )  }
+
+String primary_expression_postfix(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(primary_expression_postfixInternal(true))+ {return productionEndTerminal("primary_expression_postfix","-","-","Replacement",first,token);}
+
+ )  }
+
+String primary_expression_postfixInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	member_access(true) {return productionEndTerminal("primary_expression_postfixInternal1","-","-","Replacement",first,token);}
+ |
+	invocation_expression(true) {return productionEndTerminal("primary_expression_postfixInternal2","-","-","Replacement",first,token);}
+ |
+	element_access(true) {return productionEndTerminal("primary_expression_postfixInternal3","-","-","Replacement",first,token);}
+ |
+	post_increment_expression(true) {return productionEndTerminal("primary_expression_postfixInternal4","-","-","Replacement",first,token);}
+ |
+	post_decrement_expression(true) {return productionEndTerminal("primary_expression_postfixInternal5","-","-","Replacement",first,token);}
+ |
+	pointer_member_access(true) {return productionEndTerminal("primary_expression_postfixInternal6","-","-","Replacement",first,token);}
+
+ )  }
+
+String array_creation_postfix_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(array_creation_postfix_expressionInternal(true))+ {return productionEndTerminal("array_creation_postfix_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String array_creation_postfix_expressionInternal(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	member_access(true) {return productionEndTerminal("array_creation_postfix_expressionInternal1","-","-","Replacement",first,token);}
+ |
+	invocation_expression(true) {return productionEndTerminal("array_creation_postfix_expressionInternal2","-","-","Replacement",first,token);}
+ |
+	post_increment_expression(true) {return productionEndTerminal("array_creation_postfix_expressionInternal3","-","-","Replacement",first,token);}
+ |
+	post_decrement_expression(true) {return productionEndTerminal("array_creation_postfix_expressionInternal4","-","-","Replacement",first,token);}
+ |
+	pointer_member_access(true) {return productionEndTerminal("array_creation_postfix_expressionInternal5","-","-","Replacement",first,token);}
+
+ )  }
+
+String creation_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new" non_array_type(true) creation_expressionPostFix(true) {return productionEndTerminal("creation_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String creation_expressionPostFix(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [argument_list(true)] ")" [primary_expression_postfix(true)] {return productionEndTerminal("creation_expressionPostFix1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(2) "[" expression_list(true) "]" [rank_specifiers(true)] [array_initializer(true)] [array_creation_postfix_expression(true)] {return productionEndTerminal("creation_expressionPostFix2","-","-","Replacement",first,token);}
+ |
+	rank_specifiers(true) array_initializer(true) [array_creation_postfix_expression(true)] {return productionEndTerminal("creation_expressionPostFix3","-","-","Replacement",first,token);}
+
+ )  }
+
+String parenthesized_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" expression(true) ")" {return productionEndTerminal("parenthesized_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String member_access(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"." identifier(true) {return productionEndTerminal("member_access","-","-","Replacement",first,token);}
+
+ )  }
+
+String invocation_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [argument_list(true)] ")" {return productionEndTerminal("invocation_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String argument_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	argument(true) ("," argument(true))* {return productionEndTerminal("argument_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String argument(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[argumentPrefix(true)] expression(true) {return productionEndTerminal("argument","-","-","Replacement",first,token);}
+
+ )  }
+
+String argumentPrefix(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"ref"  {return productionEndTerminal("argumentPrefix1","-","-","Replacement",first,token);}
+ |
+	"out"  {return productionEndTerminal("argumentPrefix2","-","-","Replacement",first,token);}
+
+ )  }
+
+String element_access(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"[" argument_list(true) "]" {return productionEndTerminal("element_access","-","-","Replacement",first,token);}
+
+ )  }
+
+String expression_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	expression(true) (expression_listList(true))* {return productionEndTerminal("expression_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String expression_listList(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"," expression(true) {return productionEndTerminal("expression_listList","-","-","Replacement",first,token);}
+
+ )  }
+
+String this_access(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"this"  {return productionEndTerminal("this_access","-","-","Replacement",first,token);}
+
+ )  }
+
+String base_access(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) "base" member_access(true) {return productionEndTerminal("base_access1","-","-","Replacement",first,token);}
+ |
+	"base" element_access(true) {return productionEndTerminal("base_access2","-","-","Replacement",first,token);}
+
+ )  }
+
+String post_increment_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"++"  {return productionEndTerminal("post_increment_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String post_decrement_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"--"  {return productionEndTerminal("post_decrement_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String typeof_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"typeof" "(" type(true) ")" {return productionEndTerminal("typeof_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String checked_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"checked" "(" expression(true) ")" {return productionEndTerminal("checked_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String unchecked_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"unchecked" "(" expression(true) ")" {return productionEndTerminal("unchecked_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) identifier(true) ":" statement(true) {return productionEndTerminal("statement1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(type() identifier()) local_variable_declaration(true) ";" {return productionEndTerminal("statement2","-","-","Replacement",first,token);}
+ |
+	local_constant_declaration(true) ";" {return productionEndTerminal("statement3","-","-","Replacement",first,token);}
+ |
+	embedded_statement(true) {return productionEndTerminal("statement4","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_variable_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type(true) local_variable_declarators(true) {return productionEndTerminal("local_variable_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_variable_declarators(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	local_variable_declarator(true) ["," local_variable_declarators(true)] {return productionEndTerminal("local_variable_declarators","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_variable_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) [local_variable_assignment(true)] {return productionEndTerminal("local_variable_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_variable_assignment(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"=" local_variable_initializer(true) {return productionEndTerminal("local_variable_assignment","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_variable_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	array_initializer(true) {return productionEndTerminal("local_variable_initializer1","-","-","Replacement",first,token);}
+ |
+	expression(true) {return productionEndTerminal("local_variable_initializer2","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_constant_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"const" type(true) local_constant_declarators(true) {return productionEndTerminal("local_constant_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_constant_declarators(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	local_constant_declarator(true) ["," local_constant_declarators(true)] {return productionEndTerminal("local_constant_declarators","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_constant_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) "=" local_variable_initializer(true) {return productionEndTerminal("local_constant_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String embedded_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	block(true) {return productionEndTerminal("embedded_statement1","-","-","Replacement",first,token);}
+ |
+	";"  {return productionEndTerminal("embedded_statement2","-","-","Replacement",first,token);}
+ |
+	selection_statement(true) {return productionEndTerminal("embedded_statement3","-","-","Replacement",first,token);}
+ |
+	iteration_statement(true) {return productionEndTerminal("embedded_statement4","-","-","Replacement",first,token);}
+ |
+	jump_statement(true) {return productionEndTerminal("embedded_statement5","-","-","Replacement",first,token);}
+ |
+	try_statement(true) {return productionEndTerminal("embedded_statement6","-","-","Replacement",first,token);}
+ |
+	checked_statement(true) {return productionEndTerminal("embedded_statement7","-","-","Replacement",first,token);}
+ |
+	unchecked_statement(true) {return productionEndTerminal("embedded_statement8","-","-","Replacement",first,token);}
+ |
+	lock_statement(true) {return productionEndTerminal("embedded_statement9","-","-","Replacement",first,token);}
+ |
+	using_statement(true) {return productionEndTerminal("embedded_statement10","-","-","Replacement",first,token);}
+ |
+	unsafe_statement(true) {return productionEndTerminal("embedded_statement11","-","-","Replacement",first,token);}
+ |
+	fixed_statement(true) {return productionEndTerminal("embedded_statement12","-","-","Replacement",first,token);}
+ |
+	expression_statement(true) {return productionEndTerminal("embedded_statement13","-","-","Replacement",first,token);}
+
+ )  }
+
+String block(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" (statement(true))* "}" {return productionEndTerminal("block","-","-","Replacement",first,token);}
+
+ )  }
+
+String statement_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(statement(true))+ {return productionEndTerminal("statement_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String expression_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	expression(true) ";" {return productionEndTerminal("expression_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String selection_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	if_statement(true) {return productionEndTerminal("selection_statement1","-","-","Replacement",first,token);}
+ |
+	switch_statement(true) {return productionEndTerminal("selection_statement2","-","-","Replacement",first,token);}
+
+ )  }
+
+String if_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"if" "(" expression(true) ")" embedded_statement(true) ["else" embedded_statement(true)] {return productionEndTerminal("if_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String switch_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"switch" "(" expression(true) ")" switch_block(true) {return productionEndTerminal("switch_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String switch_block(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" (switch_section(true))+ "}" {return productionEndTerminal("switch_block","-","-","Replacement",first,token);}
+
+ )  }
+
+String switch_section(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(switch_label(true))+ statement_list(true) {return productionEndTerminal("switch_section","-","-","Replacement",first,token);}
+
+ )  }
+
+String switch_label(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"case" expression(true) ":" {return productionEndTerminal("switch_label1","-","-","Replacement",first,token);}
+ |
+	"default" ":"  {return productionEndTerminal("switch_label2","-","-","Replacement",first,token);}
+
+ )  }
+
+String iteration_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	while_statement(true) {return productionEndTerminal("iteration_statement1","-","-","Replacement",first,token);}
+ |
+	do_statement(true) {return productionEndTerminal("iteration_statement2","-","-","Replacement",first,token);}
+ |
+	for_statement(true) {return productionEndTerminal("iteration_statement3","-","-","Replacement",first,token);}
+ |
+	foreach_statement(true) {return productionEndTerminal("iteration_statement4","-","-","Replacement",first,token);}
+
+ )  }
+
+String while_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"while" "(" expression(true) ")" embedded_statement(true) {return productionEndTerminal("while_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String do_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"do" embedded_statement(true) "while" "(" expression(true) ")" {return productionEndTerminal("do_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String for_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"for" "(" [for_initializer(true)] ";" [expression(true)] ";" [expression_list(true)] ")" embedded_statement(true) {return productionEndTerminal("for_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String for_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(type() identifier()) local_variable_declaration(true) {return productionEndTerminal("for_initializer1","-","-","Replacement",first,token);}
+ |
+	expression_list(true) {return productionEndTerminal("for_initializer2","-","-","Replacement",first,token);}
+
+ )  }
+
+String foreach_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"foreach" "(" type(true) identifier(true) "in" expression(true) ")" embedded_statement(true) {return productionEndTerminal("foreach_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String jump_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"break" ";"  {return productionEndTerminal("jump_statement1","-","-","Replacement",first,token);}
+ |
+	"continue" ";"  {return productionEndTerminal("jump_statement2","-","-","Replacement",first,token);}
+ |
+	goto_statement(true) {return productionEndTerminal("jump_statement3","-","-","Replacement",first,token);}
+ |
+	return_statement(true) {return productionEndTerminal("jump_statement4","-","-","Replacement",first,token);}
+ |
+	throw_statement(true) {return productionEndTerminal("jump_statement5","-","-","Replacement",first,token);}
+
+ )  }
+
+String goto_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"goto" goto_statementEnd(true) {return productionEndTerminal("goto_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String goto_statementEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) ";" {return productionEndTerminal("goto_statementEnd1","-","-","Replacement",first,token);}
+ |
+	"case" expression(true) ";" {return productionEndTerminal("goto_statementEnd2","-","-","Replacement",first,token);}
+ |
+	"default" ";"  {return productionEndTerminal("goto_statementEnd3","-","-","Replacement",first,token);}
+
+ )  }
+
+String return_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"return" [expression(true)] ";" {return productionEndTerminal("return_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String throw_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"throw" [expression(true)] ";" {return productionEndTerminal("throw_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String try_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"try" block(true) try_statement_clauses(true) {return productionEndTerminal("try_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String try_statement_clauses(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	catch_clauses(true) [finally_clause(true)] {return productionEndTerminal("try_statement_clauses1","-","-","Replacement",first,token);}
+ |
+	finally_clause(true) {return productionEndTerminal("try_statement_clauses2","-","-","Replacement",first,token);}
+
+ )  }
+
+String catch_clauses(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(catch_clause(true))+ {return productionEndTerminal("catch_clauses","-","-","Replacement",first,token);}
+
+ )  }
+
+String catch_clause(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"catch" catch_clauseEnd(true) {return productionEndTerminal("catch_clause","-","-","Replacement",first,token);}
+
+ )  }
+
+String catch_clauseEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" type(true) [identifier(true)] ")" block(true) {return productionEndTerminal("catch_clauseEnd1","-","-","Replacement",first,token);}
+ |
+	block(true) {return productionEndTerminal("catch_clauseEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+String finally_clause(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"finally" block(true) {return productionEndTerminal("finally_clause","-","-","Replacement",first,token);}
+
+ )  }
+
+String checked_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"checked" block(true) {return productionEndTerminal("checked_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String unchecked_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"unchecked" block(true) {return productionEndTerminal("unchecked_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String lock_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"lock" "(" expression(true) ")" embedded_statement(true) {return productionEndTerminal("lock_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String using_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"using" "(" resource_acquisition(true) ")" embedded_statement(true) {return productionEndTerminal("using_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String resource_acquisition(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(type() identifier() (","|";"|"=")) local_variable_declaration(true) {return productionEndTerminal("resource_acquisition1","-","-","Replacement",first,token);}
+ |
+	expression(true) {return productionEndTerminal("resource_acquisition2","-","-","Replacement",first,token);}
+
+ )  }
+
+String compilation_unitEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	namespace_member_declaration_no_attr(inTerminal) (namespace_member_declaration(inTerminal))* {return productionEndNonTerminal("compilation_unitEnd","-","-");}
+
+ )  }
+
+String namespace_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"namespace" type_name(inTerminal) namespace_body(inTerminal) {return productionEndNonTerminal("namespace_declaration","type_name","type_name");}
+
+ )  }
+
+String namespace_body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" (using_directive(inTerminal))* (namespace_member_declaration(inTerminal))* "}" [";" ] {return productionEndNonTerminal("namespace_body","-","-");}
+
+ )  }
+
+String using_directive(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"using" n=type_name(true){ replaceName("type_name",n);} n=using_directiveEnd(true){ replaceName("using_directiveEnd",n);} {return productionEndTerminal("using_directive","{type_name}={using_directiveEnd}","{type_name}={using_directiveEnd}","Replacement",first,token);}
+
+ )  }
+
+String using_directiveEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"=" type_name(true) ";" {return productionEndTerminal("using_directiveEnd1","-","type_name","Replacement",first,token);}
+ |
+	";"  {return productionEndTerminal("using_directiveEnd2","-","type_name","Replacement",first,token);}
+
+ )  }
+
+String namespace_member_declaration_no_attr(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	namespace_declaration(inTerminal) {return productionEndNonTerminal("namespace_member_declaration_no_attr1","-","-");}
+ |
+	[type_modifiers(inTerminal)] type_declaration(inTerminal) {return productionEndNonTerminal("namespace_member_declaration_no_attr2","-","-");}
+
+ )  }
+
+String namespace_member_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	namespace_declaration(inTerminal) {return productionEndNonTerminal("namespace_member_declaration1","-","-");}
+ |
+	[attributes(inTerminal)] [type_modifiers(inTerminal)] type_declaration(inTerminal) {return productionEndNonTerminal("namespace_member_declaration2","-","-");}
+
+ )  }
+
+String type_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=class_declaration(inTerminal){ replaceName("class_declaration",n);} {return productionEndNonTerminal("type_declaration1","{class_declaration}","{class_declaration}");}
+ |
+	n=struct_declaration(inTerminal){ replaceName("struct_declaration",n);} {return productionEndNonTerminal("type_declaration2","{struct_declaration}","{struct_declaration}");}
+ |
+	n=interface_declaration(inTerminal){ replaceName("interface_declaration",n);} {return productionEndNonTerminal("type_declaration3","{interface_declaration}","{interface_declaration}");}
+ |
+	n=enum_declaration(inTerminal){ replaceName("enum_declaration",n);} {return productionEndNonTerminal("type_declaration4","{enum_declaration}","{enum_declaration}");}
+ |
+	n=delegate_declaration(inTerminal){ replaceName("delegate_declaration",n);} {return productionEndNonTerminal("type_declaration5","{delegate_declaration}","{delegate_declaration}");}
+
+ )  }
+
+String type_modifiers(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(type_modifier(true))+ {return productionEndTerminal("type_modifiers","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_modifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new"  {return productionEndTerminal("type_modifier1","-","-","Replacement",first,token);}
+ |
+	"public"  {return productionEndTerminal("type_modifier2","-","-","Replacement",first,token);}
+ |
+	"protected"  {return productionEndTerminal("type_modifier3","-","-","Replacement",first,token);}
+ |
+	"internal"  {return productionEndTerminal("type_modifier4","-","-","Replacement",first,token);}
+ |
+	"private"  {return productionEndTerminal("type_modifier5","-","-","Replacement",first,token);}
+ |
+	"abstract"  {return productionEndTerminal("type_modifier6","-","-","Replacement",first,token);}
+ |
+	"sealed"  {return productionEndTerminal("type_modifier7","-","-","Replacement",first,token);}
+ |
+	"unsafe"  {return productionEndTerminal("type_modifier8","-","-","Replacement",first,token);}
+
+ )  }
+
+String class_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"class" n=identifier(inTerminal){ replaceName("identifier",n);} [class_base(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("class_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String class_base(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	":" class_type(true) ("," type_name(true))* {return productionEndTerminal("class_base","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_type_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_name(true) ("," type_name(true))* {return productionEndTerminal("interface_type_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String class_body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" (class_member_declaration(true))* "}" {return productionEndTerminal("class_body","-","-","Replacement",first,token);}
+
+ )  }
+
+String class_member_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] [member_modifiers(true)] class_member_declarationEnd(true) {return productionEndTerminal("class_member_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String class_member_declarationEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	constant_declaration(true) {return productionEndTerminal("class_member_declarationEnd1","-","-","Replacement",first,token);}
+ |
+	event_declaration(true) {return productionEndTerminal("class_member_declarationEnd2","-","-","Replacement",first,token);}
+ |
+	destructor_declaration(true) {return productionEndTerminal("class_member_declarationEnd3","-","-","Replacement",first,token);}
+ |
+	conversion_operator_declaration(true) {return productionEndTerminal("class_member_declarationEnd4","-","-","Replacement",first,token);}
+ |
+	type_declaration(true) {return productionEndTerminal("class_member_declarationEnd5","-","-","Replacement",first,token);}
+ |
+	type(true) typeEnd(true) {return productionEndTerminal("class_member_declarationEnd6","-","-","Replacement",first,token);}
+
+ )  }
+
+String typeEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	constructor_declaration(true) {return productionEndTerminal("typeEnd1","-","-","Replacement",first,token);}
+ |
+	indexer_declaration_no_interface(true) {return productionEndTerminal("typeEnd2","-","-","Replacement",first,token);}
+ |
+	operator_declaration(true) {return productionEndTerminal("typeEnd3","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(indexer_base() "[") indexer_declaration_interface(true) {return productionEndTerminal("typeEnd4","-","-","Replacement",first,token);}
+ |
+	type_name(true) type_nameEnd(true) {return productionEndTerminal("typeEnd5","-","-","Replacement",first,token);}
+
+ )  }
+
+String type_nameEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	method_declaration(true) {return productionEndTerminal("type_nameEnd1","-","-","Replacement",first,token);}
+ |
+	property_declaration(true) {return productionEndTerminal("type_nameEnd2","-","-","Replacement",first,token);}
+ |
+	field_declaration(true) {return productionEndTerminal("type_nameEnd3","-","-","Replacement",first,token);}
+
+ )  }
+
+String member_modifiers(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(member_modifier(true))+ {return productionEndTerminal("member_modifiers","-","-","Replacement",first,token);}
+
+ )  }
+
+String member_modifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new"  {return productionEndTerminal("member_modifier1","-","-","Replacement",first,token);}
+ |
+	"public"  {return productionEndTerminal("member_modifier2","-","-","Replacement",first,token);}
+ |
+	"protected"  {return productionEndTerminal("member_modifier3","-","-","Replacement",first,token);}
+ |
+	"internal"  {return productionEndTerminal("member_modifier4","-","-","Replacement",first,token);}
+ |
+	"private"  {return productionEndTerminal("member_modifier5","-","-","Replacement",first,token);}
+ |
+	"static"  {return productionEndTerminal("member_modifier6","-","-","Replacement",first,token);}
+ |
+	"virtual"  {return productionEndTerminal("member_modifier7","-","-","Replacement",first,token);}
+ |
+	"sealed"  {return productionEndTerminal("member_modifier8","-","-","Replacement",first,token);}
+ |
+	"override"  {return productionEndTerminal("member_modifier9","-","-","Replacement",first,token);}
+ |
+	"abstract"  {return productionEndTerminal("member_modifier10","-","-","Replacement",first,token);}
+ |
+	"extern"  {return productionEndTerminal("member_modifier11","-","-","Replacement",first,token);}
+ |
+	"readonly"  {return productionEndTerminal("member_modifier12","-","-","Replacement",first,token);}
+ |
+	"unsafe"  {return productionEndTerminal("member_modifier13","-","-","Replacement",first,token);}
+
+ )  }
+
+String constant_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"const" type(true) constant_declarators(true) ";" {return productionEndTerminal("constant_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String constant_declarators(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	constant_declarator(true) ("," constant_declarator(true))* {return productionEndTerminal("constant_declarators","-","-","Replacement",first,token);}
+
+ )  }
+
+String constant_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) "=" expression(true) {return productionEndTerminal("constant_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String field_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	field_declaration_start(true) ["," field_declarators(true)] ";" {return productionEndTerminal("field_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String field_declaration_start(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	["=" variable_initializer(true)] {return productionEndTerminal("field_declaration_start","-","-","Replacement",first,token);}
+
+ )  }
+
+String field_declarators(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	field_declarator(true) ("," field_declarator(true))* {return productionEndTerminal("field_declarators","-","-","Replacement",first,token);}
+
+ )  }
+
+String field_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) ["=" variable_initializer(true)] {return productionEndTerminal("field_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String variable_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	array_initializer(true) {return productionEndTerminal("variable_initializer1","-","-","Replacement",first,token);}
+ |
+	expression(true) {return productionEndTerminal("variable_initializer2","-","-","Replacement",first,token);}
+ |
+	stackalloc_initializer(true) {return productionEndTerminal("variable_initializer3","-","-","Replacement",first,token);}
+
+ )  }
+
+String method_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [formal_parameter_list(true)] ")" body(true) {return productionEndTerminal("method_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	block(true) {return productionEndTerminal("body1","-","-","Replacement",first,token);}
+ |
+	";"  {return productionEndTerminal("body2","-","-","Replacement",first,token);}
+
+ )  }
+
+String formal_parameter_list(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] formal_parameter_listEnd(true) {return productionEndTerminal("formal_parameter_list","-","-","Replacement",first,token);}
+
+ )  }
+
+String formal_parameter_listEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	fixed_parameter(true) (fixed_parameterEnd(true))* {return productionEndTerminal("formal_parameter_listEnd1","-","-","Replacement",first,token);}
+ |
+	parameter_array(true) {return productionEndTerminal("formal_parameter_listEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+String formal_parameter_listEndInt(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	fixed_parameter(true) {return productionEndTerminal("formal_parameter_listEndInt1","-","-","Replacement",first,token);}
+ |
+	parameter_array(true) {return productionEndTerminal("formal_parameter_listEndInt2","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_parameterEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"," [attributes(true)] formal_parameter_listEndInt(true) {return productionEndTerminal("fixed_parameterEnd","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_parameter(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[parameter_modifier(true)] type(true) identifier(true) {return productionEndTerminal("fixed_parameter","-","-","Replacement",first,token);}
+
+ )  }
+
+String parameter_modifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"ref"  {return productionEndTerminal("parameter_modifier1","-","-","Replacement",first,token);}
+ |
+	"out"  {return productionEndTerminal("parameter_modifier2","-","-","Replacement",first,token);}
+
+ )  }
+
+String parameter_array(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"params" type(true) identifier(true) {return productionEndTerminal("parameter_array","-","-","Replacement",first,token);}
+
+ )  }
+
+String property_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" accessor_declarations(true) "}" {return productionEndTerminal("property_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String accessor_declarations(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	accessor_declaration(true) [accessor_declaration(true)] {return productionEndTerminal("accessor_declarations","-","-","Replacement",first,token);}
+
+ )  }
+
+String accessor_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] <IDENTIFIER> body(true) {return productionEndTerminal("accessor_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String event_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"event" type(true) event_declarationInt(true) {return productionEndTerminal("event_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String event_declarationInt(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) type_name(true) "{" event_accessor_declarations(true) "}" {return productionEndTerminal("event_declarationInt1","-","-","Replacement",first,token);}
+ |
+	event_variable_declarator(true) ("," event_variable_declarator(true))* ";" {return productionEndTerminal("event_declarationInt2","-","-","Replacement",first,token);}
+
+ )  }
+
+String event_variable_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) ["=" variable_initializer(true)] {return productionEndTerminal("event_variable_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String event_accessor_declarations(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	accessor_declaration(true) accessor_declaration(true) {return productionEndTerminal("event_accessor_declarations","-","-","Replacement",first,token);}
+
+ )  }
+
+String indexer_declaration_no_interface(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"this" "[" formal_parameter_list(true) "]" "{" accessor_declarations(true) "}" {return productionEndTerminal("indexer_declaration_no_interface","-","-","Replacement",first,token);}
+
+ )  }
+
+String indexer_declaration_interface(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	indexer_base(true) "[" formal_parameter_list(true) "]" "{" accessor_declarations(true) "}" {return productionEndTerminal("indexer_declaration_interface","-","-","Replacement",first,token);}
+
+ )  }
+
+String indexer_base(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) ("." indexer_baseInt(true))* {return productionEndTerminal("indexer_base","-","-","Replacement",first,token);}
+
+ )  }
+
+String indexer_baseInt(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) {return productionEndTerminal("indexer_baseInt1","-","-","Replacement",first,token);}
+ |
+	"this"  {return productionEndTerminal("indexer_baseInt2","-","-","Replacement",first,token);}
+
+ )  }
+
+String operator_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD("operator" overloadable_unary_operator()	"("	type()	identifier()	")") "operator" unary_operator_declaration(true) {return productionEndTerminal("operator_declaration1","-","-","Replacement",first,token);}
+ |
+	"operator" binary_operator_declaration(true) {return productionEndTerminal("operator_declaration2","-","-","Replacement",first,token);}
+
+ )  }
+
+String unary_operator_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	overloadable_unary_operator(true) "(" type(true) identifier(true) ")" body(true) {return productionEndTerminal("unary_operator_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String overloadable_unary_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"+"  {return productionEndTerminal("overloadable_unary_operator1","-","-","Replacement",first,token);}
+ |
+	"-"  {return productionEndTerminal("overloadable_unary_operator2","-","-","Replacement",first,token);}
+ |
+	"!"  {return productionEndTerminal("overloadable_unary_operator3","-","-","Replacement",first,token);}
+ |
+	"~"  {return productionEndTerminal("overloadable_unary_operator4","-","-","Replacement",first,token);}
+ |
+	"++"  {return productionEndTerminal("overloadable_unary_operator5","-","-","Replacement",first,token);}
+ |
+	"--"  {return productionEndTerminal("overloadable_unary_operator6","-","-","Replacement",first,token);}
+ |
+	"true"  {return productionEndTerminal("overloadable_unary_operator7","-","-","Replacement",first,token);}
+ |
+	"false"  {return productionEndTerminal("overloadable_unary_operator8","-","-","Replacement",first,token);}
+
+ )  }
+
+String binary_operator_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	overloadable_binary_operator(true) "(" type(true) identifier(true) "," type(true) identifier(true) ")" body(true) {return productionEndTerminal("binary_operator_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String overloadable_binary_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"+"  {return productionEndTerminal("overloadable_binary_operator1","-","-","Replacement",first,token);}
+ |
+	"-"  {return productionEndTerminal("overloadable_binary_operator2","-","-","Replacement",first,token);}
+ |
+	"*"  {return productionEndTerminal("overloadable_binary_operator3","-","-","Replacement",first,token);}
+ |
+	"/"  {return productionEndTerminal("overloadable_binary_operator4","-","-","Replacement",first,token);}
+ |
+	"%"  {return productionEndTerminal("overloadable_binary_operator5","-","-","Replacement",first,token);}
+ |
+	"&"  {return productionEndTerminal("overloadable_binary_operator6","-","-","Replacement",first,token);}
+ |
+	"|"  {return productionEndTerminal("overloadable_binary_operator7","-","-","Replacement",first,token);}
+ |
+	"^"  {return productionEndTerminal("overloadable_binary_operator8","-","-","Replacement",first,token);}
+ |
+	"<<"  {return productionEndTerminal("overloadable_binary_operator9","-","-","Replacement",first,token);}
+ |
+	">>"  {return productionEndTerminal("overloadable_binary_operator10","-","-","Replacement",first,token);}
+ |
+	"=="  {return productionEndTerminal("overloadable_binary_operator11","-","-","Replacement",first,token);}
+ |
+	"!="  {return productionEndTerminal("overloadable_binary_operator12","-","-","Replacement",first,token);}
+ |
+	">"  {return productionEndTerminal("overloadable_binary_operator13","-","-","Replacement",first,token);}
+ |
+	"<"  {return productionEndTerminal("overloadable_binary_operator14","-","-","Replacement",first,token);}
+ |
+	">="  {return productionEndTerminal("overloadable_binary_operator15","-","-","Replacement",first,token);}
+ |
+	"<="  {return productionEndTerminal("overloadable_binary_operator16","-","-","Replacement",first,token);}
+
+ )  }
+
+String conversion_operator_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	conversion_operator(true) "operator" type(true) "(" type(true) identifier(true) ")" body(true) {return productionEndTerminal("conversion_operator_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String conversion_operator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"implicit"  {return productionEndTerminal("conversion_operator1","-","-","Replacement",first,token);}
+ |
+	"explicit"  {return productionEndTerminal("conversion_operator2","-","-","Replacement",first,token);}
+
+ )  }
+
+String constructor_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [formal_parameter_list(true)] ")" [constructor_initializer(true)] body(true) {return productionEndTerminal("constructor_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String constructor_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	":" constructor_initializerInt(true) "(" [argument_list(true)] ")" {return productionEndTerminal("constructor_initializer","-","-","Replacement",first,token);}
+
+ )  }
+
+String constructor_initializerInt(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"base"  {return productionEndTerminal("constructor_initializerInt1","-","-","Replacement",first,token);}
+ |
+	"this"  {return productionEndTerminal("constructor_initializerInt2","-","-","Replacement",first,token);}
+
+ )  }
+
+String destructor_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"~" identifier(true) "(" ")" body(true) {return productionEndTerminal("destructor_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String struct_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"struct" n=identifier(inTerminal){ replaceName("identifier",n);} [base_interfaces(inTerminal)] class_body(inTerminal) [";" ] {return productionEndNonTerminal("struct_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String base_interfaces(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	":" interface_type_list(true) {return productionEndTerminal("base_interfaces","-","-","Replacement",first,token);}
+
+ )  }
+
+String array_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" rest_of_array_initializer(true) {return productionEndTerminal("array_initializer","-","-","Replacement",first,token);}
+
+ )  }
+
+String rest_of_array_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"}"  {return productionEndTerminal("rest_of_array_initializer1","-","-","Replacement",first,token);}
+ |
+	variable_initializer(true) rest_of_array_initializerEnd(true) {return productionEndTerminal("rest_of_array_initializer2","-","-","Replacement",first,token);}
+
+ )  }
+
+String rest_of_array_initializerEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"}"  {return productionEndTerminal("rest_of_array_initializerEnd1","-","-","Replacement",first,token);}
+ |
+	"," rest_of_array_initializer(true) {return productionEndTerminal("rest_of_array_initializerEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"interface" n=identifier(inTerminal){ replaceName("identifier",n);} [base_interfaces(inTerminal)] interface_body(inTerminal) [";" ] {return productionEndNonTerminal("interface_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String interface_body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" (interface_member_declaration(true))* "}" {return productionEndTerminal("interface_body","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_member_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] (interface_member_modifier(true))* interface_member_declarationEnd(true) {return productionEndTerminal("interface_member_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_member_declarationEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	interface_event_declaration(true) {return productionEndTerminal("interface_member_declarationEnd1","-","-","Replacement",first,token);}
+ |
+	type(true) interface_member_declarationEndType(true) {return productionEndTerminal("interface_member_declarationEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_member_declarationEndType(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	interface_indexer_declaration(true) {return productionEndTerminal("interface_member_declarationEndType1","-","-","Replacement",first,token);}
+ |
+	identifier(true) interface_member_declarationEndTypeIdentifier(true) {return productionEndTerminal("interface_member_declarationEndType2","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_member_declarationEndTypeIdentifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	interface_method_declaration(true) {return productionEndTerminal("interface_member_declarationEndTypeIdentifier1","-","-","Replacement",first,token);}
+ |
+	interface_property_declaration(true) {return productionEndTerminal("interface_member_declarationEndTypeIdentifier2","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_member_modifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new"  {return productionEndTerminal("interface_member_modifier1","-","-","Replacement",first,token);}
+ |
+	"unsafe"  {return productionEndTerminal("interface_member_modifier2","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_event_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"event" type(true) identifier(true) ";" {return productionEndTerminal("interface_event_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_indexer_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"this" "[" formal_parameter_list(true) "]" "{" interface_accessors(true) "}" {return productionEndTerminal("interface_indexer_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_method_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [formal_parameter_list(true)] ")" ";" {return productionEndTerminal("interface_method_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_property_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" interface_accessors(true) "}" {return productionEndTerminal("interface_property_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_accessors(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	interface_accessor(true) [interface_accessor(true)] {return productionEndTerminal("interface_accessors","-","-","Replacement",first,token);}
+
+ )  }
+
+String interface_accessor(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] <IDENTIFIER> ";" {return productionEndTerminal("interface_accessor","-","-","Replacement",first,token);}
+
+ )  }
+
+String enum_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"enum" n=identifier(inTerminal){ replaceName("identifier",n);} [enum_base(inTerminal)] enum_body(inTerminal) [";" ] {return productionEndNonTerminal("enum_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String enum_base(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	":" integral_type(true) {return productionEndTerminal("enum_base","-","-","Replacement",first,token);}
+
+ )  }
+
+String enum_body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" rest_of_enum_body(true) {return productionEndTerminal("enum_body","-","-","Replacement",first,token);}
+
+ )  }
+
+String rest_of_enum_body(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"}"  {return productionEndTerminal("rest_of_enum_body1","-","-","Replacement",first,token);}
+ |
+	enum_member_declaration(true) rest_of_enum_bodyEnd(true) {return productionEndTerminal("rest_of_enum_body2","-","-","Replacement",first,token);}
+
+ )  }
+
+String rest_of_enum_bodyEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"}"  {return productionEndTerminal("rest_of_enum_bodyEnd1","-","-","Replacement",first,token);}
+ |
+	"," rest_of_enum_body(true) {return productionEndTerminal("rest_of_enum_bodyEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+String enum_member_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[attributes(true)] identifier(true) [enum_member_assignment(true)] {return productionEndTerminal("enum_member_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+String enum_member_assignment(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"=" expression(true) {return productionEndTerminal("enum_member_assignment","-","-","Replacement",first,token);}
+
+ )  }
+
+String delegate_declaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"delegate" type(inTerminal) n=identifier(inTerminal){ replaceName("identifier",n);} "(" [formal_parameter_list(inTerminal)] ")" ";" {return productionEndNonTerminal("delegate_declaration","{identifier}","{identifier}");}
+
+ )  }
+
+String attributes_either(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(attribute_section_start(true))+ {return productionEndTerminal("attributes_either","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_section_start(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD("[" ("assembly" |"module") ":") "[" global_attribute_target_specifier(true) attribute_section(true) {return productionEndTerminal("attribute_section_start1","-","-","Replacement",first,token);}
+ |
+	"[" [attribute_target_specifier(true)] attribute_section(true) {return productionEndTerminal("attribute_section_start2","-","-","Replacement",first,token);}
+
+ )  }
+
+String global_attribute_target_specifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	global_attribute_target(true) ":" {return productionEndTerminal("global_attribute_target_specifier","-","-","Replacement",first,token);}
+
+ )  }
+
+String global_attribute_target(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"assembly"  {return productionEndTerminal("global_attribute_target1","-","-","Replacement",first,token);}
+ |
+	"module"  {return productionEndTerminal("global_attribute_target2","-","-","Replacement",first,token);}
+
+ )  }
+
+String attributes(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(local_attribute(true))+ {return productionEndTerminal("attributes","-","-","Replacement",first,token);}
+
+ )  }
+
+String local_attribute(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"[" [attribute_target_specifier(true)] attribute_section(true) {return productionEndTerminal("local_attribute","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_section(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	attribute(true) attribute_sectionEnd(true) {return productionEndTerminal("attribute_section","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_sectionEnd(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"]"  {return productionEndTerminal("attribute_sectionEnd1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(2) "," "]"  {return productionEndTerminal("attribute_sectionEnd2","-","-","Replacement",first,token);}
+ |
+	"," attribute_section(true) {return productionEndTerminal("attribute_sectionEnd3","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_target_specifier(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	attribute_target(true) ":" {return productionEndTerminal("attribute_target_specifier","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_target(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"event"  {return productionEndTerminal("attribute_target1","-","-","Replacement",first,token);}
+ |
+	"return"  {return productionEndTerminal("attribute_target2","-","-","Replacement",first,token);}
+ |
+	<IDENTIFIER> {return productionEndTerminal("attribute_target3","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	type_name(true) [attribute_arguments(true)] {return productionEndTerminal("attribute","-","-","Replacement",first,token);}
+
+ )  }
+
+String attribute_arguments(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [expression_list(true)] ")" {return productionEndTerminal("attribute_arguments","-","-","Replacement",first,token);}
+
+ )  }
+
+String sizeof_expression(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"sizeof" "(" type(true) ")" {return productionEndTerminal("sizeof_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+String unsafe_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"unsafe" block(true) {return productionEndTerminal("unsafe_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String pointer_member_access(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"->" <IDENTIFIER> {return productionEndTerminal("pointer_member_access","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_statement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"fixed" "(" type(true) fixed_pointer_declarators(true) ")" embedded_statement(true) {return productionEndTerminal("fixed_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_pointer_declarators(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	fixed_pointer_declarator(true) ("," fixed_pointer_declarator(true))* {return productionEndTerminal("fixed_pointer_declarators","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_pointer_declarator(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	identifier(true) "=" fixed_pointer_initializer(true) {return productionEndTerminal("fixed_pointer_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+String fixed_pointer_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	["&" ] expression(true) {return productionEndTerminal("fixed_pointer_initializer","-","-","Replacement",first,token);}
+
+ )  }
+
+String stackalloc_initializer(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"stackalloc" non_array_type(true) "[" expression(true) "]" {return productionEndTerminal("stackalloc_initializer","-","-","Replacement",first,token);}
+
+ )  }
+

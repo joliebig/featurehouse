@@ -50,6 +50,15 @@
 		</antcall>
 	</target>
 
+	<target name="testCSharp">
+		<antcall target="testGrammar">
+			<param name="language" value="csharp" />
+			<param name="parserClass" value="CSharpParser" />
+			<param name="mainProduction" value="compilation_unit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+		</antcall>
+	</target>
+	
 	<target name="testXML">
 		<antcall target="testGrammar">
 			<param name="language" value="xml" />
