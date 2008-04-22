@@ -19,7 +19,7 @@ import de.ovgu.cide.fstgen.ast.*;
 
 PARSER_END(CSharpParser)
 
-SKIP : {
+SPECIAL_TOKEN : {
  " "
 |  "\t"
 |  "\n"
