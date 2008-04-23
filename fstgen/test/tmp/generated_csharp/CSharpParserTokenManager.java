@@ -141,6 +141,10 @@ private final int jjMoveStringLiteralDfa0_0()
    {
       case 9:
          return jjStopAtPos(0, 2);
+      case 10:
+         return jjStopAtPos(0, 3);
+      case 13:
+         return jjStopAtPos(0, 4);
       case 32:
          return jjStopAtPos(0, 1);
       case 33:
@@ -2032,6 +2036,9 @@ static final long[] jjtoToken = {
 static final long[] jjtoSkip = {
    0x7eL, 0x0L, 0x0L, 
 };
+static final long[] jjtoSpecial = {
+   0x7eL, 0x0L, 0x0L, 
+};
 protected CharStream input_stream;
 private final int[] jjrounds = new int[164];
 private final int[] jjstateSet = new int[328];
@@ -2110,14 +2117,10 @@ public Token getNextToken()
    {        
       jjmatchedKind = 0;
       matchedToken = jjFillToken();
+      matchedToken.specialToken = specialToken;
       return matchedToken;
    }
 
-   try { input_stream.backup(0);
-      while (curChar <= 13 && (0x2400L & (1L << curChar)) != 0L)
-         curChar = input_stream.BeginToken();
-   }
-   catch (java.io.IOException e1) { continue EOFLoop; }
    jjmatchedKind = 0x7fffffff;
    jjmatchedPos = 0;
    curPos = jjMoveStringLiteralDfa0_0();
@@ -2128,10 +2131,22 @@ public Token getNextToken()
       if ((jjtoToken[jjmatchedKind >> 6] & (1L << (jjmatchedKind & 077))) != 0L)
       {
          matchedToken = jjFillToken();
+         matchedToken.specialToken = specialToken;
          return matchedToken;
       }
       else
       {
+         if ((jjtoSpecial[jjmatchedKind >> 6] & (1L << (jjmatchedKind & 077))) != 0L)
+         {
+            matchedToken = jjFillToken();
+            if (specialToken == null)
+               specialToken = matchedToken;
+            else
+            {
+               matchedToken.specialToken = specialToken;
+               specialToken = (specialToken.next = matchedToken);
+            }
+         }
          continue EOFLoop;
       }
    }

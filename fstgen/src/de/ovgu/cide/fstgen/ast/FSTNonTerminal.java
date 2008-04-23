@@ -56,17 +56,22 @@ public class FSTNonTerminal extends FSTNode {
 	@Override
 	public String toString() {
 		String shortS = toStringShort();
-		return shortS.substring(0, shortS.length() - 1) + " "
-				+ printChildrenList();
+		return shortS + printChildrenList();
 	}
 
+	private static int level = 0;
 	private String printChildrenList() {
+		level++;
+		
 		String result = "";
 		for (int idx = 0; idx < children.size(); idx++) {
-			if (idx != 0)
-				result += ", ";
+			//if (idx != 0)
+			result += "\n";
+			for(int i = 0; i < level; i++)
+				result += "\t";
 			result += children.get(idx).toString();
 		}
+		level--;
 		return result + "]";
 	}
 

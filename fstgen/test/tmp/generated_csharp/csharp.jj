@@ -19,7 +19,7 @@ import de.ovgu.cide.fstgen.ast.*;
 
 PARSER_END(CSharpParser)
 
-SKIP : {
+SPECIAL_TOKEN : {
  " "
 |  "\t"
 |  "\n"
@@ -226,97 +226,97 @@ String type_argument_list(boolean inTerminal) : { Token first=null,t;String n;
 
 String type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=non_array_type(true){ replaceName("non_array_type",n);} [n=rank_specifiers(true){ replaceName("rank_specifiers",n);}] ["*" ] {return productionEndTerminal("type","-","{non_array_type}{rank_specifiers}","Replacement",first,token);}
+	non_array_type(true) [rank_specifiers(true)] ["*" ] {return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 String rank_specifiers(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=rank_specifier(true){ replaceName("rank_specifier",n);})+ {return productionEndTerminal("rank_specifiers","-","{rank_specifier}^ ","Replacement",first,token);}
+	(rank_specifier(true))+ {return productionEndTerminal("rank_specifiers","-","-","Replacement",first,token);}
 
  )  }
 
 String rank_specifier(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"[" ("," )* "]" {return productionEndTerminal("rank_specifier","-","[]","Replacement",first,token);}
+	"[" ("," )* "]" {return productionEndTerminal("rank_specifier","-","-","Replacement",first,token);}
 
  )  }
 
 String non_array_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=predefined_type(true){ replaceName("predefined_type",n);} {return productionEndTerminal("non_array_type1","-","{predefined_type}","Replacement",first,token);}
+	predefined_type(true) {return productionEndTerminal("non_array_type1","-","-","Replacement",first,token);}
  |
-	n=type_name(true){ replaceName("type_name",n);} {return productionEndTerminal("non_array_type2","-","{type_name}","Replacement",first,token);}
+	type_name(true) {return productionEndTerminal("non_array_type2","-","-","Replacement",first,token);}
 
  )  }
 
 String predefined_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=simple_type(true){ replaceName("simple_type",n);} {return productionEndTerminal("predefined_type1","-","{simple_type}","Replacement",first,token);}
+	simple_type(true) {return productionEndTerminal("predefined_type1","-","-","Replacement",first,token);}
  |
-	"object"  {return productionEndTerminal("predefined_type2","-","object","Replacement",first,token);}
+	"object"  {return productionEndTerminal("predefined_type2","-","-","Replacement",first,token);}
  |
-	"string"  {return productionEndTerminal("predefined_type3","-","string","Replacement",first,token);}
+	"string"  {return productionEndTerminal("predefined_type3","-","-","Replacement",first,token);}
  |
-	"void"  {return productionEndTerminal("predefined_type4","-","void","Replacement",first,token);}
+	"void"  {return productionEndTerminal("predefined_type4","-","-","Replacement",first,token);}
 
  )  }
 
 String simple_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=numeric_type(true){ replaceName("numeric_type",n);} {return productionEndTerminal("simple_type1","-","{numeric_type}","Replacement",first,token);}
+	numeric_type(true) {return productionEndTerminal("simple_type1","-","-","Replacement",first,token);}
  |
-	"bool"  {return productionEndTerminal("simple_type2","-","bool","Replacement",first,token);}
+	"bool"  {return productionEndTerminal("simple_type2","-","-","Replacement",first,token);}
 
  )  }
 
 String numeric_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=integral_type(true){ replaceName("integral_type",n);} {return productionEndTerminal("numeric_type1","-","{integral_type}","Replacement",first,token);}
+	integral_type(true) {return productionEndTerminal("numeric_type1","-","-","Replacement",first,token);}
  |
-	n=floating_point_type(true){ replaceName("floating_point_type",n);} {return productionEndTerminal("numeric_type2","-","{floating_point_type}","Replacement",first,token);}
+	floating_point_type(true) {return productionEndTerminal("numeric_type2","-","-","Replacement",first,token);}
  |
-	"decimal"  {return productionEndTerminal("numeric_type3","-","decimal","Replacement",first,token);}
+	"decimal"  {return productionEndTerminal("numeric_type3","-","-","Replacement",first,token);}
 
  )  }
 
 String integral_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"sbyte"  {return productionEndTerminal("integral_type1","-","sbyte","Replacement",first,token);}
+	"sbyte"  {return productionEndTerminal("integral_type1","-","-","Replacement",first,token);}
  |
-	"byte"  {return productionEndTerminal("integral_type2","-","byte","Replacement",first,token);}
+	"byte"  {return productionEndTerminal("integral_type2","-","-","Replacement",first,token);}
  |
-	"short"  {return productionEndTerminal("integral_type3","-","short","Replacement",first,token);}
+	"short"  {return productionEndTerminal("integral_type3","-","-","Replacement",first,token);}
  |
-	"ushort"  {return productionEndTerminal("integral_type4","-","ushort","Replacement",first,token);}
+	"ushort"  {return productionEndTerminal("integral_type4","-","-","Replacement",first,token);}
  |
-	"int"  {return productionEndTerminal("integral_type5","-","int","Replacement",first,token);}
+	"int"  {return productionEndTerminal("integral_type5","-","-","Replacement",first,token);}
  |
-	"uint"  {return productionEndTerminal("integral_type6","-","uint","Replacement",first,token);}
+	"uint"  {return productionEndTerminal("integral_type6","-","-","Replacement",first,token);}
  |
-	"long"  {return productionEndTerminal("integral_type7","-","long","Replacement",first,token);}
+	"long"  {return productionEndTerminal("integral_type7","-","-","Replacement",first,token);}
  |
-	"ulong"  {return productionEndTerminal("integral_type8","-","ulong","Replacement",first,token);}
+	"ulong"  {return productionEndTerminal("integral_type8","-","-","Replacement",first,token);}
  |
-	"char"  {return productionEndTerminal("integral_type9","-","char","Replacement",first,token);}
+	"char"  {return productionEndTerminal("integral_type9","-","-","Replacement",first,token);}
 
  )  }
 
 String class_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=type_name(true){ replaceName("type_name",n);} {return productionEndTerminal("class_type1","-","{type_name}","Replacement",first,token);}
+	type_name(true) {return productionEndTerminal("class_type1","-","-","Replacement",first,token);}
  |
-	"object"  {return productionEndTerminal("class_type2","-","object","Replacement",first,token);}
+	"object"  {return productionEndTerminal("class_type2","-","-","Replacement",first,token);}
  |
-	"string"  {return productionEndTerminal("class_type3","-","string","Replacement",first,token);}
+	"string"  {return productionEndTerminal("class_type3","-","-","Replacement",first,token);}
 
  )  }
 
 String floating_point_type(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"float"  {return productionEndTerminal("floating_point_type1","-","float","Replacement",first,token);}
+	"float"  {return productionEndTerminal("floating_point_type1","-","-","Replacement",first,token);}
  |
-	"double"  {return productionEndTerminal("floating_point_type2","-","double","Replacement",first,token);}
+	"double"  {return productionEndTerminal("floating_point_type2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1114,15 +1114,15 @@ String namespace_member_declaration(boolean inTerminal) : { Token first=null,t;S
 
 String type_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=class_declaration(inTerminal){ replaceName("class_declaration",n);} {return productionEndNonTerminal("type_declaration1","{class_declaration}","{class_declaration}");}
+	class_declaration(inTerminal) {return productionEndNonTerminal("type_declaration1","-","-");}
  |
-	n=struct_declaration(inTerminal){ replaceName("struct_declaration",n);} {return productionEndNonTerminal("type_declaration2","{struct_declaration}","{struct_declaration}");}
+	struct_declaration(inTerminal) {return productionEndNonTerminal("type_declaration2","-","-");}
  |
-	n=interface_declaration(inTerminal){ replaceName("interface_declaration",n);} {return productionEndNonTerminal("type_declaration3","{interface_declaration}","{interface_declaration}");}
+	interface_declaration(inTerminal) {return productionEndNonTerminal("type_declaration3","-","-");}
  |
-	n=enum_declaration(inTerminal){ replaceName("enum_declaration",n);} {return productionEndNonTerminal("type_declaration4","{enum_declaration}","{enum_declaration}");}
+	enum_declaration(inTerminal) {return productionEndNonTerminal("type_declaration4","-","-");}
  |
-	n=delegate_declaration(inTerminal){ replaceName("delegate_declaration",n);} {return productionEndNonTerminal("type_declaration5","{delegate_declaration}","{delegate_declaration}");}
+	delegate_declaration(inTerminal) {return productionEndNonTerminal("type_declaration5","-","-");}
 
  )  }
 
@@ -1248,23 +1248,23 @@ String class_body(boolean inTerminal) : { Token first=null,t;String n;
 
 String class_member_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[attributes(inTerminal)] [member_modifiers(inTerminal)] class_member_declarationEnd(inTerminal) {return productionEndNonTerminal("class_member_declaration","-","-");}
+	[attributes(inTerminal)] [member_modifiers(inTerminal)] n=class_member_declarationEnd(inTerminal){ replaceName("class_member_declarationEnd",n);} {return productionEndNonTerminal("class_member_declaration","{class_member_declarationEnd}","{class_member_declarationEnd}");}
 
  )  }
 
 String class_member_declarationEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	constant_declaration(inTerminal) {return productionEndNonTerminal("class_member_declarationEnd1","-","-");}
+	n=constant_declaration(inTerminal){ replaceName("constant_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd1","{constant_declaration}","{constant_declaration}");}
  |
-	event_declaration(inTerminal) {return productionEndNonTerminal("class_member_declarationEnd2","-","-");}
+	n=event_declaration(inTerminal){ replaceName("event_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd2","{event_declaration}","{event_declaration}");}
  |
-	destructor_declaration(inTerminal) {return productionEndNonTerminal("class_member_declarationEnd3","-","-");}
+	n=destructor_declaration(inTerminal){ replaceName("destructor_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd3","{destructor_declaration}","{destructor_declaration}");}
  |
-	conversion_operator_declaration(inTerminal) {return productionEndNonTerminal("class_member_declarationEnd4","-","-");}
+	n=conversion_operator_declaration(inTerminal){ replaceName("conversion_operator_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd4","{conversion_operator_declaration}","{conversion_operator_declaration}");}
  |
-	type_declaration(inTerminal) {return productionEndNonTerminal("class_member_declarationEnd5","-","-");}
+	n=type_declaration(inTerminal){ replaceName("type_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd5","{type_declaration}","{type_declaration}");}
  |
-	n=type(inTerminal){ replaceName("type",n);} n=typeEnd(inTerminal){ replaceName("typeEnd",n);} {return productionEndNonTerminal("class_member_declarationEnd6","{type}{typeEnd}","{type}{typeEnd}");}
+	n=type(inTerminal){ replaceName("type",n);} n=typeEnd(inTerminal){ replaceName("typeEnd",n);} {return productionEndNonTerminal("class_member_declarationEnd6","{type}###{typeEnd}","{type}###{typeEnd}");}
 
  )  }
 
@@ -1278,7 +1278,7 @@ String typeEnd(boolean inTerminal) : { Token first=null,t;String n;
  |
 	LOOKAHEAD(indexer_base() "[") n=indexer_declaration_interface(true){ replaceName("indexer_declaration_interface",n);} {return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","Replacement",first,token);}
  |
-	n=type_name(true){ replaceName("type_name",n);} n=type_nameEnd(true){ replaceName("type_nameEnd",n);} {return productionEndTerminal("typeEnd5","{type_name}-{type_nameEnd}","{type_name}-{type_nameEnd}","Replacement",first,token);}
+	n=type_name(true){ replaceName("type_name",n);} n=type_nameEnd(true){ replaceName("type_nameEnd",n);} {return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","Replacement",first,token);}
 
  )  }
 
@@ -1288,7 +1288,7 @@ String type_nameEnd(boolean inTerminal) : { Token first=null,t;String n;
  |
 	n=property_declaration(true){ replaceName("property_declaration",n);} {return productionEndTerminal("type_nameEnd2","-","{property_declaration}","Replacement",first,token);}
  |
-	n=field_declaration(true){ replaceName("field_declaration",n);} {return productionEndTerminal("type_nameEnd3","-","{field_declaration}","Replacement",first,token);}
+	field_declaration(true) {return productionEndTerminal("type_nameEnd3","-","","Replacement",first,token);}
 
  )  }
 
@@ -1402,23 +1402,23 @@ String formal_parameter_list(boolean inTerminal) : { Token first=null,t;String n
 
 String formal_parameter_listEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=fixed_parameter(true){ replaceName("fixed_parameter",n);} (n=fixed_parameterEnd(true){ replaceName("fixed_parameterEnd",n);})* {return productionEndTerminal("formal_parameter_listEnd1","-","{fixed_parameter}{fixed_parameterEnd}^","Replacement",first,token);}
+	n=fixed_parameter(true){ replaceName("fixed_parameter",n);} (n=fixed_parameterEnd(true){ replaceName("fixed_parameterEnd",n);})* {return productionEndTerminal("formal_parameter_listEnd1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement",first,token);}
  |
 	n=parameter_array(true){ replaceName("parameter_array",n);} {return productionEndTerminal("formal_parameter_listEnd2","-","{parameter_array}","Replacement",first,token);}
-
- )  }
-
-String formal_parameter_listEndInt(boolean inTerminal) : { Token first=null,t;String n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=fixed_parameter(true){ replaceName("fixed_parameter",n);} {return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter}","Replacement",first,token);}
- |
-	n=parameter_array(true){ replaceName("parameter_array",n);} {return productionEndTerminal("formal_parameter_listEndInt2","-","{parameter_array}","Replacement",first,token);}
 
  )  }
 
 String fixed_parameterEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"," [attributes(true)] n=formal_parameter_listEndInt(true){ replaceName("formal_parameter_listEndInt",n);} {return productionEndTerminal("fixed_parameterEnd","-","{formal_parameter_listEndInt}","Replacement",first,token);}
+
+ )  }
+
+String formal_parameter_listEndInt(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=fixed_parameter(true){ replaceName("fixed_parameter",n);} {return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement",first,token);}
+ |
+	n=parameter_array(true){ replaceName("parameter_array",n);} {return productionEndTerminal("formal_parameter_listEndInt2","-","{parameter_array}","Replacement",first,token);}
 
  )  }
 
@@ -1430,15 +1430,15 @@ String fixed_parameter(boolean inTerminal) : { Token first=null,t;String n;
 
 String parameter_modifier(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"ref"  {return productionEndTerminal("parameter_modifier1","-","-","Replacement",first,token);}
+	"ref"  {return productionEndTerminal("parameter_modifier1","-","{TOSTRING}","Replacement",first,token);}
  |
-	"out"  {return productionEndTerminal("parameter_modifier2","-","-","Replacement",first,token);}
+	"out"  {return productionEndTerminal("parameter_modifier2","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 String parameter_array(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"params" n=type(true){ replaceName("type",n);} identifier(true) {return productionEndTerminal("parameter_array","-","{type}","Replacement",first,token);}
+	"params" n=type(true){ replaceName("type",n);} identifier(true) {return productionEndTerminal("parameter_array","-","params {type}","Replacement",first,token);}
 
  )  }
 
