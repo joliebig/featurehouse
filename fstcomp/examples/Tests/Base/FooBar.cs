@@ -2,10 +2,9 @@ using System; //NameSpace
 using System.Text;
 using Project = PC.MyCompany.Project;
 
-class HelloCsharp
+abstract class HelloCsharp
 {
-    public static void Main()
-    {
-     Console.WriteLine("Hello CSharp World");
-    }
+	private int i = 0;
+	int i,j=1,z;
+	public object[,] foo(object[,,] a) { }
 }
