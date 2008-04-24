@@ -6,6 +6,7 @@ import java.util.List;
 
 import composer.rules.CompositionError;
 import composer.rules.ConstructorConcatenation;
+import composer.rules.FieldOverriding;
 import composer.rules.ImplementsListMerging;
 import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
@@ -21,6 +22,7 @@ import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
 import printer.binary.BinaryPrintVisitor;
+import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.text.TextPrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -90,6 +92,7 @@ public class FSTGenComposer {
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
 		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
+		composer.registerPrintVisitor(new CSharpPrintVisitor());
 		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
 		composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		composer.run(args);
@@ -162,6 +165,9 @@ public class FSTGenComposer {
 				} else if(terminalA.getCompositionMechanism().equals(ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
 					System.out.println("Modifier list specification: " + terminalA.toString() + " specializes " + terminalB.toString());
 					ModifierListSpecialization.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(FieldOverriding.COMPOSITION_RULE_NAME)) {
+					System.out.println("Field overiding: " + terminalA.toString() + " overrides " + terminalB.toString());
+					FieldOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else if(terminalA.getCompositionMechanism().equals(CompositionError.COMPOSITION_RULE_NAME)) {
 					CompositionError.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else {

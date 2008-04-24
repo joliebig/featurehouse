@@ -1,4 +1,4 @@
-package printer.java;
+package printer.csharp;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,12 +7,12 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_java15.SimplePrintVisitor;
+import tmp.generated_csharp.SimplePrintVisitor;
 
-public class JavaPrintVisitor extends ArtifactPrintVisitor {
+public class CSharpPrintVisitor extends ArtifactPrintVisitor {
 
-	public JavaPrintVisitor() {
-		super("Java-File");
+	public CSharpPrintVisitor() {
+		super("CSharp-File");
 	}
 	public void processNode(FSTNode node, File folderPath) throws PrintVisitorException {
 		if(node instanceof FSTNonTerminal) {
