@@ -6,7 +6,7 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
-  public class CSharpParser extends AbstractFSTParser implements CSharpParserConstants {
+public class CSharpParser extends AbstractFSTParser implements CSharpParserConstants {
         public CSharpParser() {}
 
   final public String compilation_unit(boolean inTerminal) throws ParseException {
@@ -3976,7 +3976,7 @@ import de.ovgu.cide.fstgen.ast.*;
                             replaceName("type",n);
       n = typeEnd(inTerminal);
                                                                            replaceName("typeEnd",n);
-                                                                                                       {if (true) return productionEndNonTerminal("class_member_declarationEnd6","{type}###{typeEnd}","{type}###{typeEnd}");}
+                                                                                                       {if (true) return productionEndNonTerminal("class_member_declarationEnd6","{type} {typeEnd}","{type} {typeEnd}");}
       break;
     default:
       jj_la1[126] = jj_gen;
@@ -3993,7 +3993,7 @@ import de.ovgu.cide.fstgen.ast.*;
     case LPAREN:
       n = constructor_declaration(true);
                                          replaceName("constructor_declaration",n);
-                                                                                     {if (true) return productionEndTerminal("typeEnd1","{constructor_declaration}","{constructor_declaration}","Replacement",first,token);}
+                                                                                     {if (true) return productionEndTerminal("typeEnd1","{constructor_declaration}","{constructor_declaration}","ConstructorConcatenation",first,token);}
       break;
     case THIS:
       n = indexer_declaration_no_interface(true);
@@ -4016,11 +4016,11 @@ import de.ovgu.cide.fstgen.ast.*;
         case ASSEMBLY:
         case MODULE:
         case IDENTIFIER:
-          n = type_name(true);
-                           replaceName("type_name",n);
-          n = type_nameEnd(true);
-                                                                              replaceName("type_nameEnd",n);
-                                                                                                               {if (true) return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","Replacement",first,token);}
+          n = type_name(inTerminal);
+                                 replaceName("type_name",n);
+          n = type_nameEnd(inTerminal);
+                                                                                          replaceName("type_nameEnd",n);
+                                                                                                                           {if (true) return productionEndNonTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}");}
           break;
         default:
           jj_la1[128] = jj_gen;
@@ -4040,18 +4040,18 @@ import de.ovgu.cide.fstgen.ast.*;
     case LTHAN:
       n = method_declaration(true);
                                     replaceName("method_declaration",n);
-                                                                           {if (true) return productionEndTerminal("type_nameEnd1","-","{method_declaration}","Replacement",first,token);}
+                                                                           {if (true) return productionEndTerminal("type_nameEnd1","{method_declaration}","{method_declaration}","MethodOverriding",first,token);}
       break;
     case LBRACE:
       n = property_declaration(true);
                                       replaceName("property_declaration",n);
-                                                                               {if (true) return productionEndTerminal("type_nameEnd2","-","{property_declaration}","Replacement",first,token);}
+                                                                               {if (true) return productionEndTerminal("type_nameEnd2","{property_declaration}","{property_declaration}","Replacement",first,token);}
       break;
     case ASSIGN:
     case COMMA:
     case SEMI:
       field_declaration(true);
-                                 {if (true) return productionEndTerminal("type_nameEnd3","-","","Replacement",first,token);}
+                                 {if (true) return productionEndTerminal("type_nameEnd3","","","FieldOverriding",first,token);}
       break;
     default:
       jj_la1[129] = jj_gen;
@@ -5021,7 +5021,8 @@ import de.ovgu.cide.fstgen.ast.*;
     case MODULE:
     case LBRACK:
     case IDENTIFIER:
-      formal_parameter_list(true);
+      n = formal_parameter_list(true);
+                                            replaceName("formal_parameter_list",n);
       break;
     default:
       jj_la1[160] = jj_gen;
@@ -5037,7 +5038,7 @@ import de.ovgu.cide.fstgen.ast.*;
       ;
     }
     body(true);
-                                                                                          {if (true) return productionEndTerminal("constructor_declaration","-","-","Replacement",first,token);}
+                                                                                                                                      {if (true) return productionEndTerminal("constructor_declaration","-","{formal_parameter_list}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5132,7 +5133,7 @@ import de.ovgu.cide.fstgen.ast.*;
     jj_consume_token(LPAREN);
     jj_consume_token(RPAREN);
     body(true);
-                                                 {if (true) return productionEndTerminal("destructor_declaration","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("destructor_declaration","~()","~()","ConstructorConcatenation",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8301,4 +8302,4 @@ import de.ovgu.cide.fstgen.ast.*;
     JJCalls next;
   }
 
-  }
+}

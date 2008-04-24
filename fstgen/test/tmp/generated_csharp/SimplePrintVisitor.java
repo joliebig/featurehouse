@@ -306,6 +306,21 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			return false;
 		}
+		if (nonTerminal.getType().equals("typeEnd5")) {
+			{
+				FSTNode v=getChild(nonTerminal, "type_name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "type_nameEnd");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
 		if (nonTerminal.getType().equals("struct_declaration")) {
 			printToken("struct");
 			{

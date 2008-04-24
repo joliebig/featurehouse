@@ -12,10 +12,9 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
-  public class CSharpParser extends AbstractFSTParser {
+public class CSharpParser extends AbstractFSTParser {
 	public CSharpParser() {}
-   
-  }
+}
 
 PARSER_END(CSharpParser)
 
@@ -881,18 +880,18 @@ class_member_declarationEnd
 		
 
 typeEnd
-	:	@FSTTerminal(name="{constructor_declaration}")	constructor_declaration
+	:	@FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration
 	|	@FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
 	|	@FSTTerminal(name="{operator_declaration}")	operator_declaration
 	|	@FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|	@FSTTerminal(name="{type_name}{type_nameEnd}")	type_name	type_nameEnd
+	|	@FSTNonTerminal(name="{type_name}{type_nameEnd}")	type_name	type_nameEnd
 	;
 
 			
 type_nameEnd
-	:	@FSTExportName("{method_declaration}")	method_declaration
-	|	@FSTExportName("{property_declaration}")	property_declaration
-	|	@FSTExportName("")	field_declaration
+	:	@FSTTerminal(name="{method_declaration}",compose="MethodOverriding")	method_declaration
+	|	@FSTTerminal(name="{property_declaration}")							property_declaration
+	|	@FSTTerminal(name="",compose="FieldOverriding")						field_declaration
 	;
 
 member_modifiers
@@ -1088,6 +1087,7 @@ conversion_operator
 	:	"implicit" |"explicit"
 	;
 
+@FSTExportName("{formal_parameter_list}")
 constructor_declaration
 	:	"("	(formal_parameter_list)?	")"	(constructor_initializer)?	body 
 	;
@@ -1097,6 +1097,7 @@ constructor_initializer
 	;
 constructor_initializerInt: "base" | "this";
 
+@FSTTerminal(name="~()",compose="ConstructorConcatenation")
 destructor_declaration
 	:	"~"	identifier	"("	")"	body 
 	;

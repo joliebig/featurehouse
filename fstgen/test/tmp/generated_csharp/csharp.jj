@@ -12,10 +12,9 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
-  public class CSharpParser extends AbstractFSTParser {
+public class CSharpParser extends AbstractFSTParser {
 	public CSharpParser() {}
-   
-  }
+}
 
 PARSER_END(CSharpParser)
 
@@ -1264,13 +1263,13 @@ String class_member_declarationEnd(boolean inTerminal) : { Token first=null,t;St
  |
 	n=type_declaration(inTerminal){ replaceName("type_declaration",n);} {return productionEndNonTerminal("class_member_declarationEnd5","{type_declaration}","{type_declaration}");}
  |
-	n=type(inTerminal){ replaceName("type",n);} n=typeEnd(inTerminal){ replaceName("typeEnd",n);} {return productionEndNonTerminal("class_member_declarationEnd6","{type}###{typeEnd}","{type}###{typeEnd}");}
+	n=type(inTerminal){ replaceName("type",n);} n=typeEnd(inTerminal){ replaceName("typeEnd",n);} {return productionEndNonTerminal("class_member_declarationEnd6","{type} {typeEnd}","{type} {typeEnd}");}
 
  )  }
 
 String typeEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=constructor_declaration(true){ replaceName("constructor_declaration",n);} {return productionEndTerminal("typeEnd1","{constructor_declaration}","{constructor_declaration}","Replacement",first,token);}
+	n=constructor_declaration(true){ replaceName("constructor_declaration",n);} {return productionEndTerminal("typeEnd1","{constructor_declaration}","{constructor_declaration}","ConstructorConcatenation",first,token);}
  |
 	n=indexer_declaration_no_interface(true){ replaceName("indexer_declaration_no_interface",n);} {return productionEndTerminal("typeEnd2","{indexer_declaration_no_interface}","{indexer_declaration_no_interface}","Replacement",first,token);}
  |
@@ -1278,17 +1277,17 @@ String typeEnd(boolean inTerminal) : { Token first=null,t;String n;
  |
 	LOOKAHEAD(indexer_base() "[") n=indexer_declaration_interface(true){ replaceName("indexer_declaration_interface",n);} {return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","Replacement",first,token);}
  |
-	n=type_name(true){ replaceName("type_name",n);} n=type_nameEnd(true){ replaceName("type_nameEnd",n);} {return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","Replacement",first,token);}
+	n=type_name(inTerminal){ replaceName("type_name",n);} n=type_nameEnd(inTerminal){ replaceName("type_nameEnd",n);} {return productionEndNonTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}");}
 
  )  }
 
 String type_nameEnd(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=method_declaration(true){ replaceName("method_declaration",n);} {return productionEndTerminal("type_nameEnd1","-","{method_declaration}","Replacement",first,token);}
+	n=method_declaration(true){ replaceName("method_declaration",n);} {return productionEndTerminal("type_nameEnd1","{method_declaration}","{method_declaration}","MethodOverriding",first,token);}
  |
-	n=property_declaration(true){ replaceName("property_declaration",n);} {return productionEndTerminal("type_nameEnd2","-","{property_declaration}","Replacement",first,token);}
+	n=property_declaration(true){ replaceName("property_declaration",n);} {return productionEndTerminal("type_nameEnd2","{property_declaration}","{property_declaration}","Replacement",first,token);}
  |
-	field_declaration(true) {return productionEndTerminal("type_nameEnd3","-","","Replacement",first,token);}
+	field_declaration(true) {return productionEndTerminal("type_nameEnd3","","","FieldOverriding",first,token);}
 
  )  }
 
@@ -1604,7 +1603,7 @@ String conversion_operator(boolean inTerminal) : { Token first=null,t;String n;
 
 String constructor_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [formal_parameter_list(true)] ")" [constructor_initializer(true)] body(true) {return productionEndTerminal("constructor_declaration","-","-","Replacement",first,token);}
+	"(" [n=formal_parameter_list(true){ replaceName("formal_parameter_list",n);}] ")" [constructor_initializer(true)] body(true) {return productionEndTerminal("constructor_declaration","-","{formal_parameter_list}","Replacement",first,token);}
 
  )  }
 
@@ -1624,7 +1623,7 @@ String constructor_initializerInt(boolean inTerminal) : { Token first=null,t;Str
 
 String destructor_declaration(boolean inTerminal) : { Token first=null,t;String n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"~" identifier(true) "(" ")" body(true) {return productionEndTerminal("destructor_declaration","-","-","Replacement",first,token);}
+	"~" identifier(true) "(" ")" body(true) {return productionEndTerminal("destructor_declaration","~()","~()","ConstructorConcatenation",first,token);}
 
  )  }
 
