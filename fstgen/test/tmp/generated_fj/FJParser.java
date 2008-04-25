@@ -9,8 +9,8 @@ import de.ovgu.cide.fstgen.ast.*;
 
 public class FJParser extends AbstractFSTParser implements FJParserConstants {
 
-  final public String TypeDeclaration(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo TypeDeclaration(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CLASS);
     n = Name(inTerminal);
@@ -48,26 +48,26 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String Name(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Name(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     t = jj_consume_token(IDENTIFIER);
-                        replaceName("<IDENTIFIER>",t.toString());
-                                                                    {if (true) return productionEndTerminal("Name","-","{<IDENTIFIER>}","error",first,token);}
+                        replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
+                                                                                 {if (true) return productionEndTerminal("Name","-","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExtendedType(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo ExtendedType(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("ExtendedType1","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("ExtendedType1","-","-","Replacement",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("ExtendedType2","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("ExtendedType2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[1] = jj_gen;
@@ -77,19 +77,19 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String VarDeclaration(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo VarDeclaration(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Type(true);
     t = jj_consume_token(IDENTIFIER);
-                                   replaceName("<IDENTIFIER>",t.toString());
+                                   replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
     jj_consume_token(38);
-                                                                                   {if (true) return productionEndTerminal("VarDeclaration","{<IDENTIFIER>}","{<IDENTIFIER>}","error",first,token);}
+                                                                                                {if (true) return productionEndTerminal("VarDeclaration","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassConstructor(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo ClassConstructor(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Type(true);
     jj_consume_token(LPAREN);
@@ -134,12 +134,12 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       FieldAssign(true);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                {if (true) return productionEndTerminal("ClassConstructor","-","-","error",first,token);}
+                                                                                                                                {if (true) return productionEndTerminal("ClassConstructor","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String FieldAssign(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo FieldAssign(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THIS);
     jj_consume_token(DOT);
@@ -147,16 +147,16 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     jj_consume_token(39);
     jj_consume_token(IDENTIFIER);
     jj_consume_token(38);
-                                                      {if (true) return productionEndTerminal("FieldAssign","-","-","error",first,token);}
+                                                      {if (true) return productionEndTerminal("FieldAssign","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String MethodDeclaration(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo MethodDeclaration(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Type(true);
     t = jj_consume_token(IDENTIFIER);
-                                   replaceName("<IDENTIFIER>",t.toString());
+                                   replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
     jj_consume_token(LPAREN);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case OBJECT:
@@ -174,29 +174,29 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     Expression(true);
     jj_consume_token(38);
     jj_consume_token(RBRACE);
-                                                                                                                                                         {if (true) return productionEndTerminal("MethodDeclaration","{<IDENTIFIER>}","{<IDENTIFIER>}","error",first,token);}
+                                                                                                                                                                      {if (true) return productionEndTerminal("MethodDeclaration","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String BinaryOperator(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo BinaryOperator(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("BinaryOperator1","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("BinaryOperator1","-","-","Replacement",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("BinaryOperator2","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("BinaryOperator2","-","-","Replacement",first,token);}
       break;
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("BinaryOperator3","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("BinaryOperator3","-","-","Replacement",first,token);}
       break;
     case SLASH:
       jj_consume_token(SLASH);
-              {if (true) return productionEndTerminal("BinaryOperator4","-","-","error",first,token);}
+              {if (true) return productionEndTerminal("BinaryOperator4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[6] = jj_gen;
@@ -206,8 +206,8 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParameterList(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo FormalParameterList(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     FormalParameter(true);
     label_4:
@@ -222,43 +222,43 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       }
       FormalParameterRest(true);
     }
-                                                            {if (true) return productionEndTerminal("FormalParameterList","-","-","error",first,token);}
+                                                            {if (true) return productionEndTerminal("FormalParameterList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParameter(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo FormalParameter(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Type(true);
     jj_consume_token(IDENTIFIER);
-                                 {if (true) return productionEndTerminal("FormalParameter","-","-","error",first,token);}
+                                 {if (true) return productionEndTerminal("FormalParameter","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParameterRest(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo FormalParameterRest(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COMMA);
     FormalParameter(true);
-                                   {if (true) return productionEndTerminal("FormalParameterRest","-","-","error",first,token);}
+                                   {if (true) return productionEndTerminal("FormalParameterRest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Type(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Type(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INT:
       jj_consume_token(INT);
-                {if (true) return productionEndTerminal("Type1","-","-","error",first,token);}
+                {if (true) return productionEndTerminal("Type1","-","-","Replacement",first,token);}
       break;
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("Type2","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("Type2","-","-","Replacement",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("Type3","-","-","error",first,token);}
+                   {if (true) return productionEndTerminal("Type3","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -268,8 +268,8 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String Expression(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo Expression(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Term(true);
     label_5:
@@ -285,21 +285,21 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       }
       PlusOrMinus(true);
     }
-                                         {if (true) return productionEndTerminal("Expression","-","-","error",first,token);}
+                                         {if (true) return productionEndTerminal("Expression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String PlusOrMinus(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo PlusOrMinus(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       PlusExpressionRest(true);
-                                  {if (true) return productionEndTerminal("PlusOrMinus1","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("PlusOrMinus1","-","-","Replacement",first,token);}
       break;
     case MINUS:
       MinusExpressionRest(true);
-                                   {if (true) return productionEndTerminal("PlusOrMinus2","-","-","error",first,token);}
+                                   {if (true) return productionEndTerminal("PlusOrMinus2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[10] = jj_gen;
@@ -309,26 +309,26 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String PlusExpressionRest(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo PlusExpressionRest(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PLUS);
     Term(true);
-                        {if (true) return productionEndTerminal("PlusExpressionRest","-","-","error",first,token);}
+                        {if (true) return productionEndTerminal("PlusExpressionRest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String MinusExpressionRest(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo MinusExpressionRest(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(MINUS);
     Term(true);
-                        {if (true) return productionEndTerminal("MinusExpressionRest","-","-","error",first,token);}
+                        {if (true) return productionEndTerminal("MinusExpressionRest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Term(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Term(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     PrimaryExpression(true);
     label_6:
@@ -344,21 +344,21 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       }
       TimesOrDivide(true);
     }
-                                                        {if (true) return productionEndTerminal("Term","-","-","error",first,token);}
+                                                        {if (true) return productionEndTerminal("Term","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String TimesOrDivide(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo TimesOrDivide(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STAR:
       TimesExpressionRest(true);
-                                   {if (true) return productionEndTerminal("TimesOrDivide1","-","-","error",first,token);}
+                                   {if (true) return productionEndTerminal("TimesOrDivide1","-","-","Replacement",first,token);}
       break;
     case SLASH:
       DivideExpressionRest(true);
-                                    {if (true) return productionEndTerminal("TimesOrDivide2","-","-","error",first,token);}
+                                    {if (true) return productionEndTerminal("TimesOrDivide2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[12] = jj_gen;
@@ -368,59 +368,59 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String TimesExpressionRest(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo TimesExpressionRest(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(STAR);
     PrimaryExpression(true);
-                                     {if (true) return productionEndTerminal("TimesExpressionRest","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("TimesExpressionRest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String DivideExpressionRest(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo DivideExpressionRest(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SLASH);
     PrimaryExpression(true);
-                                     {if (true) return productionEndTerminal("DivideExpressionRest","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("DivideExpressionRest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String PrimaryExpression(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo PrimaryExpression(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER_LITERAL:
       jj_consume_token(INTEGER_LITERAL);
-                           {if (true) return productionEndTerminal("PrimaryExpression1","-","-","error",first,token);}
+                           {if (true) return productionEndTerminal("PrimaryExpression1","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[13] = jj_gen;
       if (jj_2_2(2147483647)) {
         MethodInvoke(true);
-                                                  {if (true) return productionEndTerminal("PrimaryExpression2","-","-","error",first,token);}
+                                                  {if (true) return productionEndTerminal("PrimaryExpression2","-","-","Replacement",first,token);}
       } else if (jj_2_3(2147483647)) {
         FieldInvoke(true);
-                                                 {if (true) return productionEndTerminal("PrimaryExpression3","-","-","error",first,token);}
+                                                 {if (true) return productionEndTerminal("PrimaryExpression3","-","-","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
           jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("PrimaryExpression4","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("PrimaryExpression4","-","-","Replacement",first,token);}
           break;
         default:
           jj_la1[14] = jj_gen;
           if (jj_2_4(2147483647)) {
             AllocationExpression(true);
-                                                          {if (true) return productionEndTerminal("PrimaryExpression5","-","-","error",first,token);}
+                                                          {if (true) return productionEndTerminal("PrimaryExpression5","-","-","Replacement",first,token);}
           } else if (jj_2_5(2147483647)) {
             CastExpression(true);
-                                                    {if (true) return productionEndTerminal("PrimaryExpression6","-","-","error",first,token);}
+                                                    {if (true) return productionEndTerminal("PrimaryExpression6","-","-","Replacement",first,token);}
           } else {
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LPAREN:
               NestedExpression(true);
-                                {if (true) return productionEndTerminal("PrimaryExpression7","-","-","error",first,token);}
+                                {if (true) return productionEndTerminal("PrimaryExpression7","-","-","Replacement",first,token);}
               break;
             default:
               jj_la1[15] = jj_gen;
@@ -434,8 +434,8 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String MethodInvoke(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo MethodInvoke(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     InvokeTarget(true);
     jj_consume_token(DOT);
@@ -454,39 +454,39 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       ;
     }
     jj_consume_token(RPAREN);
-                                                                            {if (true) return productionEndTerminal("MethodInvoke","-","-","error",first,token);}
+                                                                            {if (true) return productionEndTerminal("MethodInvoke","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String FieldInvoke(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo FieldInvoke(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     InvokeTarget(true);
     jj_consume_token(DOT);
     jj_consume_token(IDENTIFIER);
-                                             {if (true) return productionEndTerminal("FieldInvoke","-","-","error",first,token);}
+                                             {if (true) return productionEndTerminal("FieldInvoke","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String InvokeTarget(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo InvokeTarget(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NEW:
       AllocationExpression(true);
-                                    {if (true) return productionEndTerminal("InvokeTarget1","-","-","error",first,token);}
+                                    {if (true) return productionEndTerminal("InvokeTarget1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
       NestedExpression(true);
-                                {if (true) return productionEndTerminal("InvokeTarget2","-","-","error",first,token);}
+                                {if (true) return productionEndTerminal("InvokeTarget2","-","-","Replacement",first,token);}
       break;
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("InvokeTarget3","-","-","error",first,token);}
+                      {if (true) return productionEndTerminal("InvokeTarget3","-","-","Replacement",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("InvokeTarget4","-","-","error",first,token);}
+                 {if (true) return productionEndTerminal("InvokeTarget4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[17] = jj_gen;
@@ -496,8 +496,8 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String AllocationExpression(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo AllocationExpression(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(NEW);
     jj_consume_token(IDENTIFIER);
@@ -515,33 +515,33 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       ;
     }
     jj_consume_token(RPAREN);
-                                                           {if (true) return productionEndTerminal("AllocationExpression","-","-","error",first,token);}
+                                                           {if (true) return productionEndTerminal("AllocationExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String CastExpression(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo CastExpression(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LPAREN);
     Type(true);
     jj_consume_token(RPAREN);
     PrimaryExpression(true);
-                                                    {if (true) return productionEndTerminal("CastExpression","-","-","error",first,token);}
+                                                    {if (true) return productionEndTerminal("CastExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String NestedExpression(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo NestedExpression(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LPAREN);
     Expression(true);
     jj_consume_token(RPAREN);
-                                  {if (true) return productionEndTerminal("NestedExpression","-","-","error",first,token);}
+                                  {if (true) return productionEndTerminal("NestedExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExpressionList(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo ExpressionList(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Expression(true);
     label_7:
@@ -557,7 +557,7 @@ public class FJParser extends AbstractFSTParser implements FJParserConstants {
       jj_consume_token(COMMA);
       Expression(true);
     }
-                                                  {if (true) return productionEndTerminal("ExpressionList","-","-","error",first,token);}
+                                                  {if (true) return productionEndTerminal("ExpressionList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 

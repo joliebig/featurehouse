@@ -22,8 +22,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return true;
   }
 
-  final public String javacc_input(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo javacc_input(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _OPTIONS:
@@ -84,24 +84,24 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ParserNameS(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo ParserNameS(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IDENTIFIER);
                       {if (true) return productionEndTerminal("ParserNameS","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String ParserNameE(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo ParserNameE(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IDENTIFIER);
                       {if (true) return productionEndTerminal("ParserNameE","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String javacc_options(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo javacc_options(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_OPTIONS);
     jj_consume_token(LBRACE);
@@ -125,8 +125,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String option_binding(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo option_binding(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = OptionName(true);
                             replaceName("OptionName",n);
@@ -137,8 +137,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String OptionName(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo OptionName(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
@@ -165,8 +165,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String OptionValue(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo OptionValue(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER_LITERAL:
@@ -190,8 +190,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String production(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo production(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _JAVACODE:
@@ -302,8 +302,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String javacode_production(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo javacode_production(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_JAVACODE);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -332,8 +332,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ThrowsClause(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo ThrowsClause(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THROWS);
     Name(true);
@@ -354,8 +354,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String bnf_production(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo bnf_production(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PRIVATE:
@@ -387,16 +387,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String BNFName(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo BNFName(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IDENTIFIER);
                       {if (true) return productionEndTerminal("BNFName","-","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String AccessModifier(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo AccessModifier(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PUBLIC:
@@ -419,8 +419,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String regular_expr_production(boolean inTerminal) throws ParseException {
-                                                       Token first=null,t;String n;
+  final public FSTInfo regular_expr_production(boolean inTerminal) throws ParseException {
+                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
@@ -462,8 +462,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String regular_expr_productionPrefix(boolean inTerminal) throws ParseException {
-                                                             Token first=null,t;String n;
+  final public FSTInfo regular_expr_productionPrefix(boolean inTerminal) throws ParseException {
+                                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_1(2)) {
       jj_consume_token(LT);
@@ -500,8 +500,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String token_manager_decls(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo token_manager_decls(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_TOKEN_MGR_DECLS);
     jj_consume_token(COLON);
@@ -510,8 +510,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String regexpr_kind(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo regexpr_kind(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _TOKEN:
@@ -538,8 +538,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String regexpr_spec(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo regexpr_spec(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = regular_expression(true);
                                     replaceName("regular_expression",n);
@@ -564,8 +564,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String expansion_choices(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo expansion_choices(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     expansion(inTerminal);
     label_7:
@@ -585,8 +585,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String expansion(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo expansion(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _LOOKAHEAD:
@@ -612,8 +612,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String local_lookahead(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo local_lookahead(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER_LITERAL:
@@ -658,8 +658,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String expansion_unit(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo expansion_unit(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _LOOKAHEAD:
@@ -746,8 +746,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CatchPart(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo CatchPart(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CATCH);
     jj_consume_token(LPAREN);
@@ -759,8 +759,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String expansion_unitMain(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo expansion_unitMain(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_4(2147483647)) {
       jj_consume_token(IDENTIFIER);
@@ -791,8 +791,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExpModifier(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo ExpModifier(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
@@ -815,14 +815,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String regular_expression(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo regular_expression(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STRING_LITERAL:
       t = jj_consume_token(STRING_LITERAL);
-                            replaceName("<STRING_LITERAL>",t.toString());
-                                                                            {if (true) return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
+                            replaceName("<STRING_LITERAL>",new FSTInfo(t.toString()));
+                                                                                         {if (true) return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
       break;
     default:
       jj_la1[40] = jj_gen;
@@ -844,9 +844,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       } else if (jj_2_6(2)) {
         jj_consume_token(LT);
         t = jj_consume_token(IDENTIFIER);
-                                         replaceName("<IDENTIFIER>",t.toString());
+                                         replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
         jj_consume_token(GT);
-                                                                                         {if (true) return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LT:
@@ -865,8 +865,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String RegId(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;String n;
+  final public FSTInfo RegId(boolean inTerminal) throws ParseException {
+                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 137:
@@ -877,14 +877,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     t = jj_consume_token(IDENTIFIER);
-                               replaceName("<IDENTIFIER>",t.toString());
+                               replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
     jj_consume_token(COLON);
-                                                                               {if (true) return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String complex_regular_expression_choices(boolean inTerminal) throws ParseException {
-                                                                  Token first=null,t;String n;
+  final public FSTInfo complex_regular_expression_choices(boolean inTerminal) throws ParseException {
+                                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     complex_regular_expression(true);
     label_10:
@@ -904,8 +904,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String complex_regular_expression(boolean inTerminal) throws ParseException {
-                                                          Token first=null,t;String n;
+  final public FSTInfo complex_regular_expression(boolean inTerminal) throws ParseException {
+                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     label_11:
     while (true) {
@@ -927,8 +927,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String complex_regular_expression_unit(boolean inTerminal) throws ParseException {
-                                                               Token first=null,t;String n;
+  final public FSTInfo complex_regular_expression_unit(boolean inTerminal) throws ParseException {
+                                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STRING_LITERAL:
@@ -971,8 +971,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CREUPostfix(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo CREUPostfix(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
@@ -1009,8 +1009,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CREUPostfixPP(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo CREUPostfixPP(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COMMA);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1025,8 +1025,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String character_list(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo character_list(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TILDE:
@@ -1050,8 +1050,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String character_descriptorList(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo character_descriptorList(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     character_descriptor(true);
     label_12:
@@ -1071,8 +1071,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String character_descriptor(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo character_descriptor(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(STRING_LITERAL);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1088,8 +1088,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CompilationUnit(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo CompilationUnit(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PACKAGE:
@@ -1142,8 +1142,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PackageDeclaration(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo PackageDeclaration(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PACKAGE);
     Name(true);
@@ -1152,8 +1152,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ImportDeclaration(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo ImportDeclaration(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IMPORT);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1179,8 +1179,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Modifiers(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo Modifiers(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     label_15:
     while (true) {
@@ -1209,8 +1209,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Modifier(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;String n;
+  final public FSTInfo Modifier(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PUBLIC:
@@ -1269,8 +1269,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeDeclaration(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo TypeDeclaration(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SEMICOLON:
@@ -1299,8 +1299,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterfaceDeclaration(boolean inTerminal) throws ParseException {
-                                                           Token first=null,t;String n;
+  final public FSTInfo ClassOrInterfaceDeclaration(boolean inTerminal) throws ParseException {
+                                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ClassOrInterface(true);
     JavaIdentifier(true);
@@ -1333,8 +1333,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterface(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo ClassOrInterface(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CLASS:
@@ -1353,8 +1353,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExtendsList(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo ExtendsList(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(EXTENDS);
     ClassOrInterfaceType(true);
@@ -1375,8 +1375,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ImplementsList(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo ImplementsList(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IMPLEMENTS);
     ClassOrInterfaceType(true);
@@ -1397,8 +1397,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EnumDeclaration(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo EnumDeclaration(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ENUM);
     JavaIdentifier(true);
@@ -1415,8 +1415,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EnumBody(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;String n;
+  final public FSTInfo EnumBody(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     EnumConstant(true);
@@ -1446,8 +1446,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EnumBodyInternal(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo EnumBodyInternal(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SEMICOLON);
     label_19:
@@ -1505,8 +1505,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EnumConstant(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo EnumConstant(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1529,8 +1529,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeParameters(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo TypeParameters(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LT);
     TypeParameter(true);
@@ -1552,8 +1552,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeParameter(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo TypeParameter(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1568,8 +1568,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeBound(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo TypeBound(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(EXTENDS);
     ClassOrInterfaceType(true);
@@ -1590,8 +1590,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterfaceBody(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo ClassOrInterfaceBody(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     label_22:
@@ -1650,8 +1650,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterfaceBodyDeclaration(boolean inTerminal) throws ParseException {
-                                                               Token first=null,t;String n;
+  final public FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) throws ParseException {
+                                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_10(2)) {
       Initializer(true);
@@ -1691,8 +1691,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String FieldDeclaration(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo FieldDeclaration(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Type(true);
     VariableDeclarator(true);
@@ -1714,8 +1714,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String VariableDeclarator(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo VariableDeclarator(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     VariableDeclaratorId(true);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1731,8 +1731,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String VariableDeclaratorId(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo VariableDeclaratorId(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     label_24:
@@ -1752,8 +1752,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String VariableInitializer(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo VariableInitializer(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
@@ -1810,8 +1810,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ArrayInitializer(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo ArrayInitializer(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1874,8 +1874,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ArrayInitializerInternal(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo ArrayInitializerInternal(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     VariableInitializer(true);
     label_25:
@@ -1892,8 +1892,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MethodDeclaration(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo MethodDeclaration(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
@@ -1919,8 +1919,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MethodDeclarationBody(boolean inTerminal) throws ParseException {
-                                                     Token first=null,t;String n;
+  final public FSTInfo MethodDeclarationBody(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
@@ -1939,8 +1939,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MethodDeclarator(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo MethodDeclarator(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     FormalParameters(true);
@@ -1961,8 +1961,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParameters(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo FormalParameters(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LPAREN);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2000,8 +2000,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParametersInternal(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo FormalParametersInternal(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = FormalParameter(true);
                                  replaceName("FormalParameter",n);
@@ -2023,8 +2023,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String FormalParameter(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo FormalParameter(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FINAL:
@@ -2049,8 +2049,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ConstructorDeclaration(boolean inTerminal) throws ParseException {
-                                                      Token first=null,t;String n;
+  final public FSTInfo ConstructorDeclaration(boolean inTerminal) throws ParseException {
+                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
@@ -2145,8 +2145,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExplicitConstructorInvocation(boolean inTerminal) throws ParseException {
-                                                             Token first=null,t;String n;
+  final public FSTInfo ExplicitConstructorInvocation(boolean inTerminal) throws ParseException {
+                                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_19(2147483647)) {
       jj_consume_token(THIS);
@@ -2208,8 +2208,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Initializer(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo Initializer(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STATIC:
@@ -2224,8 +2224,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Type(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Type(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_20(2)) {
       ReferenceTypeP(true);
@@ -2252,8 +2252,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ReferenceTypeP(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo ReferenceTypeP(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BOOLEAN:
@@ -2311,8 +2311,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterfaceType(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo ClassOrInterfaceType(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     if (jj_2_23(2)) {
@@ -2333,8 +2333,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ClassOrInterfaceTypeIntern(boolean inTerminal) throws ParseException {
-                                                          Token first=null,t;String n;
+  final public FSTInfo ClassOrInterfaceTypeIntern(boolean inTerminal) throws ParseException {
+                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DOT);
     JavaIdentifier(true);
@@ -2347,8 +2347,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeArguments(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo TypeArguments(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LT);
     TypeArgument(true);
@@ -2370,8 +2370,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TypeArgument(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo TypeArgument(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _OPTIONS:
@@ -2419,8 +2419,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String WildcardBounds(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo WildcardBounds(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXTENDS:
@@ -2441,8 +2441,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PrimitiveType(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo PrimitiveType(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BOOLEAN:
@@ -2485,8 +2485,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ResultType(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo ResultType(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case VOID:
@@ -2525,8 +2525,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Name(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Name(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     label_33:
@@ -2543,8 +2543,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String NameList(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;String n;
+  final public FSTInfo NameList(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Name(true);
     label_34:
@@ -2564,8 +2564,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Expression(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo Expression(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ConditionalExpression(true);
     if (jj_2_27(2)) {
@@ -2577,8 +2577,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AssignExp(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo AssignExp(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     AssignmentOperator(true);
     Expression(true);
@@ -2586,8 +2586,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AssignmentOperator(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo AssignmentOperator(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSIGN:
@@ -2646,8 +2646,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ConditionalExpression(boolean inTerminal) throws ParseException {
-                                                     Token first=null,t;String n;
+  final public FSTInfo ConditionalExpression(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_28(2147483647)) {
       ConditionalExpressionFull(true);
@@ -2705,8 +2705,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ConditionalExpressionFull(boolean inTerminal) throws ParseException {
-                                                         Token first=null,t;String n;
+  final public FSTInfo ConditionalExpressionFull(boolean inTerminal) throws ParseException {
+                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ConditionalOrExpression(true);
     jj_consume_token(HOOK);
@@ -2717,8 +2717,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ConditionalOrExpression(boolean inTerminal) throws ParseException {
-                                                       Token first=null,t;String n;
+  final public FSTInfo ConditionalOrExpression(boolean inTerminal) throws ParseException {
+                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ConditionalAndExpression(true);
     label_35:
@@ -2738,8 +2738,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ConditionalAndExpression(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo ConditionalAndExpression(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     InclusiveOrExpression(true);
     label_36:
@@ -2759,8 +2759,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String InclusiveOrExpression(boolean inTerminal) throws ParseException {
-                                                     Token first=null,t;String n;
+  final public FSTInfo InclusiveOrExpression(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ExclusiveOrExpression(true);
     label_37:
@@ -2780,8 +2780,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ExclusiveOrExpression(boolean inTerminal) throws ParseException {
-                                                     Token first=null,t;String n;
+  final public FSTInfo ExclusiveOrExpression(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     AndExpression(true);
     label_38:
@@ -2801,8 +2801,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AndExpression(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo AndExpression(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     EqualityExpression(true);
     label_39:
@@ -2822,8 +2822,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EqualityExpression(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo EqualityExpression(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     InstanceOfExpression(true);
     label_40:
@@ -2843,8 +2843,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EqualityExpressionIntern(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo EqualityExpressionIntern(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     EqualityOp(true);
     InstanceOfExpression(true);
@@ -2852,8 +2852,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EqualityOp(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo EqualityOp(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EQ:
@@ -2872,8 +2872,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String InstanceOfExpression(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo InstanceOfExpression(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     RelationalExpression(true);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2889,8 +2889,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String RelationalExpression(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo RelationalExpression(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ShiftExpression(true);
     label_41:
@@ -2912,8 +2912,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String RelationalExpressionIntern(boolean inTerminal) throws ParseException {
-                                                          Token first=null,t;String n;
+  final public FSTInfo RelationalExpressionIntern(boolean inTerminal) throws ParseException {
+                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     RelationalOp(true);
     ShiftExpression(true);
@@ -2921,8 +2921,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String RelationalOp(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo RelationalOp(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
@@ -2949,8 +2949,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ShiftExpression(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo ShiftExpression(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     AdditiveExpression(true);
     label_42:
@@ -2966,8 +2966,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ShiftExpressionRight(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo ShiftExpressionRight(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     ShiftOp(true);
     AdditiveExpression(true);
@@ -2975,8 +2975,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ShiftOp(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo ShiftOp(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 142:
@@ -3002,8 +3002,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AdditiveExpression(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo AdditiveExpression(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     MultiplicativeExpression(true);
     label_43:
@@ -3023,8 +3023,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AdditiveExpressionIntern(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo AdditiveExpressionIntern(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     AdditiveOp(true);
     MultiplicativeExpression(true);
@@ -3032,8 +3032,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AdditiveOp(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo AdditiveOp(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
@@ -3052,8 +3052,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MultiplicativeExpression(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo MultiplicativeExpression(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     UnaryExpression(true);
     label_44:
@@ -3074,8 +3074,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MultiplicativeExpressionIntern(boolean inTerminal) throws ParseException {
-                                                              Token first=null,t;String n;
+  final public FSTInfo MultiplicativeExpressionIntern(boolean inTerminal) throws ParseException {
+                                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     MultiplicativeOp(true);
     UnaryExpression(true);
@@ -3083,8 +3083,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MultiplicativeOp(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo MultiplicativeOp(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STAR:
@@ -3107,8 +3107,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String UnaryExpression(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo UnaryExpression(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
@@ -3171,8 +3171,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PreIncrementExpression(boolean inTerminal) throws ParseException {
-                                                      Token first=null,t;String n;
+  final public FSTInfo PreIncrementExpression(boolean inTerminal) throws ParseException {
+                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INCR);
     PrimaryExpression(true);
@@ -3180,8 +3180,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PreDecrementExpression(boolean inTerminal) throws ParseException {
-                                                      Token first=null,t;String n;
+  final public FSTInfo PreDecrementExpression(boolean inTerminal) throws ParseException {
+                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DECR);
     PrimaryExpression(true);
@@ -3189,8 +3189,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String UnaryExpressionNotPlusMinus(boolean inTerminal) throws ParseException {
-                                                           Token first=null,t;String n;
+  final public FSTInfo UnaryExpressionNotPlusMinus(boolean inTerminal) throws ParseException {
+                                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BANG:
@@ -3252,8 +3252,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String UnaryOp(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo UnaryOp(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TILDE:
@@ -3272,8 +3272,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CastLookahead(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo CastLookahead(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_33(2)) {
       jj_consume_token(LPAREN);
@@ -3303,8 +3303,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CastLAOp(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;String n;
+  final public FSTInfo CastLAOp(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TILDE:
@@ -3365,8 +3365,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PostfixExpression(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo PostfixExpression(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     PrimaryExpression(true);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3382,8 +3382,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PostfixOp(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo PostfixOp(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
@@ -3402,8 +3402,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CastExpression(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo CastExpression(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_35(2147483647)) {
       jj_consume_token(LPAREN);
@@ -3429,8 +3429,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PrimaryExpression(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo PrimaryExpression(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     PrimaryPrefix(true);
     label_45:
@@ -3446,8 +3446,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MemberSelector(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo MemberSelector(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DOT);
     TypeArguments(true);
@@ -3456,8 +3456,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PrimaryPrefix(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo PrimaryPrefix(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FALSE:
@@ -3525,8 +3525,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String PrimarySuffix(boolean inTerminal) throws ParseException {
-                                             Token first=null,t;String n;
+  final public FSTInfo PrimarySuffix(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_38(2)) {
       jj_consume_token(DOT);
@@ -3565,8 +3565,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Literal(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo Literal(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INTEGER_LITERAL:
@@ -3602,8 +3602,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String BooleanLiteral(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo BooleanLiteral(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TRUE:
@@ -3622,16 +3622,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String NullLiteral(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo NullLiteral(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(NULL);
                  {if (true) return productionEndTerminal("NullLiteral","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Arguments(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo Arguments(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LPAREN);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3685,8 +3685,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ArgumentList(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo ArgumentList(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Expression(true);
     label_46:
@@ -3706,8 +3706,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AllocationExpression(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo AllocationExpression(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_41(2)) {
       jj_consume_token(NEW);
@@ -3739,8 +3739,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AllocationExpressionInit(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo AllocationExpressionInit(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
@@ -3767,8 +3767,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ArrayDimsAndInits(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo ArrayDimsAndInits(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_44(2)) {
       jj_consume_token(LBRACKET);
@@ -3824,8 +3824,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Statement(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo Statement(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_45(2)) {
       LabeledStatement(true);
@@ -3936,8 +3936,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AssertStatement(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo AssertStatement(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ASSERT);
     Expression(true);
@@ -3955,8 +3955,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String LabeledStatement(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo LabeledStatement(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     jj_consume_token(COLON);
@@ -3965,8 +3965,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Block(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;String n;
+  final public FSTInfo Block(boolean inTerminal) throws ParseException {
+                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     label_50:
@@ -4037,8 +4037,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String BlockStatement(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo BlockStatement(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_46(2147483647)) {
       LocalVariableDeclaration(true);
@@ -4112,8 +4112,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String LocalVariableDeclaration(boolean inTerminal) throws ParseException {
-                                                        Token first=null,t;String n;
+  final public FSTInfo LocalVariableDeclaration(boolean inTerminal) throws ParseException {
+                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FINAL:
@@ -4142,16 +4142,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String EmptyStatement(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo EmptyStatement(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SEMICOLON);
               {if (true) return productionEndTerminal("EmptyStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String StatementExpression(boolean inTerminal) throws ParseException {
-                                                   Token first=null,t;String n;
+  final public FSTInfo StatementExpression(boolean inTerminal) throws ParseException {
+                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
@@ -4227,8 +4227,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String StatementExpressionAssignment(boolean inTerminal) throws ParseException {
-                                                             Token first=null,t;String n;
+  final public FSTInfo StatementExpressionAssignment(boolean inTerminal) throws ParseException {
+                                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
@@ -4263,8 +4263,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String SwitchStatement(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo SwitchStatement(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SWITCH);
     jj_consume_token(LPAREN);
@@ -4289,8 +4289,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String SwitchStatementLabel(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo SwitchStatementLabel(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     SwitchLabel(true);
     label_53:
@@ -4360,8 +4360,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String SwitchLabel(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo SwitchLabel(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CASE:
@@ -4383,8 +4383,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String IfStatement(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo IfStatement(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IF);
     jj_consume_token(LPAREN);
@@ -4404,8 +4404,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String WhileStatement(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo WhileStatement(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(WHILE);
     jj_consume_token(LPAREN);
@@ -4416,8 +4416,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String DoStatement(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo DoStatement(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DO);
     Statement(true);
@@ -4430,8 +4430,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ForStatement(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo ForStatement(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(FOR);
     jj_consume_token(LPAREN);
@@ -4442,8 +4442,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ForStatementInternal(boolean inTerminal) throws ParseException {
-                                                    Token first=null,t;String n;
+  final public FSTInfo ForStatementInternal(boolean inTerminal) throws ParseException {
+                                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_47(2147483647)) {
       Type(true);
@@ -4634,8 +4634,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ForInit(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo ForInit(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_48(2147483647)) {
       LocalVariableDeclaration(true);
@@ -4689,8 +4689,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String StatementExpressionList(boolean inTerminal) throws ParseException {
-                                                       Token first=null,t;String n;
+  final public FSTInfo StatementExpressionList(boolean inTerminal) throws ParseException {
+                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     StatementExpression(true);
     label_54:
@@ -4710,16 +4710,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ForUpdate(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo ForUpdate(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     StatementExpressionList(true);
                                        {if (true) return productionEndTerminal("ForUpdate","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String BreakStatement(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo BreakStatement(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(BREAK);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4747,8 +4747,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ContinueStatement(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;String n;
+  final public FSTInfo ContinueStatement(boolean inTerminal) throws ParseException {
+                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CONTINUE);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4776,8 +4776,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ReturnStatement(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo ReturnStatement(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(RETURN);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4831,8 +4831,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String ThrowStatement(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo ThrowStatement(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THROW);
     Expression(true);
@@ -4841,8 +4841,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String SynchronizedStatement(boolean inTerminal) throws ParseException {
-                                                     Token first=null,t;String n;
+  final public FSTInfo SynchronizedStatement(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SYNCHRONIZED);
     jj_consume_token(LPAREN);
@@ -4853,8 +4853,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TryStatement(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo TryStatement(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(TRY);
     Block(true);
@@ -4863,8 +4863,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String TryStatementEnd(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo TryStatementEnd(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CATCH:
@@ -4895,8 +4895,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String CatchBlock(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo CatchBlock(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CATCH);
     jj_consume_token(LPAREN);
@@ -4907,8 +4907,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String Annotation(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;String n;
+  final public FSTInfo Annotation(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_49(2147483647)) {
       NormalAnnotation(true);
@@ -4931,8 +4931,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String NormalAnnotation(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo NormalAnnotation(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
     Name(true);
@@ -4962,8 +4962,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MarkerAnnotation(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo MarkerAnnotation(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
     Name(true);
@@ -4971,8 +4971,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String SingleMemberAnnotation(boolean inTerminal) throws ParseException {
-                                                      Token first=null,t;String n;
+  final public FSTInfo SingleMemberAnnotation(boolean inTerminal) throws ParseException {
+                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
     Name(true);
@@ -4983,8 +4983,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MemberValuePairs(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;String n;
+  final public FSTInfo MemberValuePairs(boolean inTerminal) throws ParseException {
+                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     MemberValuePair(true);
     label_56:
@@ -5004,8 +5004,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MemberValuePair(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;String n;
+  final public FSTInfo MemberValuePair(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     JavaIdentifier(true);
     jj_consume_token(ASSIGN);
@@ -5014,8 +5014,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MemberValue(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;String n;
+  final public FSTInfo MemberValue(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 143:
@@ -5076,8 +5076,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String MemberValueArrayInitializer(boolean inTerminal) throws ParseException {
-                                                           Token first=null,t;String n;
+  final public FSTInfo MemberValueArrayInitializer(boolean inTerminal) throws ParseException {
+                                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     MemberValue(true);
@@ -5104,8 +5104,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AnnotationTypeDeclaration(boolean inTerminal) throws ParseException {
-                                                         Token first=null,t;String n;
+  final public FSTInfo AnnotationTypeDeclaration(boolean inTerminal) throws ParseException {
+                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
     jj_consume_token(INTERFACE);
@@ -5115,8 +5115,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AnnotationTypeBody(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;String n;
+  final public FSTInfo AnnotationTypeBody(boolean inTerminal) throws ParseException {
+                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
     label_58:
@@ -5172,8 +5172,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String AnnotationTypeMemberDeclaration(boolean inTerminal) throws ParseException {
-                                                               Token first=null,t;String n;
+  final public FSTInfo AnnotationTypeMemberDeclaration(boolean inTerminal) throws ParseException {
+                                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_52(2147483647)) {
       Modifiers(true);
@@ -5275,8 +5275,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String DefaultValue(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo DefaultValue(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_DEFAULT);
     MemberValue(true);
@@ -5284,8 +5284,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public String JavaIdentifier(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;String n;
+  final public FSTInfo JavaIdentifier(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:

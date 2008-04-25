@@ -485,7 +485,7 @@ ClassOrInterfaceBodyDeclaration:
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers FieldDeclaration :: FieldDecl
 |
-  	@FSTTerminal(name="{MethodDeclaration}",compose="MethodOverriding")
+  	@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
 	LOOK_AHEAD(2)
   	Modifiers MethodDeclaration :: MethodDecl
 |

@@ -12,19 +12,41 @@ public class AbstractFSTParser {
 		}
 
 		List<FSTNode> children = new ArrayList<FSTNode>();
-		List<NameReplacement> replacements = new ArrayList<NameReplacement>();
+		List<Replacement> nameReplacements = new ArrayList<Replacement>();
+		List<Replacement> composeReplacements = new ArrayList<Replacement>();
 		boolean isInTerminal = false;
 	}
 
-	private static class NameReplacement {
-		NameReplacement(String c, String v) {
-			choiceName = c;
+	private static class Replacement {
+		Replacement(String c, FSTInfo v) {
+			productionName = c;
 			value = v;
 		}
 
-		String choiceName;
-		String value;
+		String productionName;
+		FSTInfo value;
 	}
+
+	static enum FSTInfoType {
+		NAME, COMPOSITION
+	};
+
+	protected static class FSTInfo {
+		public FSTInfo(String exportedName) {
+			this.exportedName = exportedName;
+			this.exportedComposition = "";
+		}
+
+		public FSTInfo(String exportedName, String exportedComposition) {
+			this.exportedName = exportedName;
+			this.exportedComposition = exportedComposition;
+		}
+
+		final String exportedName;
+		final String exportedComposition;
+	}
+
+	private HashMap<String, String> composeReplacements = new HashMap<String, String>();
 
 	private Stack<Context> currentContext = new Stack<Context>();
 
@@ -54,38 +76,46 @@ public class AbstractFSTParser {
 		currentContext.push(new Context(isInTerminal));
 	}
 
-	protected String productionEndNonTerminal(String type, String namePattern,
+	protected FSTInfo productionEndNonTerminal(String type, String namePattern,
 			String exportNamePattern) {
 		Context c = currentContext.pop();
 
-		String exportName = applyReplacements(exportNamePattern, c.replacements);
+		String exportName = applyReplacements(exportNamePattern,
+				c.nameReplacements, FSTInfoType.NAME);
 
 		if (!cc().isInTerminal) {
 			String name = namePattern.equals(exportNamePattern) ? exportName
-					: applyReplacements(namePattern, c.replacements);
+					: applyReplacements(namePattern, c.nameReplacements,
+							FSTInfoType.NAME);
 
 			FSTNonTerminal nonTerminal = new FSTNonTerminal(type, name,
 					c.children);
 			cc().children.add(nonTerminal);
 		}
-		return exportName;
+		return new FSTInfo(exportName);
 	}
 
-	private String applyReplacements(String name, List<NameReplacement> replList) {
+	private String applyReplacements(String name, List<Replacement> replList,
+			FSTInfoType type) {
 
-		for (NameReplacement replacement : replList) {
+		for (Replacement replacement : replList) {
+			String value;
+			if (type==FSTInfoType.NAME)
+				value=replacement.value.exportedName;
+			else //if (type==FSTInfoType.COMPOSITION)
+				value=replacement.value.exportedComposition;
 
-			String listName = "{" + replacement.choiceName + "}^";
+			String listName = "{" + replacement.productionName + "}^";
 			int listStart = name.indexOf(listName);
 			// is list
 			if (listStart >= 0) {
 				char sepChar = name.charAt(listStart + listName.length());
-				name = name.replace(listName, replacement.value
+				name = name.replace(listName, value
 						+ (sepChar == '~' ? "" : sepChar) + listName);
 			} else {
 				// no list
-				name = name.replace("{" + replacement.choiceName + "}",
-						replacement.value);
+				name = name.replace("{" + replacement.productionName + "}",
+						value);
 			}
 		}
 
@@ -106,29 +136,47 @@ public class AbstractFSTParser {
 		return "auto" + (++uniqueId);
 	}
 
-	protected String productionEndTerminal(String type, String namePattern,
+	protected FSTInfo productionEndTerminal(String type, String namePattern,
 			String exportNamePattern, String compositionMechanism, Token first,
 			Token last) {
 		AbstractFSTParser.Context c = currentContext.pop();
 
 		String prefix = getPrefix(first);
 		String body = getBody(first, last);
-		c.replacements.add(new NameReplacement("TOSTRING",
-				stripWhitespace(body)));
+		c.nameReplacements.add(new Replacement("TOSTRING", new FSTInfo(
+				stripWhitespace(body))));
 
-		String exportName = (applyReplacements(exportNamePattern,
-				c.replacements));
+		String exportName = applyReplacements(exportNamePattern,
+				c.nameReplacements, FSTInfoType.NAME);
+		compositionMechanism = applyReplacements(compositionMechanism,
+				c.nameReplacements, FSTInfoType.COMPOSITION);
 
 		if (!c.isInTerminal) {
 			String name = namePattern.equals(exportNamePattern) ? exportName
-					: applyReplacements(namePattern, c.replacements);
+					: applyReplacements(namePattern, c.nameReplacements,
+							FSTInfoType.NAME);
 
 			cc().children.addAll(c.children);
 			if (first != null)
 				cc().children.add(new FSTTerminal(type, name, body, prefix,
 						compositionMechanism));
 		}
-		return exportName;
+		return new FSTInfo(exportName, compositionMechanism);
+	}
+
+	private String applyComposeReplacements(String compositionMechanism) {
+		if (compositionMechanism.length() > 0
+				&& compositionMechanism.charAt(0) == '{') {
+
+			for (String productionKey : composeReplacements.keySet()) {
+
+				compositionMechanism = compositionMechanism.replace("{"
+						+ productionKey + "}", composeReplacements
+						.get(productionKey));
+
+			}
+		}
+		return compositionMechanism;
 	}
 
 	private String stripWhitespace(String body) {
@@ -169,7 +217,7 @@ public class AbstractFSTParser {
 		return result.toString();
 	}
 
-	protected void replaceName(String choiceName, String value) {
-		cc().replacements.add(new NameReplacement(choiceName, value));
+	protected void replaceName(String choiceName, FSTInfo value) {
+		cc().nameReplacements.add(new Replacement(choiceName, value));
 	}
 }

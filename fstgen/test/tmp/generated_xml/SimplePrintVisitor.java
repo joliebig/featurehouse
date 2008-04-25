@@ -105,24 +105,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals(expectedType)) return true;
 		if (type.equals("ElementContent") && expectedType.equals("Content")) return true;
 		if (type.equals("CommentContent") && expectedType.equals("Content")) return true;
-		if (type.equals("STag") && expectedType.equals("STag")) return true;
 		if (type.equals("Misc3") && expectedType.equals("Misc")) return true;
 		if (type.equals("PCDataContent") && expectedType.equals("Content")) return true;
 		if (type.equals("Misc2") && expectedType.equals("Misc")) return true;
-		if (type.equals("EmptyElemTag") && expectedType.equals("EmptyElemTag")) return true;
-		if (type.equals("Attribute") && expectedType.equals("Attribute")) return true;
-		if (type.equals("ElementContainer1") && expectedType.equals("Element")) return true;
 		if (type.equals("ElementContainer2") && expectedType.equals("Element")) return true;
-		if (type.equals("ETag") && expectedType.equals("ETag")) return true;
+		if (type.equals("ElementContainer1") && expectedType.equals("Element")) return true;
 		if (type.equals("Misc1") && expectedType.equals("Misc")) return true;
-		if (type.equals("XMLDecl") && expectedType.equals("XMLDecl")) return true;
-		if (type.equals("CDSect") && expectedType.equals("CDSect")) return true;
 		if (type.equals("CDSectContent") && expectedType.equals("Content")) return true;
-		if (type.equals("Comment") && expectedType.equals("Comment")) return true;
-		if (type.equals("PI") && expectedType.equals("PI")) return true;
-		if (type.equals("ElementId") && expectedType.equals("ElementId")) return true;
-		if (type.equals("Document") && expectedType.equals("Document")) return true;
-		if (type.equals("Prolog") && expectedType.equals("Prolog")) return true;
 		return false;
 	}
 }

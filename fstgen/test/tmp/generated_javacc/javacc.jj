@@ -957,37 +957,37 @@ TOKEN :
       ]
   >
 }
-String javacc_input(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo javacc_input(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[javacc_options(inTerminal)] "PARSER_BEGIN" "(" ParserNameS(inTerminal) ")" CompilationUnit(inTerminal) "PARSER_END" "(" ParserNameE(inTerminal) ")" (production(inTerminal))+ <EOF> {return productionEndNonTerminal("javacc_input","-","-");}
 
  )  }
 
-String ParserNameS(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ParserNameS(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<IDENTIFIER> {return productionEndTerminal("ParserNameS","-","-","Replacement",first,token);}
 
  )  }
 
-String ParserNameE(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ParserNameE(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<IDENTIFIER> {return productionEndTerminal("ParserNameE","-","-","Replacement",first,token);}
 
  )  }
 
-String javacc_options(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo javacc_options(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"options" "{" (option_binding(inTerminal))+ "}" {return productionEndNonTerminal("javacc_options","-","-");}
 
  )  }
 
-String option_binding(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo option_binding(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=OptionName(true){ replaceName("OptionName",n);} "=" OptionValue(true) ";" {return productionEndTerminal("option_binding","{OptionName}","{OptionName}","Replacement",first,token);}
 
  )  }
 
-String OptionName(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo OptionName(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<IDENTIFIER> {return productionEndTerminal("OptionName1","-","{TOSTRING}","Replacement",first,token);}
  |
@@ -999,7 +999,7 @@ String OptionName(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String OptionValue(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo OptionValue(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<INTEGER_LITERAL> {return productionEndTerminal("OptionValue1","-","-","Replacement",first,token);}
  |
@@ -1009,7 +1009,7 @@ String OptionValue(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String production(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(1) javacode_production(true) {return productionEndTerminal("production1","-","-","Replacement",first,token);}
  |
@@ -1021,31 +1021,31 @@ String production(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String javacode_production(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo javacode_production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"JAVACODE" [AccessModifier(true)] ResultType(true) <IDENTIFIER> FormalParameters(true) [ThrowsClause(true)] Block(true) {return productionEndTerminal("javacode_production","-","-","Replacement",first,token);}
 
  )  }
 
-String ThrowsClause(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ThrowsClause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"throws" Name(true) ("," Name(true))* {return productionEndTerminal("ThrowsClause","-","-","Replacement",first,token);}
 
  )  }
 
-String bnf_production(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo bnf_production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[AccessModifier(true)] ResultType(true) BNFName(true) FormalParameters(true) [ThrowsClause(true)] ":" Block(true) "{" expansion_choices(true) "}" {return productionEndTerminal("bnf_production","-","-","Replacement",first,token);}
 
  )  }
 
-String BNFName(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo BNFName(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<IDENTIFIER> {return productionEndTerminal("BNFName","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
-String AccessModifier(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AccessModifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"public"  {return productionEndTerminal("AccessModifier","-","-","ModifierListSpecialization",first,token);}
  |
@@ -1055,13 +1055,13 @@ String AccessModifier(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String regular_expr_production(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo regular_expr_production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[regular_expr_productionPrefix(true)] regexpr_kind(true) ["[" "IGNORE_CASE" "]" ] ":" "{" regexpr_spec(true) ("|" regexpr_spec(true))* "}" {return productionEndTerminal("regular_expr_production","-","-","Replacement",first,token);}
 
  )  }
 
-String regular_expr_productionPrefix(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo regular_expr_productionPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "<" "*" ">"  {return productionEndTerminal("regular_expr_productionPrefix1","-","-","Replacement",first,token);}
  |
@@ -1069,13 +1069,13 @@ String regular_expr_productionPrefix(boolean inTerminal) : { Token first=null,t;
 
  )  }
 
-String token_manager_decls(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo token_manager_decls(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"TOKEN_MGR_DECLS" ":" ClassOrInterfaceBody(true) {return productionEndTerminal("token_manager_decls","-","-","Replacement",first,token);}
 
  )  }
 
-String regexpr_kind(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo regexpr_kind(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"TOKEN"  {return productionEndTerminal("regexpr_kind1","-","-","Replacement",first,token);}
  |
@@ -1087,31 +1087,31 @@ String regexpr_kind(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String regexpr_spec(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo regexpr_spec(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=regular_expression(true){ replaceName("regular_expression",n);} [Block(true)] [":" <IDENTIFIER>] {return productionEndTerminal("regexpr_spec","{regular_expression}","{regular_expression}","Replacement",first,token);}
 
  )  }
 
-String expansion_choices(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo expansion_choices(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	expansion(inTerminal) ("|" expansion(inTerminal))* {return productionEndNonTerminal("expansion_choices","-","-");}
 
  )  }
 
-String expansion(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo expansion(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[LOOKAHEAD(1) "LOOKAHEAD" "(" local_lookahead(inTerminal) ")"] (LOOKAHEAD(0, { notTailOfExpansionUnit() } ) expansion_unit(inTerminal))+ {return productionEndNonTerminal("expansion","-","-");}
 
  )  }
 
-String local_lookahead(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo local_lookahead(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[LOOKAHEAD(1) <INTEGER_LITERAL>] [LOOKAHEAD(1) "," ] [LOOKAHEAD(0, { getToken(1).kind != RPAREN && getToken(1).kind != LBRACE } ) expansion_choices(true)] [LOOKAHEAD(1) "," ] ["{" Expression(true) "}"] {return productionEndTerminal("local_lookahead","-","-","Replacement",first,token);}
 
  )  }
 
-String expansion_unit(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo expansion_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(1) "LOOKAHEAD" "(" local_lookahead(true) ")" {return productionEndTerminal("expansion_unit1","-","-","ExpansionOverriding",first,token);}
  |
@@ -1127,13 +1127,13 @@ String expansion_unit(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CatchPart(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CatchPart(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"catch" "(" Name(true) <IDENTIFIER> ")" Block(true) {return productionEndTerminal("CatchPart","-","-","Replacement",first,token);}
 
  )  }
 
-String expansion_unitMain(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo expansion_unitMain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD( <IDENTIFIER> "(") <IDENTIFIER> Arguments(true) {return productionEndTerminal("expansion_unitMain1","-","-","Replacement",first,token);}
  |
@@ -1141,7 +1141,7 @@ String expansion_unitMain(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ExpModifier(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ExpModifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"+"  {return productionEndTerminal("ExpModifier1","-","-","Replacement",first,token);}
  |
@@ -1151,37 +1151,37 @@ String ExpModifier(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String regular_expression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo regular_expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<STRING_LITERAL>{ replaceName("<STRING_LITERAL>",t.toString());} {return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
+	t=<STRING_LITERAL>{ replaceName("<STRING_LITERAL>",new FSTInfo(t.toString()));} {return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
  |
 	LOOKAHEAD(3) "<" [n=RegId(true){ replaceName("RegId",n);}] complex_regular_expression_choices(true) ">" {return productionEndTerminal("regular_expression2","-","{RegId}","Replacement",first,token);}
  |
-	LOOKAHEAD(2) "<" t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} ">" {return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
+	LOOKAHEAD(2) "<" t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));} ">" {return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
  |
 	"<" "EOF" ">"  {return productionEndTerminal("EOFExpr","-","<EOF>","Replacement",first,token);}
 
  )  }
 
-String RegId(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo RegId(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["#" ] t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} ":" {return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
+	["#" ] t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));} ":" {return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 
-String complex_regular_expression_choices(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo complex_regular_expression_choices(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	complex_regular_expression(true) ("|" complex_regular_expression(true))* {return productionEndTerminal("complex_regular_expression_choices","-","-","Replacement",first,token);}
 
  )  }
 
-String complex_regular_expression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo complex_regular_expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	(complex_regular_expression_unit(true))+ {return productionEndTerminal("complex_regular_expression","-","-","Replacement",first,token);}
 
  )  }
 
-String complex_regular_expression_unit(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo complex_regular_expression_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<STRING_LITERAL> {return productionEndTerminal("complex_regular_expression_unit1","-","-","Replacement",first,token);}
  |
@@ -1193,7 +1193,7 @@ String complex_regular_expression_unit(boolean inTerminal) : { Token first=null,
 
  )  }
 
-String CREUPostfix(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CREUPostfix(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"+"  {return productionEndTerminal("CREUPostfix1","-","-","Replacement",first,token);}
  |
@@ -1205,55 +1205,55 @@ String CREUPostfix(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CREUPostfixPP(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CREUPostfixPP(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"," [<INTEGER_LITERAL>] {return productionEndTerminal("CREUPostfixPP","-","-","Replacement",first,token);}
 
  )  }
 
-String character_list(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo character_list(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	["~" ] "[" [character_descriptorList(true)] "]" {return productionEndTerminal("character_list","-","-","Replacement",first,token);}
 
  )  }
 
-String character_descriptorList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo character_descriptorList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	character_descriptor(true) ("," character_descriptor(true))* {return productionEndTerminal("character_descriptorList","-","-","Replacement",first,token);}
 
  )  }
 
-String character_descriptor(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo character_descriptor(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<STRING_LITERAL> ["-" <STRING_LITERAL>] {return productionEndTerminal("character_descriptor","-","-","Replacement",first,token);}
 
  )  }
 
-String CompilationUnit(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[PackageDeclaration(true)] (ImportDeclaration(true))* (TypeDeclaration(true))* {return productionEndTerminal("CompilationUnit","-","-","StringConcatenation",first,token);}
 
  )  }
 
-String PackageDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PackageDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"package" Name(true) ";" {return productionEndTerminal("PackageDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String ImportDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"import" ["static" ] Name(true) [ "." "*"] ";" {return productionEndTerminal("ImportDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String Modifiers(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Modifiers(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	(LOOKAHEAD(1) Modifier(true))* {return productionEndTerminal("Modifiers","-","-","Replacement",first,token);}
 
  )  }
 
-String Modifier(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"public"  {return productionEndTerminal("Modifier1","-","-","Replacement",first,token);}
  |
@@ -1281,7 +1281,7 @@ String Modifier(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	";"  {return productionEndTerminal("TypeDeclaration1","-","-","Replacement",first,token);}
  |
@@ -1293,13 +1293,13 @@ String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ClassOrInterfaceDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterfaceDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ClassOrInterface(true) JavaIdentifier(true) [TypeParameters(true)] [ExtendsList(true)] [ImplementsList(true)] ClassOrInterfaceBody(true) {return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String ClassOrInterface(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterface(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"class"  {return productionEndTerminal("ClassOrInterface1","-","-","Replacement",first,token);}
  |
@@ -1307,67 +1307,67 @@ String ClassOrInterface(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ExtendsList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ExtendsList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"extends" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ExtendsList","-","-","Replacement",first,token);}
 
  )  }
 
-String ImplementsList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ImplementsList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"implements" ClassOrInterfaceType(true) ("," ClassOrInterfaceType(true))* {return productionEndTerminal("ImplementsList","-","-","Replacement",first,token);}
 
  )  }
 
-String EnumDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EnumDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"enum" JavaIdentifier(true) [ImplementsList(true)] EnumBody(true) {return productionEndTerminal("EnumDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String EnumBody(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EnumBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" EnumConstant(true) ("," EnumConstant(true))* [EnumBodyInternal(true)] "}" {return productionEndTerminal("EnumBody","-","-","Replacement",first,token);}
 
  )  }
 
-String EnumBodyInternal(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EnumBodyInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	";" (ClassOrInterfaceBodyDeclaration(true))* {return productionEndTerminal("EnumBodyInternal","-","-","Replacement",first,token);}
 
  )  }
 
-String EnumConstant(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EnumConstant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) [Arguments(true)] [ClassOrInterfaceBody(true)] {return productionEndTerminal("EnumConstant","-","-","Replacement",first,token);}
 
  )  }
 
-String TypeParameters(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeParameters(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<" TypeParameter(true) ("," TypeParameter(true))* ">" {return productionEndTerminal("TypeParameters","-","-","Replacement",first,token);}
 
  )  }
 
-String TypeParameter(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeParameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) [TypeBound(true)] {return productionEndTerminal("TypeParameter","-","-","Replacement",first,token);}
 
  )  }
 
-String TypeBound(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeBound(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"extends" ClassOrInterfaceType(true) ("&" ClassOrInterfaceType(true))* {return productionEndTerminal("TypeBound","-","-","Replacement",first,token);}
 
  )  }
 
-String ClassOrInterfaceBody(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterfaceBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" (ClassOrInterfaceBodyDeclaration(true))* "}" {return productionEndTerminal("ClassOrInterfaceBody","-","-","Replacement",first,token);}
 
  )  }
 
-String ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) Initializer(true) {return productionEndTerminal("ClassOrInterfaceBodyDeclaration1","-","-","Replacement",first,token);}
  |
@@ -1385,25 +1385,25 @@ String ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null,
 
  )  }
 
-String FieldDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo FieldDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Type(true) VariableDeclarator(true) ("," VariableDeclarator(true))* ";" {return productionEndTerminal("FieldDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String VariableDeclarator(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo VariableDeclarator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	VariableDeclaratorId(true) ["=" VariableInitializer(true)] {return productionEndTerminal("VariableDeclarator","-","-","Replacement",first,token);}
 
  )  }
 
-String VariableDeclaratorId(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo VariableDeclaratorId(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) ("[" "]" )* {return productionEndTerminal("VariableDeclaratorId","-","-","Replacement",first,token);}
 
  )  }
 
-String VariableInitializer(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo VariableInitializer(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ArrayInitializer(true) {return productionEndTerminal("VariableInitializer1","-","-","Replacement",first,token);}
  |
@@ -1411,25 +1411,25 @@ String VariableInitializer(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ArrayInitializer(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ArrayInitializer(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" [ArrayInitializerInternal(true)] ["," ] "}" {return productionEndTerminal("ArrayInitializer","-","-","Replacement",first,token);}
 
  )  }
 
-String ArrayInitializerInternal(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ArrayInitializerInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	VariableInitializer(true) (LOOKAHEAD(2) "," VariableInitializer(true))* {return productionEndTerminal("ArrayInitializerInternal","-","-","Replacement",first,token);}
 
  )  }
 
-String MethodDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MethodDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[TypeParameters(true)] ResultType(true) MethodDeclarator(true) ["throws" NameList(true)] MethodDeclarationBody(true) {return productionEndTerminal("MethodDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String MethodDeclarationBody(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MethodDeclarationBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Block(true) {return productionEndTerminal("MethodDeclarationBody1","-","-","Replacement",first,token);}
  |
@@ -1437,37 +1437,37 @@ String MethodDeclarationBody(boolean inTerminal) : { Token first=null,t;String n
 
  )  }
 
-String MethodDeclarator(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MethodDeclarator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) FormalParameters(true) ("[" "]" )* {return productionEndTerminal("MethodDeclarator","-","-","Replacement",first,token);}
 
  )  }
 
-String FormalParameters(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo FormalParameters(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"(" [n=FormalParametersInternal(true){ replaceName("FormalParametersInternal",n);}] ")" {return productionEndTerminal("FormalParameters","{FormalParametersInternal}","{FormalParametersInternal}","Replacement",first,token);}
 
  )  }
 
-String FormalParametersInternal(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo FormalParametersInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=FormalParameter(true){ replaceName("FormalParameter",n);} ("," n=FormalParameter(true){ replaceName("FormalParameter",n);})* {return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","Replacement",first,token);}
 
  )  }
 
-String FormalParameter(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo FormalParameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	["final" ] n=Type(true){ replaceName("Type",n);} ["..." ] VariableDeclaratorId(true) {return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
 
  )  }
 
-String ConstructorDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ConstructorDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[TypeParameters(true)] JavaIdentifier(true) FormalParameters(true) ["throws" NameList(true)] "{" [LOOKAHEAD(ExplicitConstructorInvocation()) ExplicitConstructorInvocation(true)] (BlockStatement(true))* "}" {return productionEndTerminal("ConstructorDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String ExplicitConstructorInvocation(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ExplicitConstructorInvocation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD("this" Arguments() ";") "this" Arguments(true) ";" {return productionEndTerminal("ExplicitConstructorInvocation1","-","-","Replacement",first,token);}
  |
@@ -1475,13 +1475,13 @@ String ExplicitConstructorInvocation(boolean inTerminal) : { Token first=null,t;
 
  )  }
 
-String Initializer(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Initializer(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	["static" ] Block(true) {return productionEndTerminal("Initializer","-","-","Replacement",first,token);}
 
  )  }
 
-String Type(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Type(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) ReferenceTypeP(true) {return productionEndTerminal("Type1","-","{TOSTRING}","Replacement",first,token);}
  |
@@ -1489,7 +1489,7 @@ String Type(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ReferenceTypeP(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ReferenceTypeP(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	PrimitiveType(true) (LOOKAHEAD(2) "[" "]" )+ {return productionEndTerminal("ReferenceTypeP1","-","-","Replacement",first,token);}
  |
@@ -1497,25 +1497,25 @@ String ReferenceTypeP(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ClassOrInterfaceType(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterfaceType(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) [LOOKAHEAD(2) TypeArguments(true)] (LOOKAHEAD(2) ClassOrInterfaceTypeIntern(true))* {return productionEndTerminal("ClassOrInterfaceType","-","-","Replacement",first,token);}
 
  )  }
 
-String ClassOrInterfaceTypeIntern(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ClassOrInterfaceTypeIntern(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"." JavaIdentifier(true) [LOOKAHEAD(2) TypeArguments(true)] {return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","Replacement",first,token);}
 
  )  }
 
-String TypeArguments(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeArguments(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<" TypeArgument(true) ("," TypeArgument(true))* ">" {return productionEndTerminal("TypeArguments","-","-","Replacement",first,token);}
 
  )  }
 
-String TypeArgument(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TypeArgument(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ReferenceTypeP(true) {return productionEndTerminal("TypeArgument1","-","-","Replacement",first,token);}
  |
@@ -1523,7 +1523,7 @@ String TypeArgument(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String WildcardBounds(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo WildcardBounds(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"extends" ReferenceTypeP(true) {return productionEndTerminal("WildcardBounds1","-","-","Replacement",first,token);}
  |
@@ -1531,7 +1531,7 @@ String WildcardBounds(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String PrimitiveType(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PrimitiveType(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"boolean"  {return productionEndTerminal("PrimitiveType1","-","-","Replacement",first,token);}
  |
@@ -1551,7 +1551,7 @@ String PrimitiveType(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ResultType(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ResultType(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"void"  {return productionEndTerminal("ResultType","-","-","Replacement",first,token);}
  |
@@ -1559,31 +1559,31 @@ String ResultType(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String Name(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Name(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) (LOOKAHEAD(2) "." JavaIdentifier(true))* {return productionEndTerminal("Name","-","-","Replacement",first,token);}
 
  )  }
 
-String NameList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo NameList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Name(true) ("," Name(true))* {return productionEndTerminal("NameList","-","-","Replacement",first,token);}
 
  )  }
 
-String Expression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ConditionalExpression(true) [LOOKAHEAD(2) AssignExp(true)] {return productionEndTerminal("Expression","-","-","Replacement",first,token);}
 
  )  }
 
-String AssignExp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AssignExp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	AssignmentOperator(true) Expression(true) {return productionEndTerminal("AssignExp","-","-","Replacement",first,token);}
 
  )  }
 
-String AssignmentOperator(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AssignmentOperator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"="  {return productionEndTerminal("AssignmentOperator1","-","-","Replacement",first,token);}
  |
@@ -1611,7 +1611,7 @@ String AssignmentOperator(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ConditionalExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ConditionalExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(ConditionalOrExpression() "?") ConditionalExpressionFull(true) {return productionEndTerminal("ConditionalExpression1","-","-","Replacement",first,token);}
  |
@@ -1619,55 +1619,55 @@ String ConditionalExpression(boolean inTerminal) : { Token first=null,t;String n
 
  )  }
 
-String ConditionalExpressionFull(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ConditionalExpressionFull(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ConditionalOrExpression(true) "?" Expression(true) ":" Expression(true) {return productionEndTerminal("ConditionalExpressionFull","-","-","Replacement",first,token);}
 
  )  }
 
-String ConditionalOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ConditionalOrExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ConditionalAndExpression(true) ("||" ConditionalAndExpression(true))* {return productionEndTerminal("ConditionalOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String ConditionalAndExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ConditionalAndExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	InclusiveOrExpression(true) ("&&" InclusiveOrExpression(true))* {return productionEndTerminal("ConditionalAndExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String InclusiveOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo InclusiveOrExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ExclusiveOrExpression(true) ("|" ExclusiveOrExpression(true))* {return productionEndTerminal("InclusiveOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String ExclusiveOrExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ExclusiveOrExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	AndExpression(true) ("^" AndExpression(true))* {return productionEndTerminal("ExclusiveOrExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String AndExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AndExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	EqualityExpression(true) ("&" EqualityExpression(true))* {return productionEndTerminal("AndExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String EqualityExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EqualityExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	InstanceOfExpression(true) (EqualityExpressionIntern(true))* {return productionEndTerminal("EqualityExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String EqualityExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EqualityExpressionIntern(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	EqualityOp(true) InstanceOfExpression(true) {return productionEndTerminal("EqualityExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
-String EqualityOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EqualityOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"=="  {return productionEndTerminal("EqualityOp1","-","-","Replacement",first,token);}
  |
@@ -1675,25 +1675,25 @@ String EqualityOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String InstanceOfExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo InstanceOfExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	RelationalExpression(true) ["instanceof" Type(true)] {return productionEndTerminal("InstanceOfExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String RelationalExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo RelationalExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ShiftExpression(true) (RelationalExpressionIntern(true))* {return productionEndTerminal("RelationalExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String RelationalExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo RelationalExpressionIntern(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	RelationalOp(true) ShiftExpression(true) {return productionEndTerminal("RelationalExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
-String RelationalOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo RelationalOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<"  {return productionEndTerminal("RelationalOp1","-","-","Replacement",first,token);}
  |
@@ -1705,19 +1705,19 @@ String RelationalOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ShiftExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ShiftExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	AdditiveExpression(true) (LOOKAHEAD(2) ShiftExpressionRight(true))* {return productionEndTerminal("ShiftExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String ShiftExpressionRight(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ShiftExpressionRight(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ShiftOp(true) AdditiveExpression(true) {return productionEndTerminal("ShiftExpressionRight","-","-","Replacement",first,token);}
 
  )  }
 
-String ShiftOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ShiftOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<<"  {return productionEndTerminal("ShiftOp1","-","-","Replacement",first,token);}
  |
@@ -1727,19 +1727,19 @@ String ShiftOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String AdditiveExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AdditiveExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	MultiplicativeExpression(true) (AdditiveExpressionIntern(true))* {return productionEndTerminal("AdditiveExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String AdditiveExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AdditiveExpressionIntern(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	AdditiveOp(true) MultiplicativeExpression(true) {return productionEndTerminal("AdditiveExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
-String AdditiveOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AdditiveOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"+"  {return productionEndTerminal("AdditiveOp1","-","-","Replacement",first,token);}
  |
@@ -1747,19 +1747,19 @@ String AdditiveOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String MultiplicativeExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MultiplicativeExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	UnaryExpression(true) (MultiplicativeExpressionIntern(true))* {return productionEndTerminal("MultiplicativeExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String MultiplicativeExpressionIntern(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MultiplicativeExpressionIntern(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	MultiplicativeOp(true) UnaryExpression(true) {return productionEndTerminal("MultiplicativeExpressionIntern","-","-","Replacement",first,token);}
 
  )  }
 
-String MultiplicativeOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MultiplicativeOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"*"  {return productionEndTerminal("MultiplicativeOp1","-","-","Replacement",first,token);}
  |
@@ -1769,7 +1769,7 @@ String MultiplicativeOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String UnaryExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo UnaryExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	AdditiveOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpression1","-","-","Replacement",first,token);}
  |
@@ -1781,19 +1781,19 @@ String UnaryExpression(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String PreIncrementExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PreIncrementExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"++" PrimaryExpression(true) {return productionEndTerminal("PreIncrementExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String PreDecrementExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PreDecrementExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"--" PrimaryExpression(true) {return productionEndTerminal("PreDecrementExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String UnaryExpressionNotPlusMinus(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo UnaryExpressionNotPlusMinus(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	UnaryOp(true) UnaryExpression(true) {return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","Replacement",first,token);}
  |
@@ -1803,7 +1803,7 @@ String UnaryExpressionNotPlusMinus(boolean inTerminal) : { Token first=null,t;St
 
  )  }
 
-String UnaryOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo UnaryOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"~"  {return productionEndTerminal("UnaryOp1","-","-","Replacement",first,token);}
  |
@@ -1811,7 +1811,7 @@ String UnaryOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CastLookahead(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CastLookahead(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "(" PrimitiveType(true) {return productionEndTerminal("CastLookahead1","-","-","Replacement",first,token);}
  |
@@ -1821,7 +1821,7 @@ String CastLookahead(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CastLAOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CastLAOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"~"  {return productionEndTerminal("CastLAOp1","-","-","Replacement",first,token);}
  |
@@ -1841,13 +1841,13 @@ String CastLAOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String PostfixExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PostfixExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	PrimaryExpression(true) [PostfixOp(true)] {return productionEndTerminal("PostfixExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String PostfixOp(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PostfixOp(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"++"  {return productionEndTerminal("PostfixOp1","-","-","Replacement",first,token);}
  |
@@ -1855,7 +1855,7 @@ String PostfixOp(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CastExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CastExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD("(" PrimitiveType()) "(" Type(true) ")" UnaryExpression(true) {return productionEndTerminal("CastExpression1","-","-","Replacement",first,token);}
  |
@@ -1863,19 +1863,19 @@ String CastExpression(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String PrimaryExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PrimaryExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	PrimaryPrefix(true) (LOOKAHEAD(2) PrimarySuffix(true))* {return productionEndTerminal("PrimaryExpression","-","-","Replacement",first,token);}
 
  )  }
 
-String MemberSelector(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MemberSelector(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"." TypeArguments(true) JavaIdentifier(true) {return productionEndTerminal("MemberSelector","-","-","Replacement",first,token);}
 
  )  }
 
-String PrimaryPrefix(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PrimaryPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Literal(true) {return productionEndTerminal("PrimaryPrefix1","-","-","Replacement",first,token);}
  |
@@ -1893,7 +1893,7 @@ String PrimaryPrefix(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String PrimarySuffix(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PrimarySuffix(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "." "this"  {return productionEndTerminal("PrimarySuffix1","-","-","Replacement",first,token);}
  |
@@ -1909,7 +1909,7 @@ String PrimarySuffix(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String Literal(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Literal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<INTEGER_LITERAL> {return productionEndTerminal("Literal1","-","-","Replacement",first,token);}
  |
@@ -1925,7 +1925,7 @@ String Literal(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String BooleanLiteral(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo BooleanLiteral(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"true"  {return productionEndTerminal("BooleanLiteral1","-","-","Replacement",first,token);}
  |
@@ -1933,25 +1933,25 @@ String BooleanLiteral(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String NullLiteral(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo NullLiteral(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"null"  {return productionEndTerminal("NullLiteral","-","-","Replacement",first,token);}
 
  )  }
 
-String Arguments(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Arguments(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"(" [ArgumentList(true)] ")" {return productionEndTerminal("Arguments","-","-","Replacement",first,token);}
 
  )  }
 
-String ArgumentList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ArgumentList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Expression(true) ("," Expression(true))* {return productionEndTerminal("ArgumentList","-","-","Replacement",first,token);}
 
  )  }
 
-String AllocationExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AllocationExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "new" PrimitiveType(true) ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpression1","-","-","Replacement",first,token);}
  |
@@ -1959,7 +1959,7 @@ String AllocationExpression(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String AllocationExpressionInit(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AllocationExpressionInit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	ArrayDimsAndInits(true) {return productionEndTerminal("AllocationExpressionInit1","-","-","Replacement",first,token);}
  |
@@ -1967,7 +1967,7 @@ String AllocationExpressionInit(boolean inTerminal) : { Token first=null,t;Strin
 
  )  }
 
-String ArrayDimsAndInits(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ArrayDimsAndInits(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "[" Expression(true) "]" (LOOKAHEAD(2) "[" Expression(true) "]")* (LOOKAHEAD(2) "[" "]" )* {return productionEndTerminal("ArrayDimsAndInits1","-","-","Replacement",first,token);}
  |
@@ -1975,7 +1975,7 @@ String ArrayDimsAndInits(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String Statement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) LabeledStatement(true) {return productionEndTerminal("Statement1","-","-","Replacement",first,token);}
  |
@@ -2011,25 +2011,25 @@ String Statement(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String AssertStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AssertStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"assert" Expression(true) [":" Expression(true)] ";" {return productionEndTerminal("AssertStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String LabeledStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo LabeledStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) ":" Statement(true) {return productionEndTerminal("LabeledStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String Block(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Block(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" (BlockStatement(true))* "}" {return productionEndTerminal("Block","-","-","MethodOverriding",first,token);}
 
  )  }
 
-String BlockStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo BlockStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD([ "final" ] Type() JavaIdentifier()) LocalVariableDeclaration(true) ";" {return productionEndTerminal("BlockStatement1","-","-","Replacement",first,token);}
  |
@@ -2039,19 +2039,19 @@ String BlockStatement(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String LocalVariableDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo LocalVariableDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	["final" ] Type(true) VariableDeclarator(true) ("," VariableDeclarator(true))* {return productionEndTerminal("LocalVariableDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String EmptyStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EmptyStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	";"  {return productionEndTerminal("EmptyStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String StatementExpression(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo StatementExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	PreIncrementExpression(true) {return productionEndTerminal("StatementExpression1","-","-","Replacement",first,token);}
  |
@@ -2061,7 +2061,7 @@ String StatementExpression(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String StatementExpressionAssignment(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo StatementExpressionAssignment(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"++"  {return productionEndTerminal("StatementExpressionAssignment1","-","-","Replacement",first,token);}
  |
@@ -2071,19 +2071,19 @@ String StatementExpressionAssignment(boolean inTerminal) : { Token first=null,t;
 
  )  }
 
-String SwitchStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo SwitchStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"switch" "(" Expression(true) ")" "{" (SwitchStatementLabel(true))* "}" {return productionEndTerminal("SwitchStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String SwitchStatementLabel(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo SwitchStatementLabel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	SwitchLabel(true) (BlockStatement(true))* {return productionEndTerminal("SwitchStatementLabel","-","-","Replacement",first,token);}
 
  )  }
 
-String SwitchLabel(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo SwitchLabel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"case" Expression(true) ":" {return productionEndTerminal("SwitchLabel1","-","-","Replacement",first,token);}
  |
@@ -2091,31 +2091,31 @@ String SwitchLabel(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String IfStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo IfStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"if" "(" Expression(true) ")" Statement(true) [LOOKAHEAD(1) "else" Statement(true)] {return productionEndTerminal("IfStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String WhileStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo WhileStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"while" "(" Expression(true) ")" Statement(true) {return productionEndTerminal("WhileStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String DoStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo DoStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"do" Statement(true) "while" "(" Expression(true) ")" ";" {return productionEndTerminal("DoStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String ForStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ForStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"for" "(" ForStatementInternal(true) ")" Statement(true) {return productionEndTerminal("ForStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String ForStatementInternal(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ForStatementInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(Type() JavaIdentifier() ":") Type(true) JavaIdentifier(true) ":" Expression(true) {return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
  |
@@ -2123,7 +2123,7 @@ String ForStatementInternal(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ForInit(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ForInit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD([ "final" ] Type() JavaIdentifier()) LocalVariableDeclaration(true) {return productionEndTerminal("ForInit1","-","-","Replacement",first,token);}
  |
@@ -2131,55 +2131,55 @@ String ForInit(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String StatementExpressionList(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo StatementExpressionList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	StatementExpression(true) ("," StatementExpression(true))* {return productionEndTerminal("StatementExpressionList","-","-","Replacement",first,token);}
 
  )  }
 
-String ForUpdate(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ForUpdate(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	StatementExpressionList(true) {return productionEndTerminal("ForUpdate","-","-","Replacement",first,token);}
 
  )  }
 
-String BreakStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo BreakStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"break" [JavaIdentifier(true)] ";" {return productionEndTerminal("BreakStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String ContinueStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ContinueStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"continue" [JavaIdentifier(true)] ";" {return productionEndTerminal("ContinueStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String ReturnStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ReturnStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"return" [Expression(true)] ";" {return productionEndTerminal("ReturnStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String ThrowStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ThrowStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"throw" Expression(true) ";" {return productionEndTerminal("ThrowStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String SynchronizedStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo SynchronizedStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"synchronized" "(" Expression(true) ")" Block(true) {return productionEndTerminal("SynchronizedStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String TryStatement(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TryStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"try" Block(true) TryStatementEnd(true) {return productionEndTerminal("TryStatement","-","-","Replacement",first,token);}
 
  )  }
 
-String TryStatementEnd(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo TryStatementEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	(CatchBlock(true))+ {return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
  |
@@ -2187,13 +2187,13 @@ String TryStatementEnd(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String CatchBlock(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CatchBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"catch" "(" FormalParameter(true) ")" Block(true) {return productionEndTerminal("CatchBlock","-","-","Replacement",first,token);}
 
  )  }
 
-String Annotation(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Annotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD("@" Name() "(" ( JavaIdentifier() "=" | ")" )) NormalAnnotation(true) {return productionEndTerminal("Annotation1","-","-","Replacement",first,token);}
  |
@@ -2203,37 +2203,37 @@ String Annotation(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String NormalAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo NormalAnnotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"@" Name(true) "(" [MemberValuePairs(true)] ")" {return productionEndTerminal("NormalAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
-String MarkerAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MarkerAnnotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"@" Name(true) {return productionEndTerminal("MarkerAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
-String SingleMemberAnnotation(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo SingleMemberAnnotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"@" Name(true) "(" MemberValue(true) ")" {return productionEndTerminal("SingleMemberAnnotation","-","-","Replacement",first,token);}
 
  )  }
 
-String MemberValuePairs(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MemberValuePairs(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	MemberValuePair(true) ("," MemberValuePair(true))* {return productionEndTerminal("MemberValuePairs","-","-","Replacement",first,token);}
 
  )  }
 
-String MemberValuePair(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MemberValuePair(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	JavaIdentifier(true) "=" MemberValue(true) {return productionEndTerminal("MemberValuePair","-","-","Replacement",first,token);}
 
  )  }
 
-String MemberValue(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MemberValue(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Annotation(true) {return productionEndTerminal("MemberValue1","-","-","Replacement",first,token);}
  |
@@ -2243,25 +2243,25 @@ String MemberValue(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String MemberValueArrayInitializer(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo MemberValueArrayInitializer(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" MemberValue(true) (LOOKAHEAD(2) "," MemberValue(true))* ["," ] "}" {return productionEndTerminal("MemberValueArrayInitializer","-","-","Replacement",first,token);}
 
  )  }
 
-String AnnotationTypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AnnotationTypeDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"@" "interface" JavaIdentifier(true) AnnotationTypeBody(true) {return productionEndTerminal("AnnotationTypeDeclaration","-","-","Replacement",first,token);}
 
  )  }
 
-String AnnotationTypeBody(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AnnotationTypeBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"{" (AnnotationTypeMemberDeclaration(true))* "}" {return productionEndTerminal("AnnotationTypeBody","-","-","Replacement",first,token);}
 
  )  }
 
-String AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(Modifiers() Type() JavaIdentifier() "(") Modifiers(true) Type(true) JavaIdentifier(true) "(" ")" [DefaultValue(true)] ";" {return productionEndTerminal("AnnotationTypeMemberDeclaration1","-","-","Replacement",first,token);}
  |
@@ -2277,13 +2277,13 @@ String AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,
 
  )  }
 
-String DefaultValue(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo DefaultValue(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"default" MemberValue(true) {return productionEndTerminal("DefaultValue","-","-","Replacement",first,token);}
 
  )  }
 
-String JavaIdentifier(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo JavaIdentifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<IDENTIFIER> {return productionEndTerminal("JavaIdentifier1","-","-","Replacement",first,token);}
  |

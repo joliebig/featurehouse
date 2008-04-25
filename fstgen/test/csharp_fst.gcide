@@ -212,7 +212,7 @@ type_name
 	
 @FSTExportName("{identifier}")
 type_name_part
-	:	identifier [type_argument_list]
+	:	identifier [LL("type_argument_list(inTerminal)") type_argument_list]
 	;
 	
 type_argument_list
@@ -411,7 +411,7 @@ cast_expression
 	;
 
 primary_expression
-	:	primary_expression_start	( primary_expression_postfix )?
+	:	primary_expression_start	( LL("primary_expression_postfix(inTerminal)") primary_expression_postfix )?
 	|	creation_expression
 	;
 	
@@ -434,12 +434,12 @@ default_value_expression
 	;
 	
 primary_expression_postfix
-	:	(primary_expression_postfixInternal
+	:	(LL("primary_expression_postfixInternal(inTerminal)") primary_expression_postfixInternal
 		)+
 	;
 primary_expression_postfixInternal:
 	member_access 							//"." identifier
-		| invocation_expression 			//"("   (argument_list)?   ")"
+		| LL("[type_argument_list(inTerminal)] \"(\"") invocation_expression 			//"("   (argument_list)?   ")"
 		|	element_access							//"["   expression_list   "]"
 		| post_increment_expression 	//INC
 		| post_decrement_expression		//DEC
@@ -452,7 +452,7 @@ array_creation_postfix_expression
 	
 array_creation_postfix_expressionInternal:
 	member_access 							//"." identifier
-		| invocation_expression 			//"("   (argument_list)?   ")"
+		| LL("[type_argument_list(inTerminal)] \"(\"") invocation_expression 			//"("   (argument_list)?   ")"
 		| post_increment_expression 	//INC
 		| post_decrement_expression		//DEC
 		|	pointer_member_access
@@ -473,7 +473,7 @@ parenthesized_expression
 	;
 
 member_access //assumes a predefined type or a primaryexpression came before this rule
-	:	"."	identifier [type_argument_list]
+	:	"."	identifier [LL("type_argument_list(inTerminal)") type_argument_list]
 	;
 
 invocation_expression //assumes a predefined type or a primaryexpression came before this rule
@@ -870,12 +870,12 @@ class_member_declaration
 
 
 class_member_declarationEnd
-		:	@FSTNonTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
-		|	@FSTNonTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
-		|	@FSTNonTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
-		|	@FSTNonTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
+		:	@FSTTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
+		|	@FSTTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
+		|	@FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
+		|	@FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
 		|	@FSTNonTerminal(name="{type_declaration}") type_declaration
-		|	@FSTNonTerminal(name="{type} {typeEnd}") type	typeEnd	
+		|	@FSTTerminal(name="{type} {typeEnd}",compose="{typeEnd}") type	typeEnd	
 		;
 		
 
@@ -884,12 +884,12 @@ typeEnd
 	|	@FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
 	|	@FSTTerminal(name="{operator_declaration}")	operator_declaration
 	|	@FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|	@FSTNonTerminal(name="{type_name}{type_nameEnd}")	type_name	type_nameEnd
+	|	@FSTTerminal(name="{type_name}{type_nameEnd}",compose="{type_nameEnd}")	type_name	type_nameEnd
 	;
 
 			
 type_nameEnd
-	:	@FSTTerminal(name="{method_declaration}",compose="MethodOverriding")	method_declaration
+	:	@FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding")	method_declaration
 	|	@FSTTerminal(name="{property_declaration}")							property_declaration
 	|	@FSTTerminal(name="",compose="FieldOverriding")						field_declaration
 	;

@@ -89,3 +89,6 @@ NonTerminals can be annotated with an additional composition parameter
 where the compose attribute specifies the composition mechanism.
 The default mechanism is "error", i.e. composition is regarded as an error.
 
+The value of compose can be derived using "{TerminalName}" just as with names from other terminals (not from non-
+terminals; there is no separate export mechanism).
+@FSTNonTerminal(name="xy",compose="compose-{Member}") 

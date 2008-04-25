@@ -246,75 +246,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			return false;
 		}
-		if (nonTerminal.getType().equals("class_member_declarationEnd1")) {
-			{
-				FSTNode v=getChild(nonTerminal, "constant_declaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("class_member_declarationEnd2")) {
-			{
-				FSTNode v=getChild(nonTerminal, "event_declaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("class_member_declarationEnd3")) {
-			{
-				FSTNode v=getChild(nonTerminal, "destructor_declaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("class_member_declarationEnd4")) {
-			{
-				FSTNode v=getChild(nonTerminal, "conversion_operator_declaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
 		if (nonTerminal.getType().equals("class_member_declarationEnd5")) {
 			{
 				FSTNode v=getChild(nonTerminal, "type_declaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("class_member_declarationEnd6")) {
-			{
-				FSTNode v=getChild(nonTerminal, "type");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "typeEnd");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("typeEnd5")) {
-			{
-				FSTNode v=getChild(nonTerminal, "type_name");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "type_nameEnd");
 				if (v!=null) {
 					v.accept(this);
 				}

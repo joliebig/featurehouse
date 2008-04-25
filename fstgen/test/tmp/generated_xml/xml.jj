@@ -85,53 +85,53 @@ PARSER_END(XMLParser)
 {
   < CDEND:  "]]>" > : DEFAULT 
 }
-String Document(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Document(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	Prolog(inTerminal) Element(inTerminal) (Misc(inTerminal))* {return productionEndNonTerminal("Document","-","-");}
 
  )  }
 
-String Misc(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Misc(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	Comment(true) {return productionEndTerminal("Misc1","{AUTO}","{AUTO}","error",first,token);}
+	Comment(true) {return productionEndTerminal("Misc1","{AUTO}","{AUTO}","Replacement",first,token);}
  |
-	LOOKAHEAD({getToken(1).image.trim().equals("")}) <PCDATA> {return productionEndTerminal("Misc2","{AUTO}","{AUTO}","error",first,token);}
+	LOOKAHEAD({getToken(1).image.trim().equals("")}) <PCDATA> {return productionEndTerminal("Misc2","{AUTO}","{AUTO}","Replacement",first,token);}
  |
-	PI(true) {return productionEndTerminal("Misc3","{AUTO}","{AUTO}","error",first,token);}
+	PI(true) {return productionEndTerminal("Misc3","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
-String PI(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo PI(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<?" <PI_END> {return productionEndTerminal("PI","-","-","error",first,token);}
+	"<?" <PI_END> {return productionEndTerminal("PI","-","-","Replacement",first,token);}
 
  )  }
 
-String Prolog(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Prolog(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	XMLDecl(true) (Misc(true))* {return productionEndTerminal("Prolog","-","-","error",first,token);}
+	XMLDecl(true) (Misc(true))* {return productionEndTerminal("Prolog","-","-","Replacement",first,token);}
 
  )  }
 
-String XMLDecl(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo XMLDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<?xml" (Attribute(true))+ <QEND> {return productionEndTerminal("XMLDecl","-","-","error",first,token);}
+	"<?xml" (Attribute(true))+ <QEND> {return productionEndTerminal("XMLDecl","-","-","Replacement",first,token);}
 
  )  }
 
-String CDSect(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo CDSect(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<![CDATA[" <CDEND> {return productionEndTerminal("CDSect","-","-","error",first,token);}
+	"<![CDATA[" <CDEND> {return productionEndTerminal("CDSect","-","-","Replacement",first,token);}
 
  )  }
 
-String Comment(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Comment(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<!--" <COMMENT_END> {return productionEndTerminal("Comment","-","-","error",first,token);}
+	"<!--" <COMMENT_END> {return productionEndTerminal("Comment","-","-","Replacement",first,token);}
 
  )  }
 
-String Element(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Element(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(EmptyElemTag()) n=EmptyElemTag(inTerminal){ replaceName("EmptyElemTag",n);} {return productionEndNonTerminal("ElementContainer1","-","{EmptyElemTag}");}
  |
@@ -139,45 +139,45 @@ String Element(boolean inTerminal) : { Token first=null,t;String n;
 
  )  }
 
-String ElementId(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ElementId(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<ELEMENT_ID>{ replaceName("<ELEMENT_ID>",t.toString());} {return productionEndTerminal("ElementId","{<ELEMENT_ID>}","{<ELEMENT_ID>}","error",first,token);}
+	t=<ELEMENT_ID>{ replaceName("<ELEMENT_ID>",new FSTInfo(t.toString()));} {return productionEndTerminal("ElementId","{<ELEMENT_ID>}","{<ELEMENT_ID>}","Replacement",first,token);}
 
  )  }
 
-String EmptyElemTag(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo EmptyElemTag(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<" n=ElementId(inTerminal){ replaceName("ElementId",n);} (Attribute(inTerminal))* <SLASHEND> {return productionEndNonTerminal("EmptyElemTag","{ElementId}","{ElementId}");}
 
  )  }
 
-String STag(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo STag(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"<" n=ElementId(inTerminal){ replaceName("ElementId",n);} (Attribute(inTerminal))* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}");}
 
  )  }
 
-String ETag(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo ETag(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"</" ElementId(true) <ELEMENT_END> {return productionEndTerminal("ETag","-","-","error",first,token);}
+	"</" ElementId(true) <ELEMENT_END> {return productionEndTerminal("ETag","-","-","Replacement",first,token);}
 
  )  }
 
-String Attribute(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Attribute(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<ATTR_NAME>{ replaceName("<ATTR_NAME>",t.toString());} <ATTR_EQ> <ATTR_VAL> {return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","error",first,token);}
+	t=<ATTR_NAME>{ replaceName("<ATTR_NAME>",new FSTInfo(t.toString()));} <ATTR_EQ> <ATTR_VAL> {return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","Replacement",first,token);}
 
  )  }
 
-String Content(boolean inTerminal) : { Token first=null,t;String n; 
+FSTInfo Content(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=Element(inTerminal){ replaceName("Element",n);} {return productionEndNonTerminal("ElementContent","{Element}","{Element}");}
  |
-	Comment(true) {return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","error",first,token);}
+	Comment(true) {return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","Replacement",first,token);}
  |
-	CDSect(true) {return productionEndTerminal("CDSectContent","{AUTO}","{AUTO}","error",first,token);}
+	CDSect(true) {return productionEndTerminal("CDSectContent","{AUTO}","{AUTO}","Replacement",first,token);}
  |
-	<PCDATA> {return productionEndTerminal("PCDataContent","{AUTO}","{AUTO}","error",first,token);}
+	<PCDATA> {return productionEndTerminal("PCDataContent","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 

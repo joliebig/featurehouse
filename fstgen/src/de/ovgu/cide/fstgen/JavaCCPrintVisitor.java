@@ -28,8 +28,8 @@ public class JavaCCPrintVisitor extends NVisitor {
 
 	@Override
 	public boolean visit(NProduction p) {
-		out.println("String " + p.getName()
-				+ "(boolean inTerminal) : { Token first=null,t;String n; ");
+		out.println("FSTInfo " + p.getName()
+				+ "(boolean inTerminal) : { Token first=null,t;FSTInfo n; ");
 		printParameter(p);
 		out.print("} { {first=getToken(1); productionStart(inTerminal); } (");
 		return super.visit(p);
@@ -318,7 +318,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 			// + "=new ASTStringNode(t.toString(),new WToken(t));}");
 			if (keepName) {
 				out.print("{ replaceName(\"" + t.getName()
-						+ "\",t.toString());}");
+						+ "\",new FSTInfo(t.toString()));}");
 			}
 		}
 		if ((t instanceof NTextOnly) && (t.type != Type.ONE)) {

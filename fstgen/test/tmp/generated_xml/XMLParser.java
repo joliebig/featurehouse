@@ -10,8 +10,8 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
 public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
 
-  final public String Document(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;String n;
+  final public FSTInfo Document(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     Prolog(inTerminal);
     Element(inTerminal);
@@ -28,24 +28,24 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String Misc(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo Misc(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COMMENT_START:
       Comment(true);
-                       {if (true) return productionEndTerminal("Misc1","{AUTO}","{AUTO}","error",first,token);}
+                       {if (true) return productionEndTerminal("Misc1","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     default:
       jj_la1[0] = jj_gen;
       if (getToken(1).image.trim().equals("")) {
         jj_consume_token(PCDATA);
-                                                                   {if (true) return productionEndTerminal("Misc2","{AUTO}","{AUTO}","error",first,token);}
+                                                                   {if (true) return productionEndTerminal("Misc2","{AUTO}","{AUTO}","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PI_START:
           PI(true);
-                  {if (true) return productionEndTerminal("Misc3","{AUTO}","{AUTO}","error",first,token);}
+                  {if (true) return productionEndTerminal("Misc3","{AUTO}","{AUTO}","Replacement",first,token);}
           break;
         default:
           jj_la1[1] = jj_gen;
@@ -57,17 +57,17 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String PI(boolean inTerminal) throws ParseException {
-                                  Token first=null,t;String n;
+  final public FSTInfo PI(boolean inTerminal) throws ParseException {
+                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PI_START);
     jj_consume_token(PI_END);
-                       {if (true) return productionEndTerminal("PI","-","-","error",first,token);}
+                       {if (true) return productionEndTerminal("PI","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Prolog(boolean inTerminal) throws ParseException {
-                                      Token first=null,t;String n;
+  final public FSTInfo Prolog(boolean inTerminal) throws ParseException {
+                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     XMLDecl(true);
     label_2:
@@ -79,12 +79,12 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
       }
       Misc(true);
     }
-                                     {if (true) return productionEndTerminal("Prolog","-","-","error",first,token);}
+                                     {if (true) return productionEndTerminal("Prolog","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String XMLDecl(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo XMLDecl(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(XMLOPEN);
     label_3:
@@ -100,30 +100,30 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
       }
     }
     jj_consume_token(QEND);
-                                           {if (true) return productionEndTerminal("XMLDecl","-","-","error",first,token);}
+                                           {if (true) return productionEndTerminal("XMLDecl","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String CDSect(boolean inTerminal) throws ParseException {
-                                      Token first=null,t;String n;
+  final public FSTInfo CDSect(boolean inTerminal) throws ParseException {
+                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CDSTART);
     jj_consume_token(CDEND);
-                             {if (true) return productionEndTerminal("CDSect","-","-","error",first,token);}
+                             {if (true) return productionEndTerminal("CDSect","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Comment(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo Comment(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COMMENT_START);
     jj_consume_token(COMMENT_END);
-                              {if (true) return productionEndTerminal("Comment","-","-","error",first,token);}
+                              {if (true) return productionEndTerminal("Comment","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Element(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo Element(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_3(2147483647)) {
       n = EmptyElemTag(inTerminal);
@@ -161,17 +161,17 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String ElementId(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo ElementId(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     t = jj_consume_token(ELEMENT_ID);
-                        replaceName("<ELEMENT_ID>",t.toString());
-                                                                    {if (true) return productionEndTerminal("ElementId","{<ELEMENT_ID>}","{<ELEMENT_ID>}","error",first,token);}
+                        replaceName("<ELEMENT_ID>",new FSTInfo(t.toString()));
+                                                                                 {if (true) return productionEndTerminal("ElementId","{<ELEMENT_ID>}","{<ELEMENT_ID>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String EmptyElemTag(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;String n;
+  final public FSTInfo EmptyElemTag(boolean inTerminal) throws ParseException {
+                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SELEMENT_START);
     n = ElementId(inTerminal);
@@ -193,8 +193,8 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String STag(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo STag(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SELEMENT_START);
     n = ElementId(inTerminal);
@@ -216,29 +216,29 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public String ETag(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;String n;
+  final public FSTInfo ETag(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(EELEMENT_START);
     ElementId(true);
     jj_consume_token(ELEMENT_END);
-                                            {if (true) return productionEndTerminal("ETag","-","-","error",first,token);}
+                                            {if (true) return productionEndTerminal("ETag","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Attribute(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;String n;
+  final public FSTInfo Attribute(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     t = jj_consume_token(ATTR_NAME);
-                       replaceName("<ATTR_NAME>",t.toString());
+                       replaceName("<ATTR_NAME>",new FSTInfo(t.toString()));
     jj_consume_token(ATTR_EQ);
     jj_consume_token(ATTR_VAL);
-                                                                                       {if (true) return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","error",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
-  final public String Content(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;String n;
+  final public FSTInfo Content(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SELEMENT_START:
@@ -248,15 +248,15 @@ public class XMLParser extends AbstractFSTParser implements XMLParserConstants {
       break;
     case COMMENT_START:
       Comment(true);
-                       {if (true) return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","error",first,token);}
+                       {if (true) return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case CDSTART:
       CDSect(true);
-                      {if (true) return productionEndTerminal("CDSectContent","{AUTO}","{AUTO}","error",first,token);}
+                      {if (true) return productionEndTerminal("CDSectContent","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case PCDATA:
       jj_consume_token(PCDATA);
-                  {if (true) return productionEndTerminal("PCDataContent","{AUTO}","{AUTO}","error",first,token);}
+                  {if (true) return productionEndTerminal("PCDataContent","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     default:
       jj_la1[7] = jj_gen;
