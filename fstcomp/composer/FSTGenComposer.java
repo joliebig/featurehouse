@@ -6,6 +6,7 @@ import java.util.List;
 
 import composer.rules.CompositionError;
 import composer.rules.ConstructorConcatenation;
+import composer.rules.ExpansionOverriding;
 import composer.rules.FieldOverriding;
 import composer.rules.ImplementsListMerging;
 import composer.rules.ModifierListSpecialization;
@@ -17,6 +18,7 @@ import builder.ArtifactBuilderInterface;
 import builder.binary.BinaryBuilder;
 import builder.csharp.CSharpBuilder;
 import builder.java.JavaBuilder;
+import builder.javacc.JavaCCBuilder;
 import builder.text.TextBuilder;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
@@ -24,6 +26,7 @@ import printer.PrintVisitorInterface;
 import printer.binary.BinaryPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
+import printer.javacc.JavaCCPrintVisitor;
 import printer.text.TextPrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -89,10 +92,12 @@ public class FSTGenComposer {
 		FSTGenComposer composer = new FSTGenComposer();
 		composer.registerArtifactBuilder(new JavaBuilder());
 		composer.registerArtifactBuilder(new CSharpBuilder());
+		composer.registerArtifactBuilder(new JavaCCBuilder());
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
 		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
 		composer.registerPrintVisitor(new CSharpPrintVisitor());
+		composer.registerPrintVisitor(new JavaCCPrintVisitor());
 		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
 		composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		composer.run(args);
@@ -168,6 +173,9 @@ public class FSTGenComposer {
 				} else if(terminalA.getCompositionMechanism().equals(FieldOverriding.COMPOSITION_RULE_NAME)) {
 					System.out.println("Field overiding: " + terminalA.toString() + " overrides " + terminalB.toString());
 					FieldOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(ExpansionOverriding.COMPOSITION_RULE_NAME)) {
+					System.out.println("Expansion overiding: " + terminalA.toString() + " overrides " + terminalB.toString());
+					ExpansionOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else if(terminalA.getCompositionMechanism().equals(CompositionError.COMPOSITION_RULE_NAME)) {
 					CompositionError.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else {

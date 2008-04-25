@@ -1,17 +1,13 @@
 package builder.binary;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.StringTokenizer;
 
-import composer.FSTGenComposer;
-import composer.rules.CompositionError;
-import composer.rules.StringConcatenation;
-
 import builder.ArtifactBuilder;
+
+import composer.rules.CompositionError;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 

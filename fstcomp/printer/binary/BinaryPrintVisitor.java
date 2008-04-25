@@ -6,11 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import printer.ArtifactPrintVisitor;
+import printer.PrintVisitorException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
-import printer.ArtifactPrintVisitor;
-import printer.PrintVisitorException;
 
 public class BinaryPrintVisitor extends ArtifactPrintVisitor {
 
