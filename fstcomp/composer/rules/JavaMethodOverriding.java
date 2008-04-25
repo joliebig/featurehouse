@@ -6,8 +6,8 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class MethodOverriding {
-	public final static String COMPOSITION_RULE_NAME = "MethodOverriding";
+public class JavaMethodOverriding {
+	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		
 		if(terminalA.getBody().matches(".*\\s*original\\s*.*")){
@@ -17,20 +17,39 @@ public class MethodOverriding {
 			String oldMethodName = terminalB.getName();
 
 			StringTokenizer st = new StringTokenizer(oldMethodName, "(");
-			if(st.hasMoreTokens())
+			if(st.hasMoreTokens()) {
 				oldMethodName = st.nextToken();
+			}
 			st = new StringTokenizer(oldMethodName, " ");
-			
-			while(st.hasMoreTokens())
+
+			while(st.hasMoreTokens()) {
 				oldMethodName = st.nextToken();
+			}
 			
 			String toReplace = "original\\s*\\(";
 			String newMethodName = oldMethodName + "__wrappee__" + getFeatureName(terminalB);
 			String newBody = terminalComp.getBody().replaceAll(toReplace, newMethodName + "(");
 			terminalComp.setBody(newBody);
 
-			System.err.println("old: " + oldMethodName + "; new: " + newMethodName);
-			terminalComp2.setBody(terminalComp2.getBody().replaceFirst(oldMethodName, newMethodName));
+			String auxBody = "";
+			st = new StringTokenizer(terminalComp2.getBody(), "(");
+			if(st.hasMoreTokens()) {
+				auxBody = st.nextToken();
+			}
+			
+			st = new StringTokenizer(auxBody, " ");
+			String prefix = "";
+			boolean found = false;
+			while(st.hasMoreTokens() && !found) {
+				String token = st.nextToken();
+				if(oldMethodName.equals(token)) {
+					found = true;
+				} else {
+					prefix += token + " ";
+				}
+			}
+			
+			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(prefix, "").replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
 		}
 	}

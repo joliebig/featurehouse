@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
+import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ExpansionOverriding;
@@ -12,7 +13,7 @@ import composer.rules.ImplementsListMerging;
 import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
 import composer.rules.StringConcatenation;
-import composer.rules.MethodOverriding;
+import composer.rules.JavaMethodOverriding;
 
 import builder.ArtifactBuilderInterface;
 import builder.binary.BinaryBuilder;
@@ -161,9 +162,12 @@ public class FSTGenComposer {
 				} else if(terminalA.getCompositionMechanism().equals(ImplementsListMerging.COMPOSITION_RULE_NAME)) {
 					System.out.println("Implements list merging: " + terminalA.toString() + " extends " + terminalB.toString());
 					ImplementsListMerging.compose(terminalA, terminalB, terminalComp, nonterminalParent);
-				} else if(terminalA.getCompositionMechanism().equals(MethodOverriding.COMPOSITION_RULE_NAME)) {
-					System.out.println("Method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
-					MethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(JavaMethodOverriding.COMPOSITION_RULE_NAME)) {
+					System.out.println("Java method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
+					JavaMethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+				} else if(terminalA.getCompositionMechanism().equals(CSharpMethodOverriding.COMPOSITION_RULE_NAME)) {
+					System.out.println("C# method overriding: " + terminalA.toString() + " overrides " + terminalB.toString());
+					CSharpMethodOverriding.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else if(terminalA.getCompositionMechanism().equals(ConstructorConcatenation.COMPOSITION_RULE_NAME)) {
 					System.out.println("Constructor concatenation: " + terminalA.toString() + " extends " + terminalB.toString());
 					ConstructorConcatenation.compose(terminalA, terminalB, terminalComp, nonterminalParent);

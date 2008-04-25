@@ -40,17 +40,14 @@ public class FileLoader {
       parseEquationFile(equationFileName, equationBaseDirectoryName, aheadEquation);
   }
 
-  private void parseEquationFile(String equationFileName,
-      String equationBaseDirectoryName, boolean aheadEquation)
-      throws FileNotFoundException {
+  private void parseEquationFile(String equationFileName, String equationBaseDirectoryName, boolean aheadEquation) throws FileNotFoundException {
     File equationFile = new File(equationFileName);
     String equationFileContent = "";
     try {
-      BufferedReader fileReader = new BufferedReader(new FileReader(
-          equationFile));
+      BufferedReader fileReader = new BufferedReader(new FileReader(          equationFile));
       String line = fileReader.readLine();
       while (line != null) {
-        if (!line.startsWith("##")) {
+        if (!line.startsWith("#")) {
           equationFileContent += line + " ";
         }
         line = fileReader.readLine();
@@ -63,18 +60,21 @@ public class FileLoader {
     }
     if (!equationFileContent.equals("")) {
       String[] features = equationFileContent.split("\\s");
+      
+      System.out.println("Found the following features:");
+      for(String s : features)
+    	  System.out.println(s);
+      
       // if (features.length == 0) {
       // features = equationFileContent.split(" ");
       // }
       // System.out.println("BaseDirectory: " + baseDirectoryName);
       Iterator<ArtifactBuilderInterface> iterator = builderList.iterator();
       if (!equationBaseDirectoryName.trim().endsWith("" + File.separatorChar)) {
-        equationBaseDirectoryName = equationBaseDirectoryName.trim()
-            + File.separatorChar;
+        equationBaseDirectoryName = equationBaseDirectoryName.trim() + File.separatorChar;
       }
       while (iterator.hasNext()) {
-        iterator.next().setBaseDirectoryName(
-            getDirectoryName(new File(equationBaseDirectoryName)));
+        iterator.next().setBaseDirectoryName(getDirectoryName(new File(equationBaseDirectoryName)));
       }
       for (int i = 0; i < features.length; i++) {
         if (!features[i].equals(" ")) {

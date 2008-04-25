@@ -1,7 +1,7 @@
 package examples;
 
 public abstract class Foo extends A implements B, C {
-	static final public int i() {}
+	static final public int i() { int i = 0; }
 	abstract private int j();
 	
 	int a;

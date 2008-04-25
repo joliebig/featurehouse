@@ -1,7 +1,7 @@
 package examples;
 
 class Foo extends X implements B, X, Y {
-	abstract static protected int i();
+	abstract static protected int i() { before(); original(); after(); }
 	final protected int j() {}
 	
 	int a;

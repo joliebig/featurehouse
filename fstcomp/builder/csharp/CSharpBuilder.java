@@ -22,7 +22,6 @@ public class CSharpBuilder extends ArtifactBuilder {
 		try {
 			p.compilation_unit(false);
 			rootDocument.addChild(p.getRoot());
-			System.err.println(p.getRoot().toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

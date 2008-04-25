@@ -9,7 +9,7 @@ class Graph {
         return e;
     }
     public void Print() {
-        for(int i = 0; i < edges.Count; i++) {
+        for(int i = 0; i<edges.Count; i++) {
             ((Edge)edges[i]).Print();
             if(i < edges.Count -1)
 	            System.Console.Out.Write(", ");
