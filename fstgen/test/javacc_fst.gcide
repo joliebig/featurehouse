@@ -1005,10 +1005,11 @@ ThrowsClause: "throws" &LI Name ( "," &LI Name )*;
 bnf_production:
 	[AccessModifier] ResultType BNFName FormalParameters [ ThrowsClause ] ":" Block
 	"{" @+ expansion_choices @- "}";
-	
+
+@FSTExportName(name="{TOSTRING}")
 BNFName: <IDENTIFIER>;
 
-@FSTTerminal(type="AccessModifier",compose="highestScopeModifier")
+@FSTTerminal(type="AccessModifier",compose="ModifierListSpecialization")
 AccessModifier :
 	"public" | "protected" | "private";
 
@@ -1034,10 +1035,11 @@ regexpr_kind:
 @FSTTerminal(name="{regular_expression}")
 regexpr_spec: regular_expression [ Block  ] [ ":" <IDENTIFIER> ];
 
-@FSTTerminal(compose="composeExpansions")
+@FSTNonTerminal()
 expansion_choices: 
 	&LI expansion ( @! "|" &LI expansion )*;
 
+@FSTNonTerminal()
 expansion :
   ( LL(1) "LOOKAHEAD" "(" local_lookahead ")"  )?
   ( LL("0, { notTailOfExpansionUnit() } ") expansion_unit )+;
@@ -1050,6 +1052,7 @@ local_lookahead :
   [ "{" Expression "}" ]
   ;
 
+@FSTTerminal(compose="ExpansionOverriding")
 expansion_unit:
   LL(1) "LOOKAHEAD" "(" local_lookahead ")"
 	| Block
@@ -1131,7 +1134,7 @@ character_descriptor: <STRING_LITERAL> [ "-" <STRING_LITERAL> ];
 ///////////////////////////////////////////////////////////
 //copied from java15.gcide
 
-
+@FSTTerminal(compose="StringConcatenation")
 CompilationUnit:
   [ PackageDeclaration ]
   ( ImportDeclaration )*
@@ -1301,7 +1304,7 @@ MethodDeclarator:
   JavaIdentifier FormalParameters ( "[" "]"<NONE> )*
 ;
 
-@FSTTerminal(name="{FormalParametersInternal}",compose="assumeEqual")
+@FSTTerminal(name="{FormalParametersInternal}")
 FormalParameters:
   "(" [ FormalParametersInternal ] ")"
 ;
@@ -1397,7 +1400,7 @@ PrimitiveType:
   "double"<NONE>
 ;
 
-@FSTTerminal(type="ResultType",compose="assumeEqual")
+@FSTTerminal(type="ResultType")
 ResultType:
   "void"<NONE>
 |
@@ -1721,7 +1724,7 @@ LabeledStatement:
   JavaIdentifier ":" Statement
 ;
 
-@FSTTerminal(compose="composeStatements")
+@FSTTerminal(compose="MethodOverriding")
 Block:
   "{" @+  @! ( BlockStatement )* @- "}" @!
 ;
