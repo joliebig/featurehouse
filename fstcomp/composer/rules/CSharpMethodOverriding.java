@@ -11,11 +11,12 @@ public class CSharpMethodOverriding {
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		
 		if(terminalA.getBody().matches(".*\\s*original\\s*.*")){
-			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			FSTNonTerminal grandParent = (FSTNonTerminal)nonterminalParent.getParent();
-			FSTNonTerminal newParent = (FSTNonTerminal)nonterminalParent.getShallowClone();
-			newParent.addChild(terminalComp2);
+			FSTNonTerminal newParent = (FSTNonTerminal)terminalB.getParent().getDeepClone();
 			grandParent.addChild(newParent);
+			FSTTerminal terminalComp2 = (FSTTerminal)newParent.getCompatibleChild(terminalB);
+			
+			
 			
 			String oldMethodName = terminalB.getName();
 			
@@ -55,6 +56,7 @@ public class CSharpMethodOverriding {
 			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(prefix, "").replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
 			newParent.setName(newMethodName);
+			
 		}
 	}
 	private static String getFeatureName(FSTNode node) {
