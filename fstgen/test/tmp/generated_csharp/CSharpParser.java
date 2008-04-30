@@ -5168,8 +5168,8 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COLON);
-    interface_type_list(true);
-                                       {if (true) return productionEndTerminal("base_interfaces","-","-","Replacement",first,token);}
+    interface_type_list(inTerminal);
+                                             {if (true) return productionEndNonTerminal("base_interfaces","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -5347,10 +5347,10 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
         jj_la1[172] = jj_gen;
         break label_31;
       }
-      interface_member_declaration(true);
+      interface_member_declaration(inTerminal);
     }
     jj_consume_token(RBRACE);
-                                                       {if (true) return productionEndTerminal("interface_body","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndNonTerminal("interface_body","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -5378,8 +5378,9 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
       }
       interface_member_modifier(true);
     }
-    interface_member_declarationEnd(true);
-                                                                                                     {if (true) return productionEndTerminal("interface_member_declaration","-","-","Replacement",first,token);}
+    n = interface_member_declarationEnd(true);
+                                                                                                       replaceName("interface_member_declarationEnd",n);
+                                                                                                                                                           {if (true) return productionEndTerminal("interface_member_declaration","{interface_member_declarationEnd}","{interface_member_declarationEnd}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5389,7 +5390,7 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EVENT:
       interface_event_declaration(true);
-                                           {if (true) return productionEndTerminal("interface_member_declarationEnd1","-","-","Replacement",first,token);}
+                                           {if (true) return productionEndTerminal("interface_member_declarationEnd1","-","{TOSTRING}","Replacement",first,token);}
       break;
     case LONG:
     case BOOL:
@@ -5412,7 +5413,7 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
     case IDENTIFIER:
       type(true);
       interface_member_declarationEndType(true);
-                                                              {if (true) return productionEndTerminal("interface_member_declarationEnd2","-","-","Replacement",first,token);}
+                                                              {if (true) return productionEndTerminal("interface_member_declarationEnd2","-","{TOSTRING}","Replacement",first,token);}
       break;
     default:
       jj_la1[175] = jj_gen;

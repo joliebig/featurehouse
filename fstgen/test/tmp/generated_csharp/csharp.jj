@@ -1635,7 +1635,7 @@ FSTInfo struct_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo base_interfaces(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	":" interface_type_list(true) {return productionEndTerminal("base_interfaces","-","-","Replacement",first,token);}
+	":" interface_type_list(inTerminal) {return productionEndNonTerminal("base_interfaces","-","-");}
 
  )  }
 
@@ -1669,21 +1669,21 @@ FSTInfo interface_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo
 
 FSTInfo interface_body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (interface_member_declaration(true))* "}" {return productionEndTerminal("interface_body","-","-","Replacement",first,token);}
+	"{" (interface_member_declaration(inTerminal))* "}" {return productionEndNonTerminal("interface_body","-","-");}
 
  )  }
 
 FSTInfo interface_member_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[attributes(true)] (interface_member_modifier(true))* interface_member_declarationEnd(true) {return productionEndTerminal("interface_member_declaration","-","-","Replacement",first,token);}
+	[attributes(true)] (interface_member_modifier(true))* n=interface_member_declarationEnd(true){ replaceName("interface_member_declarationEnd",n);} {return productionEndTerminal("interface_member_declaration","{interface_member_declarationEnd}","{interface_member_declarationEnd}","Replacement",first,token);}
 
  )  }
 
 FSTInfo interface_member_declarationEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	interface_event_declaration(true) {return productionEndTerminal("interface_member_declarationEnd1","-","-","Replacement",first,token);}
+	interface_event_declaration(true) {return productionEndTerminal("interface_member_declarationEnd1","-","{TOSTRING}","Replacement",first,token);}
  |
-	type(true) interface_member_declarationEndType(true) {return productionEndTerminal("interface_member_declarationEnd2","-","-","Replacement",first,token);}
+	type(true) interface_member_declarationEndType(true) {return productionEndTerminal("interface_member_declarationEnd2","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 

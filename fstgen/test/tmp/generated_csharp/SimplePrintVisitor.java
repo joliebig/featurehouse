@@ -289,6 +289,16 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			return false;
 		}
+		if (nonTerminal.getType().equals("base_interfaces")) {
+			printToken(":");
+			{
+				FSTNode v=getChild(nonTerminal, "interface_type_list");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
 		if (nonTerminal.getType().equals("interface_declaration")) {
 			printToken("interface");
 			{
@@ -321,6 +331,19 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("interface_body")) {
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"interface_member_declaration")) {
+				v.accept(this);
+			}
+			hintDecIndent();
+			hintNewLine();
+			printToken("}");
+			hintNewLine();
 			return false;
 		}
 		if (nonTerminal.getType().equals("enum_declaration")) {

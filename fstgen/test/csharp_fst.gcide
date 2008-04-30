@@ -1111,6 +1111,7 @@ struct_declaration
 	:	"struct"   identifier  [type_parameter_list] (base_interfaces)?  [type_parameter_constraint_clauses] class_body   (";"<NONE>)? 
 	;
 
+@FSTNonTerminal()
 base_interfaces 
 	:	":"   interface_type_list 
 	;
@@ -1136,15 +1137,19 @@ interface_declaration
 	:	"interface"	identifier	[type_parameter_list]	(base_interfaces)?	[type_parameter_constraint_clauses]	interface_body   (";"<NONE>)?
 			
 	;
-	
+
+@FSTNonTerminal()	
 interface_body 
 	:	"{" @+!   (interface_member_declaration)*   @-! "}" @! 
 	;
 
+@FSTTerminal(name="{interface_member_declarationEnd}")
 interface_member_declaration 
 	:	(attributes)?	(interface_member_modifier)*
 		interface_member_declarationEnd
 	;
+
+@FSTExportName("{TOSTRING}")	
 interface_member_declarationEnd: 
 		interface_event_declaration			//"event"   type   identifier   ";" 
 		|	type	interface_member_declarationEndType;
