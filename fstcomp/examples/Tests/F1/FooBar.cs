@@ -1,6 +1,10 @@
 using System.Text.Encoding;
 using Project = PC.MyCompany.Project.Test;
 
+interface A {
+	void foobar();
+}
+
 class HelloCsharp
 {
 	HelloCsharp(int i) : base(i+1) {
