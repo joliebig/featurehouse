@@ -469,11 +469,11 @@ ClassOrInterfaceBodyDeclaration:
   	LOOK_AHEAD(2)
   	Initializer :: InitializerDecl
 |
-  	@FSTNonTerminal(name="{<IDENTIFIER>}")
+  	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD("Modifiers() ClassOrInterface()")
   	Modifiers  ClassOrInterfaceDeclaration :: InnerClassDecl
 |
-  	@FSTNonTerminal(name="{<IDENTIFIER>}")
+  	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD("Modifiers() \"enum\"")
   	Modifiers EnumDeclaration :: InnerEnumDecl
 |

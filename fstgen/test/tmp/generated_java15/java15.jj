@@ -475,9 +475,9 @@ FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) Initializer(true) {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement",first,token);}
  |
-	LOOKAHEAD(Modifiers() ClassOrInterface()) Modifiers(inTerminal) ClassOrInterface(inTerminal) Id(inTerminal) [TypeParameters(inTerminal)] [ExtendsList(inTerminal)] [ImplementsList(inTerminal)] "{" (ClassOrInterfaceBodyDeclaration(inTerminal))* "}" {return productionEndNonTerminal("InnerClassDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+	LOOKAHEAD(Modifiers() ClassOrInterface()) Modifiers(inTerminal) ClassOrInterface(inTerminal) n=Id(inTerminal){ replaceName("Id",n);} [TypeParameters(inTerminal)] [ExtendsList(inTerminal)] [ImplementsList(inTerminal)] "{" (ClassOrInterfaceBodyDeclaration(inTerminal))* "}" {return productionEndNonTerminal("InnerClassDecl","{Id}","{Id}");}
  |
-	LOOKAHEAD(Modifiers() "enum") Modifiers(inTerminal) "enum" Id(inTerminal) [ImplementsList(inTerminal)] "{" EnumConstant(inTerminal) ("," EnumConstant(inTerminal))* [EnumBodyInternal(inTerminal)] "}" {return productionEndNonTerminal("InnerEnumDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+	LOOKAHEAD(Modifiers() "enum") Modifiers(inTerminal) "enum" n=Id(inTerminal){ replaceName("Id",n);} [ImplementsList(inTerminal)] "{" EnumConstant(inTerminal) ("," EnumConstant(inTerminal))* [EnumBodyInternal(inTerminal)] "}" {return productionEndNonTerminal("InnerEnumDecl","{Id}","{Id}");}
  |
 	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") Modifiers(true) ConstructorDeclaration(true) {return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","ConstructorConcatenation",first,token);}
  |

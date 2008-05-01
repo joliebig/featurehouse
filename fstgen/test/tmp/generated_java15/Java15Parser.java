@@ -722,7 +722,8 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     } else if (jj_2_6(2147483647)) {
       Modifiers(inTerminal);
       ClassOrInterface(inTerminal);
-      Id(inTerminal);
+      n = Id(inTerminal);
+                                                                                                                       replaceName("Id",n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LT:
         TypeParameters(inTerminal);
@@ -788,11 +789,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         ClassOrInterfaceBodyDeclaration(inTerminal);
       }
       jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("InnerClassDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                                                         {if (true) return productionEndNonTerminal("InnerClassDecl","{Id}","{Id}");}
     } else if (jj_2_7(2147483647)) {
       Modifiers(inTerminal);
       jj_consume_token(ENUM);
-      Id(inTerminal);
+      n = Id(inTerminal);
+                                                                                     replaceName("Id",n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IMPLEMENTS:
         ImplementsList(inTerminal);
@@ -825,7 +827,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         ;
       }
       jj_consume_token(RBRACE);
-                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("InnerEnumDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                         {if (true) return productionEndNonTerminal("InnerEnumDecl","{Id}","{Id}");}
     } else if (jj_2_8(2147483647)) {
       Modifiers(true);
       ConstructorDeclaration(true);
@@ -4707,6 +4709,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
+  final private boolean jj_3R_324() {
+    if (jj_3R_311()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_158() {
     if (jj_scan_token(PLUSASSIGN)) return true;
     return false;
@@ -4790,16 +4797,16 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
-  final private boolean jj_3R_324() {
-    if (jj_3R_311()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_80() {
     if (jj_3R_134()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_22()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_328() {
+    if (jj_3R_335()) return true;
     return false;
   }
 
@@ -4810,6 +4817,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       xsp = jj_scanpos;
       if (jj_3R_358()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  final private boolean jj_3R_323() {
+    if (jj_3R_332()) return true;
     return false;
   }
 
@@ -4873,18 +4885,8 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
-  final private boolean jj_3R_328() {
-    if (jj_3R_335()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_122() {
     if (jj_scan_token(BYTE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_323() {
-    if (jj_3R_332()) return true;
     return false;
   }
 
@@ -4899,8 +4901,19 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
+  final private boolean jj_3R_322() {
+    if (jj_3R_331()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_120() {
     if (jj_scan_token(BOOLEAN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_327() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_326()) return true;
     return false;
   }
 
@@ -5016,17 +5029,6 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
-  final private boolean jj_3R_322() {
-    if (jj_3R_331()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_327() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_326()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_69() {
     if (jj_scan_token(LT)) return true;
     if (jj_3R_112()) return true;
@@ -5036,6 +5038,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       if (jj_3R_263()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(GT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_321() {
+    if (jj_3R_100()) return true;
     return false;
   }
 
@@ -5135,11 +5142,6 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
-  final private boolean jj_3R_321() {
-    if (jj_3R_100()) return true;
-    return false;
-  }
-
   final private boolean jj_3_14() {
     if (jj_scan_token(THIS)) return true;
     if (jj_3R_67()) return true;
@@ -5160,6 +5162,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     jj_scanpos = xsp;
     if (jj_3R_101()) return true;
     }
+    return false;
+  }
+
+  final private boolean jj_3R_325() {
+    if (jj_3R_332()) return true;
     return false;
   }
 
@@ -5323,11 +5330,6 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
 
   final private boolean jj_3R_349() {
     if (jj_3R_357()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_325() {
-    if (jj_3R_332()) return true;
     return false;
   }
 
