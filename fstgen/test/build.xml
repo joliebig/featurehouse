@@ -60,6 +60,16 @@
 		</antcall>
 	</target>
 	
+	<target name="testC">
+			<antcall target="testGrammar">
+				<param name="language" value="capprox" />
+				<param name="parserClass" value="CApproxParser" />
+				<param name="mainProduction" value="TranslationUnit" />
+				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="testFile" value="Test.c" />
+			</antcall>
+		</target>
+	
 	<target name="testXML">
 		<antcall target="testGrammar">
 			<param name="language" value="xml" />
