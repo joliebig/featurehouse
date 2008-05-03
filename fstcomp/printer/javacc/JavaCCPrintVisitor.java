@@ -20,11 +20,11 @@ public class JavaCCPrintVisitor extends ArtifactPrintVisitor {
 			for(FSTNode child : nonterminal.getChildren()) {
 				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
 
-				SimplePrintVisitor javaVisitor;
+				SimplePrintVisitor visitor;
 				try {
-					javaVisitor = new SimplePrintVisitor(new PrintStream(fileName));
-					javaVisitor.visit((FSTNonTerminal)child);
-					javaVisitor.getResult();
+					visitor = new SimplePrintVisitor(new PrintStream(fileName));
+					visitor.visit((FSTNonTerminal)child);
+					visitor.getResult();
 				} catch (FileNotFoundException e) {
 					throw new PrintVisitorException(e.getMessage());
 				}

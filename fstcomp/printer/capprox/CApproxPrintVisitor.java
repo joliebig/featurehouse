@@ -1,4 +1,4 @@
-package printer.java;
+package printer.capprox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,12 +7,12 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_java15.SimplePrintVisitor;
+import tmp.generated_capprox.SimplePrintVisitor;
 
-public class JavaPrintVisitor extends ArtifactPrintVisitor {
+public class CApproxPrintVisitor extends ArtifactPrintVisitor {
 
-	public JavaPrintVisitor() {
-		super("Java-File");
+	public CApproxPrintVisitor() {
+		super("C-File");
 	}
 	public void processNode(FSTNode node, File folderPath) throws PrintVisitorException {
 		if(node instanceof FSTNonTerminal) {
