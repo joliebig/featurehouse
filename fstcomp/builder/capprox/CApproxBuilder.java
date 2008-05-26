@@ -22,7 +22,6 @@ public class CApproxBuilder extends ArtifactBuilder {
 		try {
 			p.TranslationUnit(false);
 			rootDocument.addChild(p.getRoot());
-			System.err.println(p.getRoot().toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

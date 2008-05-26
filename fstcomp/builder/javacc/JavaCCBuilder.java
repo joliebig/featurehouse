@@ -22,7 +22,6 @@ public class JavaCCBuilder extends ArtifactBuilder {
 		try {
 			p.javacc_input(false);
 			rootDocument.addChild(p.getRoot());
-			System.err.println(p.getRoot());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
