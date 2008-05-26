@@ -80,6 +80,8 @@ public class FSTGenComposer {
 			for(ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 				FSTNode composition = compose(features);
+				//if(composition != null)
+				//  System.err.println(composition.toString());
 				try {
 					featureVisitor.visit((FSTNonTerminal)composition);	
 				} catch (PrintVisitorException e) {

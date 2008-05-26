@@ -11,8 +11,9 @@ import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class CApproxBuilder extends ArtifactBuilder {
+	private final static String[] suffixArray = {".c", ".h"};
 	public CApproxBuilder() {
-		super(".c");
+		super(suffixArray);
 	}
 	
 	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
@@ -22,6 +23,7 @@ public class CApproxBuilder extends ArtifactBuilder {
 		try {
 			p.TranslationUnit(false);
 			rootDocument.addChild(p.getRoot());
+			//System.err.println(p.getRoot().toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
