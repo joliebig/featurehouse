@@ -1724,7 +1724,7 @@ LabeledStatement:
   JavaIdentifier ":" Statement
 ;
 
-@FSTTerminal(compose="MethodOverriding")
+@FSTTerminal(compose="JavaMethodOverriding")
 Block:
   "{" @+  @! ( BlockStatement )* @- "}" @!
 ;

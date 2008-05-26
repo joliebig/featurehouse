@@ -2025,7 +2025,7 @@ FSTInfo LabeledStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Block(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (BlockStatement(true))* "}" {return productionEndTerminal("Block","-","-","MethodOverriding",first,token);}
+	"{" (BlockStatement(true))* "}" {return productionEndTerminal("Block","-","-","JavaMethodOverriding",first,token);}
 
  )  }
 

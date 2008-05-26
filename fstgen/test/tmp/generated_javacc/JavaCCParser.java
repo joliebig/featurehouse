@@ -4033,7 +4033,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       BlockStatement(true);
     }
     jj_consume_token(RBRACE);
-                                         {if (true) return productionEndTerminal("Block","-","-","MethodOverriding",first,token);}
+                                         {if (true) return productionEndTerminal("Block","-","-","JavaMethodOverriding",first,token);}
     throw new Error("Missing return statement in function");
   }
 
