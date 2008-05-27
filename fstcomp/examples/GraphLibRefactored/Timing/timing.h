@@ -8,6 +8,7 @@
 static long tps; // ticks per second
 static struct tms t;
 static clock_t t0,t1;
+double start, stop;
 
 //! initialize timing
 double timing_init(FILE *f) {

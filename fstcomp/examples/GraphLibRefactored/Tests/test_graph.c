@@ -3,9 +3,10 @@ unsigned int uni_int(unsigned int n) {
 }
 
 void init() { original(); }
-void beforeFlipEdge() {}
-void afterFlipEdge() {}
 
+void beforeFlipEdge() {}
+
+void afterFlipEdge(unsigned int nflips) {}
 
 int main(int argc, char** argv) {
   unsigned int n=5000,nflips=1000000;
@@ -26,6 +27,6 @@ int main(int argc, char** argv) {
     while ((j=uni_int(n))==i);
     graph_flip_edge(g,i,j);
   }
-  afterFlipEdge();
+  afterFlipEdge(nflips);
   return 0;
 }

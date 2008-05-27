@@ -100,12 +100,14 @@ public class FSTGenComposer {
 		composer.registerArtifactBuilder(new CApproxBuilder());
 		composer.registerArtifactBuilder(new JavaCCBuilder());
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
+		composer.registerArtifactBuilder(new TextBuilder(".mk"));
 		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
 		composer.registerPrintVisitor(new CSharpPrintVisitor());
 		composer.registerPrintVisitor(new CApproxPrintVisitor());
 		composer.registerPrintVisitor(new JavaCCPrintVisitor());
 		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
+		composer.registerPrintVisitor(new TextPrintVisitor(".mk"));
 		composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		composer.run(args);
 	}
