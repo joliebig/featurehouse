@@ -82,6 +82,8 @@ public class FSTGenComposer {
 				FSTNode composition = compose(features);
 				//if(composition != null)
 				//  System.err.println(composition.toString());
+				modify(composition);
+				
 				try {
 					featureVisitor.visit((FSTNonTerminal)composition);	
 				} catch (PrintVisitorException e) {
@@ -199,5 +201,9 @@ public class FSTGenComposer {
 		}
 		else
 			return null;
+	}
+	
+	static void modify(FSTNode root) {
+		
 	}
 }
