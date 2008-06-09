@@ -291,6 +291,61 @@ public class JavaCCPrintVisitor extends NVisitor {
 			printToken(x, true);
 
 		if (t instanceof NNonTerminal) {
+			out.print(// t.genVariablePlainName() + "=" +
+					"n="+t.getName() + "("
+							+ (inTerminalChoice ? "true" : "inTerminal") + ")");
+
+			if (keepName(t)) {
+				out.print("{ replaceName(\""+t.getName()+"\", n);}");
+				// if (name.equals(\"\") name=\""+fstName+"\";
+				// name=name.replace(\"{}\", n);
+			}
+			out.print("{ replaceName(n);}");
+
+		}
+		if (t instanceof NValue) {
+			boolean keepName = keepName(t);
+			if (keepName)
+				out.print("t=");
+
+			out.print(// "t="+
+					t.getName());
+			// out.print("{" + t.genVariablePlainName()
+			// + "=new ASTStringNode(t.toString(),new WToken(t));}");
+			if (keepName) {
+				out.print("{ replaceName(new FSTInfo(\"" + t.getName()
+						+ "\",t.toString()));}");
+			}
+		}
+		if ((t instanceof NTextOnly) && (t.type != Type.ONE)) {
+			// out.print("{" + t.genVariablePlainName() + "=new ASTTextNode("
+			// + getTextTokenParameter(t) + ",new WToken(token));}");
+		}
+
+		if (t.isListElement()) {
+			// out.print("{list" + t.getParent().getChoiceIdx() + ".add("
+			// + t.genVariablePlainName() + ");}");
+		} else if (t.type == Type.ONEORMORE || t.type == Type.ZEROORMORE) {
+			// out.print("{" + t.genVariableName() + ".add("
+			// + t.genVariablePlainName() + ");}");
+		}
+
+		for (String x : t.innerPostTokens)
+			printToken(x, false);
+	}
+
+	private boolean keepName(NAbstractValue t) {
+		boolean keepName = fstNamePattern.contains("{" + t.getName() + "}");
+		keepName |= fstExportNamePattern.contains("{" + t.getName() + "}");
+		keepName |= getFSTType(t.getParent()).contains("{" + t.getName() + "}");
+		return keepName;
+	}
+	
+	/*private void printInner(NAbstractValue t) {
+		for (String x : t.innerPreTokens)
+			printToken(x, true);
+
+		if (t instanceof NNonTerminal) {
 			boolean keepName = fstNamePattern.contains("{" + t.getName() + "}")
 					|| fstExportNamePattern.contains("{" + t.getName() + "}");
 			if (keepName)
@@ -336,7 +391,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 
 		for (String x : t.innerPostTokens)
 			printToken(x, false);
-	}
+	}*/
 
 	// private String getTextTokenParameter(NAbstractValue t) {
 	// List<String> tokens = new ArrayList<String>();

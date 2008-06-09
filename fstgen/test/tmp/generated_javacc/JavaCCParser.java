@@ -27,7 +27,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _OPTIONS:
-      javacc_options(inTerminal);
+      n = javacc_options(inTerminal);
+                                       replaceName(n);
       break;
     default:
       jj_la1[0] = jj_gen;
@@ -35,16 +36,20 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     jj_consume_token(_PARSER_BEGIN);
     jj_consume_token(LPAREN);
-    ParserNameS(inTerminal);
+    n = ParserNameS(inTerminal);
+                                                                                                       replaceName(n);
     jj_consume_token(RPAREN);
-    CompilationUnit(inTerminal);
+    n = CompilationUnit(inTerminal);
+                                                                                                                                                           replaceName(n);
     jj_consume_token(_PARSER_END);
     jj_consume_token(LPAREN);
-    ParserNameE(inTerminal);
+    n = ParserNameE(inTerminal);
+                                                                                                                                                                                                                        replaceName(n);
     jj_consume_token(RPAREN);
     label_1:
     while (true) {
-      production(inTerminal);
+      n = production(inTerminal);
+                                                                                                                                                                                                                                                                        replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
       case _LOOKAHEAD:
@@ -80,7 +85,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       }
     }
     jj_consume_token(0);
-                                                                                                                                                                                              {if (true) return productionEndNonTerminal("javacc_input","-","-");}
+                                                                                                                                                                                                                                                                                                  {if (true) return productionEndNonTerminal("javacc_input","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -107,7 +112,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_consume_token(LBRACE);
     label_2:
     while (true) {
-      option_binding(inTerminal);
+      n = option_binding(inTerminal);
+                                                     replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _LOOKAHEAD:
       case _IGNORE_CASE:
@@ -121,7 +127,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       }
     }
     jj_consume_token(RBRACE);
-                                                         {if (true) return productionEndNonTerminal("javacc_options","-","-");}
+                                                                             {if (true) return productionEndNonTerminal("javacc_options","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -129,11 +135,13 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = OptionName(true);
-                            replaceName("OptionName",n);
+                            replaceName("OptionName", n);
+                                                            replaceName(n);
     jj_consume_token(ASSIGN);
-    OptionValue(true);
+    n = OptionValue(true);
+                                                                                                      replaceName(n);
     jj_consume_token(SEMICOLON);
-                                                                                     {if (true) return productionEndTerminal("option_binding","{OptionName}","{OptionName}","Replacement",first,token);}
+                                                                                                                            {if (true) return productionEndTerminal("option_binding","{OptionName}","{OptionName}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -175,8 +183,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       break;
     case FALSE:
     case TRUE:
-      BooleanLiteral(true);
-                              {if (true) return productionEndTerminal("OptionValue2","-","-","Replacement",first,token);}
+      n = BooleanLiteral(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("OptionValue2","-","-","Replacement",first,token);}
       break;
     case STRING_LITERAL:
       jj_consume_token(STRING_LITERAL);
@@ -195,8 +204,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _JAVACODE:
-      javacode_production(true);
-                                                {if (true) return productionEndTerminal("production1","-","-","Replacement",first,token);}
+      n = javacode_production(true);
+                                                  replaceName(n);
+                                                                    {if (true) return productionEndTerminal("production1","-","-","Replacement",first,token);}
       break;
     case _TOKEN:
     case _SPECIAL_TOKEN:
@@ -205,13 +215,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case LT:
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LT:
-        regular_expr_productionPrefix(inTerminal);
+        n = regular_expr_productionPrefix(inTerminal);
+                                                      replaceName(n);
         break;
       default:
         jj_la1[5] = jj_gen;
         ;
       }
-      regexpr_kind(inTerminal);
+      n = regexpr_kind(inTerminal);
+                                                                                                    replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACKET:
         jj_consume_token(LBRACKET);
@@ -224,7 +236,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       }
       jj_consume_token(COLON);
       jj_consume_token(LBRACE);
-      regexpr_spec(inTerminal);
+      n = regexpr_spec(inTerminal);
+                                                                                                                                                                                  replaceName(n);
       label_3:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -236,14 +249,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           break label_3;
         }
         jj_consume_token(BIT_OR);
-        regexpr_spec(inTerminal);
+        n = regexpr_spec(inTerminal);
+                                                                                                                                                                                                                                    replaceName(n);
       }
       jj_consume_token(RBRACE);
-                                                                                                                                                                            {if (true) return productionEndNonTerminal("RegExprProduction","{AUTO}","{AUTO}");}
+                                                                                                                                                                                                                                                            {if (true) return productionEndNonTerminal("RegExprProduction","{AUTO}","{AUTO}");}
       break;
     case _TOKEN_MGR_DECLS:
-      token_manager_decls(true);
-                                                {if (true) return productionEndTerminal("production3","-","-","Replacement",first,token);}
+      n = token_manager_decls(true);
+                                                  replaceName(n);
+                                                                    {if (true) return productionEndTerminal("production3","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -268,31 +283,38 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case PRIVATE:
       case PROTECTED:
       case PUBLIC:
-        AccessModifier(inTerminal);
+        n = AccessModifier(inTerminal);
+                                       replaceName(n);
         break;
       default:
         jj_la1[8] = jj_gen;
         ;
       }
-      ResultType(inTerminal);
+      n = ResultType(inTerminal);
+                                                                                   replaceName(n);
       n = BNFName(inTerminal);
-                                                                                   replaceName("BNFName",n);
+                                                                                                                           replaceName("BNFName", n);
+                                                                                                                                                        replaceName(n);
       n = FormalParameters(inTerminal);
-                                                                                                                                              replaceName("FormalParameters",n);
+                                                                                                                                                                                                         replaceName("FormalParameters", n);
+                                                                                                                                                                                                                                               replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case THROWS:
-        ThrowsClause(inTerminal);
+        n = ThrowsClause(inTerminal);
+                                                                                                                                                                                                                                                                                             replaceName(n);
         break;
       default:
         jj_la1[9] = jj_gen;
         ;
       }
       jj_consume_token(COLON);
-      Block(inTerminal);
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                                                                                        replaceName(n);
       jj_consume_token(LBRACE);
-      expansion_choices(inTerminal);
+      n = expansion_choices(inTerminal);
+                                                                                                                                                                                                                                                                                                                                                                                              replaceName(n);
       jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                          {if (true) return productionEndNonTerminal("BNFProduction","{BNFName}({FormalParameters})","{BNFName}({FormalParameters})");}
+                                                                                                                                                                                                                                                                                                                                                                                                                    {if (true) return productionEndNonTerminal("BNFProduction","{BNFName}({FormalParameters})","{BNFName}({FormalParameters})");}
       break;
     default:
       jj_la1[10] = jj_gen;
@@ -310,25 +332,30 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PRIVATE:
     case PROTECTED:
     case PUBLIC:
-      AccessModifier(true);
+      n = AccessModifier(true);
+                                            replaceName(n);
       break;
     default:
       jj_la1[11] = jj_gen;
       ;
     }
-    ResultType(true);
+    n = ResultType(true);
+                                                                                  replaceName(n);
     jj_consume_token(IDENTIFIER);
-    FormalParameters(true);
+    n = FormalParameters(true);
+                                                                                                                                          replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THROWS:
-      ThrowsClause(true);
+      n = ThrowsClause(true);
+                                                                                                                                                                                  replaceName(n);
       break;
     default:
       jj_la1[12] = jj_gen;
       ;
     }
-    Block(true);
-                                                                                                                                 {if (true) return productionEndTerminal("javacode_production","-","-","Replacement",first,token);}
+    n = Block(true);
+                                                                                                                                                                                                                   replaceName(n);
+                                                                                                                                                                                                                                     {if (true) return productionEndTerminal("javacode_production","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -336,7 +363,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THROWS);
-    Name(true);
+    n = Name(true);
+                               replaceName(n);
     label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -348,9 +376,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_4;
       }
       jj_consume_token(COMMA);
-      Name(true);
+      n = Name(true);
+                                                                   replaceName(n);
     }
-                                               {if (true) return productionEndTerminal("ThrowsClause","-","-","Replacement",first,token);}
+                                                                                       {if (true) return productionEndTerminal("ThrowsClause","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -361,29 +390,36 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PRIVATE:
     case PROTECTED:
     case PUBLIC:
-      AccessModifier(true);
+      n = AccessModifier(true);
+                                 replaceName(n);
       break;
     default:
       jj_la1[14] = jj_gen;
       ;
     }
-    ResultType(true);
-    BNFName(true);
-    FormalParameters(true);
+    n = ResultType(true);
+                                                                       replaceName(n);
+    n = BNFName(true);
+                                                                                                         replaceName(n);
+    n = FormalParameters(true);
+                                                                                                                                                    replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THROWS:
-      ThrowsClause(true);
+      n = ThrowsClause(true);
+                                                                                                                                                                                            replaceName(n);
       break;
     default:
       jj_la1[15] = jj_gen;
       ;
     }
     jj_consume_token(COLON);
-    Block(true);
+    n = Block(true);
+                                                                                                                                                                                                                                 replaceName(n);
     jj_consume_token(LBRACE);
-    expansion_choices(true);
+    n = expansion_choices(true);
+                                                                                                                                                                                                                                                                                 replaceName(n);
     jj_consume_token(RBRACE);
-                                                                                                                                                           {if (true) return productionEndTerminal("bnf_production","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("bnf_production","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -424,13 +460,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
-      regular_expr_productionPrefix(true);
+      n = regular_expr_productionPrefix(true);
+                                                replaceName(n);
       break;
     default:
       jj_la1[17] = jj_gen;
       ;
     }
-    regexpr_kind(true);
+    n = regexpr_kind(true);
+                                                                                        replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
       jj_consume_token(LBRACKET);
@@ -443,7 +481,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     jj_consume_token(COLON);
     jj_consume_token(LBRACE);
-    regexpr_spec(true);
+    n = regexpr_spec(true);
+                                                                                                                                                                replaceName(n);
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -455,10 +494,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_5;
       }
       jj_consume_token(BIT_OR);
-      regexpr_spec(true);
+      n = regexpr_spec(true);
+                                                                                                                                                                                                            replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                                    {if (true) return productionEndTerminal("regular_expr_production","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                    {if (true) return productionEndTerminal("regular_expr_production","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -505,8 +545,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_TOKEN_MGR_DECLS);
     jj_consume_token(COLON);
-    ClassOrInterfaceBody(true);
-                                                          {if (true) return productionEndTerminal("token_manager_decls","-","-","Replacement",first,token);}
+    n = ClassOrInterfaceBody(true);
+                                                            replaceName(n);
+                                                                              {if (true) return productionEndTerminal("token_manager_decls","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -542,10 +583,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = regular_expression(true);
-                                    replaceName("regular_expression",n);
+                                    replaceName("regular_expression", n);
+                                                                            replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
-      Block(true);
+      n = Block(true);
+                                                                                                             replaceName(n);
       break;
     default:
       jj_la1[23] = jj_gen;
@@ -560,14 +603,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_la1[24] = jj_gen;
       ;
     }
-                                                                                                            {if (true) return productionEndTerminal("regexpr_spec","{regular_expression}","{regular_expression}","Replacement",first,token);}
+                                                                                                                                                   {if (true) return productionEndTerminal("regexpr_spec","{regular_expression}","{regular_expression}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo expansion_choices(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    expansion(inTerminal);
+    n = expansion(inTerminal);
+                                 replaceName(n);
     label_7:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -579,9 +623,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_7;
       }
       jj_consume_token(BIT_OR);
-      expansion(inTerminal);
+      n = expansion(inTerminal);
+                                                                                replaceName(n);
     }
-                                                            {if (true) return productionEndNonTerminal("expansion_choices","-","-");}
+                                                                                                    {if (true) return productionEndNonTerminal("expansion_choices","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -592,7 +637,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _LOOKAHEAD:
       jj_consume_token(_LOOKAHEAD);
       jj_consume_token(LPAREN);
-      local_lookahead(inTerminal);
+      n = local_lookahead(inTerminal);
+                                                                     replaceName(n);
       jj_consume_token(RPAREN);
       break;
     default:
@@ -601,14 +647,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     label_8:
     while (true) {
-      expansion_unit(inTerminal);
+      n = expansion_unit(inTerminal);
+                                                                                                                                                                      replaceName(n);
       if (notTailOfExpansionUnit()) {
         ;
       } else {
         break label_8;
       }
     }
-                                                                                                                                                  {if (true) return productionEndNonTerminal("expansion","-","-");}
+                                                                                                                                                                                          {if (true) return productionEndNonTerminal("expansion","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -632,7 +679,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     if (getToken(1).kind != RPAREN && getToken(1).kind != LBRACE) {
-      expansion_choices(true);
+      n = expansion_choices(true);
+                                                                                                                                                                     replaceName(n);
     } else {
       ;
     }
@@ -647,14 +695,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
       jj_consume_token(LBRACE);
-      Expression(true);
+      n = Expression(true);
+                                                                                                                                                                                                                                    replaceName(n);
       jj_consume_token(RBRACE);
       break;
     default:
       jj_la1[30] = jj_gen;
       ;
     }
-                                                                                                                                                                                                                   {if (true) return productionEndTerminal("local_lookahead","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                                           {if (true) return productionEndTerminal("local_lookahead","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -665,24 +714,28 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _LOOKAHEAD:
       jj_consume_token(_LOOKAHEAD);
       jj_consume_token(LPAREN);
-      local_lookahead(true);
+      n = local_lookahead(true);
+                                                              replaceName(n);
       jj_consume_token(RPAREN);
-                                                                {if (true) return productionEndTerminal("expansion_unit1","-","-","ExpansionOverriding",first,token);}
+                                                                                    {if (true) return productionEndTerminal("expansion_unit1","-","-","ExpansionOverriding",first,token);}
       break;
     case LBRACE:
-      Block(true);
-                     {if (true) return productionEndTerminal("expansion_unit2","-","-","ExpansionOverriding",first,token);}
+      n = Block(true);
+                       replaceName(n);
+                                         {if (true) return productionEndTerminal("expansion_unit2","-","-","ExpansionOverriding",first,token);}
       break;
     case LBRACKET:
       jj_consume_token(LBRACKET);
-      expansion_choices(true);
+      n = expansion_choices(true);
+                                       replaceName(n);
       jj_consume_token(RBRACKET);
-                                         {if (true) return productionEndTerminal("expansion_unit3","-","-","ExpansionOverriding",first,token);}
+                                                             {if (true) return productionEndTerminal("expansion_unit3","-","-","ExpansionOverriding",first,token);}
       break;
     case TRY:
       jj_consume_token(TRY);
       jj_consume_token(LBRACE);
-      expansion_choices(true);
+      n = expansion_choices(true);
+                                             replaceName(n);
       jj_consume_token(RBRACE);
       label_9:
       while (true) {
@@ -694,47 +747,53 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           jj_la1[31] = jj_gen;
           break label_9;
         }
-        CatchPart(true);
+        n = CatchPart(true);
+                                                                                      replaceName(n);
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case FINALLY:
         jj_consume_token(FINALLY);
-        Block(true);
+        n = Block(true);
+                                                                                                                                   replaceName(n);
         break;
       default:
         jj_la1[32] = jj_gen;
         ;
       }
-                                                                                          {if (true) return productionEndTerminal("expansion_unit4","-","-","ExpansionOverriding",first,token);}
+                                                                                                                                                      {if (true) return productionEndTerminal("expansion_unit4","-","-","ExpansionOverriding",first,token);}
       break;
     default:
       jj_la1[34] = jj_gen;
       if (jj_2_3(2147483647)) {
         if (jj_2_2(2147483647)) {
-          PrimaryExpression(true);
+          n = PrimaryExpression(true);
+                                                                                                                                                  replaceName(n);
           jj_consume_token(ASSIGN);
         } else {
           ;
         }
-        expansion_unitMain(true);
-                                                                                                                                                                              {if (true) return productionEndTerminal("expansion_unit5","-","-","ExpansionOverriding",first,token);}
+        n = expansion_unitMain(true);
+                                                                                                                                                                                                    replaceName(n);
+                                                                                                                                                                                                                      {if (true) return productionEndTerminal("expansion_unit5","-","-","ExpansionOverriding",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LPAREN:
           jj_consume_token(LPAREN);
-          expansion_choices(true);
+          n = expansion_choices(true);
+                                       replaceName(n);
           jj_consume_token(RPAREN);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case HOOK:
           case PLUS:
           case STAR:
-            ExpModifier(true);
+            n = ExpModifier(true);
+                                                                                  replaceName(n);
             break;
           default:
             jj_la1[33] = jj_gen;
             ;
           }
-                                                             {if (true) return productionEndTerminal("expansion_unit6","-","-","ExpansionOverriding",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("expansion_unit6","-","-","ExpansionOverriding",first,token);}
           break;
         default:
           jj_la1[35] = jj_gen;
@@ -751,11 +810,13 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CATCH);
     jj_consume_token(LPAREN);
-    Name(true);
+    n = Name(true);
+                                  replaceName(n);
     jj_consume_token(IDENTIFIER);
     jj_consume_token(RPAREN);
-    Block(true);
-                                                             {if (true) return productionEndTerminal("CatchPart","-","-","Replacement",first,token);}
+    n = Block(true);
+                                                                                   replaceName(n);
+                                                                                                     {if (true) return productionEndTerminal("CatchPart","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -764,13 +825,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_4(2147483647)) {
       jj_consume_token(IDENTIFIER);
-      Arguments(true);
-                                                                   {if (true) return productionEndTerminal("expansion_unitMain1","-","-","Replacement",first,token);}
+      n = Arguments(true);
+                                                                     replaceName(n);
+                                                                                       {if (true) return productionEndTerminal("expansion_unitMain1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STRING_LITERAL:
       case LT:
-        regular_expression(true);
+        n = regular_expression(true);
+                                    replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case DOT:
           jj_consume_token(DOT);
@@ -780,7 +843,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           jj_la1[36] = jj_gen;
           ;
         }
-                                                     {if (true) return productionEndTerminal("expansion_unitMain2","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("expansion_unitMain2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[37] = jj_gen;
@@ -821,7 +884,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STRING_LITERAL:
       t = jj_consume_token(STRING_LITERAL);
-                            replaceName("<STRING_LITERAL>",new FSTInfo(t.toString()));
+                            replaceName(new FSTInfo("<STRING_LITERAL>",t.toString()));
                                                                                          {if (true) return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
       break;
     default:
@@ -832,19 +895,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case IDENTIFIER:
         case 137:
           n = RegId(true);
-                                         replaceName("RegId",n);
+                                         replaceName("RegId", n);
+                                                                    replaceName(n);
           break;
         default:
           jj_la1[39] = jj_gen;
           ;
         }
-        complex_regular_expression_choices(true);
+        n = complex_regular_expression_choices(true);
+                                                                                                                                  replaceName(n);
         jj_consume_token(GT);
-                                                                                                                 {if (true) return productionEndTerminal("regular_expression2","-","{RegId}","Replacement",first,token);}
+                                                                                                                                                        {if (true) return productionEndTerminal("regular_expression2","-","{RegId}","Replacement",first,token);}
       } else if (jj_2_6(2)) {
         jj_consume_token(LT);
         t = jj_consume_token(IDENTIFIER);
-                                         replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
+                                         replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));
         jj_consume_token(GT);
                                                                                                       {if (true) return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
       } else {
@@ -877,7 +942,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     t = jj_consume_token(IDENTIFIER);
-                               replaceName("<IDENTIFIER>",new FSTInfo(t.toString()));
+                               replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));
     jj_consume_token(COLON);
                                                                                             {if (true) return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
@@ -886,7 +951,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo complex_regular_expression_choices(boolean inTerminal) throws ParseException {
                                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    complex_regular_expression(true);
+    n = complex_regular_expression(true);
+                                            replaceName(n);
     label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -898,9 +964,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_10;
       }
       jj_consume_token(BIT_OR);
-      complex_regular_expression(true);
+      n = complex_regular_expression(true);
+                                                                                                      replaceName(n);
     }
-                                                                                  {if (true) return productionEndTerminal("complex_regular_expression_choices","-","-","Replacement",first,token);}
+                                                                                                                          {if (true) return productionEndTerminal("complex_regular_expression_choices","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -909,7 +976,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     label_11:
     while (true) {
-      complex_regular_expression_unit(true);
+      n = complex_regular_expression_unit(true);
+                                                  replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STRING_LITERAL:
       case LPAREN:
@@ -923,7 +991,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_11;
       }
     }
-                                                  {if (true) return productionEndTerminal("complex_regular_expression","-","-","Replacement",first,token);}
+                                                                      {if (true) return productionEndTerminal("complex_regular_expression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -943,25 +1011,28 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       break;
     case LBRACKET:
     case TILDE:
-      character_list(true);
-                              {if (true) return productionEndTerminal("complex_regular_expression_unit3","-","-","Replacement",first,token);}
+      n = character_list(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("complex_regular_expression_unit3","-","-","Replacement",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
-      complex_regular_expression_choices(true);
+      n = complex_regular_expression_choices(true);
+                                                        replaceName(n);
       jj_consume_token(RPAREN);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACE:
       case HOOK:
       case PLUS:
       case STAR:
-        CREUPostfix(true);
+        n = CREUPostfix(true);
+                                                                                                   replaceName(n);
         break;
       default:
         jj_la1[45] = jj_gen;
         ;
       }
-                                                                              {if (true) return productionEndTerminal("complex_regular_expression_unit4","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("complex_regular_expression_unit4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[46] = jj_gen;
@@ -992,14 +1063,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_consume_token(INTEGER_LITERAL);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
-        CREUPostfixPP(true);
+        n = CREUPostfixPP(true);
+                                                      replaceName(n);
         break;
       default:
         jj_la1[47] = jj_gen;
         ;
       }
       jj_consume_token(RBRACE);
-                                                         {if (true) return productionEndTerminal("CREUPostfix4","-","-","Replacement",first,token);}
+                                                                             {if (true) return productionEndTerminal("CREUPostfix4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[48] = jj_gen;
@@ -1039,21 +1111,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_consume_token(LBRACKET);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STRING_LITERAL:
-      character_descriptorList(true);
+      n = character_descriptorList(true);
+                                                      replaceName(n);
       break;
     default:
       jj_la1[51] = jj_gen;
       ;
     }
     jj_consume_token(RBRACKET);
-                                                         {if (true) return productionEndTerminal("character_list","-","-","Replacement",first,token);}
+                                                                             {if (true) return productionEndTerminal("character_list","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo character_descriptorList(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    character_descriptor(true);
+    n = character_descriptor(true);
+                                      replaceName(n);
     label_12:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1065,9 +1139,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_12;
       }
       jj_consume_token(COMMA);
-      character_descriptor(true);
+      n = character_descriptor(true);
+                                                                                          replaceName(n);
     }
-                                                                      {if (true) return productionEndTerminal("character_descriptorList","-","-","Replacement",first,token);}
+                                                                                                              {if (true) return productionEndTerminal("character_descriptorList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1093,7 +1168,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PACKAGE:
-      PackageDeclaration(true);
+      n = PackageDeclaration(true);
+                                     replaceName(n);
       break;
     default:
       jj_la1[54] = jj_gen;
@@ -1109,7 +1185,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[55] = jj_gen;
         break label_13;
       }
-      ImportDeclaration(true);
+      n = ImportDeclaration(true);
+                                                                                   replaceName(n);
     }
     label_14:
     while (true) {
@@ -1136,9 +1213,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[56] = jj_gen;
         break label_14;
       }
-      TypeDeclaration(true);
+      n = TypeDeclaration(true);
+                                                                                                                                replaceName(n);
     }
-                                                                                        {if (true) return productionEndTerminal("CompilationUnit","-","-","StringConcatenation",first,token);}
+                                                                                                                                                    {if (true) return productionEndTerminal("CompilationUnit","-","-","StringConcatenation",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1146,9 +1224,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PACKAGE);
-    Name(true);
+    n = Name(true);
+                                replaceName(n);
     jj_consume_token(SEMICOLON);
-                                  {if (true) return productionEndTerminal("PackageDeclaration","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("PackageDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1164,7 +1243,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_la1[57] = jj_gen;
       ;
     }
-    Name(true);
+    n = Name(true);
+                                           replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DOT:
       jj_consume_token(DOT);
@@ -1175,7 +1255,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     jj_consume_token(SEMICOLON);
-                                                        {if (true) return productionEndTerminal("ImportDeclaration","-","-","Replacement",first,token);}
+                                                                            {if (true) return productionEndTerminal("ImportDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1203,9 +1283,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[59] = jj_gen;
         break label_15;
       }
-      Modifier(true);
+      n = Modifier(true);
+                                        replaceName(n);
     }
-                                        {if (true) return productionEndTerminal("Modifiers","-","-","Replacement",first,token);}
+                                                            {if (true) return productionEndTerminal("Modifiers","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1258,8 +1339,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                      {if (true) return productionEndTerminal("Modifier11","-","-","Replacement",first,token);}
       break;
     case 143:
-      Annotation(true);
-                          {if (true) return productionEndTerminal("Modifier12","-","-","Replacement",first,token);}
+      n = Annotation(true);
+                            replaceName(n);
+                                              {if (true) return productionEndTerminal("Modifier12","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[60] = jj_gen;
@@ -1280,17 +1362,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     default:
       jj_la1[61] = jj_gen;
       if (jj_2_7(2)) {
-        Modifiers(true);
-        ClassOrInterfaceDeclaration(true);
-                                                                        {if (true) return productionEndTerminal("TypeDeclaration2","-","-","Replacement",first,token);}
+        n = Modifiers(true);
+                                        replaceName(n);
+        n = ClassOrInterfaceDeclaration(true);
+                                                                                              replaceName(n);
+                                                                                                                {if (true) return productionEndTerminal("TypeDeclaration2","-","-","Replacement",first,token);}
       } else if (jj_2_8(2)) {
-        Modifiers(true);
-        EnumDeclaration(true);
-                                                            {if (true) return productionEndTerminal("TypeDeclaration3","-","-","Replacement",first,token);}
+        n = Modifiers(true);
+                                        replaceName(n);
+        n = EnumDeclaration(true);
+                                                                                  replaceName(n);
+                                                                                                    {if (true) return productionEndTerminal("TypeDeclaration3","-","-","Replacement",first,token);}
       } else if (jj_2_9(2)) {
-        Modifiers(true);
-        AnnotationTypeDeclaration(true);
-                                                                      {if (true) return productionEndTerminal("TypeDeclaration4","-","-","Replacement",first,token);}
+        n = Modifiers(true);
+                                        replaceName(n);
+        n = AnnotationTypeDeclaration(true);
+                                                                                            replaceName(n);
+                                                                                                              {if (true) return productionEndTerminal("TypeDeclaration4","-","-","Replacement",first,token);}
       } else {
         jj_consume_token(-1);
         throw new ParseException();
@@ -1302,11 +1390,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo ClassOrInterfaceDeclaration(boolean inTerminal) throws ParseException {
                                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ClassOrInterface(true);
-    JavaIdentifier(true);
+    n = ClassOrInterface(true);
+                                  replaceName(n);
+    n = JavaIdentifier(true);
+                                                                           replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
-      TypeParameters(true);
+      n = TypeParameters(true);
+                                                                                                                     replaceName(n);
       break;
     default:
       jj_la1[62] = jj_gen;
@@ -1314,7 +1405,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXTENDS:
-      ExtendsList(true);
+      n = ExtendsList(true);
+                                                                                                                                                             replaceName(n);
       break;
     default:
       jj_la1[63] = jj_gen;
@@ -1322,14 +1414,16 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IMPLEMENTS:
-      ImplementsList(true);
+      n = ImplementsList(true);
+                                                                                                                                                                                                        replaceName(n);
       break;
     default:
       jj_la1[64] = jj_gen;
       ;
     }
-    ClassOrInterfaceBody(true);
-                                                                                                                                                  {if (true) return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","Replacement",first,token);}
+    n = ClassOrInterfaceBody(true);
+                                                                                                                                                                                                                                                        replaceName(n);
+                                                                                                                                                                                                                                                                          {if (true) return productionEndTerminal("ClassOrInterfaceDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1357,7 +1451,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(EXTENDS);
-    ClassOrInterfaceType(true);
+    n = ClassOrInterfaceType(true);
+                                                replaceName(n);
     label_16:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1369,9 +1464,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_16;
       }
       jj_consume_token(COMMA);
-      ClassOrInterfaceType(true);
+      n = ClassOrInterfaceType(true);
+                                                                                                    replaceName(n);
     }
-                                                                                {if (true) return productionEndTerminal("ExtendsList","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("ExtendsList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1379,7 +1475,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IMPLEMENTS);
-    ClassOrInterfaceType(true);
+    n = ClassOrInterfaceType(true);
+                                                   replaceName(n);
     label_17:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1391,9 +1488,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_17;
       }
       jj_consume_token(COMMA);
-      ClassOrInterfaceType(true);
+      n = ClassOrInterfaceType(true);
+                                                                                                       replaceName(n);
     }
-                                                                                   {if (true) return productionEndTerminal("ImplementsList","-","-","Replacement",first,token);}
+                                                                                                                           {if (true) return productionEndTerminal("ImplementsList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1401,17 +1499,20 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ENUM);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                       replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IMPLEMENTS:
-      ImplementsList(true);
+      n = ImplementsList(true);
+                                                                                 replaceName(n);
       break;
     default:
       jj_la1[68] = jj_gen;
       ;
     }
-    EnumBody(true);
-                                                                           {if (true) return productionEndTerminal("EnumDeclaration","-","-","Replacement",first,token);}
+    n = EnumBody(true);
+                                                                                                                     replaceName(n);
+                                                                                                                                       {if (true) return productionEndTerminal("EnumDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1419,7 +1520,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
-    EnumConstant(true);
+    n = EnumConstant(true);
+                                  replaceName(n);
     label_18:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1431,18 +1533,20 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_18;
       }
       jj_consume_token(COMMA);
-      EnumConstant(true);
+      n = EnumConstant(true);
+                                                                              replaceName(n);
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SEMICOLON:
-      EnumBodyInternal(true);
+      n = EnumBodyInternal(true);
+                                                                                                                            replaceName(n);
       break;
     default:
       jj_la1[70] = jj_gen;
       ;
     }
     jj_consume_token(RBRACE);
-                                                                                       {if (true) return productionEndTerminal("EnumBody","-","-","Replacement",first,token);}
+                                                                                                                                                   {if (true) return productionEndTerminal("EnumBody","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1499,19 +1603,22 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[71] = jj_gen;
         break label_19;
       }
-      ClassOrInterfaceBodyDeclaration(true);
+      n = ClassOrInterfaceBodyDeclaration(true);
+                                                      replaceName(n);
     }
-                                                      {if (true) return productionEndTerminal("EnumBodyInternal","-","-","Replacement",first,token);}
+                                                                          {if (true) return productionEndTerminal("EnumBodyInternal","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo EnumConstant(boolean inTerminal) throws ParseException {
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LPAREN:
-      Arguments(true);
+      n = Arguments(true);
+                                                                     replaceName(n);
       break;
     default:
       jj_la1[72] = jj_gen;
@@ -1519,13 +1626,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
-      ClassOrInterfaceBody(true);
+      n = ClassOrInterfaceBody(true);
+                                                                                                                      replaceName(n);
       break;
     default:
       jj_la1[73] = jj_gen;
       ;
     }
-                                                                             {if (true) return productionEndTerminal("EnumConstant","-","-","Replacement",first,token);}
+                                                                                                                                         {if (true) return productionEndTerminal("EnumConstant","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1533,7 +1641,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LT);
-    TypeParameter(true);
+    n = TypeParameter(true);
+                                   replaceName(n);
     label_20:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1545,26 +1654,29 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_20;
       }
       jj_consume_token(COMMA);
-      TypeParameter(true);
+      n = TypeParameter(true);
+                                                                                replaceName(n);
     }
     jj_consume_token(GT);
-                                                                {if (true) return productionEndTerminal("TypeParameters","-","-","Replacement",first,token);}
+                                                                                                        {if (true) return productionEndTerminal("TypeParameters","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo TypeParameter(boolean inTerminal) throws ParseException {
                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXTENDS:
-      TypeBound(true);
+      n = TypeBound(true);
+                                                                     replaceName(n);
       break;
     default:
       jj_la1[75] = jj_gen;
       ;
     }
-                                                {if (true) return productionEndTerminal("TypeParameter","-","-","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("TypeParameter","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1572,7 +1684,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(EXTENDS);
-    ClassOrInterfaceType(true);
+    n = ClassOrInterfaceType(true);
+                                                replaceName(n);
     label_21:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1584,9 +1697,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_21;
       }
       jj_consume_token(BIT_AND);
-      ClassOrInterfaceType(true);
+      n = ClassOrInterfaceType(true);
+                                                                                                    replaceName(n);
     }
-                                                                                {if (true) return productionEndTerminal("TypeBound","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("TypeBound","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1643,10 +1757,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[77] = jj_gen;
         break label_22;
       }
-      ClassOrInterfaceBodyDeclaration(true);
+      n = ClassOrInterfaceBodyDeclaration(true);
+                                                      replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                          {if (true) return productionEndTerminal("ClassOrInterfaceBody","-","-","Replacement",first,token);}
+                                                                              {if (true) return productionEndTerminal("ClassOrInterfaceBody","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1654,28 +1769,39 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_10(2)) {
-      Initializer(true);
-                                        {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration1","-","-","Replacement",first,token);}
+      n = Initializer(true);
+                                          replaceName(n);
+                                                            {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration1","-","-","Replacement",first,token);}
     } else if (jj_2_11(2147483647)) {
-      Modifiers(true);
-      ClassOrInterfaceDeclaration(true);
-                                                                                                     {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration2","-","-","Replacement",first,token);}
+      n = Modifiers(true);
+                                                                     replaceName(n);
+      n = ClassOrInterfaceDeclaration(true);
+                                                                                                                           replaceName(n);
+                                                                                                                                             {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration2","-","-","Replacement",first,token);}
     } else if (jj_2_12(2147483647)) {
-      Modifiers(true);
-      EnumDeclaration(true);
-                                                                             {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration3","-","-","Replacement",first,token);}
+      n = Modifiers(true);
+                                                         replaceName(n);
+      n = EnumDeclaration(true);
+                                                                                                   replaceName(n);
+                                                                                                                     {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration3","-","-","Replacement",first,token);}
     } else if (jj_2_13(2147483647)) {
-      Modifiers(true);
-      ConstructorDeclaration(true);
-                                                                                                                        {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration4","-","-","Replacement",first,token);}
+      n = Modifiers(true);
+                                                                                             replaceName(n);
+      n = ConstructorDeclaration(true);
+                                                                                                                                              replaceName(n);
+                                                                                                                                                                {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration4","-","-","Replacement",first,token);}
     } else if (jj_2_14(2147483647)) {
-      Modifiers(true);
-      FieldDeclaration(true);
-                                                                                                                                 {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration5","-","-","Replacement",first,token);}
+      n = Modifiers(true);
+                                                                                                            replaceName(n);
+      n = FieldDeclaration(true);
+                                                                                                                                                       replaceName(n);
+                                                                                                                                                                         {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration5","-","-","Replacement",first,token);}
     } else if (jj_2_15(2)) {
-      Modifiers(true);
-      MethodDeclaration(true);
-                                                              {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration6","-","-","Replacement",first,token);}
+      n = Modifiers(true);
+                                        replaceName(n);
+      n = MethodDeclaration(true);
+                                                                                    replaceName(n);
+                                                                                                      {if (true) return productionEndTerminal("ClassOrInterfaceBodyDeclaration6","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SEMICOLON:
@@ -1694,8 +1820,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo FieldDeclaration(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    Type(true);
-    VariableDeclarator(true);
+    n = Type(true);
+                      replaceName(n);
+    n = VariableDeclarator(true);
+                                                                   replaceName(n);
     label_23:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1707,34 +1835,38 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_23;
       }
       jj_consume_token(COMMA);
-      VariableDeclarator(true);
+      n = VariableDeclarator(true);
+                                                                                                                     replaceName(n);
     }
     jj_consume_token(SEMICOLON);
-                                                                                 {if (true) return productionEndTerminal("FieldDeclaration","-","-","Replacement",first,token);}
+                                                                                                                                             {if (true) return productionEndTerminal("FieldDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo VariableDeclarator(boolean inTerminal) throws ParseException {
                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    VariableDeclaratorId(true);
+    n = VariableDeclaratorId(true);
+                                      replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSIGN:
       jj_consume_token(ASSIGN);
-      VariableInitializer(true);
+      n = VariableInitializer(true);
+                                                                                         replaceName(n);
       break;
     default:
       jj_la1[80] = jj_gen;
       ;
     }
-                                                                    {if (true) return productionEndTerminal("VariableDeclarator","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("VariableDeclarator","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo VariableDeclaratorId(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     label_24:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1748,7 +1880,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
     }
-                                          {if (true) return productionEndTerminal("VariableDeclaratorId","-","-","Replacement",first,token);}
+                                                              {if (true) return productionEndTerminal("VariableDeclaratorId","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1757,8 +1889,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
-      ArrayInitializer(true);
-                                {if (true) return productionEndTerminal("VariableInitializer1","-","-","Replacement",first,token);}
+      n = ArrayInitializer(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("VariableInitializer1","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -1799,8 +1932,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PLUS:
     case MINUS:
     case IDENTIFIER:
-      Expression(true);
-                          {if (true) return productionEndTerminal("VariableInitializer2","-","-","Replacement",first,token);}
+      n = Expression(true);
+                            replaceName(n);
+                                              {if (true) return productionEndTerminal("VariableInitializer2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[82] = jj_gen;
@@ -1855,7 +1989,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PLUS:
     case MINUS:
     case IDENTIFIER:
-      ArrayInitializerInternal(true);
+      n = ArrayInitializerInternal(true);
+                                               replaceName(n);
       break;
     default:
       jj_la1[83] = jj_gen;
@@ -1870,14 +2005,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     jj_consume_token(RBRACE);
-                                                         {if (true) return productionEndTerminal("ArrayInitializer","-","-","Replacement",first,token);}
+                                                                             {if (true) return productionEndTerminal("ArrayInitializer","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ArrayInitializerInternal(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    VariableInitializer(true);
+    n = VariableInitializer(true);
+                                     replaceName(n);
     label_25:
     while (true) {
       if (jj_2_16(2)) {
@@ -1886,9 +2022,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_25;
       }
       jj_consume_token(COMMA);
-      VariableInitializer(true);
+      n = VariableInitializer(true);
+                                                                                                     replaceName(n);
     }
-                                                                                 {if (true) return productionEndTerminal("ArrayInitializerInternal","-","-","Replacement",first,token);}
+                                                                                                                         {if (true) return productionEndTerminal("ArrayInitializerInternal","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1897,25 +2034,30 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
-      TypeParameters(true);
+      n = TypeParameters(true);
+                                 replaceName(n);
       break;
     default:
       jj_la1[85] = jj_gen;
       ;
     }
-    ResultType(true);
-    MethodDeclarator(true);
+    n = ResultType(true);
+                                                                       replaceName(n);
+    n = MethodDeclarator(true);
+                                                                                                                  replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THROWS:
       jj_consume_token(THROWS);
-      NameList(true);
+      n = NameList(true);
+                                                                                                                                                               replaceName(n);
       break;
     default:
       jj_la1[86] = jj_gen;
       ;
     }
-    MethodDeclarationBody(true);
-                                                                                                                              {if (true) return productionEndTerminal("MethodDeclaration","-","-","Replacement",first,token);}
+    n = MethodDeclarationBody(true);
+                                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                                  {if (true) return productionEndTerminal("MethodDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1924,8 +2066,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACE:
-      Block(true);
-                     {if (true) return productionEndTerminal("MethodDeclarationBody1","-","-","Replacement",first,token);}
+      n = Block(true);
+                       replaceName(n);
+                                         {if (true) return productionEndTerminal("MethodDeclarationBody1","-","-","Replacement",first,token);}
       break;
     case SEMICOLON:
       jj_consume_token(SEMICOLON);
@@ -1942,8 +2085,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo MethodDeclarator(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
-    FormalParameters(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
+    n = FormalParameters(true);
+                                                                           replaceName(n);
     label_26:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1957,7 +2102,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
     }
-                                                                 {if (true) return productionEndTerminal("MethodDeclarator","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("MethodDeclarator","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1989,14 +2134,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case SHORT:
     case IDENTIFIER:
       n = FormalParametersInternal(true);
-                                               replaceName("FormalParametersInternal",n);
+                                               replaceName("FormalParametersInternal", n);
+                                                                                             replaceName(n);
       break;
     default:
       jj_la1[89] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                                 {if (true) return productionEndTerminal("FormalParameters","{FormalParametersInternal}","{FormalParametersInternal}","Replacement",first,token);}
+                                                                                                                    {if (true) return productionEndTerminal("FormalParameters","{FormalParametersInternal}","{FormalParametersInternal}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2004,7 +2150,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = FormalParameter(true);
-                                 replaceName("FormalParameter",n);
+                                 replaceName("FormalParameter", n);
+                                                                      replaceName(n);
     label_27:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2017,9 +2164,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       }
       jj_consume_token(COMMA);
       n = FormalParameter(true);
-                                                                                                  replaceName("FormalParameter",n);
+                                                                                                                     replaceName("FormalParameter", n);
+                                                                                                                                                          replaceName(n);
     }
-                                                                                                                                        {if (true) return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","Replacement",first,token);}
+                                                                                                                                                                              {if (true) return productionEndTerminal("FormalParametersInternal","-","{FormalParameter}^-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2035,7 +2183,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     n = Type(true);
-                                 replaceName("Type",n);
+                                 replaceName("Type", n);
+                                                           replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 138:
       jj_consume_token(138);
@@ -2044,8 +2193,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_la1[92] = jj_gen;
       ;
     }
-    VariableDeclaratorId(true);
-                                                                                              {if (true) return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
+    n = VariableDeclaratorId(true);
+                                                                                                                   replaceName(n);
+                                                                                                                                     {if (true) return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2054,18 +2204,22 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LT:
-      TypeParameters(true);
+      n = TypeParameters(true);
+                                 replaceName(n);
       break;
     default:
       jj_la1[93] = jj_gen;
       ;
     }
-    JavaIdentifier(true);
-    FormalParameters(true);
+    n = JavaIdentifier(true);
+                                                                           replaceName(n);
+    n = FormalParameters(true);
+                                                                                                                      replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THROWS:
       jj_consume_token(THROWS);
-      NameList(true);
+      n = NameList(true);
+                                                                                                                                                                   replaceName(n);
       break;
     default:
       jj_la1[94] = jj_gen;
@@ -2073,7 +2227,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     jj_consume_token(LBRACE);
     if (jj_2_17(2147483647)) {
-      ExplicitConstructorInvocation(true);
+      n = ExplicitConstructorInvocation(true);
+                                                                                                                                                                                                                                                                            replaceName(n);
     } else {
       ;
     }
@@ -2138,10 +2293,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[95] = jj_gen;
         break label_28;
       }
-      BlockStatement(true);
+      n = BlockStatement(true);
+                                                                                                                                                                                                                                                                                                                       replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                                                                                                       {if (true) return productionEndTerminal("ConstructorDeclaration","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndTerminal("ConstructorDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2150,9 +2306,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_19(2147483647)) {
       jj_consume_token(THIS);
-      Arguments(true);
+      n = Arguments(true);
+                                                                    replaceName(n);
       jj_consume_token(SEMICOLON);
-                                                                      {if (true) return productionEndTerminal("ExplicitConstructorInvocation1","-","-","Replacement",first,token);}
+                                                                                          {if (true) return productionEndTerminal("ExplicitConstructorInvocation1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
@@ -2189,15 +2346,17 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case LPAREN:
       case IDENTIFIER:
         if (jj_2_18(2)) {
-          PrimaryExpression(true);
+          n = PrimaryExpression(true);
+                                                 replaceName(n);
           jj_consume_token(DOT);
         } else {
           ;
         }
         jj_consume_token(SUPER);
-        Arguments(true);
+        n = Arguments(true);
+                                                                                                  replaceName(n);
         jj_consume_token(SEMICOLON);
-                                                                                {if (true) return productionEndTerminal("ExplicitConstructorInvocation2","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("ExplicitConstructorInvocation2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[96] = jj_gen;
@@ -2219,8 +2378,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_la1[97] = jj_gen;
       ;
     }
-    Block(true);
-                                 {if (true) return productionEndTerminal("Initializer","-","-","Replacement",first,token);}
+    n = Block(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("Initializer","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2228,8 +2388,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_20(2)) {
-      ReferenceTypeP(true);
-                                           {if (true) return productionEndTerminal("Type1","-","{TOSTRING}","Replacement",first,token);}
+      n = ReferenceTypeP(true);
+                                             replaceName(n);
+                                                               {if (true) return productionEndTerminal("Type1","-","{TOSTRING}","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BOOLEAN:
@@ -2240,8 +2401,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case INT:
       case LONG:
       case SHORT:
-        PrimitiveType(true);
-                             {if (true) return productionEndTerminal("Type2","-","{TOSTRING}","Replacement",first,token);}
+        n = PrimitiveType(true);
+                               replaceName(n);
+                                                 {if (true) return productionEndTerminal("Type2","-","{TOSTRING}","Replacement",first,token);}
         break;
       default:
         jj_la1[98] = jj_gen;
@@ -2264,7 +2426,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case INT:
     case LONG:
     case SHORT:
-      PrimitiveType(true);
+      n = PrimitiveType(true);
+                               replaceName(n);
       label_29:
       while (true) {
         jj_consume_token(LBRACKET);
@@ -2275,7 +2438,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           break label_29;
         }
       }
-                                                      {if (true) return productionEndTerminal("ReferenceTypeP1","-","-","Replacement",first,token);}
+                                                                          {if (true) return productionEndTerminal("ReferenceTypeP1","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -2290,7 +2453,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _TOKEN_MGR_DECLS:
     case _EOF:
     case IDENTIFIER:
-      ClassOrInterfaceType(true);
+      n = ClassOrInterfaceType(true);
+                                      replaceName(n);
       label_30:
       while (true) {
         if (jj_2_22(2)) {
@@ -2301,7 +2465,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_consume_token(LBRACKET);
         jj_consume_token(RBRACKET);
       }
-                                                             {if (true) return productionEndTerminal("ReferenceTypeP2","-","-","Replacement",first,token);}
+                                                                                 {if (true) return productionEndTerminal("ReferenceTypeP2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[99] = jj_gen;
@@ -2314,9 +2478,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo ClassOrInterfaceType(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     if (jj_2_23(2)) {
-      TypeArguments(true);
+      n = TypeArguments(true);
+                                                                                      replaceName(n);
     } else {
       ;
     }
@@ -2327,9 +2493,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       } else {
         break label_31;
       }
-      ClassOrInterfaceTypeIntern(true);
+      n = ClassOrInterfaceTypeIntern(true);
+                                                                                                                                                          replaceName(n);
     }
-                                                                                                                  {if (true) return productionEndTerminal("ClassOrInterfaceType","-","-","Replacement",first,token);}
+                                                                                                                                                                              {if (true) return productionEndTerminal("ClassOrInterfaceType","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2337,13 +2504,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DOT);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                    replaceName(n);
     if (jj_2_25(2)) {
-      TypeArguments(true);
+      n = TypeArguments(true);
+                                                                                          replaceName(n);
     } else {
       ;
     }
-                                                                     {if (true) return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","Replacement",first,token);}
+                                                                                                             {if (true) return productionEndTerminal("ClassOrInterfaceTypeIntern","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2351,7 +2520,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LT);
-    TypeArgument(true);
+    n = TypeArgument(true);
+                                  replaceName(n);
     label_32:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2363,10 +2533,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_32;
       }
       jj_consume_token(COMMA);
-      TypeArgument(true);
+      n = TypeArgument(true);
+                                                                              replaceName(n);
     }
     jj_consume_token(GT);
-                                                              {if (true) return productionEndTerminal("TypeArguments","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("TypeArguments","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2395,21 +2566,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case LONG:
     case SHORT:
     case IDENTIFIER:
-      ReferenceTypeP(true);
-                              {if (true) return productionEndTerminal("TypeArgument1","-","-","Replacement",first,token);}
+      n = ReferenceTypeP(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("TypeArgument1","-","-","Replacement",first,token);}
       break;
     case HOOK:
       jj_consume_token(HOOK);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case EXTENDS:
       case SUPER:
-        WildcardBounds(true);
+        n = WildcardBounds(true);
+                                     replaceName(n);
         break;
       default:
         jj_la1[101] = jj_gen;
         ;
       }
-                                    {if (true) return productionEndTerminal("TypeArgument2","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("TypeArgument2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[102] = jj_gen;
@@ -2425,13 +2598,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXTENDS:
       jj_consume_token(EXTENDS);
-      ReferenceTypeP(true);
-                                        {if (true) return productionEndTerminal("WildcardBounds1","-","-","Replacement",first,token);}
+      n = ReferenceTypeP(true);
+                                          replaceName(n);
+                                                            {if (true) return productionEndTerminal("WildcardBounds1","-","-","Replacement",first,token);}
       break;
     case SUPER:
       jj_consume_token(SUPER);
-      ReferenceTypeP(true);
-                                      {if (true) return productionEndTerminal("WildcardBounds2","-","-","Replacement",first,token);}
+      n = ReferenceTypeP(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("WildcardBounds2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[103] = jj_gen;
@@ -2514,8 +2689,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case LONG:
     case SHORT:
     case IDENTIFIER:
-      Type(true);
-                    {if (true) return productionEndTerminal("ResultType","-","-","Replacement",first,token);}
+      n = Type(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("ResultType","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[105] = jj_gen;
@@ -2528,7 +2704,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo Name(boolean inTerminal) throws ParseException {
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     label_33:
     while (true) {
       if (jj_2_26(2)) {
@@ -2537,16 +2714,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_33;
       }
       jj_consume_token(DOT);
-      JavaIdentifier(true);
+      n = JavaIdentifier(true);
+                                                                                           replaceName(n);
     }
-                                                                       {if (true) return productionEndTerminal("Name","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("Name","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo NameList(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    Name(true);
+    n = Name(true);
+                      replaceName(n);
     label_34:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2558,31 +2737,36 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_34;
       }
       jj_consume_token(COMMA);
-      Name(true);
+      n = Name(true);
+                                                          replaceName(n);
     }
-                                      {if (true) return productionEndTerminal("NameList","-","-","Replacement",first,token);}
+                                                                              {if (true) return productionEndTerminal("NameList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo Expression(boolean inTerminal) throws ParseException {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ConditionalExpression(true);
+    n = ConditionalExpression(true);
+                                       replaceName(n);
     if (jj_2_27(2)) {
-      AssignExp(true);
+      n = AssignExp(true);
+                                                                                         replaceName(n);
     } else {
       ;
     }
-                                                                    {if (true) return productionEndTerminal("Expression","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("Expression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo AssignExp(boolean inTerminal) throws ParseException {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    AssignmentOperator(true);
-    Expression(true);
-                                                   {if (true) return productionEndTerminal("AssignExp","-","-","Replacement",first,token);}
+    n = AssignmentOperator(true);
+                                    replaceName(n);
+    n = Expression(true);
+                                                                         replaceName(n);
+                                                                                           {if (true) return productionEndTerminal("AssignExp","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2650,8 +2834,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_28(2147483647)) {
-      ConditionalExpressionFull(true);
-                                                                                  {if (true) return productionEndTerminal("ConditionalExpression1","-","-","Replacement",first,token);}
+      n = ConditionalExpressionFull(true);
+                                                                                    replaceName(n);
+                                                                                                      {if (true) return productionEndTerminal("ConditionalExpression1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
@@ -2693,8 +2878,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case PLUS:
       case MINUS:
       case IDENTIFIER:
-        ConditionalOrExpression(true);
-                                       {if (true) return productionEndTerminal("ConditionalExpression2","-","-","Replacement",first,token);}
+        n = ConditionalOrExpression(true);
+                                         replaceName(n);
+                                                           {if (true) return productionEndTerminal("ConditionalExpression2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[108] = jj_gen;
@@ -2708,19 +2894,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo ConditionalExpressionFull(boolean inTerminal) throws ParseException {
                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ConditionalOrExpression(true);
+    n = ConditionalOrExpression(true);
+                                         replaceName(n);
     jj_consume_token(HOOK);
-    Expression(true);
+    n = Expression(true);
+                                                                                  replaceName(n);
     jj_consume_token(COLON);
-    Expression(true);
-                                                                                 {if (true) return productionEndTerminal("ConditionalExpressionFull","-","-","Replacement",first,token);}
+    n = Expression(true);
+                                                                                                                           replaceName(n);
+                                                                                                                                             {if (true) return productionEndTerminal("ConditionalExpressionFull","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ConditionalOrExpression(boolean inTerminal) throws ParseException {
                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ConditionalAndExpression(true);
+    n = ConditionalAndExpression(true);
+                                          replaceName(n);
     label_35:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2732,16 +2922,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_35;
       }
       jj_consume_token(SC_OR);
-      ConditionalAndExpression(true);
+      n = ConditionalAndExpression(true);
+                                                                                                   replaceName(n);
     }
-                                                                               {if (true) return productionEndTerminal("ConditionalOrExpression","-","-","Replacement",first,token);}
+                                                                                                                       {if (true) return productionEndTerminal("ConditionalOrExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ConditionalAndExpression(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    InclusiveOrExpression(true);
+    n = InclusiveOrExpression(true);
+                                       replaceName(n);
     label_36:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2753,16 +2945,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_36;
       }
       jj_consume_token(SC_AND);
-      InclusiveOrExpression(true);
+      n = InclusiveOrExpression(true);
+                                                                                             replaceName(n);
     }
-                                                                         {if (true) return productionEndTerminal("ConditionalAndExpression","-","-","Replacement",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("ConditionalAndExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo InclusiveOrExpression(boolean inTerminal) throws ParseException {
                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ExclusiveOrExpression(true);
+    n = ExclusiveOrExpression(true);
+                                       replaceName(n);
     label_37:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2774,16 +2968,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_37;
       }
       jj_consume_token(BIT_OR);
-      ExclusiveOrExpression(true);
+      n = ExclusiveOrExpression(true);
+                                                                                            replaceName(n);
     }
-                                                                        {if (true) return productionEndTerminal("InclusiveOrExpression","-","-","Replacement",first,token);}
+                                                                                                                {if (true) return productionEndTerminal("InclusiveOrExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ExclusiveOrExpression(boolean inTerminal) throws ParseException {
                                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    AndExpression(true);
+    n = AndExpression(true);
+                               replaceName(n);
     label_38:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2795,16 +2991,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_38;
       }
       jj_consume_token(XOR);
-      AndExpression(true);
+      n = AndExpression(true);
+                                                                            replaceName(n);
     }
-                                                        {if (true) return productionEndTerminal("ExclusiveOrExpression","-","-","Replacement",first,token);}
+                                                                                                {if (true) return productionEndTerminal("ExclusiveOrExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo AndExpression(boolean inTerminal) throws ParseException {
                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    EqualityExpression(true);
+    n = EqualityExpression(true);
+                                    replaceName(n);
     label_39:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2816,16 +3014,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_39;
       }
       jj_consume_token(BIT_AND);
-      EqualityExpression(true);
+      n = EqualityExpression(true);
+                                                                                      replaceName(n);
     }
-                                                                  {if (true) return productionEndTerminal("AndExpression","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("AndExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo EqualityExpression(boolean inTerminal) throws ParseException {
                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    InstanceOfExpression(true);
+    n = InstanceOfExpression(true);
+                                      replaceName(n);
     label_40:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2837,18 +3037,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[114] = jj_gen;
         break label_40;
       }
-      EqualityExpressionIntern(true);
+      n = EqualityExpressionIntern(true);
+                                                                                          replaceName(n);
     }
-                                                                      {if (true) return productionEndTerminal("EqualityExpression","-","-","Replacement",first,token);}
+                                                                                                              {if (true) return productionEndTerminal("EqualityExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo EqualityExpressionIntern(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    EqualityOp(true);
-    InstanceOfExpression(true);
-                                                     {if (true) return productionEndTerminal("EqualityExpressionIntern","-","-","Replacement",first,token);}
+    n = EqualityOp(true);
+                            replaceName(n);
+    n = InstanceOfExpression(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("EqualityExpressionIntern","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2875,24 +3078,27 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo InstanceOfExpression(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    RelationalExpression(true);
+    n = RelationalExpression(true);
+                                      replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INSTANCEOF:
       jj_consume_token(INSTANCEOF);
-      Type(true);
+      n = Type(true);
+                                                                                   replaceName(n);
       break;
     default:
       jj_la1[116] = jj_gen;
       ;
     }
-                                                              {if (true) return productionEndTerminal("InstanceOfExpression","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("InstanceOfExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo RelationalExpression(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ShiftExpression(true);
+    n = ShiftExpression(true);
+                                 replaceName(n);
     label_41:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2906,18 +3112,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[117] = jj_gen;
         break label_41;
       }
-      RelationalExpressionIntern(true);
+      n = RelationalExpressionIntern(true);
+                                                                                       replaceName(n);
     }
-                                                                   {if (true) return productionEndTerminal("RelationalExpression","-","-","Replacement",first,token);}
+                                                                                                           {if (true) return productionEndTerminal("RelationalExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo RelationalExpressionIntern(boolean inTerminal) throws ParseException {
                                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    RelationalOp(true);
-    ShiftExpression(true);
-                                                  {if (true) return productionEndTerminal("RelationalExpressionIntern","-","-","Replacement",first,token);}
+    n = RelationalOp(true);
+                              replaceName(n);
+    n = ShiftExpression(true);
+                                                                        replaceName(n);
+                                                                                          {if (true) return productionEndTerminal("RelationalExpressionIntern","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2952,7 +3161,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo ShiftExpression(boolean inTerminal) throws ParseException {
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    AdditiveExpression(true);
+    n = AdditiveExpression(true);
+                                    replaceName(n);
     label_42:
     while (true) {
       if (jj_2_29(2)) {
@@ -2960,18 +3170,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       } else {
         break label_42;
       }
-      ShiftExpressionRight(true);
+      n = ShiftExpressionRight(true);
+                                                                                                 replaceName(n);
     }
-                                                                             {if (true) return productionEndTerminal("ShiftExpression","-","-","Replacement",first,token);}
+                                                                                                                     {if (true) return productionEndTerminal("ShiftExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ShiftExpressionRight(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    ShiftOp(true);
-    AdditiveExpression(true);
-                                                {if (true) return productionEndTerminal("ShiftExpressionRight","-","-","Replacement",first,token);}
+    n = ShiftOp(true);
+                         replaceName(n);
+    n = AdditiveExpression(true);
+                                                                      replaceName(n);
+                                                                                        {if (true) return productionEndTerminal("ShiftExpressionRight","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3005,7 +3218,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo AdditiveExpression(boolean inTerminal) throws ParseException {
                                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    MultiplicativeExpression(true);
+    n = MultiplicativeExpression(true);
+                                          replaceName(n);
     label_43:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3017,18 +3231,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[120] = jj_gen;
         break label_43;
       }
-      AdditiveExpressionIntern(true);
+      n = AdditiveExpressionIntern(true);
+                                                                                              replaceName(n);
     }
-                                                                          {if (true) return productionEndTerminal("AdditiveExpression","-","-","Replacement",first,token);}
+                                                                                                                  {if (true) return productionEndTerminal("AdditiveExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo AdditiveExpressionIntern(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    AdditiveOp(true);
-    MultiplicativeExpression(true);
-                                                         {if (true) return productionEndTerminal("AdditiveExpressionIntern","-","-","Replacement",first,token);}
+    n = AdditiveOp(true);
+                            replaceName(n);
+    n = MultiplicativeExpression(true);
+                                                                               replaceName(n);
+                                                                                                 {if (true) return productionEndTerminal("AdditiveExpressionIntern","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3055,7 +3272,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo MultiplicativeExpression(boolean inTerminal) throws ParseException {
                                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    UnaryExpression(true);
+    n = UnaryExpression(true);
+                                 replaceName(n);
     label_44:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3068,18 +3286,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[122] = jj_gen;
         break label_44;
       }
-      MultiplicativeExpressionIntern(true);
+      n = MultiplicativeExpressionIntern(true);
+                                                                                           replaceName(n);
     }
-                                                                       {if (true) return productionEndTerminal("MultiplicativeExpression","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("MultiplicativeExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo MultiplicativeExpressionIntern(boolean inTerminal) throws ParseException {
                                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    MultiplicativeOp(true);
-    UnaryExpression(true);
-                                                      {if (true) return productionEndTerminal("MultiplicativeExpressionIntern","-","-","Replacement",first,token);}
+    n = MultiplicativeOp(true);
+                                  replaceName(n);
+    n = UnaryExpression(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("MultiplicativeExpressionIntern","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3113,17 +3334,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
     case MINUS:
-      AdditiveOp(true);
-      UnaryExpression(true);
-                                                {if (true) return productionEndTerminal("UnaryExpression1","-","-","Replacement",first,token);}
+      n = AdditiveOp(true);
+                            replaceName(n);
+      n = UnaryExpression(true);
+                                                                      replaceName(n);
+                                                                                        {if (true) return productionEndTerminal("UnaryExpression1","-","-","Replacement",first,token);}
       break;
     case INCR:
-      PreIncrementExpression(true);
-                                      {if (true) return productionEndTerminal("UnaryExpression2","-","-","Replacement",first,token);}
+      n = PreIncrementExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("UnaryExpression2","-","-","Replacement",first,token);}
       break;
     case DECR:
-      PreDecrementExpression(true);
-                                      {if (true) return productionEndTerminal("UnaryExpression3","-","-","Replacement",first,token);}
+      n = PreDecrementExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("UnaryExpression3","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -3160,8 +3385,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case BANG:
     case TILDE:
     case IDENTIFIER:
-      UnaryExpressionNotPlusMinus(true);
-                                           {if (true) return productionEndTerminal("UnaryExpression4","-","-","Replacement",first,token);}
+      n = UnaryExpressionNotPlusMinus(true);
+                                             replaceName(n);
+                                                               {if (true) return productionEndTerminal("UnaryExpression4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[124] = jj_gen;
@@ -3175,8 +3401,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INCR);
-    PrimaryExpression(true);
-                                      {if (true) return productionEndTerminal("PreIncrementExpression","-","-","Replacement",first,token);}
+    n = PrimaryExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("PreIncrementExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3184,8 +3411,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DECR);
-    PrimaryExpression(true);
-                                      {if (true) return productionEndTerminal("PreDecrementExpression","-","-","Replacement",first,token);}
+    n = PrimaryExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("PreDecrementExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3195,15 +3423,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BANG:
     case TILDE:
-      UnaryOp(true);
-      UnaryExpression(true);
-                                             {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","Replacement",first,token);}
+      n = UnaryOp(true);
+                         replaceName(n);
+      n = UnaryExpression(true);
+                                                                   replaceName(n);
+                                                                                     {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus1","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[125] = jj_gen;
       if (jj_2_32(2147483647)) {
-        CastExpression(true);
-                                                         {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","Replacement",first,token);}
+        n = CastExpression(true);
+                                                           replaceName(n);
+                                                                             {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus2","-","-","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case _OPTIONS:
@@ -3239,8 +3470,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case STRING_LITERAL:
         case LPAREN:
         case IDENTIFIER:
-          PostfixExpression(true);
-                                 {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","Replacement",first,token);}
+          n = PostfixExpression(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("UnaryExpressionNotPlusMinus3","-","-","Replacement",first,token);}
           break;
         default:
           jj_la1[126] = jj_gen;
@@ -3277,22 +3509,26 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_33(2)) {
       jj_consume_token(LPAREN);
-      PrimitiveType(true);
-                                              {if (true) return productionEndTerminal("CastLookahead1","-","-","Replacement",first,token);}
+      n = PrimitiveType(true);
+                                                replaceName(n);
+                                                                  {if (true) return productionEndTerminal("CastLookahead1","-","-","Replacement",first,token);}
     } else if (jj_2_34(2147483647)) {
       jj_consume_token(LPAREN);
-      Type(true);
+      n = Type(true);
+                                                    replaceName(n);
       jj_consume_token(LBRACKET);
       jj_consume_token(RBRACKET);
-                                                          {if (true) return productionEndTerminal("CastLookahead2","-","-","Replacement",first,token);}
+                                                                              {if (true) return productionEndTerminal("CastLookahead2","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
         jj_consume_token(LPAREN);
-        Type(true);
+        n = Type(true);
+                          replaceName(n);
         jj_consume_token(RPAREN);
-        CastLAOp(true);
-                                           {if (true) return productionEndTerminal("CastLookahead3","-","-","Replacement",first,token);}
+        n = CastLAOp(true);
+                                                                 replaceName(n);
+                                                                                   {if (true) return productionEndTerminal("CastLookahead3","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[128] = jj_gen;
@@ -3344,8 +3580,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _TOKEN_MGR_DECLS:
     case _EOF:
     case IDENTIFIER:
-      JavaIdentifier(true);
-                              {if (true) return productionEndTerminal("CastLAOp7","-","-","Replacement",first,token);}
+      n = JavaIdentifier(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("CastLAOp7","-","-","Replacement",first,token);}
       break;
     case FALSE:
     case NULL:
@@ -3354,8 +3591,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case FLOATING_POINT_LITERAL:
     case CHARACTER_LITERAL:
     case STRING_LITERAL:
-      Literal(true);
-                       {if (true) return productionEndTerminal("CastLAOp8","-","-","Replacement",first,token);}
+      n = Literal(true);
+                         replaceName(n);
+                                           {if (true) return productionEndTerminal("CastLAOp8","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[129] = jj_gen;
@@ -3368,17 +3606,19 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo PostfixExpression(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    PrimaryExpression(true);
+    n = PrimaryExpression(true);
+                                   replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
     case DECR:
-      PostfixOp(true);
+      n = PostfixOp(true);
+                                                                        replaceName(n);
       break;
     default:
       jj_la1[130] = jj_gen;
       ;
     }
-                                                   {if (true) return productionEndTerminal("PostfixExpression","-","-","Replacement",first,token);}
+                                                                                           {if (true) return productionEndTerminal("PostfixExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3407,18 +3647,22 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_35(2147483647)) {
       jj_consume_token(LPAREN);
-      Type(true);
+      n = Type(true);
+                                                         replaceName(n);
       jj_consume_token(RPAREN);
-      UnaryExpression(true);
-                                                                                 {if (true) return productionEndTerminal("CastExpression1","-","-","Replacement",first,token);}
+      n = UnaryExpression(true);
+                                                                                                       replaceName(n);
+                                                                                                                         {if (true) return productionEndTerminal("CastExpression1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
         jj_consume_token(LPAREN);
-        Type(true);
+        n = Type(true);
+                          replaceName(n);
         jj_consume_token(RPAREN);
-        UnaryExpressionNotPlusMinus(true);
-                                                              {if (true) return productionEndTerminal("CastExpression2","-","-","Replacement",first,token);}
+        n = UnaryExpressionNotPlusMinus(true);
+                                                                                    replaceName(n);
+                                                                                                      {if (true) return productionEndTerminal("CastExpression2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[132] = jj_gen;
@@ -3432,7 +3676,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo PrimaryExpression(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    PrimaryPrefix(true);
+    n = PrimaryPrefix(true);
+                               replaceName(n);
     label_45:
     while (true) {
       if (jj_2_36(2)) {
@@ -3440,9 +3685,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       } else {
         break label_45;
       }
-      PrimarySuffix(true);
+      n = PrimarySuffix(true);
+                                                                                     replaceName(n);
     }
-                                                                 {if (true) return productionEndTerminal("PrimaryExpression","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("PrimaryExpression","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3450,9 +3696,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DOT);
-    TypeArguments(true);
-    JavaIdentifier(true);
-                                                      {if (true) return productionEndTerminal("MemberSelector","-","-","Replacement",first,token);}
+    n = TypeArguments(true);
+                                   replaceName(n);
+    n = JavaIdentifier(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("MemberSelector","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3467,8 +3715,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case FLOATING_POINT_LITERAL:
     case CHARACTER_LITERAL:
     case STRING_LITERAL:
-      Literal(true);
-                       {if (true) return productionEndTerminal("PrimaryPrefix1","-","-","Replacement",first,token);}
+      n = Literal(true);
+                         replaceName(n);
+                                           {if (true) return productionEndTerminal("PrimaryPrefix1","-","-","Replacement",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
@@ -3477,26 +3726,30 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case SUPER:
       jj_consume_token(SUPER);
       jj_consume_token(DOT);
-      JavaIdentifier(true);
-                                          {if (true) return productionEndTerminal("PrimaryPrefix3","-","-","Replacement",first,token);}
+      n = JavaIdentifier(true);
+                                            replaceName(n);
+                                                              {if (true) return productionEndTerminal("PrimaryPrefix3","-","-","Replacement",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
-      Expression(true);
+      n = Expression(true);
+                                replaceName(n);
       jj_consume_token(RPAREN);
-                                  {if (true) return productionEndTerminal("PrimaryPrefix4","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("PrimaryPrefix4","-","-","Replacement",first,token);}
       break;
     case NEW:
-      AllocationExpression(true);
-                                    {if (true) return productionEndTerminal("PrimaryPrefix5","-","-","Replacement",first,token);}
+      n = AllocationExpression(true);
+                                      replaceName(n);
+                                                        {if (true) return productionEndTerminal("PrimaryPrefix5","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[133] = jj_gen;
       if (jj_2_37(2147483647)) {
-        ResultType(true);
+        n = ResultType(true);
+                                                                 replaceName(n);
         jj_consume_token(DOT);
         jj_consume_token(CLASS);
-                                                                           {if (true) return productionEndTerminal("PrimaryPrefix6","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("PrimaryPrefix6","-","-","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case _OPTIONS:
@@ -3512,8 +3765,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case _TOKEN_MGR_DECLS:
         case _EOF:
         case IDENTIFIER:
-          Name(true);
-                    {if (true) return productionEndTerminal("PrimaryPrefix7","-","-","Replacement",first,token);}
+          n = Name(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("PrimaryPrefix7","-","-","Replacement",first,token);}
           break;
         default:
           jj_la1[134] = jj_gen;
@@ -3534,27 +3788,32 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                   {if (true) return productionEndTerminal("PrimarySuffix1","-","-","Replacement",first,token);}
     } else if (jj_2_39(2)) {
       jj_consume_token(DOT);
-      AllocationExpression(true);
-                                                     {if (true) return productionEndTerminal("PrimarySuffix2","-","-","Replacement",first,token);}
+      n = AllocationExpression(true);
+                                                       replaceName(n);
+                                                                         {if (true) return productionEndTerminal("PrimarySuffix2","-","-","Replacement",first,token);}
     } else if (jj_2_40(3)) {
-      MemberSelector(true);
-                                           {if (true) return productionEndTerminal("PrimarySuffix3","-","-","Replacement",first,token);}
+      n = MemberSelector(true);
+                                             replaceName(n);
+                                                               {if (true) return productionEndTerminal("PrimarySuffix3","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACKET:
         jj_consume_token(LBRACKET);
-        Expression(true);
+        n = Expression(true);
+                                replaceName(n);
         jj_consume_token(RBRACKET);
-                                  {if (true) return productionEndTerminal("PrimarySuffix4","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("PrimarySuffix4","-","-","Replacement",first,token);}
         break;
       case DOT:
         jj_consume_token(DOT);
-        JavaIdentifier(true);
-                                  {if (true) return productionEndTerminal("PrimarySuffix5","-","-","Replacement",first,token);}
+        n = JavaIdentifier(true);
+                                    replaceName(n);
+                                                      {if (true) return productionEndTerminal("PrimarySuffix5","-","-","Replacement",first,token);}
         break;
       case LPAREN:
-        Arguments(true);
-                         {if (true) return productionEndTerminal("PrimarySuffix6","-","-","Replacement",first,token);}
+        n = Arguments(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("PrimarySuffix6","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[135] = jj_gen;
@@ -3587,12 +3846,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       break;
     case FALSE:
     case TRUE:
-      BooleanLiteral(true);
-                              {if (true) return productionEndTerminal("Literal5","-","-","Replacement",first,token);}
+      n = BooleanLiteral(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Literal5","-","-","Replacement",first,token);}
       break;
     case NULL:
-      NullLiteral(true);
-                           {if (true) return productionEndTerminal("Literal6","-","-","Replacement",first,token);}
+      n = NullLiteral(true);
+                             replaceName(n);
+                                               {if (true) return productionEndTerminal("Literal6","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[136] = jj_gen;
@@ -3674,21 +3935,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PLUS:
     case MINUS:
     case IDENTIFIER:
-      ArgumentList(true);
+      n = ArgumentList(true);
+                                   replaceName(n);
       break;
     default:
       jj_la1[138] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
-                                      {if (true) return productionEndTerminal("Arguments","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("Arguments","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ArgumentList(boolean inTerminal) throws ParseException {
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    Expression(true);
+    n = Expression(true);
+                            replaceName(n);
     label_46:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -3700,9 +3963,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_46;
       }
       jj_consume_token(COMMA);
-      Expression(true);
+      n = Expression(true);
+                                                                      replaceName(n);
     }
-                                                  {if (true) return productionEndTerminal("ArgumentList","-","-","Replacement",first,token);}
+                                                                                          {if (true) return productionEndTerminal("ArgumentList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3711,24 +3975,29 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_41(2)) {
       jj_consume_token(NEW);
-      PrimitiveType(true);
-      ArrayDimsAndInits(true);
-                                                                        {if (true) return productionEndTerminal("AllocationExpression1","-","-","Replacement",first,token);}
+      n = PrimitiveType(true);
+                                                  replaceName(n);
+      n = ArrayDimsAndInits(true);
+                                                                                              replaceName(n);
+                                                                                                                {if (true) return productionEndTerminal("AllocationExpression1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NEW:
         jj_consume_token(NEW);
-        ClassOrInterfaceType(true);
+        n = ClassOrInterfaceType(true);
+                                            replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LT:
-          TypeArguments(true);
+          n = TypeArguments(true);
+                                                                                     replaceName(n);
           break;
         default:
           jj_la1[140] = jj_gen;
           ;
         }
-        AllocationExpressionInit(true);
-                                                                                               {if (true) return productionEndTerminal("AllocationExpression2","-","-","Replacement",first,token);}
+        n = AllocationExpressionInit(true);
+                                                                                                                                         replaceName(n);
+                                                                                                                                                           {if (true) return productionEndTerminal("AllocationExpression2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[141] = jj_gen;
@@ -3744,20 +4013,23 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
-      ArrayDimsAndInits(true);
-                                 {if (true) return productionEndTerminal("AllocationExpressionInit1","-","-","Replacement",first,token);}
+      n = ArrayDimsAndInits(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("AllocationExpressionInit1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
-      Arguments(true);
+      n = Arguments(true);
+                           replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACE:
-        ClassOrInterfaceBody(true);
+        n = ClassOrInterfaceBody(true);
+                                                                           replaceName(n);
         break;
       default:
         jj_la1[142] = jj_gen;
         ;
       }
-                                                      {if (true) return productionEndTerminal("AllocationExpressionInit2","-","-","Replacement",first,token);}
+                                                                                              {if (true) return productionEndTerminal("AllocationExpressionInit2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[143] = jj_gen;
@@ -3772,7 +4044,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_44(2)) {
       jj_consume_token(LBRACKET);
-      Expression(true);
+      n = Expression(true);
+                                             replaceName(n);
       jj_consume_token(RBRACKET);
       label_47:
       while (true) {
@@ -3782,7 +4055,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           break label_47;
         }
         jj_consume_token(LBRACKET);
-        Expression(true);
+        n = Expression(true);
+                                                                                                        replaceName(n);
         jj_consume_token(RBRACKET);
       }
       label_48:
@@ -3795,7 +4069,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_consume_token(LBRACKET);
         jj_consume_token(RBRACKET);
       }
-                                                                                                                 {if (true) return productionEndTerminal("ArrayDimsAndInits1","-","-","Replacement",first,token);}
+                                                                                                                                                         {if (true) return productionEndTerminal("ArrayDimsAndInits1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACKET:
@@ -3812,8 +4086,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
             break label_49;
           }
         }
-        ArrayInitializer(true);
-                                            {if (true) return productionEndTerminal("ArrayDimsAndInits2","-","-","Replacement",first,token);}
+        n = ArrayInitializer(true);
+                                              replaceName(n);
+                                                                {if (true) return productionEndTerminal("ArrayDimsAndInits2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[145] = jj_gen;
@@ -3828,21 +4103,25 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_45(2)) {
-      LabeledStatement(true);
-                                             {if (true) return productionEndTerminal("Statement1","-","-","Replacement",first,token);}
+      n = LabeledStatement(true);
+                                               replaceName(n);
+                                                                 {if (true) return productionEndTerminal("Statement1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASSERT:
-        AssertStatement(true);
-                               {if (true) return productionEndTerminal("Statement2","-","-","Replacement",first,token);}
+        n = AssertStatement(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("Statement2","-","-","Replacement",first,token);}
         break;
       case LBRACE:
-        Block(true);
-                     {if (true) return productionEndTerminal("Statement3","-","-","Replacement",first,token);}
+        n = Block(true);
+                       replaceName(n);
+                                         {if (true) return productionEndTerminal("Statement3","-","-","Replacement",first,token);}
         break;
       case SEMICOLON:
-        EmptyStatement(true);
-                              {if (true) return productionEndTerminal("Statement4","-","-","Replacement",first,token);}
+        n = EmptyStatement(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Statement4","-","-","Replacement",first,token);}
         break;
       case _OPTIONS:
       case _LOOKAHEAD:
@@ -3879,53 +4158,65 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case INCR:
       case DECR:
       case IDENTIFIER:
-        StatementExpression(true);
+        n = StatementExpression(true);
+                                     replaceName(n);
         jj_consume_token(SEMICOLON);
-                                       {if (true) return productionEndTerminal("Statement5","-","-","Replacement",first,token);}
+                                                           {if (true) return productionEndTerminal("Statement5","-","-","Replacement",first,token);}
         break;
       case SWITCH:
-        SwitchStatement(true);
-                               {if (true) return productionEndTerminal("Statement6","-","-","Replacement",first,token);}
+        n = SwitchStatement(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("Statement6","-","-","Replacement",first,token);}
         break;
       case IF:
-        IfStatement(true);
-                           {if (true) return productionEndTerminal("Statement7","-","-","Replacement",first,token);}
+        n = IfStatement(true);
+                             replaceName(n);
+                                               {if (true) return productionEndTerminal("Statement7","-","-","Replacement",first,token);}
         break;
       case WHILE:
-        WhileStatement(true);
-                              {if (true) return productionEndTerminal("Statement8","-","-","Replacement",first,token);}
+        n = WhileStatement(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Statement8","-","-","Replacement",first,token);}
         break;
       case DO:
-        DoStatement(true);
-                           {if (true) return productionEndTerminal("Statement9","-","-","Replacement",first,token);}
+        n = DoStatement(true);
+                             replaceName(n);
+                                               {if (true) return productionEndTerminal("Statement9","-","-","Replacement",first,token);}
         break;
       case FOR:
-        ForStatement(true);
-                            {if (true) return productionEndTerminal("Statement10","-","-","Replacement",first,token);}
+        n = ForStatement(true);
+                              replaceName(n);
+                                                {if (true) return productionEndTerminal("Statement10","-","-","Replacement",first,token);}
         break;
       case BREAK:
-        BreakStatement(true);
-                              {if (true) return productionEndTerminal("Statement11","-","-","Replacement",first,token);}
+        n = BreakStatement(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Statement11","-","-","Replacement",first,token);}
         break;
       case CONTINUE:
-        ContinueStatement(true);
-                                 {if (true) return productionEndTerminal("Statement12","-","-","Replacement",first,token);}
+        n = ContinueStatement(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("Statement12","-","-","Replacement",first,token);}
         break;
       case RETURN:
-        ReturnStatement(true);
-                               {if (true) return productionEndTerminal("Statement13","-","-","Replacement",first,token);}
+        n = ReturnStatement(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("Statement13","-","-","Replacement",first,token);}
         break;
       case THROW:
-        ThrowStatement(true);
-                              {if (true) return productionEndTerminal("Statement14","-","-","Replacement",first,token);}
+        n = ThrowStatement(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Statement14","-","-","Replacement",first,token);}
         break;
       case SYNCHRONIZED:
-        SynchronizedStatement(true);
-                                     {if (true) return productionEndTerminal("Statement15","-","-","Replacement",first,token);}
+        n = SynchronizedStatement(true);
+                                       replaceName(n);
+                                                         {if (true) return productionEndTerminal("Statement15","-","-","Replacement",first,token);}
         break;
       case TRY:
-        TryStatement(true);
-                            {if (true) return productionEndTerminal("Statement16","-","-","Replacement",first,token);}
+        n = TryStatement(true);
+                              replaceName(n);
+                                                {if (true) return productionEndTerminal("Statement16","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[146] = jj_gen;
@@ -3940,28 +4231,32 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ASSERT);
-    Expression(true);
+    n = Expression(true);
+                                     replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COLON:
       jj_consume_token(COLON);
-      Expression(true);
+      n = Expression(true);
+                                                                               replaceName(n);
       break;
     default:
       jj_la1[147] = jj_gen;
       ;
     }
     jj_consume_token(SEMICOLON);
-                                                              {if (true) return productionEndTerminal("AssertStatement","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("AssertStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo LabeledStatement(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     jj_consume_token(COLON);
-    Statement(true);
-                                                  {if (true) return productionEndTerminal("LabeledStatement","-","-","Replacement",first,token);}
+    n = Statement(true);
+                                                                        replaceName(n);
+                                                                                          {if (true) return productionEndTerminal("LabeledStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4030,10 +4325,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[148] = jj_gen;
         break label_50;
       }
-      BlockStatement(true);
+      n = BlockStatement(true);
+                                     replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                         {if (true) return productionEndTerminal("Block","-","-","JavaMethodOverriding",first,token);}
+                                                             {if (true) return productionEndTerminal("Block","-","-","JavaMethodOverriding",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4041,9 +4337,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_46(2147483647)) {
-      LocalVariableDeclaration(true);
+      n = LocalVariableDeclaration(true);
+                                                                                         replaceName(n);
       jj_consume_token(SEMICOLON);
-                                                                                           {if (true) return productionEndTerminal("BlockStatement1","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("BlockStatement1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
@@ -4095,13 +4392,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case INCR:
       case DECR:
       case IDENTIFIER:
-        Statement(true);
-                         {if (true) return productionEndTerminal("BlockStatement2","-","-","Replacement",first,token);}
+        n = Statement(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("BlockStatement2","-","-","Replacement",first,token);}
         break;
       case CLASS:
       case INTERFACE:
-        ClassOrInterfaceDeclaration(true);
-                                           {if (true) return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
+        n = ClassOrInterfaceDeclaration(true);
+                                             replaceName(n);
+                                                               {if (true) return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[149] = jj_gen;
@@ -4123,8 +4422,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       jj_la1[150] = jj_gen;
       ;
     }
-    Type(true);
-    VariableDeclarator(true);
+    n = Type(true);
+                                 replaceName(n);
+    n = VariableDeclarator(true);
+                                                                              replaceName(n);
     label_51:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4136,9 +4437,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_51;
       }
       jj_consume_token(COMMA);
-      VariableDeclarator(true);
+      n = VariableDeclarator(true);
+                                                                                                                                replaceName(n);
     }
-                                                                                        {if (true) return productionEndTerminal("LocalVariableDeclaration","-","-","Replacement",first,token);}
+                                                                                                                                                    {if (true) return productionEndTerminal("LocalVariableDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4155,12 +4457,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case INCR:
-      PreIncrementExpression(true);
-                                      {if (true) return productionEndTerminal("StatementExpression1","-","-","Replacement",first,token);}
+      n = PreIncrementExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("StatementExpression1","-","-","Replacement",first,token);}
       break;
     case DECR:
-      PreDecrementExpression(true);
-                                      {if (true) return productionEndTerminal("StatementExpression2","-","-","Replacement",first,token);}
+      n = PreDecrementExpression(true);
+                                        replaceName(n);
+                                                          {if (true) return productionEndTerminal("StatementExpression2","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -4195,7 +4499,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case STRING_LITERAL:
     case LPAREN:
     case IDENTIFIER:
-      PrimaryExpression(true);
+      n = PrimaryExpression(true);
+                                   replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASSIGN:
       case INCR:
@@ -4211,13 +4516,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case 139:
       case 140:
       case 141:
-        StatementExpressionAssignment(true);
+        n = StatementExpressionAssignment(true);
+                                                                                            replaceName(n);
         break;
       default:
         jj_la1[152] = jj_gen;
         ;
       }
-                                                                       {if (true) return productionEndTerminal("StatementExpression3","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("StatementExpression3","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[153] = jj_gen;
@@ -4251,9 +4557,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case 139:
     case 140:
     case 141:
-      AssignmentOperator(true);
-      Expression(true);
-                                                   {if (true) return productionEndTerminal("StatementExpressionAssignment3","-","-","Replacement",first,token);}
+      n = AssignmentOperator(true);
+                                    replaceName(n);
+      n = Expression(true);
+                                                                         replaceName(n);
+                                                                                           {if (true) return productionEndTerminal("StatementExpressionAssignment3","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[154] = jj_gen;
@@ -4268,7 +4576,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SWITCH);
     jj_consume_token(LPAREN);
-    Expression(true);
+    n = Expression(true);
+                                         replaceName(n);
     jj_consume_token(RPAREN);
     jj_consume_token(LBRACE);
     label_52:
@@ -4282,17 +4591,19 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[155] = jj_gen;
         break label_52;
       }
-      SwitchStatementLabel(true);
+      n = SwitchStatementLabel(true);
+                                                                                                 replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                 {if (true) return productionEndTerminal("SwitchStatement","-","-","Replacement",first,token);}
+                                                                                                                         {if (true) return productionEndTerminal("SwitchStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo SwitchStatementLabel(boolean inTerminal) throws ParseException {
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    SwitchLabel(true);
+    n = SwitchLabel(true);
+                             replaceName(n);
     label_53:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4354,9 +4665,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[156] = jj_gen;
         break label_53;
       }
-      BlockStatement(true);
+      n = BlockStatement(true);
+                                                                       replaceName(n);
     }
-                                                   {if (true) return productionEndTerminal("SwitchStatementLabel","-","-","Replacement",first,token);}
+                                                                                           {if (true) return productionEndTerminal("SwitchStatementLabel","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4366,9 +4678,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case CASE:
       jj_consume_token(CASE);
-      Expression(true);
+      n = Expression(true);
+                                   replaceName(n);
       jj_consume_token(COLON);
-                                     {if (true) return productionEndTerminal("SwitchLabel1","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("SwitchLabel1","-","-","Replacement",first,token);}
       break;
     case _DEFAULT:
       jj_consume_token(_DEFAULT);
@@ -4388,19 +4701,22 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IF);
     jj_consume_token(LPAREN);
-    Expression(true);
+    n = Expression(true);
+                                     replaceName(n);
     jj_consume_token(RPAREN);
-    Statement(true);
+    n = Statement(true);
+                                                                             replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ELSE:
       jj_consume_token(ELSE);
-      Statement(true);
+      n = Statement(true);
+                                                                                                                                      replaceName(n);
       break;
     default:
       jj_la1[158] = jj_gen;
       ;
     }
-                                                                                             {if (true) return productionEndTerminal("IfStatement","-","-","Replacement",first,token);}
+                                                                                                                                                         {if (true) return productionEndTerminal("IfStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4409,10 +4725,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(WHILE);
     jj_consume_token(LPAREN);
-    Expression(true);
+    n = Expression(true);
+                                        replaceName(n);
     jj_consume_token(RPAREN);
-    Statement(true);
-                                                          {if (true) return productionEndTerminal("WhileStatement","-","-","Replacement",first,token);}
+    n = Statement(true);
+                                                                                replaceName(n);
+                                                                                                  {if (true) return productionEndTerminal("WhileStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4420,13 +4738,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DO);
-    Statement(true);
+    n = Statement(true);
+                                replaceName(n);
     jj_consume_token(WHILE);
     jj_consume_token(LPAREN);
-    Expression(true);
+    n = Expression(true);
+                                                                                 replaceName(n);
     jj_consume_token(RPAREN);
     jj_consume_token(SEMICOLON);
-                                                                   {if (true) return productionEndTerminal("DoStatement","-","-","Replacement",first,token);}
+                                                                                                           {if (true) return productionEndTerminal("DoStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4435,10 +4755,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(FOR);
     jj_consume_token(LPAREN);
-    ForStatementInternal(true);
+    n = ForStatementInternal(true);
+                                                replaceName(n);
     jj_consume_token(RPAREN);
-    Statement(true);
-                                                                  {if (true) return productionEndTerminal("ForStatement","-","-","Replacement",first,token);}
+    n = Statement(true);
+                                                                                        replaceName(n);
+                                                                                                          {if (true) return productionEndTerminal("ForStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4446,11 +4768,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_47(2147483647)) {
-      Type(true);
-      JavaIdentifier(true);
+      n = Type(true);
+                                                             replaceName(n);
+      n = JavaIdentifier(true);
+                                                                                                      replaceName(n);
       jj_consume_token(COLON);
-      Expression(true);
-                                                                                                     {if (true) return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
+      n = Expression(true);
+                                                                                                                                               replaceName(n);
+                                                                                                                                                                 {if (true) return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
@@ -4527,7 +4852,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case INCR:
         case DECR:
         case IDENTIFIER:
-          ForInit(true);
+          n = ForInit(true);
+                          replaceName(n);
           break;
         default:
           jj_la1[159] = jj_gen;
@@ -4574,7 +4900,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case PLUS:
         case MINUS:
         case IDENTIFIER:
-          Expression(true);
+          n = Expression(true);
+                                                                     replaceName(n);
           break;
         default:
           jj_la1[160] = jj_gen;
@@ -4617,13 +4944,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         case INCR:
         case DECR:
         case IDENTIFIER:
-          ForUpdate(true);
+          n = ForUpdate(true);
+                                                                                                               replaceName(n);
           break;
         default:
           jj_la1[161] = jj_gen;
           ;
         }
-                                                                      {if (true) return productionEndTerminal("ForStatementInternal2","-","-","Replacement",first,token);}
+                                                                                                                                  {if (true) return productionEndTerminal("ForStatementInternal2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[162] = jj_gen;
@@ -4638,8 +4966,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_48(2147483647)) {
-      LocalVariableDeclaration(true);
-                                                                                       {if (true) return productionEndTerminal("ForInit1","-","-","Replacement",first,token);}
+      n = LocalVariableDeclaration(true);
+                                                                                         replaceName(n);
+                                                                                                           {if (true) return productionEndTerminal("ForInit1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _OPTIONS:
@@ -4677,8 +5006,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case INCR:
       case DECR:
       case IDENTIFIER:
-        StatementExpressionList(true);
-                                       {if (true) return productionEndTerminal("ForInit2","-","-","Replacement",first,token);}
+        n = StatementExpressionList(true);
+                                         replaceName(n);
+                                                           {if (true) return productionEndTerminal("ForInit2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[163] = jj_gen;
@@ -4692,7 +5022,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final public FSTInfo StatementExpressionList(boolean inTerminal) throws ParseException {
                                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    StatementExpression(true);
+    n = StatementExpression(true);
+                                     replaceName(n);
     label_54:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4704,17 +5035,19 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_54;
       }
       jj_consume_token(COMMA);
-      StatementExpression(true);
+      n = StatementExpression(true);
+                                                                                        replaceName(n);
     }
-                                                                    {if (true) return productionEndTerminal("StatementExpressionList","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("StatementExpressionList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo ForUpdate(boolean inTerminal) throws ParseException {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    StatementExpressionList(true);
-                                       {if (true) return productionEndTerminal("ForUpdate","-","-","Replacement",first,token);}
+    n = StatementExpressionList(true);
+                                         replaceName(n);
+                                                           {if (true) return productionEndTerminal("ForUpdate","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4736,14 +5069,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _TOKEN_MGR_DECLS:
     case _EOF:
     case IDENTIFIER:
-      JavaIdentifier(true);
+      n = JavaIdentifier(true);
+                                         replaceName(n);
       break;
     default:
       jj_la1[165] = jj_gen;
       ;
     }
     jj_consume_token(SEMICOLON);
-                                            {if (true) return productionEndTerminal("BreakStatement","-","-","Replacement",first,token);}
+                                                                {if (true) return productionEndTerminal("BreakStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4765,14 +5099,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _TOKEN_MGR_DECLS:
     case _EOF:
     case IDENTIFIER:
-      JavaIdentifier(true);
+      n = JavaIdentifier(true);
+                                            replaceName(n);
       break;
     default:
       jj_la1[166] = jj_gen;
       ;
     }
     jj_consume_token(SEMICOLON);
-                                               {if (true) return productionEndTerminal("ContinueStatement","-","-","Replacement",first,token);}
+                                                                   {if (true) return productionEndTerminal("ContinueStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4820,14 +5155,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PLUS:
     case MINUS:
     case IDENTIFIER:
-      Expression(true);
+      n = Expression(true);
+                                      replaceName(n);
       break;
     default:
       jj_la1[167] = jj_gen;
       ;
     }
     jj_consume_token(SEMICOLON);
-                                         {if (true) return productionEndTerminal("ReturnStatement","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("ReturnStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4835,9 +5171,10 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THROW);
-    Expression(true);
+    n = Expression(true);
+                                    replaceName(n);
     jj_consume_token(SEMICOLON);
-                                      {if (true) return productionEndTerminal("ThrowStatement","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("ThrowStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4846,10 +5183,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(SYNCHRONIZED);
     jj_consume_token(LPAREN);
-    Expression(true);
+    n = Expression(true);
+                                               replaceName(n);
     jj_consume_token(RPAREN);
-    Block(true);
-                                                             {if (true) return productionEndTerminal("SynchronizedStatement","-","-","Replacement",first,token);}
+    n = Block(true);
+                                                                                   replaceName(n);
+                                                                                                     {if (true) return productionEndTerminal("SynchronizedStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4857,9 +5196,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(TRY);
-    Block(true);
-    TryStatementEnd(true);
-                                                 {if (true) return productionEndTerminal("TryStatement","-","-","Replacement",first,token);}
+    n = Block(true);
+                             replaceName(n);
+    n = TryStatementEnd(true);
+                                                                       replaceName(n);
+                                                                                         {if (true) return productionEndTerminal("TryStatement","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4870,7 +5211,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case CATCH:
       label_55:
       while (true) {
-        CatchBlock(true);
+        n = CatchBlock(true);
+                             replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case CATCH:
           ;
@@ -4880,12 +5222,13 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           break label_55;
         }
       }
-                             {if (true) return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("TryStatementEnd1","-","-","Replacement",first,token);}
       break;
     case FINALLY:
       jj_consume_token(FINALLY);
-      Block(true);
-                               {if (true) return productionEndTerminal("FinallyBlock","-","-","Replacement",first,token);}
+      n = Block(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("FinallyBlock","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[169] = jj_gen;
@@ -4900,10 +5243,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CATCH);
     jj_consume_token(LPAREN);
-    FormalParameter(true);
+    n = FormalParameter(true);
+                                             replaceName(n);
     jj_consume_token(RPAREN);
-    Block(true);
-                                                           {if (true) return productionEndTerminal("CatchBlock","-","-","Replacement",first,token);}
+    n = Block(true);
+                                                                                 replaceName(n);
+                                                                                                   {if (true) return productionEndTerminal("CatchBlock","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4911,16 +5256,19 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_49(2147483647)) {
-      NormalAnnotation(true);
-                                                                                         {if (true) return productionEndTerminal("Annotation1","-","-","Replacement",first,token);}
+      n = NormalAnnotation(true);
+                                                                                           replaceName(n);
+                                                                                                             {if (true) return productionEndTerminal("Annotation1","-","-","Replacement",first,token);}
     } else if (jj_2_50(2147483647)) {
-      SingleMemberAnnotation(true);
-                                                                {if (true) return productionEndTerminal("Annotation2","-","-","Replacement",first,token);}
+      n = SingleMemberAnnotation(true);
+                                                                  replaceName(n);
+                                                                                    {if (true) return productionEndTerminal("Annotation2","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case 143:
-        MarkerAnnotation(true);
-                                {if (true) return productionEndTerminal("Annotation3","-","-","Replacement",first,token);}
+        n = MarkerAnnotation(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("Annotation3","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[170] = jj_gen;
@@ -4935,7 +5283,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
-    Name(true);
+    n = Name(true);
+                          replaceName(n);
     jj_consume_token(LPAREN);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case _OPTIONS:
@@ -4951,14 +5300,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case _TOKEN_MGR_DECLS:
     case _EOF:
     case IDENTIFIER:
-      MemberValuePairs(true);
+      n = MemberValuePairs(true);
+                                                                          replaceName(n);
       break;
     default:
       jj_la1[171] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
-                                                         {if (true) return productionEndTerminal("NormalAnnotation","-","-","Replacement",first,token);}
+                                                                                                 {if (true) return productionEndTerminal("NormalAnnotation","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4966,8 +5316,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
-    Name(true);
-                        {if (true) return productionEndTerminal("MarkerAnnotation","-","-","Replacement",first,token);}
+    n = Name(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("MarkerAnnotation","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4975,18 +5326,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
-    Name(true);
+    n = Name(true);
+                          replaceName(n);
     jj_consume_token(LPAREN);
-    MemberValue(true);
+    n = MemberValue(true);
+                                                                    replaceName(n);
     jj_consume_token(RPAREN);
-                                                  {if (true) return productionEndTerminal("SingleMemberAnnotation","-","-","Replacement",first,token);}
+                                                                                          {if (true) return productionEndTerminal("SingleMemberAnnotation","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo MemberValuePairs(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    MemberValuePair(true);
+    n = MemberValuePair(true);
+                                 replaceName(n);
     label_56:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4998,19 +5352,22 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_56;
       }
       jj_consume_token(COMMA);
-      MemberValuePair(true);
+      n = MemberValuePair(true);
+                                                                                replaceName(n);
     }
-                                                            {if (true) return productionEndTerminal("MemberValuePairs","-","-","Replacement",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("MemberValuePairs","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo MemberValuePair(boolean inTerminal) throws ParseException {
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    JavaIdentifier(true);
+    n = JavaIdentifier(true);
+                                replaceName(n);
     jj_consume_token(ASSIGN);
-    MemberValue(true);
-                                                    {if (true) return productionEndTerminal("MemberValuePair","-","-","Replacement",first,token);}
+    n = MemberValue(true);
+                                                                          replaceName(n);
+                                                                                            {if (true) return productionEndTerminal("MemberValuePair","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5019,12 +5376,14 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 143:
-      Annotation(true);
-                          {if (true) return productionEndTerminal("MemberValue1","-","-","Replacement",first,token);}
+      n = Annotation(true);
+                            replaceName(n);
+                                              {if (true) return productionEndTerminal("MemberValue1","-","-","Replacement",first,token);}
       break;
     case LBRACE:
-      MemberValueArrayInitializer(true);
-                                           {if (true) return productionEndTerminal("MemberValue2","-","-","Replacement",first,token);}
+      n = MemberValueArrayInitializer(true);
+                                             replaceName(n);
+                                                               {if (true) return productionEndTerminal("MemberValue2","-","-","Replacement",first,token);}
       break;
     case _OPTIONS:
     case _LOOKAHEAD:
@@ -5065,8 +5424,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     case PLUS:
     case MINUS:
     case IDENTIFIER:
-      ConditionalExpression(true);
-                                     {if (true) return productionEndTerminal("MemberValue3","-","-","Replacement",first,token);}
+      n = ConditionalExpression(true);
+                                       replaceName(n);
+                                                         {if (true) return productionEndTerminal("MemberValue3","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[173] = jj_gen;
@@ -5080,7 +5440,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(LBRACE);
-    MemberValue(true);
+    n = MemberValue(true);
+                                 replaceName(n);
     label_57:
     while (true) {
       if (jj_2_51(2)) {
@@ -5089,7 +5450,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         break label_57;
       }
       jj_consume_token(COMMA);
-      MemberValue(true);
+      n = MemberValue(true);
+                                                                                         replaceName(n);
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COMMA:
@@ -5100,7 +5462,7 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       ;
     }
     jj_consume_token(RBRACE);
-                                                                                {if (true) return productionEndTerminal("MemberValueArrayInitializer","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("MemberValueArrayInitializer","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5109,9 +5471,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(143);
     jj_consume_token(INTERFACE);
-    JavaIdentifier(true);
-    AnnotationTypeBody(true);
-                                                                       {if (true) return productionEndTerminal("AnnotationTypeDeclaration","-","-","Replacement",first,token);}
+    n = JavaIdentifier(true);
+                                                replaceName(n);
+    n = AnnotationTypeBody(true);
+                                                                                             replaceName(n);
+                                                                                                               {if (true) return productionEndTerminal("AnnotationTypeDeclaration","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5165,10 +5529,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
         jj_la1[175] = jj_gen;
         break label_58;
       }
-      AnnotationTypeMemberDeclaration(true);
+      n = AnnotationTypeMemberDeclaration(true);
+                                                      replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                          {if (true) return productionEndTerminal("AnnotationTypeBody","-","-","Replacement",first,token);}
+                                                                              {if (true) return productionEndTerminal("AnnotationTypeBody","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5176,21 +5541,25 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_52(2147483647)) {
-      Modifiers(true);
-      Type(true);
-      JavaIdentifier(true);
+      n = Modifiers(true);
+                                                                              replaceName(n);
+      n = Type(true);
+                                                                                                             replaceName(n);
+      n = JavaIdentifier(true);
+                                                                                                                                                      replaceName(n);
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case _DEFAULT:
-        DefaultValue(true);
+        n = DefaultValue(true);
+                                                                                                                                                                                                      replaceName(n);
         break;
       default:
         jj_la1[176] = jj_gen;
         ;
       }
       jj_consume_token(SEMICOLON);
-                                                                                                                                             {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration1","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                             {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ABSTRACT:
@@ -5207,20 +5576,26 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       case TRANSIENT:
       case VOLATILE:
       case 143:
-        Modifiers(true);
-        ClassOrInterfaceDeclaration(true);
-                                                                        {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration2","-","-","Replacement",first,token);}
+        n = Modifiers(true);
+                                        replaceName(n);
+        n = ClassOrInterfaceDeclaration(true);
+                                                                                              replaceName(n);
+                                                                                                                {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[177] = jj_gen;
         if (jj_2_53(2)) {
-          Modifiers(true);
-          EnumDeclaration(true);
-                                                            {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration3","-","-","Replacement",first,token);}
+          n = Modifiers(true);
+                                        replaceName(n);
+          n = EnumDeclaration(true);
+                                                                                  replaceName(n);
+                                                                                                    {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration3","-","-","Replacement",first,token);}
         } else if (jj_2_54(2)) {
-          Modifiers(true);
-          AnnotationTypeDeclaration(true);
-                                                                      {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration4","-","-","Replacement",first,token);}
+          n = Modifiers(true);
+                                        replaceName(n);
+          n = AnnotationTypeDeclaration(true);
+                                                                                            replaceName(n);
+                                                                                                              {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration4","-","-","Replacement",first,token);}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case _OPTIONS:
@@ -5256,9 +5631,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
           case VOLATILE:
           case IDENTIFIER:
           case 143:
-            Modifiers(true);
-            FieldDeclaration(true);
-                                                             {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration5","-","-","Replacement",first,token);}
+            n = Modifiers(true);
+                                        replaceName(n);
+            n = FieldDeclaration(true);
+                                                                                   replaceName(n);
+                                                                                                     {if (true) return productionEndTerminal("AnnotationTypeMemberDeclaration5","-","-","Replacement",first,token);}
             break;
           case SEMICOLON:
             jj_consume_token(SEMICOLON);
@@ -5279,8 +5656,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(_DEFAULT);
-    MemberValue(true);
-                                     {if (true) return productionEndTerminal("DefaultValue","-","-","Replacement",first,token);}
+    n = MemberValue(true);
+                                       replaceName(n);
+                                                         {if (true) return productionEndTerminal("DefaultValue","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5726,14 +6104,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     finally { jj_save(53, xla); }
   }
 
-  final private boolean jj_3_23() {
-    if (jj_3R_78()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_22() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
+  final private boolean jj_3_51() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_93()) return true;
     return false;
   }
 
@@ -5813,12 +6186,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_395() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_394()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_126() {
     Token xsp;
     xsp = jj_scanpos;
@@ -5826,12 +6193,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_scanpos = xsp;
     if (jj_3R_168()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3_21() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
@@ -5861,12 +6222,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3_51() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_93()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_79() {
     if (jj_scan_token(DOT)) return true;
     if (jj_3R_70()) return true;
@@ -5879,6 +6234,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final private boolean jj_3_53() {
     if (jj_3R_63()) return true;
     if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_332() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_331()) return true;
     return false;
   }
 
@@ -5915,12 +6276,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_367() {
-    if (jj_scan_token(THROWS)) return true;
-    if (jj_3R_376()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_77() {
     Token xsp;
     xsp = jj_scanpos;
@@ -5936,20 +6291,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_379() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
-    return false;
-  }
-
   final private boolean jj_3_20() {
     if (jj_3R_77()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_332() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_331()) return true;
     return false;
   }
 
@@ -5963,6 +6306,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final private boolean jj_3R_66() {
     if (jj_scan_token(143)) return true;
     if (jj_scan_token(INTERFACE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_306() {
+    if (jj_3R_320()) return true;
     return false;
   }
 
@@ -6036,6 +6384,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_16() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_74()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_366() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_365()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_360() {
     if (jj_3R_102()) return true;
     return false;
@@ -6048,6 +6408,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_scanpos = xsp;
     if (jj_3R_122()) return true;
     }
+    return false;
+  }
+
+  final private boolean jj_3R_357() {
+    if (jj_3R_371()) return true;
     return false;
   }
 
@@ -6080,11 +6445,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       if (jj_3R_364()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_306() {
-    if (jj_3R_320()) return true;
     return false;
   }
 
@@ -6137,18 +6497,24 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3_16() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_74()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_243() {
     if (jj_scan_token(143)) return true;
     if (jj_3R_91()) return true;
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_93()) return true;
     if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_392() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_378() {
+    if (jj_scan_token(ASSIGN)) return true;
+    if (jj_3R_74()) return true;
     return false;
   }
 
@@ -6184,6 +6550,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_scanpos = xsp;
     if (jj_scan_token(93)) return true;
     }
+    return false;
+  }
+
+  final private boolean jj_3R_420() {
+    if (jj_3R_428()) return true;
     return false;
   }
 
@@ -6255,9 +6626,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_366() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_365()) return true;
+  final private boolean jj_3R_356() {
+    if (jj_3R_370()) return true;
     return false;
   }
 
@@ -6274,18 +6644,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_392() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_378() {
-    if (jj_scan_token(ASSIGN)) return true;
-    if (jj_3R_74()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_73() {
     Token xsp;
     xsp = jj_scanpos;
@@ -6295,6 +6653,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     xsp = jj_scanpos;
     if (jj_3R_367()) jj_scanpos = xsp;
     if (jj_3R_368()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_388() {
+    if (jj_3R_314()) return true;
     return false;
   }
 
@@ -6312,6 +6675,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_374() {
+    if (jj_3R_389()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_414() {
     if (jj_scan_token(FINALLY)) return true;
     if (jj_3R_99()) return true;
@@ -6320,6 +6688,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_421() {
     if (jj_3R_429()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_253() {
+    if (jj_scan_token(BIT_AND)) return true;
+    if (jj_3R_166()) return true;
     return false;
   }
 
@@ -6340,6 +6714,18 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       xsp = jj_scanpos;
       if (jj_3_16()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  final private boolean jj_3R_433() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_294()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_403() {
+    if (jj_scan_token(ELSE)) return true;
+    if (jj_3R_252()) return true;
     return false;
   }
 
@@ -6410,19 +6796,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_420() {
-    if (jj_3R_428()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_406() {
     if (jj_3R_70()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_253() {
-    if (jj_scan_token(BIT_AND)) return true;
-    if (jj_3R_166()) return true;
     return false;
   }
 
@@ -6436,9 +6811,13 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_433() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_294()) return true;
+  final private boolean jj_3R_419() {
+    if (jj_3R_89()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_205() {
+    if (jj_3R_235()) return true;
     return false;
   }
 
@@ -6446,6 +6825,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     if (jj_scan_token(THROW)) return true;
     if (jj_3R_89()) return true;
     if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_163() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_162()) return true;
     return false;
   }
 
@@ -6501,11 +6886,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_357() {
-    if (jj_3R_371()) return true;
-    return false;
-  }
-
   final private boolean jj_3_12() {
     if (jj_3R_63()) return true;
     if (jj_scan_token(ENUM)) return true;
@@ -6524,6 +6904,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_387() {
+    if (jj_3R_76()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_345() {
     if (jj_scan_token(SEMICOLON)) return true;
     return false;
@@ -6535,8 +6920,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_388() {
-    if (jj_3R_314()) return true;
+  final private boolean jj_3R_355() {
+    if (jj_3R_102()) return true;
     return false;
   }
 
@@ -6555,31 +6940,21 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_374() {
-    if (jj_3R_389()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_344() {
     if (jj_3R_63()) return true;
     if (jj_3R_353()) return true;
     return false;
   }
 
+  final private boolean jj_3R_386() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_166()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_343() {
     if (jj_3R_63()) return true;
     if (jj_3R_352()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_419() {
-    if (jj_3R_89()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_403() {
-    if (jj_scan_token(ELSE)) return true;
-    if (jj_3R_252()) return true;
     return false;
   }
 
@@ -6598,8 +6973,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_205() {
-    if (jj_3R_235()) return true;
+  final private boolean jj_3R_373() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_372()) return true;
     return false;
   }
 
@@ -6609,9 +6985,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_163() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_162()) return true;
+  final private boolean jj_3R_358() {
+    if (jj_3R_371()) return true;
     return false;
   }
 
@@ -6636,6 +7011,17 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_428() {
     if (jj_3R_432()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_385() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_166()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_402() {
+    if (jj_3R_410()) return true;
     return false;
   }
 
@@ -6664,8 +7050,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_356() {
-    if (jj_3R_370()) return true;
+  final private boolean jj_3R_397() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_365()) return true;
     return false;
   }
 
@@ -6676,11 +7063,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       xsp = jj_scanpos;
       if (jj_3R_433()) { jj_scanpos = xsp; break; }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_387() {
-    if (jj_3R_76()) return true;
     return false;
   }
 
@@ -6709,12 +7091,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       if (jj_3R_329()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_386() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_166()) return true;
     return false;
   }
 
@@ -6757,9 +7133,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_373() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_372()) return true;
+  final private boolean jj_3R_417() {
+    if (jj_3R_204()) return true;
     return false;
   }
 
@@ -6768,17 +7143,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     if (jj_3R_70()) return true;
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_89()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_358() {
-    if (jj_3R_371()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_385() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_166()) return true;
     return false;
   }
 
@@ -6797,16 +7161,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_scanpos = xsp;
     if (jj_3R_412()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3R_402() {
-    if (jj_3R_410()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_355() {
-    if (jj_3R_102()) return true;
     return false;
   }
 
@@ -6836,6 +7190,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_409() {
+    if (jj_3R_415()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_372() {
     if (jj_3R_70()) return true;
     Token xsp;
@@ -6854,11 +7213,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     if (jj_3R_89()) return true;
     if (jj_scan_token(RPAREN)) return true;
     if (jj_scan_token(SEMICOLON)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_417() {
-    if (jj_3R_204()) return true;
     return false;
   }
 
@@ -6881,12 +7235,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_397() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_365()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_359() {
     if (jj_scan_token(LBRACE)) return true;
     if (jj_3R_372()) return true;
@@ -6898,6 +7246,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     xsp = jj_scanpos;
     if (jj_3R_374()) jj_scanpos = xsp;
     if (jj_scan_token(RBRACE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_43() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
@@ -6933,11 +7287,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     xsp = jj_scanpos;
     if (jj_3R_358()) jj_scanpos = xsp;
     if (jj_3R_359()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_409() {
-    if (jj_3R_415()) return true;
     return false;
   }
 
@@ -7034,6 +7383,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_401() {
+    if (jj_scan_token(COLON)) return true;
+    if (jj_3R_89()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_415() {
     Token xsp;
     xsp = jj_scanpos;
@@ -7097,12 +7452,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3_43() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_294() {
     Token xsp;
     xsp = jj_scanpos;
@@ -7137,12 +7486,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     if (jj_scan_token(46)) jj_scanpos = xsp;
     if (jj_3R_71()) return true;
     if (jj_3R_70()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_401() {
-    if (jj_scan_token(COLON)) return true;
-    if (jj_3R_89()) return true;
     return false;
   }
 
@@ -7212,6 +7555,13 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_195() {
     if (jj_scan_token(PRIVATE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_42() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_3R_89()) return true;
+    if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
@@ -7315,6 +7665,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_248() {
+    if (jj_3R_78()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_292() {
     if (jj_scan_token(ASSERT)) return true;
     if (jj_3R_89()) return true;
@@ -7322,13 +7677,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     xsp = jj_scanpos;
     if (jj_3R_401()) jj_scanpos = xsp;
     if (jj_scan_token(SEMICOLON)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_42() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_3R_89()) return true;
-    if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
@@ -7352,6 +7700,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_290() {
+    if (jj_3R_314()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_277() {
     if (jj_3R_301()) return true;
     return false;
@@ -7372,6 +7725,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_97() {
+    if (jj_scan_token(BIT_OR)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_266() {
     if (jj_3R_291()) return true;
     return false;
@@ -7379,11 +7737,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_273() {
     if (jj_3R_297()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_248() {
-    if (jj_3R_78()) return true;
     return false;
   }
 
@@ -7399,6 +7752,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_271() {
     if (jj_3R_295()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_206() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_89()) return true;
     return false;
   }
 
@@ -7420,11 +7779,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_268() {
     if (jj_3R_99()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_290() {
-    if (jj_3R_314()) return true;
     return false;
   }
 
@@ -7452,11 +7806,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final private boolean jj_3_2() {
     if (jj_3R_59()) return true;
     if (jj_scan_token(ASSIGN)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_97() {
-    if (jj_scan_token(BIT_OR)) return true;
     return false;
   }
 
@@ -7542,12 +7891,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       xsp = jj_scanpos;
       if (jj_3_43()) { jj_scanpos = xsp; break; }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_206() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_89()) return true;
     return false;
   }
 
@@ -7795,6 +8138,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_36() {
+    if (jj_3R_85()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_190() {
     Token xsp;
     xsp = jj_scanpos;
@@ -7902,15 +8250,15 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_396() {
+    if (jj_3R_398()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_157() {
     if (jj_3R_86()) return true;
     if (jj_scan_token(DOT)) return true;
     if (jj_scan_token(CLASS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_36() {
-    if (jj_3R_85()) return true;
     return false;
   }
 
@@ -7965,11 +8313,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     }
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_396() {
-    if (jj_3R_398()) return true;
     return false;
   }
 
@@ -8207,6 +8550,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_346() {
+    if (jj_3R_354()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_259() {
     Token xsp;
     xsp = jj_scanpos;
@@ -8223,6 +8571,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final private boolean jj_3R_258() {
     if (jj_scan_token(DECR)) return true;
     if (jj_3R_59()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_339() {
+    if (jj_3R_347()) return true;
     return false;
   }
 
@@ -8244,11 +8597,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_239() {
     if (jj_3R_257()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_346() {
-    if (jj_3R_354()) return true;
     return false;
   }
 
@@ -8289,11 +8637,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_339() {
-    if (jj_3R_347()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_369() {
     Token xsp;
     xsp = jj_scanpos;
@@ -8304,6 +8647,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     if (jj_3R_384()) return true;
     }
     }
+    return false;
+  }
+
+  final private boolean jj_3_29() {
+    if (jj_3R_82()) return true;
     return false;
   }
 
@@ -8328,6 +8676,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_364() {
+    if (jj_3R_204()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_284() {
     if (jj_scan_token(PLUS)) return true;
     return false;
@@ -8343,14 +8696,20 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3_29() {
-    if (jj_3R_82()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_347() {
     if (jj_3R_256()) return true;
     if (jj_3R_184()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_322() {
+    if (jj_3R_333()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_308() {
+    if (jj_scan_token(INSTANCEOF)) return true;
+    if (jj_3R_71()) return true;
     return false;
   }
 
@@ -8401,14 +8760,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_322() {
-    if (jj_3R_333()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_308() {
-    if (jj_scan_token(INSTANCEOF)) return true;
-    if (jj_3R_71()) return true;
+  final private boolean jj_3R_283() {
+    if (jj_3R_309()) return true;
     return false;
   }
 
@@ -8437,6 +8790,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3R_255() {
+    if (jj_scan_token(BIT_AND)) return true;
+    if (jj_3R_254()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_348() {
     if (jj_scan_token(LT)) return true;
     return false;
@@ -8458,14 +8817,33 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_283() {
-    if (jj_3R_309()) return true;
+  final private boolean jj_3R_208() {
+    if (jj_scan_token(BIT_OR)) return true;
+    if (jj_3R_207()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_237() {
+    if (jj_scan_token(XOR)) return true;
+    if (jj_3R_236()) return true;
     return false;
   }
 
   final private boolean jj_3R_333() {
     if (jj_3R_340()) return true;
     if (jj_3R_321()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_182() {
+    if (jj_scan_token(SC_AND)) return true;
+    if (jj_3R_181()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_129() {
+    if (jj_scan_token(SC_OR)) return true;
+    if (jj_3R_128()) return true;
     return false;
   }
 
@@ -8476,12 +8854,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
       xsp = jj_scanpos;
       if (jj_3R_322()) { jj_scanpos = xsp; break; }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_255() {
-    if (jj_scan_token(BIT_AND)) return true;
-    if (jj_3R_254()) return true;
     return false;
   }
 
@@ -8503,18 +8875,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_208() {
-    if (jj_scan_token(BIT_OR)) return true;
-    if (jj_3R_207()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_237() {
-    if (jj_scan_token(XOR)) return true;
-    if (jj_3R_236()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_323() {
     Token xsp;
     xsp = jj_scanpos;
@@ -8522,18 +8882,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     jj_scanpos = xsp;
     if (jj_3R_335()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3R_182() {
-    if (jj_scan_token(SC_AND)) return true;
-    if (jj_3R_181()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_129() {
-    if (jj_scan_token(SC_OR)) return true;
-    if (jj_3R_128()) return true;
     return false;
   }
 
@@ -8553,6 +8901,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_17() {
+    if (jj_3R_75()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_236() {
     if (jj_3R_254()) return true;
     Token xsp;
@@ -8563,8 +8916,8 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_364() {
-    if (jj_3R_204()) return true;
+  final private boolean jj_3R_363() {
+    if (jj_3R_75()) return true;
     return false;
   }
 
@@ -8614,6 +8967,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_27() {
+    if (jj_3R_80()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_218() {
     if (jj_3R_81()) return true;
     if (jj_scan_token(HOOK)) return true;
@@ -8653,18 +9011,25 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_26() {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_178() {
     if (jj_scan_token(ANDASSIGN)) return true;
     return false;
   }
 
-  final private boolean jj_3_27() {
-    if (jj_3R_80()) return true;
+  final private boolean jj_3R_177() {
+    if (jj_scan_token(141)) return true;
     return false;
   }
 
-  final private boolean jj_3R_177() {
-    if (jj_scan_token(141)) return true;
+  final private boolean jj_3R_391() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_91()) return true;
     return false;
   }
 
@@ -8678,6 +9043,11 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_24() {
+    if (jj_3R_79()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_174() {
     if (jj_scan_token(MINUSASSIGN)) return true;
     return false;
@@ -8685,6 +9055,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_173() {
     if (jj_scan_token(PLUSASSIGN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_362() {
+    if (jj_scan_token(THROWS)) return true;
+    if (jj_3R_376()) return true;
     return false;
   }
 
@@ -8705,12 +9081,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
 
   final private boolean jj_3R_169() {
     if (jj_scan_token(ASSIGN)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_26() {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_3R_70()) return true;
     return false;
   }
 
@@ -8754,20 +9124,9 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_391() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_91()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_80() {
     if (jj_3R_127()) return true;
     if (jj_3R_89()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_17() {
-    if (jj_3R_75()) return true;
     return false;
   }
 
@@ -8789,11 +9148,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_363() {
-    if (jj_3R_75()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_91() {
     if (jj_3R_70()) return true;
     Token xsp;
@@ -8804,18 +9158,30 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3_24() {
-    if (jj_3R_79()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_146() {
     if (jj_3R_71()) return true;
     return false;
   }
 
+  final private boolean jj_3R_265() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_126()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_145() {
     if (jj_scan_token(VOID)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_25() {
+    if (jj_3R_78()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_367() {
+    if (jj_scan_token(THROWS)) return true;
+    if (jj_3R_376()) return true;
     return false;
   }
 
@@ -8854,6 +9220,17 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_23() {
+    if (jj_3R_78()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_22() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_114() {
     if (jj_scan_token(_TOKEN_MGR_DECLS)) return true;
     return false;
@@ -8884,12 +9261,6 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
-  final private boolean jj_3R_265() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_126()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_111() {
     if (jj_scan_token(_SPECIAL_TOKEN)) return true;
     return false;
@@ -8900,19 +9271,20 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
     return false;
   }
 
+  final private boolean jj_3_21() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_110() {
     if (jj_scan_token(_TOKEN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_362() {
-    if (jj_scan_token(THROWS)) return true;
-    if (jj_3R_376()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_25() {
-    if (jj_3R_78()) return true;
+  final private boolean jj_3R_395() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_394()) return true;
     return false;
   }
 
@@ -8968,6 +9340,12 @@ public class JavaCCParser extends AbstractFSTParser implements JavaCCParserConst
   final private boolean jj_3R_337() {
     if (jj_scan_token(EXTENDS)) return true;
     if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_379() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 

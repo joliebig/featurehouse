@@ -1,0 +1,140 @@
+options{
+  STATIC = false;
+}
+PARSER_BEGIN(UMLParser)
+package tmp.generated_uml;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+public class UMLParser extends AbstractFSTParser{
+}
+PARSER_END(UMLParser)
+
+
+
+
+<*> TOKEN :
+{
+  <#ALPHA_CHAR: ["a"-"z", "A"-"Z"] >
+| <#NUM_CHAR:   ["0"-"9"] >
+| <#ALPHANUM_CHAR: [ "a"-"z", "A"-"Z", "0"-"9" ] >
+| <#IDENTIFIER_CHAR: [ "a"-"z", "A"-"Z", "0"-"9", "_", "-", "." ] >
+| <#IDENTIFIER_PART: <ALPHA_CHAR> (<IDENTIFIER_CHAR>)* >
+| <#IDENTIFIER: <IDENTIFIER_PART> (":" <IDENTIFIER_PART>)? >
+| <#QUOTED_STRING_NB: ( "'" ( ~["'", "\r", "\n"] )* "'" ) 
+                    | ( "\"" ( ~["\"", "\r", "\n"] )* "\"" ) >
+| <#QUOTED_STRING: ( "'" ( ~["'"] )* "'" ) | ( "\"" ( ~["\""] )* "\"" ) >
+| <#WHITESPACE: ( " " | "\t" | "\n" | "\r" ) >
+| <#NEWLINE:    ( "\r\n" | "\r" | "\n" ) >
+| <#QUOTE:      ( "'" | "\"" )>
+| <#CPB:		">">
+}
+
+<DEFAULT> TOKEN : 
+{
+  <XMLOPEN:"<?xml">				: LexElement_Inside
+| <SELEMENT_START:      "<"       > : LexElement_Start
+| <EELEMENT_START:      "</"       > : LexElement_Start
+| <PI_START:      "<?"       > : LexPI
+| <COMMENT_START:  "<!--"    > : LexComment
+| <CDSTART: 		"<![CDATA["> : LexCDATA
+//| <DECL_START:     "<!DOCTYPE"      > : LexDecl
+| <PCDATA:         ( ~["<"] )+ >
+}
+
+<LexElement_Start> TOKEN :
+{
+  <ELEMENT_ID: <IDENTIFIER> > : LexElement_Inside
+}
+
+<LexElement_Inside> SPECIAL_TOKEN :
+{
+  < (<WHITESPACE>)+ >
+}
+
+<LexElement_Inside> TOKEN :
+{
+  <ATTR_NAME: <IDENTIFIER> >		
+| <ELEMENT_END: <CPB> >                       : DEFAULT
+| <QEND: "?>" >                     		: DEFAULT
+| <SLASHEND: "/>" >                       : DEFAULT
+| <ATTR_EQ: "=" >                       
+| <ATTR_VAL: <QUOTED_STRING>>			
+}
+
+
+<LexComment> MORE : { <~[] > } 
+<LexComment> TOKEN : 
+{
+  < COMMENT_END:  "-->" > : DEFAULT 
+}
+
+<LexPI> MORE : { <~[] > } 
+<LexPI> TOKEN : 
+{
+  < PI_END:  "?>" > : DEFAULT 
+}
+
+<LexCDATA> MORE : { <~[] > } 
+<LexCDATA> TOKEN : 
+{
+  < CDEND:  "]]>" > : DEFAULT 
+}
+
+//<LexDecl> MORE : { <~[] > } //<LexDecl> TOKEN : //{//  < DECLEND:  <CPB> > : DEFAULT //| < DECLINNERSTART: "["> : LexDeclInner//}//<LexDeclInner> MORE : { <~[] > } //<LexDeclInner> TOKEN : {// < DECLINNEREND: "]"> : LexDecl//}
+
+
+GRAMMARSTART
+
+@FSTNonTerminal
+Document: Prolog Element (Misc)*;
+
+@FSTTerminal(name="{AUTO}")
+Misc: Comment | LOOK_AHEAD("{getToken(1).image.trim().equals(\"\")}") <PCDATA> | PI;
+PI: "<?" <PI_END>;
+
+Prolog: XMLDecl (Misc)*;// [DoctypeDecl];
+XMLDecl	   : "<?xml" (Attribute)+ "!<QEND>?>";
+//DoctypeDecl: "<!DOCTYPE" /*[ "!<DECLINNERSTART>[" <DECLINNEREND> ]*/ <DECLEND> (Misc)*;
+ 
+CDSect	   :  	"<![CDATA[" <CDEND>;
+
+Comment: "<!--"  <COMMENT_END>;
+
+
+Element: 
+	@FSTNonTerminal(type="ElementContent1") @FSTExportName("{EmptyElemTag}") 
+	LOOK_AHEAD("EmptyElemTag()") EmptyElemTag :: TElement
+| 
+	@FSTNonTerminal(type="ElementContent2") @FSTExportName("{STag}")
+	STag (Content)* ETag :: CElement;
+		
+@FSTTerminal(name=	"{<ELEMENT_ID>}")		
+ElementId: 			<ELEMENT_ID>;
+			
+@FSTNonTerminal(name="{ElementId}")
+EmptyElemTag	   :   	"<" ElementId (Attribute)* "!<SLASHEND>/>";
+
+@FSTNonTerminal @FSTExportName("{ElementId}_{Attr_name}")
+STag : "<" ElementId (Attribute)* "!<ELEMENT_END>>";
+ETag: "</" ElementId "!<ELEMENT_END>>";
+
+@FSTTerminal(type="Attr_{<ATTR_NAME>}",name="{<ATTR_VAL>}")
+Attribute :	@~ <ATTR_NAME> "!<ATTR_EQ>=" <ATTR_VAL>;
+
+Content:   
+	  @FSTNonTerminal(name="{Element}", compose="ABC", type="Element")
+	  Element 
+//	| Reference 
+	| @FSTTerminal(name="{AUTO}") Comment :: CommentContent
+	| @FSTTerminal(name="{AUTO}") CDSect :: CDSectContent
+	| @FSTTerminal(name="{AUTO}") <PCDATA> :: PCDataContent
+;
+
+//Reference	   :   	EntityRef | <CHARREF>;
+//EntityRef	   :  	"&" Name ";";
+  

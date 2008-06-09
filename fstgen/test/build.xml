@@ -91,6 +91,16 @@
 		</antcall>
 	</target>
 
+	<target name="testUML">
+			<antcall target="testGrammar">
+				<param name="language" value="uml" />
+				<param name="parserClass" value="UMLParser" />
+				<param name="mainProduction" value="Document" />
+				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="testFile" value="Test.uml" />
+			</antcall>
+		</target>
+	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
 

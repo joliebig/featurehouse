@@ -1,8 +1,8 @@
 options{
   STATIC = false;
 }
-PARSER_BEGIN(XMLParser)
-package tmp.generated_xml;
+PARSER_BEGIN(UMLParser)
+package tmp.generated_uml;
 
 import java.io.*;
 import java.util.*;
@@ -10,10 +10,9 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
-
-public class XMLParser extends AbstractFSTParser{
+public class UMLParser extends AbstractFSTParser{
 }
-PARSER_END(XMLParser)
+PARSER_END(UMLParser)
 
 
 
@@ -133,9 +132,9 @@ FSTInfo Comment(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Element(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(EmptyElemTag()) n=EmptyElemTag(inTerminal){ replaceName("EmptyElemTag", n);}{ replaceName(n);} {return productionEndNonTerminal("ElementContainer1","-","{EmptyElemTag}");}
+	LOOKAHEAD(EmptyElemTag()) n=EmptyElemTag(inTerminal){ replaceName("EmptyElemTag", n);}{ replaceName(n);} {return productionEndNonTerminal("ElementContent1","-","{EmptyElemTag}");}
  |
-	n=STag(inTerminal){ replaceName("STag", n);}{ replaceName(n);} (n=Content(inTerminal){ replaceName(n);})* n=ETag(inTerminal){ replaceName(n);} {return productionEndNonTerminal("ElementContainer2","-","{STag}");}
+	n=STag(inTerminal){ replaceName("STag", n);}{ replaceName(n);} (n=Content(inTerminal){ replaceName(n);})* n=ETag(inTerminal){ replaceName(n);} {return productionEndNonTerminal("ElementContent2","-","{STag}");}
 
  )  }
 
@@ -153,7 +152,7 @@ FSTInfo EmptyElemTag(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo STag(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<" n=ElementId(inTerminal){ replaceName("ElementId", n);}{ replaceName(n);} (n=Attribute(inTerminal){ replaceName(n);})* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}");}
+	"<" n=ElementId(inTerminal){ replaceName("ElementId", n);}{ replaceName(n);} (n=Attribute(inTerminal){ replaceName(n);})* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}_{Attr_name}");}
 
  )  }
 
@@ -165,13 +164,13 @@ FSTInfo ETag(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Attribute(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<ATTR_NAME>{ replaceName(new FSTInfo("<ATTR_NAME>",t.toString()));} <ATTR_EQ> <ATTR_VAL> {return productionEndTerminal("Attribute","{<ATTR_NAME>}","{<ATTR_NAME>}","Replacement",first,token);}
+	t=<ATTR_NAME>{ replaceName(new FSTInfo("<ATTR_NAME>",t.toString()));} <ATTR_EQ> t=<ATTR_VAL>{ replaceName(new FSTInfo("<ATTR_VAL>",t.toString()));} {return productionEndTerminal("Attr_{<ATTR_NAME>}","{<ATTR_VAL>}","{<ATTR_VAL>}","Replacement",first,token);}
 
  )  }
 
 FSTInfo Content(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Element(inTerminal){ replaceName("Element", n);}{ replaceName(n);} {return productionEndNonTerminal("ElementContent","{Element}","{Element}");}
+	n=Element(inTerminal){ replaceName("Element", n);}{ replaceName(n);} {return productionEndNonTerminal("Element","{Element}","{Element}");}
  |
 	n=Comment(true){ replaceName(n);} {return productionEndTerminal("CommentContent","{AUTO}","{AUTO}","Replacement",first,token);}
  |
