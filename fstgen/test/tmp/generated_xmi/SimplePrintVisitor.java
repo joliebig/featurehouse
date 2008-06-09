@@ -1,4 +1,4 @@
-package tmp.generated_uml;
+package tmp.generated_xmi;
 
 import java.util.*;
 import cide.gast.*;
@@ -11,10 +11,10 @@ import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
-		super(out); generateSpaces=true;
+		super(out); generateSpaces=false;
 	}
 	public SimplePrintVisitor() {
-		super(); generateSpaces=true;
+		super(); generateSpaces=false;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("Document")) {

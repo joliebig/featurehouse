@@ -1,8 +1,8 @@
 options{
   STATIC = false;
 }
-PARSER_BEGIN(UMLParser)
-package tmp.generated_uml;
+PARSER_BEGIN(XMIParser)
+package tmp.generated_xmi;
 
 import java.io.*;
 import java.util.*;
@@ -10,9 +10,9 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
-public class UMLParser extends AbstractFSTParser{
+public class XMIParser extends AbstractFSTParser{
 }
-PARSER_END(UMLParser)
+PARSER_END(XMIParser)
 
 
 
@@ -152,7 +152,7 @@ FSTInfo EmptyElemTag(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo STag(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<" n=ElementId(inTerminal){ replaceName("ElementId", n);}{ replaceName(n);} (n=Attribute(inTerminal){ replaceName(n);})* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}_{Attr_name}");}
+	"<" n=ElementId(inTerminal){ replaceName("ElementId", n);}{ replaceName(n);} (n=Attribute(inTerminal){ replaceName("Attribute", n);}{ replaceName(n);})* <ELEMENT_END> {return productionEndNonTerminal("STag","-","{ElementId}_{Attribute}");}
 
  )  }
 

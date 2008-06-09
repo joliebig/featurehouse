@@ -91,13 +91,14 @@
 		</antcall>
 	</target>
 
-	<target name="testUML">
+	<target name="testXMI">
 			<antcall target="testGrammar">
-				<param name="language" value="uml" />
-				<param name="parserClass" value="UMLParser" />
+				<param name="language" value="xmi" />
+				<param name="parserClass" value="XMIParser" />
 				<param name="mainProduction" value="Document" />
 				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.uml" />
+				<param name="testFile" value="Test.xmi" />
+				<param name="autoSpacingPrettyPrinter" value="false" />
 			</antcall>
 		</target>
 	

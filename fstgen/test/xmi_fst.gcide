@@ -1,8 +1,8 @@
 options{
   STATIC = false;
 }
-PARSER_BEGIN(UMLParser)
-package tmp.generated_uml;
+PARSER_BEGIN(XMIParser)
+package tmp.generated_xmi;
 
 import java.io.*;
 import java.util.*;
@@ -10,9 +10,9 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
-public class UMLParser extends AbstractFSTParser{
+public class XMIParser extends AbstractFSTParser{
 }
-PARSER_END(UMLParser)
+PARSER_END(XMIParser)
 
 
 
@@ -119,7 +119,7 @@ ElementId: 			<ELEMENT_ID>;
 @FSTNonTerminal(name="{ElementId}")
 EmptyElemTag	   :   	"<" ElementId (Attribute)* "!<SLASHEND>/>";
 
-@FSTNonTerminal @FSTExportName("{ElementId}_{Attr_name}")
+@FSTNonTerminal @FSTExportName("{ElementId}_{Attribute}")
 STag : "<" ElementId (Attribute)* "!<ELEMENT_END>>";
 ETag: "</" ElementId "!<ELEMENT_END>>";
 
