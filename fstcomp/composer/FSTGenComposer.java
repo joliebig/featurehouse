@@ -4,24 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import composer.rules.CSharpMethodOverriding;
-import composer.rules.CompositionError;
-import composer.rules.ConstructorConcatenation;
-import composer.rules.ExpansionOverriding;
-import composer.rules.FieldOverriding;
-import composer.rules.ImplementsListMerging;
-import composer.rules.ModifierListSpecialization;
-import composer.rules.Replacement;
-import composer.rules.StringConcatenation;
-import composer.rules.JavaMethodOverriding;
-
-import builder.ArtifactBuilderInterface;
-import builder.binary.BinaryBuilder;
-import builder.capprox.CApproxBuilder;
-import builder.csharp.CSharpBuilder;
-import builder.java.JavaBuilder;
-import builder.javacc.JavaCCBuilder;
-import builder.text.TextBuilder;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
@@ -31,6 +13,27 @@ import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
 import printer.text.TextPrintVisitor;
+import printer.xmi.XMIPrintVisitor;
+import builder.ArtifactBuilderInterface;
+import builder.binary.BinaryBuilder;
+import builder.capprox.CApproxBuilder;
+import builder.csharp.CSharpBuilder;
+import builder.java.JavaBuilder;
+import builder.javacc.JavaCCBuilder;
+import builder.text.TextBuilder;
+import builder.xmi.XMIBuilder;
+
+import composer.rules.CSharpMethodOverriding;
+import composer.rules.CompositionError;
+import composer.rules.ConstructorConcatenation;
+import composer.rules.ExpansionOverriding;
+import composer.rules.FieldOverriding;
+import composer.rules.ImplementsListMerging;
+import composer.rules.JavaMethodOverriding;
+import composer.rules.ModifierListSpecialization;
+import composer.rules.Replacement;
+import composer.rules.StringConcatenation;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -82,8 +85,6 @@ public class FSTGenComposer {
 				FSTNode composition = compose(features);
 				//if(composition != null)
 				//  System.err.println(composition.toString());
-				modify(composition);
-				
 				try {
 					featureVisitor.visit((FSTNonTerminal)composition);	
 				} catch (PrintVisitorException e) {
@@ -101,15 +102,15 @@ public class FSTGenComposer {
 		composer.registerArtifactBuilder(new CSharpBuilder());
 		composer.registerArtifactBuilder(new CApproxBuilder());
 		composer.registerArtifactBuilder(new JavaCCBuilder());
+		composer.registerArtifactBuilder(new XMIBuilder());
 		composer.registerArtifactBuilder(new TextBuilder(".properties"));
-		composer.registerArtifactBuilder(new TextBuilder(".mk"));
 		composer.registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		composer.registerPrintVisitor(new JavaPrintVisitor());
 		composer.registerPrintVisitor(new CSharpPrintVisitor());
 		composer.registerPrintVisitor(new CApproxPrintVisitor());
 		composer.registerPrintVisitor(new JavaCCPrintVisitor());
+		composer.registerPrintVisitor(new XMIPrintVisitor());
 		composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
-		composer.registerPrintVisitor(new TextPrintVisitor(".mk"));
 		composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		composer.run(args);
 	}
@@ -201,9 +202,5 @@ public class FSTGenComposer {
 		}
 		else
 			return null;
-	}
-	
-	static void modify(FSTNode root) {
-		
 	}
 }
