@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="BachelorThesis" basedir="..">
+	<target name="build">
+		<javacc target="javacc/queryLanguageParser.jj"
+		        outputdirectory="queryLanguageParser"
+		        javacchome="javacc/"
+		/>		
+	</target>
+</project>
