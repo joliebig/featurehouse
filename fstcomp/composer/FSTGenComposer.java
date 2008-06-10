@@ -83,6 +83,8 @@ public class FSTGenComposer {
 			for(ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 				FSTNode composition = compose(features);
+				modify(composition);
+				
 				//if(composition != null)
 				//  System.err.println(composition.toString());
 				try {
@@ -94,6 +96,12 @@ public class FSTGenComposer {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private void modify(FSTNode composition) {
+	  if(composition != null)
+	      System.err.println(composition.toString());
+	    
 	}
 
 	public static void main(String[] args) {
