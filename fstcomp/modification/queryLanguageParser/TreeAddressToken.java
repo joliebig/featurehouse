@@ -15,11 +15,11 @@ public abstract class TreeAddressToken {
     /**
      * 
      */
-    public abstract List<FSTNode> getPossibleMatchingChildren(FSTNode node);
+    public abstract List<FSTNode> getPossibleMatchingFollowUps(FSTNode node);
 
     /**
      * 
      */
-    public abstract boolean isMatchWithNode(FSTNode node);
+    public abstract List<FSTNode> getMatchingNodes(FSTNode node);
 
 }

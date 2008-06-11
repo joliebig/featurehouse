@@ -16,19 +16,22 @@ public class WildcardToken extends TreeAddressToken {
      * 
      */
     @Override
-    public List<FSTNode> getPossibleMatchingChildren(FSTNode node) {
-	LogIterator logIt = new LogIterator();
-	node.accept(logIt);
-	List<FSTNode> list = logIt.getLog();
-	list.remove(node);
-	return list;
+    public List<FSTNode> getPossibleMatchingFollowUps(FSTNode node) {
+	return subTreeList(node);
     }
 
     /**
      * 
      */
     @Override
-    public boolean isMatchWithNode(FSTNode node) {
-	return true;
+    public List<FSTNode> getMatchingNodes(FSTNode node) {
+	return subTreeList(node);
+    }
+
+    private List<FSTNode> subTreeList(FSTNode node) {	
+	LogIterator logIt = new LogIterator();
+	node.accept(logIt);
+	List<FSTNode> list = logIt.getLog();
+	return list;
     }
 }

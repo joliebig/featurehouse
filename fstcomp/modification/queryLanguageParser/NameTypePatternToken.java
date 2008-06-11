@@ -3,6 +3,7 @@
  */
 package modification.queryLanguageParser;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -22,8 +23,8 @@ public class NameTypePatternToken extends TreeAddressToken {
      * 
      */
     @Override
-    public List<FSTNode> getPossibleMatchingChildren(FSTNode node) {
-	if (node.getClass() == FSTNonTerminal.class)
+    public List<FSTNode> getPossibleMatchingFollowUps(FSTNode node) {
+	if (node instanceof FSTNonTerminal)
 	    return ((FSTNonTerminal) node).getChildren();
 	else
 	    return null;
@@ -33,11 +34,14 @@ public class NameTypePatternToken extends TreeAddressToken {
      * 
      */
     @Override
-    public boolean isMatchWithNode(FSTNode node) {
+    public List<FSTNode> getMatchingNodes(FSTNode node) {
+	List<FSTNode> list = new LinkedList<FSTNode>();
 	if (Pattern.matches(namePattern, node.getName())
-		&& Pattern.matches(typePattern, node.getType()))
-	    return true;
-	return false;
+		&& Pattern.matches(typePattern, node.getType())) {
+	    list.add(node);
+	    return list;
+	}
+	return null;
     }
 
     /**

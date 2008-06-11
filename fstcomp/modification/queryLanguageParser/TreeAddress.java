@@ -25,26 +25,37 @@ public class TreeAddress {
      * 
      */
     public List<FSTNode> resolve(FSTNode compilation) {
-	//TODO BUG ahhhhhhhhhhhh!
-	List<FSTNode> possibleNodesOld = new LinkedList<FSTNode>();
-	List<FSTNode> possibleNodesNew = new LinkedList<FSTNode>();
-	List<FSTNode> resultNodes = new LinkedList<FSTNode>();
+	// TODO BUG ahhhhhhhhhhhh!
+
+	List<FSTNode> possibleNodesOld = new DuplicateFreeLinkedList<FSTNode>();
+	List<FSTNode> possibleNodesNew = new DuplicateFreeLinkedList<FSTNode>();
+	List<FSTNode> resultNodes = new DuplicateFreeLinkedList<FSTNode>();
 	possibleNodesOld.add(compilation);
 	TreeAddressToken token;
 
 	Iterator<TreeAddressToken> it = addressTokens.iterator();
 	while (it.hasNext()) {
 	    token = it.next();
+	    System.out.println("TOKEN: " + token);
 	    possibleNodesNew.clear();
 	    for (FSTNode node : possibleNodesOld) {
-		if (token.isMatchWithNode(node)) {
-		    if (token.getPossibleMatchingChildren(node) != null)
+		System.out.println("  NODE: " + node.getName() + " : "
+			+ node.getType());
+		if (token.getMatchingNodes(node)!=null) {
+		    System.out.println("  MATCH!");
+		    if (token.getPossibleMatchingFollowUps(node) != null
+			    && !possibleNodesNew.contains(node)) {
 			possibleNodesNew.addAll(token
-				.getPossibleMatchingChildren(node));
+				.getPossibleMatchingFollowUps(node));
+			System.out.println("    ADDED possible CHILDREN: "
+				+ node.getName() + " : " + node.getType());
+		    }
+		    if (!it.hasNext()) {
+			resultNodes.addAll(token.getMatchingNodes(node));
+			System.out.println("    ADDED to RESULT: "
+				+ node.getName() + " : " + node.getType());
 
-		    if (!it.hasNext())
-			resultNodes.add(node);
-
+		    }
 		}
 	    }
 
