@@ -4,9 +4,11 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
+import modification.queryLanguageParser.addressManagement.NameTypePatternToken;
+import modification.queryLanguageParser.addressManagement.TreeAddress;
+import modification.queryLanguageParser.addressManagement.TreeAddressToken;
+import modification.queryLanguageParser.addressManagement.WildcardToken;
 import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class QueryLanguageParserTokenManager implements QueryLanguageParserConstants
 {

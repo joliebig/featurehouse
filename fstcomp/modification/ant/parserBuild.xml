@@ -2,7 +2,7 @@
 
 <project name="BachelorThesis" basedir="..">
 	<target name="build">
-		<javacc target="javacc/queryLanguageParser.jj"
+		<javacc target="queryLanguageParser/queryLanguageParser.jj"
 		        outputdirectory="queryLanguageParser"
 		        javacchome="javacc/"
 		/>		

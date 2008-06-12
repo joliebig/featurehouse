@@ -5,10 +5,13 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.regex.Pattern;
+
+import modification.queryLanguageParser.addressManagement.NameTypePatternToken;
+import modification.queryLanguageParser.addressManagement.TreeAddress;
+import modification.queryLanguageParser.addressManagement.TreeAddressToken;
+import modification.queryLanguageParser.addressManagement.WildcardToken;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class QueryLanguageParser implements QueryLanguageParserConstants {
         /**    *     */
@@ -576,11 +579,6 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     finally { jj_save(29, xla); }
   }
 
-  final private boolean jj_3_15() {
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    return false;
-  }
-
   final private boolean jj_3_10() {
     Token xsp;
     if (jj_3_8()) return true;
@@ -882,6 +880,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
   final private boolean jj_3_7() {
     if (jj_scan_token(ADDRESS_WILDCARD)) return true;
     if (jj_3R_11()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_15() {
+    if (jj_scan_token(STRING_WILDCARD)) return true;
     return false;
   }
 

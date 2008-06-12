@@ -1,7 +1,7 @@
 /**
  * 
  */
-package modification.queryLanguageParser;
+package modification.queryLanguageParser.addressManagement;
 
 import java.util.List;
 
