@@ -4,21 +4,18 @@ package modification.queryLanguageParser;
 public interface QueryLanguageParserConstants {
 
   int EOF = 0;
-  int SPECIAL_CHARACTER_FLAG = 5;
-  int SPECIAL_CHARACTER = 6;
-  int UNION = 7;
-  int INTERSECTION = 8;
-  int MINUS = 9;
-  int ADDRESS_DIVIDER = 10;
-  int TYPE_DIVIDER = 11;
-  int ADDRESS_WILDCARD = 12;
-  int STRING_WILDCARD = 13;
-  int LEFT_BRACE = 14;
-  int RIGHT_BRACE = 15;
-  int NUMBER = 16;
-  int SMALL_CHARACTER = 17;
-  int GREAT_CHARACTER = 18;
-  int WORD = 19;
+  int UNION = 5;
+  int INTERSECTION = 6;
+  int MINUS = 7;
+  int ADDRESS_DIVIDER = 8;
+  int TYPE_DIVIDER = 9;
+  int ADDRESS_WILDCARD = 10;
+  int STRING_WILDCARD = 11;
+  int LEFT_BRACE = 12;
+  int RIGHT_BRACE = 13;
+  int NUMBER = 14;
+  int SMALL_CHARACTER = 15;
+  int GREAT_CHARACTER = 16;
 
   int DEFAULT = 0;
 
@@ -28,8 +25,6 @@ public interface QueryLanguageParserConstants {
     "\"\\t\"",
     "\"\\n\"",
     "\"\\r\"",
-    "\"\\\'\"",
-    "<SPECIAL_CHARACTER>",
     "\"||\"",
     "\"&&\"",
     "\"-\"",
@@ -42,7 +37,7 @@ public interface QueryLanguageParserConstants {
     "<NUMBER>",
     "<SMALL_CHARACTER>",
     "<GREAT_CHARACTER>",
-    "<WORD>",
+    "\"%\"",
   };
 
 }

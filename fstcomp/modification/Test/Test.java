@@ -3,6 +3,6 @@ import java.util.regex.Pattern;
 
 public class Test {
     public static void main(String args[]) {
-	System.out.println(Pattern.matches("a(.)*", "aaaaab"));
+	System.out.println(Pattern.matches("a\\.", "a."));
     }
 }

@@ -25,8 +25,6 @@ public class TreeAddress {
      * 
      */
     public List<FSTNode> resolve(FSTNode compilation) {
-	// TODO BUG ahhhhhhhhhhhh!
-
 	List<FSTNode> possibleNodesOld = new DuplicateFreeLinkedList<FSTNode>();
 	List<FSTNode> possibleNodesNew = new DuplicateFreeLinkedList<FSTNode>();
 	List<FSTNode> resultNodes = new DuplicateFreeLinkedList<FSTNode>();
