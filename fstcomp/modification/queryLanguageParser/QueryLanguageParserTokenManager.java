@@ -45,7 +45,7 @@ private final int jjMoveStringLiteralDfa0_0()
    switch(curChar)
    {
       case 37:
-         return jjStopAtPos(0, 17);
+         return jjStopAtPos(0, 14);
       case 38:
          return jjMoveStringLiteralDfa1_0(0x40L);
       case 40:
@@ -144,7 +144,7 @@ private final int jjMoveNfa_0(int startState, int curPos)
             {
                case 0:
                   if ((0x3ff000000000000L & l) != 0L)
-                     kind = 14;
+                     kind = 15;
                   break;
                default : break;
             }
@@ -160,22 +160,22 @@ private final int jjMoveNfa_0(int startState, int curPos)
                case 0:
                   if ((0x7fffffeL & l) != 0L)
                   {
-                     if (kind > 16)
-                        kind = 16;
+                     if (kind > 17)
+                        kind = 17;
                   }
                   else if ((0x7fffffe00000000L & l) != 0L)
                   {
-                     if (kind > 15)
-                        kind = 15;
+                     if (kind > 16)
+                        kind = 16;
                   }
                   break;
                case 1:
                   if ((0x7fffffe00000000L & l) != 0L)
-                     kind = 15;
+                     kind = 16;
                   break;
                case 2:
                   if ((0x7fffffeL & l) != 0L)
-                     kind = 16;
+                     kind = 17;
                   break;
                default : break;
             }
@@ -210,12 +210,12 @@ static final int[] jjnextStates = {
 };
 public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, "\174\174", "\46\46", "\55", "\56", "\72", 
-"\56\56", "\52", "\50", "\51", null, null, null, "\45", };
+"\56\56", "\52", "\50", "\51", "\45", null, null, null, null, };
 public static final String[] lexStateNames = {
    "DEFAULT", 
 };
 static final long[] jjtoToken = {
-   0x3ffe1L, 
+   0x7ffe1L, 
 };
 static final long[] jjtoSkip = {
    0x1eL, 
@@ -309,6 +309,10 @@ public Token getNextToken()
    jjmatchedKind = 0x7fffffff;
    jjmatchedPos = 0;
    curPos = jjMoveStringLiteralDfa0_0();
+   if (jjmatchedPos == 0 && jjmatchedKind > 18)
+   {
+      jjmatchedKind = 18;
+   }
    if (jjmatchedKind != 0x7fffffff)
    {
       if (jjmatchedPos + 1 < curPos)

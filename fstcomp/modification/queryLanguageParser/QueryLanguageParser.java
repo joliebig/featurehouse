@@ -61,33 +61,43 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         List<FSTNode> nodeListOp2 = new LinkedList<FSTNode>();
         List<FSTNode> nodeListRes = new LinkedList<FSTNode>();
       nodeListOp1 = queryTerm();
-                nodeListRes = nodeListOp1;
+         nodeListRes = nodeListOp1;
       label_1:
       while (true) {
-        if (jj_2_1(5)) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case UNION:
+        case INTERSECTION:
+        case MINUS:
           ;
-        } else {
+          break;
+        default:
+          jj_la1[0] = jj_gen;
           break label_1;
         }
-        if (jj_2_2(5)) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case UNION:
           jj_consume_token(UNION);
           nodeListOp2 = queryTerm();
-                        nodeListRes = nodeListOp1 = or(nodeListOp1, nodeListOp2);
-        } else if (jj_2_3(5)) {
+                 nodeListRes = nodeListOp1 = or(nodeListOp1, nodeListOp2);
+          break;
+        case INTERSECTION:
           jj_consume_token(INTERSECTION);
           nodeListOp2 = queryTerm();
-                        nodeListRes = nodeListOp1 = and(nodeListOp1, nodeListOp2);
-        } else if (jj_2_4(5)) {
+                 nodeListRes = nodeListOp1 = and(nodeListOp1, nodeListOp2);
+          break;
+        case MINUS:
           jj_consume_token(MINUS);
           nodeListOp2 = queryTerm();
-                        nodeListRes = nodeListOp1 = minus(nodeListOp1, nodeListOp2);
-        } else {
+                 nodeListRes = nodeListOp1 = minus(nodeListOp1, nodeListOp2);
+          break;
+        default:
+          jj_la1[1] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
       }
       jj_consume_token(0);
-                {if (true) return nodeListRes;}
+         {if (true) return nodeListRes;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("expression");
@@ -100,38 +110,55 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     try {
         List<FSTNode> nodeList;
         TreeAddress treeAddress;
-      if (jj_2_5(5)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LEFT_BRACE:
         jj_consume_token(LEFT_BRACE);
         nodeList = expression();
         jj_consume_token(RIGHT_BRACE);
-                {if (true) return nodeList;}
-      } else if (jj_2_6(5)) {
+                 {if (true) return nodeList;}
+        break;
+      case ADDRESS_WILDCARD:
+      case STRING_WILDCARD:
+      case LITERAL_FLAG:
+      case NUMBER:
+      case SMALL_CHARACTER:
+      case GREAT_CHARACTER:
         treeAddress = treeAddress();
-      } else {
+        break;
+      default:
+        jj_la1[2] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
-                {if (true) return treeAddress.resolve(root);}
+         {if (true) return treeAddress.resolve(root);}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("queryTerm");
     }
   }
 
-/*** single tree address without operators*/
+/*** single tree address without operators. * Differentiation with "|" to avoid the empty string.* splits off <ADDRESS_WILDCARD>s to treat seperately.*/
   final public TreeAddress treeAddress() throws ParseException {
     trace_call("treeAddress");
     try {
         List<TreeAddressToken> tokenList = new LinkedList<TreeAddressToken>();
         List<TreeAddressToken> tempTokenList;
-      if (jj_2_9(5)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case STRING_WILDCARD:
+      case LITERAL_FLAG:
+      case NUMBER:
+      case SMALL_CHARACTER:
+      case GREAT_CHARACTER:
         tempTokenList = literalAddress();
                          tokenList.addAll(tempTokenList);
         label_2:
         while (true) {
-          if (jj_2_7(5)) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case ADDRESS_WILDCARD:
             ;
-          } else {
+            break;
+          default:
+            jj_la1[3] = jj_gen;
             break label_2;
           }
           jj_consume_token(ADDRESS_WILDCARD);
@@ -139,20 +166,26 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
           tempTokenList = literalAddress();
                                  tokenList.addAll(tempTokenList);
         }
-      } else if (jj_2_10(5)) {
+        break;
+      case ADDRESS_WILDCARD:
         label_3:
         while (true) {
           jj_consume_token(ADDRESS_WILDCARD);
                          tokenList.add(new WildcardToken());
           tempTokenList = literalAddress();
                          tokenList.addAll(tempTokenList);
-          if (jj_2_8(5)) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case ADDRESS_WILDCARD:
             ;
-          } else {
+            break;
+          default:
+            jj_la1[4] = jj_gen;
             break label_3;
           }
         }
-      } else {
+        break;
+      default:
+        jj_la1[5] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -163,7 +196,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
-/*** */
+/*** literalAddress consisting of nameTypePatternTokens and <ADDRESS_DIVIDER>s*/
   final public List<TreeAddressToken> literalAddress() throws ParseException {
     trace_call("literalAddress");
     try {
@@ -173,9 +206,12 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
          tokenList.add(token);
       label_4:
       while (true) {
-        if (jj_2_11(5)) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ADDRESS_DIVIDER:
           ;
-        } else {
+          break;
+        default:
+          jj_la1[6] = jj_gen;
           break label_4;
         }
         jj_consume_token(ADDRESS_DIVIDER);
@@ -189,7 +225,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
-/*** tokens split by <ADDRESS_DIVIDER>*/
+/*** tokens split by <ADDRESS_DIVIDER> in literal addresses*/
   final public TreeAddressToken nameTypePatternToken() throws ParseException {
     trace_call("nameTypePatternToken");
     try {
@@ -198,89 +234,64 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
       name = name();
       jj_consume_token(TYPE_DIVIDER);
       type = type();
-                {if (true) return new NameTypePatternToken(name,type);}
+         {if (true) return new NameTypePatternToken(name,type);}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("nameTypePatternToken");
     }
   }
 
-/*** */
+/*** regex pattern for name part of nameTypePatternTokens*/
   final public String name() throws ParseException {
     trace_call("name");
     try {
         String name;
       name = stringWithWildcards();
-                {if (true) return name;}
+         {if (true) return name;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("name");
     }
   }
 
-/*** */
+/*** regex pattern for type part of nameTypePatternTokens*/
   final public String type() throws ParseException {
     trace_call("type");
     try {
         String type;
       type = stringWithWildcards();
-                {if (true) return type;}
+         {if (true) return type;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("type");
     }
   }
 
-/*** */
+/*** contains <STRING_WILDCARD>s and words mixed up in different ways*/
   final public String stringWithWildcards() throws ParseException {
     trace_call("stringWithWildcards");
     try {
         String result = "";
         Token t;
         String s;
-      if (jj_2_16(5)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case STRING_WILDCARD:
         jj_consume_token(STRING_WILDCARD);
-         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-        label_5:
-        while (true) {
-          if (jj_2_12(5)) {
-            ;
-          } else {
-            break label_5;
-          }
-          s = word();
-         result = result.concat(s.toString());
-          jj_consume_token(STRING_WILDCARD);
-         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-        }
-        if (jj_2_13(5)) {
-          s = word();
-         result = result.concat(s.toString());
-        } else {
-          ;
-        }
-      } else if (jj_2_17(5)) {
+                         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
+        s = wildcardExtension();
+                         result = result.concat(s.toString());
+        break;
+      case LITERAL_FLAG:
+      case NUMBER:
+      case SMALL_CHARACTER:
+      case GREAT_CHARACTER:
         s = word();
-         result = result.concat(s.toString());
-        label_6:
-        while (true) {
-          if (jj_2_14(5)) {
-            ;
-          } else {
-            break label_6;
-          }
-          jj_consume_token(STRING_WILDCARD);
-         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-          s = word();
-         result = result.concat(s.toString());
-        }
-        if (jj_2_15(5)) {
-          jj_consume_token(STRING_WILDCARD);
-         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-        } else {
-          ;
-        }
-      } else {
+                         result = result.concat(s.toString());
+        s = wordExtension();
+                         result = result.concat(s.toString());
+        break;
+      default:
+        jj_la1[7] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -291,34 +302,121 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
+/*** possible extends for word*/
+  final public String wordExtension() throws ParseException {
+    trace_call("wordExtension");
+    try {
+        String result = "";
+        Token t;
+        String s;
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case STRING_WILDCARD:
+        jj_consume_token(STRING_WILDCARD);
+                         result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case LITERAL_FLAG:
+        case NUMBER:
+        case SMALL_CHARACTER:
+        case GREAT_CHARACTER:
+          s = word();
+                                 result = result.concat(s.toString());
+          s = wordExtension();
+                                 result = result.concat(s.toString());
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          ;
+        }
+        break;
+      default:
+        jj_la1[9] = jj_gen;
+        ;
+      }
+         {if (true) return result;}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("wordExtension");
+    }
+  }
+
+/*** possible extends for <STRING_WILDCARD>*/
+  final public String wildcardExtension() throws ParseException {
+    trace_call("wildcardExtension");
+    try {
+        String result = "";
+        Token t;
+        String s;
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LITERAL_FLAG:
+      case NUMBER:
+      case SMALL_CHARACTER:
+      case GREAT_CHARACTER:
+        s = word();
+                         result = result.concat(s.toString());
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case STRING_WILDCARD:
+          jj_consume_token(STRING_WILDCARD);
+                                 result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
+          s = wildcardExtension();
+                                 result = result.concat(s.toString());
+          break;
+        default:
+          jj_la1[10] = jj_gen;
+          ;
+        }
+        break;
+      default:
+        jj_la1[11] = jj_gen;
+        ;
+      }
+         {if (true) return result;}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("wildcardExtension");
+    }
+  }
+
+/*** word is consisting of <SMALL_CHARACTER>s, <GREAT_CHARACTER>s, * <NUMBER>s and specialCharacters (treated seperately)*/
   final public String word() throws ParseException {
     trace_call("word");
     try {
         String m;
         String s = "";
         Token t;
-      label_7:
+      label_5:
       while (true) {
-        if (jj_2_18(5)) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SMALL_CHARACTER:
           t = jj_consume_token(SMALL_CHARACTER);
-         s = s.concat(t.toString());
-        } else if (jj_2_19(5)) {
+                 s = s.concat("\\Q" + t.toString() + "\\E");
+          break;
+        case GREAT_CHARACTER:
           t = jj_consume_token(GREAT_CHARACTER);
-                 s = s.concat(t.toString());
-        } else if (jj_2_20(5)) {
+                 s = s.concat("\\Q" + t.toString() + "\\E");
+          break;
+        case NUMBER:
           t = jj_consume_token(NUMBER);
-                 s = s.concat(t.toString());
-        } else if (jj_2_21(5)) {
+                 s = s.concat("\\Q" + t.toString() + "\\E");
+          break;
+        case LITERAL_FLAG:
           m = specialCharacter();
                  s = s.concat(m);
-        } else {
+          break;
+        default:
+          jj_la1[12] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
-        if (jj_2_22(5)) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case LITERAL_FLAG:
+        case NUMBER:
+        case SMALL_CHARACTER:
+        case GREAT_CHARACTER:
           ;
-        } else {
-          break label_7;
+          break;
+        default:
+          jj_la1[13] = jj_gen;
+          break label_5;
         }
       }
          {if (true) return s;}
@@ -333,32 +431,46 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     try {
         String s = "";
         Token t;
-      jj_consume_token(17);
-      if (jj_2_23(5)) {
+      jj_consume_token(LITERAL_FLAG);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ANY_CHAR:
+        t = jj_consume_token(ANY_CHAR);
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case UNION:
         t = jj_consume_token(UNION);
-                 s = s.concat(t.toString());
-      } else if (jj_2_24(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case INTERSECTION:
         t = jj_consume_token(INTERSECTION);
-                 s = s.concat(t.toString());
-      } else if (jj_2_25(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case MINUS:
         t = jj_consume_token(MINUS);
-                 s = s.concat(t.toString());
-      } else if (jj_2_26(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case ADDRESS_DIVIDER:
         t = jj_consume_token(ADDRESS_DIVIDER);
-                 s = s.concat("\\.");
-      } else if (jj_2_27(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case TYPE_DIVIDER:
         t = jj_consume_token(TYPE_DIVIDER);
-                 s = s.concat(t.toString());
-      } else if (jj_2_28(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case STRING_WILDCARD:
         t = jj_consume_token(STRING_WILDCARD);
-                 s = s.concat(t.toString());
-      } else if (jj_2_29(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case LEFT_BRACE:
         t = jj_consume_token(LEFT_BRACE);
-                 s = s.concat(t.toString());
-      } else if (jj_2_30(5)) {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      case RIGHT_BRACE:
         t = jj_consume_token(RIGHT_BRACE);
-                 s = s.concat(t.toString());
-      } else {
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+        break;
+      default:
+        jj_la1[14] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -369,545 +481,19 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
-  final private boolean jj_2_1(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_1(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(0, xla); }
-  }
-
-  final private boolean jj_2_2(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_2(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(1, xla); }
-  }
-
-  final private boolean jj_2_3(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_3(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(2, xla); }
-  }
-
-  final private boolean jj_2_4(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_4(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(3, xla); }
-  }
-
-  final private boolean jj_2_5(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_5(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(4, xla); }
-  }
-
-  final private boolean jj_2_6(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_6(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(5, xla); }
-  }
-
-  final private boolean jj_2_7(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_7(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(6, xla); }
-  }
-
-  final private boolean jj_2_8(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_8(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(7, xla); }
-  }
-
-  final private boolean jj_2_9(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_9(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(8, xla); }
-  }
-
-  final private boolean jj_2_10(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_10(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(9, xla); }
-  }
-
-  final private boolean jj_2_11(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_11(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(10, xla); }
-  }
-
-  final private boolean jj_2_12(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_12(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(11, xla); }
-  }
-
-  final private boolean jj_2_13(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_13(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(12, xla); }
-  }
-
-  final private boolean jj_2_14(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_14(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(13, xla); }
-  }
-
-  final private boolean jj_2_15(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_15(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(14, xla); }
-  }
-
-  final private boolean jj_2_16(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_16(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(15, xla); }
-  }
-
-  final private boolean jj_2_17(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_17(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(16, xla); }
-  }
-
-  final private boolean jj_2_18(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_18(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(17, xla); }
-  }
-
-  final private boolean jj_2_19(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_19(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(18, xla); }
-  }
-
-  final private boolean jj_2_20(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_20(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(19, xla); }
-  }
-
-  final private boolean jj_2_21(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_21(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(20, xla); }
-  }
-
-  final private boolean jj_2_22(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_22(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(21, xla); }
-  }
-
-  final private boolean jj_2_23(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_23(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(22, xla); }
-  }
-
-  final private boolean jj_2_24(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_24(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(23, xla); }
-  }
-
-  final private boolean jj_2_25(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_25(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(24, xla); }
-  }
-
-  final private boolean jj_2_26(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_26(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(25, xla); }
-  }
-
-  final private boolean jj_2_27(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_27(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(26, xla); }
-  }
-
-  final private boolean jj_2_28(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_28(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(27, xla); }
-  }
-
-  final private boolean jj_2_29(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_29(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(28, xla); }
-  }
-
-  final private boolean jj_2_30(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_30(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(29, xla); }
-  }
-
-  final private boolean jj_3_10() {
-    Token xsp;
-    if (jj_3_8()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_8()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_14() {
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_17() {
-    if (jj_3R_13()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_14()) { jj_scanpos = xsp; break; }
-    }
-    xsp = jj_scanpos;
-    if (jj_3_15()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3_9() {
-    if (jj_3R_11()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_7()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_13() {
-    if (jj_3R_13()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_10() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_9()) {
-    jj_scanpos = xsp;
-    if (jj_3_10()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3_12() {
-    if (jj_3R_13()) return true;
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_16() {
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_12()) { jj_scanpos = xsp; break; }
-    }
-    xsp = jj_scanpos;
-    if (jj_3_13()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3_30() {
-    if (jj_scan_token(RIGHT_BRACE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_17() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_16()) {
-    jj_scanpos = xsp;
-    if (jj_3_17()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3_29() {
-    if (jj_scan_token(LEFT_BRACE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_6() {
-    if (jj_3R_10()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_28() {
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_5() {
-    if (jj_scan_token(LEFT_BRACE)) return true;
-    if (jj_3R_9()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_27() {
-    if (jj_scan_token(TYPE_DIVIDER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_8() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_5()) {
-    jj_scanpos = xsp;
-    if (jj_3_6()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3_26() {
-    if (jj_scan_token(ADDRESS_DIVIDER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_16() {
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_25() {
-    if (jj_scan_token(MINUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_24() {
-    if (jj_scan_token(INTERSECTION)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_4() {
-    if (jj_scan_token(MINUS)) return true;
-    if (jj_3R_8()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_23() {
-    if (jj_scan_token(UNION)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_3() {
-    if (jj_scan_token(INTERSECTION)) return true;
-    if (jj_3R_8()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_15() {
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    if (jj_scan_token(UNION)) return true;
-    if (jj_3R_8()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_1() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_2()) {
-    jj_scanpos = xsp;
-    if (jj_3_3()) {
-    jj_scanpos = xsp;
-    if (jj_3_4()) return true;
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_14() {
-    if (jj_scan_token(17)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_23()) {
-    jj_scanpos = xsp;
-    if (jj_3_24()) {
-    jj_scanpos = xsp;
-    if (jj_3_25()) {
-    jj_scanpos = xsp;
-    if (jj_3_26()) {
-    jj_scanpos = xsp;
-    if (jj_3_27()) {
-    jj_scanpos = xsp;
-    if (jj_3_28()) {
-    jj_scanpos = xsp;
-    if (jj_3_29()) {
-    jj_scanpos = xsp;
-    if (jj_3_30()) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_21() {
-    if (jj_3R_14()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_20() {
-    if (jj_scan_token(NUMBER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_12() {
-    if (jj_3R_15()) return true;
-    if (jj_scan_token(TYPE_DIVIDER)) return true;
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_9() {
-    if (jj_3R_8()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_1()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(0)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_19() {
-    if (jj_scan_token(GREAT_CHARACTER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_11() {
-    if (jj_scan_token(ADDRESS_DIVIDER)) return true;
-    if (jj_3R_12()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_18() {
-    if (jj_scan_token(SMALL_CHARACTER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_22() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_18()) {
-    jj_scanpos = xsp;
-    if (jj_3_19()) {
-    jj_scanpos = xsp;
-    if (jj_3_20()) {
-    jj_scanpos = xsp;
-    if (jj_3_21()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_13() {
-    Token xsp;
-    if (jj_3_22()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_22()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_11() {
-    if (jj_3R_12()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_11()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_8() {
-    if (jj_scan_token(ADDRESS_WILDCARD)) return true;
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_7() {
-    if (jj_scan_token(ADDRESS_WILDCARD)) return true;
-    if (jj_3R_11()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_15() {
-    if (jj_scan_token(STRING_WILDCARD)) return true;
-    return false;
-  }
-
   public QueryLanguageParserTokenManager token_source;
   SimpleCharStream jj_input_stream;
   public Token token, jj_nt;
   private int jj_ntk;
-  private Token jj_scanpos, jj_lastpos;
-  private int jj_la;
-  public boolean lookingAhead = false;
-  private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[0];
+  final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static {
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {};
+      jj_la1_0 = new int[] {0xe0,0xe0,0x3dc00,0x400,0x400,0x3cc00,0x100,0x3c800,0x3c000,0x800,0x800,0x3c000,0x3c000,0x3c000,0x43be0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[30];
-  private boolean jj_rescan = false;
-  private int jj_gc = 0;
 
   public QueryLanguageParser(java.io.InputStream stream) {
      this(stream, null);
@@ -918,8 +504,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.InputStream stream) {
@@ -931,8 +516,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   public QueryLanguageParser(java.io.Reader stream) {
@@ -941,8 +525,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.Reader stream) {
@@ -951,8 +534,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   public QueryLanguageParser(QueryLanguageParserTokenManager tm) {
@@ -960,8 +542,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(QueryLanguageParserTokenManager tm) {
@@ -969,8 +550,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 0; i++) jj_la1[i] = -1;
-    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
+    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
   }
 
   final private Token jj_consume_token(int kind) throws ParseException {
@@ -980,45 +560,12 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
-      if (++jj_gc > 100) {
-        jj_gc = 0;
-        for (int i = 0; i < jj_2_rtns.length; i++) {
-          JJCalls c = jj_2_rtns[i];
-          while (c != null) {
-            if (c.gen < jj_gen) c.first = null;
-            c = c.next;
-          }
-        }
-      }
       trace_token(token, "");
       return token;
     }
     token = oldToken;
     jj_kind = kind;
     throw generateParseException();
-  }
-
-  static private final class LookaheadSuccess extends java.lang.Error { }
-  final private LookaheadSuccess jj_ls = new LookaheadSuccess();
-  final private boolean jj_scan_token(int kind) {
-    if (jj_scanpos == jj_lastpos) {
-      jj_la--;
-      if (jj_scanpos.next == null) {
-        jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
-      } else {
-        jj_lastpos = jj_scanpos = jj_scanpos.next;
-      }
-    } else {
-      jj_scanpos = jj_scanpos.next;
-    }
-    if (jj_rescan) {
-      int i = 0; Token tok = token;
-      while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
-      if (tok != null) jj_add_error_token(kind, i);
-    }
-    if (jj_scanpos.kind != kind) return true;
-    if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
-    return false;
   }
 
   final public Token getNextToken() {
@@ -1031,7 +578,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
   }
 
   final public Token getToken(int index) {
-    Token t = lookingAhead ? jj_scanpos : token;
+    Token t = token;
     for (int i = 0; i < index; i++) {
       if (t.next != null) t = t.next;
       else t = t.next = token_source.getNextToken();
@@ -1049,48 +596,18 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
   private java.util.Vector jj_expentries = new java.util.Vector();
   private int[] jj_expentry;
   private int jj_kind = -1;
-  private int[] jj_lasttokens = new int[100];
-  private int jj_endpos;
-
-  private void jj_add_error_token(int kind, int pos) {
-    if (pos >= 100) return;
-    if (pos == jj_endpos + 1) {
-      jj_lasttokens[jj_endpos++] = kind;
-    } else if (jj_endpos != 0) {
-      jj_expentry = new int[jj_endpos];
-      for (int i = 0; i < jj_endpos; i++) {
-        jj_expentry[i] = jj_lasttokens[i];
-      }
-      boolean exists = false;
-      for (java.util.Enumeration e = jj_expentries.elements(); e.hasMoreElements();) {
-        int[] oldentry = (int[])(e.nextElement());
-        if (oldentry.length == jj_expentry.length) {
-          exists = true;
-          for (int i = 0; i < jj_expentry.length; i++) {
-            if (oldentry[i] != jj_expentry[i]) {
-              exists = false;
-              break;
-            }
-          }
-          if (exists) break;
-        }
-      }
-      if (!exists) jj_expentries.addElement(jj_expentry);
-      if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
-    }
-  }
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[18];
-    for (int i = 0; i < 18; i++) {
+    boolean[] la1tokens = new boolean[19];
+    for (int i = 0; i < 19; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 0; i++) {
+    for (int i = 0; i < 15; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -1099,16 +616,13 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         }
       }
     }
-    for (int i = 0; i < 18; i++) {
+    for (int i = 0; i < 19; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
         jj_expentries.addElement(jj_expentry);
       }
     }
-    jj_endpos = 0;
-    jj_rescan_token();
-    jj_add_error_token(0, 0);
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
       exptokseq[i] = (int[])jj_expentries.elementAt(i);
@@ -1163,70 +677,6 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
       }
       System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
     }
-  }
-
-  final private void jj_rescan_token() {
-    jj_rescan = true;
-    for (int i = 0; i < 30; i++) {
-    try {
-      JJCalls p = jj_2_rtns[i];
-      do {
-        if (p.gen > jj_gen) {
-          jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
-          switch (i) {
-            case 0: jj_3_1(); break;
-            case 1: jj_3_2(); break;
-            case 2: jj_3_3(); break;
-            case 3: jj_3_4(); break;
-            case 4: jj_3_5(); break;
-            case 5: jj_3_6(); break;
-            case 6: jj_3_7(); break;
-            case 7: jj_3_8(); break;
-            case 8: jj_3_9(); break;
-            case 9: jj_3_10(); break;
-            case 10: jj_3_11(); break;
-            case 11: jj_3_12(); break;
-            case 12: jj_3_13(); break;
-            case 13: jj_3_14(); break;
-            case 14: jj_3_15(); break;
-            case 15: jj_3_16(); break;
-            case 16: jj_3_17(); break;
-            case 17: jj_3_18(); break;
-            case 18: jj_3_19(); break;
-            case 19: jj_3_20(); break;
-            case 20: jj_3_21(); break;
-            case 21: jj_3_22(); break;
-            case 22: jj_3_23(); break;
-            case 23: jj_3_24(); break;
-            case 24: jj_3_25(); break;
-            case 25: jj_3_26(); break;
-            case 26: jj_3_27(); break;
-            case 27: jj_3_28(); break;
-            case 28: jj_3_29(); break;
-            case 29: jj_3_30(); break;
-          }
-        }
-        p = p.next;
-      } while (p != null);
-      } catch(LookaheadSuccess ls) { }
-    }
-    jj_rescan = false;
-  }
-
-  final private void jj_save(int index, int xla) {
-    JJCalls p = jj_2_rtns[index];
-    while (p.gen > jj_gen) {
-      if (p.next == null) { p = p.next = new JJCalls(); break; }
-      p = p.next;
-    }
-    p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
-  }
-
-  static final class JJCalls {
-    int gen;
-    Token first;
-    int arg;
-    JJCalls next;
   }
 
 }
