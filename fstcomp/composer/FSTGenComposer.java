@@ -113,7 +113,8 @@ public class FSTGenComposer {
 
 	    String query = "..";
 	    query = "..*:*..*:*..*:*";
-	    //query = "..Ed*%.*:*..*:*";
+	    query = "..Ed*%.%*:*..*:*";
+	    query = "..*%s.%e*:*%s- %e*";
 
 	    QueryLanguageParser parser = new QueryLanguageParser(query,
 		    composition);

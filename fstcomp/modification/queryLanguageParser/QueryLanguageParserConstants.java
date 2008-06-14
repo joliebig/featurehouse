@@ -13,13 +13,16 @@ public interface QueryLanguageParserConstants {
   int STRING_WILDCARD = 11;
   int LEFT_BRACE = 12;
   int RIGHT_BRACE = 13;
-  int LITERAL_FLAG = 14;
-  int NUMBER = 15;
-  int SMALL_CHARACTER = 16;
-  int GREAT_CHARACTER = 17;
-  int ANY_CHAR = 18;
+  int NUMBER = 14;
+  int SMALL_CHARACTER = 15;
+  int GREAT_CHARACTER = 16;
+  int ANY_CHAR = 17;
+  int LITERAL_START_FLAG = 18;
+  int LITERAL_END_FLAG = 19;
+  int ANY_CHAR_LITERAL = 20;
 
   int DEFAULT = 0;
+  int LITERAL_MODE = 1;
 
   String[] tokenImage = {
     "<EOF>",
@@ -36,11 +39,13 @@ public interface QueryLanguageParserConstants {
     "\"*\"",
     "\"(\"",
     "\")\"",
-    "\"%\"",
     "<NUMBER>",
     "<SMALL_CHARACTER>",
     "<GREAT_CHARACTER>",
     "<ANY_CHAR>",
+    "\"%s\"",
+    "\"%e\"",
+    "<ANY_CHAR_LITERAL>",
   };
 
 }

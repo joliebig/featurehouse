@@ -119,10 +119,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         break;
       case ADDRESS_WILDCARD:
       case STRING_WILDCARD:
-      case LITERAL_FLAG:
       case NUMBER:
       case SMALL_CHARACTER:
       case GREAT_CHARACTER:
+      case ANY_CHAR:
+      case LITERAL_START_FLAG:
         treeAddress = treeAddress();
         break;
       default:
@@ -145,10 +146,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         List<TreeAddressToken> tempTokenList;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STRING_WILDCARD:
-      case LITERAL_FLAG:
       case NUMBER:
       case SMALL_CHARACTER:
       case GREAT_CHARACTER:
+      case ANY_CHAR:
+      case LITERAL_START_FLAG:
         tempTokenList = literalAddress();
                          tokenList.addAll(tempTokenList);
         label_2:
@@ -281,10 +283,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         s = wildcardExtension();
                          result = result.concat(s.toString());
         break;
-      case LITERAL_FLAG:
       case NUMBER:
       case SMALL_CHARACTER:
       case GREAT_CHARACTER:
+      case ANY_CHAR:
+      case LITERAL_START_FLAG:
         s = word();
                          result = result.concat(s.toString());
         s = wordExtension();
@@ -314,10 +317,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         jj_consume_token(STRING_WILDCARD);
                          result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LITERAL_FLAG:
         case NUMBER:
         case SMALL_CHARACTER:
         case GREAT_CHARACTER:
+        case ANY_CHAR:
+        case LITERAL_START_FLAG:
           s = word();
                                  result = result.concat(s.toString());
           s = wordExtension();
@@ -347,10 +351,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         Token t;
         String s;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LITERAL_FLAG:
       case NUMBER:
       case SMALL_CHARACTER:
       case GREAT_CHARACTER:
+      case ANY_CHAR:
+      case LITERAL_START_FLAG:
         s = word();
                          result = result.concat(s.toString());
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -398,8 +403,12 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
           t = jj_consume_token(NUMBER);
                  s = s.concat("\\Q" + t.toString() + "\\E");
           break;
-        case LITERAL_FLAG:
-          m = specialCharacter();
+        case ANY_CHAR:
+          t = jj_consume_token(ANY_CHAR);
+                 s = s.concat("\\Q" + t.toString() + "\\E");
+          break;
+        case LITERAL_START_FLAG:
+          m = literalString();
                  s = s.concat(m);
           break;
         default:
@@ -408,10 +417,11 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
           throw new ParseException();
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LITERAL_FLAG:
         case NUMBER:
         case SMALL_CHARACTER:
         case GREAT_CHARACTER:
+        case ANY_CHAR:
+        case LITERAL_START_FLAG:
           ;
           break;
         default:
@@ -426,58 +436,30 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
-  final public String specialCharacter() throws ParseException {
-    trace_call("specialCharacter");
+  final public String literalString() throws ParseException {
+    trace_call("literalString");
     try {
         String s = "";
         Token t;
-      jj_consume_token(LITERAL_FLAG);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case ANY_CHAR:
-        t = jj_consume_token(ANY_CHAR);
+      jj_consume_token(LITERAL_START_FLAG);
+      label_6:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ANY_CHAR_LITERAL:
+          ;
+          break;
+        default:
+          jj_la1[14] = jj_gen;
+          break label_6;
+        }
+        t = jj_consume_token(ANY_CHAR_LITERAL);
                          s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case UNION:
-        t = jj_consume_token(UNION);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case INTERSECTION:
-        t = jj_consume_token(INTERSECTION);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case MINUS:
-        t = jj_consume_token(MINUS);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case ADDRESS_DIVIDER:
-        t = jj_consume_token(ADDRESS_DIVIDER);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case TYPE_DIVIDER:
-        t = jj_consume_token(TYPE_DIVIDER);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case STRING_WILDCARD:
-        t = jj_consume_token(STRING_WILDCARD);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case LEFT_BRACE:
-        t = jj_consume_token(LEFT_BRACE);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      case RIGHT_BRACE:
-        t = jj_consume_token(RIGHT_BRACE);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
-        break;
-      default:
-        jj_la1[14] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
       }
+      jj_consume_token(LITERAL_END_FLAG);
          {if (true) return s;}
     throw new Error("Missing return statement in function");
     } finally {
-      trace_return("specialCharacter");
+      trace_return("literalString");
     }
   }
 
@@ -492,7 +474,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0xe0,0xe0,0x3dc00,0x400,0x400,0x3cc00,0x100,0x3c800,0x3c000,0x800,0x800,0x3c000,0x3c000,0x3c000,0x43be0,};
+      jj_la1_0 = new int[] {0xe0,0xe0,0x7dc00,0x400,0x400,0x7cc00,0x100,0x7c800,0x7c000,0x800,0x800,0x7c000,0x7c000,0x7c000,0x100000,};
    }
 
   public QueryLanguageParser(java.io.InputStream stream) {
@@ -599,8 +581,8 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[19];
-    for (int i = 0; i < 19; i++) {
+    boolean[] la1tokens = new boolean[21];
+    for (int i = 0; i < 21; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -616,7 +598,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
         }
       }
     }
-    for (int i = 0; i < 19; i++) {
+    for (int i = 0; i < 21; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
