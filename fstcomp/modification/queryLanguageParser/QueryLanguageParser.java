@@ -138,7 +138,7 @@ public class QueryLanguageParser implements QueryLanguageParserConstants {
     }
   }
 
-/*** single tree address without operators. * Differentiation with "|" to avoid the empty string.* splits off <ADDRESS_WILDCARD>s to treat seperately.*/
+/*** single tree address without operators. * Differentiation with "|" to suppress the empty string.* splits off <ADDRESS_WILDCARD>s to treat seperately.*/
   final public TreeAddress treeAddress() throws ParseException {
     trace_call("treeAddress");
     try {
