@@ -2,8 +2,8 @@
 
 <project name="BachelorThesis" basedir="..">
 	<target name="build">
-		<javacc target="queryLanguageParser/queryLanguageParser.jj"
-		        outputdirectory="queryLanguageParser"
+		<javacc target="traversalLanguageParser/traversalLanguageParser.jj"
+		        outputdirectory="traversalLanguageParser"
 		        javacchome="javacc/"
 		/>		
 	</target>

@@ -4,9 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import modification.queryLanguageParser.ParseException;
-import modification.queryLanguageParser.QueryLanguageParser;
-
+import modification.traversalLanguageParser.ParseException;
+import modification.traversalLanguageParser.TraversalLanguageParser;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
@@ -113,11 +112,10 @@ public class FSTGenComposer {
 
 	    String query = "..";
 	    query = "..*:*..*:*..*:*";
-	    query = "..Ed*%.%*:*..*:*";
-	    query = "..*%s.%e*:*%s- %e*";
-	    query = "..*:*Java*";
+	    query = "..*:MethodD*";
+	    //query = "*%s %s  .,?%e:*..*:*";
 
-	    QueryLanguageParser parser = new QueryLanguageParser(query,
+	    TraversalLanguageParser parser = new TraversalLanguageParser(query,
 		    composition);
 	    try {
 		list = parser.parse();
