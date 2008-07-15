@@ -11,6 +11,11 @@ import java.util.LinkedList;
  * 
  */
 public class DuplicateFreeLinkedList<E> extends LinkedList<E> {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+
     public DuplicateFreeLinkedList() {
 	super();
     }
