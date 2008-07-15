@@ -3,7 +3,7 @@ package modification.xmlParser;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Feature {
+public class ModificationComposition {
 
     private List<Modification> modList = new LinkedList<Modification>();
 

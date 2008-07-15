@@ -2,7 +2,9 @@ package modification.xmlParser;
 
 public class Modification {
 
-    private String fstTraversal, content, fstNodeType, modType;
+    private String fstTraversal, fstNodeType, modType;
+    
+    private Content content;
 
     /**
      * @return the fstTraversal
@@ -22,7 +24,7 @@ public class Modification {
     /**
      * @return the content
      */
-    public String getContent() {
+    public Content getContent() {
 	return content;
     }
 
@@ -30,7 +32,7 @@ public class Modification {
      * @param content
      *                the content to set
      */
-    public void setContent(String content) {
+    public void setContent(Content content) {
 	this.content = content;
     }
 

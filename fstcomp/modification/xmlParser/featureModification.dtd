@@ -1,7 +1,7 @@
-<!ELEMENT feature (modification)*>
-<!ELEMENT modification (modType, FSTNodeType, FSTTraversal, content)>
+<!ELEMENT modificationComposition (modification)*>
+<!ELEMENT modification (modType, baseFSTTraversal, modContent)>
 <!ELEMENT modType ("change"|"rewrite")>
 <!ELEMENT FSTNodeType (#PCDATA)>
 <!ELEMENT FSTTraversal (#PCDATA)>
-<!ELEMENT content ((#PCDATA | externInput))>
+<!ELEMENT content ((#PCDATA | externInput)+)>
 <!ELEMENT externInput (#PCDATA)>

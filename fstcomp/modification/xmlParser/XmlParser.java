@@ -1,10 +1,8 @@
 package modification.xmlParser;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -23,10 +21,10 @@ public class XmlParser {
 	this.inputStream = inputStream;
     }
 
-    public Feature parse() throws XMLStreamException, IOException {
+    public ModificationComposition parse() throws XMLStreamException, IOException {
 	XMLInputFactory factory = XMLInputFactory.newInstance();
 	XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
-	Feature feat = new Feature();
+	ModificationComposition feat = new ModificationComposition();
 
 	Modification mod = null;
 
@@ -77,19 +75,11 @@ public class XmlParser {
 		    break;
 		case content:
 		    System.out.println(reader.getText());
-		    mod.setContent(reader.getText());
+		    mod.setContent(new StringContent(reader.getText()));
 		    break;
 		case externInput:
 		    System.out.println(reader.getText());
-		    FileReader f = new FileReader(reader.getText());
-		    String s = "";
-		    StringWriter sw = new StringWriter();
-		    for (int c; (c = f.read()) != -1;) {
-			System.out.print((char) c);
-			sw.append((char) c);
-		    }
-		    System.out.println();
-		    mod.setContent(sw.toString());
+		    mod.setContent(new FileContent(reader.getText()));
 		    break;
 		default:
 		    break;
@@ -110,13 +100,6 @@ public class XmlParser {
 	    reader.next();
 	}
 	reader.close();
-	for (Modification m : feat.getModList()) {
-	    System.out.println(m.getModType());
-	    System.out.println(m.getFstTraversal());
-	    System.out.println(m.getFstNodeType());
-	    System.out.println(m.getContent());
-	}
-
 	return feat;
     }
 }
