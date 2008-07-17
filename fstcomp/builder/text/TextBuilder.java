@@ -7,9 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import composer.FSTGenComposer;
 import composer.rules.StringConcatenation;
-
 import builder.ArtifactBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
