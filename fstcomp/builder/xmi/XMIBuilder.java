@@ -18,6 +18,8 @@ public class XMIBuilder extends ArtifactBuilder {
 	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
 		FSTNonTerminal rootDocument = new FSTNonTerminal("XMI-File", st.nextToken());
 		parent.addChild(rootDocument);
+		
+		
 		XMIParser p = new XMIParser(new OffsetCharStream( new FileInputStream(inputFile)));
 		try {
 			p.Document(false);
