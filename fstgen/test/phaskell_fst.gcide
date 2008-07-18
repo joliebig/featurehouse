@@ -474,6 +474,7 @@ TOKEN : {
 
 GRAMMARSTART
 
+@FSTNonTerminal(name="{modid}")
 module: 
       	"module"
         	modid
@@ -483,7 +484,7 @@ module:
       	body <EOF>
     ;
     
-    
+@FSTTerminal(name="{TOSTRING}")	    
 qconid :
 //TODO		<QCONID>|
 		<CONSTRUCTOR_ID>	;
@@ -518,11 +519,14 @@ qvarid: //TODO<QVARID>|
 
 qvarsym://TODO <QVARSYM>|
 	<VARSYM>;
-	
+
+@FSTTerminal(name="{TOSTRING}")	
 modid:qconid;
 
+@FSTTerminal(name="{TOSTRING}")	
 conid:<CONSTRUCTOR_ID>;
-	
+
+@FSTNonTerminal	
 body : LL(2) "{" @+! impdecls [ ";"@! @! topdecls] @-! "}"
      | "{" @+! topdecls @-! "}"
      ;	
@@ -548,15 +552,30 @@ imp: var
 	
 tyconorcls: conid;
 
+@FSTNonTerminal
 topdecls: &LI topdecl	( ";"@! @! &LI topdecl )* 	;
 
-topdecl :	"type"		simpletype		declrhs	 :: typedecl
-	|   "data" optContext simpletype "=" constrs [deriving] :: datadecl
-	|	"newtype"  optContext simpletype declrhs  :: newtypedecl
-	|   "class"    optContext conid tyvar ("where" cdecls)? :: classdecl
-    |   "instance" optContext qconid inst ("where" block)?  :: instancedecl
-	|   "default" list  :: defaultdecl
-	|   decl :: declaration
+topdecl :	
+		@FSTNonTerminal(name="{simpletype}")
+		"type"		simpletype		declrhs	 :: typedecl
+	|   
+		@FSTNonTerminal(name="{simpletype}")
+		"data" optContext simpletype "=" constrs [deriving] :: datadecl
+	|	
+		@FSTNonTerminal(name="{simpletype}")
+		"newtype"  optContext simpletype declrhs  :: newtypedecl
+	|   
+		@FSTNonTerminal(name="{conid}")
+		"class"    optContext conid tyvar ("where" cdecls)? :: classdecl
+    |   
+   		@FSTNonTerminal(name="{qconid}")
+    	"instance" optContext qconid inst ("where" block)?  :: instancedecl
+	|   
+		@FSTTerminal
+		"default" list  :: defaultdecl
+	|   
+		@FSTTerminal(name="{AUTO}")
+		decl :: declaration
 	;
 	
 decl: LL("vars() \"::\"") signdecl	:: typeSignature
@@ -593,6 +612,7 @@ cdecl:	LL("vars() \"::\"") signdecl
 
 context: [LL("{isNot(SEMICOLON,CONTEXT_ARROW)}") JAVATOKEN(findUntilSemiOrContextArrow)];//(~(CONTEXT_ARROW|SEMICOLON))*;
 
+@FSTTerminal(name="{TOSTRING}")	
 simpletype: <CONSTRUCTOR_ID> [LL("{isNot(EQUALS)}") JAVATOKEN(findUntilEquals)];
 	
 

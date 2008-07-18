@@ -473,13 +473,13 @@ TOKEN : {
 }
 FSTInfo module(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"module" n=modid(true){ replaceName(n);} [n=exports(true){ replaceName(n);}] "where" n=body(true){ replaceName(n);} <EOF> {return productionEndTerminal("module","-","-","Replacement",first,token);}
+	"module" n=modid(inTerminal){ replaceName("modid", n);}{ replaceName(n);} [n=exports(inTerminal){ replaceName(n);}] "where" n=body(inTerminal){ replaceName(n);} <EOF> {return productionEndNonTerminal("module","{modid}","{modid}");}
 
  )  }
 
 FSTInfo qconid(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<CONSTRUCTOR_ID> {return productionEndTerminal("qconid","-","-","Replacement",first,token);}
+	<CONSTRUCTOR_ID> {return productionEndTerminal("qconid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
@@ -555,21 +555,21 @@ FSTInfo qvarsym(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo modid(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=qconid(true){ replaceName(n);} {return productionEndTerminal("modid","-","-","Replacement",first,token);}
+	n=qconid(true){ replaceName(n);} {return productionEndTerminal("modid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 FSTInfo conid(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<CONSTRUCTOR_ID> {return productionEndTerminal("conid","-","-","Replacement",first,token);}
+	<CONSTRUCTOR_ID> {return productionEndTerminal("conid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 FSTInfo body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "{" n=impdecls(true){ replaceName(n);} [";" n=topdecls(true){ replaceName(n);}] "}" {return productionEndTerminal("body1","-","-","Replacement",first,token);}
+	LOOKAHEAD(2) "{" n=impdecls(inTerminal){ replaceName(n);} [";" n=topdecls(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("body1","-","-");}
  |
-	"{" n=topdecls(true){ replaceName(n);} "}" {return productionEndTerminal("body2","-","-","Replacement",first,token);}
+	"{" n=topdecls(inTerminal){ replaceName(n);} "}" {return productionEndNonTerminal("body2","-","-");}
 
  )  }
 
@@ -615,25 +615,25 @@ FSTInfo tyconorcls(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo topdecls(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=topdecl(true){ replaceName(n);} (";" n=topdecl(true){ replaceName(n);})* {return productionEndTerminal("topdecls","-","-","Replacement",first,token);}
+	n=topdecl(inTerminal){ replaceName(n);} (";" n=topdecl(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("topdecls","-","-");}
 
  )  }
 
 FSTInfo topdecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"type" n=simpletype(true){ replaceName(n);} n=declrhs(true){ replaceName(n);} {return productionEndTerminal("typedecl","-","-","Replacement",first,token);}
+	"type" n=simpletype(inTerminal){ replaceName("simpletype", n);}{ replaceName(n);} n=declrhs(inTerminal){ replaceName(n);} {return productionEndNonTerminal("typedecl","{simpletype}","{simpletype}");}
  |
-	"data" n=optContext(true){ replaceName(n);} n=simpletype(true){ replaceName(n);} "=" n=constrs(true){ replaceName(n);} [n=deriving(true){ replaceName(n);}] {return productionEndTerminal("datadecl","-","-","Replacement",first,token);}
+	"data" n=optContext(inTerminal){ replaceName(n);} n=simpletype(inTerminal){ replaceName("simpletype", n);}{ replaceName(n);} "=" n=constrs(inTerminal){ replaceName(n);} [n=deriving(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("datadecl","{simpletype}","{simpletype}");}
  |
-	"newtype" n=optContext(true){ replaceName(n);} n=simpletype(true){ replaceName(n);} n=declrhs(true){ replaceName(n);} {return productionEndTerminal("newtypedecl","-","-","Replacement",first,token);}
+	"newtype" n=optContext(inTerminal){ replaceName(n);} n=simpletype(inTerminal){ replaceName("simpletype", n);}{ replaceName(n);} n=declrhs(inTerminal){ replaceName(n);} {return productionEndNonTerminal("newtypedecl","{simpletype}","{simpletype}");}
  |
-	"class" n=optContext(true){ replaceName(n);} n=conid(true){ replaceName(n);} n=tyvar(true){ replaceName(n);} ["where" n=cdecls(true){ replaceName(n);}] {return productionEndTerminal("classdecl","-","-","Replacement",first,token);}
+	"class" n=optContext(inTerminal){ replaceName(n);} n=conid(inTerminal){ replaceName("conid", n);}{ replaceName(n);} n=tyvar(inTerminal){ replaceName(n);} ["where" n=cdecls(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("classdecl","{conid}","{conid}");}
  |
-	"instance" n=optContext(true){ replaceName(n);} n=qconid(true){ replaceName(n);} n=inst(true){ replaceName(n);} ["where" n=block(true){ replaceName(n);}] {return productionEndTerminal("instancedecl","-","-","Replacement",first,token);}
+	"instance" n=optContext(inTerminal){ replaceName(n);} n=qconid(inTerminal){ replaceName("qconid", n);}{ replaceName(n);} n=inst(inTerminal){ replaceName(n);} ["where" n=block(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("instancedecl","{qconid}","{qconid}");}
  |
 	"default" n=list(true){ replaceName(n);} {return productionEndTerminal("defaultdecl","-","-","Replacement",first,token);}
  |
-	n=decl(true){ replaceName(n);} {return productionEndTerminal("declaration","-","-","Replacement",first,token);}
+	n=decl(true){ replaceName(n);} {return productionEndTerminal("declaration","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
@@ -725,7 +725,7 @@ FSTInfo context(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo simpletype(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<CONSTRUCTOR_ID> [LOOKAHEAD({isNot(EQUALS)}) findUntilEquals()] {return productionEndTerminal("simpletype","-","-","Replacement",first,token);}
+	<CONSTRUCTOR_ID> [LOOKAHEAD({isNot(EQUALS)}) findUntilEquals()] {return productionEndTerminal("simpletype","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 

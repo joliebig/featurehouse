@@ -289,22 +289,23 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(MODULE);
-    n = modid(true);
-                                replaceName(n);
+    n = modid(inTerminal);
+                                      replaceName("modid", n);
+                                                                 replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LEFT_PAREN:
-      n = exports(true);
-                                                                   replaceName(n);
+      n = exports(inTerminal);
+                                                                                                          replaceName(n);
       break;
     default:
       jj_la1[0] = jj_gen;
       ;
     }
     jj_consume_token(WHERE);
-    n = body(true);
-                                                                                                           replaceName(n);
+    n = body(inTerminal);
+                                                                                                                                                        replaceName(n);
     jj_consume_token(0);
-                                                                                                                                   {if (true) return productionEndTerminal("module","-","-","Replacement",first,token);}
+                                                                                                                                                                                {if (true) return productionEndNonTerminal("module","{modid}","{modid}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -312,7 +313,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CONSTRUCTOR_ID);
-                          {if (true) return productionEndTerminal("qconid","-","-","Replacement",first,token);}
+                          {if (true) return productionEndTerminal("qconid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -534,7 +535,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
      first=getToken(1); productionStart(inTerminal);
     n = qconid(true);
                         replaceName(n);
-                                          {if (true) return productionEndTerminal("modid","-","-","Replacement",first,token);}
+                                          {if (true) return productionEndTerminal("modid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -542,7 +543,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(CONSTRUCTOR_ID);
-                          {if (true) return productionEndTerminal("conid","-","-","Replacement",first,token);}
+                          {if (true) return productionEndTerminal("conid","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -551,28 +552,28 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_3(2)) {
       jj_consume_token(LEFT_CURLY);
-      n = impdecls(true);
-                                           replaceName(n);
+      n = impdecls(inTerminal);
+                                                 replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SEMICOLON:
         jj_consume_token(SEMICOLON);
-        n = topdecls(true);
-                                                                                   replaceName(n);
+        n = topdecls(inTerminal);
+                                                                                               replaceName(n);
         break;
       default:
         jj_la1[10] = jj_gen;
         ;
       }
       jj_consume_token(RIGHT_CURLY);
-                                                                                                          {if (true) return productionEndTerminal("body1","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndNonTerminal("body1","-","-");}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LEFT_CURLY:
         jj_consume_token(LEFT_CURLY);
-        n = topdecls(true);
-                              replaceName(n);
+        n = topdecls(inTerminal);
+                                    replaceName(n);
         jj_consume_token(RIGHT_CURLY);
-                                                    {if (true) return productionEndTerminal("body2","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndNonTerminal("body2","-","-");}
         break;
       default:
         jj_la1[11] = jj_gen;
@@ -740,8 +741,8 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
   final public FSTInfo topdecls(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = topdecl(true);
-                         replaceName(n);
+    n = topdecl(inTerminal);
+                               replaceName(n);
     label_5:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -753,10 +754,10 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         break label_5;
       }
       jj_consume_token(SEMICOLON);
-      n = topdecl(true);
-                                                                replaceName(n);
+      n = topdecl(inTerminal);
+                                                                            replaceName(n);
     }
-                                                                                    {if (true) return productionEndTerminal("topdecls","-","-","Replacement",first,token);}
+                                                                                                {if (true) return productionEndNonTerminal("topdecls","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -766,81 +767,86 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TYPE:
       jj_consume_token(TYPE);
-      n = simpletype(true);
-                                   replaceName(n);
-      n = declrhs(true);
-                                                                     replaceName(n);
-                                                                                       {if (true) return productionEndTerminal("typedecl","-","-","Replacement",first,token);}
+      n = simpletype(inTerminal);
+                                         replaceName("simpletype", n);
+                                                                         replaceName(n);
+      n = declrhs(inTerminal);
+                                                                                                                 replaceName(n);
+                                                                                                                                   {if (true) return productionEndNonTerminal("typedecl","{simpletype}","{simpletype}");}
       break;
     case DATA:
       jj_consume_token(DATA);
-      n = optContext(true);
-                                   replaceName(n);
-      n = simpletype(true);
-                                                                        replaceName(n);
+      n = optContext(inTerminal);
+                                         replaceName(n);
+      n = simpletype(inTerminal);
+                                                                                    replaceName("simpletype", n);
+                                                                                                                    replaceName(n);
       jj_consume_token(EQUALS);
-      n = constrs(true);
-                                                                                                              replaceName(n);
+      n = constrs(inTerminal);
+                                                                                                                                                                replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case DERIVING:
-        n = deriving(true);
-                                                                                                                                                  replaceName(n);
+        n = deriving(inTerminal);
+                                                                                                                                                                                                          replaceName(n);
         break;
       default:
         jj_la1[21] = jj_gen;
         ;
       }
-                                                                                                                                                                     {if (true) return productionEndTerminal("datadecl","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                             {if (true) return productionEndNonTerminal("datadecl","{simpletype}","{simpletype}");}
       break;
     case NEWTYPE:
       jj_consume_token(NEWTYPE);
-      n = optContext(true);
-                                      replaceName(n);
-      n = simpletype(true);
-                                                                           replaceName(n);
-      n = declrhs(true);
-                                                                                                             replaceName(n);
-                                                                                                                               {if (true) return productionEndTerminal("newtypedecl","-","-","Replacement",first,token);}
+      n = optContext(inTerminal);
+                                            replaceName(n);
+      n = simpletype(inTerminal);
+                                                                                       replaceName("simpletype", n);
+                                                                                                                       replaceName(n);
+      n = declrhs(inTerminal);
+                                                                                                                                                               replaceName(n);
+                                                                                                                                                                                 {if (true) return productionEndNonTerminal("newtypedecl","{simpletype}","{simpletype}");}
       break;
     case CLASS:
       jj_consume_token(CLASS);
-      n = optContext(true);
-                                    replaceName(n);
-      n = conid(true);
-                                                                    replaceName(n);
-      n = tyvar(true);
-                                                                                                    replaceName(n);
+      n = optContext(inTerminal);
+                                          replaceName(n);
+      n = conid(inTerminal);
+                                                                                replaceName("conid", n);
+                                                                                                           replaceName(n);
+      n = tyvar(inTerminal);
+                                                                                                                                                 replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case WHERE:
         jj_consume_token(WHERE);
-        n = cdecls(true);
-                                                                                                                                              replaceName(n);
+        n = cdecls(inTerminal);
+                                                                                                                                                                                                 replaceName(n);
         break;
       default:
         jj_la1[22] = jj_gen;
         ;
       }
-                                                                                                                                                                 {if (true) return productionEndTerminal("classdecl","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                    {if (true) return productionEndNonTerminal("classdecl","{conid}","{conid}");}
       break;
     case INSTANCE:
       jj_consume_token(INSTANCE);
-      n = optContext(true);
-                                       replaceName(n);
-      n = qconid(true);
-                                                                        replaceName(n);
-      n = inst(true);
-                                                                                                       replaceName(n);
+      n = optContext(inTerminal);
+                                             replaceName(n);
+      n = qconid(inTerminal);
+                                                                                    replaceName("qconid", n);
+                                                                                                                replaceName(n);
+      n = inst(inTerminal);
+                                                                                                                                                     replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case WHERE:
         jj_consume_token(WHERE);
-        n = block(true);
-                                                                                                                                                replaceName(n);
+        n = block(inTerminal);
+                                                                                                                                                                                                    replaceName(n);
         break;
       default:
         jj_la1[23] = jj_gen;
         ;
       }
-                                                                                                                                                                   {if (true) return productionEndTerminal("instancedecl","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("instancedecl","{qconid}","{qconid}");}
       break;
     case DEFAULTTOKEN:
       jj_consume_token(DEFAULTTOKEN);
@@ -852,7 +858,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
       jj_la1[24] = jj_gen;
       n = decl(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("declaration","-","-","Replacement",first,token);}
+                                        {if (true) return productionEndTerminal("declaration","{AUTO}","{AUTO}","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -1085,7 +1091,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
     } else {
       ;
     }
-                                                                         {if (true) return productionEndTerminal("simpletype","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("simpletype","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1540,6 +1546,11 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
     return false;
   }
 
+  final private boolean jj_3R_13() {
+    if (jj_scan_token(SEMICOLON)) return true;
+    return false;
+  }
+
   final private boolean jj_3_8() {
     if (jj_3R_16()) return true;
     if (jj_scan_token(OFTYPE)) return true;
@@ -1585,11 +1596,6 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
   final private boolean jj_3_1() {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_11()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_13() {
-    if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
 

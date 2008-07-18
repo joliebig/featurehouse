@@ -17,6 +17,207 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("module")) {
+			printToken("module");
+			{
+				FSTNode v=getChild(nonTerminal, "modid");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "exports");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintNewLine();
+			printToken("where");
+			{
+				FSTNode v=getChild(nonTerminal, "body");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("body1")) {
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "impdecls");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "topdecls");
+				if (v!=null) {
+					printToken(";");
+					hintNewLine();
+					hintNewLine();
+					v.accept(this);
+				}
+			}
+			hintDecIndent();
+			hintNewLine();
+			printToken("}");
+			return false;
+		}
+		if (nonTerminal.getType().equals("body2")) {
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "topdecls");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintDecIndent();
+			hintNewLine();
+			printToken("}");
+			return false;
+		}
+		if (nonTerminal.getType().equals("topdecls")) {
+			Iterator<FSTNode> listElements = getChildren(nonTerminal, "topdecl").iterator();
+			if (listElements.hasNext()) {
+				listElements.next().accept(this);
+			}
+			while (listElements.hasNext()) {
+				printToken(";");
+				hintNewLine();
+				hintNewLine();
+				listElements.next().accept(this);
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("typedecl")) {
+			printToken("type");
+			{
+				FSTNode v=getChild(nonTerminal, "simpletype");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "declrhs");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("datadecl")) {
+			printToken("data");
+			{
+				FSTNode v=getChild(nonTerminal, "optContext");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "simpletype");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("=");
+			{
+				FSTNode v=getChild(nonTerminal, "constrs");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "deriving");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("newtypedecl")) {
+			printToken("newtype");
+			{
+				FSTNode v=getChild(nonTerminal, "optContext");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "simpletype");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "declrhs");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("classdecl")) {
+			printToken("class");
+			{
+				FSTNode v=getChild(nonTerminal, "optContext");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "conid");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "tyvar");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "cdecls");
+				if (v!=null) {
+					printToken("where");
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("instancedecl")) {
+			printToken("instance");
+			{
+				FSTNode v=getChild(nonTerminal, "optContext");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "qconid");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "inst");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "block");
+				if (v!=null) {
+					printToken("where");
+					v.accept(this);
+				}
+			}
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
