@@ -14,6 +14,7 @@ import printer.capprox.CApproxPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
+import printer.phaskell.PHaskellPrintVisitor;
 import printer.text.TextPrintVisitor;
 import printer.xmi.XMIPrintVisitor;
 import builder.ArtifactBuilderInterface;
@@ -22,6 +23,7 @@ import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;
 import builder.java.JavaBuilder;
 import builder.javacc.JavaCCBuilder;
+import builder.phaskell.PHaskellBuilder;
 import builder.text.TextBuilder;
 import builder.xmi.XMIBuilder;
 
@@ -87,11 +89,15 @@ public class FSTGenComposer {
 
 	    for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 		LinkedList<FSTNonTerminal> features = builder.getFeatures();
+		
+		for(FSTNonTerminal feature : features)
+			System.err.println(feature.toString());
+		
 		FSTNode composition = compose(features);
-		modify(composition);
+		//modify(composition);
 
-		// if(composition != null)
-		// System.err.println(composition.toString());
+		//if(composition != null)
+		//	System.err.println(composition.toString());
 		try {
 		    featureVisitor.visit((FSTNonTerminal) composition);
 		} catch (PrintVisitorException e) {
@@ -136,6 +142,7 @@ public class FSTGenComposer {
 	composer.registerArtifactBuilder(new JavaBuilder());
 	composer.registerArtifactBuilder(new CSharpBuilder());
 	composer.registerArtifactBuilder(new CApproxBuilder());
+	composer.registerArtifactBuilder(new PHaskellBuilder());
 	composer.registerArtifactBuilder(new JavaCCBuilder());
 	composer.registerArtifactBuilder(new XMIBuilder());
 	composer.registerArtifactBuilder(new TextBuilder(".properties"));
@@ -144,6 +151,7 @@ public class FSTGenComposer {
 	composer.registerPrintVisitor(new CSharpPrintVisitor());
 	composer.registerPrintVisitor(new CApproxPrintVisitor());
 	composer.registerPrintVisitor(new JavaCCPrintVisitor());
+	composer.registerPrintVisitor(new PHaskellPrintVisitor());
 	composer.registerPrintVisitor(new XMIPrintVisitor());
 	composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
 	composer.registerPrintVisitor(new BinaryPrintVisitor(".jpg"));

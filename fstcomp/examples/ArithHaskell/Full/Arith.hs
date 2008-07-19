@@ -1,16 +1,46 @@
 module Arith where
 {
-  data BinOp = DummyBinOp
+  data BinOp = Add
+             | Sub
+             | Mul
+             | Div
+             | And
+             | Or
              deriving Show;
    
-  data UnOp = DummyUnOp
+  data UnOp = Neg
+            | Recip
+            | Not
             deriving Show;
             
   tvBinOp ::
             BinOp -> TypedVal -> TypedVal -> Result TypedVal EvalError;
+  tvBinOp (Add) (TVString s) (TVString t)
+    = Result (TVString (s ++ t));
+  tvBinOp (Add) (TVString s) (TVDouble y)
+    = Result (TVString (s ++ show y));
+  tvBinOp (Add) (TVDouble x) (TVString t)
+    = Result (TVString (show x ++ t));
+  tvBinOp (Add) (TVDouble x) (TVDouble y)
+    = Result (TVDouble (x + y));
+  tvBinOp (Sub) (TVDouble x) (TVDouble y)
+    = Result (TVDouble (x - y));
+  tvBinOp (Mul) (TVDouble x) (TVDouble y)
+    = Result (TVDouble (x * y));
+  tvBinOp (Div) (TVDouble x) (TVDouble 0) = Fail DivByZero;
+  tvBinOp (Div) (TVDouble x) (TVDouble y)
+    = Result (TVDouble (x / y));
+  tvBinOp (And) (TVBool x) (TVBool y)
+    = Result (TVBool (x && y));
+  tvBinOp (Or) (TVBool x) (TVBool y)
+    = Result (TVBool (x || y));
   tvBinOp _ _ _ = Fail TypeError;
    
   tvUnOp :: UnOp -> TypedVal -> Result TypedVal EvalError;
+  tvUnOp (Neg) (TVDouble x) = Result (TVDouble (negate x));
+  tvUnOp (Recip) (TVDouble 0) = Fail DivByZero;
+  tvUnOp (Recip) (TVDouble x) = Result (TVDouble (recip x));
+  tvUnOp (Not) (TVBool x) = Result (TVBool (not x));
   tvUnOp _ _ = Fail TypeError;
             
   -- Vars
@@ -40,7 +70,8 @@ module Arith where
              deriving Show;
   
   -- TODO MRO: DivByZero bei BinOps ODER UnOps
-  data EvalError = Overflow
+  data EvalError = DivByZero
+                 | Overflow
                  | TypeError
                  | UndefVarError				-- Vars
                  | ApplicationError				-- Lambda
