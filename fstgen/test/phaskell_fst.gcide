@@ -574,9 +574,10 @@ topdecl :
 		@FSTTerminal
 		"default" list  :: defaultdecl
 	|   
-		@FSTTerminal(name="{AUTO}")
+		@FSTTerminal(name="{TOSTRING}")
 		decl :: declaration
 	;
+
 	
 decl: LL("vars() \"::\"") signdecl	:: typeSignature
 	|   fixdecl						:: fixityDeclaration
@@ -591,9 +592,10 @@ optContext: [LL("{isContext()}") context "=>"];
 	
 deriving : "deriving" JAVATOKEN(findNonstddeclRest) ;
 
-	
+@FSTNonTerminal	
 constrs	:		&LI constr ("|" &LI constr)*	;
-	
+
+@FSTTerminal(name="{TOSTRING}")	
 constr: conP [LL("{isNot(SEMICOLON,ALT,RIGHT_CURLY,DERIVING)}")  JAVATOKEN(findConRest)];
 
 

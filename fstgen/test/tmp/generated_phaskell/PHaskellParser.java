@@ -858,7 +858,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
       jj_la1[24] = jj_gen;
       n = decl(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("declaration","{AUTO}","{AUTO}","Replacement",first,token);}
+                                        {if (true) return productionEndTerminal("declaration","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -934,8 +934,8 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
   final public FSTInfo constrs(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = constr(true);
-                        replaceName(n);
+    n = constr(inTerminal);
+                              replaceName(n);
     label_6:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -947,10 +947,10 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         break label_6;
       }
       jj_consume_token(ALT);
-      n = constr(true);
-                                                              replaceName(n);
+      n = constr(inTerminal);
+                                                                          replaceName(n);
     }
-                                                                                  {if (true) return productionEndTerminal("constrs","-","-","Replacement",first,token);}
+                                                                                              {if (true) return productionEndNonTerminal("constrs","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -964,7 +964,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
     } else {
       ;
     }
-                                                                                                               {if (true) return productionEndTerminal("constr","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("constr","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 

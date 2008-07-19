@@ -633,7 +633,7 @@ FSTInfo topdecl(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"default" n=list(true){ replaceName(n);} {return productionEndTerminal("defaultdecl","-","-","Replacement",first,token);}
  |
-	n=decl(true){ replaceName(n);} {return productionEndTerminal("declaration","{AUTO}","{AUTO}","Replacement",first,token);}
+	n=decl(true){ replaceName(n);} {return productionEndTerminal("declaration","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
@@ -671,13 +671,13 @@ FSTInfo deriving(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo constrs(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=constr(true){ replaceName(n);} ("|" n=constr(true){ replaceName(n);})* {return productionEndTerminal("constrs","-","-","Replacement",first,token);}
+	n=constr(inTerminal){ replaceName(n);} ("|" n=constr(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("constrs","-","-");}
 
  )  }
 
 FSTInfo constr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=conP(true){ replaceName(n);} [LOOKAHEAD({isNot(SEMICOLON,ALT,RIGHT_CURLY,DERIVING)}) findConRest()] {return productionEndTerminal("constr","-","-","Replacement",first,token);}
+	n=conP(true){ replaceName(n);} [LOOKAHEAD({isNot(SEMICOLON,ALT,RIGHT_CURLY,DERIVING)}) findConRest()] {return productionEndTerminal("constr","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
