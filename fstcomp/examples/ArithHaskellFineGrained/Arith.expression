@@ -1,10 +1,15 @@
 Base
+BinOp
 Add
 Sub
 Mul
 Div
 And
 Or
+UnOp
 Neg
 Not
 Recip
+Eval
+EvalBinOp
+EvalUnOp
