@@ -11,8 +11,9 @@ import java.io.*;
 import java.util.*;
 import cide.gast.*;
 import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
-  public class HaskellParser{
+  public class HaskellParser  extends AbstractFSTParser {
 
 	/**
 	 * Append the given {@link Token} and any preceding special tokens to a
@@ -495,12 +496,15 @@ GRAMMARSTART
 
 //module
 
+@FSTNonTerminal(name="{moduleHeader}")
 module: [moduleHeader] "{" @+! body @-!"}";
 
+@FSTNonTerminal
 body: 
 	&LI importDecl (LL(2) ";"@!@! &LI importDecl)* [";"@!@! definitions] 
 	| [definitions];
 
+@FSTNonTerminal(name="{naam}")
 moduleHeader: "module" naam [exports] "where" @!;
 exports: "(" [exportList]  ")";
 
@@ -523,18 +527,35 @@ naamOrVarList: &LI naamOrVar ("," &LI naamOrVar)*;
 naamOrVar: LL("naam()") naam | var; 
 
 //definition
+@FSTNonTerminal
 definitions: &LI definition (";"@!@! &LI definition)*;
-definition :	
-		"type"		simpletype "=" functiontype :: typedecl	|   "data" [LL("context()") context] simpletype "=" constrs [deriving] :: datadecl	|	"newtype"  [LL("context()") context] simpletype "=" naam newtypeParam [deriving]  :: newtypedecl	|   "class"    [LL("context()") context] naam (var)+ [whereDecls] :: classdecl    |   "instance" [LL("context()") context] inst [whereDecls]  :: instancedecl	|   "default" functiontypeList  :: defaultdecl	|   declaration	;
 
+definition :
+		@FSTNonTerminal(name="{simpletype}")	
+		"type"		simpletype "=" functiontype :: typedecl	|   @FSTNonTerminal(name="{simpletype}")	
+		"data" [LL("context()") context] simpletype "=" constrs [deriving] :: datadecl	|	@FSTNonTerminal(name="{simpletype}")	
+		"newtype"  [LL("context()") context] simpletype "=" naam newtypeParam [deriving]  :: newtypedecl	|	@FSTNonTerminal(name="{naam}")	
+		"class"    [LL("context()") context] naam (var)+ [whereDecls] :: classdecl    |	@FSTNonTerminal(name="{inst}")	   
+    	"instance" [LL("context()") context] inst [whereDecls]  :: instancedecl	|	@FSTNonTerminal(name="{functiontypeList}")	   
+		"default" functiontypeList  :: defaultdecl	|	@FSTTerminal(name="{declaration}")	
+		declaration	;
+
+@FSTTerminal(name="{naam}")
 simpletype: naam (var)*;
 
+@FSTNonTerminal
 constrs: @+ &LI constr ("|"@! &LI constr)* @-;
 
+
 constr: 
-	  LL("naam() \"{\"")  naam "{"  &LI fielddeclaration ("," &LI fielddeclaration)* "}"
-	| LL("(type())+ operator()") (LL("type()")type)+ operator (type)+
-	| naam (type)*;
+		@FSTTerminal(name="{naam}")
+		LL("naam() \"{\"")  naam "{"  &LI fielddeclaration ("," &LI fielddeclaration)* "}"
+	| 
+		@FSTTerminal(name="{operator}")
+		LL("(type())+ operator()") (LL("type()")type)+ operator (type)+
+	| 
+		@FSTTerminal(name="{naam}")
+		naam (type)*;
 
 fielddeclaration: varList "::" functiontype;
 
@@ -548,13 +569,18 @@ inst: naam (type)+;
 //inst: naam inst_rest;//inst_rest: type;//	LL("naam()") naam//	| LL("\"(\" var() \"->\"") 	"(" var "->" var ")"//	| LL("\"(\" var() \",\"")		"(" &LI var ("," &LI var)+ ")"//	| "(" [simpletype] ")"//	| "[" var "]";
 
 //declaratie
+@FSTNonTerminal
 decls: "{" @+ [ declarationList] @- "}";
-
+@FSTNonTerminal
 declarationList: &LI declaration (";" @! &LI declaration)*;
+
 declaration:
-	LL("function() \"=\"") function "=" expr [whereDecls]
-	| LL("function() \"|\"") function (altExprAss)+ [whereDecls]
-	| LL("varList() \"::\"") varList "::" [LL("context()") context] functiontype
+		@FSTTerminal(name="{function}")
+		LL("function() \"=\"") function "=" expr [whereDecls]
+	| 	@FSTTerminal(name="{function}")
+		LL("function() \"|\"") function (altExprAss)+ [whereDecls]
+	|	@FSTTerminal(name="{varList}")
+		LL("varList() \"::\"") varList "::" [LL("context()") context] functiontype
 	| LL("patr() \"=\"") patr "=" expr [whereDecls]
 	| LL("patr() \"|\"") patr (altExprAss)+ [whereDecls]
 	| "infix" [<INTEGER>] operatorList
@@ -563,6 +589,7 @@ declaration:
 
 altExprAss: "|" expr "=" expr;
 
+@FSTExportName("{TOSTRING}")
 function:
 	LL("var() patroon()")  var &LI patroon (&LI patroon)*
 	| LL("\"(\" function()") "(" function ")" (patroon)+
@@ -663,6 +690,7 @@ klasse: /*klasse*/naam (klasseTypeVar)+;
 klasseTypeVar: "(" /*tyvar*/<VARIABLE_ID> (type)* ")" | /*tyvar*/<VARIABLE_ID>; 	
 	
 //var and naam	
+@FSTExportName("{TOSTRING}")
 varList: &LI var ("," &LI var)*;
 var : [LL("ModuleNaamPrefix()") ModuleNaamPrefix] varMain;
 varMain: <VARIABLE_ID>
@@ -670,6 +698,8 @@ varMain: <VARIABLE_ID>
 	//|	"`" varOperator "`"	; does not fit H98 standard
 
 naamList: &LI naam ("," &LI naam)*;
+
+@FSTTerminal(name="{TOSTRING}")
 naam: qcon;
 
 qcon: qconid | "(" gconsym ")";
