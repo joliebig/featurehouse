@@ -1,4 +1,4 @@
-<!ELEMENT modificationComposition (modification)*>
+<!ELEMENT modificationComposition (modification*)>
 <!ELEMENT modification (modType, baseFSTTraversal, modContent)>
 <!ELEMENT modType ("change"|"rewrite")>
 <!ELEMENT FSTNodeType (#PCDATA)>

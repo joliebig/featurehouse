@@ -9,6 +9,9 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import modification.Modification;
+import modification.ModificationComposition;
+
 public class XmlParser {
     enum Elements {
 	modification, modType, FSTNodeType, FSTTraversal, content, externInput
@@ -35,7 +38,7 @@ public class XmlParser {
 	    case XMLStreamConstants.START_ELEMENT: {
 		if (reader.getLocalName().equals(
 			Elements.modification.toString())) {
-		    mod = new Modification();
+		    
 		} else if (reader.getLocalName().equals(
 			Elements.modType.toString())) {
 		    currentElement = Elements.modType;
@@ -61,25 +64,25 @@ public class XmlParser {
 		System.out.println("<" + currentElement.toString() + ">");
 		switch (currentElement) {
 		case modType: {
-		    mod.setModType(reader.getText());
+		    
 		    System.out.println(reader.getText());
 		    break;
 		}
 		case FSTTraversal:
 		    System.out.println(reader.getText());
-		    mod.setFstTraversal(reader.getText());
+		    
 		    break;
 		case FSTNodeType:
 		    System.out.println(reader.getText());
-		    mod.setFstNodeType(reader.getText());
+		    
 		    break;
 		case content:
 		    System.out.println(reader.getText());
-		    mod.setContent(new StringContent(reader.getText()));
+		    
 		    break;
 		case externInput:
 		    System.out.println(reader.getText());
-		    mod.setContent(new FileContent(reader.getText()));
+		    
 		    break;
 		default:
 		    break;

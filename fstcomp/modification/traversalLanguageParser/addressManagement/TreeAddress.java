@@ -33,24 +33,16 @@ public class TreeAddress {
 	Iterator<TreeAddressToken> it = addressTokens.iterator();
 	while (it.hasNext()) {
 	    token = it.next();
-	    System.out.println("TOKEN: " + token);
 	    possibleNodesNew.clear();
 	    for (FSTNode node : possibleNodesOld) {
-		System.out.println("  NODE: " + node.getName() + " : "
-			+ node.getType());
 		if (token.getMatchingNodes(node)!=null) {
-		    System.out.println("  MATCH!");
 		    if (token.getPossibleMatchingFollowUps(node) != null
 			    && !possibleNodesNew.contains(node)) {
 			possibleNodesNew.addAll(token
 				.getPossibleMatchingFollowUps(node));
-			System.out.println("    ADDED possible CHILDREN: "
-				+ node.getName() + " : " + node.getType());
 		    }
 		    if (!it.hasNext()) {
 			resultNodes.addAll(token.getMatchingNodes(node));
-			System.out.println("    ADDED to RESULT: "
-				+ node.getName() + " : " + node.getType());
 
 		    }
 		}

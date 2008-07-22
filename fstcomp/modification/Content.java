@@ -1,4 +1,4 @@
-package modification.xmlParser;
+package modification;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 

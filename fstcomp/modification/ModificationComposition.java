@@ -1,7 +1,9 @@
-package modification.xmlParser;
+package modification;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class ModificationComposition {
 
@@ -15,8 +17,16 @@ public class ModificationComposition {
      * @return the modList
      */
     public List<Modification> getModList() {
-        return modList;
+	return modList;
     }
-    
-    
+
+    /**
+     * apply every single modification
+     */
+    public void apply(FSTNode root) {
+	for (Modification mod : modList) {
+	    mod.apply(root);
+	}
+    }
+
 }
