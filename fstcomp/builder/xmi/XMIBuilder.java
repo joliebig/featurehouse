@@ -19,14 +19,20 @@ public class XMIBuilder extends ArtifactBuilder {
 		FSTNonTerminal rootDocument = new FSTNonTerminal("XMI-File", st.nextToken());
 		parent.addChild(rootDocument);
 		
+		XMIFactory builder = new XMIFactory(inputFile, rootDocument);
+
+		builder.extractFST();
 		
+		//System.out.println(parent);
+		/*
 		XMIParser p = new XMIParser(new OffsetCharStream( new FileInputStream(inputFile)));
+		
 		try {
 			p.Document(false);
 			rootDocument.addChild(p.getRoot());
 			System.err.println(p.getRoot().toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 }
