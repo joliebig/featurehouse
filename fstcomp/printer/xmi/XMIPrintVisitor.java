@@ -15,7 +15,12 @@ public class XMIPrintVisitor extends ArtifactPrintVisitor {
 		super("XMI-File");
 	}
 	public void processNode(FSTNode node, File folderPath) throws PrintVisitorException {
-		if(node instanceof FSTNonTerminal) {
+		//System.out.println(node.toString());
+		String fileName = folderPath.getPath() + File.separator + node.getName();
+		XMIPrinter printer = new XMIPrinter(node, fileName);
+		printer.transformDocument();
+		
+		/*if(node instanceof FSTNonTerminal) {
 			FSTNonTerminal nonterminal = (FSTNonTerminal)node;
 			for(FSTNode child : nonterminal.getChildren()) {
 				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
@@ -31,6 +36,7 @@ public class XMIPrintVisitor extends ArtifactPrintVisitor {
 			}
 		} else {
 			assert(!(node instanceof FSTNonTerminal));
-		}
+		}*/
 	}
+
 }
