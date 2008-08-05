@@ -1,8 +1,6 @@
 package cide.gast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * property like ZeroOrMore, but when the last element is removed, that also the

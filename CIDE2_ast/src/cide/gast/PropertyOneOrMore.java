@@ -1,8 +1,6 @@
 package cide.gast;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class PropertyOneOrMore<T extends ASTNode> extends PropertyZeroOrMore<T> {
 

@@ -1,10 +1,7 @@
 package cide.gast;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
-import cide.gast.Property.PropertyType;
 
 public class PropertyZeroOrMore<T extends ASTNode> extends Property {
 

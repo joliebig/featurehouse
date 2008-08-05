@@ -1,7 +1,6 @@
 package cide.gast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ASTTextNode extends ASTNode {
 	private String[] value;

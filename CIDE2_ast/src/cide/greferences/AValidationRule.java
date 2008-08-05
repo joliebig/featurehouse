@@ -1,6 +1,5 @@
 package cide.greferences;
 
-import java.util.HashMap;
 import java.util.Set;
 
 import cide.features.IASTColorProvider;
