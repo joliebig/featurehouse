@@ -22,10 +22,10 @@
 
 package org.javacc.parser;
 
-import java.util.*;
-import java.io.*;
-
-import cide.gparser.OffsetCharStream;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 
 public class LexGen extends JavaCCGlobals implements JavaCCParserConstants {
 	static private java.io.PrintWriter ostr;

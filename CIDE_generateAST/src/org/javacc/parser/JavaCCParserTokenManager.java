@@ -5,7 +5,6 @@
  */
 
 package org.javacc.parser;
-import java.util.Vector;
 
 public class JavaCCParserTokenManager implements JavaCCParserConstants
 {

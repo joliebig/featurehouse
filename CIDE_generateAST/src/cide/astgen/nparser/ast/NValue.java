@@ -1,7 +1,5 @@
 package cide.astgen.nparser.ast;
 
-import java.util.List;
-
 import cide.astgen.nparser.visitor.NVisitor;
 
 public class NValue extends NAbstractValue {

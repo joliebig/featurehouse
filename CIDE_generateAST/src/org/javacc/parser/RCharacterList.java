@@ -22,7 +22,7 @@
 
 package org.javacc.parser;
 
-import java.util.*;
+import java.util.Vector;
 
 /**
  * Describes character lists.

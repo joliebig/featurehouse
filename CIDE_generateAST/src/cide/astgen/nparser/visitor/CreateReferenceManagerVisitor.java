@@ -3,17 +3,13 @@ package cide.astgen.nparser.visitor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import cide.astgen.nparser.ast.NAbstractValue;
 import cide.astgen.nparser.ast.NChoice;
 import cide.astgen.nparser.ast.NGrammar;
-import cide.gast.ISourceFile;
 
 public class CreateReferenceManagerVisitor extends NCreateFileVisitor {
 

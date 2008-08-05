@@ -22,7 +22,9 @@
 
 package org.javacc.parser;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 
 final class KindInfo
 {

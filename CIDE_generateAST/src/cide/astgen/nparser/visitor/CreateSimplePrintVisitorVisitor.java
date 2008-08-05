@@ -9,9 +9,6 @@ import cide.astgen.nparser.ast.NChoice;
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.ast.NTextOnly;
 import cide.astgen.nparser.ast.NAbstractValue.Type;
-import cide.gast.ASTNode;
-import cide.gast.ASTStringNode;
-import cide.gast.PropertyZeroOrOne;
 
 public class CreateSimplePrintVisitorVisitor extends NCreateFileVisitor {
 

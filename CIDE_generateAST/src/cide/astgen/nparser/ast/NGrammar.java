@@ -5,8 +5,6 @@ import java.util.List;
 
 import cide.astgen.nparser.visitor.NVisitor;
 
-import com.sun.corba.se.pept.transport.Acceptor;
-
 public class NGrammar {
 	final public List<NProduction> productions;
 	private String introduction;

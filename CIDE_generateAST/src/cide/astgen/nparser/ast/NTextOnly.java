@@ -1,6 +1,5 @@
 package cide.astgen.nparser.ast;
 
-import cide.astgen.nparser.ast.NAbstractValue.Type;
 import cide.astgen.nparser.visitor.NVisitor;
 
 /**
