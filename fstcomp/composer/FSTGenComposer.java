@@ -107,7 +107,7 @@ public class FSTGenComposer {
 		    System.err.println(feature.toString());
 
 		FSTNode composition = compose(features);
-		modify(composition);
+		//modify(composition);
 
 		// if(composition != null)
 		// System.err.println(composition.toString());

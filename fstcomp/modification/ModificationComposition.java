@@ -3,6 +3,8 @@ package modification;
 import java.util.LinkedList;
 import java.util.List;
 
+import modification.traversalLanguageParser.ParseException;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class ModificationComposition {
@@ -25,7 +27,12 @@ public class ModificationComposition {
      */
     public void apply(FSTNode root) {
 	for (Modification mod : modList) {
-	    mod.apply(root);
+	    try {
+			mod.apply(root);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
     }
 
