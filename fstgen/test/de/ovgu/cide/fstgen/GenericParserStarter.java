@@ -3,13 +3,11 @@ package de.ovgu.cide.fstgen;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
-
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
 

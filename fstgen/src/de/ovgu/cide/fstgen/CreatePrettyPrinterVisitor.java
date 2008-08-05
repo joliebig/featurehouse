@@ -9,10 +9,7 @@ import cide.astgen.nparser.ast.NAbstractValue;
 import cide.astgen.nparser.ast.NChoice;
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.ast.NNonTerminal;
-import cide.astgen.nparser.ast.NTextOnly;
-import cide.astgen.nparser.ast.NAbstractValue.Type;
 import cide.astgen.nparser.visitor.NCreateFileVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class CreatePrettyPrinterVisitor extends NCreateFileVisitor {
 

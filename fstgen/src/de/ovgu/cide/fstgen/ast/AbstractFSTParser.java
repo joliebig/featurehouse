@@ -1,8 +1,11 @@
 package de.ovgu.cide.fstgen.ast;
 
-import cide.gparser.Token;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Stack;
 
-import java.util.*;
+import cide.gparser.Token;
 
 public class AbstractFSTParser {
 

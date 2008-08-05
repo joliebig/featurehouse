@@ -1,8 +1,5 @@
 package de.ovgu.cide.fstgen;
 
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Set;
 
 import junit.framework.Assert;
@@ -13,7 +10,6 @@ import org.junit.Test;
 
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.parser.ParseException;
-import cide.astgen.nparser.parser.SlimJJParser;
 import de.ovgu.cide.fstgen.ast.FSTNodeType;
 
 public class CreateFSTVisitorTest extends AbstractNParser{

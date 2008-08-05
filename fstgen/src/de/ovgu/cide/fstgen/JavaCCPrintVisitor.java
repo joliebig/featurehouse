@@ -1,13 +1,8 @@
 package de.ovgu.cide.fstgen;
 
 import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import cide.astgen.nparser.ast.NAbstractValue;
-import cide.astgen.nparser.ast.NAnnotation;
 import cide.astgen.nparser.ast.NChoice;
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.ast.NNonTerminal;

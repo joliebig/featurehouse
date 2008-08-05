@@ -1,6 +1,5 @@
 package de.ovgu.cide.fstgen.ast;
 
-import java.util.LinkedList;
 
 public class FSTTerminal extends FSTNode {
 	

@@ -3,12 +3,9 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
+import tmp.generated_java15.Java15Parser;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
-
-import tmp.generated_java15.Java15Parser;
-
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class JavaParserTest {
 	@Test

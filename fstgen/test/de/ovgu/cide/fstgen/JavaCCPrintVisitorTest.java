@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.parser.ParseException;
-import cide.astgen.nparser.visitor.NVisitor;
 
 public class JavaCCPrintVisitorTest extends AbstractNParser {
 

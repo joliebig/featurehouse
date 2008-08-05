@@ -9,7 +9,6 @@ import java.io.PrintStream;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
-import cide.astgen.Main;
 import cide.astgen.nparser.ast.NGrammar;
 import cide.astgen.nparser.parser.ParseException;
 import cide.astgen.nparser.parser.SlimJJParser;

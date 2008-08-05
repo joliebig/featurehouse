@@ -2,9 +2,7 @@ package de.ovgu.cide.fstgen;
 
 import java.util.List;
 
-import sun.rmi.server.UnicastRef;
 import cide.astgen.nparser.ast.NAbstractValue;
-import cide.astgen.nparser.ast.NAnnotation;
 import cide.astgen.nparser.ast.NChoice;
 import cide.astgen.nparser.ast.NNonTerminal;
 import cide.astgen.nparser.ast.NProduction;

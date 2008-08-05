@@ -1,13 +1,11 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import tmp.generated_fj.*;
 
 import org.junit.Test;
 
+import tmp.generated_fj.FJParser;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
-
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class FJParserTest {
 	@Test
