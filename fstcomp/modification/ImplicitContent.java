@@ -1,6 +1,7 @@
 package modification;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 /**
  * content, given directly by 2 Strings: content and type
@@ -20,15 +21,23 @@ public class ImplicitContent implements Content {
     private String type;
 
     /**
+     * name of the FST node to create
+     */
+    private String name;
+
+    /**
+     * @param name
+     *                name of the FST node to create
      * @param content
      *                content given as a string
      * @param type
      *                type of the FST node to create
      */
-    public ImplicitContent(String content, String type) {
+    public ImplicitContent(String content, String type, String name) {
 	super();
 	this.content = content;
 	this.type = type;
+	this.name = name;
     }
 
     /*
@@ -38,8 +47,7 @@ public class ImplicitContent implements Content {
      */
     @Override
     public FSTNode getContent() {
-	// TODO Auto-generated method stub
-	return null;
+	return new FSTTerminal(type, name, content, "");
     }
 
 }

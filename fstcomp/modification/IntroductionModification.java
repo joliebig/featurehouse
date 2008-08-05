@@ -3,7 +3,10 @@
  */
 package modification;
 
+import modification.traversalLanguageParser.ParseException;
+import modification.traversalLanguageParser.TraversalLanguageParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 /**
  * @author Boxleitner Stefan
@@ -18,7 +21,6 @@ public class IntroductionModification extends Modification {
      */
     public IntroductionModification(String fstTraversal, Content content) {
 	super(fstTraversal, content);
-	// TODO Auto-generated constructor stub
     }
 
     /*
@@ -27,9 +29,11 @@ public class IntroductionModification extends Modification {
      * @see modification.Modification#apply(de.ovgu.cide.fstgen.ast.FSTNode)
      */
     @Override
-    public void apply(FSTNode root) {
-	// TODO Auto-generated method stub
-
+    public void apply(FSTNode root) throws ParseException {
+	TraversalLanguageParser tlp = new TraversalLanguageParser(
+		getFstTraversal(), root);
+	for (FSTNode node : tlp.parse())
+	    ((FSTNonTerminal) node).addChild(getContent().getContent());
     }
 
 }

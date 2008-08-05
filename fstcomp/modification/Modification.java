@@ -1,5 +1,6 @@
 package modification;
 
+import modification.traversalLanguageParser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
 /**
@@ -35,8 +36,9 @@ public abstract class Modification {
      * 
      * @param root
      *                root of the FST to modify
+     * @throws ParseException
      */
-    public abstract void apply(FSTNode root);
+    public abstract void apply(FSTNode root) throws ParseException;
 
     /**
      * @return the content
