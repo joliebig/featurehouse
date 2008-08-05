@@ -2,10 +2,10 @@ package printer.xmi;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -21,9 +21,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
-import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class XMIPrinter {
 

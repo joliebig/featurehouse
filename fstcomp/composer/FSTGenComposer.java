@@ -16,7 +16,6 @@ import printer.csharp.CSharpPrintVisitor;
 import printer.haskell.HaskellPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
-import printer.phaskell.PHaskellPrintVisitor;
 import printer.text.TextPrintVisitor;
 import printer.xmi.XMIPrintVisitor;
 import builder.ArtifactBuilderInterface;
@@ -26,7 +25,6 @@ import builder.csharp.CSharpBuilder;
 import builder.haskell.HaskellBuilder;
 import builder.java.JavaBuilder;
 import builder.javacc.JavaCCBuilder;
-import builder.phaskell.PHaskellBuilder;
 import builder.text.TextBuilder;
 import builder.xmi.XMIBuilder;
 

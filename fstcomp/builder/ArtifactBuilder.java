@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+
 import de.ovgu.cide.fstgen.ast.FSTFeatureNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 

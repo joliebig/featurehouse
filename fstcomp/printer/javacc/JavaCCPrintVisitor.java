@@ -3,11 +3,12 @@ package printer.javacc;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
 import tmp.generated_javacc.SimplePrintVisitor;
+import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class JavaCCPrintVisitor extends ArtifactPrintVisitor {
 

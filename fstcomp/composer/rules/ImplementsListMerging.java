@@ -2,6 +2,7 @@ package composer.rules;
 
 import java.util.LinkedHashSet;
 import java.util.StringTokenizer;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 

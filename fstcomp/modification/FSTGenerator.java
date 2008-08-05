@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import builder.ArtifactBuilderInterface;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 

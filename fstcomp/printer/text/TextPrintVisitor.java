@@ -4,11 +4,12 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import printer.ArtifactPrintVisitor;
+import printer.PrintVisitorException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
-import printer.ArtifactPrintVisitor;
-import printer.PrintVisitorException;
 
 public class TextPrintVisitor extends ArtifactPrintVisitor {
 

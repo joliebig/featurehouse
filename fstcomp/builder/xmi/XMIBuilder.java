@@ -1,13 +1,10 @@
 package builder.xmi;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
+
 import builder.ArtifactBuilder;
-import tmp.generated_xmi.XMIParser;
-import cide.gparser.OffsetCharStream;
-import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class XMIBuilder extends ArtifactBuilder {

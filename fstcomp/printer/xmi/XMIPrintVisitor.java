@@ -1,13 +1,10 @@
 package printer.xmi;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_xmi.SimplePrintVisitor;
+import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class XMIPrintVisitor extends ArtifactPrintVisitor {
 

@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import modification.traversalLanguageParser.ParseException;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class ModificationComposition {
