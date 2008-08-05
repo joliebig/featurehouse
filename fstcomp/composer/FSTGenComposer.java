@@ -79,8 +79,18 @@ public class FSTGenComposer {
 
     void run(String[] args) {
 	cmd.parseCmdLineArguments(args);
-
 	try {
+	    fileLoader.loadFiles("modification/eqfile", "modification", true);
+	} catch (FileNotFoundException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	}
+	for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
+	    LinkedList<FSTNonTerminal> features = builder.getFeatures();
+	    System.out.println(features);
+	}
+
+	 try {
 	    fileLoader.loadFiles(cmd.equationFileName,
 		    cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
 	    String outputDir = cmd.equationBaseDirectoryName;
@@ -92,15 +102,15 @@ public class FSTGenComposer {
 
 	    for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 		LinkedList<FSTNonTerminal> features = builder.getFeatures();
-		
-		for(FSTNonTerminal feature : features)
-			System.err.println(feature.toString());
-		
-		FSTNode composition = compose(features);
-		//modify(composition);
 
-		//if(composition != null)
-		//	System.err.println(composition.toString());
+		for (FSTNonTerminal feature : features)
+		    System.err.println(feature.toString());
+
+		FSTNode composition = compose(features);
+		modify(composition);
+
+		// if(composition != null)
+		// System.err.println(composition.toString());
 		try {
 		    featureVisitor.visit((FSTNonTerminal) composition);
 		} catch (PrintVisitorException e) {
@@ -114,14 +124,14 @@ public class FSTGenComposer {
 
     private void modify(FSTNode composition) {
 
-	if (composition != null) {
+	 if (composition != null) {
 	    System.out.println(composition);
 	    List<FSTNode> TraversalList = new LinkedList<FSTNode>();
-	    
+
 	    /*
 	     * INTRODUCTION
 	     */
-	    
+
 	    // 1. do a traversal-spec to the base FST
 	    String traversal = "..*:ClassDeclaration";
 	    TraversalLanguageParser parser = new TraversalLanguageParser(
@@ -135,7 +145,7 @@ public class FSTGenComposer {
 	    System.out.println(TraversalList.size());
 	    // 2. create artifacts, thus an FST out of a given
 	    // file-structure
-	    File f = new File("modification/test/FSTParserTest.java");
+	    File f = new File("modification/test/featureA/Folder/FSTParserTest.java");
 	    ArtifactBuilderInterface builder = new JavaBuilder();
 	    builder.setBaseDirectoryName("modification");
 	    try {
@@ -162,11 +172,11 @@ public class FSTGenComposer {
 		((FSTNonTerminal) node).addChild(nodeToConcate);
 	    }
 	    System.out.println(composition);
-	    
+
 	    /*
 	     * SUPERIMPOSITION
-	     */ 
-	    
+	     */
+
 	    List<FSTNode> TraversalList2 = new LinkedList<FSTNode>();
 	    // 1. do a traversal-spec to the base FST
 	    String traversal2 = "..print*:*";
@@ -181,7 +191,7 @@ public class FSTGenComposer {
 	    System.out.println(TraversalList2.size());
 	    // 2. create artifacts, thus an FST out of a given
 	    // file-structure
-	    File f2 = new File("modification/test/FSTParserTest.java");
+	    File f2 = new File("modification/test/featureA/Folder/FSTParserTest.java");
 	    ArtifactBuilderInterface builder2 = new JavaBuilder();
 	    builder2.setBaseDirectoryName("modification");
 	    try {
@@ -219,7 +229,7 @@ public class FSTGenComposer {
 	composer.registerArtifactBuilder(new JavaBuilder());
 	composer.registerArtifactBuilder(new CSharpBuilder());
 	composer.registerArtifactBuilder(new CApproxBuilder());
-	//composer.registerArtifactBuilder(new PHaskellBuilder());
+	// composer.registerArtifactBuilder(new PHaskellBuilder());
 	composer.registerArtifactBuilder(new HaskellBuilder());
 	composer.registerArtifactBuilder(new JavaCCBuilder());
 	composer.registerArtifactBuilder(new XMIBuilder());
@@ -229,7 +239,7 @@ public class FSTGenComposer {
 	composer.registerPrintVisitor(new CSharpPrintVisitor());
 	composer.registerPrintVisitor(new CApproxPrintVisitor());
 	composer.registerPrintVisitor(new JavaCCPrintVisitor());
-	//composer.registerPrintVisitor(new PHaskellPrintVisitor());
+	// composer.registerPrintVisitor(new PHaskellPrintVisitor());
 	composer.registerPrintVisitor(new HaskellPrintVisitor());
 	composer.registerPrintVisitor(new XMIPrintVisitor());
 	composer.registerPrintVisitor(new TextPrintVisitor(".properties"));
