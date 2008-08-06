@@ -23,15 +23,12 @@ public class ModificationComposition {
 
     /**
      * apply every single modification
+     * 
+     * @throws ParseException
      */
-    public void apply(FSTNode root) {
+    public void apply(FSTNode root) throws ParseException {
 	for (Modification mod : modList) {
-	    try {
-			mod.apply(root);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    mod.apply(root);
 	}
     }
 
