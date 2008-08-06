@@ -52,8 +52,7 @@ public class ExplicitContent implements Content {
      */
     @Override
     public FSTNode getContent() {
-	fstGen.setRootPath(rootPath);
-	
+	fstGen.setRootPath(rootPath);	
 	return null;
     }
 
