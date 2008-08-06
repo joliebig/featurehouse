@@ -98,9 +98,7 @@ public class FSTGenComposer {
 
 		FSTNode composition = compose(features);
 		modify(composition);
-		System.out.println(composition);
 		
-
 		// if(composition != null)
 		// System.err.println(composition.toString());
 		try {
@@ -127,6 +125,8 @@ public class FSTGenComposer {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
+	    
+	    System.out.println(composition);
 
 	    // List<FSTNode> TraversalList = new LinkedList<FSTNode>();
 	    //
