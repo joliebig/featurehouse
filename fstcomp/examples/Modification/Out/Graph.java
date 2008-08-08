@@ -11,9 +11,7 @@ class  Graph {
 
 	 Edge add( Node n, Node m ) { Edge e = new Edge( n, m ); nodes.add( n ); nodes.add( m ); edges.add( e ); return e; }
 
-	 private void foo() { }
-
-	 public void print(){	System.out.println("BÄM"); }
+	 void print() { for( int i = 0; i < edges.size(); i++ ) { ( ( Edge ) edges.get( i ) ).print(); if( i < edges.size() - 1 ) System.out.print( ", " ); } }
 
 
 }

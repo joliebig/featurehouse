@@ -6,9 +6,7 @@ class  Edge {
 
 	 Edge( Node _a, Node _b ) { a = _a; b = _b; }
 
-	 private void foo() { }
-
-	 public void print(){	System.out.println("BÄM"); }
+	 void print() { System.out.print( "edge (" ); a.print(); System.out.print( ", " ); b.print(); System.out.print( ") " ); }
 
 
 }
