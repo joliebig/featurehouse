@@ -1,5 +1,6 @@
 package modification;
 
+import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,8 +26,13 @@ public class ModificationComposition {
      * apply every single modification
      * 
      * @throws ParseException
+     * @throws cide.gparser.ParseException
+     * @throws InvalidFSTTraversalException
+     * @throws FileNotFoundException
      */
-    public void apply(FSTNode root) throws ParseException {
+    public void apply(FSTNode root) throws ParseException,
+	    FileNotFoundException, cide.gparser.ParseException,
+	    InvalidFSTTraversalException {
 	for (Modification mod : modList) {
 	    mod.apply(root);
 	}

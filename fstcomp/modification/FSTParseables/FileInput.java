@@ -1,0 +1,28 @@
+package modification.FSTParseables;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import cide.gparser.CharStream;
+import cide.gparser.OffsetCharStream;
+
+public class FileInput implements Input {
+
+    /**
+     * @param file
+     */
+    public FileInput(File file) {
+	super();
+	this.file = file;
+    }
+
+    private File file;
+
+    @Override
+    public CharStream getCharStream() throws FileNotFoundException {
+
+	return new OffsetCharStream(new FileInputStream(file));
+    }
+
+}
