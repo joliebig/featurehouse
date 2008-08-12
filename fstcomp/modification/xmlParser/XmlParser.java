@@ -10,13 +10,14 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
-import cide.gparser.ParseException;
-
 import modification.FSTGenerator;
-import modification.Modification;
+import modification.IntroductionModification;
 import modification.ModificationComposition;
 import modification.ParsedTraversalFSTContent;
 import modification.SuperimpositionModification;
+import modification.FSTParseables.FileInput;
+import modification.FSTParseables.StringInput;
+import cide.gparser.ParseException;
 
 public class XmlParser {
     enum Elements {
@@ -121,6 +122,28 @@ public class XmlParser {
 		    if (modType.equals("superimposition")) {
 			if (!plainTextType.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
+				feat
+					.add(new SuperimpositionModification(
+						FSTTraversal,
+						new ParsedTraversalFSTContent(
+							contentFSTTraversal,
+							FSTGenerator
+								.createFSTParseable(
+									new StringInput(
+										text,
+										plainTextType))
+								.getFST())));
+			    } else {
+				feat
+					.add(new SuperimpositionModification(
+						FSTTraversal,
+						FSTGenerator
+							.createFSTParseable(new StringInput(
+								text,
+								plainTextType))));
+			    }
+			} else if (!externLink.equals("")) {
+			    if (!contentFSTTraversal.equals("")) {
 				feat.add(new SuperimpositionModification(
 					FSTTraversal,
 					new ParsedTraversalFSTContent(
@@ -129,27 +152,55 @@ public class XmlParser {
 							.createFST(new File(
 								externLink)))));
 			    } else {
-				// TODO add body
-			    }
-			} else if (!externLink.equals("")) {
-			    if (!contentFSTTraversal.equals("")) {
-				// TODO add body
-			    } else {
-				// TODO add body
+				feat
+					.add(new SuperimpositionModification(
+						FSTTraversal,
+						FSTGenerator
+							.createFSTParseable(new FileInput(
+								new File(
+									externLink)))));
 			    }
 			}
 		    } else if (modType.equals("introduction")) {
 			if (!plainTextType.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-
+				feat
+					.add(new IntroductionModification(
+						FSTTraversal,
+						new ParsedTraversalFSTContent(
+							contentFSTTraversal,
+							FSTGenerator
+								.createFSTParseable(
+									new StringInput(
+										text,
+										plainTextType))
+								.getFST())));
 			    } else {
-
+				feat
+					.add(new IntroductionModification(
+						FSTTraversal,
+						FSTGenerator
+							.createFSTParseable(new StringInput(
+								text,
+								plainTextType))));
 			    }
 			} else if (!externLink.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-
+				feat.add(new IntroductionModification(
+					FSTTraversal,
+					new ParsedTraversalFSTContent(
+						contentFSTTraversal,
+						FSTGenerator
+							.createFST(new File(
+								externLink)))));
 			    } else {
-
+				feat
+					.add(new IntroductionModification(
+						FSTTraversal,
+						FSTGenerator
+							.createFSTParseable(new FileInput(
+								new File(
+									externLink)))));
 			    }
 			}
 		    }

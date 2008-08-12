@@ -1,6 +1,5 @@
 package modification;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 
 import modification.traversalLanguageParser.ParseException;
