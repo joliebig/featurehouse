@@ -1,5 +1,6 @@
 package modification.xmlParser;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,12 +10,17 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
+import cide.gparser.ParseException;
+
+import modification.FSTGenerator;
 import modification.Modification;
 import modification.ModificationComposition;
+import modification.ParsedTraversalFSTContent;
+import modification.SuperimpositionModification;
 
 public class XmlParser {
     enum Elements {
-	modification, modType, FSTNodeType, FSTTraversal, content, externInput
+	modification, modType, FSTTraversal, parsedContent, plainText, customContent, plainTextType, text, externLink, contentFSTTraversal
     }
 
     InputStream inputStream;
@@ -24,12 +30,20 @@ public class XmlParser {
 	this.inputStream = inputStream;
     }
 
-    public ModificationComposition parse() throws XMLStreamException, IOException {
+    public ModificationComposition parse() throws XMLStreamException,
+	    IOException, ParseException {
 	XMLInputFactory factory = XMLInputFactory.newInstance();
 	XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
 	ModificationComposition feat = new ModificationComposition();
 
-	Modification mod = null;
+	String modType = "";
+	String FSTTraversal = "";
+	String plainTextType = "";
+	String text = "";
+	String externLink = "";
+	String contentFSTTraversal = "";
+	// boolean parsedContent = false;
+	// boolean parsedContent = false;
 
 	Elements currentElement = null;
 
@@ -38,22 +52,31 @@ public class XmlParser {
 	    case XMLStreamConstants.START_ELEMENT: {
 		if (reader.getLocalName().equals(
 			Elements.modification.toString())) {
-		    
+		    currentElement = Elements.modification;
 		} else if (reader.getLocalName().equals(
 			Elements.modType.toString())) {
 		    currentElement = Elements.modType;
 		} else if (reader.getLocalName().equals(
-			Elements.FSTNodeType.toString())) {
-		    currentElement = Elements.FSTNodeType;
-		} else if (reader.getLocalName().equals(
 			Elements.FSTTraversal.toString())) {
 		    currentElement = Elements.FSTTraversal;
 		} else if (reader.getLocalName().equals(
-			Elements.content.toString())) {
-		    currentElement = Elements.content;
+			Elements.parsedContent.toString())) {
+		    currentElement = Elements.parsedContent;
 		} else if (reader.getLocalName().equals(
-			Elements.externInput.toString())) {
-		    currentElement = Elements.externInput;
+			Elements.customContent.toString())) {
+		    currentElement = Elements.customContent;
+		} else if (reader.getLocalName().equals(
+			Elements.plainTextType.toString())) {
+		    currentElement = Elements.plainTextType;
+		} else if (reader.getLocalName().equals(
+			Elements.text.toString())) {
+		    currentElement = Elements.text;
+		} else if (reader.getLocalName().equals(
+			Elements.externLink.toString())) {
+		    currentElement = Elements.externLink;
+		} else if (reader.getLocalName().equals(
+			Elements.contentFSTTraversal.toString())) {
+		    currentElement = Elements.contentFSTTraversal;
 		}
 		break;
 	    }
@@ -63,26 +86,29 @@ public class XmlParser {
 		    break;
 		System.out.println("<" + currentElement.toString() + ">");
 		switch (currentElement) {
-		case modType: {
-		    
+		case modType:
+		    modType = reader.getText();
 		    System.out.println(reader.getText());
 		    break;
-		}
 		case FSTTraversal:
+		    FSTTraversal = reader.getText();
 		    System.out.println(reader.getText());
-		    
 		    break;
-		case FSTNodeType:
+		case plainTextType:
+		    plainTextType = reader.getText();
 		    System.out.println(reader.getText());
-		    
 		    break;
-		case content:
+		case text:
+		    text = reader.getText();
 		    System.out.println(reader.getText());
-		    
 		    break;
-		case externInput:
+		case externLink:
+		    externLink = reader.getText();
 		    System.out.println(reader.getText());
-		    
+		    break;
+		case contentFSTTraversal:
+		    contentFSTTraversal = reader.getText();
+		    System.out.println(reader.getText());
 		    break;
 		default:
 		    break;
@@ -92,8 +118,41 @@ public class XmlParser {
 	    case XMLStreamConstants.END_ELEMENT: {
 		if (reader.getLocalName().equals(
 			Elements.modification.toString())) {
-		    feat.add(mod);
-		    mod = null;
+		    if (modType.equals("superimposition")) {
+			if (!plainTextType.equals("")) {
+			    if (!contentFSTTraversal.equals("")) {
+				feat.add(new SuperimpositionModification(
+					FSTTraversal,
+					new ParsedTraversalFSTContent(
+						contentFSTTraversal,
+						FSTGenerator
+							.createFST(new File(
+								externLink)))));
+			    } else {
+				// TODO add body
+			    }
+			} else if (!externLink.equals("")) {
+			    if (!contentFSTTraversal.equals("")) {
+				// TODO add body
+			    } else {
+				// TODO add body
+			    }
+			}
+		    } else if (modType.equals("introduction")) {
+			if (!plainTextType.equals("")) {
+			    if (!contentFSTTraversal.equals("")) {
+
+			    } else {
+
+			    }
+			} else if (!externLink.equals("")) {
+			    if (!contentFSTTraversal.equals("")) {
+
+			    } else {
+
+			    }
+			}
+		    }
 		}
 		break;
 	    }

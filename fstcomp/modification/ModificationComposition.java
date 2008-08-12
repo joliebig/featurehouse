@@ -29,6 +29,7 @@ public class ModificationComposition {
      * @throws cide.gparser.ParseException
      * @throws InvalidFSTTraversalException
      * @throws FileNotFoundException
+     * @throws UnknownTypeParseException
      */
     public void apply(FSTNode root) throws ParseException,
 	    FileNotFoundException, cide.gparser.ParseException,

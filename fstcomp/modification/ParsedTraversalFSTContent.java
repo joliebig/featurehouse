@@ -3,7 +3,6 @@ package modification;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import modification.FSTParseables.FSTParseable;
 import modification.traversalLanguageParser.ParseException;
 import modification.traversalLanguageParser.TraversalLanguageParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -20,7 +19,7 @@ public class ParsedTraversalFSTContent implements Content {
      * @param fstTraversal
      * @param root
      */
-    public ParsedTraversalFSTContent(String fstTraversal, File root) {
+    public ParsedTraversalFSTContent(String fstTraversal, FSTNode root) {
 	super();
 	this.fstTraversal = fstTraversal;
 	this.root = root;
@@ -29,7 +28,7 @@ public class ParsedTraversalFSTContent implements Content {
     /**
      * 
      */
-    private File root;
+    private FSTNode root;
 
     /**
      * FST traversal to select the desired artifact, i.e. an FST node
@@ -46,7 +45,7 @@ public class ParsedTraversalFSTContent implements Content {
 	    InvalidFSTTraversalException, FileNotFoundException,
 	    cide.gparser.ParseException {
 	TraversalLanguageParser tparser = new TraversalLanguageParser(
-		fstTraversal, FileFSTGenerator.createFSTRecursive(root));
+		fstTraversal, root);
 	if (tparser.parse().size() == 1)
 	    return tparser.parse().get(0);
 	else

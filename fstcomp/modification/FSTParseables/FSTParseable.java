@@ -5,6 +5,8 @@ package modification.FSTParseables;
 
 import java.io.FileNotFoundException;
 
+import modification.Content;
+
 import cide.gparser.ParseException;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -13,7 +15,7 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
  * @author Boxleitner Stefan
  * 
  */
-public abstract class FSTParseable {
+public abstract class FSTParseable implements Content {
 
     protected Input input;
 
@@ -21,7 +23,7 @@ public abstract class FSTParseable {
 	this.input = input;
     }
 
-    public abstract FSTNode parseToFST() throws FileNotFoundException,
+    public abstract FSTNode getFST() throws FileNotFoundException,
 	    ParseException;
 
 }

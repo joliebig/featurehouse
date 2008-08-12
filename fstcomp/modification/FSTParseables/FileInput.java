@@ -21,8 +21,15 @@ public class FileInput implements Input {
 
     @Override
     public CharStream getCharStream() throws FileNotFoundException {
-
 	return new OffsetCharStream(new FileInputStream(file));
+    }
+
+    @Override
+    public String getType() {
+	if (file.getName().split("\\.").length > 0)
+	    return file.getName().split("\\.")[file.getName().split("\\.").length - 1];
+	else
+	    return "";
     }
 
 }

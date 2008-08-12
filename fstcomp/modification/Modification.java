@@ -42,6 +42,7 @@ public abstract class Modification {
      * @throws cide.gparser.ParseException
      * @throws InvalidFSTTraversalException
      * @throws FileNotFoundException
+     * @throws UnknownTypeParseException
      */
     public abstract void apply(FSTNode root) throws ParseException,
 	    FileNotFoundException, cide.gparser.ParseException,

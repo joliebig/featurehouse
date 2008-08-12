@@ -8,4 +8,6 @@ public interface Input {
 
     public CharStream getCharStream() throws FileNotFoundException;
 
+    public String getType();
+
 }

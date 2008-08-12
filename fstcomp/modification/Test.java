@@ -4,11 +4,8 @@
 package modification;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
-import modification.FSTParseables.FSTParseable;
-import modification.FSTParseables.FileInput;
-import modification.FSTParseables.JavaFile;
-import modification.FSTParseables.JavaMethod;
 import modification.FSTParseables.StringInput;
 
 /**
@@ -19,20 +16,20 @@ public class Test {
 
     /**
      * @param args
-     * 
      * @throws Exception
      */
-    public static void main(String[] args) throws Exception {
-	FSTParseable jf = new JavaFile(new FileInput(new File(
-		"examples/Modification/Edge.java")));
-	System.out.println(jf.parseToFST());
+    public static void main(String[] args) throws FileNotFoundException,
+	    Exception {
 
-	FSTParseable jt = new JavaMethod(
-		new StringInput(
-			"void print(){System.out.print( \"edge (\" );a.print();System.out.print( \", \" );b.print();System.out.print( \") \" );}"));
-	System.out.println(jt.parseToFST());
+	System.out
+		.println(FSTGenerator
+			.createFSTParseable(
+				new StringInput(
+					"void print(){System.out.print( \"edge (\" );a.print();System.out.print( \", \" );b.print();System.out.print( \") \" );}",
+					"java.method")).getFST());
 
-	System.out.println(FileFSTGenerator.createFSTRecursive(new File(
-		"modification/test")));
+	System.out.println(FSTGenerator
+		.createFST(new File("modification/test")));
+
     }
 }

@@ -7,19 +7,28 @@ import cide.gparser.OffsetCharStream;
 
 public class StringInput implements Input {
 
-    /**
-     * @param input
-     */
-    public StringInput(String string) {
-	super();
-	this.string = string;
-    }
+    private String type;
 
     private String string;
+
+    /**
+     * @param string
+     * @param type
+     */
+    public StringInput(String string, String type) {
+	super();
+	this.string = string;
+	this.type = type;
+    }
 
     @Override
     public CharStream getCharStream() {
 	return new OffsetCharStream(new StringReader(string));
+    }
+
+    @Override
+    public String getType() {
+	return type;
     }
 
 }

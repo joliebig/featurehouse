@@ -20,7 +20,7 @@ public class JavaMethod extends FSTParseable {
     }
 
     @Override
-    public FSTNode parseToFST() throws FileNotFoundException, ParseException {
+    public FSTNode getFST() throws FileNotFoundException, ParseException {
 	Java15Parser p = new Java15Parser(super.input.getCharStream());
 	p.ClassOrInterfaceBodyDeclaration(false);
 	return p.getRoot();

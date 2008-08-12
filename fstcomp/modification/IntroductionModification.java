@@ -32,7 +32,8 @@ public class IntroductionModification extends Modification {
      */
     @Override
     public void apply(FSTNode root) throws ParseException,
-	    FileNotFoundException, cide.gparser.ParseException, InvalidFSTTraversalException {
+	    FileNotFoundException, cide.gparser.ParseException,
+	    InvalidFSTTraversalException {
 	TraversalLanguageParser tlp = new TraversalLanguageParser(
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse())

@@ -6,9 +6,7 @@ import java.util.List;
 
 import modification.CustomFSTContent;
 import modification.IntroductionModification;
-import modification.InvalidFSTTraversalException;
 import modification.Modification;
-import modification.traversalLanguageParser.ParseException;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
