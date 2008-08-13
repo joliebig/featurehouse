@@ -27,9 +27,7 @@ public class Test {
 				new StringInput(
 					"void print(){System.out.print( \"edge (\" );a.print();System.out.print( \", \" );b.print();System.out.print( \") \" );}",
 					"java.method")).getFST());
-
 	System.out.println(FSTGenerator
 		.createFST(new File("modification/test")));
-
     }
 }

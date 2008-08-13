@@ -9,6 +9,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import javax.xml.transform.TransformerException;
 
 import modification.FSTGenerator;
 import modification.IntroductionModification;
@@ -17,6 +18,9 @@ import modification.ParsedTraversalFSTContent;
 import modification.SuperimpositionModification;
 import modification.FSTParseables.FileInput;
 import modification.FSTParseables.StringInput;
+
+import org.xml.sax.SAXException;
+
 import cide.gparser.ParseException;
 
 public class XmlParser {
@@ -32,10 +36,10 @@ public class XmlParser {
     }
 
     public ModificationComposition parse() throws XMLStreamException,
-	    IOException, ParseException {
+	    IOException, ParseException, TransformerException, SAXException {
 	XMLInputFactory factory = XMLInputFactory.newInstance();
 	XMLStreamReader reader = factory.createXMLStreamReader(inputStream);
-	ModificationComposition feat = new ModificationComposition();
+	ModificationComposition mods = new ModificationComposition();
 
 	String modType = "";
 	String FSTTraversal = "";
@@ -122,7 +126,7 @@ public class XmlParser {
 		    if (modType.equals("superimposition")) {
 			if (!plainTextType.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-				feat
+				mods
 					.add(new SuperimpositionModification(
 						FSTTraversal,
 						new ParsedTraversalFSTContent(
@@ -134,7 +138,7 @@ public class XmlParser {
 										plainTextType))
 								.getFST())));
 			    } else {
-				feat
+				mods
 					.add(new SuperimpositionModification(
 						FSTTraversal,
 						FSTGenerator
@@ -144,7 +148,7 @@ public class XmlParser {
 			    }
 			} else if (!externLink.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-				feat.add(new SuperimpositionModification(
+				mods.add(new SuperimpositionModification(
 					FSTTraversal,
 					new ParsedTraversalFSTContent(
 						contentFSTTraversal,
@@ -152,7 +156,7 @@ public class XmlParser {
 							.createFST(new File(
 								externLink)))));
 			    } else {
-				feat
+				mods
 					.add(new SuperimpositionModification(
 						FSTTraversal,
 						FSTGenerator
@@ -164,7 +168,7 @@ public class XmlParser {
 		    } else if (modType.equals("introduction")) {
 			if (!plainTextType.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-				feat
+				mods
 					.add(new IntroductionModification(
 						FSTTraversal,
 						new ParsedTraversalFSTContent(
@@ -176,7 +180,7 @@ public class XmlParser {
 										plainTextType))
 								.getFST())));
 			    } else {
-				feat
+				mods
 					.add(new IntroductionModification(
 						FSTTraversal,
 						FSTGenerator
@@ -186,7 +190,7 @@ public class XmlParser {
 			    }
 			} else if (!externLink.equals("")) {
 			    if (!contentFSTTraversal.equals("")) {
-				feat.add(new IntroductionModification(
+				mods.add(new IntroductionModification(
 					FSTTraversal,
 					new ParsedTraversalFSTContent(
 						contentFSTTraversal,
@@ -194,7 +198,7 @@ public class XmlParser {
 							.createFST(new File(
 								externLink)))));
 			    } else {
-				feat
+				mods
 					.add(new IntroductionModification(
 						FSTTraversal,
 						FSTGenerator
@@ -213,6 +217,6 @@ public class XmlParser {
 	    reader.next();
 	}
 	reader.close();
-	return feat;
+	return mods;
     }
 }

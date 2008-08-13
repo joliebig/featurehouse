@@ -1,0 +1,9 @@
+<modification>
+	<modType>introduction</modType>
+	<FSTTraversal>..*:Feature</FSTTraversal>
+	<content>
+		<parsedContent>
+			<externLink>modification/FSTGenerator.java</externLink>
+		</parsedContent>
+	</content>
+</modification>

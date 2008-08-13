@@ -5,16 +5,16 @@ package modification;
 
 import java.io.FileNotFoundException;
 
-import composer.FSTGenComposer;
-
 import modification.traversalLanguageParser.ParseException;
 import modification.traversalLanguageParser.TraversalLanguageParser;
+
+import composer.FSTGenComposer;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 /**
  * @author Boxleitner Stefan
- * @uml.dependency supplier="modification.Content"
  */
 public class SuperimpositionModification extends Modification {
 
@@ -39,8 +39,9 @@ public class SuperimpositionModification extends Modification {
 	TraversalLanguageParser tlp = new TraversalLanguageParser(
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse()) {
+	    // TODO catch null pointer
 	    ((FSTNonTerminal) node.getParent()).addChild(FSTGenComposer
-		    .compose(node, getContent().getFST()));
+		    .compose(getContent().getFST(), node, node.getParent()));
 	    ((FSTNonTerminal) node.getParent()).removeChild(node);
 	}
     }

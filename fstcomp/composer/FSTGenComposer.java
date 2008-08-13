@@ -1,12 +1,11 @@
 package composer;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import modification.CustomFSTContent;
-import modification.IntroductionModification;
-import modification.Modification;
+import modification.xmlParser.XmlParser;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
@@ -112,15 +111,14 @@ public class FSTGenComposer {
     private void modify(FSTNode composition) {
 
 	if (composition != null) {
-	    Modification mod = new IntroductionModification(
-		    "..*:ClassDeclaration", new CustomFSTContent(
-			    "System.out.println(\"B‰M\")", "methodDecl",
-			    "toString()"));
 	    try {
-		mod.apply(composition);
+		XmlParser xmlpars = new XmlParser(new FileInputStream(
+			"modification/xmlParser/test.xml"));
+		xmlpars.parse().apply(composition);
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
+
 	    System.out.println(composition);
 	}
     }

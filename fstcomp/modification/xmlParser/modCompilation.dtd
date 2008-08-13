@@ -1,0 +1,17 @@
+<?xml version="1.0" ?> 
+  <!ELEMENT modification (modType, FSTTraversal, content)>
+		<!ELEMENT modType (#PCDATA)>
+		<!ELEMENT FSTTraversal (#PCDATA)>
+		<!ELEMENT content (parsedContent|customContent)>
+			<!ELEMENT customContent (type,name,body,prefix,compositionMechnism)>
+				<!ELEMENT type (#PCDATA)>
+				<!ELEMENT name (#PCDATA)>
+				<!ELEMENT body (#PCDATA)>
+				<!ELEMENT prefix (#PCDATA)>
+				<!ELEMENT compositionMechanism (#PCDATA)>
+			<!ELEMENT parsedContent ((plainText|externLink),contentTraversal?)>
+				<!ELEMENT plainText (plainTextType,text)>
+					<!ELEMENT plainTextType (#PCDATA)>
+					<!ELEMENT text (#PCDATA)>
+				<!ELEMENT externLink (#PCDATA)>
+				<!ELEMENT contentTraversal (#PCDATA)>
