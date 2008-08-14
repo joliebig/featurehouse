@@ -113,35 +113,16 @@ public class CmdLineInterpreter {
 	
 	private static void printHelp(boolean errorOccured) {
 		if (errorOccured) {
-			System.out.println("Ein Fehler ist aufgetreten!");
+			System.out.println("An error has occurred!");
 		}
-		System.out.println("Composer " 
-				+ INPUT_OPTION_EQUATIONFILE + " filename ["
-				+ INPUT_OPTION_AHEAD_EQUATION_FILE + "] ["
+		System.out.println("java -jar FeatureHouse-0.1.jar" 
+				+ INPUT_OPTION_EQUATIONFILE + " file name ["
 				+ INPUT_OPTION_BASE_DIRECTORY + " directory name] ["
-				+ INPUT_OPTION_SHOW_FST + "] [" 
-				+ INPUT_OPTION_SHOW_XML + "] [" 
-				+ INPUT_OPTION_SHOW_SUM + "] [" 
-				+ INPUT_OPTION_SHOW_GUI + "] [" 
-				+ INPUT_OPTION_FILE_OUTPUT + "]");
+);
 		System.out.println(INPUT_OPTION_EQUATIONFILE
 				+ " name of the file that lists the input features/components");
-		System.out.println(INPUT_OPTION_AHEAD_EQUATION_FILE 
-				+ " defines that the composer should run in AHEAD/Jak mode");
 		System.out.println(INPUT_OPTION_BASE_DIRECTORY
 				+ " defines the working directory, which is the search path for the input features/components");
-		System.out.println(INPUT_OPTION_SHOW_XML
-				+ " defines that an XML representation of the input components are written to the standard output");
-		System.out.println(INPUT_OPTION_SHOW_GUI
-				+ " defines that the input components are displayed in a GUI");
-		System.out.println(INPUT_OPTION_SHOW_FST
-				+ " defines that the FST of the composed program is written to the standard output");
-		System.out.println(INPUT_OPTION_SHOW_SUM
-				+ " defines that the algebraic expression of the composed program is written to the standard output");
-		System.out.println(INPUT_OPTION_FILE_OUTPUT
-				+ " advises the composer to write the composed program to the file system");
-		System.out.println(INPUT_OPTION_OUTPUT_DIRECTORY
-				+ " defines the directory where the composed program is written (requires "+INPUT_OPTION_FILE_OUTPUT+")");
 	}
 	
 	private static String getDirectoryName(File file) {
