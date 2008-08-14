@@ -42,7 +42,7 @@ public class FileLoader {
   }
 
   private void parseEquationFile(String equationFileName, String equationBaseDirectoryName, boolean aheadEquation) throws FileNotFoundException {
-	if(equationFileName.length() == 0)
+	if(equationFileName == null || equationFileName.length() == 0)
 		throw new FileNotFoundException();
     File equationFile = new File(equationFileName);
     

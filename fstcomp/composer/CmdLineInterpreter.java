@@ -115,9 +115,9 @@ public class CmdLineInterpreter {
 		if (errorOccured) {
 			System.out.println("An error has occurred!");
 		}
-		System.out.println("java -jar FeatureHouse-0.1.jar" 
+		System.out.println("java -jar FeatureHouse-0.1.jar " 
 				+ INPUT_OPTION_EQUATIONFILE + " file name ["
-				+ INPUT_OPTION_BASE_DIRECTORY + " directory name] ["
+				+ INPUT_OPTION_BASE_DIRECTORY + " directory name]"
 );
 		System.out.println(INPUT_OPTION_EQUATIONFILE
 				+ " name of the file that lists the input features/components");
