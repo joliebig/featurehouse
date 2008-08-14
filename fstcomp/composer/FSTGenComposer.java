@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import modification.ImplicitContent;
+//import modification.ImplicitContent;
 import modification.IntroductionModification;
 import modification.Modification;
 import modification.traversalLanguageParser.ParseException;
@@ -115,10 +115,10 @@ public class FSTGenComposer {
     private void modify(FSTNode composition) {
 
 	if (composition != null) {
-	    Modification mod = new IntroductionModification(
-		    "..*:ClassDeclaration", new ImplicitContent(
-			    "System.out.println(\"B�M\")", "methodDecl",
-			    "toString()"));
+	    //Modification mod = new IntroductionModification(
+		//    "..*:ClassDeclaration", new ImplicitContent(
+		//	    "System.out.println(\"B�M\")", "methodDecl",
+		//	    "toString()"));
 	    //try {
 		//mod.apply(composition);
 	    //} catch (ParseException e) {
