@@ -23,15 +23,19 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class XMIFactory {
 
 	// XMI-document
-	Document xmi;
+	private Document xmi;
 	// Content-root in XMI-document
-	Element root;
+	private Element root;
 	// Root in FST
-	FSTNonTerminal FSTroot;
-	// Mapping of class ID and class Name needed for associations
-	Map<String, String> classMap = new HashMap<String, String>();
-	//
+	private FSTNonTerminal FSTroot;
+	// LinkManager
+	private LinkManager linkManager = new LinkManager();
+	
+
+	
 	List<FSTTerminal> associationClasses = new LinkedList<FSTTerminal>();
+	List<FSTTerminal> associationEnums = new LinkedList<FSTTerminal>();
+	List<FSTTerminal> dataTypes = new LinkedList<FSTTerminal>();
 
 	public XMIFactory(File filename, FSTNonTerminal fstroot) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -75,14 +79,17 @@ public class XMIFactory {
 			// if (parent.equals("UML:Namespace.ownedElement")) {
 			String nodeName = node.getNodeName();
 
-			// Class found
-			if (nodeName.equals("UML:Class") /*
-												 * &&
-												 * !node.getAttribute("name").equals("String")
-												 */) {
+			if (nodeName.equals("UML:Class")) {
 				FSTroot.addChild(extractClass((Element) node));
 			} else if (nodeName.equals("UML:Association")) {
 				FSTroot.addChild(extractAssociation((Element) node));
+			} else if (nodeName.equals("UML:AssociationClass")) {
+				//TODO
+				FSTroot.addChild(extractClass((Element) node));
+			} else if (nodeName.equals("UML:Generalization")) {
+				FSTroot.addChild(extractGeneralization((Element) node));
+			} else if (nodeName.equals("UML:Enumeration")) {
+				FSTroot.addChild(extractEnumeration((Element) node));
 			} else if (nodeName.equals("UML:Package")) {
 				Element packageNode = (Element) node;
 				FSTNonTerminal FSTpackage = new FSTNonTerminal("XMIPackage",
@@ -103,29 +110,61 @@ public class XMIFactory {
 					Element subPackage = (Element) packageNodes.item(j);
 					extractPackage(subPackage);
 				}
-
 				FSTroot.addChild(FSTpackage);
 			}
-			// }
 		}
-
-		/*
-		 * childNodes = root.getElementsByTagName("UML:Association");
-		 * 
-		 * for (Integer i = 0; i < childNodes.getLength(); i++) { Element node =
-		 * (Element)childNodes.item(i); String parent =
-		 * node.getParentNode().getNodeName();
-		 * 
-		 * if (parent.equals("UML:Namespace.ownedElement")) { String nodeName =
-		 * node.getNodeName();
-		 * 
-		 * if (nodeName.equals("UML:Association")) {
-		 * 
-		 * FSTroot.addChild(extractAssociation(node)); } } }
-		 */
 		buildClassLinks();
+		buildEnumLinks();
 	}
-
+	
+	private FSTNonTerminal extractEnumeration(Element node) {
+		FSTNonTerminal FSTenum = new FSTNonTerminal("XMIEnumeration", node.getAttribute("name"));
+		FSTenum.addChild(new FSTTerminal("isSpecification", node
+				.getAttribute("isSpecification"), "", ""));
+		FSTenum.addChild(new FSTTerminal("isRoot", node
+				.getAttribute("isRoot"), "", ""));
+		FSTenum.addChild(new FSTTerminal("isLeaf", node
+				.getAttribute("isLeaf"), "", ""));
+		FSTenum.addChild(new FSTTerminal("isAbstract", node
+				.getAttribute("isAbstract"), "", ""));
+	
+		//enumMap.put(node.getAttribute("xmi.id"), node.getAttribute("name"));
+		linkManager.addEnum(node.getAttribute("xmi.id"), node.getAttribute("name"));
+		
+		NodeList enumerations = node.getElementsByTagName("UML:EnumerationLiteral");
+		for (int i = 0; i < enumerations.getLength(); i++) {
+			Element enumeration = (Element)enumerations.item(i);
+			FSTNonTerminal FSTliteral = new FSTNonTerminal("Literal", enumeration.getAttribute("name"));
+			FSTliteral.addChild(new FSTTerminal("isSpecification", enumeration.getAttribute("isSpecification"), "", ""));
+			FSTenum.addChild(FSTliteral);
+		}
+		return FSTenum;
+	}
+	
+	private FSTNonTerminal extractGeneralization(Element node) {
+		FSTNonTerminal FSTgeneral = new FSTNonTerminal("XMIGeneralization","");
+		FSTgeneral.addChild(new FSTTerminal("isSpecification",node.getAttribute("isSpecification"),"",""));
+		
+		NodeList children = node.getElementsByTagName("UML:Generalization.child");
+		Element child = (Element)children.item(0);
+		NodeList childClasses = child.getElementsByTagName("UML:Class");
+		Element childClass = (Element)childClasses.item(0);
+		
+		NodeList parents = node.getElementsByTagName("UML:Generalization.parent");
+		Element parent = (Element)parents.item(0);
+		NodeList parentClasses = parent.getElementsByTagName("UML:Class");
+		Element parentClass = (Element)parentClasses.item(0);
+		
+		FSTTerminal FSTchildClass = new FSTTerminal("Child",childClass.getAttribute("xmi.idref"),"","");
+		FSTTerminal FSTparentClass = new FSTTerminal("Parent",parentClass.getAttribute("xmi.idref"),"","");
+		associationClasses.add(FSTchildClass);
+		associationClasses.add(FSTparentClass);
+		
+		FSTgeneral.addChild(FSTchildClass);
+		FSTgeneral.addChild(FSTparentClass);
+		return FSTgeneral;
+	}
+	
 	private void extractPackage(Element node) {
 		/*
 		 * FSTNonTerminal FSTpackage = new FSTNonTerminal("XMIPacket", "");
@@ -195,18 +234,19 @@ public class XMIFactory {
 			FSTNonTerminal FSTassocEnd = new FSTNonTerminal("XMIAssocEnd", j
 					.toString());
 			Element associationEnd = (Element) associationEnds.item(j);
-			/*
-			 * NodeList multiplicities =
-			 * associationEnd.getElementsByTagName("UML:AssociationEnd.multiplicity");
-			 * Element multiplicity = (Element)multiplicities.item(0);
-			 */
+		
 			NodeList multiplicityRanges = associationEnd
 					.getElementsByTagName("UML:MultiplicityRange");
 			Element multiplicityRange = (Element) multiplicityRanges.item(0);
 
 			NodeList classes = associationEnd.getElementsByTagName("UML:Class");
-			Element umlClass = (Element) classes.item(0);
-			String refName = classMap.get(umlClass.getAttribute("xmi.idref"));
+			if (classes.getLength() > 0) {
+				Element umlClass = (Element) classes.item(0);
+				String classRefName = linkManager.getClassName(umlClass.getAttribute("xmi.idref")); // classMap.get(umlClass.getAttribute("xmi.idref"));
+				FSTassocEnd.addChild(new FSTTerminal("xmi.idref", classRefName, "", ""));
+			}
+			
+				
 
 			FSTassocEnd.addChild(new FSTTerminal("lower", multiplicityRange
 					.getAttribute("lower"), "", ""));
@@ -226,9 +266,10 @@ public class XMIFactory {
 					.getAttribute("targetScope"), "", ""));
 			FSTassocEnd.addChild(new FSTTerminal("changeability",
 					associationEnd.getAttribute("changeability"), "", ""));
-			FSTassocEnd.addChild(new FSTTerminal("xmi.idref", refName, "", ""));
+			
 			FSTassociation.addChild(FSTassocEnd);
 		}
+		
 		return FSTassociation;
 	}
 
@@ -256,7 +297,8 @@ public class XMIFactory {
 		classNode.addChild(new FSTTerminal("isSpecification", node
 				.getAttribute("isSpecification"), "", ""));
 
-		classMap.put(node.getAttribute("xmi.id"), node.getAttribute("name"));
+		//classMap.put(node.getAttribute("xmi.id"), node.getAttribute("name"));
+		linkManager.addClass(node.getAttribute("xmi.id"), node.getAttribute("name"));
 
 		// add attributes as NonTerminals
 		NodeList attributes = node.getElementsByTagName("UML:Attribute");
@@ -271,6 +313,13 @@ public class XMIFactory {
 			Element operation = (Element) operations.item(j);
 			classNode.addChild(extractClassOperation(operation));
 		}
+		
+		//AssociationClass?
+		//TODO
+		/*NodeList associations = node.getElementsByTagName("UML:Association.connection");
+		if (associations.getLength() > 0) {
+			classNode.addChild(extractAssociation(node));
+		}*/
 
 		return classNode;
 	}
@@ -298,6 +347,15 @@ public class XMIFactory {
 				.getAttribute("changeability"), "", ""));
 		FSTAttribute.addChild(new FSTTerminal("targetScope", attribute
 				.getAttribute("targetScope"), "", ""));
+		
+		//Multiplicity
+		NodeList multiplicities = attribute.getElementsByTagName("UML:MultiplicityRange");
+		Element multiplicity = (Element)multiplicities.item(0);
+		FSTAttribute.addChild(new FSTTerminal("lower", multiplicity
+				.getAttribute("lower"), "", ""));
+		FSTAttribute.addChild(new FSTTerminal("upper", multiplicity
+				.getAttribute("upper"), "", ""));
+
 
 		// extract link to DataType
 		NodeList featureTypes = attribute
@@ -318,6 +376,17 @@ public class XMIFactory {
 			Element dataType = (Element) dataTypes.item(0);
 			String idRef = dataType.getAttribute("xmi.idref");
 			appendDataType(idRef, FSTAttribute, "UML:Class");
+		}
+		
+		// UML-Enumeration-Feature found?
+		dataTypes = featureType.getElementsByTagName("UML:Enumeration");
+		if (dataTypes.getLength() > 0) {
+			Element dataType = (Element) dataTypes.item(0);
+			String idRef = dataType.getAttribute("xmi.idref");
+			FSTTerminal FSTenum = new FSTTerminal("XMIEnumeration", idRef, "", "");
+			FSTAttribute.addChild(FSTenum);
+			associationEnums.add(FSTenum);
+			//appendDataType(idRef, FSTAttribute, "UML:Enumeration");
 		}
 
 		return FSTAttribute;
@@ -340,8 +409,10 @@ public class XMIFactory {
 		for (int i = 0; i < dataTypes.getLength(); i++) {
 			Element dataType = (Element) dataTypes.item(i);
 			if (dataType.getAttribute("xmi.id").equals(id)) {
-				FSTNonTerminal FSTdataType = new FSTNonTerminal("XMIDataType",
-						dataType.getAttribute("name"));
+				FSTNonTerminal FSTdataType = new FSTNonTerminal("XMIDataType","");
+				
+				FSTdataType.addChild(new FSTTerminal("name",
+						dataType.getAttribute("name"), "", ""));
 				FSTdataType.addChild(new FSTTerminal("isSpecification",
 						dataType.getAttribute("isSpecification"), "", ""));
 				FSTdataType.addChild(new FSTTerminal("isRoot", dataType
@@ -418,7 +489,14 @@ public class XMIFactory {
 	private void buildClassLinks() {
 		for (FSTTerminal classLink : associationClasses) {
 			String idRef = classLink.getName();
-			classLink.setName(classMap.get(idRef));
+			classLink.setName(linkManager.getClassName(idRef));
+		}
+	}
+	
+	private void buildEnumLinks() {
+		for (FSTTerminal enumLink : associationEnums) {
+			String idRef = enumLink.getName();
+			enumLink.setName(linkManager.getEnumName(idRef));	
 		}
 	}
 }

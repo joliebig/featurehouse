@@ -32,8 +32,9 @@ public class XMIPrinter {
 	Document xmi = null;
 	Element documentRoot;
 	Integer uniqueID = 0;
-	Map<String, String> refMap = new HashMap<String, String>();
-	List<Element> classLinks = new LinkedList<Element>();
+
+	List<Association> associations = new LinkedList<Association>();
+	LinkManager linkManager = new LinkManager();
 
 	public XMIPrinter(FSTNode root, String filename) {
 		this.root = root;
@@ -50,7 +51,13 @@ public class XMIPrinter {
 
 		documentRoot = createRoot();
 		process();
-		createClassLinks();
+		linkManager.createDataTypes(documentRoot, xmi);
+		//Create Associations
+		for (Association association : associations) {
+			association.createXMI(documentRoot, xmi, linkManager);
+		}
+		linkManager.createClassLinks();
+		linkManager.createEnumLinks();
 		try {
 
 			transformer = TransformerFactory.newInstance().newTransformer();
@@ -96,6 +103,9 @@ public class XMIPrinter {
 					} else if (FSTchild.getType().equals("XMIOperation")) {
 						featureNodes
 								.appendChild(createOperation((FSTNonTerminal) FSTchild));
+					} else if (FSTchild.getType().equals("XMIAssociation")) {
+						classNode = xmi.createElement("UML:AssociationClass");
+						associations.add(new Association(FSTchild, classNode));
 					} else {
 						classNode.setAttribute(FSTchild.getType(), FSTchild
 								.getName());
@@ -110,53 +120,130 @@ public class XMIPrinter {
 				// associations
 				String IDname = classNode.getAttribute("name");
 				String newID = createUniqueID();
-				refMap.put(IDname, newID);
+				linkManager.addClass(IDname, newID);
+				//refMap.put(IDname, newID);
 
 				classNode.setAttribute("xmi.id", newID);
 				documentRoot.appendChild(classNode);
 			} else if (child.getType().equals("XMIAssociation")) {
-				documentRoot.appendChild(createAssociation(child));
+				associations.add(new Association(child));
+			} else if (child.getType().equals("XMIGeneralization")) {
+				documentRoot.appendChild(createGeneralization((FSTNonTerminal)child));
+			} else if (child.getType().equals("XMIEnumeration")) {
+				documentRoot.appendChild(createEnumeration((FSTNonTerminal)child));
 			}
 		}
+	}
+	
+	private Element createEnumeration(FSTNonTerminal FSTchild) {
+		Element enumeration = xmi.createElement("UML:Enumeration");
+		enumeration.setAttribute("name", FSTchild.getName());
+		Element enumliteral = xmi.createElement("UML:Enumeration.literal");
+		enumeration.appendChild(enumliteral);
+		
+		String xmiid = createUniqueID();
+		enumeration.setAttribute("xmi.id", xmiid);
+		linkManager.addEnum(FSTchild.getName(), xmiid);
+		
+		for (FSTNode FSTnode : FSTchild.getChildren()) {
+			if (FSTnode instanceof FSTTerminal) {
+				FSTTerminal FSTterminal = (FSTTerminal)FSTnode;
+				enumeration.setAttribute(FSTterminal.getType(), FSTterminal.getName());
+
+			} else {
+				FSTNonTerminal FSTliteral = (FSTNonTerminal)FSTnode;
+				Element literal = xmi.createElement("UML:EnumerationLiteral");
+				literal.setAttribute("name", FSTliteral.getName());
+				for(FSTNode FSTsubliteral : FSTliteral.getChildren()) {
+					FSTTerminal FSTsub = (FSTTerminal)FSTsubliteral;
+					literal.setAttribute(FSTsub.getType(), FSTsub.getName());
+				}
+				enumliteral.appendChild(literal);
+			}
+		}
+		return enumeration;
+	}
+	
+	private Element createGeneralization(FSTNonTerminal FSTchild) {
+		Element general = xmi.createElement("UML:Generalization");
+		Element generalChild = xmi.createElement("UML:Generalization.child");
+		Element generalParent = xmi.createElement("UML:Generalization.parent");
+		Element xmiClass1 = xmi.createElement("UML:Class");
+		Element xmiClass2 = xmi.createElement("UML:Class");
+		linkManager.addClassLink(xmiClass1);
+		linkManager.addClassLink(xmiClass2);
+		//classLinks.add(xmiClass1);
+		//classLinks.add(xmiClass2);
+		generalChild.appendChild(xmiClass1);
+		generalParent.appendChild(xmiClass2);
+		general.appendChild(generalChild);
+		general.appendChild(generalParent);
+		for(FSTNode FSTnode : FSTchild.getChildren()) {
+			FSTTerminal terminal = (FSTTerminal)FSTnode;
+			String name = terminal.getName();
+			String type = terminal.getType();
+			if(type.equals("isSpecification")) {
+				general.setAttribute("isSpecification", name);
+			} else if(type.equals("Child")) {
+				xmiClass1.setAttribute("xmi.idref", name);
+			} else if(type.equals("Parent")) {
+				xmiClass2.setAttribute("xmi.idref", name);
+			}
+		}
+		return general;
 	}
 
 	private Element createAttribute(FSTNonTerminal FSTchild) {
 		Element attributeNode = xmi.createElement("UML:Attribute");
 		FSTNonTerminal attributes = (FSTNonTerminal) FSTchild;
 		attributeNode.setAttribute("name", FSTchild.getName());
-
+		String upperMult = "";
+		String lowerMult = "";
 		// get Attribute-Attributes
 		for (FSTNode attribute : attributes.getChildren()) {
 
 			// DataType contained?
 			if (attribute.getType().equals("XMIDataType")) {
 				FSTNonTerminal FSTdataType = (FSTNonTerminal) attribute;
-				Element dataType = xmi.createElement("UML:DataType");
-				dataType.setAttribute("name", FSTdataType.getName());
-
-				// get DataType-Attributes
-				for (FSTNode dataTypeAttribute : FSTdataType.getChildren()) {
-					dataType.setAttribute(dataTypeAttribute.getType(),
-							dataTypeAttribute.getName());
-				}
-
+				String idRef = linkManager.addDataType(new DataType(FSTdataType, createUniqueID()));
 				// Link Attribute-Data-Type to Data-Type
-				String dataTypeID = createUniqueID();
-				dataType.setAttribute("xmi.id", dataTypeID);
-				documentRoot.appendChild(dataType);
-
-				Element UMLstructFeature = xmi
-						.createElement("UML:StructuralFeature.type");
+				Element UMLstructFeature = xmi.createElement("UML:StructuralFeature.type");
 				Element UMLdataType = xmi.createElement("UML:DataType");
-				UMLdataType.setAttribute("xmi.idref", dataTypeID);
+				UMLdataType.setAttribute("xmi.idref", idRef);
 				UMLstructFeature.appendChild(UMLdataType);
 				attributeNode.appendChild(UMLstructFeature);
+			//Link to Enumeration	
+			} else if (attribute.getType().equals("XMIEnumeration")) {
+				Element UMLstructFeature = xmi.createElement("UML:StructuralFeature.type");
+				Element UMLenum = xmi.createElement("UML:Enumeration");
+				UMLenum.setAttribute("xmi.idref", attribute.getName());
+				UMLstructFeature.appendChild(UMLenum);
+				attributeNode.appendChild(UMLstructFeature);
+				//enumLinks.add(UMLenum);
+				linkManager.addEnumLink(UMLenum);
+			} else if (attribute.getType().equals("lower")) {
+				lowerMult = attribute.getName();
+			} else if (attribute.getType().equals("upper")) {
+				upperMult = attribute.getName();
 			} else {
 				attributeNode.setAttribute(attribute.getType(), attribute
 						.getName());
 			}
-			attributeNode.setAttribute("xmi.id", createUniqueID());
+			
+			
+			//attributeNode.setAttribute("xmi.id", createUniqueID());
 		}
+		Element structMult = xmi.createElement("UML:StructuralFeature.multiplicity");
+		Element mult = xmi.createElement("UML:Multiplicity");
+		Element multRange = xmi.createElement("UML:Multiplicity.range");
+		Element multItemRange = xmi.createElement("UML:MultiplicityRange");
+		
+		multItemRange.setAttribute("upper", upperMult);
+		multItemRange.setAttribute("lower", lowerMult);
+		multRange.appendChild(multItemRange);
+		mult.appendChild(multRange);
+		structMult.appendChild(mult);
+		attributeNode.appendChild(structMult);
 		return attributeNode;
 	}
 
@@ -164,8 +251,7 @@ public class XMIPrinter {
 		Element operationNode = xmi.createElement("UML:Operation");
 		operationNode.setAttribute("name", FSTchild.getName());
 		FSTNonTerminal operations = (FSTNonTerminal) FSTchild;
-		String dataTypeRef = "";
-
+		Element parameterSubType = xmi.createElement("Dummy");
 		// get Operation-Attributes
 		for (FSTNode operation : operations.getChildren()) {
 			if (operation.getType().equals("XMIOperationParam")) {
@@ -173,21 +259,18 @@ public class XMIPrinter {
 						.createElement("UML:BehavioralFeature.parameter");
 				Element parameter = xmi.createElement("UML:Parameter");
 				Element parameterType = xmi.createElement("UML:Parameter.type");
-				Element parameterSubType = null;
+				
 
 				FSTNonTerminal FSTNToperation = (FSTNonTerminal) operation;
 				for (FSTNode FSTparameter : FSTNToperation.getChildren()) {
 					String name = FSTparameter.getType();
 					if (name.equals("DataType")) {
-						parameterSubType = xmi.createElement("UML:DataType");
-						dataTypeRef = createUniqueID();
-						parameterSubType.setAttribute("xmi.idref", dataTypeRef);
-
+						parameterSubType.setNodeValue("UML:DataType");
 					} else if (name.equals("Class")) {
 						parameterSubType = xmi.createElement("UML:Class");
 						parameterSubType.setAttribute("xmi.idref", FSTparameter
 								.getName());
-						classLinks.add(parameterSubType);
+						linkManager.addClassLink(parameterSubType);
 					} else {
 						parameter.setAttribute(name, FSTparameter.getName());
 					}
@@ -198,103 +281,16 @@ public class XMIPrinter {
 				behavioralFeature.appendChild(parameter);
 				operationNode.appendChild(behavioralFeature);
 			} else if (operation.getType().equals("XMIDataType")) {
-				Element dataType = xmi.createElement("UML:DataType");
-				dataType.setAttribute("name", operation.getName());
-
-				FSTNonTerminal FSToperation = (FSTNonTerminal) operation;
-				for (FSTNode FSTdataType : FSToperation.getChildren()) {
-					dataType.setAttribute(FSTdataType.getType(), FSTdataType
-							.getName());
-				}
-				dataType.setAttribute("xmi.id", dataTypeRef);
-				documentRoot.appendChild(dataType);
-
+				FSTNonTerminal node = (FSTNonTerminal) operation;
+				String idRef = linkManager.addDataType(new DataType(node,createUniqueID()));
+				parameterSubType.setAttribute("xmi.idref", idRef);
 			} else {
 				operationNode.setAttribute(operation.getType(), operation
 						.getName());
 			}
-			operationNode.setAttribute("xmi.id", createUniqueID());
+			//operationNode.setAttribute("xmi.id", createUniqueID());
 		}
 		return operationNode;
-	}
-
-	private Element createAssociation(FSTNode FSTassociationNode) {
-		// Association Elements
-		Element association = xmi.createElement("UML:Association");
-		Element associationConn = xmi
-				.createElement("UML:Association.connection");
-
-		FSTNonTerminal FSTassociation = (FSTNonTerminal) FSTassociationNode;
-
-		association.setAttribute("name", FSTassociation.getName());
-
-		for (FSTNode FSTassocEndNode : FSTassociation.getChildren()) {
-			FSTNonTerminal FSTassocEnd = (FSTNonTerminal) FSTassocEndNode;
-
-			if (FSTassocEnd.getType().equals("XMIAssociationDetails")) {
-				for (FSTNode FSTassocSubEnd : FSTassocEnd.getChildren()) {
-					FSTTerminal FSTassocTerminal = (FSTTerminal) FSTassocSubEnd;
-
-					association.setAttribute(FSTassocTerminal.getType(),
-							FSTassocTerminal.getName());
-
-				}
-
-			} else {
-
-				// AssociationEnd Elements
-				Element associationEnd = xmi
-						.createElement("UML:AssociationEnd");
-				Element associationmult = xmi
-						.createElement("UML:AssociationEnd.multiplicity");
-				Element multiplicity = xmi.createElement("UML:Multiplicity");
-				Element multiplicityrange = xmi
-						.createElement("UML:Multiplicity.range");
-				Element multiplicityRange = xmi
-						.createElement("UML:MultiplicityRange");
-				Element participant = xmi
-						.createElement("UML:AssociationEnd.participant");
-				Element participantClass = xmi.createElement("UML:Class");
-
-				// Process terminal nodes
-				for (FSTNode FSTassocSubEnd : FSTassocEnd.getChildren()) {
-					FSTTerminal FSTassocTerminal = (FSTTerminal) FSTassocSubEnd;
-
-					String FSTtype = FSTassocTerminal.getType();
-
-					if (FSTtype.equals("xmi.idref")) {
-						// instead of old idref use new idref saved in the
-						// refMap
-						String IDname = FSTassocTerminal.getName();
-						String newID = refMap.get(IDname);
-						participantClass.setAttribute("xmi.idref", newID);
-					} else if (FSTtype.equals("lower")
-							|| FSTtype.equals("upper")) {
-						multiplicityRange.setAttribute(FSTtype,
-								FSTassocTerminal.getName());
-					} else {
-						associationEnd.setAttribute(FSTtype, FSTassocTerminal
-								.getName());
-					}
-				}
-
-				// Build XMI-Tree
-				multiplicityrange.appendChild(multiplicityRange);
-				multiplicity.appendChild(multiplicityrange);
-				associationmult.appendChild(multiplicity);
-
-				participant.appendChild(participantClass);
-
-				associationEnd.appendChild(associationmult);
-				associationEnd.appendChild(participant);
-
-				associationConn.appendChild(associationEnd);
-			}
-		}
-
-		association.appendChild(associationConn);
-
-		return association;
 	}
 
 	private Element createRoot() {
@@ -338,11 +334,21 @@ public class XMIPrinter {
 		return uniqueID.toString();
 	}
 
+	/*
 	private void createClassLinks() {
 		for (Element classLink : classLinks) {
 			String idRef = classLink.getAttribute("xmi.idref");
 			classLink.setAttribute("xmi.idref", refMap.get(idRef));
 		}
-	}
+	
+	
+	private void createEnumLinks() {
+		for (Element enumLink : enumLinks) {
+			String idRef = enumLink.getAttribute("xmi.idref");
+			String newID = enumMap.get(idRef); 
+			enumLink.setAttribute("xmi.idref", newID);
+		}
+	}*/
+
 
 }
