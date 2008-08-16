@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>introduction</type>
+		<traversal>..*:Feature</traversal>
+		<content>
+			<parsed>
+				<externLink>Foo.java</externLink>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void foo(){}</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>superimposition</type>
+		<traversal>..foo*:*</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void foo(){System.out.println("bäm");}</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>superimposition</type>
+		<traversal>..*print*:*</traversal>
+		<content>
+			<parsed>
+				<externLink>Bar.java</externLink>
+				<cTraversal>..*print*:*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public class FooBar {public void bar(){System.out.println("method from parsed plain text java file");}}</text>
+					<tType>java.file</tType>
+				</plainText>
+				<cTraversal>..*bar*:*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

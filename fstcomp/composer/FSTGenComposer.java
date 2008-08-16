@@ -1,15 +1,12 @@
 package composer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-//import modification.ImplicitContent;
-import modification.IntroductionModification;
+import modification.InvalidFSTTraversalException;
 import modification.Modification;
 import modification.traversalLanguageParser.ParseException;
-import modification.traversalLanguageParser.TraversalLanguageParser;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
@@ -93,11 +90,11 @@ public class FSTGenComposer {
 	    for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 		LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-		//for (FSTNonTerminal feature : features)
-		//    System.err.println(feature.toString());
+		for (FSTNonTerminal feature : features)
+		    System.err.println(feature.toString());
 
 		FSTNode composition = compose(features);
-		//modify(composition);
+		modify(composition);
 		
 		// if(composition != null)
 		// System.err.println(composition.toString());
@@ -113,117 +110,23 @@ public class FSTGenComposer {
     }
 
     private void modify(FSTNode composition) {
-
 	if (composition != null) {
-	    //Modification mod = new IntroductionModification(
-		//    "..*:ClassDeclaration", new ImplicitContent(
-		//	    "System.out.println(\"B�M\")", "methodDecl",
-		//	    "toString()"));
-	    //try {
-		//mod.apply(composition);
-	    //} catch (ParseException e) {
-		 //TODO Auto-generated catch block
-		//e.printStackTrace();
-	    //}
-	    
+	    try {
+		fileLoader.getModifications().apply(composition);
+	    } catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (cide.gparser.ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (InvalidFSTTraversalException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    }	    
 	    System.out.println(composition);
-
-	    // List<FSTNode> TraversalList = new LinkedList<FSTNode>();
-	    //
-	    // /*
-	    // * INTRODUCTION
-	    // */
-	    //
-	    // // 1. do a traversal-spec to the base FST
-	    // String traversal = "..*:ClassDeclaration";
-	    // TraversalLanguageParser parser = new TraversalLanguageParser(
-	    // traversal, composition);
-	    // try {
-	    // TraversalList = parser.parse();
-	    // } catch (ParseException e) {
-	    // // TODO Auto-generated catch block
-	    // e.printStackTrace();
-	    // }
-	    // System.out.println(TraversalList.size());
-	    // // 2. create artifacts, thus an FST out of a given
-	    // // file-structure
-	    // File f = new
-	    // File("modification/test/featureA/Folder/FSTParserTest.java");
-	    // ArtifactBuilderInterface builder = new JavaBuilder();
-	    // builder.setBaseDirectoryName("modification");
-	    // try {
-	    // builder.processFile(f);
-	    // } catch (FileNotFoundException e1) {
-	    // // TODO Auto-generated catch block
-	    // e1.printStackTrace();
-	    // }
-	    // System.out.println(builder.getFeatures());
-	    // // 3. do a traversal-spec to the created FST, selecting the
-	    // // artifact to concate.
-	    // String rewriteTraversalA = "..foo*:MethodDecl";
-	    // TraversalLanguageParser parserRewriteA = new
-	    // TraversalLanguageParser(
-	    // rewriteTraversalA, builder.getFeatures().get(0));
-	    // FSTNode nodeToConcate = null;
-	    // try {
-	    // nodeToConcate = parserRewriteA.parse().get(0);
-	    // } catch (ParseException e) {
-	    // // TODO Auto-generated catch block
-	    // e.printStackTrace();
-	    // }
-	    // // 4. concate selected node to nodes retrieved by step 1
-	    // for (FSTNode node : TraversalList) {
-	    // ((FSTNonTerminal) node).addChild(nodeToConcate);
-	    // }
-	    // System.out.println(composition);
-	    //
-	    // /*
-	    // * SUPERIMPOSITION
-	    // */
-	    //
-	    // List<FSTNode> TraversalList2 = new LinkedList<FSTNode>();
-	    // // 1. do a traversal-spec to the base FST
-	    // String traversal2 = "..print*:*";
-	    // TraversalLanguageParser parser2 = new TraversalLanguageParser(
-	    // traversal2, composition);
-	    // try {
-	    // TraversalList2 = parser2.parse();
-	    // } catch (ParseException e) {
-	    // // TODO Auto-generated catch block
-	    // e.printStackTrace();
-	    // }
-	    // System.out.println(TraversalList2.size());
-	    // // 2. create artifacts, thus an FST out of a given
-	    // // file-structure
-	    // File f2 = new
-	    // File("modification/test/featureA/Folder/FSTParserTest.java");
-	    // ArtifactBuilderInterface builder2 = new JavaBuilder();
-	    // builder2.setBaseDirectoryName("modification");
-	    // try {
-	    // builder2.processFile(f2);
-	    // } catch (FileNotFoundException e1) {
-	    // // TODO Auto-generated catch block
-	    // e1.printStackTrace();
-	    // }
-	    // // 3. do a traversal-spec to the created FST, selecting the
-	    // // mod-artifact
-	    // String rewriteTraversal2 = "..print*:*";
-	    // TraversalLanguageParser parserRewrite2 = new
-	    // TraversalLanguageParser(
-	    // rewriteTraversal2, builder2.getFeatures().get(0));
-	    // FSTNode modNode = null;
-	    // try {
-	    // modNode = parserRewrite2.parse().get(0);
-	    // } catch (ParseException e) {
-	    // // TODO Auto-generated catch block
-	    // e.printStackTrace();
-	    // }
-	    // // 4. compose mod-node with every node selected by step 1
-	    // for (FSTNode node : TraversalList2) {
-	    // ((FSTNonTerminal) node.getParent()).getChildren().remove(node);
-	    // ((FSTNonTerminal) node.getParent()).getChildren().add(
-	    // compose(modNode, node, node.getParent()));
-	    // }
 	}
     }
 

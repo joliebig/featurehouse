@@ -1,4 +1,4 @@
-// $Header: /home/apel/cvs/fstcomp/examples/Modification/Attic/Edge.java,v 1.1 2008-08-08 01:15:17 boxleitn Exp $
+// $Header: /home/apel/cvs/fstcomp/examples/Modification/ConstructedSimpleTests/ClassicFeature/Attic/Edge.java,v 1.1 2008-08-16 01:17:41 boxleitn Exp $
 /**
  * Please complete these missing tags
  * @author

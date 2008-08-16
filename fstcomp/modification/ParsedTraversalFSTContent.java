@@ -1,6 +1,7 @@
 package modification;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import modification.traversalLanguageParser.ParseException;
 import modification.traversalLanguageParser.TraversalLanguageParser;
@@ -45,9 +46,10 @@ public class ParsedTraversalFSTContent implements Content {
 	    cide.gparser.ParseException {
 	TraversalLanguageParser tparser = new TraversalLanguageParser(
 		fstTraversal, root);
-	if (tparser.parse().size() == 1)
-	    return tparser.parse().get(0);
-	else
+	List<FSTNode> list = tparser.parse();
+	if (list.size() == 1) {
+	    return list.get(0);
+	} else
 	    throw new InvalidFSTTraversalException();
     }
 }

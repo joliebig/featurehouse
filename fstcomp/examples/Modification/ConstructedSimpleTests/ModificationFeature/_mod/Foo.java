@@ -1,12 +1,5 @@
-/**
- * 
- */
 
-/**
- * @author Boxleitner Stefan
- *
- */
-public class Test {
+public class Foo {
 
     /**
      * @param args

@@ -11,7 +11,11 @@ class  Graph {
 
 	 Edge add( Node n, Node m ) { Edge e = new Edge( n, m ); nodes.add( n ); nodes.add( m ); edges.add( e ); return e; }
 
-	 void print() { for( int i = 0; i < edges.size(); i++ ) { ( ( Edge ) edges.get( i ) ).print(); if( i < edges.size() - 1 ) System.out.print( ", " ); } }
+	public void foo(){System.out.println("bäm");}
+
+	 void print() {	System.out.println("new print method from Bar"); }
+
+	public void bar(){System.out.println("method from parsed plain text java file");}
 
 
 }
