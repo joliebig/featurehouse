@@ -1,5 +1,5 @@
 
-package Graph; 
+package Graph; import java.util.List; 
  
 class  Node {
 	 int id = 0;
@@ -10,7 +10,7 @@ class  Node {
 
 	 void print() {	System.out.println("new print method from Bar"); }
 
-	public void bar(){System.out.println("method from parsed plain text java file");}
+	public void	bar(){System.out.println("method from parsed plain text java file");}
 
 
 }

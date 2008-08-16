@@ -19,12 +19,19 @@ public class CustomFSTContent implements Content {
      */
     public CustomFSTContent(String compositionMechanism,
 	    String content, String name, String prefix, String type) {
+	
 	super();
+	
 	this.compositionMechanism = compositionMechanism;
 	this.content = content;
 	this.name = name;
 	this.prefix = prefix;
 	this.type = type;
+	System.out.println(compositionMechanism);
+	System.out.println(content);
+	System.out.println(name);
+	System.out.println(prefix);
+	System.out.println(type);
     }
 
     /**

@@ -49,11 +49,25 @@
 		<content>
 			<parsed>
 				<plainText>
-					<text>public class FooBar {public void bar(){System.out.println("method from parsed plain text java file");}}</text>
+					<text>public class FooBar {public void
+						bar(){System.out.println("method from parsed plain text java file");}}</text>
 					<tType>java.file</tType>
 				</plainText>
 				<cTraversal>..*bar*:*</cTraversal>
 			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..*:CompilationUnit</traversal>
+		<content>
+			<custom>
+				<nodeType>ImportDeclaration</nodeType>
+				<name>java.util.List{ImportPackage}</name>
+				<body>import java.util.List;</body>
+				<prefix></prefix>
+				<compositionMechanism>compose:Replacement</compositionMechanism>
+			</custom>
 		</content>
 	</modification>
 </modificationComposition>

@@ -1,6 +1,6 @@
 
 package Graph; 
-import java.util.*; 
+import java.util.*; import java.util.List; 
  
 class  Graph {
 	 Vector nodes = new Vector();
@@ -15,7 +15,7 @@ class  Graph {
 
 	 void print() {	System.out.println("new print method from Bar"); }
 
-	public void bar(){System.out.println("method from parsed plain text java file");}
+	public void	bar(){System.out.println("method from parsed plain text java file");}
 
 
 }

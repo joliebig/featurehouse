@@ -124,6 +124,9 @@ public class XmlParser {
 		} else if (reader.getLocalName().equals(Tags.custom.toString())) {
 		    currentElement = Tags.custom;
 		    contentType = ContentType.custom;
+		} else if (reader.getLocalName().equals(
+			Tags.nodeType.toString())) {
+		    currentElement = Tags.nodeType;
 		} else if (reader.getLocalName().equals(Tags.name.toString())) {
 		    currentElement = Tags.name;
 		} else if (reader.getLocalName().equals(Tags.body.toString())) {
@@ -242,12 +245,19 @@ public class XmlParser {
 		    }
 		    break;
 		case custom:
-		    content = new CustomFSTContent(
-			    tagContents[Tags.compositionMechanism.ordinal()],
-			    tagContents[Tags.content.ordinal()],
-			    tagContents[Tags.name.ordinal()],
-			    tagContents[Tags.prefix.ordinal()],
-			    tagContents[Tags.nodeType.ordinal()]);
+		    if (tagContents[Tags.prefix.ordinal()] != null)
+			content = new CustomFSTContent(
+				tagContents[Tags.compositionMechanism.ordinal()],
+				tagContents[Tags.body.ordinal()],
+				tagContents[Tags.name.ordinal()],
+				tagContents[Tags.prefix.ordinal()],
+				tagContents[Tags.nodeType.ordinal()]);
+		    else
+			content = new CustomFSTContent(
+				tagContents[Tags.compositionMechanism.ordinal()],
+				tagContents[Tags.body.ordinal()],
+				tagContents[Tags.name.ordinal()], "",
+				tagContents[Tags.nodeType.ordinal()]);
 		    break;
 		}
 
