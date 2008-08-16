@@ -3,6 +3,7 @@ package modification;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
+import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 

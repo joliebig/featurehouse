@@ -20,8 +20,8 @@ import org.xml.sax.SAXException;
 import cide.gparser.ParseException;
 
 import modification.IntroductionModification;
-import modification.InvalidFSTTraversalException;
 import modification.ModificationComposition;
+import modification.content.InvalidFSTTraversalException;
 import modification.xmlParser.XmlParser;
 
 import builder.ArtifactBuilderInterface;

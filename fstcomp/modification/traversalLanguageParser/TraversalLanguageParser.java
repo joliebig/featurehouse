@@ -3,13 +3,14 @@ package modification.traversalLanguageParser;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.LinkedList;
 
 import modification.traversalLanguageParser.addressManagement.NameTypePatternToken;
 import modification.traversalLanguageParser.addressManagement.TreeAddress;
 import modification.traversalLanguageParser.addressManagement.TreeAddressToken;
 import modification.traversalLanguageParser.addressManagement.WildcardToken;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
 public class TraversalLanguageParser implements TraversalLanguageParserConstants {
@@ -54,301 +55,225 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
 
 /*** independent expression*/
   final public List<FSTNode> expression() throws ParseException {
-    trace_call("expression");
-    try {
         List<FSTNode> nodeListOp1 = new LinkedList<FSTNode>();
         List<FSTNode> nodeListOp2 = new LinkedList<FSTNode>();
         List<FSTNode> nodeListRes = new LinkedList<FSTNode>();
-      nodeListOp1 = traversalTerm();
+    nodeListOp1 = traversalTerm();
          nodeListRes = nodeListOp1;
-      label_1:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case UNION:
-        case INTERSECTION:
-        case MINUS:
-          ;
-          break;
-        default:
-          jj_la1[0] = jj_gen;
-          break label_1;
-        }
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case UNION:
-          jj_consume_token(UNION);
-          nodeListOp2 = traversalTerm();
-                 nodeListRes = nodeListOp1 = or(nodeListOp1, nodeListOp2);
-          break;
-        case INTERSECTION:
-          jj_consume_token(INTERSECTION);
-          nodeListOp2 = traversalTerm();
-                 nodeListRes = nodeListOp1 = and(nodeListOp1, nodeListOp2);
-          break;
-        case MINUS:
-          jj_consume_token(MINUS);
-          nodeListOp2 = traversalTerm();
-                 nodeListRes = nodeListOp1 = minus(nodeListOp1, nodeListOp2);
-          break;
-        default:
-          jj_la1[1] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case UNION:
+      case INTERSECTION:
+      case MINUS:
+        ;
+        break;
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
       }
-      jj_consume_token(0);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case UNION:
+        jj_consume_token(UNION);
+        nodeListOp2 = traversalTerm();
+                 nodeListRes = nodeListOp1 = or(nodeListOp1, nodeListOp2);
+        break;
+      case INTERSECTION:
+        jj_consume_token(INTERSECTION);
+        nodeListOp2 = traversalTerm();
+                 nodeListRes = nodeListOp1 = and(nodeListOp1, nodeListOp2);
+        break;
+      case MINUS:
+        jj_consume_token(MINUS);
+        nodeListOp2 = traversalTerm();
+                 nodeListRes = nodeListOp1 = minus(nodeListOp1, nodeListOp2);
+        break;
+      default:
+        jj_la1[1] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    jj_consume_token(0);
          {if (true) return nodeListRes;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("expression");
-    }
   }
 
 /*** traversal term without operators outside braces*/
   final public List<FSTNode> traversalTerm() throws ParseException {
-    trace_call("traversalTerm");
-    try {
         List<FSTNode> nodeList;
         TreeAddress treeAddress;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LEFT_BRACE:
-        jj_consume_token(LEFT_BRACE);
-        nodeList = expression();
-        jj_consume_token(RIGHT_BRACE);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LEFT_BRACE:
+      jj_consume_token(LEFT_BRACE);
+      nodeList = expression();
+      jj_consume_token(RIGHT_BRACE);
                  {if (true) return nodeList;}
-        break;
-      case ADDRESS_WILDCARD:
-      case STRING_WILDCARD:
-      case NUMBER:
-      case SMALL_CHARACTER:
-      case GREAT_CHARACTER:
-      case ANY_CHAR:
-      case LITERAL_START_FLAG:
-        treeAddress = treeAddress();
-        break;
-      default:
-        jj_la1[2] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
+      break;
+    case ADDRESS_WILDCARD:
+    case STRING_WILDCARD:
+    case NUMBER:
+    case SMALL_CHARACTER:
+    case GREAT_CHARACTER:
+    case ANY_CHAR:
+    case LITERAL_START_FLAG:
+      treeAddress = treeAddress();
+      break;
+    default:
+      jj_la1[2] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
          {if (true) return treeAddress.resolve(root);}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("traversalTerm");
-    }
   }
 
 /*** single tree address without operators. * Differentiation with "|" to suppress the empty string.* splits off <ADDRESS_WILDCARD>s to treat seperately.*/
   final public TreeAddress treeAddress() throws ParseException {
-    trace_call("treeAddress");
-    try {
         List<TreeAddressToken> tokenList = new LinkedList<TreeAddressToken>();
         List<TreeAddressToken> tempTokenList;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_WILDCARD:
-      case NUMBER:
-      case SMALL_CHARACTER:
-      case GREAT_CHARACTER:
-      case ANY_CHAR:
-      case LITERAL_START_FLAG:
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case STRING_WILDCARD:
+    case NUMBER:
+    case SMALL_CHARACTER:
+    case GREAT_CHARACTER:
+    case ANY_CHAR:
+    case LITERAL_START_FLAG:
+      tempTokenList = literalAddress();
+                         tokenList.addAll(tempTokenList);
+      label_2:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ADDRESS_WILDCARD:
+          ;
+          break;
+        default:
+          jj_la1[3] = jj_gen;
+          break label_2;
+        }
+        jj_consume_token(ADDRESS_WILDCARD);
+                                 tokenList.add(new WildcardToken());
+        tempTokenList = literalAddress();
+                                 tokenList.addAll(tempTokenList);
+      }
+      break;
+    case ADDRESS_WILDCARD:
+      label_3:
+      while (true) {
+        jj_consume_token(ADDRESS_WILDCARD);
+                         tokenList.add(new WildcardToken());
         tempTokenList = literalAddress();
                          tokenList.addAll(tempTokenList);
-        label_2:
-        while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case ADDRESS_WILDCARD:
-            ;
-            break;
-          default:
-            jj_la1[3] = jj_gen;
-            break label_2;
-          }
-          jj_consume_token(ADDRESS_WILDCARD);
-                                 tokenList.add(new WildcardToken());
-          tempTokenList = literalAddress();
-                                 tokenList.addAll(tempTokenList);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case ADDRESS_WILDCARD:
+          ;
+          break;
+        default:
+          jj_la1[4] = jj_gen;
+          break label_3;
         }
-        break;
-      case ADDRESS_WILDCARD:
-        label_3:
-        while (true) {
-          jj_consume_token(ADDRESS_WILDCARD);
-                         tokenList.add(new WildcardToken());
-          tempTokenList = literalAddress();
-                         tokenList.addAll(tempTokenList);
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case ADDRESS_WILDCARD:
-            ;
-            break;
-          default:
-            jj_la1[4] = jj_gen;
-            break label_3;
-          }
-        }
-        break;
-      default:
-        jj_la1[5] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
       }
+      break;
+    default:
+      jj_la1[5] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
          {if (true) return new TreeAddress(tokenList);}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("treeAddress");
-    }
   }
 
 /*** literalAddress consisting of nameTypePatternTokens and <ADDRESS_DIVIDER>s*/
   final public List<TreeAddressToken> literalAddress() throws ParseException {
-    trace_call("literalAddress");
-    try {
         List<TreeAddressToken> tokenList = new LinkedList<TreeAddressToken>();
         TreeAddressToken token;
-      token = nameTypePatternToken();
+    token = nameTypePatternToken();
          tokenList.add(token);
-      label_4:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ADDRESS_DIVIDER:
-          ;
-          break;
-        default:
-          jj_la1[6] = jj_gen;
-          break label_4;
-        }
-        jj_consume_token(ADDRESS_DIVIDER);
-        token = nameTypePatternToken();
-                 tokenList.add(token);
+    label_4:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ADDRESS_DIVIDER:
+        ;
+        break;
+      default:
+        jj_la1[6] = jj_gen;
+        break label_4;
       }
+      jj_consume_token(ADDRESS_DIVIDER);
+      token = nameTypePatternToken();
+                 tokenList.add(token);
+    }
          {if (true) return tokenList;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("literalAddress");
-    }
   }
 
 /*** tokens split by <ADDRESS_DIVIDER> in literal addresses*/
   final public TreeAddressToken nameTypePatternToken() throws ParseException {
-    trace_call("nameTypePatternToken");
-    try {
         String name;
         String type;
-      name = name();
-      jj_consume_token(TYPE_DIVIDER);
-      type = type();
+    name = name();
+    jj_consume_token(TYPE_DIVIDER);
+    type = type();
          {if (true) return new NameTypePatternToken(name,type);}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("nameTypePatternToken");
-    }
   }
 
 /*** regex pattern for name part of nameTypePatternTokens*/
   final public String name() throws ParseException {
-    trace_call("name");
-    try {
         String name;
-      name = stringWithWildcards();
+    name = stringWithWildcards();
          {if (true) return name;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("name");
-    }
   }
 
 /*** regex pattern for type part of nameTypePatternTokens*/
   final public String type() throws ParseException {
-    trace_call("type");
-    try {
         String type;
-      type = stringWithWildcards();
+    type = stringWithWildcards();
          {if (true) return type;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("type");
-    }
   }
 
 /*** contains <STRING_WILDCARD>s and words mixed up in different ways*/
   final public String stringWithWildcards() throws ParseException {
-    trace_call("stringWithWildcards");
-    try {
         String result = "";
         Token t;
         String s;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_WILDCARD:
-        jj_consume_token(STRING_WILDCARD);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case STRING_WILDCARD:
+      jj_consume_token(STRING_WILDCARD);
                          result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-        s = wildcardExtension();
+      s = wildcardExtension();
                          result = result.concat(s.toString());
-        break;
-      case NUMBER:
-      case SMALL_CHARACTER:
-      case GREAT_CHARACTER:
-      case ANY_CHAR:
-      case LITERAL_START_FLAG:
-        s = word();
+      break;
+    case NUMBER:
+    case SMALL_CHARACTER:
+    case GREAT_CHARACTER:
+    case ANY_CHAR:
+    case LITERAL_START_FLAG:
+      s = word();
                          result = result.concat(s.toString());
-        s = wordExtension();
+      s = wordExtension();
                          result = result.concat(s.toString());
-        break;
-      default:
-        jj_la1[7] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
+      break;
+    default:
+      jj_la1[7] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
          {if (true) return result;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("stringWithWildcards");
-    }
   }
 
 /*** possible extends for word*/
   final public String wordExtension() throws ParseException {
-    trace_call("wordExtension");
-    try {
         String result = "";
         Token t;
         String s;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_WILDCARD:
-        jj_consume_token(STRING_WILDCARD);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case STRING_WILDCARD:
+      jj_consume_token(STRING_WILDCARD);
                          result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case NUMBER:
-        case SMALL_CHARACTER:
-        case GREAT_CHARACTER:
-        case ANY_CHAR:
-        case LITERAL_START_FLAG:
-          s = word();
-                                 result = result.concat(s.toString());
-          s = wordExtension();
-                                 result = result.concat(s.toString());
-          break;
-        default:
-          jj_la1[8] = jj_gen;
-          ;
-        }
-        break;
-      default:
-        jj_la1[9] = jj_gen;
-        ;
-      }
-         {if (true) return result;}
-    throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("wordExtension");
-    }
-  }
-
-/*** possible extends for <STRING_WILDCARD>*/
-  final public String wildcardExtension() throws ParseException {
-    trace_call("wildcardExtension");
-    try {
-        String result = "";
-        Token t;
-        String s;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NUMBER:
       case SMALL_CHARACTER:
@@ -356,110 +281,126 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
       case ANY_CHAR:
       case LITERAL_START_FLAG:
         s = word();
-                         result = result.concat(s.toString());
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case STRING_WILDCARD:
-          jj_consume_token(STRING_WILDCARD);
-                                 result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
-          s = wildcardExtension();
                                  result = result.concat(s.toString());
-          break;
-        default:
-          jj_la1[10] = jj_gen;
-          ;
-        }
+        s = wordExtension();
+                                 result = result.concat(s.toString());
         break;
       default:
-        jj_la1[11] = jj_gen;
+        jj_la1[8] = jj_gen;
         ;
       }
+      break;
+    default:
+      jj_la1[9] = jj_gen;
+      ;
+    }
          {if (true) return result;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("wildcardExtension");
+  }
+
+/*** possible extends for <STRING_WILDCARD>*/
+  final public String wildcardExtension() throws ParseException {
+        String result = "";
+        Token t;
+        String s;
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case NUMBER:
+    case SMALL_CHARACTER:
+    case GREAT_CHARACTER:
+    case ANY_CHAR:
+    case LITERAL_START_FLAG:
+      s = word();
+                         result = result.concat(s.toString());
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case STRING_WILDCARD:
+        jj_consume_token(STRING_WILDCARD);
+                                 result = result.concat(JAVA_REGEX_PATTERN_STRING_WILDCARD);
+        s = wildcardExtension();
+                                 result = result.concat(s.toString());
+        break;
+      default:
+        jj_la1[10] = jj_gen;
+        ;
+      }
+      break;
+    default:
+      jj_la1[11] = jj_gen;
+      ;
     }
+         {if (true) return result;}
+    throw new Error("Missing return statement in function");
   }
 
 /*** word is consisting of <SMALL_CHARACTER>s, <GREAT_CHARACTER>s, * <NUMBER>s and specialCharacters (treated seperately)*/
   final public String word() throws ParseException {
-    trace_call("word");
-    try {
         String m;
         String s = "";
         Token t;
-      label_5:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case SMALL_CHARACTER:
-          t = jj_consume_token(SMALL_CHARACTER);
+    label_5:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case SMALL_CHARACTER:
+        t = jj_consume_token(SMALL_CHARACTER);
                  s = s.concat("\\Q" + t.toString() + "\\E");
-          break;
-        case GREAT_CHARACTER:
-          t = jj_consume_token(GREAT_CHARACTER);
+        break;
+      case GREAT_CHARACTER:
+        t = jj_consume_token(GREAT_CHARACTER);
                  s = s.concat("\\Q" + t.toString() + "\\E");
-          break;
-        case NUMBER:
-          t = jj_consume_token(NUMBER);
+        break;
+      case NUMBER:
+        t = jj_consume_token(NUMBER);
                  s = s.concat("\\Q" + t.toString() + "\\E");
-          break;
-        case ANY_CHAR:
-          t = jj_consume_token(ANY_CHAR);
+        break;
+      case ANY_CHAR:
+        t = jj_consume_token(ANY_CHAR);
                  s = s.concat("\\Q" + t.toString() + "\\E");
-          break;
-        case LITERAL_START_FLAG:
-          m = literalString();
+        break;
+      case LITERAL_START_FLAG:
+        m = literalString();
                  s = s.concat(m);
-          break;
-        default:
-          jj_la1[12] = jj_gen;
-          jj_consume_token(-1);
-          throw new ParseException();
-        }
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case NUMBER:
-        case SMALL_CHARACTER:
-        case GREAT_CHARACTER:
-        case ANY_CHAR:
-        case LITERAL_START_FLAG:
-          ;
-          break;
-        default:
-          jj_la1[13] = jj_gen;
-          break label_5;
-        }
+        break;
+      default:
+        jj_la1[12] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case NUMBER:
+      case SMALL_CHARACTER:
+      case GREAT_CHARACTER:
+      case ANY_CHAR:
+      case LITERAL_START_FLAG:
+        ;
+        break;
+      default:
+        jj_la1[13] = jj_gen;
+        break label_5;
+      }
+    }
          {if (true) return s;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("word");
-    }
   }
 
   final public String literalString() throws ParseException {
-    trace_call("literalString");
-    try {
         String s = "";
         Token t;
-      jj_consume_token(LITERAL_START_FLAG);
-      label_6:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ANY_CHAR_LITERAL:
-          ;
-          break;
-        default:
-          jj_la1[14] = jj_gen;
-          break label_6;
-        }
-        t = jj_consume_token(ANY_CHAR_LITERAL);
-                         s = s.concat("\\Q" + t.toString() + "\\E");
+    jj_consume_token(LITERAL_START_FLAG);
+    label_6:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case ANY_CHAR_LITERAL:
+        ;
+        break;
+      default:
+        jj_la1[14] = jj_gen;
+        break label_6;
       }
-      jj_consume_token(LITERAL_END_FLAG);
+      t = jj_consume_token(ANY_CHAR_LITERAL);
+                         s = s.concat("\\Q" + t.toString() + "\\E");
+    }
+    jj_consume_token(LITERAL_END_FLAG);
          {if (true) return s;}
     throw new Error("Missing return statement in function");
-    } finally {
-      trace_return("literalString");
-    }
   }
 
   public TraversalLanguageParserTokenManager token_source;
@@ -541,7 +482,6 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
-      trace_token(token, "");
       return token;
     }
     token = oldToken;
@@ -554,7 +494,6 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     else token = token.next = token_source.getNextToken();
     jj_ntk = -1;
     jj_gen++;
-      trace_token(token, " (in getNextToken)");
     return token;
   }
 
@@ -611,53 +550,10 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     return new ParseException(token, exptokseq, tokenImage);
   }
 
-  private int trace_indent = 0;
-  private boolean trace_enabled = true;
-
   final public void enable_tracing() {
-    trace_enabled = true;
   }
 
   final public void disable_tracing() {
-    trace_enabled = false;
-  }
-
-  final private void trace_call(String s) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.println("Call:   " + s);
-    }
-    trace_indent = trace_indent + 2;
-  }
-
-  final private void trace_return(String s) {
-    trace_indent = trace_indent - 2;
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.println("Return: " + s);
-    }
-  }
-
-  final private void trace_token(Token t, String where) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.print("Consumed token: <" + tokenImage[t.kind]);
-      if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
-        System.out.print(": \"" + t.image + "\"");
-      }
-      System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
-    }
-  }
-
-  final private void trace_scan(Token t1, int t2) {
-    if (trace_enabled) {
-      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
-      System.out.print("Visited token: <" + tokenImage[t1.kind]);
-      if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
-        System.out.print(": \"" + t1.image + "\"");
-      }
-      System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
-    }
   }
 
 }

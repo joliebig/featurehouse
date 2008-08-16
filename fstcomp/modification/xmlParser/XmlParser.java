@@ -15,17 +15,17 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import modification.Content;
-import modification.CustomFSTContent;
 import modification.FSTGenerator;
 import modification.IntroductionModification;
-import modification.InvalidFSTTraversalException;
 import modification.ModificationComposition;
-import modification.ParsedTraversalFSTContent;
 import modification.SuperimpositionModification;
-import modification.FSTParseables.FSTParseable;
-import modification.FSTParseables.FileInput;
-import modification.FSTParseables.StringInput;
+import modification.content.Content;
+import modification.content.CustomFSTContent;
+import modification.content.InvalidFSTTraversalException;
+import modification.content.ParsedTraversalFSTContent;
+import modification.content.FSTParseables.FSTParseable;
+import modification.content.FSTParseables.FileInput;
+import modification.content.FSTParseables.StringInput;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

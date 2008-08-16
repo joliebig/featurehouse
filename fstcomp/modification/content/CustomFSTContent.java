@@ -1,4 +1,4 @@
-package modification;
+package modification.content;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -27,11 +27,6 @@ public class CustomFSTContent implements Content {
 	this.name = name;
 	this.prefix = prefix;
 	this.type = type;
-	System.out.println(compositionMechanism);
-	System.out.println(content);
-	System.out.println(name);
-	System.out.println(prefix);
-	System.out.println(type);
     }
 
     /**

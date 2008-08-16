@@ -6,12 +6,12 @@ package modification;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import modification.FSTParseables.FSTParseable;
-import modification.FSTParseables.FileInput;
-import modification.FSTParseables.Input;
-import modification.FSTParseables.JavaFile;
-import modification.FSTParseables.JavaMethod;
-import modification.FSTParseables.UnknownType;
+import modification.content.FSTParseables.FSTParseable;
+import modification.content.FSTParseables.FileInput;
+import modification.content.FSTParseables.Input;
+import modification.content.FSTParseables.JavaFile;
+import modification.content.FSTParseables.JavaMethod;
+import modification.content.FSTParseables.UnknownType;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;

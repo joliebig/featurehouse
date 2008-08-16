@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
-import modification.InvalidFSTTraversalException;
 import modification.Modification;
+import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;

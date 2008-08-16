@@ -2,6 +2,8 @@ package modification;
 
 import java.io.FileNotFoundException;
 
+import modification.content.Content;
+import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
