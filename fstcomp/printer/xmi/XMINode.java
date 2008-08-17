@@ -7,17 +7,17 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class XMINode {
-	private String name;
+	/*private String name;
 	private String id;
 	private String isSpecification;
 	private String isRoot;
 	private String isLeaf;
-	private String isAbstract;
+	private String isAbstract;*/
 	
 	private Map<String, String> attributeMap = new HashMap<String,String>();
 	
 	public XMINode() {}
-	
+	/*
 	public XMINode(String id, String name, String isSpecification, String isRoot, String isLeaf, String isAbstract) {
 		this.id = id;
 		this.name = name;
@@ -25,30 +25,33 @@ public class XMINode {
 		this.isRoot = isRoot;
 		this.isLeaf = isLeaf;
 		this.isAbstract = isAbstract;
-	}
+	}*/
 	
 	public XMINode(FSTNonTerminal node, String id) {
-		this.id = id;
-		name = node.getName();
+		//this.id = id;
+		setAttribute(Strings.ID, id);
+		//name = node.getName();
+		setAttribute(Strings.NAME, node.getName());
 		for (FSTNode dataTypeAttribute : node.getChildren()) {
 			String type = dataTypeAttribute.getType();
 			String nodeName = dataTypeAttribute.getName();
 			
-			if (type.equals("name") && name.equals("")) {
-				name = nodeName;
+			if (type.equals("name") && getAttribute(Strings.NAME).equals("")) {
+				setAttribute(Strings.NAME, node.getName());
 			}
 			
 			setAttribute(type, nodeName);
 			
+			/*
 			if (type.equals(Strings.ISSPEC)) {
-				isSpecification = name;
+				isSpecification = nodeName;
 			} else if (type.equals(Strings.ISROOT)) {
-				isRoot = name;
+				isRoot = nodeName;
 			} else if (type.equals(Strings.ISLEAF)) {
-				isLeaf = name;
+				isLeaf = nodeName;
 			} else if (type.equals(Strings.ISABSTRACT)) {
-				isAbstract = name;
-			}
+				isAbstract = nodeName;
+			}*/
 		}
 	}
 	
@@ -59,7 +62,7 @@ public class XMINode {
 	public String getAttribute(String name) {
 		return attributeMap.get(name);
 	}
-	
+	/*
 	public String getName() {
 		return name;
 	}
@@ -106,7 +109,7 @@ public class XMINode {
 	
 	public void setIsAbstract(String isAbstract) {
 		this.isAbstract = isAbstract;
-	}
+	}*/
 	
 	@Override
 	public boolean equals(Object o) {
@@ -115,11 +118,11 @@ public class XMINode {
 		} else {
 			if (o instanceof DataType) {
 				DataType ref = (DataType)o;
-				if (ref.getName().equals(name) &&
-					ref.getIsAbstract().equals(isAbstract) &&
-					ref.getIsLeaf().equals(isLeaf) &&
-					ref.getIsRoot().equals(isRoot) &&
-					ref.getIsSpecification().equals(isSpecification)) {
+				if (ref.getAttribute(Strings.NAME).equals(getAttribute(Strings.NAME)) &&
+					ref.getAttribute(Strings.ISABSTRACT).equals(getAttribute(Strings.ISABSTRACT)) &&
+					ref.getAttribute(Strings.ISLEAF).equals(getAttribute(Strings.ISLEAF)) &&
+					ref.getAttribute(Strings.ISROOT).equals(getAttribute(Strings.ISROOT)) &&
+					ref.getAttribute(Strings.ISSPEC).equals(getAttribute(Strings.ISSPEC))) {
 					return true;
 				}
 			}

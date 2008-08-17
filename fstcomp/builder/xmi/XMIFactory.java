@@ -2,10 +2,8 @@ package builder.xmi;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -74,17 +72,15 @@ public class XMIFactory {
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			// Element node = (Element)childNodes.item(i);
 			Node node = childNodes.item(i);
-			String parent = node.getParentNode().getNodeName();
 
 			// if (parent.equals("UML:Namespace.ownedElement")) {
 			String nodeName = node.getNodeName();
-
+			System.out.println(nodeName);
 			if (nodeName.equals("UML:Class")) {
 				FSTroot.addChild(extractClass((Element) node));
 			} else if (nodeName.equals("UML:Association")) {
 				FSTroot.addChild(extractAssociation((Element) node));
 			} else if (nodeName.equals("UML:AssociationClass")) {
-				//TODO
 				FSTroot.addChild(extractClass((Element) node));
 			} else if (nodeName.equals("UML:Generalization")) {
 				FSTroot.addChild(extractGeneralization((Element) node));
@@ -316,10 +312,10 @@ public class XMIFactory {
 		
 		//AssociationClass?
 		//TODO
-		/*NodeList associations = node.getElementsByTagName("UML:Association.connection");
+		NodeList associations = node.getElementsByTagName("UML:Association.connection");
 		if (associations.getLength() > 0) {
 			classNode.addChild(extractAssociation(node));
-		}*/
+		}
 
 		return classNode;
 	}

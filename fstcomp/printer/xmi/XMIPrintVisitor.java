@@ -12,7 +12,7 @@ public class XMIPrintVisitor extends ArtifactPrintVisitor {
 		super("XMI-File");
 	}
 	public void processNode(FSTNode node, File folderPath) throws PrintVisitorException {
-		//System.out.println(node.toString());
+		System.out.println(node.toString());
 		String fileName = folderPath.getPath() + File.separator + node.getName();
 		XMIPrinter printer = new XMIPrinter(node, fileName);
 		printer.transformDocument();

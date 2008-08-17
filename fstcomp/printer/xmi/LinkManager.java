@@ -96,12 +96,14 @@ public class LinkManager {
 		//Is DataType already exisiting?
 		for (DataType refType : dataTypes) {
 			if (refType.equals(dataType)) {
-				return refType.getID();
+				//return refType.getID();
+				return refType.getAttribute(Strings.ID);
 			}
 		}
 		//Insert new DataType
 		dataTypes.add(dataType);
-		return dataType.getID();
+		//return dataType.getID();
+		return dataType.getAttribute(Strings.ID);
 	}
 	
 	
@@ -113,12 +115,12 @@ public class LinkManager {
 	public void createDataTypes(Node parent, Document document) {
 		for (DataType dataType : dataTypes) {
 			Element dataNode = document.createElement(Strings.TYPE);
-			dataNode.setAttribute(Strings.ID, dataType.getID());
-			dataNode.setAttribute(Strings.NAME, dataType.getName());
-			dataNode.setAttribute(Strings.ISSPEC, dataType.getIsSpecification());
-			dataNode.setAttribute(Strings.ISROOT, dataType.getIsRoot());
-			dataNode.setAttribute(Strings.ISLEAF, dataType.getIsLeaf());
-			dataNode.setAttribute(Strings.ISABSTRACT, dataType.getIsAbstract());
+			dataNode.setAttribute(Strings.ID, dataType.getAttribute(Strings.ID));
+			dataNode.setAttribute(Strings.NAME, dataType.getAttribute(Strings.NAME));
+			dataNode.setAttribute(Strings.ISSPEC, dataType.getAttribute(Strings.ISSPEC));
+			dataNode.setAttribute(Strings.ISROOT, dataType.getAttribute(Strings.ISROOT));
+			dataNode.setAttribute(Strings.ISLEAF, dataType.getAttribute(Strings.ISLEAF));
+			dataNode.setAttribute(Strings.ISABSTRACT, dataType.getAttribute(Strings.ISABSTRACT));
 			parent.appendChild(dataNode);
 		}
 	}

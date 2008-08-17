@@ -92,39 +92,55 @@ public class XMIPrinter {
 
 				// Classnode
 				Element classNode = xmi.createElement("UML:Class");
+				Element assocClassNode = xmi.createElement("UML:AssociationClass");
 				classNode.setAttribute("name", child.getName());
+				assocClassNode.setAttribute("name", child.getName());
 
 				FSTNonTerminal FSTClass = (FSTNonTerminal) child;
+				boolean isAssocClass = false;
 				for (FSTNode FSTchild : FSTClass.getChildren()) {
+					
+					String type = FSTchild.getType();
 
-					if (FSTchild.getType().equals("XMIAttribute")) {
+					if (type.equals("XMIAttribute")) {
 						featureNodes
 								.appendChild(createAttribute((FSTNonTerminal) FSTchild));
-					} else if (FSTchild.getType().equals("XMIOperation")) {
+					} else if (type.equals("XMIOperation")) {
 						featureNodes
 								.appendChild(createOperation((FSTNonTerminal) FSTchild));
-					} else if (FSTchild.getType().equals("XMIAssociation")) {
-						classNode = xmi.createElement("UML:AssociationClass");
+					} else if (type.equals("XMIAssociation")) {
 						associations.add(new Association(FSTchild, classNode));
+						associations.add(new Association(FSTchild, assocClassNode));
+						isAssocClass = true;
 					} else {
-						classNode.setAttribute(FSTchild.getType(), FSTchild
-								.getName());
-					}
-
-					if (featureNodes.hasChildNodes()) {
-						classNode.appendChild(featureNodes);
+						classNode.setAttribute(type, FSTchild.getName());
+						assocClassNode.setAttribute(type, FSTchild.getName());
 					}
 
 				}
+				
+				if (featureNodes.hasChildNodes()) {
+					if (isAssocClass) {
+						assocClassNode.appendChild(featureNodes);
+					} else {
+						classNode.appendChild(featureNodes);
+					}
+				}
+				
 				// Save name and ID refMap for later reconstruction of
 				// associations
 				String IDname = classNode.getAttribute("name");
 				String newID = createUniqueID();
 				linkManager.addClass(IDname, newID);
-				//refMap.put(IDname, newID);
-
-				classNode.setAttribute("xmi.id", newID);
-				documentRoot.appendChild(classNode);
+				
+				if (isAssocClass) {
+					assocClassNode.setAttribute("xmi.id", newID);
+					documentRoot.appendChild(assocClassNode);
+				} else {
+					classNode.setAttribute("xmi.id", newID);
+					documentRoot.appendChild(classNode);
+				}
+				
 			} else if (child.getType().equals("XMIAssociation")) {
 				associations.add(new Association(child));
 			} else if (child.getType().equals("XMIGeneralization")) {
