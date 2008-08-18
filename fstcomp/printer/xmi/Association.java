@@ -11,15 +11,17 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
+/**
+ * Represents an association between classes or association classes.
+ * There are methods to build an association node according to 
+ * a FST node and attach the association node to a xmi document.
+ */
 public class Association extends XMINode {
 	
 	private List<AssociationEnd> associationEnds = new LinkedList<AssociationEnd>();
 	private Element classNode;
 
-	/**
-	 * 
-	 * @param rootNode
-	 */
+
 	public Association(FSTNode rootNode) {
 		super();
 		initAssociation(rootNode);
@@ -31,6 +33,10 @@ public class Association extends XMINode {
 		this.classNode = classNode;
 	}
 	
+	/**
+	 * Sets up an association with its attributes and ends
+	 * @param rootNode root of an asscociation in the FST
+	 */
 	private void initAssociation(FSTNode rootNode) {
 		FSTNonTerminal assocItems = (FSTNonTerminal) rootNode;
 		super.setAttribute("name", assocItems.getName());
@@ -56,9 +62,11 @@ public class Association extends XMINode {
 	
 	
 	/**
-	 * 
-	 * @param parent
-	 * @param doc
+	 * Attaches an association to the xmi-parent node. Inconsistent links to classes,
+	 * or enumerations will be replaced due to the linkManager.
+	 * @param parent node to attach the association
+	 * @param doc document of the parent node
+	 * @param linkManager a reference to the linkManager
 	 */
 	public void createXMI(Node parent, Document doc, LinkManager linkManager) {
 		
@@ -90,28 +98,11 @@ public class Association extends XMINode {
 	
 	
 	/**
-	 * 
-	 * @param linkManager
-	 */
-	/*
-	public void createLinks(LinkManager linkManager) {
-		for (AssociationEnd assocEnd : associationEnds) {
-			String oldRef = assocEnd.getAttribute(Strings.IDREF);
-			String newRef = linkManager.getClassLink(oldRef);
-			assocEnd.setAttribute(Strings.IDREF, newRef);
-		}
-	}*/
-	
-	
-	/**
-	 * 
-	 *
+	 * Represents the end of an association. 
+	 * Creates an xmi node out of an FST node
 	 */
 	class AssociationEnd extends XMINode {
-		/**
-		 * 
-		 * @param rootNode
-		 */
+
 		AssociationEnd(FSTNode rootNode) {
 			super();
 			FSTNonTerminal node = (FSTNonTerminal)rootNode;
@@ -120,15 +111,15 @@ public class Association extends XMINode {
 				String name = assocItem.getType();
 				String value = assocItem.getName();
 				super.setAttribute(name, value);
-				
 			}
 		}
 		
 		
 		/**
-		 * 
-		 * @param rootNode
-		 * @param doc
+		 * Attaches an association to the association xmi parent node.
+		 * @param parent association node to attach the association end
+		 * @param doc document of the parent node
+		 * @param linkManager a reference to the linkManager
 		 */
 		void createXMI(Node rootNode, Document doc, LinkManager linkManager) {
 			//root

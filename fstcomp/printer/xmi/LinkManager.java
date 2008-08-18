@@ -9,7 +9,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
-
+/**
+ * The LinkManager saves mappings between the names and ids of data types,
+ *  classes and enumerations.
+ */
 public class LinkManager {
 
 	//DataTypes
@@ -23,9 +26,9 @@ public class LinkManager {
 	
 	
 	/**
-	 * 
-	 * @param name
-	 * @param idRef
+	 * Add a new class mapping
+	 * @param name name of the class
+	 * @param idRef id of the class
 	 */
 	public void addClass(String name, String idRef) {
 		classMap.put(name, idRef);
@@ -33,8 +36,8 @@ public class LinkManager {
 	
 	
 	/**
-	 * 
-	 * @param node
+	 * add a link to a class which reference has to updated
+	 * @param node 
 	 */
 	public void addClassLink(Element node) {
 		classLinks.add(node);
@@ -42,9 +45,8 @@ public class LinkManager {
 		
 	
 	/**
-	 * 
-	 * @param parent
-	 * @param document
+	 * creates a consistent links between the name of an attribute
+	 * or operation  to its referencing class
 	 */
 	public void createClassLinks() {
 		for (Element node : classLinks) {
@@ -55,7 +57,7 @@ public class LinkManager {
 	}
 	
 	/**
-	 * 
+	 * add a link to an enumeration which reference has to updated
 	 * @param name
 	 * @param idRef
 	 */
@@ -65,7 +67,7 @@ public class LinkManager {
 	
 	
 	/**
-	 * 
+	 * add a link to an enumeration which reference has to updated
 	 * @param node
 	 */
 	public void addEnumLink(Element node) {
@@ -74,9 +76,8 @@ public class LinkManager {
 		
 	
 	/**
-	 * 
-	 * @param parent
-	 * @param document
+	 * creates a consistent links between the name of an attribute
+	 * or operation  to its referencing enumeration
 	 */
 	public void createEnumLinks() {
 		for (Element node : enumLinks) {
@@ -86,31 +87,30 @@ public class LinkManager {
 		}
 	}
 	
-	
 	/**
-	 * 
-	 * @param dataType
-	 * @return
+	 * adds a new data type an checks whether another
+	 * data type with the same attributes is 
+	 * already existing
+	 * @param dataType data type to be added
+	 * @return unique ID of the data type
 	 */
 	public String addDataType(DataType dataType) {
 		//Is DataType already exisiting?
 		for (DataType refType : dataTypes) {
 			if (refType.equals(dataType)) {
-				//return refType.getID();
 				return refType.getAttribute(Strings.ID);
 			}
 		}
-		//Insert new DataType
+		//No! Insert new DataType
 		dataTypes.add(dataType);
-		//return dataType.getID();
 		return dataType.getAttribute(Strings.ID);
 	}
 	
 	
 	/**
-	 * 
-	 * @param parent
-	 * @param document
+	 * add the stored data types to the corresponding xmi parent node
+	 * @param parent xmi parent node
+	 * @param document xmi document
 	 */
 	public void createDataTypes(Node parent, Document document) {
 		for (DataType dataType : dataTypes) {

@@ -350,21 +350,6 @@ public class XMIPrinter {
 		return uniqueID.toString();
 	}
 
-	/*
-	private void createClassLinks() {
-		for (Element classLink : classLinks) {
-			String idRef = classLink.getAttribute("xmi.idref");
-			classLink.setAttribute("xmi.idref", refMap.get(idRef));
-		}
-	
-	
-	private void createEnumLinks() {
-		for (Element enumLink : enumLinks) {
-			String idRef = enumLink.getAttribute("xmi.idref");
-			String newID = enumMap.get(idRef); 
-			enumLink.setAttribute("xmi.idref", newID);
-		}
-	}*/
 
 
 }
