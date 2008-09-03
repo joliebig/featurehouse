@@ -15,12 +15,12 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
-import modification.FSTGenerator;
 import modification.IntroductionModification;
 import modification.ModificationComposition;
 import modification.SuperimpositionModification;
 import modification.content.Content;
 import modification.content.CustomFSTContent;
+import modification.content.FSTGenerator;
 import modification.content.InvalidFSTTraversalException;
 import modification.content.ParsedTraversalFSTContent;
 import modification.content.FSTParseables.FSTParseable;
@@ -294,20 +294,17 @@ public class XmlParser {
 	    public void warning(SAXParseException exception)
 		    throws SAXException {
 		throw exception;
-
 	    }
 
 	    @Override
 	    public void fatalError(SAXParseException exception)
 		    throws SAXException {
 		throw exception;
-
 	    }
 
 	    @Override
 	    public void error(SAXParseException exception) throws SAXException {
 		throw exception;
-
 	    }
 	});
 	return schemaValidator;

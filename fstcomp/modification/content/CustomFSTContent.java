@@ -20,8 +20,7 @@ public class CustomFSTContent implements Content {
     public CustomFSTContent(String compositionMechanism,
 	    String content, String name, String prefix, String type) {
 	
-	super();
-	
+	super();	
 	this.compositionMechanism = compositionMechanism;
 	this.content = content;
 	this.name = name;
