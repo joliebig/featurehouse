@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>	
+	<modification>
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:ClassDeclaration
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>private int degree;</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:ClassDeclaration
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public int getDegree() {return degree;}</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:ClassDeclaration
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void setDegree(int degree) {this.degree =
+						degree;}</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>superimposition</type>
+		<traversal>..Vertex*:*..display%s(%e*:MethodDecl
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void display() {System.out.print(" degree=" + degree);original();}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>	
+</modificationComposition>
