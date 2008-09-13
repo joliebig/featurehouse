@@ -9,7 +9,6 @@ import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
-import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -19,19 +18,15 @@ import modification.IntroductionModification;
 import modification.ModificationComposition;
 import modification.SuperimpositionModification;
 import modification.content.Content;
+import modification.content.ContentGenerator;
 import modification.content.CustomFSTContent;
-import modification.content.FSTGenerator;
-import modification.content.InvalidFSTTraversalException;
-import modification.content.ParsedTraversalFSTContent;
-import modification.content.FSTParseables.FSTParseable;
-import modification.content.FSTParseables.FileInput;
-import modification.content.FSTParseables.StringInput;
+import modification.content.TraversalFSTContent;
+import modification.content.UnknownContentTypeParseException;
+import modification.content.UnknownFileTypeParseException;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import cide.gparser.ParseException;
 
 public class XmlParser {
     private static final String XML_SCHEMA = "modification/xmlParser/schema.xsd";
@@ -66,10 +61,8 @@ public class XmlParser {
     }
 
     public ModificationComposition parse() throws XMLStreamException,
-	    IOException, ParseException, TransformerException, SAXException,
-	    ParserConfigurationException,
-	    modification.traversalLanguageParser.ParseException,
-	    InvalidFSTTraversalException {
+	    SAXException, IOException, UnknownFileTypeParseException,
+	    UnknownContentTypeParseException {
 
 	XMLInputFactory xmlif = XMLInputFactory.newInstance();
 
@@ -192,23 +185,19 @@ public class XmlParser {
 		    break;
 		}
 		Content content = null;
-		FSTParseable fstParseable = null;
 
 		if (inputType != null)
 		    switch (inputType) {
 		    case externLink:
-			fstParseable = FSTGenerator
-				.createFSTParseable(new FileInput(new File(
-					input.getParentFile().getPath()
-						+ File.separator
-						+ tagContents[Tags.externLink
-							.ordinal()])));
+			content = ContentGenerator.createContent(new File(input
+				.getParentFile().getPath()
+				+ File.separator
+				+ tagContents[Tags.externLink.ordinal()]));
 			break;
 		    case plainText:
-			fstParseable = FSTGenerator
-				.createFSTParseable(new StringInput(
-					tagContents[Tags.text.ordinal()],
-					tagContents[Tags.tType.ordinal()]));
+			content = ContentGenerator.createContent(
+				tagContents[Tags.tType.ordinal()],
+				tagContents[Tags.text.ordinal()]);
 			break;
 		    }
 		switch (contentType) {
@@ -216,31 +205,12 @@ public class XmlParser {
 		    switch (contentTraversalFlag) {
 
 		    case noTraversal:
-			content = fstParseable;
 			break;
 		    case traversal:
-			switch (inputType) {
-			case plainText:
-			    content = new ParsedTraversalFSTContent(
-				    tagContents[Tags.cTraversal.ordinal()],
-				    FSTGenerator.createFSTParseable(
-					    new StringInput(
-						    tagContents[Tags.text
-							    .ordinal()],
-						    tagContents[Tags.tType
-							    .ordinal()]))
-					    .getFST());
-			    break;
-			case externLink:
-			    content = new ParsedTraversalFSTContent(
-				    tagContents[Tags.cTraversal.ordinal()],
-				    FSTGenerator.createFST(new File(input
-					    .getParentFile().getPath()
-					    + File.separator
-					    + tagContents[Tags.externLink
-						    .ordinal()])));
-			    break;
-			}
+
+			content = new TraversalFSTContent(
+				tagContents[Tags.cTraversal.ordinal()], content);
+
 			break;
 		    }
 		    break;

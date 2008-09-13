@@ -13,22 +13,22 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
  * 
  * @author Boxleitner Stefan
  */
-public class ParsedTraversalFSTContent implements Content {
+public class TraversalFSTContent implements Content {
 
     /**
      * @param fstTraversal
      * @param root
      */
-    public ParsedTraversalFSTContent(String fstTraversal, FSTNode root) {
+    public TraversalFSTContent(String fstTraversal, Content content) {
 	super();
 	this.fstTraversal = fstTraversal;
-	this.root = root;
+	this.content = content;
     }
 
     /**
      * 
      */
-    private FSTNode root;
+    private Content content;
 
     /**
      * FST traversal to select the desired artifact, i.e. an FST node
@@ -45,7 +45,7 @@ public class ParsedTraversalFSTContent implements Content {
 	    InvalidFSTTraversalException, FileNotFoundException,
 	    cide.gparser.ParseException {
 	TraversalLanguageParser tparser = new TraversalLanguageParser(
-		fstTraversal, root);
+		fstTraversal, content.getFST());
 	List<FSTNode> list = tparser.parse();
 	if (list.size() == 1) {
 	    return list.get(0);

@@ -42,9 +42,14 @@ public class SuperimpositionModification extends Modification {
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse()) {
 	    // TODO catch null pointer
-	    ((FSTNonTerminal) node.getParent()).addChild(FSTGenComposer
-		    .compose(getContent().getFST(), node, node.getParent()));
-	    ((FSTNonTerminal) node.getParent()).removeChild(node);
+	    if (FSTGenComposer.compose(getContent().getFST(), node, node
+		    .getParent()) == null) {
+		System.out.println("====== error print ======");
+		System.out.println(getContent().getFST());
+		System.out.println();
+		System.out.println(node);
+		System.out.println("====== error print end ======");
+	    }
 	}
     }
 }
