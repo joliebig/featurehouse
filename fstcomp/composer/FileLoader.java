@@ -3,26 +3,21 @@ package composer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.StringReader;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.transform.TransformerException;
+
+import modification.ModificationComposition;
+import modification.content.UnknownContentTypeParseException;
+import modification.content.UnknownFileTypeParseException;
+import modification.xmlParser.XmlParser;
 
 import org.xml.sax.SAXException;
-
-import cide.gparser.ParseException;
-
-import modification.IntroductionModification;
-import modification.ModificationComposition;
-import modification.content.InvalidFSTTraversalException;
-import modification.xmlParser.XmlParser;
 
 import builder.ArtifactBuilderInterface;
 
@@ -124,36 +119,32 @@ public class FileLoader {
 	if (directory.getName().equals(MODIFICATION_FOLDER_TAG)) {
 	    // TODO _mod folder should only be allowed as direct subfolder of
 	    // feature folder
+
+	    XmlParser xmlpars;
 	    try {
-		XmlParser xmlpars = new XmlParser(new File(
-			directory.getPath() + File.separator
-				+ MODIFICATION_CONTROL_FILE_TAG));
+		xmlpars = new XmlParser(new File(directory.getPath()
+			+ File.separator + MODIFICATION_CONTROL_FILE_TAG));
 		modcomposition.addAll(xmlpars.parse());
 	    } catch (XMLStreamException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    } catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    } catch (TransformerException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	    } catch (SAXException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    } catch (ParserConfigurationException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	    } catch (modification.traversalLanguageParser.ParseException e) {
+	    } catch (SAXException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
-	    } catch (InvalidFSTTraversalException e) {
+	    } catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (UnknownFileTypeParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	    } catch (UnknownContentTypeParseException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	    }
+
 	} else if (recursive) {
 	    File[] files = directory.listFiles(fileFilter);
 	    if (files != null) {
