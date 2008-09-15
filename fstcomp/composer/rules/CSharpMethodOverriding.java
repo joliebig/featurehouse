@@ -10,7 +10,7 @@ public class CSharpMethodOverriding {
 	public final static String COMPOSITION_RULE_NAME = "CSharpMethodOverriding";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		
-		if(terminalA.getBody().matches(".*\\s*original\\s*.*")){
+		if(terminalA.getBody().matches("(?s).*\\s*original\\s*.*")){
 			FSTNonTerminal grandParent = (FSTNonTerminal)nonterminalParent.getParent();
 			FSTNonTerminal newParent = (FSTNonTerminal)terminalB.getParent().getDeepClone();
 			grandParent.addChild(newParent);

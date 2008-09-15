@@ -1,6 +1,7 @@
 package composer.rules;
 
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -9,8 +10,7 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class JavaMethodOverriding {
 	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-		
-		if(terminalA.getBody().matches(".*\\s*original\\s*.*")){
+		if(terminalA.getBody().matches("(?s).*\\s*original\\s*.*")){
 			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			nonterminalParent.addChild(terminalComp2);
 
