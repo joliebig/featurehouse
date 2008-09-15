@@ -17,6 +17,7 @@ import javax.xml.validation.Validator;
 import modification.IntroductionModification;
 import modification.ModificationComposition;
 import modification.SuperimpositionModification;
+import modification.UpdateFeatureNameModification;
 import modification.content.Content;
 import modification.content.ContentGenerator;
 import modification.content.CustomFSTContent;
@@ -36,7 +37,7 @@ public class XmlParser {
     ModificationComposition mods = new ModificationComposition();
 
     enum Tags {
-	modification, type, traversal, content, parsed, custom, plainText, tType, text, externLink, name, body, prefix, compositionMechanism, cTraversal, nodeType
+	modification, type, traversal, content, parsed, custom, plainText, tType, text, externLink, name, body, prefix, compositionMechanism, cTraversal, nodeType, modificationComposition
     }
 
     enum ModClassification {
@@ -85,7 +86,11 @@ public class XmlParser {
 	while (reader.hasNext()) {
 	    switch (reader.getEventType()) {
 	    case XMLStreamConstants.START_ELEMENT: {
-		if (reader.getLocalName().equals(Tags.modification.toString())) {
+		if (reader.getLocalName().equals(
+			Tags.modificationComposition.toString())) {
+		    currentElement = Tags.modificationComposition;
+		} else if (reader.getLocalName().equals(
+			Tags.modification.toString())) {
 		    currentElement = Tags.modification;
 		} else if (reader.getLocalName().equals(Tags.type.toString())) {
 		    currentElement = Tags.type;
@@ -180,7 +185,12 @@ public class XmlParser {
 		break;
 	    }
 
-	    case XMLStreamConstants.END_ELEMENT: {
+	    case XMLStreamConstants.END_ELEMENT: {		
+		if (reader.getLocalName().equals(
+			Tags.modificationComposition.toString())) {
+		    mods.addLast(new UpdateFeatureNameModification(input
+			    .getParentFile().getParentFile().getName()));
+		}
 		if (!reader.getLocalName().equals(Tags.modification.toString())) {
 		    break;
 		}

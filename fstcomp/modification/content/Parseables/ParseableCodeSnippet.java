@@ -13,10 +13,7 @@ import cide.gparser.OffsetCharStream;
  * 
  */
 public abstract class ParseableCodeSnippet implements Content {
-    /**
-     * 
-     */
-    protected String type;
+    
 
     /**
      * 
@@ -25,11 +22,9 @@ public abstract class ParseableCodeSnippet implements Content {
 
     /**
      * @param content
-     * @param type
      */
-    public ParseableCodeSnippet(String type, String content) {
-	this.content = content;
-	this.type = type;
+    public ParseableCodeSnippet(String content) {
+	this.content = content;	
     }
 
     /**

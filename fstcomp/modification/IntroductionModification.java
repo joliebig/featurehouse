@@ -16,7 +16,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
  * @author Boxleitner Stefan
  * 
  */
-public class IntroductionModification extends Modification {
+public class IntroductionModification extends ContentModification {
 
     /**
      * 

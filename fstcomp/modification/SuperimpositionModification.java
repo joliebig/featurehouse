@@ -18,7 +18,7 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 /**
  * @author Boxleitner Stefan
  */
-public class SuperimpositionModification extends Modification {
+public class SuperimpositionModification extends ContentModification {
 
     /**
      * 
@@ -42,14 +42,17 @@ public class SuperimpositionModification extends Modification {
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse()) {
 	    // TODO catch null pointer
-	    if (FSTGenComposer.compose(getContent().getFST(), node, node
-		    .getParent()) == null) {
-		System.out.println("====== error print ======");
-		System.out.println(getContent().getFST());
-		System.out.println();
-		System.out.println(node);
-		System.out.println("====== error print end ======");
-	    }
+	    FSTNode composedNode = FSTGenComposer.compose(
+		    getContent().getFST(), node, node.getParent());
+	    ((FSTNonTerminal) node.getParent()).addChild(composedNode);
+	    ((FSTNonTerminal) node.getParent()).removeChild(node);
+
+	    // System.out.println("====== error print ======");
+	    // System.out.println(getContent().getFST());
+	    // System.out.println();
+	    // System.out.println(node);
+	    // System.out.println("====== error print end ======");
+
 	}
     }
 }

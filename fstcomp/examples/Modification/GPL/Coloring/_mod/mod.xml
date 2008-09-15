@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modificationComposition>
-	<modification><!-- add 2 methods to EdgeIfc -->
+	<modification><!-- add getter/setter to interface EdgeIfc -->
 		<type>introduction</type>
 		<traversal>..EdgeIfc*:*..*:ClassDeclaration
 		</traversal>
@@ -27,11 +27,11 @@
 		</content>
 	</modification>
 	<modification>
-		<type>introduction</type>
 		<!--
-			add 2 methods and 1 field to Edge
+			add getter/setter/field and update display() in Edge/Vertex classes
 		-->
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration
+		<type>introduction</type>
+		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -44,7 +44,7 @@
 	</modification>
 	<modification>
 		<type>introduction</type>
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration
+		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -57,7 +57,7 @@
 	</modification>
 	<modification>
 		<type>introduction</type>
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration
+		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -68,50 +68,10 @@
 				</plainText>
 			</parsed>
 		</content>
-	</modification>
-	<modification>
-		<type>introduction</type><!--  -->
-		<traversal>..Vertex*:*..*:ClassDeclaration
-		</traversal>
-		<content>
-			<parsed>
-				<plainText>
-					<text>private int color;</text>
-					<tType>java.method</tType>
-				</plainText>
-			</parsed>
-		</content>
-	</modification>
-	<modification>
-		<type>introduction</type>
-		<traversal>..Vertex*:*..*:ClassDeclaration
-		</traversal>
-		<content>
-			<parsed>
-				<plainText>
-					<text>public int getColor() {return color;}</text>
-					<tType>java.method</tType>
-				</plainText>
-			</parsed>
-		</content>
-	</modification>
-	<modification>
-		<type>introduction</type>
-		<traversal>..Vertex*:*..*:ClassDeclaration
-		</traversal>
-		<content>
-			<parsed>
-				<plainText>
-					<text>public void setColor(int color) {this.color = color;}
-					</text>
-					<tType>java.method</tType>
-				</plainText>
-			</parsed>
-		</content>
-	</modification>
+	</modification>	
 	<modification>
 		<type>superimposition</type>
-		<traversal>..display%s(%e*:MethodDecl
+		<traversal>..Vertex*:*..display%s(%e*:MethodDecl||..Edge%s.%e*:*..display%s(%e*:MethodDecl
 		</traversal>
 		<content>
 			<parsed>

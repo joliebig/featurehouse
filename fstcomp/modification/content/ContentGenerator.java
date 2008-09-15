@@ -5,12 +5,14 @@ package modification.content;
 
 import java.io.File;
 
-import modification.content.Parseables.CFile;
-import modification.content.Parseables.CFunction;
-import modification.content.Parseables.HaskellDefinition;
-import modification.content.Parseables.HaskellFile;
-import modification.content.Parseables.JavaFile;
-import modification.content.Parseables.JavaMethod;
+import modification.content.Parseables.C.CFile;
+import modification.content.Parseables.C.CFunction;
+import modification.content.Parseables.CSharp.CSharpFile;
+import modification.content.Parseables.CSharp.CSharpMethod;
+import modification.content.Parseables.haskell.HaskellDefinition;
+import modification.content.Parseables.haskell.HaskellFile;
+import modification.content.Parseables.java.JavaFile;
+import modification.content.Parseables.java.JavaMethod;
 
 /**
  * generates an FST out of a given root file
@@ -29,7 +31,9 @@ public class ContentGenerator {
 	    return new CFile(file);
 	} else if (file.getName().endsWith("hs")) {
 	    return new HaskellFile(file);
-	    // } else if (type.equals("")) {
+	} else if (file.getName().endsWith("cs")) {
+	    return new CSharpFile(file);
+	    // } else if (file.getName().endsWith("")) {
 	    // return null;
 	} else {
 	    System.out.println("> " + file.getName());
@@ -40,11 +44,13 @@ public class ContentGenerator {
     public static Content createContent(String type, String content)
 	    throws UnknownContentTypeParseException {
 	if (type.equals("java.method")) {
-	    return new JavaMethod(type, content);
+	    return new JavaMethod(content);
 	} else if (type.equals("c.function")) {
-	    return new CFunction(type, content);
+	    return new CFunction(content);
 	} else if (type.equals("haskell.definition")) {
-	    return new HaskellDefinition(type, content);
+	    return new HaskellDefinition(content);
+	} else if (type.equals("cSharp.method")) {
+	    return new CSharpMethod(content);
 	    // } else if (type.equals("")) {
 	    // return null;
 	} else

@@ -49,7 +49,8 @@ public class TraversalFSTContent implements Content {
 	List<FSTNode> list = tparser.parse();
 	if (list.size() == 1) {
 	    return list.get(0);
-	} else
+	} else {
 	    throw new InvalidFSTTraversalException();
+	}
     }
 }

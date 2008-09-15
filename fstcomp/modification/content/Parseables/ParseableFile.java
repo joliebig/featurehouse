@@ -8,13 +8,14 @@ import modification.content.Content;
 
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
+
 /**
  * 
  * @author boxleitner
- *
+ * 
  */
 public abstract class ParseableFile implements Content {
-
+    
     /**
      * @param file
      */

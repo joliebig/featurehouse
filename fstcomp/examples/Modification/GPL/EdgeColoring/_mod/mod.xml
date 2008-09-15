@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modificationComposition>
-	<modification><!-- add edgeColoring method-->
+	<modification><!-- add edgeColoring method in Graph.java -->
 		<type>introduction</type>
 		<traversal>..Graph*:*..*:ClassDeclaration
 		</traversal>

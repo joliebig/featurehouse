@@ -1,50 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modificationComposition>
-	<!-- testing input types / java mods -->
-	<modification><!-- introduction -->
+	<!-- testing mod types based on java -->
+	<modification><!-- introduction, extern link to a Java class -->
 		<type>introduction</type>
 		<traversal>..*:Feature</traversal>
 		<content>
 			<parsed>
-				<externLink>Foo.java</externLink>
+				<externLink>newClass.java</externLink>
 			</parsed>
 		</content>
 	</modification>
 	<modification>
+		<!--
+			introduction, java method given as plain text on every java class
+		-->
 		<type>introduction</type>
 		<traversal>..*:ClassDeclaration</traversal>
 		<content>
 			<parsed>
 				<plainText>
-					<text>public void foo(){}</text>
+					<text>public void newMethod(){System.out.println("bim");}
+					</text>
 					<tType>java.method</tType>
 				</plainText>
 			</parsed>
 		</content>
 	</modification>
-	<modification><!-- superimposition -->
+	<modification><!-- superimposition, java method given as plain text -->
 		<type>superimposition</type>
-		<traversal>..foo*:*</traversal>
+		<traversal>..newMethod*:*</traversal>
 		<content>
 			<parsed>
 				<plainText>
-					<text>public void foo(){System.out.println("bäm");}</text>
+					<text>public void newMethod()
+						{original();System.out.println("bäm");}</text>
 					<tType>java.method</tType>
 				</plainText>
 			</parsed>
 		</content>
 	</modification>
 	<modification>
+		<!--
+			superimposition, java method given as member of an separate java File
+		-->
 		<type>superimposition</type>
-		<traversal>..*print*:*</traversal>
+		<traversal>..*existingMethod*:*</traversal>
 		<content>
 			<parsed>
-				<externLink>Bar.java</externLink>
-				<cTraversal>..*print*:*</cTraversal>
+				<externLink>AuxClass.java</externLink>
+				<cTraversal>..*existingMethod*:*</cTraversal>
 			</parsed>
 		</content>
 	</modification>
-	<modification><!-- custom content / introduction on more than one location -->
+	<modification>
+		<!--
+			custom content / introduction on every java class
+		-->
 		<type>introduction</type>
 		<traversal>..*:CompilationUnit</traversal>
 		<content>
@@ -59,7 +70,7 @@
 			</custom>
 		</content>
 	</modification>
-	<!--C mods-->
+	<!-- testing C -->
 	<modification><!-- introduction -->
 		<type>introduction</type>
 		<traversal>..Test*:*..*:Sequence_CodeUnit_TopLevel
@@ -75,8 +86,7 @@
 	</modification>
 	<modification><!-- superimposition -->
 		<type>superimposition</type>
-		<traversal>..Test*:*..foo*:Func
-		</traversal>
+		<traversal>..Test*:*..foo*:Func</traversal>
 		<content>
 			<parsed>
 				<plainText>
@@ -86,7 +96,7 @@
 			</parsed>
 		</content>
 	</modification>
-	<!-- haskell -->
+	<!-- testing haskell -->
 	<modification><!-- introduction -->
 		<type>introduction</type>
 		<traversal>..HaskellTest*:*..*:definitions

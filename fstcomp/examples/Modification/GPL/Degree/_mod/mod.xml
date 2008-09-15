@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modificationComposition>	
+<modificationComposition>
 	<modification>
+		<!--
+			add getter/setter/field and update display() in Vertex classe
+		-->
 		<type>introduction</type>
 		<traversal>..Vertex*:*..*:ClassDeclaration
 		</traversal>

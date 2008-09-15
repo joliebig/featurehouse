@@ -2,38 +2,11 @@ package modification;
 
 import java.io.FileNotFoundException;
 
-import modification.content.Content;
 import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
-/**
- * @author Boxleitner Stefan
- * 
- */
-public abstract class Modification {
-
-    /**
-     * content of the modification
-     */
-    private Content content;
-
-    /**
-     * traversal to select nodes in the FST to modify
-     */
-    private String fstTraversal;
-
-    /**
-     * @param fstTraversal
-     *            traversal to select nodes in the FST to modify
-     * @param content
-     *            content of the modification
-     */
-    public Modification(String fstTraversal, Content content) {
-	super();
-	this.fstTraversal = fstTraversal;
-	this.content = content;
-    }
+public interface Modification {
 
     /**
      * applies the modification to an existing FST
@@ -50,17 +23,4 @@ public abstract class Modification {
 	    FileNotFoundException, cide.gparser.ParseException,
 	    InvalidFSTTraversalException;
 
-    /**
-     * @return the content
-     */
-    public Content getContent() {
-	return content;
-    }
-
-    /**
-     * @return the fstTraversal
-     */
-    public String getFstTraversal() {
-	return fstTraversal;
-    }
 }
