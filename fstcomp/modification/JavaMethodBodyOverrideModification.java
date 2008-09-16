@@ -5,8 +5,8 @@ package modification;
 
 import java.io.FileNotFoundException;
 
-import modification.content.Content;
 import modification.content.InvalidFSTTraversalException;
+import modification.content.Parseables.java.JavaMethodBody;
 import modification.traversalLanguageParser.ParseException;
 import modification.traversalLanguageParser.TraversalLanguageParser;
 
@@ -14,36 +14,35 @@ import composer.FSTGenComposer;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 /**
- * @author Boxleitner Stefan
+ * @author boxleitner
+ * 
  */
-public class SuperimpositionModification extends ContentModification {
+public class JavaMethodBodyOverrideModification extends
+	SuperimpositionModification {
 
-    /**
-     * 
-     * @param fstTraversal
-     * @param content
-     */
-    public SuperimpositionModification(String fstTraversal, Content content) {
-	super(fstTraversal, content);
+    public JavaMethodBodyOverrideModification(String fstTraversal,
+	    JavaMethodBody body) {
+	super(fstTraversal, body);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see modification.Modification#apply(de.ovgu.cide.fstgen.ast.FSTNode)
-     */
     @Override
     public void apply(FSTNode root) throws ParseException,
 	    FileNotFoundException, cide.gparser.ParseException,
 	    InvalidFSTTraversalException {
 	TraversalLanguageParser tlp = new TraversalLanguageParser(
 		getFstTraversal(), root);
+	FSTTerminal contentFST = (FSTTerminal) getContent().getFST();
+
 	for (FSTNode node : tlp.parse()) {
+	    contentFST.setName(node.getName());
+	    contentFST.setType(node.getType());	    
+	    
 	    // TODO catch null pointer
-	    FSTNode composedNode = FSTGenComposer.compose(
-		    getContent().getFST(), node, node.getParent());
+	    FSTNode composedNode = FSTGenComposer.compose(contentFST, node,
+		    node.getParent());
 	    ((FSTNonTerminal) node.getParent()).addChild(composedNode);
 	    ((FSTNonTerminal) node.getParent()).removeChild(node);
 	}

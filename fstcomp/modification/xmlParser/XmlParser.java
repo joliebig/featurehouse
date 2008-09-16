@@ -15,6 +15,7 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 
 import modification.IntroductionModification;
+import modification.JavaMethodBodyOverrideModification;
 import modification.ModificationComposition;
 import modification.SuperimpositionModification;
 import modification.UpdateFeatureNameModification;
@@ -24,6 +25,7 @@ import modification.content.CustomFSTContent;
 import modification.content.TraversalFSTContent;
 import modification.content.UnknownContentTypeParseException;
 import modification.content.UnknownFileTypeParseException;
+import modification.content.Parseables.java.JavaMethodBody;
 
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -41,7 +43,7 @@ public class XmlParser {
     }
 
     enum ModClassification {
-	superimposition, introduction
+	superimposition, introduction, javaMethodBodyOverriding
     }
 
     enum ContentType {
@@ -150,6 +152,10 @@ public class XmlParser {
 			modclass = ModClassification.introduction;
 		    else if (s.equals(ModClassification.superimposition.name()))
 			modclass = ModClassification.superimposition;
+		    else if (s
+			    .equals(ModClassification.javaMethodBodyOverriding
+				    .name()))
+			modclass = ModClassification.javaMethodBodyOverriding;
 		    break;
 		case traversal:
 		    tagContents[Tags.traversal.ordinal()] = s;
@@ -185,7 +191,7 @@ public class XmlParser {
 		break;
 	    }
 
-	    case XMLStreamConstants.END_ELEMENT: {		
+	    case XMLStreamConstants.END_ELEMENT: {
 		if (reader.getLocalName().equals(
 			Tags.modificationComposition.toString())) {
 		    mods.addLast(new UpdateFeatureNameModification(input
@@ -250,6 +256,10 @@ public class XmlParser {
 		    mods.add(new SuperimpositionModification(
 			    tagContents[Tags.traversal.ordinal()], content));
 		    break;
+		case javaMethodBodyOverriding:
+		    mods.add(new JavaMethodBodyOverrideModification(
+			    tagContents[Tags.traversal.ordinal()],
+			    (JavaMethodBody) content));
 		}
 		contentTraversalFlag = ContentTraversalFlag.noTraversal;
 		break;

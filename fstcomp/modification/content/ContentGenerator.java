@@ -13,6 +13,7 @@ import modification.content.Parseables.haskell.HaskellDefinition;
 import modification.content.Parseables.haskell.HaskellFile;
 import modification.content.Parseables.java.JavaFile;
 import modification.content.Parseables.java.JavaMethod;
+import modification.content.Parseables.java.JavaMethodBody;
 
 /**
  * generates an FST out of a given root file
@@ -51,6 +52,8 @@ public class ContentGenerator {
 	    return new HaskellDefinition(content);
 	} else if (type.equals("cSharp.method")) {
 	    return new CSharpMethod(content);
+	} else if (type.equals("java.methodBody")) {
+	    return new JavaMethodBody(content);
 	    // } else if (type.equals("")) {
 	    // return null;
 	} else
