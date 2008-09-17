@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<!--
+			javaMethodBodyOverriding log every entrance and exit of a method
+		-->
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text> { t.in(Thread.currentThread().getStackTrace()[1].toString());
+						original(); t.out(Thread.currentThread().getStackTrace()[1].toString()); }
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<!--
+			introduction of field Tracer t on every java class
+		-->
+		<type>introduction</type>
+		<traversal>..*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>private Tracer t = new Tracer();</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<!--
+			introduction of getter for Tracer t on every java class
+		-->
+		<type>introduction</type>
+		<traversal>..*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public Tracer getTracer(){return t;}</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

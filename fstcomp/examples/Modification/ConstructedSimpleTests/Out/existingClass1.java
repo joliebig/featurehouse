@@ -6,7 +6,7 @@ class  existingClass1 {
 
 	public void newMethod__wrappee__ClassicFeature(){System.out.println("bim");}
 
-	public void newMethod()	{newMethod__wrappee__ClassicFeature();System.out.println("b‰m");}
+	public void newMethod()	{newMethod__wrappee__ClassicFeature();System.out.println("b√§m");}
 
 	 void existingMethod__wrappee__ClassicFeature() {	System.out.print("classic feature"); }
 

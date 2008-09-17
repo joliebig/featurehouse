@@ -33,16 +33,21 @@ public class JavaMethodBodyOverrideModification extends
 	    FileNotFoundException, cide.gparser.ParseException,
 	    InvalidFSTTraversalException {
 	TraversalLanguageParser tlp = new TraversalLanguageParser(
-		getFstTraversal(), root);
-	FSTTerminal contentFST = (FSTTerminal) getContent().getFST();
+		getFstTraversal(), root);	
 
 	for (FSTNode node : tlp.parse()) {
+	    FSTTerminal contentFST = (FSTTerminal) getContent().getFST();
 	    contentFST.setName(node.getName());
-	    contentFST.setType(node.getType());	    
+	    contentFST.setType(node.getType());
+	    contentFST.setCompositionMechanism(((FSTTerminal) node)
+		    .getCompositionMechanism());
+	    String newBody = ((FSTTerminal) node).getBody().split("[{]")[0];	    
+	    newBody = newBody + contentFST.getBody();
+	    contentFST.setBody(newBody);	    
 	    
 	    // TODO catch null pointer
 	    FSTNode composedNode = FSTGenComposer.compose(contentFST, node,
-		    node.getParent());
+		    node.getParent());	    
 	    ((FSTNonTerminal) node.getParent()).addChild(composedNode);
 	    ((FSTNonTerminal) node.getParent()).removeChild(node);
 	}

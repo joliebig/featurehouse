@@ -32,6 +32,7 @@ public abstract class ParseableCodeSnippet implements Content {
      * @return
      */
     public CharStream getCharStream() {
+	System.out.println(content);
 	return new OffsetCharStream(new StringReader(content));
     }
 }

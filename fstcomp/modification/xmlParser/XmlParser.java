@@ -81,6 +81,9 @@ public class XmlParser {
 	InputType inputType = null;
 	ContentTraversalFlag contentTraversalFlag = ContentTraversalFlag.noTraversal;
 	Tags currentElement = null;
+	Tags lastElement = null;
+
+	String text = "";
 
 	String[] tagContents = new String[Tags.values().length];
 	ModificationComposition mods = new ModificationComposition();
@@ -143,49 +146,57 @@ public class XmlParser {
 	    case XMLStreamConstants.CHARACTERS: {
 		if (reader.isWhiteSpace())
 		    break;
+		if (lastElement == null)
+		    lastElement = currentElement;
+		
+		if (currentElement.name().equals(lastElement.name()))
+		    text = text + reader.getText();
+		else
+		    text = reader.getText();
 
-		String s = reader.getText();
+		lastElement = currentElement;
 
 		switch (currentElement) {
 		case type:
-		    if (s.equals(ModClassification.introduction.name()))
+		    if (text.equals(ModClassification.introduction.name()))
 			modclass = ModClassification.introduction;
-		    else if (s.equals(ModClassification.superimposition.name()))
+		    else if (text.equals(ModClassification.superimposition
+			    .name()))
 			modclass = ModClassification.superimposition;
-		    else if (s
+		    else if (text
 			    .equals(ModClassification.javaMethodBodyOverriding
 				    .name()))
 			modclass = ModClassification.javaMethodBodyOverriding;
 		    break;
 		case traversal:
-		    tagContents[Tags.traversal.ordinal()] = s;
+		    tagContents[Tags.traversal.ordinal()] = text;
 		    break;
 		case text:
-		    tagContents[Tags.text.ordinal()] = s;
+		    tagContents[Tags.text.ordinal()] = text;
 		    break;
 		case tType:
-		    tagContents[Tags.tType.ordinal()] = s;
+		    tagContents[Tags.tType.ordinal()] = text;
 		    break;
 		case externLink:
-		    tagContents[Tags.externLink.ordinal()] = s;
+		    tagContents[Tags.externLink.ordinal()] = text;
 		    break;
 		case cTraversal:
-		    tagContents[Tags.cTraversal.ordinal()] = s;
+		    tagContents[Tags.cTraversal.ordinal()] = text;
 		    break;
 		case nodeType:
-		    tagContents[Tags.nodeType.ordinal()] = s;
+		    tagContents[Tags.nodeType.ordinal()] = text;
 		    break;
 		case name:
-		    tagContents[Tags.name.ordinal()] = s;
+		    tagContents[Tags.name.ordinal()] = text;
 		    break;
 		case body:
-		    tagContents[Tags.body.ordinal()] = s;
+		    tagContents[Tags.body.ordinal()] = text;
 		    break;
 		case prefix:
-		    tagContents[Tags.prefix.ordinal()] = s;
+		    tagContents[Tags.prefix.ordinal()] = text;
 		    break;
 		case compositionMechanism:
-		    tagContents[Tags.compositionMechanism.ordinal()] = s;
+		    tagContents[Tags.compositionMechanism.ordinal()] = text;
 		    break;
 		}
 		break;
