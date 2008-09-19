@@ -2,8 +2,14 @@ package modification.content;
 
 import java.io.File;
 import java.io.StringReader;
+import java.util.LinkedList;
+import java.util.List;
+
+import composer.FSTGenComposer;
 
 import cide.gparser.OffsetCharStream;
+import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 import tmp.generated_java15.Java15Parser;
 
@@ -39,18 +45,44 @@ public class ParseableTest {
 	// new File("examples/Tests/C1/Test.c")).getFST());
 	// System.out.println(ContentGenerator.createContent(
 	// new File("examples/ArithHaskellFull/Arith.hs")).getFST());
-
-	// System.out.println(new CSharpFile(new File(
-	// "examples/GPLCSharp/Number/Graph.cs")).getFST());
-	//
-	// System.out
-	// .println(new CSharpMethod(
-	// "public void NumberVertices(){GraphSearch(new NumberWorkSpace());}")
+	// System.out.println(new JavaMethodBody("{System.out.println();}")
 	// .getFST());
 
-	
+//	/*
+//	 * CSHARP SUPERIMPOSITION
+//	 */
+//	CSharpMethod csOld = new CSharpMethod("public int method(){nothing();}");
+//	FSTNode csOldFST = csOld.getFST();
+//	List<FSTNode> l = new LinkedList<FSTNode>();
+//	l.add(csOldFST);
+//	FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
+//
+//	CSharpMethod csNew = new CSharpMethod(
+//		"public int method(){original();something();}");
+//
+//	FSTNode par = new FSTNonTerminal("nonterminal", "parent");
+//
+//	System.out.println(FSTGenComposer
+//		.compose(csNew.getFST(), csOldFST, par));
 
-	System.out.println(new JavaMethodBody("{System.out.println();}")
-		.getFST());
+	 /*
+	 * JAVA SUPERIMPOSITION
+	 * BUG ARRRRGHHHH
+	 */
+	 JavaMethod jmOld = new
+	 JavaMethod("public int [] method(){nothing();}");
+	 FSTNode jmOldFST = jmOld.getFST();
+	 List<FSTNode> l = new LinkedList<FSTNode>();
+	 l.add(jmOldFST);
+	 FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
+	
+	 JavaMethod jmNew = new JavaMethod(
+	 "public int [] method(){original();something();}");
+	
+	 FSTNode par = new FSTNonTerminal("nonterminal", "parent");
+	
+	 System.out.println(FSTGenComposer
+	 .compose(jmNew.getFST(), jmOldFST, par));
+
     }
 }

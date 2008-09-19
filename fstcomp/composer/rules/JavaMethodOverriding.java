@@ -8,55 +8,76 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaMethodOverriding {
-	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
-	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-		if(terminalA.getBody().matches("(?s).*\\s*original\\s*.*")){
-			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
-			nonterminalParent.addChild(terminalComp2);
+    public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
 
-			String oldMethodName = terminalB.getName();
+    public static void compose(FSTTerminal terminalA, FSTTerminal terminalB,
+	    FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+	if (terminalA.getBody().matches("(?s).*\\s*original\\s*.*")) {
+	    FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
+	    nonterminalParent.addChild(terminalComp2);
 
-			StringTokenizer st = new StringTokenizer(oldMethodName, "(");
-			if(st.hasMoreTokens()) {
-				oldMethodName = st.nextToken();
-			}
-			st = new StringTokenizer(oldMethodName, " ");
+	    String oldMethodName = terminalB.getName();
 
-			while(st.hasMoreTokens()) {
-				oldMethodName = st.nextToken();
-			}
-			
-			String toReplace = "original\\s*\\(";
-			String newMethodName = oldMethodName + "__wrappee__" + getFeatureName(terminalB);
-			String newBody = terminalComp.getBody().replaceAll(toReplace, newMethodName + "(");
-			terminalComp.setBody(newBody);
+	    StringTokenizer st = new StringTokenizer(oldMethodName, "(");
+	    if (st.hasMoreTokens()) {
+		oldMethodName = st.nextToken();
+	    }
+	    st = new StringTokenizer(oldMethodName, " ");
 
-			String auxBody = "";
-			st = new StringTokenizer(terminalComp2.getBody(), "(");
-			if(st.hasMoreTokens()) {
-				auxBody = st.nextToken();
-			}
-			
-			st = new StringTokenizer(auxBody, " ");
-			String prefix = "";
-			boolean found = false;
-			while(st.hasMoreTokens() && !found) {
-				String token = st.nextToken();
-				if(oldMethodName.equals(token)) {
-					found = true;
-				} else {
-					prefix += token + " ";
-				}
-			}
-			
-			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(prefix, "").replaceFirst(oldMethodName, newMethodName));
-			terminalComp2.setName(newMethodName);
+	    while (st.hasMoreTokens()) {
+		oldMethodName = st.nextToken();
+	    }
+
+	    String toReplace = "original\\s*\\(";
+	    String newMethodName = oldMethodName + "__wrappee__"
+		    + getFeatureName(terminalB);
+	    String newBody = terminalComp.getBody().replaceAll(toReplace,
+		    newMethodName + "(");
+	    terminalComp.setBody(newBody);
+
+	    String auxBody = "";
+	    st = new StringTokenizer(terminalComp2.getBody(), "(");
+	    if (st.hasMoreTokens()) {
+		auxBody = st.nextToken();
+	    }
+
+	    st = new StringTokenizer(auxBody, " ");
+	    String prefix = "";
+	    boolean found = false;
+	    while (st.hasMoreTokens() && !found) {
+		String token = st.nextToken();
+		if (oldMethodName.equals(token)) {
+		    found = true;
+		} else {
+		    prefix += token + " ";
 		}
-	}
-	private static String getFeatureName(FSTNode node) {
-		if(node.getType().equals("Feature"))
-			return node.getName();
+	    }
+	    
+	    System.out.println("vorher " + prefix);
+	    String modPrefix = "";
+	    for(char c:prefix.toCharArray()){
+		if (c=='[')
+		    modPrefix += "\\[";
+		else if (c==']')
+		    modPrefix += "\\]";
 		else
-			return getFeatureName(node.getParent());
+		    modPrefix += String.valueOf(c);
+	    }
+	    
+	    prefix=modPrefix;	     
+	    System.out.println("nachher " + prefix);
+	    
+	    terminalComp2.setBody(prefix
+		    + terminalComp2.getBody().replaceFirst(prefix, "")
+			    .replaceFirst(oldMethodName, newMethodName));
+	    terminalComp2.setName(newMethodName);
 	}
+    }
+
+    private static String getFeatureName(FSTNode node) {
+	if (node.getType().equals("Feature"))
+	    return node.getName();
+	else
+	    return getFeatureName(node.getParent());
+    }
 }
