@@ -12,6 +12,7 @@ import modification.traversalLanguageParser.addressManagement.TreeAddressToken;
 import modification.traversalLanguageParser.addressManagement.WildcardToken;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class TraversalLanguageParser implements TraversalLanguageParserConstants {
         /**    *     */
@@ -47,9 +48,22 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
 
     /**    *     */
     private List<FSTNode> or(List<FSTNode> a, List<FSTNode> b) {
-        List<FSTNode> result = new LinkedList<FSTNode>(a);
+                List<FSTNode> result = new LinkedList<FSTNode>(a);
                 result.removeAll(b);
                 result.addAll(b);
+        return result;
+    }
+
+    /**    *     */
+    private List<FSTNode> addSiblings(List<FSTNode> l) {
+                List<FSTNode> result = new LinkedList<FSTNode>(l);
+                for (FSTNode n : l) {
+                        if (n.getParent() != null)
+                                for (FSTNode sib: ((FSTNonTerminal)n.getParent()).getChildren()) {
+                                        if (n != sib)
+                                                result.add(sib);
+                                }
+                }
         return result;
     }
 
@@ -101,14 +115,15 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
 
 /*** traversal term without operators outside braces*/
   final public List<FSTNode> traversalTerm() throws ParseException {
-        List<FSTNode> nodeList;
+        List<FSTNode> nodeList = new LinkedList<FSTNode>();
         TreeAddress treeAddress;
+        TreeAddress conditionalTreeAddress;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LEFT_BRACE:
       jj_consume_token(LEFT_BRACE);
       nodeList = expression();
       jj_consume_token(RIGHT_BRACE);
-                 {if (true) return nodeList;}
+                         {if (true) return nodeList;}
       break;
     case ADDRESS_WILDCARD:
     case STRING_WILDCARD:
@@ -118,13 +133,33 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     case ANY_CHAR:
     case LITERAL_START_FLAG:
       treeAddress = treeAddress();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case COND_LEFT_BRACE:
+        jj_consume_token(COND_LEFT_BRACE);
+        conditionalTreeAddress = treeAddress();
+        jj_consume_token(COND_RIGHT_BRACE);
+                                        for (FSTNode n : treeAddress.resolve(root)) {
+                                                if (conditionalTreeAddress.resolve(n).size() > 0)
+                                                        nodeList.add(n);
+                                        }
+                                        {if (true) return nodeList;}
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        ;
+      }
+                         {if (true) return treeAddress.resolve(root);}
+      break;
+    case ADDSIB:
+      jj_consume_token(ADDSIB);
+      treeAddress = treeAddress();
+                         {if (true) return addSiblings(treeAddress.resolve(root));}
       break;
     default:
-      jj_la1[2] = jj_gen;
+      jj_la1[3] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-         {if (true) return treeAddress.resolve(root);}
     throw new Error("Missing return statement in function");
   }
 
@@ -148,7 +183,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
           ;
           break;
         default:
-          jj_la1[3] = jj_gen;
+          jj_la1[4] = jj_gen;
           break label_2;
         }
         jj_consume_token(ADDRESS_WILDCARD);
@@ -169,13 +204,13 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
           ;
           break;
         default:
-          jj_la1[4] = jj_gen;
+          jj_la1[5] = jj_gen;
           break label_3;
         }
       }
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -196,7 +231,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
         ;
         break;
       default:
-        jj_la1[6] = jj_gen;
+        jj_la1[7] = jj_gen;
         break label_4;
       }
       jj_consume_token(ADDRESS_DIVIDER);
@@ -257,7 +292,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
                          result = result.concat(s.toString());
       break;
     default:
-      jj_la1[7] = jj_gen;
+      jj_la1[8] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -286,12 +321,12 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
                                  result = result.concat(s.toString());
         break;
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[9] = jj_gen;
         ;
       }
       break;
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[10] = jj_gen;
       ;
     }
          {if (true) return result;}
@@ -319,12 +354,12 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
                                  result = result.concat(s.toString());
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         ;
       }
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[12] = jj_gen;
       ;
     }
          {if (true) return result;}
@@ -360,7 +395,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
                  s = s.concat(m);
         break;
       default:
-        jj_la1[12] = jj_gen;
+        jj_la1[13] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -373,7 +408,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
         ;
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_5;
       }
     }
@@ -392,7 +427,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
         ;
         break;
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         break label_6;
       }
       t = jj_consume_token(ANY_CHAR_LITERAL);
@@ -408,13 +443,13 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
   public Token token, jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[15];
+  final private int[] jj_la1 = new int[16];
   static private int[] jj_la1_0;
   static {
       jj_la1_0();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0xe0,0xe0,0x7dc00,0x400,0x400,0x7cc00,0x100,0x7c800,0x7c000,0x800,0x800,0x7c000,0x7c000,0x7c000,0x100000,};
+      jj_la1_0 = new int[] {0xe0,0xe0,0x4000,0x3e9900,0x800,0x800,0x3e1800,0x200,0x3e1000,0x3e0000,0x1000,0x1000,0x3e0000,0x3e0000,0x3e0000,0x800000,};
    }
 
   public TraversalLanguageParser(java.io.InputStream stream) {
@@ -426,7 +461,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.InputStream stream) {
@@ -438,7 +473,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   public TraversalLanguageParser(java.io.Reader stream) {
@@ -447,7 +482,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.Reader stream) {
@@ -456,7 +491,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   public TraversalLanguageParser(TraversalLanguageParserTokenManager tm) {
@@ -464,7 +499,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(TraversalLanguageParserTokenManager tm) {
@@ -472,7 +507,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 15; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
   }
 
   final private Token jj_consume_token(int kind) throws ParseException {
@@ -519,15 +554,15 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[21];
-    for (int i = 0; i < 21; i++) {
+    boolean[] la1tokens = new boolean[24];
+    for (int i = 0; i < 24; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 16; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -536,7 +571,7 @@ public class TraversalLanguageParser implements TraversalLanguageParserConstants
         }
       }
     }
-    for (int i = 0; i < 21; i++) {
+    for (int i = 0; i < 24; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

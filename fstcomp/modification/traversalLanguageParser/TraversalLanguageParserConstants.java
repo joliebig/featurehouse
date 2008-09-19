@@ -7,19 +7,22 @@ public interface TraversalLanguageParserConstants {
   int UNION = 5;
   int INTERSECTION = 6;
   int MINUS = 7;
-  int ADDRESS_DIVIDER = 8;
-  int TYPE_DIVIDER = 9;
-  int ADDRESS_WILDCARD = 10;
-  int STRING_WILDCARD = 11;
-  int LEFT_BRACE = 12;
-  int RIGHT_BRACE = 13;
-  int NUMBER = 14;
-  int SMALL_CHARACTER = 15;
-  int GREAT_CHARACTER = 16;
-  int ANY_CHAR = 17;
-  int LITERAL_START_FLAG = 18;
-  int LITERAL_END_FLAG = 19;
-  int ANY_CHAR_LITERAL = 20;
+  int ADDSIB = 8;
+  int ADDRESS_DIVIDER = 9;
+  int TYPE_DIVIDER = 10;
+  int ADDRESS_WILDCARD = 11;
+  int STRING_WILDCARD = 12;
+  int COND_RIGHT_BRACE = 13;
+  int COND_LEFT_BRACE = 14;
+  int LEFT_BRACE = 15;
+  int RIGHT_BRACE = 16;
+  int NUMBER = 17;
+  int SMALL_CHARACTER = 18;
+  int GREAT_CHARACTER = 19;
+  int ANY_CHAR = 20;
+  int LITERAL_START_FLAG = 21;
+  int LITERAL_END_FLAG = 22;
+  int ANY_CHAR_LITERAL = 23;
 
   int DEFAULT = 0;
   int LITERAL_MODE = 1;
@@ -33,10 +36,13 @@ public interface TraversalLanguageParserConstants {
     "\"||\"",
     "\"&&\"",
     "\"--\"",
+    "\"sib+\"",
     "\".\"",
     "\":\"",
     "\"..\"",
     "\"*\"",
+    "\"]\"",
+    "\"[\"",
     "\"(\"",
     "\")\"",
     "<NUMBER>",
