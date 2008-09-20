@@ -519,7 +519,7 @@ FSTInfo exports(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo importDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["qualified" ] n=naam(true){ replaceName(n);} ["as" n=naam(true){ replaceName(n);}] [n=hiding(true){ replaceName(n);}] {return productionEndTerminal("importDecl","-","-","Replacement",first,token);}
+	"import" ["qualified" ] n=naam(true){ replaceName(n);} ["as" n=naam(true){ replaceName(n);}] [n=hiding(true){ replaceName(n);}] {return productionEndTerminal("importDecl","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
@@ -637,7 +637,7 @@ FSTInfo newtypeParam(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo inst(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=naam(true){ replaceName(n);} (n=type(true){ replaceName(n);})+ {return productionEndTerminal("inst","-","-","Replacement",first,token);}
+	n=naam(true){ replaceName(n);} (n=type(true){ replaceName(n);})+ {return productionEndTerminal("inst","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 

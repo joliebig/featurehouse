@@ -1,11 +1,13 @@
 package tmp.generated_haskell;
 
-import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.*;
+import cide.gast.*;
 
-import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import java.io.PrintStream;
+
+import cide.languages.*;
+
+import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {

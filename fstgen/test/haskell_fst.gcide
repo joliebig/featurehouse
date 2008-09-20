@@ -508,6 +508,7 @@ body:
 moduleHeader: "module" naam [exports] "where" @!;
 exports: "(" [exportList]  ")";
 
+@FSTTerminal(name="{TOSTRING}")
 importDecl: "import" ["qualified"<NONE>] naam ["as" naam] [hiding];
 hiding: ["hiding"<NONE>] "(" [exportList] ")";
 
@@ -565,6 +566,7 @@ deriving:
 	
 newtypeParam: "{" var "::" functiontype "}" | type; 
 
+@FSTTerminal(name="{AUTO}")
 inst: naam (type)+;
 //inst: naam inst_rest;//inst_rest: type;//	LL("naam()") naam//	| LL("\"(\" var() \"->\"") 	"(" var "->" var ")"//	| LL("\"(\" var() \",\"")		"(" &LI var ("," &LI var)+ ")"//	| "(" [simpletype] ")"//	| "[" var "]";
 
