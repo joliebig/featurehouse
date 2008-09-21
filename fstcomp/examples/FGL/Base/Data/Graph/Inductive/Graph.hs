@@ -1,9 +1,7 @@
 module Data.Graph.Inductive.Graph
-       (Node, LNode, UNode, Edge, LEdge, UEdge, Adj, Context, MContext,
-        Decomp, GDecomp, UContext, UDecomp, Path, LPath(..), UPath,
-        Graph(..), DynGraph(..), ufold, gmap, nmap, emap, nodes, edges,
-        newNodes, gelem, insNode, insEdge, delNode, delEdge, delLEdge,
-        insNodes, insEdges, delNodes, delEdges, buildGr, mkUGraph, context,
+       (Node, LNode, Edge, LEdge, Adj, Context, MContext,
+        Decomp, GDecomp, Path, LPath(..), Graph(..), ufold, nodes, edges,
+        newNodes, gelem, delNode, delNodes, mkUGraph, context,
         lab, neighbors, suc, pre, lsuc, lpre, out, inn, outdeg, indeg, deg,
         equal, node', lab', labNode', neighbors', suc', pre', lpre', lsuc',
         out', inn', outdeg', indeg', deg')
@@ -14,13 +12,9 @@ module Data.Graph.Inductive.Graph
    
   type LNode a = (Node, a);
    
-  type UNode = LNode ();
-   
   type Edge = (Node, Node);
    
   type LEdge b = (Node, Node, b);
-   
-  type UEdge = LEdge ();
    
   type Path = [Node];
    
@@ -28,8 +22,6 @@ module Data.Graph.Inductive.Graph
    
   instance (Show a) => Show (LPath a) where
           { show (LP xs) = show xs};
-   
-  type UPath = [UNode];
    
   type Adj b = [(b, Node)];
    
@@ -40,10 +32,6 @@ module Data.Graph.Inductive.Graph
   type Decomp g a b = (MContext a b, g a b);
    
   type GDecomp g a b = (Context a b, g a b);
-   
-  type UContext = ([Node], Node, [Node]);
-   
-  type UDecomp g = (Maybe UContext, g);
    
   class Graph gr where
           {  
@@ -76,26 +64,11 @@ module Data.Graph.Inductive.Graph
               = ufold (\ (_, v, _, s) -> ((map (\ (l, w) -> (v, w, l)) s) ++))
                   []};
    
-  class (Graph gr) => DynGraph gr where
-          {  
-            (&) :: Context a b -> gr a b -> gr a b};
-   
   ufold :: (Graph gr) => (Context a b -> c -> c) -> c -> gr a b -> c;
   ufold f u g
     | isEmpty g = u
     | otherwise = f c (ufold f u g')
     where { (c, g') = matchAny g};
-   
-  gmap ::
-       (DynGraph gr) => (Context a b -> Context c d) -> gr a b -> gr c d;
-  gmap f = ufold (\ c -> (f c &)) empty;
-   
-  nmap :: (DynGraph gr) => (a -> c) -> gr a b -> gr c b;
-  nmap f = gmap (\ (p, v, l, s) -> (p, v, f l, s));
-   
-  emap :: (DynGraph gr) => (b -> c) -> gr a b -> gr a c;
-  emap f = gmap (\ (p, v, l, s) -> (map1 f p, v, l, map1 f s))
-    where { map1 g = map (\ (l, v) -> (g l, v))};
    
   nodes :: (Graph gr) => gr a b -> [Node];
   nodes = map fst . labNodes;
@@ -113,45 +86,12 @@ module Data.Graph.Inductive.Graph
           { (Just _, _) -> True;
             _ -> False};
    
-  insNode :: (DynGraph gr) => LNode a -> gr a b -> gr a b;
-  insNode (v, l) = (([], v, l, []) &);
-   
-  insEdge :: (DynGraph gr) => LEdge b -> gr a b -> gr a b;
-  insEdge (v, w, l) g = (pr, v, la, (l, w) : su) & g'
-    where { (Just (pr, _, la, su), g') = match v g};
-   
   delNode :: (Graph gr) => Node -> gr a b -> gr a b;
   delNode v = delNodes [v];
-   
-  delEdge :: (DynGraph gr) => Edge -> gr a b -> gr a b;
-  delEdge (v, w) g
-    = case match v g of
-          { (Nothing, _) -> g;
-            (Just (p, v', l, s), g')
-              -> (p, v', l, filter ((/= w) . snd) s) & g'};
-   
-  delLEdge :: (DynGraph gr, Eq b) => LEdge b -> gr a b -> gr a b;
-  delLEdge (v, w, b) g
-    = case match v g of
-          { (Nothing, _) -> g;
-            (Just (p, v', l, s), g')
-              -> (p, v', l, filter (\ (x, n) -> x /= b || n /= w) s) & g'};
-   
-  insNodes :: (DynGraph gr) => [LNode a] -> gr a b -> gr a b;
-  insNodes vs g = foldr insNode g vs;
-   
-  insEdges :: (DynGraph gr) => [LEdge b] -> gr a b -> gr a b;
-  insEdges es g = foldr insEdge g es;
-   
+
   delNodes :: (Graph gr) => [Node] -> gr a b -> gr a b;
   delNodes [] g = g;
   delNodes (v : vs) g = delNodes vs (snd (match v g));
-   
-  delEdges :: (DynGraph gr) => [Edge] -> gr a b -> gr a b;
-  delEdges es g = foldr delEdge g es;
-   
-  buildGr :: (DynGraph gr) => [Context a b] -> gr a b;
-  buildGr = foldr (&) empty;
    
   mkUGraph :: (Graph gr) => [Node] -> [Edge] -> gr () ();
   mkUGraph vs es = mkGraph (labUNodes vs) (labUEdges es)

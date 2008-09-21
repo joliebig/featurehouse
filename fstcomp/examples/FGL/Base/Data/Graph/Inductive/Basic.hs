@@ -1,5 +1,5 @@
 module Data.Graph.Inductive.Basic
-       (grev, undir, unlab, gsel, gfold, efilter, elfilter, hasLoop,
+       (gsel, gfold, hasLoop,
         isSimple, postorder, postorderF, preorder, preorderF)
        where
 { import Data.Graph.Inductive.Graph;
@@ -8,30 +8,10 @@ module Data.Graph.Inductive.Basic
   import Data.List (nub);
   import Data.Tree;
    
-  grev :: (DynGraph gr) => gr a b -> gr a b;
-  grev = gmap (\ (p, v, l, s) -> (s, v, l, p));
-   
-  undir :: (Eq b, DynGraph gr) => gr a b -> gr a b;
-  undir
-    = gmap
-        (\ (p, v, l, s) -> let { ps = nub (p ++ s)} in (ps, v, l, ps));
-   
-  unlab :: (DynGraph gr) => gr a b -> gr () ();
-  unlab = gmap (\ (p, v, _, s) -> (unlabAdj p, v, (), unlabAdj s))
-    where { unlabAdj = map (\ (_, v) -> ((), v))};
-   
+ 
   gsel ::
        (Graph gr) => (Context a b -> Bool) -> gr a b -> [Context a b];
   gsel p = ufold (\ c cs -> if p c then c : cs else cs) [];
-   
-  efilter :: (DynGraph gr) => (LEdge b -> Bool) -> gr a b -> gr a b;
-  efilter f = ufold cfilter empty
-    where { cfilter (p, v, l, s) g = (p', v, l, s') & g
-              where { p' = filter (\ (b, u) -> f (u, v, b)) p;
-                      s' = filter (\ (b, w) -> f (v, w, b)) s}};
-   
-  elfilter :: (DynGraph gr) => (b -> Bool) -> gr a b -> gr a b;
-  elfilter f = efilter (\ (_, _, b) -> f b);
    
   hasLoop :: (Graph gr) => gr a b -> Bool;
   hasLoop = not . null . (gsel (\ c -> (node' c `elem` suc' c)));
