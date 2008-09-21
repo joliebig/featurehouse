@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification><!-- add getter/setter to interface EdgeIfc -->
+		<type>introduction</type>
+		<traversal>..EdgeIfc*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public int getColor();</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..EdgeIfc*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void setColor(int color);</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<!--
+			add getter/setter/field and update display() in Edge/Vertex classes
+		-->
+		<type>introduction</type>
+		<traversal>..Edge%s.%e*:*..*:class_body||..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>private int color;</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Edge%s.%e*:*..*:class_body||..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public int getColor() {return color;}</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Edge%s.%e*:*..*:class_body||..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void setColor(int color) {this.color = color;}
+					</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>	
+	<modification>
+		<type>superimposition</type>
+		<traversal>..Vertex*:*..*display%s(%e*:class_member_declaration||..Edge%s.%e*:*..*display%s(%e*:class_member_declaration
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void display() {System.Console.Out.Write(" color=" + color);original();}
+					</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>	
+</modificationComposition>

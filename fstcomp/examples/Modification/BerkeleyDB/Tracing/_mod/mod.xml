@@ -5,7 +5,8 @@
 			javaMethodBodyOverriding log every entrance and exit of a method
 		-->
 		<type>javaMethodBodyOverriding</type>
-		<traversal>..*:MethodDecl</traversal>
+		<traversal>..*:MethodDecl -- sib+ ..*:ClassOrInterface2
+		</traversal>
 		<content>
 			<parsed>
 				<plainText>
@@ -22,7 +23,8 @@
 			introduction of field Tracer t on every java class
 		-->
 		<type>introduction</type>
-		<traversal>..*:ClassDeclaration</traversal>
+		<traversal>..*:ClassDeclaration[..*:ClassOrInterface1]
+		</traversal>
 		<content>
 			<parsed>
 				<plainText>
@@ -37,13 +39,26 @@
 			introduction of getter for Tracer t on every java class
 		-->
 		<type>introduction</type>
-		<traversal>..*:ClassDeclaration</traversal>
+		<traversal>..*:ClassDeclaration[..*:ClassOrInterface1]
+		</traversal>
 		<content>
 			<parsed>
 				<plainText>
 					<text>public Tracer getTracer(){return t;}</text>
 					<tType>java.method</tType>
 				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<!--
+			introduction java class Tracer
+		-->
+		<type>introduction</type>
+		<traversal>..*src:*</traversal>
+		<content>
+			<parsed>
+				<externLink>Tracer.java</externLink>
 			</parsed>
 		</content>
 	</modification>

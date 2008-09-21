@@ -52,8 +52,8 @@ public class JavaMethodOverriding {
 		    prefix += token + " ";
 		}
 	    }
-	    
-	    System.out.println("vorher " + prefix);
+	    	    
+	    // Replace '[]' for regex
 	    String modPrefix = "";
 	    for(char c:prefix.toCharArray()){
 		if (c=='[')
@@ -64,8 +64,7 @@ public class JavaMethodOverriding {
 		    modPrefix += String.valueOf(c);
 	    }
 	    
-	    prefix=modPrefix;	     
-	    System.out.println("nachher " + prefix);
+	    prefix=modPrefix;	    
 	    
 	    terminalComp2.setBody(prefix
 		    + terminalComp2.getBody().replaceFirst(prefix, "")

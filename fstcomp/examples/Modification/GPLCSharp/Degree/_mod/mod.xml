@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<!--
+			add getter/setter/field and update display() in Vertex classe
+		-->
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>private int degree;</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public int getDegree() {return degree;}</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..Vertex*:*..*:class_body
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void setDegree(int degree) {this.degree = degree;}
+					</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>superimposition</type>
+		<traversal>..Vertex*:*..*display%s(%e*:class_member_declaration
+		</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>public void display() {System.Console.Out.Write(" degree=" + degree);original();}
+					</text>
+					<tType>cSharp.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>	
+</modificationComposition>

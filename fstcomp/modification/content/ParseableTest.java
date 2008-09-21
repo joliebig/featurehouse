@@ -48,41 +48,42 @@ public class ParseableTest {
 	// System.out.println(new JavaMethodBody("{System.out.println();}")
 	// .getFST());
 
-//	/*
-//	 * CSHARP SUPERIMPOSITION
-//	 */
-//	CSharpMethod csOld = new CSharpMethod("public int method(){nothing();}");
-//	FSTNode csOldFST = csOld.getFST();
-//	List<FSTNode> l = new LinkedList<FSTNode>();
-//	l.add(csOldFST);
-//	FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
-//
-//	CSharpMethod csNew = new CSharpMethod(
-//		"public int method(){original();something();}");
-//
-//	FSTNode par = new FSTNonTerminal("nonterminal", "parent");
-//
-//	System.out.println(FSTGenComposer
-//		.compose(csNew.getFST(), csOldFST, par));
-
-	 /*
-	 * JAVA SUPERIMPOSITION
-	 * BUG ARRRRGHHHH
+	/*
+	 * CSHARP SUPERIMPOSITION
 	 */
-	 JavaMethod jmOld = new
-	 JavaMethod("public int [] method(){nothing();}");
-	 FSTNode jmOldFST = jmOld.getFST();
-	 List<FSTNode> l = new LinkedList<FSTNode>();
-	 l.add(jmOldFST);
-	 FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
-	
-	 JavaMethod jmNew = new JavaMethod(
-	 "public int [] method(){original();something();}");
-	
-	 FSTNode par = new FSTNonTerminal("nonterminal", "parent");
-	
-	 System.out.println(FSTGenComposer
-	 .compose(jmNew.getFST(), jmOldFST, par));
+	CSharpMethod csOld = new CSharpMethod("public int method(){nothing();}");
+	FSTNode csOldFST = csOld.getFST();
+	List<FSTNode> l = new LinkedList<FSTNode>();
+	l.add(csOldFST);
+	FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
+
+	CSharpMethod csNew = new CSharpMethod(
+		"public int method(){original();something();}");
+
+	FSTNode par = new FSTNonTerminal("nonterminal", "parent");
+
+	System.out.println(FSTGenComposer
+		.compose(csNew.getFST(), csOldFST, par).getParent());
+	System.out.println();
+
+//	 /*
+//	 * JAVA SUPERIMPOSITION
+//	 * BUG ARRRRGHHHH
+//	 */
+//	 JavaMethod jmOld = new
+//	 JavaMethod("public int [] method(){nothing();}");
+//	 FSTNode jmOldFST = jmOld.getFST();
+//	 List<FSTNode> l = new LinkedList<FSTNode>();
+//	 l.add(jmOldFST);
+//	 FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
+//	
+//	 JavaMethod jmNew = new JavaMethod(
+//	 "public int [] method(){original();something();}");
+//	
+//	 FSTNode par = new FSTNonTerminal("nonterminal", "parent");
+//	
+//	 System.out.println(FSTGenComposer
+//	 .compose(jmNew.getFST(), jmOldFST, par));
 
     }
 }

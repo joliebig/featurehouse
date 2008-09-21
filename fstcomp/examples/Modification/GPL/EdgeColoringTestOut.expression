@@ -3,8 +3,8 @@ WithEdges
 Undirected
 UndirectedWithEdges
 DFS
-EdgeGraph
-Degree
 Coloring
+Degree
+EdgeGraph
 EdgeColoring
 EdgeColoringTest

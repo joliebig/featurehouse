@@ -18,7 +18,7 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 public class CSharpMethod extends ParseableCodeSnippet {
 
     public CSharpMethod(String content) {
-	super(content);
+	super(content);	
     }
 
     /*
