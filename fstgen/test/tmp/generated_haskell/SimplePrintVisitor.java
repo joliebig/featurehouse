@@ -87,6 +87,28 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			hintNewLine();
 			return false;
 		}
+		if (nonTerminal.getType().equals("exports")) {
+			printToken("(");
+			{
+				FSTNode v=getChild(nonTerminal, "exportList");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			return false;
+		}
+		if (nonTerminal.getType().equals("exportList")) {
+			Iterator<FSTNode> listElements = getChildren(nonTerminal, "export").iterator();
+			if (listElements.hasNext()) {
+				listElements.next().accept(this);
+			}
+			while (listElements.hasNext()) {
+				printToken(",");
+				listElements.next().accept(this);
+			}
+			return false;
+		}
 		if (nonTerminal.getType().equals("definitions")) {
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "definition").iterator();
 			if (listElements.hasNext()) {
@@ -312,6 +334,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("exprListSpecial3") && expectedType.equals("exprListSpecial")) return true;
 		if (type.equals("newtypeParam1") && expectedType.equals("newtypeParam")) return true;
 		if (type.equals("conop2") && expectedType.equals("conop")) return true;
+		if (type.equals("declaration") && expectedType.equals("definition")) return true;
 		if (type.equals("declaration4") && expectedType.equals("declaration")) return true;
 		if (type.equals("deriving1") && expectedType.equals("deriving")) return true;
 		if (type.equals("expressie3") && expectedType.equals("expressie")) return true;
@@ -359,7 +382,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("varMain2") && expectedType.equals("varMain")) return true;
 		if (type.equals("caseInner1") && expectedType.equals("caseInner")) return true;
 		if (type.equals("exprMain2") && expectedType.equals("exprMain")) return true;
-		if (type.equals("definition7") && expectedType.equals("definition")) return true;
 		if (type.equals("exprMain3") && expectedType.equals("exprMain")) return true;
 		if (type.equals("expressie7") && expectedType.equals("expressie")) return true;
 		if (type.equals("varop2") && expectedType.equals("varop")) return true;

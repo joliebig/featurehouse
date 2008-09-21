@@ -506,6 +506,8 @@ body:
 
 @FSTNonTerminal(name="{naam}")
 moduleHeader: "module" naam [exports] "where" @!;
+
+@FSTNonTerminal
 exports: "(" [exportList]  ")";
 
 @FSTTerminal(name="{TOSTRING}")
@@ -514,7 +516,10 @@ hiding: ["hiding"<NONE>] "(" [exportList] ")";
 
 //export
 
+@FSTNonTerminal
 exportList: &LI export ("," &LI export)*;
+
+@FSTTerminal(name="{TOSTRING}")
 export:
 	LL("var()") var
 	| naam [ exportNaamParam]
@@ -531,7 +536,7 @@ naamOrVar: LL("naam()") naam | var;
 @FSTNonTerminal
 definitions: &LI definition (";"@!@! &LI definition)*;
 
-definition :
+definition:
 		@FSTNonTerminal(name="{simpletype}")	
 		"type"		simpletype "=" functiontype :: typedecl	|   @FSTNonTerminal(name="{simpletype}")	
 		"data" [LL("context()") context] simpletype "=" constrs [deriving] :: datadecl	|	@FSTNonTerminal(name="{simpletype}")	
@@ -539,7 +544,7 @@ definition :
 		"class"    [LL("context()") context] naam (var)+ [whereDecls] :: classdecl    |	@FSTNonTerminal(name="{inst}")	   
     	"instance" [LL("context()") context] inst [whereDecls]  :: instancedecl	|	@FSTNonTerminal(name="{functiontypeList}")	   
 		"default" functiontypeList  :: defaultdecl	|	@FSTTerminal(name="{declaration}")	
-		declaration	;
+		declaration  :: declaration	;
 
 @FSTTerminal(name="{naam}")
 simpletype: naam (var)*;
@@ -576,18 +581,16 @@ decls: "{" @+ [ declarationList] @- "}";
 @FSTNonTerminal
 declarationList: &LI declaration (";" @! &LI declaration)*;
 
+@FSTExportName("{TOSTRING}")
 declaration:
-		@FSTTerminal(name="{function}")
 		LL("function() \"=\"") function "=" expr [whereDecls]
-	| 	@FSTTerminal(name="{function}")
-		LL("function() \"|\"") function (altExprAss)+ [whereDecls]
-	|	@FSTTerminal(name="{varList}")
-		LL("varList() \"::\"") varList "::" [LL("context()") context] functiontype
-	| LL("patr() \"=\"") patr "=" expr [whereDecls]
-	| LL("patr() \"|\"") patr (altExprAss)+ [whereDecls]
-	| "infix" [<INTEGER>] operatorList
-	| "infixl" [<INTEGER>] operatorList
-	| "infixr" [<INTEGER>] operatorList;
+	| 	LL("function() \"|\"") function (altExprAss)+ [whereDecls]
+	|	LL("varList() \"::\"") varList "::" [LL("context()") context] functiontype
+	| 	LL("patr() \"=\"") patr "=" expr [whereDecls]
+	|	LL("patr() \"|\"") patr (altExprAss)+ [whereDecls]
+	|	"infix" [<INTEGER>] operatorList
+	| 	"infixl" [<INTEGER>] operatorList
+	|	"infixr" [<INTEGER>] operatorList;
 
 altExprAss: "|" expr "=" expr;
 
