@@ -2,8 +2,6 @@ module Data.Graph.Inductive.Example
        (abb', dag3', clr479', clr489', clr486')
        where
 {  
-	import Data.Graph.Inductive.Monad;
-  	import Data.Graph.Inductive.Monad.IOArray;
 
   a' = mkGraphM [(1, 'a')] noEdges;
   b' = mkGraphM (zip [1 .. 2] "ab") noEdges;
