@@ -500,9 +500,14 @@ GRAMMARSTART
 module: [moduleHeader] "{" @+! body @-!"}";
 
 @FSTNonTerminal
-body: 
-	&LI importDecl (LL(2) ";"@!@! &LI importDecl)* [";"@!@! definitions] 
-	| [definitions];
+body: [imports] [";"<NONE>] [definitions];
+
+@FSTNonTerminal
+imports: &LI importDecl (LL(2) ";"@!@! &LI importDecl)*;
+
+//body: 
+//	&LI importDecl (LL(2) ";"@!@! &LI importDecl)* [";"@!@! definitions] 
+//	| [definitions];
 
 @FSTNonTerminal(name="{naam}")
 moduleHeader: "module" naam [exports] "where" @!;

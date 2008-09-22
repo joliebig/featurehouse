@@ -499,9 +499,13 @@ FSTInfo module(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=importDecl(inTerminal){ replaceName(n);} (LOOKAHEAD(2) ";" n=importDecl(inTerminal){ replaceName(n);})* [";" n=definitions(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("body1","-","-");}
- |
-	[n=definitions(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("body2","-","-");}
+	[n=imports(inTerminal){ replaceName(n);}] [";" ] [n=definitions(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("body","-","-");}
+
+ )  }
+
+FSTInfo imports(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=importDecl(inTerminal){ replaceName(n);} (LOOKAHEAD(2) ";" n=importDecl(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("imports","-","-");}
 
  )  }
 

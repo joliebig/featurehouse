@@ -38,7 +38,22 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printToken("}");
 			return false;
 		}
-		if (nonTerminal.getType().equals("body1")) {
+		if (nonTerminal.getType().equals("body")) {
+			{
+				FSTNode v=getChild(nonTerminal, "imports");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "definitions");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("imports")) {
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "importDecl").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -48,24 +63,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				hintNewLine();
 				hintNewLine();
 				listElements.next().accept(this);
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "definitions");
-				if (v!=null) {
-					printToken(";");
-					hintNewLine();
-					hintNewLine();
-					v.accept(this);
-				}
-			}
-			return false;
-		}
-		if (nonTerminal.getType().equals("body2")) {
-			{
-				FSTNode v=getChild(nonTerminal, "definitions");
-				if (v!=null) {
-					v.accept(this);
-				}
 			}
 			return false;
 		}
@@ -335,8 +332,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("newtypeParam1") && expectedType.equals("newtypeParam")) return true;
 		if (type.equals("conop2") && expectedType.equals("conop")) return true;
 		if (type.equals("declaration") && expectedType.equals("definition")) return true;
-		if (type.equals("declaration4") && expectedType.equals("declaration")) return true;
 		if (type.equals("deriving1") && expectedType.equals("deriving")) return true;
+		if (type.equals("declaration4") && expectedType.equals("declaration")) return true;
 		if (type.equals("expressie3") && expectedType.equals("expressie")) return true;
 		if (type.equals("context3") && expectedType.equals("context")) return true;
 		if (type.equals("patroonMain5") && expectedType.equals("patroonMain")) return true;
@@ -367,7 +364,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("constructorNaam") && expectedType.equals("patroonMain")) return true;
 		if (type.equals("type2") && expectedType.equals("type")) return true;
 		if (type.equals("function3") && expectedType.equals("function")) return true;
-		if (type.equals("body2") && expectedType.equals("body")) return true;
 		if (type.equals("literal2") && expectedType.equals("literal")) return true;
 		if (type.equals("exprMain1") && expectedType.equals("exprMain")) return true;
 		if (type.equals("constr1") && expectedType.equals("constr")) return true;
@@ -378,7 +374,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("type3") && expectedType.equals("type")) return true;
 		if (type.equals("declaration8") && expectedType.equals("declaration")) return true;
 		if (type.equals("literal1") && expectedType.equals("literal")) return true;
-		if (type.equals("body1") && expectedType.equals("body")) return true;
 		if (type.equals("varMain2") && expectedType.equals("varMain")) return true;
 		if (type.equals("caseInner1") && expectedType.equals("caseInner")) return true;
 		if (type.equals("exprMain2") && expectedType.equals("exprMain")) return true;
