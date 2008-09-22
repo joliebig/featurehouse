@@ -23,9 +23,9 @@ public  class  Edge  extends Neighbor  implements EdgeIfc {
 
 	public void setColor(int color) {this.color = color;}
 
-	 public void display__wrappee__Degree( ) { System.out.println( " start=" + start.getName() + " end=" + end.getName( ) ); }
+	 public void display__wrappee__DFS( ) { System.out.println( " start=" + start.getName() + " end=" + end.getName( ) ); }
 
-	public void display() {System.out.print(" color=" + color);display__wrappee__Degree();}
+	public void display() {System.out.print(" color=" + color);display__wrappee__DFS();}
 
 
 }

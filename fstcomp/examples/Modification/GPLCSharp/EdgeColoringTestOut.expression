@@ -3,4 +3,8 @@ WithEdges
 Undirected
 UndirectedWithEdges
 DFS
-TestProg
+Coloring
+Degree
+EdgeGraph
+EdgeColoring
+EdgeColoringTest

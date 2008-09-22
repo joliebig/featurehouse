@@ -1,44 +1,38 @@
 public class Graph {
-    // TODO mod
     public Graph getEdgeGraph() {
 	Graph edgeGraph = new Graph();
-	EdgeIter eIt = getEdges();
-	while (eIt.hasNext()) {
-	    EdgeIfc e = eIt.next();	    
+	
+	foreach (EdgeIfc e in edges) {	    
 	    Vertex edgeVertex = new Vertex();
-	    edgeVertex.name = e.getStart().getName() + " "
-		    + e.getEnd().getName();
-	    edgeGraph.addVertex(edgeVertex);
+	    edgeVertex.name = e.GetStart().GetName() + " "
+		    + e.GetEnd().GetName();
+	    edgeGraph.AddVertex(edgeVertex);
 	}
 
 	// add new edges
-	EdgeIter eIt1 = getEdges();
-	while (eIt1.hasNext()) {
-	    EdgeIfc e1 = eIt1.next();
-	    EdgeIter eIt2 = getEdges();
-	    while (eIt2.hasNext()) {
-		EdgeIfc e2 = eIt2.next();
-		if (!(e1.getStart().equals(e2.getStart()) && e1.getEnd()
-			.equals(e2.getEnd()))
-			&& (e1.getStart().equals(e2.getStart())
-				|| e1.getStart().equals(e2.getEnd())
-				|| e1.getEnd().equals(e2.getStart()) || e1
-				.getEnd().equals(e2.getEnd()))) {
+	foreach (EdgeIfc e1 in edges) {	 
+	   foreach (EdgeIfc e2 in edges) { 
+		if (!(e1.GetStart().Equals(e2.GetStart()) && e1.GetEnd()
+			.Equals(e2.GetEnd()))
+			&& (e1.GetStart().Equals(e2.GetStart())
+				|| e1.GetStart().Equals(e2.GetEnd())
+				|| e1.GetEnd().Equals(e2.GetStart()) || e1
+				.GetEnd().Equals(e2.GetEnd()))) {
 
-		    if (edgeGraph.findsEdge(edgeGraph.findsVertex(e2.getStart()
-			    .getName()
-			    + " " + e2.getEnd().getName()), edgeGraph
-			    .findsVertex((e1.getStart().getName() + " " + e1
-				    .getEnd().getName()))) == null)
-			edgeGraph.addEdge(edgeGraph.findsVertex((e1.getStart()
-				.getName()
-				+ " " + e1.getEnd().getName())), edgeGraph
-				.findsVertex(e2.getStart().getName() + " "
-					+ e2.getEnd().getName()));
-
+		    if (edgeGraph.findsEdge(edgeGraph.findsVertex(e2.GetStart()
+			    .GetName()
+			    + " " + e2.GetEnd().GetName()), edgeGraph
+			    .findsVertex((e1.GetStart().GetName() + " " + e1
+				    .GetEnd().GetName()))) == null)
+			edgeGraph.AddEdge(edgeGraph.findsVertex((e1.GetStart()
+				.GetName()
+				+ " " + e1.GetEnd().GetName())), edgeGraph
+				.findsVertex(e2.GetStart().GetName() + " "
+					+ e2.GetEnd().GetName()));
 		}
 	    }
 	}
 	return edgeGraph;
     }
+    
 }

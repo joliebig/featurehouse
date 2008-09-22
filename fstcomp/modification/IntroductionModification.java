@@ -39,7 +39,9 @@ public class IntroductionModification extends ContentModification {
 	TraversalLanguageParser tlp = new TraversalLanguageParser(
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse())
-	    ((FSTNonTerminal) node).addChild(getContent().getFST());
+	    ((FSTNonTerminal) node).addChild(
+		    getContent()
+		    .getFST());
     }
 
 }

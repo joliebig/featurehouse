@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<modificationComposition>
-	<modification>
-		<!--
-			add getter/setter/field and update display() in Vertex classe
-		-->
-		<type>introduction</type>
-		<traversal>..Vertex*:*..*:class_body
-		</traversal>
-		<content>
-			<parsed>
-				<plainText>
-					<text>private int degree;</text>
-					<tType>cSharp.method</tType>
-				</plainText>
-			</parsed>
-		</content>
-	</modification>
+<modificationComposition>	
 	<modification>
 		<type>introduction</type>
 		<traversal>..Vertex*:*..*:class_body
@@ -23,34 +7,20 @@
 		<content>
 			<parsed>
 				<plainText>
-					<text>public int getDegree() {return degree;}</text>
+					<text>public int getDegree() {return neighbors.Count;}</text>
 					<tType>cSharp.method</tType>
 				</plainText>
 			</parsed>
 		</content>
-	</modification>
-	<modification>
-		<type>introduction</type>
-		<traversal>..Vertex*:*..*:class_body
-		</traversal>
-		<content>
-			<parsed>
-				<plainText>
-					<text>public void setDegree(int degree) {this.degree = degree;}
-					</text>
-					<tType>cSharp.method</tType>
-				</plainText>
-			</parsed>
-		</content>
-	</modification>
+	</modification>	
 	<modification>
 		<type>superimposition</type>
-		<traversal>..Vertex*:*..*display%s(%e*:class_member_declaration
+		<traversal>..Vertex:*..*display%s(%e*:class_member_declaration
 		</traversal>
 		<content>
 			<parsed>
 				<plainText>
-					<text>public void display() {System.Console.Out.Write(" degree=" + degree);original();}
+					<text>public void display() {System.Console.Out.Write(" degree=" + getDegree());original();}
 					</text>
 					<tType>cSharp.method</tType>
 				</plainText>

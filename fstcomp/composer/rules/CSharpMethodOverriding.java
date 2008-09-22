@@ -66,8 +66,9 @@ public class CSharpMethodOverriding {
 	    newMethodName = newMethodName.replaceFirst("(.)*\\.", "");
 	    // end Modification thus to an unwanted behavior
 
-	    terminalComp2.setBody(terminalComp2.getBody().replaceFirst(prefix,
-		    "").replaceFirst(oldMethodName, newMethodName));
+	    terminalComp2.setBody(prefix
+		    + terminalComp2.getBody().replaceFirst(prefix, "")
+			    .replaceFirst(oldMethodName, newMethodName));
 	    terminalComp2.setName(newMethodName);
 	    newParent.setName(newMethodName);
 

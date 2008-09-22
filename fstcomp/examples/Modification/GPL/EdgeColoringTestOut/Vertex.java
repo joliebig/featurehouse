@@ -32,23 +32,19 @@ public   class  Vertex {
 
 	 public void nodeSearch( WorkSpace w ) { Vertex v; w.preVisitAction( ( Vertex ) this ); if ( visited ) return; visited = true; for ( VertexIter vxiter = getNeighbors(); vxiter.hasNext(); ) { v = vxiter.next( ); w.checkNeighborAction( ( Vertex ) this, v ); v.nodeSearch( w ); } w.postVisitAction( ( Vertex ) this ); }
 
-	private int degree;
-
-	public int getDegree() {return degree;}
-
-	public void setDegree(int degree) {this.degree =	degree;}
-
-	 public void display__wrappee__DFS( ) { if ( visited ) System.out.print( "  visited" ); else System.out.println( " !visited " ); display__wrappee__UndirectedWithEdges( ); }
-
 	private int color;
 
 	public int getColor() {return color;}
 
 	public void setColor(int color) {this.color = color;}
 
-	public void display__wrappee__Degree() {System.out.print(" degree=" + degree);display__wrappee__DFS();}
+	 public void display__wrappee__DFS( ) { if ( visited ) System.out.print( "  visited" ); else System.out.println( " !visited " ); display__wrappee__UndirectedWithEdges( ); }
 
-	public void display() {System.out.print(" color=" + color);display__wrappee__Degree();}
+	public int getDegree() {return neighbors.size();}
+
+	public void display__wrappee__Coloring() {System.out.print(" color=" + color);display__wrappee__DFS();}
+
+	public void display() {System.out.print(" degree=" + getDegree());display__wrappee__Coloring();}
 
 
 }

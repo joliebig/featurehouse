@@ -1,21 +1,21 @@
 public class Graph {
     public void edgeColoring() {
 	Graph edgeGraph = getEdgeGraph();
-	edgeGraph.sortVertices(new DescendingDegreeComparator());
-	VertexIter vIt;
+	edgeGraph.sortVertices(new DescendingDegreeComparator());	
+	Iterator<Vertex> vIt;
 	Vertex v;
-	boolean actionFlag = false;
+	bool actionFlag = false;
 	int color = 1;
 	while (true) {
-	    vIt = edgeGraph.getVertices();	    
+	     vIt = edgeGraph.GetVertices();	    
 	    while (vIt.hasNext()) {
-		v = vIt.next();		
-		if (v.getColor() == 0) {
-		    VertexIter neigborVIt = v.getNeighbors();
+		v = vIt.next(); 
+		if (v.getColor() == 0) {		    
+		     Iterator<Vertex>  neigborVIt = v.GetNeighbors();
 		    Vertex neighbor;
-		    boolean neighborAlreadyHasCurrentColor = false;
+		    bool neighborAlreadyHasCurrentColor = false;
 		    while (neigborVIt.hasNext()) {			
-			neighbor = neigborVIt.next();
+			neighbor = neigborVIt.next();			
 			if (neighbor.getColor() == color) {
 			    neighborAlreadyHasCurrentColor = true;
 			    break;
@@ -34,12 +34,9 @@ public class Graph {
 	    actionFlag = false;
 	}
 
-	EdgeIfc e;
-	EdgeIter eIt = getEdges();
-	while (eIt.hasNext()) {
-	    e = eIt.next();
+	foreach (EdgeIfc e in edges) {		   
 	    e.setColor(edgeGraph.findsVertex(
-		    e.getStart().getName() + " " + e.getEnd().getName())
+		    e.GetStart().GetName() + " " + e.GetEnd().GetName())
 		    .getColor());
 	}
     }    

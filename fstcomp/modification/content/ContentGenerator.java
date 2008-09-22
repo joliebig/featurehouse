@@ -8,6 +8,7 @@ import java.io.File;
 import modification.content.Parseables.C.CFile;
 import modification.content.Parseables.C.CFunction;
 import modification.content.Parseables.CSharp.CSharpFile;
+import modification.content.Parseables.CSharp.CSharpInterfaceMemberDeclaration;
 import modification.content.Parseables.CSharp.CSharpMethod;
 import modification.content.Parseables.haskell.HaskellDefinition;
 import modification.content.Parseables.haskell.HaskellFile;
@@ -36,6 +37,8 @@ public class ContentGenerator {
 	    return new CSharpFile(file);
 	    // } else if (file.getName().endsWith("")) {
 	    // return null;
+	    // } else if (file.getName().endsWith("")) {
+	    // return null;
 	} else {
 	    System.out.println("> " + file.getName());
 	    throw new UnknownFileTypeParseException();
@@ -54,6 +57,8 @@ public class ContentGenerator {
 	    return new CSharpMethod(content);
 	} else if (type.equals("java.methodBody")) {
 	    return new JavaMethodBody(content);
+	} else if (type.equals("cSharp.interfaceMemberDeclaration")) {
+	    return new CSharpInterfaceMemberDeclaration(content);
 	    // } else if (type.equals("")) {
 	    // return null;
 	} else

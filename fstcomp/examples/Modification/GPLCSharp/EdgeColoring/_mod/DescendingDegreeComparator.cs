@@ -1,17 +1,14 @@
 /**
  * 
  */
-package GPL;
-
-import java.util.Comparator;
 
 /**
  * @author boxleitner
  * 
  */
-public class DescendingDegreeComparator implements Comparator<Vertex> {
+public class DescendingDegreeComparator : System.Collections.Generic.IComparer<Vertex> {
 
-    public int compare(Vertex arg0, Vertex arg1) {
+    public int Compare(Vertex arg0, Vertex arg1) {
 	return arg1.getDegree() - arg0.getDegree();
     }
 

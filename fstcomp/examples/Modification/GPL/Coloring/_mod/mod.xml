@@ -2,7 +2,7 @@
 <modificationComposition>
 	<modification><!-- add getter/setter to interface EdgeIfc -->
 		<type>introduction</type>
-		<traversal>..EdgeIfc*:*..*:ClassDeclaration
+		<traversal>..EdgeIfc:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -15,7 +15,7 @@
 	</modification>
 	<modification>
 		<type>introduction</type>
-		<traversal>..EdgeIfc*:*..*:ClassDeclaration
+		<traversal>..EdgeIfc:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -31,7 +31,7 @@
 			add getter/setter/field and update display() in Edge/Vertex classes
 		-->
 		<type>introduction</type>
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
+		<traversal>..Edge:*..*:ClassDeclaration||..Vertex:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -44,7 +44,7 @@
 	</modification>
 	<modification>
 		<type>introduction</type>
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
+		<traversal>..Edge:*..*:ClassDeclaration||..Vertex:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -57,7 +57,7 @@
 	</modification>
 	<modification>
 		<type>introduction</type>
-		<traversal>..Edge%s.%e*:*..*:ClassDeclaration||..Vertex*:*..*:ClassDeclaration
+		<traversal>..Edge:*..*:ClassDeclaration||..Vertex:*..*:ClassDeclaration
 		</traversal>
 		<content>
 			<parsed>
@@ -71,7 +71,7 @@
 	</modification>	
 	<modification>
 		<type>superimposition</type>
-		<traversal>..Vertex*:*..display%s(%e*:MethodDecl||..Edge%s.%e*:*..display%s(%e*:MethodDecl
+		<traversal>..Vertex:*..display%s(%e*:MethodDecl||..Edge:*..display%s(%e*:MethodDecl
 		</traversal>
 		<content>
 			<parsed>
