@@ -1,3 +1,223 @@
+
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(SchemeParser)
+
+package tmp.generated_scheme;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+public class SchemeParser  extends AbstractFSTParser {
+
+}
+
+PARSER_END(SchemeParser)
+
+TOKEN : {
+	<plus			: "+">
+|	<minus			: "-" >
+|	<dots			: "..." >
+|	<excl			: "!" >
+|	<dollar			: "$" >
+|	<perc			: "%" >
+|	<and			: "&" >
+|	<mult			: "*" >
+| 	<div			: "/" >
+|	<colon			: ":" >
+|	<less			: "<" >
+|	<eq				: "=" >
+|	<great			: ">" >
+|	<quest			: "?" >
+|	<tilde			: "~" >
+|	<uline			: "_" >
+|	<power			: "^" >
+|	<dot			: "." >
+|	<begin			: "begin" >
+|	<letsyntax		: "let-syntax" >
+|	<letrecsyntax	: "letrec-syntax" >
+|	<define 		: "define" >
+|	<definesyntax	: "define-syntax" >
+|	<quote 			: "quote" >
+|	<lambda			: "lambda" > 
+|	<iff 			: "if" >
+|	<set 			: "!set" >
+|	<truetoken		: "#t" >
+|	<falsetoken		: "#f" >
+|	<prime1			: "'" >
+| 	<prime2			: "`" >
+|	<comma			: "," >
+|	<commaat		: ",@">
+|	<at				: "@">
+}
+
+SPECIAL_TOKEN : {
+" "
+|  "\t"
+|  "\n"
+|  "\r"
+|  <"--" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+| <"{-"(~["-"])*"-"("-" | ~["-", "}"](~["-"])*"-")*"}">
+}
+
+TOKEN : {
+
+<identifier	:	<initial> (<subsequent>)* 
+				| <plus>  
+				| <minus>
+				| <dots>
+				>
+				
+<initial	:	<letter>
+			|	<operator>
+			>
+			
+<operator	:	<excl>
+			|	<dollar>
+			|	<perc>
+			|	<and>
+			|	<mult> 
+			| 	<div>
+			|	<colon>
+			|	<less>
+			|	<eq>
+			|	<great>
+			|	<quest>
+			|	<tilde>
+			|	<uline>
+			|	<power>
+			>
+
+
+<subsequent	:	<initial>
+			|	<digit>
+			| 	<dot>
+			|	<plus>
+			|	<minus>
+			>
+
+
+<letter	:	["a"-"z"]
+		|	["A"-"Z"]
+		>
+			
+<digit	:	["0"-"9"] >
+		
+<datum	:	<bool>
+		|	<number>
+		|	<character>
+		|	<string>
+		|	<symbol>
+		|	<list>
+		|	<vector>
+		>
+		
+<bool	:	<true>
+		|	<false>
+		>
+
+<number	:	<num> >
+
+<character	:	~["'","\\","\"]
+			|	"\\" ["n","t","a","b","r","f","\\","'","\"","&"]
+			>
+
+<string	:	"\"" (<string_character>)* "\""	>
+		
+<string_character	:	"\""
+					|	"\\"
+					|	<character>
+					>
+					
+<symbol	:	<identifier> >
+		
+<list	:	"(" (<datum>)* ")" 
+		| 	"(" (<datum>)+ "." <datum> ")"
+		|	<abbreviation>
+		>
+		
+<abbreviation	:	<prime1>  <datum>
+				| 	<prime2>  <datum>
+				|	<comma>   <datum>
+				|	<commaat> <datum>
+				>
+				
+<vector	:	"#(" (<datum>)* ")"	>
+		
+<num	:	<prefix> <complex> >
+
+<complex	:	<real>
+			|	<real> <at> <real>
+			|	<real> <plus> <imag>
+			|	<real> <minus> <imag>
+			|	<plus> <imag> 
+			|	<minus> <imag>
+			>
+			
+<imag	:	"i"
+		|	<ureal> "i"
+		>
+		
+<real	:	<sign> <ureal> >
+
+<ureal	:	<uinteger>
+		|	<uinteger> "/" <uinteger r>
+		|	<decimal>
+		>
+		
+<uinteger	:	(<digit>)+ ("#")* >
+
+<prefix	:	<radix> <exactness>
+		|	<exactness> <radix>
+		>
+		
+<decimal	:	<uinteger> <exponent>
+			|	"." (<digit>)+ ("#")* <suffix>
+			|	(<digit>)+ "." (<digit>)* ("#")* <suffix>
+			|	(<digit>)+ ("#")+ "." ("#")* <suffix>
+			>
+
+<suffix	:	<empty> 
+		|	<exponent>
+		>
+		
+<exponent	:	<exponent_marker> <sign> (<digit>)+ >
+
+<exponent_marker	: 	"e"
+					| 	"s"
+					|	"f"
+					|	"d"
+					|	"l"
+					>
+					
+<sign	:	<empty>
+		|	<plus>
+		|	<minus>
+		>
+		
+<exactness	:	<empty>
+			|	"#i"
+			|	"#e"
+			>
+
+<radix	:	"#b"
+		|	"#o"
+		|	<empty>
+		|	"#d"
+		|	"#x"
+		>
+
+<digit	:	["0"-"9"] | ["a"-"f"] >
+		
+}
+
+GRAMMARSTART
+
 /* Grammar taken from: http://www.scheme.com/tspl2d/grammar.html */
 
 program	:	(form)*
@@ -9,15 +229,15 @@ form	:	definition
 		
 definition	:	variable_definition
 			|	syntax_definition
-			|	"begin" (definition)*
-			|	"let-syntax" (syntax_binding)* (definition)*
-			|	"letrec-syntax" (syntax_binding)* (definition)*
+			|	"(" "begin" (definition)* ")"
+			|	"(" "let-syntax" "(" (syntax_binding)* ")" (definition)* ")"
+			|	"(" "letrec-syntax" "(" (syntax_binding)* ")" (definition)* ")"
 			|	derived_definition
 			;
 			
-variable_definition	:	"define" variable expression
-					|	"define" variable (variable)* body
-					|	"define" variable (variable)* "." (variable) body
+variable_definition	:	"(" "define" variable expression ")"
+					|	"(" "define" "(" variable (variable)* ")" body ")"
+					|	"(" "define" "(" variable (variable)* "." variable ")" body ")"
 					;
 
 variable	:	identifier
@@ -26,40 +246,39 @@ variable	:	identifier
 body	:	(definition)* (expression)+
 		;
 		
-syntax_definition	:	"define-syntax" keyword transformer_expression
+syntax_definition	:	"(" "define-syntax" keyword transformer_expression ")"
 					;
 					
 keyword	:	identifier
 		;
 
-syntax_binding	:	keyword transformer_expression
+syntax_binding	:	"(" keyword transformer_expression ")"
 				;
 				
 expression	:	constant
 			|	variable
-			|	"quote" datum 
+			|	"(" "quote" datum ")" 
 			|	"'" datum
-			|	"lambda" formals body
-			|	"if" expression expression expression>
-			| 	"if" expression expression
-			|	"set!" variable expression
+			|	"(" "lambda" formals body ")"
+			|	"(" "if" expression expression expression ")"
+			| 	"(" "if" expression expression ")"
+			|	"(" "set!" variable expression ")"
 			|	application
-			|	"let-syntax" (syntax_binding)* (expression)+
-			|	"letrec-syntax" (syntax_binding)* (expression)+
+			|	"(" "let-syntax" "(" (syntax_binding)* ")" (expression)+ ")"
+			|	"(" "letrec-syntax" "(" (syntax_binding)* ")" (expression)+ ")"
 			|	derived_expression
 			;
 			
-constant	:	boolean
-			|	number
-			|	character
-			|	string
+constant	:	<bool>
+			|	<number>
+			|	<character>
+			|	<string>
 			;
 
 formals	:	variable
-		|	(variable)*
-		|	(variable)+ "." variable
+		|	"(" (variable)* ")"
+		|	"(" (variable)+ "." variable ")"
 		;
 		
-application	:	expression (expression)*
+application	:	"(" expression (expression)* ")"
 			;	
-

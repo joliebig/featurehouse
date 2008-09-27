@@ -78,6 +78,17 @@
 				<param name="testFile" value="Test.hs" />
 			</antcall>
 		</target>
+
+	<target name="testScheme">
+			<antcall target="testGrammar">
+				<param name="language" value="scheme" />
+				<param name="parserClass" value="SchemeParser" />
+				<param name="mainProduction" value="program" />
+				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="testFile" value="Test.hs" />
+			</antcall>
+		</target>
+
 	
 	<target name="testPHaskell">
 			<antcall target="testGrammar">
