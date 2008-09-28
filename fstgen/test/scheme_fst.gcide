@@ -71,13 +71,13 @@ TOKEN : {
 				| <plus>  
 				| <minus>
 				| <dots>
-				>
-				
-<initial	:	<letter>
+				>			
+|				
+<#initial	:	<letter>
 			|	<operator>
 			>
-			
-<operator	:	<excl>
+|			
+<#operator	:	<excl>
 			|	<dollar>
 			|	<perc>
 			|	<and>
@@ -93,126 +93,83 @@ TOKEN : {
 			|	<power>
 			>
 
-
-<subsequent	:	<initial>
+|
+<#subsequent	:	<initial>
 			|	<digit>
 			| 	<dot>
 			|	<plus>
 			|	<minus>
 			>
 
-
-<letter	:	["a"-"z"]
+|
+<#letter	:	["a"-"z"]
 		|	["A"-"Z"]
 		>
-			
-<digit	:	["0"-"9"] >
-		
-<datum	:	<bool>
-		|	<number>
-		|	<character>
-		|	<string>
-		|	<symbol>
-		|	<list>
-		|	<vector>
-		>
-		
-<bool	:	<true>
-		|	<false>
-		>
+|			
+<#digit	:	["0"-"9"] >
 
-<number	:	<num> >
-
-<character	:	~["'","\\","\"]
-			|	"\\" ["n","t","a","b","r","f","\\","'","\"","&"]
+|		
+<bool	:	"#" ["t","f","T","F"]>
+|
+<number	:	<num10> >
+|
+<character	:	"#\\" ~[]
+			|	"\\" ["n"," "]
 			>
-
+|
 <string	:	"\"" (<string_character>)* "\""	>
-		
-<string_character	:	"\""
+|		
+<#string_character	:	"\""
 					|	"\\"
-					|	<character>
+					|	~["\\","\""]
 					>
-					
-<symbol	:	<identifier> >
-		
-<list	:	"(" (<datum>)* ")" 
-		| 	"(" (<datum>)+ "." <datum> ")"
-		|	<abbreviation>
-		>
-		
-<abbreviation	:	<prime1>  <datum>
-				| 	<prime2>  <datum>
-				|	<comma>   <datum>
-				|	<commaat> <datum>
-				>
-				
-<vector	:	"#(" (<datum>)* ")"	>
-		
-<num	:	<prefix> <complex> >
-
-<complex	:	<real>
-			|	<real> <at> <real>
-			|	<real> <plus> <imag>
-			|	<real> <minus> <imag>
-			|	<plus> <imag> 
-			|	<minus> <imag>
+|		
+<#num10	:	<prefix10> <complex10> >
+|
+<#complex10	:	<real10>
+			|	<real10> <at> <real10>
+			|	<real10> <plus> <imag10>
+			|	<real10> <minus> <imag10>
+			|	<plus> <imag10> 
+			|	<minus> <imag10>
 			>
-			
-<imag	:	"i"
-		|	<ureal> "i"
+|			
+<#imag10	:	"i"		|	<ureal10> "i"		> |		
+<#real10	:	(<sign>)? <ureal10> > |
+<#ureal10	:	<uinteger10>
+		|	(<uinteger10> "/" <uinteger10>)
+		|	<decimal10>
 		>
-		
-<real	:	<sign> <ureal> >
-
-<ureal	:	<uinteger>
-		|	<uinteger> "/" <uinteger r>
-		|	<decimal>
+|	<#uinteger10	:	(<digit10>)+ ("#")* >
+|
+<#prefix10	:	(<radix10>)? (<exactness>)?
+		|	(<exactness>)? (<radix10>)?
 		>
-		
-<uinteger	:	(<digit>)+ ("#")* >
-
-<prefix	:	<radix> <exactness>
-		|	<exactness> <radix>
-		>
-		
-<decimal	:	<uinteger> <exponent>
-			|	"." (<digit>)+ ("#")* <suffix>
-			|	(<digit>)+ "." (<digit>)* ("#")* <suffix>
-			|	(<digit>)+ ("#")+ "." ("#")* <suffix>
+|		
+<#decimal10	:	<uinteger10> <exponent>
+			|	"." (<digit10>)+ ("#")* (<exponent>)?
+			|	(<digit10>)+ "." (<digit10>)* ("#")* (<exponent>)?
+			|	(<digit10>)+ ("#")+ "." ("#")* (<exponent>)?
 			>
-
-<suffix	:	<empty> 
-		|	<exponent>
-		>
-		
-<exponent	:	<exponent_marker> <sign> (<digit>)+ >
-
-<exponent_marker	: 	"e"
+|		
+<#exponent	:	<exponent_marker> (<sign>)? (<digit>)+ >
+|
+<#exponent_marker	: 	"e"
 					| 	"s"
 					|	"f"
 					|	"d"
 					|	"l"
 					>
-					
-<sign	:	<empty>
-		|	<plus>
-		|	<minus>
-		>
-		
-<exactness	:	<empty>
-			|	"#i"
-			|	"#e"
-			>
-
-<radix	:	"#b"
-		|	"#o"
-		|	<empty>
-		|	"#d"
-		|	"#x"
-		>
-
-<digit	:	["0"-"9"] | ["a"-"f"] >
+|					
+<#sign	:	"+"|"-">
+|		
+<#exactness	:	"#i" |	"#e"			>
+|
+//<#radix	:	"#b"//		|	"#o"//		|	"#d"//		|	"#x"//		>
+<#radix10: ("#d")?>
+|
+<#digit10	:	["0"-"9"] >|
+<#digit16	:	["0"-"9"] | ["a"-"f"] >
 		
 }
 
@@ -240,7 +197,7 @@ variable_definition	:	"(" "define" variable expression ")"
 					|	"(" "define" "(" variable (variable)* "." variable ")" body ")"
 					;
 
-variable	:	identifier
+variable	:	<identifier>
 			;
 			
 body	:	(definition)* (expression)+
@@ -249,7 +206,7 @@ body	:	(definition)* (expression)+
 syntax_definition	:	"(" "define-syntax" keyword transformer_expression ")"
 					;
 					
-keyword	:	identifier
+keyword	:	<identifier>
 		;
 
 syntax_binding	:	"(" keyword transformer_expression ")"
@@ -274,6 +231,28 @@ constant	:	<bool>
 			|	<character>
 			|	<string>
 			;
+
+datum	:	<bool>
+		|	<number>
+		|	<character>
+		|	<string>
+		|	symbol
+		|	list
+		|	vector
+		;
+		
+list	:	LL(2) "(" ")"<NONE>
+		|  	"(" (datum)+ ["." datum] ")" 
+		|	abbreviation;
+		
+abbreviation	:	<prime1>  datum
+				| 	<prime2>  datum
+				|	<comma>   datum
+				|	<commaat> datum;
+
+symbol	:	<identifier>;
+				
+vector	:	"#(" (datum)* ")";				
 
 formals	:	variable
 		|	"(" (variable)* ")"
