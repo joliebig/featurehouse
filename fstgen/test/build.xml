@@ -85,10 +85,19 @@
 				<param name="parserClass" value="SchemeParser" />
 				<param name="mainProduction" value="program" />
 				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.hs" />
+				<param name="testFile" value="Test.scm" />
 			</antcall>
 		</target>
-
+	
+	<target name="testScheme2">
+				<antcall target="testGrammar">
+					<param name="language" value="scheme2" />
+					<param name="parserClass" value="Scheme2Parser" />
+					<param name="mainProduction" value="program" />
+					<param name="directory" value="${fstgen_dir}/test" />
+					<param name="testFile" value="Test.scm" />
+				</antcall>
+			</target>
 	
 	<target name="testPHaskell">
 			<antcall target="testGrammar">
