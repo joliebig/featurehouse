@@ -1,0 +1,282 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(Scheme2Parser)
+
+package tmp.generated_scheme2;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+public class Scheme2Parser extends AbstractFSTParser {
+
+}
+
+PARSER_END(Scheme2Parser)
+
+TOKEN : {
+	<plus			: "+">
+|	<minus			: "-" >
+|	<dots			: "..." >
+|	<excl			: "!" >
+|	<dollar			: "$" >
+|	<perc			: "%" >
+|	<and			: "&" >
+|	<mult			: "*" >
+| 	<div			: "/" >
+|	<colon			: ":" >
+|	<less			: "<" >
+|	<eq				: "=" >
+|	<great			: ">" >
+|	<quest			: "?" >
+|	<tilde			: "~" >
+|	<uline			: "_" >
+|	<power			: "^" >
+|	<dot			: "." >
+|	<begin			: "begin" >
+|	<let			: "let" >
+|	<letrec			: "letrec" >
+|	<define 		: "define" >
+|	<quote 			: "quote" >
+|	<lambda			: "lambda" > 
+|	<iff 			: "if" >
+|	<set 			: "set!" >
+|	<dotok 			: "do" >
+|	<ortok 			: "or" >
+|	<andtok 		: "and" >
+|	<condtok		: "cond" >
+|	<elsetok		: "else" >
+|	<casetok		: "case" >
+|	<delaytok		: "delay" >
+|	<truetoken		: "#t" >
+|	<falsetoken		: "#f" >
+|	<prime1			: "'" >
+| 	<prime2			: "`" >
+|	<comma			: "," >
+|	<commaat		: ",@">
+|	<at				: "@">
+}
+
+SPECIAL_TOKEN : {
+" "
+|  "\t"
+|  "\n"
+|  "\r"
+|  <"--" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+| <"{-"(~["-"])*"-"("-" | ~["-", "}"](~["-"])*"-")*"}">
+}
+
+TOKEN : {
+
+<identifier	:	<initial> (<subsequent>)* 
+				| <plus>  
+				| <minus>
+				| <dots>
+				>			
+|				
+<#initial	:	<letter>
+			|	<operator>
+			>
+|			
+<#operator	:	<excl>
+			|	<dollar>
+			|	<perc>
+			|	<and>
+			|	<mult> 
+			| 	<div>
+			|	<colon>
+			|	<less>
+			|	<eq>
+			|	<great>
+			|	<quest>
+			|	<tilde>
+			|	<uline>
+			|	<power>
+			>
+
+|
+<#subsequent	:	<initial>
+			|	<digit>
+			| 	<dot>
+			|	<plus>
+			|	<minus>
+			>
+
+|
+<#letter	:	["a"-"z"]
+		|	["A"-"Z"]
+		>
+|			
+<#digit	:	["0"-"9"] >
+
+|		
+<bool	:	"#" ["t","f","T","F"]>
+|
+<number	:	<num10> >
+|
+<character	:	"#\\" ~[]
+			|	"\\" ["n"," "]
+			>
+|
+<string	:	"\"" (<string_character>)* "\""	>
+|		
+<#string_character	:	"\""
+					|	"\\"
+					|	~["\\","\""]
+					>
+|		
+<#num10	:	<prefix10> <complex10> >
+|
+<#complex10	:	<real10>
+			|	<real10> <at> <real10>
+			|	<real10> <plus> <imag10>
+			|	<real10> <minus> <imag10>
+			|	<plus> <imag10> 
+			|	<minus> <imag10>
+			>
+|			
+<#imag10	:	"i"		|	<ureal10> "i"		> |		
+<#real10	:	(<sign>)? <ureal10> > |
+<#ureal10	:	<uinteger10>
+		|	(<uinteger10> "/" <uinteger10>)
+		|	<decimal10>
+		>
+|	<#uinteger10	:	(<digit10>)+ ("#")* >
+|
+<#prefix10	:	(<radix10>)? (<exactness>)?
+		|	(<exactness>)? (<radix10>)?
+		>
+|		
+<#decimal10	:	<uinteger10> <exponent>
+			|	"." (<digit10>)+ ("#")* (<exponent>)?
+			|	(<digit10>)+ "." (<digit10>)* ("#")* (<exponent>)?
+			|	(<digit10>)+ ("#")+ "." ("#")* (<exponent>)?
+			>
+|		
+<#exponent	:	<exponent_marker> (<sign>)? (<digit>)+ >
+|
+<#exponent_marker	: 	"e"
+					| 	"s"
+					|	"f"
+					|	"d"
+					|	"l"
+					>
+|					
+<#sign	:	"+"|"-">
+|		
+<#exactness	:	"#i" |	"#e"			>
+|
+<#radix10: ("#d")?>
+|
+<#digit10	:	["0"-"9"] >
+|
+<#digit16	:	["0"-"9"] | ["a"-"f"] >
+		
+}
+
+GRAMMARSTART
+
+/* Grammar taken from: http://www.cs.indiana.edu/scheme-repository/R4RS/r4rs_9.html */
+
+program : (command_or_definition)*;
+
+command_or_definition : command | definition;
+
+definition	: LOOK_AHEAD(" \"(\" \"define\" variable()") "(" "define" variable expression ")" 
+			| "(" "define" "(" variable def_formals ")" body ")" 
+			| LOOK_AHEAD(" \"(\" \"begin\" definition()") "(" "begin" (definition)* ")";
+
+def_formals : (variable)* | (variable)+ "." variable;
+
+datum : simple_datum | compound_datum;
+
+simple_datum : <bool> | <number> | <character> | <string> |  symbol;
+
+symbol : <identifier>;
+
+compound_datum : list | vector;
+
+list : "(" (datum)* ")" | "(" (datum)+ "." datum ")" | abbreviation;
+
+abbreviation : abbrev_prefix datum;
+
+abbrev_prefix : "'" | "`" | "," | ",@";
+
+vector : "#(" (datum)* ")";
+
+expression	: variable
+			| literal
+			| procedure_call
+			| lambda_expression
+			| conditional
+			| assignment
+			| derived_expression
+			;
+
+literal : quotation | self_evaluating;
+
+variable : <identifier>;
+
+self_evaluating : <bool> | <number> | <character> | <string>;
+     
+quotation : "'" datum | "(" "quote" datum ")";
+
+procedure_call : "(" operator (operand)* ")";
+
+operator : expression;
+
+operand : expression;
+
+lambda_expression : "(" "lambda" formals body ")";
+
+formals : "(" (variable)* ")" | variable | "(" (variable)+ "." variable ")";
+
+body : (definition)* sequence;
+
+sequence : (command)* expression;
+
+command : expression;
+
+conditional : "(" "if" test consequent alternate ")";
+
+test : expression;
+
+consequent : expression;
+
+alternate : expression | <NONE>;
+
+assignment : "(" "set!" variable expression ")";
+
+derived_expression	: "(" "cond" (cond_clause)+ ")"
+					| "(" "cond" (cond_clause)* "(" "else" sequence ")" ")"
+					| "(" "case" expression (case_clause)+ ")"
+					| "(" "case" expression (case_clause)* "(" "else" sequence ")" ")"
+					| "(" "and" (test)* ")"
+					| "(" "or" (test)* ")"
+					| "(" "let" "(" (binding_spec)* ")" body ")"
+					| "(" "let" variable "(" (binding_spec)* ")" body ")"
+					| "(" (<let>)* "(" (binding_spec)* ")" body ")"
+					| "(" "letrec" "(" (binding_spec)* ")" body ")"
+					| LOOK_AHEAD(" \"(\" \"begin\" sequence()") "(" "begin" sequence ")"
+ 					| "(" "do" "(" (iteration_spec)* ")" "(" test sequence ")" (command)* ")"
+					| "(" "delay" expression ")"
+//					| quasiquotation
+					;
+
+cond_clause : "(" test sequence ")" | "(" test ")" | "(" test "=>" recipient ")";
+
+recipient : expression;
+
+case_clause : "(" "(" (datum)* ")" sequence ")";
+
+binding_spec : "(" variable expression ")";
+
+iteration_spec : "(" variable init step ")" | "(" variable init ")";
+
+init : expression;
+
+step : expression;
