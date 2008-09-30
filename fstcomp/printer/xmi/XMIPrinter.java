@@ -17,14 +17,10 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import builder.xmi.XMIAssociation;
-import builder.xmi.XMIAssociationClass;
-import builder.xmi.XMIClass;
-import builder.xmi.XMIDataType;
-import builder.xmi.XMIEnumeration;
-import builder.xmi.XMIGeneralization;
+import builder.xmi.XMICompositeState;
 import builder.xmi.XMINode;
-import builder.xmi.XMIPackage;
+import builder.xmi.XMIStateNode;
+import builder.xmi.XMITransition;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -53,9 +49,7 @@ public class XMIPrinter {
 		documentRoot = createRoot();
 		process();
 		try {
-
 			transformer = TransformerFactory.newInstance().newTransformer();
-
 			DOMSource source = new DOMSource(xmi);
 			FileOutputStream os = new FileOutputStream(filename);
 			StreamResult result = new StreamResult(os);
@@ -77,30 +71,36 @@ public class XMIPrinter {
 
 	private void process() {
 		FSTNonTerminal nonterminal = (FSTNonTerminal) root;
+		//state chart
+		Element stateMachine = xmi.createElement("UML:StateMachine");
+		Element stateTop = xmi.createElement("UML:StateMachine.top");
+		Element stateTrans = xmi.createElement("UML:StateMachine.transitions");
+		
 		for (FSTNode node : nonterminal.getChildren()) {
 			
 			XMINode xminode = (XMINode) node;
-			documentRoot.appendChild(xminode.toXMI(xmi));
 			
-			System.out.println(node.getClass());
+			if (node instanceof XMIStateNode) {
+				if(((XMIStateNode) node).getType().equals("UML:CompositeState")) {
+					stateTop.appendChild(xminode.toXMI(xmi));
+				}
+			} else if (node instanceof XMITransition){
+				stateTrans.appendChild(xminode.toXMI(xmi));
+			} else {
+				documentRoot.appendChild(xminode.toXMI(xmi));
+			}
 			
-			/*if (node instanceof XMIClass) {
-				XMIClass xmiClass = (XMIClass)node;
-				Element classNode = xmiClass.toXMI(xmi);
-				documentRoot.appendChild(classNode);
-			} else if (node instanceof XMIDataType) {
-				documentRoot.appendChild(((XMIDataType)node).toXMI(xmi));
-			} else if (node instanceof XMIAssociation) {
-				documentRoot.appendChild(((XMIAssociation)node).toXMI(xmi));
-			} else if (node instanceof XMIEnumeration) {
-				documentRoot.appendChild(((XMIEnumeration) node).toXMI(xmi));
-			} else if (node instanceof XMIGeneralization) {
-				documentRoot.appendChild(((XMIGeneralization) node).toXMI(xmi));
-			} else if (node instanceof XMIAssociationClass) {
-				documentRoot.appendChild(((XMIAssociationClass) node).toXMI(xmi));
-			} else if (node instanceof XMIPackage) {
-				documentRoot.appendChild(((XMIPackage) node).toXMI(xmi));
-			}*/
+			if (stateTop.hasChildNodes()) {
+				stateMachine.appendChild(stateTop);
+			}
+			
+			if (stateTrans.hasChildNodes()) {
+				stateMachine.appendChild(stateTrans);
+			}
+			
+			if (stateMachine.hasChildNodes()) {
+				documentRoot.appendChild(stateMachine);
+			}
 		}
 	}
 	
@@ -121,18 +121,18 @@ public class XMIPrinter {
 		Element root = xmi.createElement("XMI");
 		root.setAttribute("xmi.version", "1.2");
 		root.setAttribute("xmlns:UML", "org.omg.xmi.namespace.UML");
-		// Header
+		// header
 		Element header = xmi.createElement("XMI.header");
 		Element metamodel = xmi.createElement("XMI.metamodel");
 		metamodel.setAttribute("xmi.name", "UML");
 		metamodel.setAttribute("xmi.version", "1.4");
 		header.appendChild(metamodel);
-		// Content
+		// content
 		Element content = xmi.createElement("XMI.content");
-		// Model
+		// model
 		Element model = xmi.createElement("UML:Model");
 		model.setAttribute("xmi.id", "");
-		// Namespace
+		// namespace
 		Element namespace = xmi.createElement("UML:Namespace.ownedElement");
 		model.appendChild(namespace);
 		content.appendChild(model);

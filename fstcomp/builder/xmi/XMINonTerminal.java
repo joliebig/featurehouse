@@ -43,11 +43,9 @@ public abstract class XMINonTerminal extends FSTNonTerminal implements XMINode {
 		for (int i = 0; i < dataTypes.getLength(); i++) {
 			Element dataType = (Element) dataTypes.item(i);
 			if (dataType.getAttribute("xmi.id").equals(id)) {
-				//return dataType;
 				return dataType.getAttribute("name");
 			}
 		}
-		//return null;
 		return "";
 	}
 }
