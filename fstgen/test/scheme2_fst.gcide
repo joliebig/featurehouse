@@ -21,7 +21,6 @@ PARSER_END(Scheme2Parser)
 TOKEN : {
 	<plus			: "+">
 |	<minus			: "-" >
-|	<dots			: "..." >
 |	<excl			: "!" >
 |	<dollar			: "$" >
 |	<perc			: "%" >
@@ -37,6 +36,7 @@ TOKEN : {
 |	<uline			: "_" >
 |	<power			: "^" >
 |	<dot			: "." >
+|	<egt			: "=>" >
 |	<begin			: "begin" >
 |	<let			: "let" >
 |	<letrec			: "letrec" >
@@ -75,7 +75,7 @@ TOKEN : {
 <identifier	:	<initial> (<subsequent>)* 
 				| <plus>  
 				| <minus>
-				| <dots>
+				| "..."
 				>			
 |				
 <#initial	:	<letter>
@@ -110,13 +110,10 @@ TOKEN : {
 <#letter	:	["a"-"z"]
 		|	["A"-"Z"]
 		>
-|			
-<#digit	:	["0"-"9"] >
-
 |		
 <bool	:	"#" ["t","f","T","F"]>
 |
-<number	:	<num10> >
+<number	:	<num> >
 |
 <character	:	"#\\" ~[]
 			|	"\\" ["n"," "]
@@ -129,32 +126,32 @@ TOKEN : {
 					|	~["\\","\""]
 					>
 |		
-<#num10	:	<prefix10> <complex10> >
+<#num	:	<prefix> <complex> >
 |
-<#complex10	:	<real10>
-			|	<real10> <at> <real10>
-			|	<real10> <plus> <imag10>
-			|	<real10> <minus> <imag10>
-			|	<plus> <imag10> 
-			|	<minus> <imag10>
+<#complex	:	<real>
+			|	<real> <at> <real>
+			|	<real> <plus> <imag>
+			|	<real> <minus> <imag>
+			|	<plus> <imag> 
+			|	<minus> <imag>
 			>
 |			
-<#imag10	:	"i"		|	<ureal10> "i"		> |		
-<#real10	:	(<sign>)? <ureal10> > |
-<#ureal10	:	<uinteger10>
-		|	(<uinteger10> "/" <uinteger10>)
-		|	<decimal10>
-		>
-|	<#uinteger10	:	(<digit10>)+ ("#")* >
+<#imag	:	"i"	| <ureal> "i"> 
+|		
+<#real	:	(<sign>)? <ureal> > 
 |
-<#prefix10	:	(<radix10>)? (<exactness>)?
-		|	(<exactness>)? (<radix10>)?
+<#ureal	:	<uinteger> | (<uinteger> "/" <uinteger>) | <decimal> >
+|	
+<#uinteger	:	(<digit>)+ ("#")* >
+|
+<#prefix	:	(<radix>)? (<exactness>)?
+		|	(<exactness>)? (<radix>)?
 		>
 |		
-<#decimal10	:	<uinteger10> <exponent>
-			|	"." (<digit10>)+ ("#")* (<exponent>)?
-			|	(<digit10>)+ "." (<digit10>)* ("#")* (<exponent>)?
-			|	(<digit10>)+ ("#")+ "." ("#")* (<exponent>)?
+<#decimal	:	<uinteger> <exponent>
+			|	"." (<digit>)+ ("#")* (<exponent>)?
+			|	(<digit>)+ "." (<digit>)* ("#")* (<exponent>)?
+			|	(<digit>)+ ("#")+ "." ("#")* (<exponent>)?
 			>
 |		
 <#exponent	:	<exponent_marker> (<sign>)? (<digit>)+ >
@@ -170,11 +167,9 @@ TOKEN : {
 |		
 <#exactness	:	"#i" |	"#e"			>
 |
-<#radix10: ("#d")?>
+<#radix	: "#b" | "#o" | "#d" | "#x">
 |
-<#digit10	:	["0"-"9"] >
-|
-<#digit16	:	["0"-"9"] | ["a"-"f"] >
+<#digit	:	["0"-"9"] | ["a"-"f"]>
 		
 }
 
@@ -184,13 +179,14 @@ GRAMMARSTART
 
 program : (command_or_definition)*;
 
-command_or_definition : command | definition;
+command_or_definition : LL(2) command | definition;
 
-definition	: LOOK_AHEAD(" \"(\" \"define\" variable()") "(" "define" variable expression ")" 
-			| "(" "define" "(" variable def_formals ")" body ")" 
-			| LOOK_AHEAD(" \"(\" \"begin\" definition()") "(" "begin" (definition)* ")";
+definition	: 
+			  LL(2) "(" "begin" (definition)* ")"
+			| LL(3) "(" "define" "(" variable [def_formals] ")" body ")" 
+			| "(" "define" variable expression ")"; 
 
-def_formals : (variable)* | (variable)+ "." variable;
+def_formals : (variable)+ ["." variable];
 
 datum : simple_datum | compound_datum;
 
@@ -200,7 +196,7 @@ symbol : <identifier>;
 
 compound_datum : list | vector;
 
-list : "(" (datum)* ")" | "(" (datum)+ "." datum ")" | abbreviation;
+list : LL(2) "(" ")"<NONE> | "(" (datum)+ ["." datum] ")" | abbreviation;
 
 abbreviation : abbrev_prefix datum;
 
@@ -209,21 +205,21 @@ abbrev_prefix : "'" | "`" | "," | ",@";
 vector : "#(" (datum)* ")";
 
 expression	: variable
-			| literal
+			| LL(2) literal
+			| LL(2) lambda_expression
+			| LL(2) conditional
+			| LL(2) assignment
+			| LL(2) derived_expression
 			| procedure_call
-			| lambda_expression
-			| conditional
-			| assignment
-			| derived_expression
 			;
 
 literal : quotation | self_evaluating;
 
-variable : <identifier>;
+variable: <identifier>;
 
 self_evaluating : <bool> | <number> | <character> | <string>;
      
-quotation : "'" datum | "(" "quote" datum ")";
+quotation : "'" datum | LL(2) "(" "quote" datum ")";
 
 procedure_call : "(" operator (operand)* ")";
 
@@ -233,11 +229,11 @@ operand : expression;
 
 lambda_expression : "(" "lambda" formals body ")";
 
-formals : "(" (variable)* ")" | variable | "(" (variable)+ "." variable ")";
+formals : variable | LL(2) "(" ")"<NONE> | "(" (variable)+ ["." variable] ")";
 
-body : (definition)* sequence;
+body : (LL(2) definition)* sequence;
 
-sequence : (command)* expression;
+sequence : (LL(2) command)* expression;
 
 command : expression;
 
@@ -251,23 +247,26 @@ alternate : expression | <NONE>;
 
 assignment : "(" "set!" variable expression ")";
 
-derived_expression	: "(" "cond" (cond_clause)+ ")"
-					| "(" "cond" (cond_clause)* "(" "else" sequence ")" ")"
-					| "(" "case" expression (case_clause)+ ")"
-					| "(" "case" expression (case_clause)* "(" "else" sequence ")" ")"
-					| "(" "and" (test)* ")"
-					| "(" "or" (test)* ")"
-					| "(" "let" "(" (binding_spec)* ")" body ")"
-					| "(" "let" variable "(" (binding_spec)* ")" body ")"
-					| "(" (<let>)* "(" (binding_spec)* ")" body ")"
-					| "(" "letrec" "(" (binding_spec)* ")" body ")"
-					| LOOK_AHEAD(" \"(\" \"begin\" sequence()") "(" "begin" sequence ")"
- 					| "(" "do" "(" (iteration_spec)* ")" "(" test sequence ")" (command)* ")"
-					| "(" "delay" expression ")"
+derived_expression	: LL(4) "(" "cond" "(" "else" sequence ")" ")"
+					| LL(2) "(" "cond" (LL(2) cond_clause)+ ["(" "else" sequence ")"] ")"
+					| LL(2) "(" "case" expression case_end ")"
+					| LL(2) "(" "and" (test)* ")"
+					| LL(2) "(" "or" (test)* ")"
+					| LL(3) "(" "let" variable "(" (binding_spec)* ")" body ")"
+					| LL(3) "(" "let" "(" (binding_spec)* ")" body ")"
+					| LL("complex_let()") complex_let
+					| LL(2) "(" "letrec" "(" (binding_spec)* ")" body ")"
+					| LL(2) "(" "begin" sequence ")"
+ 					| LL(2) "(" "do" "(" (iteration_spec)* ")" "(" test sequence ")" (command)* ")"
+					| LL(2) "(" "delay" expression ")"
 //					| quasiquotation
 					;
+					
+case_end: 	LL(2) "(" "else" sequence ")" | (LL(2) case_clause)+ ["(" "else" sequence ")"];				
+complex_let: "(" (<let>)* "(" (binding_spec)* ")" body ")";
 
-cond_clause : "(" test sequence ")" | "(" test ")" | "(" test "=>" recipient ")";
+cond_clause : "(" test [cond_end] ")";
+cond_end: "=>" recipient | sequence; 
 
 recipient : expression;
 
@@ -275,7 +274,7 @@ case_clause : "(" "(" (datum)* ")" sequence ")";
 
 binding_spec : "(" variable expression ")";
 
-iteration_spec : "(" variable init step ")" | "(" variable init ")";
+iteration_spec : "(" variable init [step] ")";
 
 init : expression;
 
