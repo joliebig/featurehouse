@@ -179,7 +179,7 @@ GRAMMARSTART
 
 program : (command_or_definition)*;
 
-command_or_definition : LL(2) command | definition;
+command_or_definition : LL("command()") command | definition;
 
 definition	: 
 			  LL(2) "(" "begin" (definition)* ")"
@@ -187,6 +187,8 @@ definition	:
 			| "(" "define" variable expression ")"; 
 
 def_formals : (variable)+ ["." variable];
+
+command : expression;
 
 datum : simple_datum | compound_datum;
 
@@ -221,7 +223,7 @@ self_evaluating : <bool> | <number> | <character> | <string>;
      
 quotation : "'" datum | LL(2) "(" "quote" datum ")";
 
-procedure_call : "(" operator (operand)* ")";
+procedure_call : LL(3) "(" operator ")" | "(" operator (operand)+ ")";
 
 operator : expression;
 
@@ -233,9 +235,7 @@ formals : variable | LL(2) "(" ")"<NONE> | "(" (variable)+ ["." variable] ")";
 
 body : (LL(2) definition)* sequence;
 
-sequence : (LL(2) command)* expression;
-
-command : expression;
+sequence : (expression)+;
 
 conditional : "(" "if" test consequent alternate ")";
 

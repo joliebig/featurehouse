@@ -40,11 +40,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("expression5") && expectedType.equals("expression")) return true;
 		if (type.equals("derived_expression2") && expectedType.equals("derived_expression")) return true;
 		if (type.equals("simple_datum2") && expectedType.equals("simple_datum")) return true;
+		if (type.equals("procedure_call2") && expectedType.equals("procedure_call")) return true;
 		if (type.equals("formals2") && expectedType.equals("formals")) return true;
 		if (type.equals("self_evaluating1") && expectedType.equals("self_evaluating")) return true;
 		if (type.equals("abbrev_prefix3") && expectedType.equals("abbrev_prefix")) return true;
 		if (type.equals("literal1") && expectedType.equals("literal")) return true;
 		if (type.equals("simple_datum5") && expectedType.equals("simple_datum")) return true;
+		if (type.equals("procedure_call1") && expectedType.equals("procedure_call")) return true;
 		if (type.equals("list3") && expectedType.equals("list")) return true;
 		if (type.equals("derived_expression6") && expectedType.equals("derived_expression")) return true;
 		if (type.equals("case_end1") && expectedType.equals("case_end")) return true;
