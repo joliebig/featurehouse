@@ -4,8 +4,6 @@ module Arith where
              | Sub
              | Mul
              | Div
-             | And
-             | Or
              deriving Show;
    
   tvBinOp ::
@@ -25,10 +23,6 @@ module Arith where
   tvBinOp (Div) (TVDouble x) (TVDouble 0) = Fail DivByZero;
   tvBinOp (Div) (TVDouble x) (TVDouble y)
     = Result (TVDouble (x / y));
-  tvBinOp (And) (TVBool x) (TVBool y)
-    = Result (TVBool (x && y));
-  tvBinOp (Or) (TVBool x) (TVBool y)
-    = Result (TVBool (x || y));
   tvBinOp _ _ _ = Fail TypeError;
    
   data Exp a = Binary BinOp (Exp a) (Exp a)
