@@ -1049,7 +1049,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         break label_12;
       }
     }
-                                                                          {if (true) return productionEndTerminal("inst","{AUTO}","{AUTO}","Replacement",first,token);}
+                                                                          {if (true) return productionEndTerminal("inst","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1126,7 +1126,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         jj_la1[36] = jj_gen;
         ;
       }
-                                                                                                                                                {if (true) return productionEndTerminal("declaration1","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                                                                {if (true) return productionEndTerminal("declaration1","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     } else if (jj_2_15(2147483647)) {
       n = function(true);
                                                     replaceName(n);
@@ -1152,7 +1152,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         jj_la1[38] = jj_gen;
         ;
       }
-                                                                                                                                                     {if (true) return productionEndTerminal("declaration2","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                                                                     {if (true) return productionEndTerminal("declaration2","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     } else if (jj_2_16(2147483647)) {
       n = varList(true);
                                                    replaceName(n);
@@ -1165,7 +1165,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
       }
       n = functiontype(true);
                                                                                                                                                         replaceName(n);
-                                                                                                                                                                          {if (true) return productionEndTerminal("declaration3","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                                                                                          {if (true) return productionEndTerminal("declaration3","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     } else if (jj_2_17(2147483647)) {
       n = patr(true);
                                             replaceName(n);
@@ -1181,7 +1181,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         jj_la1[39] = jj_gen;
         ;
       }
-                                                                                                                                        {if (true) return productionEndTerminal("declaration4","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                                                        {if (true) return productionEndTerminal("declaration4","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     } else if (jj_2_18(2147483647)) {
       n = patr(true);
                                             replaceName(n);
@@ -1207,7 +1207,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         jj_la1[41] = jj_gen;
         ;
       }
-                                                                                                                                             {if (true) return productionEndTerminal("declaration5","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                                                             {if (true) return productionEndTerminal("declaration5","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INFIX:
@@ -1222,7 +1222,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         }
         n = operatorList(true);
                                                   replaceName(n);
-                                                                    {if (true) return productionEndTerminal("declaration6","-","{TOSTRING}","Replacement",first,token);}
+                                                                    {if (true) return productionEndTerminal("declaration6","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
         break;
       case INFIXL:
         jj_consume_token(INFIXL);
@@ -1236,7 +1236,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         }
         n = operatorList(true);
                                                    replaceName(n);
-                                                                     {if (true) return productionEndTerminal("declaration7","-","{TOSTRING}","Replacement",first,token);}
+                                                                     {if (true) return productionEndTerminal("declaration7","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
         break;
       case INFIXR:
         jj_consume_token(INFIXR);
@@ -1250,7 +1250,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
         }
         n = operatorList(true);
                                                    replaceName(n);
-                                                                     {if (true) return productionEndTerminal("declaration8","-","{TOSTRING}","Replacement",first,token);}
+                                                                     {if (true) return productionEndTerminal("declaration8","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
         break;
       default:
         jj_la1[45] = jj_gen;
@@ -1372,9 +1372,9 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(WHERE);
-    n = decls(true);
-                               replaceName(n);
-                                                 {if (true) return productionEndTerminal("whereDecls","-","-","Replacement",first,token);}
+    n = decls(inTerminal);
+                                     replaceName(n);
+                                                       {if (true) return productionEndNonTerminal("whereDecls","-","-");}
     throw new Error("Missing return statement in function");
   }
 

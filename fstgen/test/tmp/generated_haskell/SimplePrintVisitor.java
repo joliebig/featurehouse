@@ -296,6 +296,19 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			return false;
 		}
+		if (nonTerminal.getType().equals("whereDecls")) {
+			printToken("where");
+			hintIncIndent();
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "decls");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintDecIndent();
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {

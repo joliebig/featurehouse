@@ -576,7 +576,7 @@ deriving:
 	
 newtypeParam: "{" var "::" functiontype "}" | type; 
 
-@FSTTerminal(name="{AUTO}")
+@FSTTerminal(name="{TOSTRING}")
 inst: naam (type)+;
 //inst: naam inst_rest;//inst_rest: type;//	LL("naam()") naam//	| LL("\"(\" var() \"->\"") 	"(" var "->" var ")"//	| LL("\"(\" var() \",\"")		"(" &LI var ("," &LI var)+ ")"//	| "(" [simpletype] ")"//	| "[" var "]";
 
@@ -586,7 +586,7 @@ decls: "{" @+ [ declarationList] @- "}";
 @FSTNonTerminal
 declarationList: &LI declaration (";" @! &LI declaration)*;
 
-@FSTExportName("{TOSTRING}")
+@FSTTerminal(name="{TOSTRING}")
 declaration:
 		LL("function() \"=\"") function "=" expr [whereDecls]
 	| 	LL("function() \"|\"") function (altExprAss)+ [whereDecls]
@@ -605,6 +605,7 @@ function:
 	| LL("\"(\" function()") "(" function ")" (patroon)+
 	| patroon operator patr;
 
+@FSTNonTerminal
 whereDecls: "where" @+! decls @-;
 
 //expression
