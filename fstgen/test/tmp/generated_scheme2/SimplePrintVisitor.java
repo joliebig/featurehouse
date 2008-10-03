@@ -17,6 +17,155 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("program")) {
+			for (FSTNode v : getChildren(nonTerminal,"command_or_definition")) {
+				v.accept(this);
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("command_or_definition1")) {
+			{
+				FSTNode v=getChild(nonTerminal, "command");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("command_or_definition2")) {
+			{
+				FSTNode v=getChild(nonTerminal, "definition");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("definition1")) {
+			printToken("(");
+			printToken("begin");
+			for (FSTNode v : getChildren(nonTerminal,"definition")) {
+				v.accept(this);
+			}
+			printToken(")");
+			return false;
+		}
+		if (nonTerminal.getType().equals("definition2")) {
+			printToken("(");
+			printToken("define");
+			printToken("(");
+			{
+				FSTNode v=getChild(nonTerminal, "variable");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "def_formals");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			{
+				FSTNode v=getChild(nonTerminal, "body");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			return false;
+		}
+		if (nonTerminal.getType().equals("definition3")) {
+			printToken("(");
+			printToken("define");
+			{
+				FSTNode v=getChild(nonTerminal, "variable");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "expression");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			return false;
+		}
+		if (nonTerminal.getType().equals("command")) {
+			{
+				FSTNode v=getChild(nonTerminal, "expression");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression1")) {
+			{
+				FSTNode v=getChild(nonTerminal, "variable");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression2")) {
+			{
+				FSTNode v=getChild(nonTerminal, "literal");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression3")) {
+			{
+				FSTNode v=getChild(nonTerminal, "lambda_expression");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression4")) {
+			{
+				FSTNode v=getChild(nonTerminal, "conditional");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression5")) {
+			{
+				FSTNode v=getChild(nonTerminal, "assignment");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression6")) {
+			{
+				FSTNode v=getChild(nonTerminal, "derived_expression");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
+		if (nonTerminal.getType().equals("expression7")) {
+			{
+				FSTNode v=getChild(nonTerminal, "procedure_call");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
