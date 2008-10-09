@@ -82,7 +82,11 @@ public class XMIAssociation extends XMINonTerminal {
 			//assert class
 			NodeList classes = node.getElementsByTagName("UML:Class");
 			Element refClass = (Element)classes.item(0);
-			setNodeAttribute("xmi.idref",IdToElement(refClass.getAttribute("xmi.idref"), "UML:Class"));
+			String newID = IdToElement(refClass.getAttribute("xmi.idref"), "UML:Class");
+			if (newID.equals("")) {
+				System.err.println("Can't find class refernece!");
+			}
+			setNodeAttribute("xmi.idref",newID);
 		}
 		
 		public Element toXMI(Document doc) {

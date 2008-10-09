@@ -40,14 +40,12 @@ public class XMIAttribute extends XMINonTerminal {
 		features = featureType.getElementsByTagName("UML:DataType");
 		if (features.getLength() > 0) {
 			Element feature = (Element)features.item(0);
-			//addChild(new XMIDataType(IdToElement(feature.getAttribute("xmi.idref"), "UML:DataType")));
 			addChild(new FSTTerminal("dataTypeRef", "dataType" + IdToElement(feature.getAttribute("xmi.idref"), "UML:DataType"), "", ""));
 		}
 		
 		features = featureType.getElementsByTagName("UML:Enumeration");
 		if (features.getLength() > 0) {
 			Element feature = (Element)features.item(0);
-			//addChild(new XMIDataType(IdToElement(feature.getAttribute("xmi.idref"), "UML:DataType")));
 			addChild(new FSTTerminal("enumRef", "enum" + IdToElement(feature.getAttribute("xmi.idref"), "UML:Enumeration"), "", ""));
 		}
 	}

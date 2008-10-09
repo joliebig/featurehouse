@@ -5,6 +5,11 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
+/**
+ * An XMIDeferrableEvent can be used as trigger for states
+ * or transitions. Possible types are: CallEvent, TimerEvent,
+ * ChangeEvent and SignalEvent
+ */
 public class XMIDeferrableEvent extends XMITerminal {
 	
 	Element node;

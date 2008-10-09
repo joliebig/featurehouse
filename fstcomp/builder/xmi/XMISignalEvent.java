@@ -5,6 +5,9 @@ import org.w3c.dom.Element;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
+/**
+ * A XMISignalEvent is associated with a transition.
+ */
 public class XMISignalEvent extends XMITerminal {
 	
 	Element node;

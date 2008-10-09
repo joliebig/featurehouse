@@ -46,6 +46,7 @@ public abstract class XMINonTerminal extends FSTNonTerminal implements XMINode {
 				return dataType.getAttribute("name");
 			}
 		}
+		System.err.println("Can't find " + id + " in " + rootType);
 		return "";
 	}
 }

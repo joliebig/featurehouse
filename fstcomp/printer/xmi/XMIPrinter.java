@@ -17,7 +17,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import builder.xmi.XMICompositeState;
 import builder.xmi.XMINode;
 import builder.xmi.XMIStateNode;
 import builder.xmi.XMITransition;

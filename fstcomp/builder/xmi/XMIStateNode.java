@@ -7,6 +7,10 @@ import org.w3c.dom.NodeList;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 
+/**
+ * Represents a state chart state. Possible types are: SimpleState,
+ * Pseudostate, FinalState, CompositeState, SynchState
+ */
 public class XMIStateNode extends XMINonTerminal {
 
 	static Integer counter = 0;
@@ -21,31 +25,23 @@ public class XMIStateNode extends XMINonTerminal {
 		setNodeAttribute("xmi.id", node.getAttribute("xmi.id"));
 		setNodeAttribute("isSpecification", node
 				.getAttribute("isSpecification"));
+		//only in pseudo state
 		setNodeAttribute("kind", node.getAttribute("kind"));
+		//only in synch state
 		setNodeAttribute("bound", node.getAttribute("bound"));
-		setNodeAttribute("name", node.getAttribute("name"));
+		//only in composite state
 		setNodeAttribute("isConcurrent", node.getAttribute("isConcurrent"));
 	}
 
 	public void toFST() {
-		// NodeList outgoing =
-		// getNode().getElementsByTagName("UML:StateVertex.outgoing");
-		// NodeList incoming =
-		// getNode().getElementsByTagName("UML:StateVertex.incoming");
-		// NodeList subvertexes =
-		// getNode().getElementsByTagName("UML:CompositeState.subvertex");
-
 		NodeList children = getNode().getChildNodes();
-		// System.out.println(children.getLength())
 
 		for (int i = 0; i < children.getLength(); i++) {
 			Node node = children.item(i);
-
+			//only immediate children of this node are of interest
 			if (node.getParentNode() == getNode()) {
-				// if (outgoing.getLength() > 0) {
 				if (node.getNodeName().equals("UML:StateVertex.outgoing")) {
 					VertexOut vertexOut = new VertexOut(getNode(), getRoot());
-					// Element outTrans = (Element) outgoing.item(0);
 					Element outTrans = (Element) node;
 					NodeList outNodes = outTrans
 							.getElementsByTagName("UML:Transition");
@@ -56,10 +52,8 @@ public class XMIStateNode extends XMINonTerminal {
 					addChild(vertexOut);
 				}
 
-				// if (incoming.getLength() > 0) {
 				if (node.getNodeName().equals("UML:StateVertex.incoming")) {
 					VertexIn vertexIn = new VertexIn(getNode(), getRoot());
-					// Element inTrans = (Element) incoming.item(0);
 					Element inTrans = (Element) node;
 					NodeList inNodes = inTrans
 							.getElementsByTagName("UML:Transition");
@@ -70,23 +64,15 @@ public class XMIStateNode extends XMINonTerminal {
 					addChild(vertexIn);
 				}
 
-				// if (subvertexes.getLength() > 0) {
 				if (node.getNodeName().equals("UML:CompositeState.subvertex")) {
-					// Node subvertex = subvertexes.item(0);
-					// NodeList nodes = subvertex.getChildNodes();
+
 					NodeList nodes = ((Element) node).getChildNodes();
 					for (int j = 0; j < nodes.getLength(); j++) {
 						Node subNode = nodes.item(j);
+						//only immediate children are of interest
 						if (subNode.getParentNode() == node) {
 							String type = subNode.getNodeName();
 
-							// if (type.equals("UML:CompositeState")) {
-							// XMICompositeState xmicomp = new
-							// XMICompositeState((Element) subNode, getRoot());
-							// xmicomp.toFST();
-							// XMIStateNode xmicom = new XMIStateNode(ty)
-							// addChild(xmicomp);
-							// } else if (!type.equals("#text")) {
 							if (!type.equals("#text")) {
 								XMIStateNode xmiState = new XMIStateNode(type,
 										((Element) subNode)
@@ -96,12 +82,9 @@ public class XMIStateNode extends XMINonTerminal {
 								addChild(xmiState);
 							}
 						}
-
 					}
-
 				}
 			}
-			// }
 		}
 		// any associated actions?
 		for (XMIStateEvent stateEvent : XMIStateEvent.values()) {
@@ -120,8 +103,8 @@ public class XMIStateNode extends XMINonTerminal {
 	@Override
 	public Element toXMI(Document doc) {
 		Element node = doc.createElement(getType());
-		if (!getNodeAttribute("name").equals("")) {
-			node.setAttribute("xmi.id", type + getNodeAttribute("name"));
+		if (!getName().equals("")) {
+			node.setAttribute("xmi.id", type + getName());
 		} else {
 			node.setAttribute("xmi.id", type + getNodeAttribute("xmi.id"));
 		}
@@ -133,8 +116,8 @@ public class XMIStateNode extends XMINonTerminal {
 		if (!getNodeAttribute("bound").equals("")) {
 			node.setAttribute("bound", getNodeAttribute("bound"));
 		}
-		if (!getNodeAttribute("name").equals("")) {
-			node.setAttribute("name", getNodeAttribute("name"));
+		if (!getName().equals("")) {
+			node.setAttribute("name", getName());
 		}
 		if (!getNodeAttribute("isConcurrent").equals("")) {
 			node.setAttribute("isConcurrent", getNodeAttribute("isConcurrent"));
@@ -177,22 +160,21 @@ public class XMIStateNode extends XMINonTerminal {
 		return xmiState;
 	}
 
-	class Transition extends XMITerminal {
+	private class Transition extends XMITerminal {
 
 		private Element node;
 
 		Transition(Element node) {
-			super("XMITransition", node.getNodeName() + IdToElement(node.getAttribute("xmi.idref"), node.getNodeName()));
-			//counter++;
-			//String newId = IdToElement(node.getAttribute("xmi.idref"), node.getNodeName());
-			//setNodeAttribute("xmi.idref", node.getNodeName() + newId);
+			super("XMITransition", node.getNodeName()
+					+ IdToElement(node.getAttribute("xmi.idref"), node
+							.getNodeName()));
+
 			this.node = node;
 		}
 
 		@Override
 		public Element toXMI(Document doc) {
 			Element node = doc.createElement("UML:Transition");
-			//node.setAttribute("xmi.idref", getNodeAttribute("xmi.idref"));
 			node.setAttribute("xmi.idref", getName());
 			return node;
 		}
@@ -208,7 +190,7 @@ public class XMIStateNode extends XMINonTerminal {
 		}
 	}
 
-	class VertexOut extends XMINonTerminal {
+	private class VertexOut extends XMINonTerminal {
 
 		VertexOut(Element node, Element root) {
 			super("XMIVertexOut", "", node, root);
@@ -242,7 +224,7 @@ public class XMIStateNode extends XMINonTerminal {
 		}
 	}
 
-	class VertexIn extends XMINonTerminal {
+	private class VertexIn extends XMINonTerminal {
 
 		VertexIn(Element node, Element root) {
 			super("XMIVertexIn", "", node, root);

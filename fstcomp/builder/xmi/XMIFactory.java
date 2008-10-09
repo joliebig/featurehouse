@@ -23,7 +23,6 @@ public class XMIFactory {
 	private Element root;
 	// Root in FST
 	private FSTNonTerminal FSTroot;
-	
 
 	public XMIFactory(File filename, FSTNonTerminal fstroot) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -41,7 +40,8 @@ public class XMIFactory {
 
 		// Extract root node
 		Element docEle = xmi.getDocumentElement();
-		NodeList modelList = docEle.getElementsByTagName("UML:Namespace.ownedElement");
+		NodeList modelList = docEle
+				.getElementsByTagName("UML:Namespace.ownedElement");
 
 		FSTroot = fstroot;
 
@@ -59,8 +59,8 @@ public class XMIFactory {
 
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node node = childNodes.item(i);
-			
-			//Class chart componentes
+
+			// Class chart components
 			String nodeName = node.getNodeName();
 			if (nodeName.equals("UML:Class")) {
 				XMIClass xmiclass = new XMIClass((Element) node, root);
@@ -69,70 +69,77 @@ public class XMIFactory {
 			} else if (nodeName.equals("UML:DataType")) {
 				FSTroot.addChild(new XMIDataType((Element) node));
 			} else if (nodeName.equals("UML:Association")) {
-				XMIAssociation xmiassoc = new XMIAssociation((Element) node, root);
+				XMIAssociation xmiassoc = new XMIAssociation((Element) node,
+						root);
 				xmiassoc.toFST();
 				FSTroot.addChild(xmiassoc);
 			} else if (nodeName.equals("UML:AssociationClass")) {
-				XMIAssociationClass xmiassocclass = new XMIAssociationClass((Element) node, root);
+				XMIAssociationClass xmiassocclass = new XMIAssociationClass(
+						(Element) node, root);
 				xmiassocclass.toFST();
 				FSTroot.addChild(xmiassocclass);
 			} else if (nodeName.equals("UML:Generalization")) {
-				XMIGeneralization xmigen = new XMIGeneralization((Element) node, root);
+				XMIGeneralization xmigen = new XMIGeneralization(
+						(Element) node, root);
 				xmigen.toFST();
 				FSTroot.addChild(xmigen);
 			} else if (nodeName.equals("UML:Enumeration")) {
-				XMIEnumeration xmienum = new XMIEnumeration((Element) node, root);
+				XMIEnumeration xmienum = new XMIEnumeration((Element) node,
+						root);
 				xmienum.toFST();
 				FSTroot.addChild(xmienum);
 			} else if (nodeName.equals("UML:Package")) {
 				FSTroot.addChild(new XMIPackage((Element) node, root));
-			//State chart components
+				// State chart components
 			} else if (nodeName.equals("UML:StateMachine")) {
 				extractStateMachine((Element) node);
 			} else if (nodeName.equals("UML:SignalEvent")) {
 				FSTroot.addChild(new XMISignalEvent((Element) node));
-			} else if (nodeName.equals("UML:CallEvent") ||
-						nodeName.equals("UML:TimerEvent") ||
-						nodeName.equals("UML:ChangeEvent") ||
-						nodeName.equals("UML:SignalEvent")) {
+			} else if (nodeName.equals("UML:CallEvent")
+					|| nodeName.equals("UML:TimerEvent")
+					|| nodeName.equals("UML:ChangeEvent")
+					|| nodeName.equals("UML:SignalEvent")) {
 				FSTroot.addChild(new XMIDeferrableEvent((Element) node));
 			}
 		}
 	}
-	
+
 	private void extractStateMachine(Element stateRoot) {
 
 		NodeList childNodes = stateRoot.getChildNodes();
-		
+
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node node = childNodes.item(i);
 			String nodeName = node.getNodeName();
-			
+
 			if (nodeName.equals("UML:StateMachine.top")) {
 				NodeList topNodes = node.getChildNodes();
 				for (int j = 0; j < topNodes.getLength(); j++) {
 					Node topNode = topNodes.item(j);
 					String topNodeName = topNode.getNodeName();
-					//we should find only composite states at that level
+					// we should find only composite states at that level
 					if (topNodeName.equals("UML:CompositeState")) {
-						//XMICompositeState compState = new XMICompositeState((Element) topNode, root);
-						XMIStateNode compState = new XMIStateNode("UML:CompositeState", ((Element) topNode).getAttribute("name"),(Element) topNode, root);
+						XMIStateNode compState = new XMIStateNode(
+								"UML:CompositeState", ((Element) topNode)
+										.getAttribute("name"),
+								(Element) topNode, root);
 						compState.toFST();
 						FSTroot.addChild(compState);
-					} 
-				}	
-				
+					}
+				}
+
 			} else if (nodeName.equals("UML:StateMachine.transitions")) {
 				NodeList transNodes = node.getChildNodes();
 				for (int j = 0; j < transNodes.getLength(); j++) {
 					Node transNode = transNodes.item(j);
 					String transNodeName = transNode.getNodeName();
-					
+
 					if (transNodeName.equals("UML:Transition")) {
-						XMITransition transition = new XMITransition((Element) transNode, root);
+						XMITransition transition = new XMITransition(
+								(Element) transNode, root);
 						FSTroot.addChild(transition);
-					} 
-				}	
+					}
+				}
 			}
 		}
 	}
