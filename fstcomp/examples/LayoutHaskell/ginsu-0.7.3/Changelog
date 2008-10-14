@@ -1,0 +1,186 @@
+Mon Mar  5 16:04:03 PST 2007  John Meacham <john@repetae.net>
+  tagged 0.7.3
+
+Mon Mar  5 16:03:35 PST 2007  John Meacham <john@repetae.net>
+  * make ginsu compile with ghc 6.6
+
+Mon Aug  7 21:32:06 PDT 2006  John Meacham <john@repetae.net>
+  * fix building of rpms
+
+Wed Jun  7 17:34:46 PDT 2006  John Meacham <john@repetae.net>
+  * move some modules into the Gale subdirectory to clean up
+
+Wed Jun  7 17:22:43 PDT 2006  John Meacham <john@repetae.net>
+  * switch to using ghc's --make mode
+
+Wed Jun  7 15:28:04 PDT 2006  John Meacham <john@repetae.net>
+  * code clean ups
+
+Tue Jun  6 19:30:38 PDT 2006  John Meacham <john@repetae.net>
+  * make Category a proper newtype
+
+Tue Jun  6 18:44:40 PDT 2006  John Meacham <john@repetae.net>
+  * use $ARCH when deleting old binary versions
+
+Tue Jun  6 18:35:43 PDT 2006  John Meacham <john@repetae.net>
+  * add jitter into the pufflog writing loop
+
+Tue Jun  6 18:30:57 PDT 2006  John Meacham <john@repetae.net>
+  * clean up uses of strict fields
+
+Tue Jun  6 17:16:57 PDT 2006  John Meacham <john@repetae.net>
+  * update GenUtil with rspan,rdropWhile fixes
+
+Tue Jun  6 17:12:31 PDT 2006  John Meacham <john@repetae.net>
+  * import Atom, Binay, and PackedString from jhc
+
+Tue Jun  6 16:56:40 PDT 2006  John Meacham <john@repetae.net>
+  * make autoreconf work properly, remove old 'reconf' script
+
+Tue Jun  6 14:41:06 PDT 2006  John Meacham <john@repetae.net>
+  * update GenUtil
+
+Tue Jun  6 14:01:17 PDT 2006  John Meacham <john@repetae.net>
+  tagged 7.2
+
+Tue Jun  6 14:00:58 PDT 2006  John Meacham <john@repetae.net>
+  * update version to 7.2
+
+Mon Feb  6 16:43:52 PST 2006  Adam Sampson <ats@offog.org>
+  * Handle ECHILD correctly
+
+Sat Feb  4 04:22:29 PST 2006  Adam Sampson <ats@offog.org>
+  * Wait for children to exit
+  waitpid() repeatedly to catch zombified editor processes.
+
+Fri Jan  6 09:02:11 PST 2006  Adam Sampson <ats@offog.org>
+  * Only allow one background edit at a time
+
+Fri Jan  6 08:44:45 PST 2006  Adam Sampson <ats@offog.org>
+  * Fix quit message
+
+Thu Jan  5 19:41:49 PST 2006  Adam Sampson <ats@offog.org>
+  * Tidy up UI strings
+  
+  Make the strings in the UI a bit more consistent (always start labels with capital letters; no internal capitals; don't end labels with a period).
+
+Thu Jan  5 18:47:05 PST 2006  Adam Sampson <ats@offog.org>
+  * Allow background editing
+  
+  Provide a couple of options so that you can still use ginsu while editing puffs, provided you've got some way of running your editor in the background (either with something graphical like SciTE, or using something that behaves like xterm -e).
+
+Wed Aug 10 18:21:18 PDT 2005  John Meacham <john@repetae.net>
+  * get rid of underquoted autoconf warnings
+
+Wed Aug 10 06:11:41 PDT 2005  Adam Sampson <ats@offog.org>
+  * Make pufflog checkpointing work with SCROLLBACK_SIZE on
+
+Wed Aug 10 05:39:24 PDT 2005  Adam Sampson <ats@offog.org>
+  * Better workaround for the non-blocking problem
+  Suggested by Simon Marlow -- this means that the child process won't have stdout non-blocking either.
+
+Tue Aug  9 17:11:13 PDT 2005  John Meacham <john@repetae.net>
+  * remove dead code in screen
+
+Tue Aug  9 16:44:17 PDT 2005  John Meacham <john@repetae.net>
+  * fix many warnings
+
+Tue Aug  9 13:38:00 PDT 2005  John Meacham <john@repetae.net>
+  tagged 0.7.1
+
+Tue Aug  9 13:37:47 PDT 2005  John Meacham <john@repetae.net>
+  * bring ginsu.spec up to date
+
+Tue Aug  9 13:17:12 PDT 2005  John Meacham <john@repetae.net>
+  * fix manual
+
+Tue Aug  9 13:14:09 PDT 2005  John Meacham <john@repetae.net>
+  * remove generated files, update version
+
+Tue Aug  9 13:09:05 PDT 2005  John Meacham <john@repetae.net>
+  * change scrollback_size default to unlimited
+
+Tue Aug  9 12:48:34 PDT 2005  John Meacham <john@repetae.net>
+  * add SCROLLBACK_SIZE default, remove non-vt100 control characters for practicality's sake.
+
+Tue Aug  9 09:55:32 PDT 2005  ats@offog.org
+  * Workaround for incomplete screen updates bug
+  The bug was that after you'd run an external program, the screen would no longer be updated correctly. A bit of stracing showed that write()s were failing with EAGAIN, because rawSystem/system puts fd 0 (and thus fd 1 too) into O_NONBLOCK mode just before the vfork() (looks like it's using the "stdin" handle, which has that effect). This looks to me like a GHC bug, or at least a GHC incompatibility with curses.
+  
+  Anyway, here's a workaround: forcibly turn nonblocking mode off again after rawSystem returns. The FD's still in nonblocking mode while the editor runs, though, so if you're using an editor that isn't careful with its write()s it'll still get confused...
+
+Tue Aug  9 03:30:30 PDT 2005  John Meacham <john@repetae.net>
+  * doc fix, remove intermediate file
+
+Sun Aug  7 16:33:12 PDT 2005  ats@offog.org
+  * Fix some typos in the man page.
+
+Sun Aug  7 16:31:18 PDT 2005  ats@offog.org
+  * Update documentation for rot13.
+
+Sun Aug  7 16:30:56 PDT 2005  ats@offog.org
+  * Update documentation for SCROLLBACK_SIZE.
+
+Sun Aug  7 15:59:05 PDT 2005  ats@offog.org
+  * rot13 support for reading and composing puffs.
+
+Sun Aug  7 14:27:53 PDT 2005  ats@offog.org
+  * Add SCROLLBACK_SIZE option to limit number of puffs kept in memory.
+
+Sat Aug  6 14:39:51 PDT 2005  ats@offog.org
+  * Allow <ncurses/ncurses.h> even if not in /usr.
+
+Fri Jul 29 12:55:42 PDT 2005  Aaron Denney <wnoise@ofb.net>
+  * allow unlimited pufflog
+  Setting PUFFLOG_SIZE to 0 makes it unlimited.
+
+Fri Jul 29 13:10:25 PDT 2005  Heath Hunnicutt <heath@ofb.net>
+  * Replace 'abort' terminology with 'cancel' terminology.
+
+Thu Jul 21 04:44:11 PDT 2005  John Meacham <john@repetae.net>
+  * fix rebuild detection
+
+Thu Jul 21 02:56:59 PDT 2005  John Meacham <john@repetae.net>
+  * fix bug in default colors
+
+Thu Jul 21 02:39:25 PDT 2005  John Meacham <john@repetae.net>
+  * fix trailing whitespace
+
+Thu Jul 21 02:25:08 PDT 2005  John Meacham <john@repetae.net>
+  * remove dirtag hack
+
+Thu Jul 21 02:24:14 PDT 2005  John Meacham <john@repetae.net>
+  * update GenUtil.hs
+
+Tue Jul  5 18:56:33 PDT 2005  John Meacham <john@repetae.net>
+  * fix for non glibc based systems
+
+Tue Jul  5 18:39:03 PDT 2005  John Meacham <john@repetae.net>
+  * Allow ^G to break out of filter prompt.
+
+Tue Jul  5 18:05:05 PDT 2005  John Meacham <john@repetae.net>
+  * Fix up unicode chards
+
+Thu Jul 21 02:06:24 PDT 2005  John Meacham <john@repetae.net>
+  tagged 0.7.0
+
+Sun Jul  3 22:05:13 PDT 2005  John Meacham <john@repetae.net>
+  * fix build architecture
+
+Sun Jul  3 21:32:34 PDT 2005  John Meacham <john@repetae.net>
+  * Fix for build
+
+Sun Jul  3 17:55:28 PDT 2005  John Meacham <john@repetae.net>
+  * Code cleanups, Screen simplified.
+
+Sun Jul  3 11:13:42 PDT 2005  John Meacham <john@repetae.net>
+  * Code Cleanups, fix warnings, call perl properly
+
+Sun Jul  3 10:51:46 PDT 2005  John Meacham <john@repetae.net>
+  * Code cleanups
+
+Sun Jul  3 10:44:29 PDT 2005  John Meacham <john@repetae.net>
+  * Code cleanups, switch to Data.Map from FiniteMap
+
+Sun Jul  3 08:27:12 PDT 2005  John Meacham <john@repetae.net>
+  * initial import

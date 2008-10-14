@@ -1,0 +1,7 @@
+Hircules (pronounced like the Greek Hero) is an IRC
+(Internet Relay Chat) client written in the functional
+programming language Haskell (<http://haskell.org/).  See
+the "index.html" file for more details.  The present code
+evolved from Lambdabot by Andrew J. Bromage et al.
+
+The latest version is available from <http://haskell.org/hircules/>.

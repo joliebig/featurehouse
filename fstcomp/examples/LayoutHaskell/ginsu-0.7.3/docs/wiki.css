@@ -1,0 +1,109 @@
+
+/* arch-tag: ded74685-7f5f-477c-a242-4c1a2bddb51d */
+
+div.diff { padding-left:5%; padding-right:5% }
+div.old { background-color:#FFFFAF }
+div.new { background-color:#CFFFCF}
+div.refer { padding-left:5%; padding-right:5%; font-size:smaller; }
+table.history { border-style:none; }
+td.history { border-style:none; }
+table.user { border-style:solid; border-width:thin; margin-left:5%; }
+table.user tr td { border-style:solid; border-width:thin; padding:5px; }
+img.logo {
+    float: right;
+    clear: right;
+    border-style:none;
+    background-color:#fff;
+}
+img {
+    border: #777777 1px solid;
+    padding: 0.5em;
+    margin-left: 1em;
+    margin-right: 2em;
+    background-color: #e6e6e6;
+    color: black;
+}
+img.smiley {
+    border:none;
+    padding:0;
+    margin:0;
+    background:#fff;
+    color:#000;
+}    
+
+div.header img, div.footer img { border:0; padding:0; margin:0; }
+
+span.author {
+    color: #501;
+}
+
+@media print {
+    span.gotobar { display:none; }
+    div.refer { display:none; }
+    div.footer { display:none; }
+}
+
+body {
+    background:#fff;
+    padding:2% 5%;
+    margin:0;
+}
+
+a {
+    text-decoration:none;
+    font-weight:bold;
+    color:#c00;
+}
+
+a:visited { color:#c55; }
+
+a:hover {
+    background:#000000;
+    color:#FFFFFF;
+}
+
+p a.definition {
+    color:#666;
+    padding: 2px;
+    margin-top: 5px;
+    border-bottom: 2px solid #000000;
+    text-decoration:none;
+    display:block; 
+}
+
+p a.definition:hover {
+    background:#000000;
+    color:#FFFFFF;
+}
+
+h1, h2, h3, h4, h1 a, h2 a, h3 a, h4 a { color:#666; }
+h1, h2, h3, h4 { font-size:medium; margin:4ex 0 1ex 0; padding:0; }
+h1, h2 { border-bottom: 2px solid #000; }
+h3 { border-bottom: 1px dashed #000; }
+h1 { font-size:large; border-bottom: 3px solid #000; margin:4ex 0 1ex 0; padding:0;}
+
+div.header h1 {
+    font-size:xx-large; margin-top:1ex;
+    border-bottom: 5px solid #000;
+}
+
+hr {
+    border:none;
+    color:black;
+    background-color:#000;
+    height:2px; 
+    margin-top:2ex;
+}
+div.footer hr { height:4px; }
+
+pre {
+    border: #777777 1px solid;
+    padding: 0.5em;
+    margin-left: 1em;
+    margin-right: 2em;
+    white-space: pre;
+    background-color: #e6e6e6;
+    color: black;
+}
+
+body.magenta a { color:#639; }

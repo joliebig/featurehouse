@@ -1,0 +1,94 @@
+Subject: Announce: hircules 0.2 released
+From: Jens Petersen <petersen@haskell.org>
+To: haskell@haskell.org, hircules-users@lists.sourceforge.net
+Cc: gtk2hs-users@lists.sourceforge.net
+Date: 04 Jul 2003 11:40:39 +0900
+
+I am happy to announce the release of Hircules 0.2.
+
+Hircules is an IRC client written in Haskell, using gtk2hs
+for its user interface.  Since the last release about 2 months
+ago, many bugs have been fixed and some new features added.
+A brief list of the main changes is appended below.
+
+See the Hircules webpage <http://haskell.org/hircules/> for
+more details.  A source tarball and an i386 rpm built for Linux
+with glibc-2.3 and gtk2-2.2 are available for download from
+the project site page <http://sourceforge.net/projects/hircules/>.
+
+Going forward I want to make an effort to keep the cvs repository
+more up-to-date with more regular commits.  The TODO list contains
+the list of features I would like to implement in coming versions.
+
+Enjoy, and as usual please send your feedback and comments,
+
+Jens
+
+
+* Summary of changes in Hircules 0.2
+- Whitespace in messages received, sent and displayed is now preserved.
+- Hircules can now be run from a non-tty.
+- The "/me" command has been added for writing ctcp actions.
+- CTCP actions are now displayed properly.
+- When users join a channel their "user@host" info is also displayed
+now.
+- MODE changes should now be displayed properly.
+- All channels are now logged to a log file in ".hircules/log/".
+- Channel tabs are now numbered.
+- Channel members are now tracked per channel.
+  Quit and nick-change messages only appear now in the relevant channel.
+- Private messages and public messages addressed to one (with "nick:
+...") cause an audible beep.
+- Public messages addressed to one appear also in a new virtual Alert
+channel.
+- /join can now also be used to display a hidden channel or start a
+private conversation.
+
+
+_______________________________________________
+Haskell mailing list
+Haskell@haskell.org
+http://www.haskell.org/mailman/listinfo/haskell
+
+
+Subject: Announce: Hircules 0.1 IRC client released
+From: Jens Petersen <petersen@redhat.com>
+To: haskell@haskell.org
+Message-Id: <1052993124.5289.13444.camel@smile.house>
+Sender: haskell-admin@haskell.org
+X-BeenThere: haskell@haskell.org
+Precedence: bulk
+Date: 15 May 2003 19:05:24 +0900
+
+Hello,
+
+I am pleased to announce the first release of Hircules,
+an IRC client written in Haskell. It uses gtk2hs for the UI.
+The present code evolved from Lambdabot 1.0 by Andrew Bromage et al.
+(I hope it will be possible to factor out a nice IRC library from
+Lambdabot and Hircules, to avoid duplication of code and effort --
+certainly I can see plenty of improvements that could be made in
+the structuring and code of Hircules.)
+
+Hircules is still quite basic in terms of features, and though
+I think it can be used for basic chatting, I would describe it as
+alpha quality software. It supports channel tabs, a raw irc tab
+and an all channel tab. It is also possible to use lambdabot
+extension modules, though by default most of them are disabled
+currently.
+
+The source code and rpms can now be downloaded from:
+
+        http://haskell.org/hircules/
+
+Give it a try if you can!  Comments on the design, bug reports, rfe's,
+contributions, etc are most welcome.  I hope to have a cvs repository
+up soon to make it more accessible.
+
+Cheers, Jens
+
+
+_______________________________________________
+Haskell mailing list
+Haskell@haskell.org
+http://www.haskell.org/mailman/listinfo/haskell

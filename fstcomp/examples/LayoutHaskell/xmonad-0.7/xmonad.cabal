@@ -1,0 +1,77 @@
+name:               xmonad
+version:            0.7
+homepage:           http://xmonad.org
+synopsis:           A tiling window manager
+description:
+    xmonad is a tiling window manager for X. Windows are arranged
+    automatically to tile the screen without gaps or overlap, maximising
+    screen use. All features of the window manager are accessible from
+    the keyboard: a mouse is strictly optional. xmonad is written and
+    extensible in Haskell. Custom layout algorithms, and other
+    extensions, may be written by the user in config files. Layouts are
+    applied dynamically, and different layouts may be used on each
+    workspace. Xinerama is fully supported, allowing windows to be tiled
+    on several screens.
+category:           System
+license:            BSD3
+license-file:       LICENSE
+author:             Spencer Janssen
+maintainer:         xmonad@haskell.org
+extra-source-files: README TODO CONFIG STYLE tests/loc.hs tests/Properties.hs
+                    man/xmonad.1.in man/xmonad.1 man/xmonad.html man/xmonad.hs
+                    util/GenerateManpage.hs
+cabal-version:      >= 1.2
+build-type:         Simple
+
+flag small_base
+    description: Choose the new smaller, split-up base package.
+
+flag testing
+    description: Testing mode, only build minimal components
+    default: False
+
+library
+    exposed-modules:    XMonad
+                        XMonad.Main
+                        XMonad.Core
+                        XMonad.Config
+                        XMonad.Layout
+                        XMonad.ManageHook
+                        XMonad.Operations
+                        XMonad.StackSet
+
+    if flag(small_base)
+        build-depends: base >= 3, containers, directory, process
+    else
+        build-depends: base < 3
+    build-depends: X11>=1.4.1, mtl, unix
+
+    ghc-options:        -funbox-strict-fields -Wall -optl-Wl,-s
+    ghc-prof-options:   -prof -auto-all
+    extensions:         CPP
+
+    if flag(testing)
+        buildable: False
+
+executable xmonad
+    main-is:            Main.hs
+    other-modules:      XMonad
+                        XMonad.Main
+                        XMonad.Core
+                        XMonad.Config
+                        XMonad.Layout
+                        XMonad.ManageHook
+                        XMonad.Operations
+                        XMonad.StackSet
+
+    ghc-options:        -funbox-strict-fields -Wall -optl-Wl,-s
+    ghc-prof-options:   -prof -auto-all
+    extensions:         CPP
+
+    if flag(testing)
+        cpp-options:    -DTESTING
+        hs-source-dirs: . tests/
+        build-depends:  QuickCheck < 2
+        ghc-options:    -Werror
+    if flag(testing) && flag(small_base)
+        build-depends:  random

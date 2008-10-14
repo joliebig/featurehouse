@@ -1,0 +1,75 @@
+#!/usr/bin/perl -w
+
+# arch-tag: c784e11d-c261-4a7b-ad9d-7b89c1757eaf
+
+
+use strict;
+use Getopt::Std;
+use IO::File;
+use Data::Dumper;
+
+my %o;
+my %cm;
+my @hs;
+getopts('hc:',\%o) || die "bad options";
+
+$o{c} ||= "ginsu.config.sample";
+
+sub newsection ($) {
+    if ($o{h}) {
+        push @hs, "Left \"$_[0]\"";
+    } else {
+        print "|||||| <b><i>$_[0]</i></b> ||\n";
+    }
+}
+
+sub key ($$) {
+    my $d = $_[1] || $_[0];
+    $d =~ tr/_/ /;
+    if ($o{h}) {
+        push @hs, "Right (gk \"$_[0]\", \"$d\")"
+    } else {
+        my $dk = join ", ", @{$cm{$_[0]}};
+        print "||$_[0]|| $dk ||$d||\n";
+    }
+}
+
+sub spkey ($$$) {
+    my $d = $_[2] || $_[0];
+    $d =~ tr/_/ /;
+    my $dk = $_[1];
+    if ($o{h}) {
+        push @hs, "Right (\"$_[1]\", \"$d\")"
+    } else {
+        print "||$_[0]|| $dk ||$d||\n";
+    }
+}
+
+if (!$o{h}) {
+
+    my $cfd = new IO::File "<$o{c}" || die "open: $!";
+
+    while (<$cfd>) {
+        next unless /^bind\s+(\S+)\s+(\w+)\s*$/;
+        push @{$cm{$2}}, $1;   
+    } 
+
+}
+
+
+
+print "|| <b>Action Name</b> || <b>Default Key</b> || <b>Description</b> ||\n" unless $o{h};
+
+print "module KeyHelpTable(keyHelpTable) where\n\n" if $o{h};
+print "keyHelpTable gk = [\n" if $o{h};                            
+
+while (<>) {
+    next if /^\s*(\#.*)?\s*$/;
+    newsection($1),next if /^\@(.*?)\s*$/;
+    spkey($1, $2, $3),next if /^\%(\w*)\s+(\S+)\s*(.+?)?\s*$/;
+    key($1, $2),next if /^(\w*)\s*(.+?)?\s*$/;
+}
+
+print "\t ", join("\n\t,", @hs), "\n";
+
+print "\t]\n" if $o{h};                            

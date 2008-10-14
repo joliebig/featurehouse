@@ -1,0 +1,288 @@
+#!/usr/bin/env python2
+
+# arch-tag: 87f506e5-2a67-4ec9-8bb5-9f202eb6d2a1
+
+import xmlrpclib, sys, getopt, os, getpass, string
+
+
+defaultserver= 'https://yammer.net:1115/mdk.psp'
+
+def usage():
+  print """usage:
+
+    Normal usage:
+    %(cmd)s [-m URI]
+      interactive dialog to issue and write a key
+
+    More fine-grained commands:
+    %(cmd)s [-m URI] ls
+      list available domains
+    %(cmd)s [-m URI] gen USER@DOM.AIN [-r PR] [-u PU] -e EM /FN
+      generate key
+    %(cmd)s [-m URI] get USER@DOM.AIN [-r PR] [-u PU]
+      issue a key (you must have the account password)
+    %(cmd)s [-m URI] regen USER@DOM.AIN [-r PR] [-u PU]
+      reissue a key (you must have the account password)
+    %(cmd)s [-m URI] revoke USER@DOM.AIN
+      revoke a key (you must have the account password)
+    %(cmd)s [-m URI] change-password USER@DOM.AIN
+      change the account password for a key
+    %(cmd)s [-m URI] reset-password USER@DOM.AIN
+      reset the account password for a key and email it to the key's owner
+
+    -m URI   the Marmaduke server URI (default: %(defaultserver)s)
+    -r PR    write the pRivate key to file PR instead of key directory
+    -u PU    write the pUblic key to file PU instead of key directory
+    -e EM    email address; passwords are sent to this address
+    /FN      full name of user, preceded by a slash
+
+    Marmaduke command line client version 1.0pre.2161,
+    generated on Yammer.
+    """ % {'cmd': sys.argv[0], 'defaultserver': defaultserver}
+
+def handleLs(server, args):
+  domains= server.listDomains()
+  print string.join(domains)
+
+def handleGen(server, args):
+  requiredArguments('key email fullname'.split(), args)
+  privPath= '%(galedir)s/%(key)s.gpri' % args
+  if args.has_key('priv') and args['priv'] is not None:
+    privPath= priv
+  pubPath= '%(galedir)s/%(key)s.gpub' % args
+  if args.has_key('pub') and args['pub'] is not None:
+    pubPath= pub
+  keys= server.generateKey(args['key'], args['fullname'], args['email'])
+  saveKeys(keys, privPath, pubPath)
+  kgenMsg()
+
+def handleGet(server, args):
+  requiredArguments('key'.split(), args)
+  privPath= '%(galedir)s/%(key)s.gpri' % args
+  if args.has_key('priv') and args['priv'] is not None:
+    privPath= priv
+  pubPath= '%(galedir)s/%(key)s.gpub' % args
+  if args.has_key('pub') and args['pub'] is not None:
+    pubPath= pub
+  passwd= getPassword()
+  keys= server.issue(args['key'], passwd)
+  saveKeys(keys, privPath, pubPath)
+
+def handleRegen(server, args):
+  requiredArguments('key'.split(), args)
+  privPath= '%(galedir)s/%(key)s.gpri' % args
+  if args.has_key('priv') and args['priv'] is not None:
+    privPath= priv
+  pubPath= '%(galedir)s/%(key)s.gpub' % args
+  if args.has_key('pub') and args['pub'] is not None:
+    pubPath= pub
+  passwd= getPassword()
+  keys= server.reissue(args['key'], passwd)
+  saveKeys(keys, privPath, pubPath)
+
+def handleRevoke(server, args):
+  requiredArguments('key'.split(), args)
+  privPath= '%(galedir)s/%(key)s.gpri' % args
+  pubPath= '%(galedir)s/%(key)s.gpub' % args
+  passwd= getPassword()
+  keys= server.revoke(args['key'], passwd)
+  eraseKeys(privPath, pubPath)
+
+def handleChPwd(server, args):
+  requiredArguments('key'.split(), args)
+  repeat= 1
+  while repeat:
+    oldpasswd= getPassword('Current password: ')
+    newpasswd1= getPassword('New password: ')
+    newpasswd2= getPassword('Re-enter new password: ')
+    if newpasswd1 != newpasswd2:
+      sys.stderr.write('new passwords do not match\n')
+    else:
+      repeat= 0
+  server.changePassword(args['key'], oldpasswd, newpasswd1)
+  sys.stderr.write('password changed\n')
+
+def handleRePwd(server, args):
+  requiredArguments('key'.split(), args)
+  repeat= 1
+  server.forgotPassword(args['key'])
+  sys.stderr.write('password reset and emailed to user\n')
+
+def handleWizard(server, args):
+  domains= server.listDomains()
+  print 'Available domains: ' + string.join(domains)
+  print
+  repeat= 1
+  user, fullname, email= None, None, None
+  while repeat:
+    print '\nWhat username do you want?  Include the domain (example, ' + \
+      'user@whatever.com).'
+    user= readLine()
+    if user.find('@') < 1:
+      user= user + '@' + domains[0]
+      print 'Adding default domain -> ' + user
+    args['user']= user
+    print '\nWhat is your full name?'
+    if fullname is not None:
+      print '[hit enter to use "%s"]' % fullname
+    fullname= readLine(fullname)
+    print '\nWhat is your email address?'
+    if email is not None:
+      print '[hit enter to use "%s"]' % email
+    email= readLine(email)
+    try:
+      keys= server.generateKey(user, fullname, email)
+      print
+      saveKeys(keys, '%(galedir)s/%(user)s.gpri' % args,
+        '%(galedir)s/%(user)s.gpub' % args)
+      kgenMsg()
+      repeat= 0
+    except xmlrpclib.Fault, fault:
+      handleFault(fault)
+      if fault.faultCode == 111:
+        print 'If you have the password for %s, enter it now.' % user
+        print 'Otherwise, just hit enter.'
+        if regenWizard(server, user, args['galedir']):
+          return
+        print
+
+def regenWizard(server, keyid, galedir):
+  repeat= 1
+  while repeat:
+    password= getPassword('password for %s: ' % keyid)
+    if len(password) == 0:
+      return 0
+    try:
+      keys= server.reissue(keyid, password)
+      print
+      saveKeys(keys, '%(galedir)s/%(keyid)s.gpri' % locals(),
+        '%(galedir)s/%(keyid)s.gpub' % locals())
+      repeat= 0
+      return 1
+    except xmlrpclib.Fault, fault:
+      handleFault(fault)
+
+
+
+
+def kgenMsg():
+  sys.stderr.write('\nKey generated.  Watch your mailbox for an account ' + \
+    'password;\nthis will be needed if you want to reissue or revoke\n' + \
+    'your key, and can also be used to log in to the appropriate instance\n' + \
+    'of Yammer.\n')
+
+
+
+def eraseKeys(privPath, pubPath):
+  sys.stderr.write('\n')
+  if os.path.exists(privPath):
+    sys.stderr.write('erasing private key %s\n' % privPath)
+    os.unlink(privPath)
+  if os.path.exists(pubPath):
+    sys.stderr.write('erasing public key %s\n' % pubPath)
+    os.unlink(pubPath)
+
+def saveKeys(keys, privPath=None, pubPath=None):
+  sys.stderr.write('writing private key to %s\n' % privPath)
+  mkdirDashP(privPath)
+  p= open(privPath, 'w')
+  p.write(keys['private'].data)
+  p.close()
+  mkdirDashP(pubPath)
+  sys.stderr.write('writing public key to %s\n' % pubPath)
+  p= open(pubPath, 'w')
+  p.write(keys['public'].data)
+  p.close()
+
+def mkdirDashP(filename):
+  path= os.path.dirname(filename)
+  if not os.path.exists(path):
+    os.makedirs(path)
+
+def requiredArguments(reqs, args):
+  a= [x for x in reqs if x not in args or args[x] is None]
+  if len(a) > 0:
+    print 'missing argument(s): ' + string.join(a)
+    usage()
+    sys.exit(1)
+
+def getPassword(prompt= None):
+  if prompt is None:
+    prompt= 'Password: '
+  return getpass.getpass(prompt)
+
+def readLine(default= None):
+  a= sys.stdin.readline().strip()
+  if len(a) == 0 and default is not None:
+    return default
+  return a
+
+def getGaleDir():
+  return os.environ['HOME'] + '/.gale/auth/private'
+
+def getServer(mdkuri):
+  return xmlrpclib.ServerProxy(mdkuri)
+
+
+def handleFault(fault):
+  sys.stderr.write('\n%s\n\n' %
+    (fault.faultString))
+
+
+commands= {'ls': handleLs, 'gen': handleGen, 'regen': handleRegen,
+           'get': handleGet, 'revoke': handleRevoke,
+           'change-password': handleChPwd, 'reset-password': handleRePwd}
+
+argu= sys.argv[1:]
+dashes, squares= [], []
+i= 0
+while i < len(argu):
+  if argu[i].startswith('-'):
+    dashes.append(argu[i])
+    if argu[i][1] != 'h':
+      dashes.append(argu[i+1])
+      i= i + 1
+    i= i + 1
+  else:
+    squares.append(argu[i])
+    i= i + 1
+opts, args= getopt.getopt(dashes + squares, 'm:r:u:e:h')
+mdkserver, priv, pub, email= defaultserver, None, None, None
+for opt, value in opts:
+  if opt == '-m':
+    mdkserver= value
+  if opt == '-r':
+    priv= value
+  if opt == '-u':
+    pub= value
+  if opt == '-e':
+    email= value
+  if opt == '-h':
+    usage()
+    sys.exit(1)
+
+cmd= None
+if len(args) > 0:
+  cmd= args[0]
+fullname= [x[1:] for x in args if x.startswith('/')]
+if len(fullname) > 0:
+  fullname= fullname[0]
+else:
+  fullname= None
+key= [x for x in args if not x.startswith('/') and x.find('@') > 0]
+if len(key) > 0:
+  key= key[0]
+else:
+  key= None
+
+try:
+  server= getServer(mdkserver)
+  galedir= getGaleDir()
+  if cmd is not None and commands.has_key(cmd):
+    commands[cmd](server, locals())
+  else:
+    handleWizard(server, locals())
+except xmlrpclib.Fault, fault:
+  handleFault(fault)
+  sys.exit(fault.faultCode)
+

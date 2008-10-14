@@ -1,0 +1,24 @@
+module Version(package, version, fullName, bugReport, prefix) where
+
+-- arch-tag: d0a40c36-5517-4d1f-8767-b809096eb9db
+
+{- # NOTINLINE package #-}
+{- # NOTINLINE version #-}
+{- # NOTINLINE fullName #-}
+{- # NOTINLINE bugReport #-}
+{- # NOTINLINE prefix #-}
+
+package :: String
+package = "@PACKAGE@"
+
+version :: String
+version = "@VERSION@"
+
+bugReport :: String
+bugReport = "@PACKAGE_BUGREPORT@"
+
+fullName :: String
+fullName = "@PACKAGE@-@VERSION@"
+
+prefix :: String
+prefix = "@PREFIX@"

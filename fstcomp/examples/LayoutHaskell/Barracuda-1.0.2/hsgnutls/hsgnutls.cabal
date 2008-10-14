@@ -1,0 +1,28 @@
+Name:		hsgnutls
+Version:	0.2.3-barracuda
+License:	LGPL
+Author:		Einar Kartunen
+		Henning Günther
+Description:	Library wrapping the GnuTLS API.
+Homepage:       http://www.cs.helsinki.fi/u/ekarttun/hsgnutls
+Build-Depends:  base,
+                mtl
+extra-libraries:gnutls
+		gcrypt
+c-sources:	helpers.c,
+		crypt_helpers.c
+Extensions:     FunctionalDependencies,
+                ForeignFunctionInterface
+Exposed-Modules:Network.GnuTLS,
+                Network.GnuTLS.Attributes,
+                Network.GnuTLS.GnuTLSMonad,
+                Network.GnuTLS.Errors,
+		Network.GnuTLS.X509,
+		Network.GnuTLS.OID,
+		Codec.Encryption,
+		Codec.Encryption.Ciphers
+Other-Modules:  Network.GnuTLS.GnuTLS,
+                Network.GnuTLS.Internals,
+                Network.GnuTLS.IOWrap,
+                Network.GnuTLS.RefCount
+	

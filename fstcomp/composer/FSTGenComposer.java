@@ -23,6 +23,7 @@ import builder.binary.BinaryBuilder;
 import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;
 import builder.haskell.HaskellBuilder;
+//import builder.lhaskell.HaskellBuilder;
 import builder.java.JavaBuilder;
 import builder.javacc.JavaCCBuilder;
 import builder.text.TextBuilder;

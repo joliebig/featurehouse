@@ -1,0 +1,66 @@
+Version 0.3 (2003-10-05):
+* New features
+- input area is now at bottom of TextView not in Entry box
+- UTF-8 support
+- highlighting of tabs for channel activity
+- multiline input is support now (from text pasted into input area)
+- exceptions from lambdabot modules are now caught
+- absolute paths no longer mistaken for irc commands
+- leading '/' is optional now in virtual channels
+- topic changes appear in Alert channel now
+- autodecoding of ISO-2022
+- tabs menu setup now
+- virtual channels now have '%' in front of them and can be "joined"
+- irc log is now date-stamped as well
+- the charset encoding for write to a channel can now be set and shown
+  with the new "/coding" command
+
+* Build changes
+- improved lambdabot configure support
+- build with -Wall by default
+
+
+Version 0.2 (2003-07-03):
+* User visible changes
+- Whitespace in messages received, sent and displayed is now preserved.
+- Hircules can be run from a non-tty (previously a call to getLoginName
+  prevented this)
+- Hircules now creates its own directory (".hircules/").
+- The "/me" command has been added for writing ctcp actions.
+- CTCP actions are now displayed properly.
+- When users join a channel their "user@host" info is also displayed now.
+- MODE changes should now be displayed properly.
+- All channels are now logged to a log file in ".hircules/log/".
+- Channel tabs are now numbered.
+- Channel members are now tracked per channel.  Quit and nick change messages
+  only appear now in the relevant channel.
+- Private messages and public messages addressed to one (with "nick: ...")
+  cause an audible beep.
+- Public messages addressed to one appear also in a new virtual alert channel.
+- Input in a virtual channel is now always assumed to be a command, ie it has
+  a '/' prepended to it automatically.
+- /join can now also be used to display a hidden channel, or to start a private
+  conversation.
+
+* Implementation changes
+- Message middle and tail now stored as String's rather than a list of words.
+- new modules added:
+  - WordString to handle strings of whitespaced words
+  - Config to carry configuration variables
+  - CTCP now houses the ctcp quoting and dequoting functions
+  - Debug provides debugging functions
+  - Directories contains various directory utilities
+  - Display temporarily provides Gdk.beep
+
+* Build changes
+- lambdabot support is now a build option.
+
+
+Version 0.1 (released 2003-05-14):
+
+* First public release
+- tabs for channels
+- tabs for private dialogs
+- "raw" channel tab
+- all channel tab
+- support for a few common irc commands
