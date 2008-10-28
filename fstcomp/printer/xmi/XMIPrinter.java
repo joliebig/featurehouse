@@ -33,6 +33,7 @@ public class XMIPrinter {
 
 
 	public XMIPrinter(FSTNode root, String filename) {
+		System.out.println(root);
 		this.root = root;
 		this.filename = filename;
 	}
