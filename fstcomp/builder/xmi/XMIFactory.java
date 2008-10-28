@@ -90,7 +90,7 @@ public class XMIFactory {
 				FSTroot.addChild(xmienum);
 			} else if (nodeName.equals("UML:Package")) {
 				FSTroot.addChild(new XMIPackage((Element) node, root));
-				// State chart components
+			// State chart components
 			} else if (nodeName.equals("UML:StateMachine")) {
 				extractStateMachine((Element) node);
 			} else if (nodeName.equals("UML:SignalEvent")) {
@@ -100,6 +100,11 @@ public class XMIFactory {
 					|| nodeName.equals("UML:ChangeEvent")
 					|| nodeName.equals("UML:SignalEvent")) {
 				FSTroot.addChild(new XMIDeferrableEvent((Element) node));
+			// Sequence chart components
+			} else if (nodeName.equals("UML:Collaboration")) {
+				XMICollaboration xmiCollab = new XMICollaboration((Element) node, root);
+				xmiCollab.toFST();
+				FSTroot.addChild(xmiCollab);
 			}
 		}
 	}
