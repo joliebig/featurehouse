@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <jardesc>
-    <jar path="/home/clstaff/apel/tmp/FeatureHouse-0.1.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.1.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <jar path="/home/clstaff/apel/tmp/FeatureHouse-0.2.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.2.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" mainClassHandleIdentifier="=fstcomp/&lt;composer{FSTGenComposer.java[FSTGenComposer" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -17,8 +17,8 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.phaskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer"/>
-        <file path="/CIDE2_ast/php.jj"/>
         <file path="/CIDE_generateAST/GenASTNode.java"/>
+        <file path="/CIDE2_ast/php.jj"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification{IntroductionModification.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification{ModificationComposition.java"/>
@@ -28,8 +28,8 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification{Modification.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
