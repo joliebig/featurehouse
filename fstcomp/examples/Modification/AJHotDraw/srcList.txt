@@ -1,0 +1,45 @@
+TODO[x]Precedence.aj: declare precedence
+[x]CommandAspectsOrdering.aj: declare precedence
+[x]CommandContracts.aj: 2 advices wohl nicht umsetzbar
+[ ]CommandObserver.aj: 1. advice: pointcut deutet auf Konstruktor, jedoch auf einen mit angegebener Signatur. 2. advice: Methodensignatur muss erschlossen werden um den Code für die Modifikation zu erzeugen. 3./4. advice: siehe 2.
+[x]ObservableUndoableCommand.aj: nichtig
+[ ]UndoableCommand.aj
+[x]AlignCommandUndo.aj: 4 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode
+[x]BringToFrontCommandUndo.aj: 4 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode
+[x]ChangeAttributeCommandUndo.aj: 5 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode
+TODO [ ]CommandUndo.aj: tiefer in AspectJ einlesen!
+[x]CutCommandUndo.aj: 4 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode
+[x]DeleteCommandUndo.aj: 3 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode
+[x]DuplicateCommandUndo.aj: advice 3 nicht umsetzbar, 1 import, execute-methode (1 advice), createUndoActivity-methode 
+[x]GroupCommandUndo.aj: advice 2 nicht umsetzbar, 7 imports, execute-methode (2 advices), innere klasse, createUndoActivity-methode 
+TODO[x]PasteCommandUndo.aj: Aspekt kann im Allgemeinen wohl nur sehr unelegant (durch Hacks :p) umgesetzt werden (pointcuts innerhalb von Methoden, Felder im Aspekts selbst), 3 advices nicht umgesetzt, 
+TODO[x]UndoRedoActivity.aj: komische sache: fast alle pointcuts enthalten eine .. && if(false) klausel, sind also nichtig. vermutlich noch unvollständige implementierung. einziger effektiver advice umgesetzbar durch bedingte adressierung (wenn name der implementierten interfaces von klassen im fst-knoten des statements stehen!)
+[x]FigureSelectionObserverRole.aj: 4 method introductions, 2 davon mit leerem rumpf.
+TODO[x]FigureSelectionSubjectRole.aj: interface umgesetzt durch eine separate java Datei (nicht durch vererbung), noch passende stelle finden und imports einbauen und extends in DrawingView einbauen, Konstruktoren erweitert, createList erweitert, 5 introductions: methoden nach StandardDrawingView und NullDrawingView
+[x]SelectionChangedNotification.aj: 1. pointcut/advice nicht umsetzbar, 2. umgesetzt (betrifft ZWEI Positionen im FST!), 
+[x]IOExceptionHandling.aj: reines exception handling, daher nicht umgesetzt
+[x]PersistentAttributeFigure.aj: bei imports SIEBEN Knoten gleichzeitig modifiziert, 14 introductions (methoden)
+[x]PersistentCompositeFigure.aj: imports wieder an 3 Knoten, 8 method introductions
+[x]PersistentConnectors.aj: import, 4 method introductions
+[x]PersistentContentProducers.aj: imports an 7 Knoten, 14 methoden introductions
+[x]PersistentDecoratorFigure.aj: import, 4 method introductions
+TODO[x]PersistentDrawing.aj: extends sollte eingebaut werden
+[x]PersistentFigure.aj: import, 2 method introductions
+[x]PersistentImageFigure.aj: import, 2 method introductions
+[x]PersistentLayouters.aj: import, 4 method introductions
+TODO[x]PersistentLineDecorations.aj: extends, imports, 4 method introductions
+TODO[x]PersistentLocators.aj: extends, imports, 4 methoden introductions
+[x]PersistentPolyLineFigure.aj: import, 4 method introductions
+[x]PersistentTextFigure.aj: import, 2 method introductions
+TODO[x]SerializableImplementation.aj: declare warning ?!
+TODO[x]StorableImplementationAspect.aj: declare warning, precedence?!
+[x]ConnectionHandleUndo.aj: import, 1 method introduction
+[x]CreationToolUndo.aj: import, 1 method introduction
+[x]PolygonToolUndo.aj: import, 1 method introduction
+[x]ScribbleToolUndo.aj: import, 1 method introduction
+[x]TextAreaToolUndo.aj: import, 1 method introduction
+[x]TextToolUndo.aj: extends, import, 5 method introduction
+[x]SimpleTracer.aj: nichtiger pointcut
+
+allgemeine Anmerkungen:
+Wenn von Aspekten aus auf Methoden anderer Aspekte zugegriffen wird, müssen diese Referenzen alle per Hand neu gesetzt werden.
