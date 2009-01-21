@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>introduction</type>
+		<traversal>..ScribbleTool*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.*;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..ScribbleTool*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	/*@AJHD protected*/public Undoable createUndoActivity() {
+		return new /*@AJHD PasteCommand*/PasteCommandUndo.UndoActivity(view());
+	}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

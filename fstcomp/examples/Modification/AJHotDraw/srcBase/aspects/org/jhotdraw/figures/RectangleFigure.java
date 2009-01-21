@@ -1,0 +1,103 @@
+/*
+ * @(#)RectangleFigure.java
+ *
+ * Project:		JHotdraw - a GUI framework for technical drawings
+ *				http://www.jhotdraw.org
+ *				http://jhotdraw.sourceforge.net
+ * Copyright:	� by the original author(s) and all contributors
+ * License:		Lesser GNU Public License (LGPL)
+ *				http://www.opensource.org/licenses/lgpl-license.html
+ */
+
+package org.jhotdraw.figures;
+
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.List;
+
+import org.jhotdraw.framework.HandleEnumeration;
+import org.jhotdraw.standard.BoxHandleKit;
+import org.jhotdraw.standard.HandleEnumerator;
+import org.jhotdraw.util.CollectionsFactory;
+
+
+/**
+ * A rectangle figure.
+ *
+ * @version <$CURRENT_VERSION$>
+ */
+public class RectangleFigure extends AttributeFigure {
+
+	private Rectangle   fDisplayBox;
+
+	/*
+	 * Serialization support.
+	 */
+	private static final long serialVersionUID = 184722075881789163L;
+	private int rectangleFigureSerializedDataVersion = 1;
+
+	public RectangleFigure() {
+		this(new Point(0,0), new Point(0,0));
+	}
+
+	public RectangleFigure(Point origin, Point corner) {
+		basicDisplayBox(origin,corner);
+	}
+
+	public void basicDisplayBox(Point origin, Point corner) {
+		fDisplayBox = new Rectangle(origin);
+		fDisplayBox.add(corner);
+	}
+
+	public HandleEnumeration handles() {
+		List handles = CollectionsFactory.current().createList();
+		BoxHandleKit.addHandles(this, handles);
+		return new HandleEnumerator(handles);
+	}
+
+	public Rectangle displayBox() {
+		return new Rectangle(
+			fDisplayBox.x,
+			fDisplayBox.y,
+			fDisplayBox.width,
+			fDisplayBox.height);
+	}
+
+	protected void basicMoveBy(int x, int y) {
+		fDisplayBox.translate(x,y);
+	}
+
+	public void drawBackground(Graphics g) {
+		Rectangle r = displayBox();
+		g.fillRect(r.x, r.y, r.width, r.height);
+	}
+
+	public void drawFrame(Graphics g) {
+		Rectangle r = displayBox();
+		g.drawRect(r.x, r.y, r.width-1, r.height-1);
+	}
+
+//	AJHD: refactored persistence - the persistence-specific methods,
+//	write/read, are introduced via inter-type declarations from the
+//	persistence.PersistentAttributeFigure aspect.
+//	//-- store / load ----------------------------------------------
+//
+//	public void write(StorableOutput dw) {
+//		super.write(dw);
+//		dw.writeInt(fDisplayBox.x);
+//		dw.writeInt(fDisplayBox.y);
+//		dw.writeInt(fDisplayBox.width);
+//		dw.writeInt(fDisplayBox.height);
+//	}
+//
+//	public void read(StorableInput dr) /*@AJHD refactored throws IOException*/ {
+//		super.read(dr);
+//		fDisplayBox = new Rectangle(
+//			dr.readInt(),
+//			dr.readInt(),
+//			dr.readInt(),
+//			dr.readInt());
+//	}
+
+}

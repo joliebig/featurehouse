@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration.*clearSelection*:MethodDecl || ..StandardDrawingView*:ClassDeclaration.*clearSelection*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{
+							original();
+							fireSelectionChanged();
+						}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>
