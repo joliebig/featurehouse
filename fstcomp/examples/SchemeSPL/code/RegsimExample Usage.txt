@@ -1,0 +1,10 @@
+(load "ch5-regsim.scm")
+(load "RegsimExample.scm")
+
+(set-register-contents! gcd-machine 'a 206)
+done
+(set-register-contents! gcd-machine 'b 40)
+done
+(start gcd-machine)
+done
+(get-register-contents gcd-machine 'a)
