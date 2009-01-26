@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class XMIFactory {
@@ -20,9 +21,11 @@ public class XMIFactory {
 	// XMI-document
 	private Document xmi;
 	// Content-root in XMI-document
-	private Element root;
+	// private Element root;
 	// Root in FST
-	private FSTNonTerminal FSTroot;
+	private FSTNonTerminal FSTMasterRoot;
+
+	Element docEle;
 
 	public XMIFactory(File filename, FSTNonTerminal fstroot) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -38,114 +41,42 @@ public class XMIFactory {
 			ioe.printStackTrace();
 		}
 
-		// Extract root node
-		Element docEle = xmi.getDocumentElement();
-		NodeList modelList = docEle
-				.getElementsByTagName("UML:Namespace.ownedElement");
+		FSTMasterRoot = fstroot;
+		docEle = xmi.getDocumentElement();
 
-		FSTroot = fstroot;
+	}
 
-		if (modelList.getLength() > 0) {
-			root = (Element) modelList.item(0);
-		}
+	public void extract() {
+		extractFST(docEle, FSTMasterRoot);
 	}
 
 	/**
 	 * Makes an FST out of the XMI-file
 	 */
-	public void extractFST() {
+	private void extractFST(Element masterRoot, FSTNonTerminal FSTroot) {
 
-		NodeList childNodes = root.getChildNodes();
+		NodeList modelList = masterRoot
+				.getElementsByTagName("UML:Namespace.ownedElement");
+		if (modelList.getLength() > 0) {
+			Element root = (Element) modelList.item(0);
 
-		for (int i = 0; i < childNodes.getLength(); i++) {
-			Node node = childNodes.item(i);
+			NodeList childNodes = root.getChildNodes();
 
-			// Class chart components
-			String nodeName = node.getNodeName();
-			if (nodeName.equals("UML:Class")) {
-				XMIClass xmiclass = new XMIClass((Element) node, root);
-				xmiclass.toFST();
-				FSTroot.addChild(xmiclass);
-			} else if (nodeName.equals("UML:DataType")) {
-				FSTroot.addChild(new XMIDataType((Element) node));
-			} else if (nodeName.equals("UML:Association")) {
-				XMIAssociation xmiassoc = new XMIAssociation((Element) node,
-						root);
-				xmiassoc.toFST();
-				FSTroot.addChild(xmiassoc);
-			} else if (nodeName.equals("UML:AssociationClass")) {
-				XMIAssociationClass xmiassocclass = new XMIAssociationClass(
-						(Element) node, root);
-				xmiassocclass.toFST();
-				FSTroot.addChild(xmiassocclass);
-			} else if (nodeName.equals("UML:Generalization")) {
-				XMIGeneralization xmigen = new XMIGeneralization(
-						(Element) node, root);
-				xmigen.toFST();
-				FSTroot.addChild(xmigen);
-			} else if (nodeName.equals("UML:Enumeration")) {
-				XMIEnumeration xmienum = new XMIEnumeration((Element) node,
-						root);
-				xmienum.toFST();
-				FSTroot.addChild(xmienum);
-			} else if (nodeName.equals("UML:Package")) {
-				FSTroot.addChild(new XMIPackage((Element) node, root));
-			// State chart components
-			} else if (nodeName.equals("UML:StateMachine")) {
-				extractStateMachine((Element) node);
-			} else if (nodeName.equals("UML:SignalEvent")) {
-				FSTroot.addChild(new XMISignalEvent((Element) node));
-			} else if (nodeName.equals("UML:CallEvent")
-					|| nodeName.equals("UML:TimerEvent")
-					|| nodeName.equals("UML:ChangeEvent")
-					|| nodeName.equals("UML:SignalEvent")) {
-				FSTroot.addChild(new XMIDeferrableEvent((Element) node));
-			// Sequence chart components
-			} else if (nodeName.equals("UML:Collaboration")) {
-				XMICollaboration xmiCollab = new XMICollaboration((Element) node, root);
-				xmiCollab.toFST();
-				FSTroot.addChild(xmiCollab);
-			}
-		}
-	}
+			for (int i = 0; i < childNodes.getLength(); i++) {
+				Node node = childNodes.item(i);
 
-	private void extractStateMachine(Element stateRoot) {
+				String nodeName = node.getNodeName();
 
-		NodeList childNodes = stateRoot.getChildNodes();
-
-		for (int i = 0; i < childNodes.getLength(); i++) {
-			Node node = childNodes.item(i);
-			String nodeName = node.getNodeName();
-
-			if (nodeName.equals("UML:StateMachine.top")) {
-				NodeList topNodes = node.getChildNodes();
-				for (int j = 0; j < topNodes.getLength(); j++) {
-					Node topNode = topNodes.item(j);
-					String topNodeName = topNode.getNodeName();
-					// we should find only composite states at that level
-					if (topNodeName.equals("UML:CompositeState")) {
-						XMIStateNode compState = new XMIStateNode(
-								"UML:CompositeState", ((Element) topNode)
-										.getAttribute("name"),
-								(Element) topNode, root);
-						compState.toFST();
-						FSTroot.addChild(compState);
-					}
-				}
-
-			} else if (nodeName.equals("UML:StateMachine.transitions")) {
-				NodeList transNodes = node.getChildNodes();
-				for (int j = 0; j < transNodes.getLength(); j++) {
-					Node transNode = transNodes.item(j);
-					String transNodeName = transNode.getNodeName();
-
-					if (transNodeName.equals("UML:Transition")) {
-						XMITransition transition = new XMITransition(
-								(Element) transNode, root);
-						FSTroot.addChild(transition);
-					}
+				 if (!nodeName.equals("#text")) {
+					XMINode xmiab = new XMINode(node, root, false, false);
+					xmiab.toFST();
+					FSTroot.addChild(xmiab);
 				}
 			}
 		}
+
+
 	}
+
+
 }

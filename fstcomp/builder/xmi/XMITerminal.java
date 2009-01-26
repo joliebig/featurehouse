@@ -5,7 +5,7 @@ import java.util.Map;
 
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public abstract class XMITerminal extends FSTTerminal implements XMINode {
+public abstract class XMITerminal extends FSTTerminal implements XMINodeInterface {
 	
 	private Map<String, String> nodeAttributes = new HashMap<String, String>();
 
