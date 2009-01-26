@@ -15,6 +15,7 @@ public class XMIPrintVisitor extends ArtifactPrintVisitor {
 		//System.out.println(node.toString());
 		String fileName = folderPath.getPath() + File.separator + node.getName();
 		XMIPrinter printer = new XMIPrinter(node, fileName);
+		//TODO
 		printer.transformDocument();
 		
 		/*if(node instanceof FSTNonTerminal) {

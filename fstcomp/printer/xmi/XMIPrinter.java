@@ -18,8 +18,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import builder.xmi.XMINode;
-import builder.xmi.XMIStateNode;
-import builder.xmi.XMITransition;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -31,11 +29,12 @@ public class XMIPrinter {
 	Document xmi = null;
 	Element documentRoot;
 
-
 	public XMIPrinter(FSTNode root, String filename) {
-		System.out.println(root);
 		this.root = root;
 		this.filename = filename;
+
+		System.out.println(root.toString());
+
 	}
 
 	/**
@@ -71,41 +70,15 @@ public class XMIPrinter {
 
 	private void process() {
 		FSTNonTerminal nonterminal = (FSTNonTerminal) root;
-		//state chart
-		Element stateMachine = xmi.createElement("UML:StateMachine");
-		Element stateTop = xmi.createElement("UML:StateMachine.top");
-		Element stateTrans = xmi.createElement("UML:StateMachine.transitions");
-		
+
 		for (FSTNode node : nonterminal.getChildren()) {
-			
+
 			XMINode xminode = (XMINode) node;
-			
-			if (node instanceof XMIStateNode) {
-				if(((XMIStateNode) node).getType().equals("UML:CompositeState")) {
-					stateTop.appendChild(xminode.toXMI(xmi));
-				}
-			} else if (node instanceof XMITransition){
-				stateTrans.appendChild(xminode.toXMI(xmi));
-			} else {
-				documentRoot.appendChild(xminode.toXMI(xmi));
-			}
-			
-			if (stateTop.hasChildNodes()) {
-				stateMachine.appendChild(stateTop);
-			}
-			
-			if (stateTrans.hasChildNodes()) {
-				stateMachine.appendChild(stateTrans);
-			}
-			
-			if (stateMachine.hasChildNodes()) {
-				documentRoot.appendChild(stateMachine);
-			}
+
+			documentRoot.appendChild(xminode.toXMI(xmi));
+
 		}
 	}
-	
-
-
 
 	private Element createRoot() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
