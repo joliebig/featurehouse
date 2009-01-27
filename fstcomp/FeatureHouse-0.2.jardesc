@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="/home/clstaff/apel/tmp/FeatureHouse-0.2.jar"/>
+    <jar path="C:/Dokumente und Einstellungen/Sven Apel/Desktop/FeatureHouse-0.2.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.2.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -24,8 +24,10 @@
         <javaElement handleIdentifier="=fstcomp/&lt;modification{ModificationComposition.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
@@ -40,8 +42,10 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification{SuperimpositionModification.java"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
         <folder path="/fstcomp/examples"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.C"/>
         <file path="/CIDE2_ast/FormsPlSql.jj"/>
         <javaElement handleIdentifier="=CIDE2_ast/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.java"/>
