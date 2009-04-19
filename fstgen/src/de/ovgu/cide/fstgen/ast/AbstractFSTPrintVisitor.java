@@ -147,8 +147,14 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	
 	@Override
 	public boolean visit(FSTTerminal terminal) {
+		printFeatures(terminal, true);
 		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
-//		hintNewLine();
+		printFeatures(terminal, false);
+		//		hintNewLine();
 		return false;
+	}
+
+	protected void printFeatures(FSTNode node, boolean b) {
+		// used only in subclasses		
 	}
 }

@@ -309,7 +309,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 			// + "=new ASTStringNode(t.toString(),new WToken(t));}");
 			if (keepName) {
 				out.print("{ replaceName(new FSTInfo(\"" + t.getName()
-						+ "\",t.toString()));}");
+						+ "\",t.image));}");
 			}
 		}
 		if ((t instanceof NTextOnly) && (t.type != Type.ONE)) {

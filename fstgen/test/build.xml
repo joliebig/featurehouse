@@ -9,7 +9,7 @@
      ====================================================================== -->
 <project name="test_fstgen" default="testJava">
 	<echo>${java.class.path}</echo>
-	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
+	<eclipse.convertPath resourcePath="fstgen_sven" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
 	<eclipse.convertPath resourcePath="CIDE_generateAST/bin" property="astgen_dir" />
 
@@ -44,6 +44,16 @@
 		<antcall target="testGrammar">
 			<param name="language" value="java15" />
 			<param name="parserClass" value="Java15Parser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.java" />
+		</antcall>
+	</target>
+	
+	<target name="testJak">
+		<antcall target="testGrammar">
+			<param name="language" value="jak" />
+			<param name="parserClass" value="JakParser" />
 			<param name="mainProduction" value="CompilationUnit" />
 			<param name="directory" value="${fstgen_dir}/test" />
 			<param name="testFile" value="Test.java" />

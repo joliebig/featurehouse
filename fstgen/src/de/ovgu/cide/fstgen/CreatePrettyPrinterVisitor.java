@@ -60,6 +60,7 @@ public class CreatePrettyPrinterVisitor extends NCreateFileVisitor {
 		// println(c.genClassname() + " n = (" + c.genClassname() + ")node;",
 		// 3);
 
+		println("printFeatures(nonTerminal,true);",3);
 		if (c.isList()) {
 			println(
 					"Iterator<FSTNode> listElements = getChildren(nonTerminal, \""
@@ -74,6 +75,7 @@ public class CreatePrettyPrinterVisitor extends NCreateFileVisitor {
 			for (String t : unit.outerPostTokens)
 				printToken(t, 3);
 		}
+		println("printFeatures(nonTerminal,false);",3);
 		println("return false;", 3);
 		println("}", 2);
 		return false;

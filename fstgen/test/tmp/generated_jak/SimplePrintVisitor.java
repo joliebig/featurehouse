@@ -1,4 +1,4 @@
-package tmp.generated_java15;
+package tmp.generated_jak;
 
 import java.util.*;
 import cide.gast.*;
@@ -19,6 +19,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("CompilationUnit")) {
 			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "LayerDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			{
 				FSTNode v=getChild(nonTerminal, "PackageDeclaration");
 				if (v!=null) {
@@ -369,7 +375,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
-
 	protected boolean isSubtype(String type, String expectedType) {
 		if (type.equals(expectedType)) return true;
 		if (type.equals("ClassDeclaration") && expectedType.equals("TypeDeclaration")) return true;
@@ -404,6 +409,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("PrimitiveType6") && expectedType.equals("PrimitiveType")) return true;
 		if (type.equals("ArrayDimsAndInits2") && expectedType.equals("ArrayDimsAndInits")) return true;
 		if (type.equals("Modifier3") && expectedType.equals("Modifier")) return true;
+		if (type.equals("Modifier13") && expectedType.equals("Modifier")) return true;
 		if (type.equals("InnerClassDecl") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;
 		if (type.equals("AssignmentOperator3") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("RelationalOp3") && expectedType.equals("RelationalOp")) return true;
@@ -451,6 +457,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AssignmentOperator1") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("CastLookahead1") && expectedType.equals("CastLookahead")) return true;
+		if (type.equals("PrimaryPrefix8") && expectedType.equals("PrimaryPrefix")) return true;
 		if (type.equals("EqualityOp2") && expectedType.equals("EqualityOp")) return true;
 		if (type.equals("Type1") && expectedType.equals("Type")) return true;
 		if (type.equals("PrimaryPrefix2") && expectedType.equals("PrimaryPrefix")) return true;
