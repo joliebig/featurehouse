@@ -66,6 +66,9 @@ public class AbstractFSTParser {
 
 	private Stack<Context> currentContext = new Stack<Context>();
 
+	// memorize all FSTNonTerminals that are created
+	public static ArrayList<FSTNode> fstnodes = new ArrayList<FSTNode>();
+
 	protected AbstractFSTParser() {
 		// list that finally contains the root element
 		currentContext.push(new Context(false));
@@ -107,6 +110,7 @@ public class AbstractFSTParser {
 
 			FSTNonTerminal nonTerminal = new FSTNonTerminal(type, name,
 					c.children);
+			fstnodes.add(nonTerminal);
 			cc().children.add(nonTerminal);
 		}
 		return new FSTInfo(type, exportName);

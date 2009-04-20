@@ -16,7 +16,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor() {
 		super(); generateSpaces=true;
 	}
-	public boolean visit(FSTNonTerminal nonTerminal) {
+	public boolean visit(FSTNonTerminal nonTerminal){
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
