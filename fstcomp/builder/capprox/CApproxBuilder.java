@@ -12,21 +12,21 @@ import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class CApproxBuilder extends ArtifactBuilder {
-	private final static String[] suffixArray = {".c", ".h"};
+	private final static String[] suffixArray = { ".c", ".h" };
+
 	public CApproxBuilder() {
 		super(suffixArray);
 	}
-	
-	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
-		FSTNonTerminal rootDocument = new FSTNonTerminal("C-File", st.nextToken());
+
+	public void processNode(FSTNonTerminal parent, StringTokenizer st,
+			File inputFile) throws FileNotFoundException, ParseException {
+		FSTNonTerminal rootDocument = new FSTNonTerminal("C-File", st
+				.nextToken());
 		parent.addChild(rootDocument);
-		CApproxParser p = new CApproxParser(new OffsetCharStream( new FileInputStream(inputFile)));
-		try {
-			p.TranslationUnit(false);
-			rootDocument.addChild(p.getRoot());
-			//System.err.println(p.getRoot().toString());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		CApproxParser p = new CApproxParser(new OffsetCharStream(
+				new FileInputStream(inputFile)));
+		p.TranslationUnit(false);
+		rootDocument.addChild(p.getRoot());
+		// System.err.println(p.getRoot().toString());
 	}
 }

@@ -15,16 +15,15 @@ public class JavaCCBuilder extends ArtifactBuilder {
 	public JavaCCBuilder() {
 		super(".jj");
 	}
-	
-	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
-		FSTNonTerminal rootDocument = new FSTNonTerminal("JavaCC-File", st.nextToken());
+
+	public void processNode(FSTNonTerminal parent, StringTokenizer st,
+			File inputFile) throws FileNotFoundException, ParseException {
+		FSTNonTerminal rootDocument = new FSTNonTerminal("JavaCC-File", st
+				.nextToken());
 		parent.addChild(rootDocument);
-		JavaCCParser p = new JavaCCParser(new OffsetCharStream( new FileInputStream(inputFile)));
-		try {
-			p.javacc_input(false);
-			rootDocument.addChild(p.getRoot());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		JavaCCParser p = new JavaCCParser(new OffsetCharStream(
+				new FileInputStream(inputFile)));
+		p.javacc_input(false);
+		rootDocument.addChild(p.getRoot());
 	}
 }

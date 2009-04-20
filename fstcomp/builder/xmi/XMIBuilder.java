@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
+import cide.gparser.ParseException;
+
 import builder.ArtifactBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
@@ -12,7 +14,7 @@ public class XMIBuilder extends ArtifactBuilder {
 		super(".xmi");
 	}
 	
-	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
+	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException, ParseException {
 		FSTNonTerminal rootDocument = new FSTNonTerminal("XMI-File", st.nextToken());
 		parent.addChild(rootDocument);
 		

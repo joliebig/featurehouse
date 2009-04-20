@@ -13,7 +13,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import cide.gparser.ParseException;
 
+
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class XMIFactory {
@@ -27,7 +30,7 @@ public class XMIFactory {
 
 	Element docEle;
 
-	public XMIFactory(File filename, FSTNonTerminal fstroot) {
+	public XMIFactory(File filename, FSTNonTerminal fstroot) throws ParseException{
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
 		try {
@@ -36,7 +39,8 @@ public class XMIFactory {
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch (SAXException se) {
-			se.printStackTrace();
+//			se.printStackTrace();
+			throw new ParseException(se.toString());
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
@@ -54,6 +58,8 @@ public class XMIFactory {
 	 * Makes an FST out of the XMI-file
 	 */
 	private void extractFST(Element masterRoot, FSTNonTerminal FSTroot) {
+		
+		AbstractFSTParser.fstnodes.add(FSTroot);
 
 		NodeList modelList = masterRoot
 				.getElementsByTagName("UML:Namespace.ownedElement");

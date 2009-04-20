@@ -15,16 +15,15 @@ public class CSharpBuilder extends ArtifactBuilder {
 	public CSharpBuilder() {
 		super(".cs");
 	}
-	
-	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
-		FSTNonTerminal rootDocument = new FSTNonTerminal("CSharp-File", st.nextToken());
+
+	public void processNode(FSTNonTerminal parent, StringTokenizer st,
+			File inputFile) throws FileNotFoundException, ParseException {
+		FSTNonTerminal rootDocument = new FSTNonTerminal("CSharp-File", st
+				.nextToken());
 		parent.addChild(rootDocument);
-		CSharpParser p = new CSharpParser(new OffsetCharStream( new FileInputStream(inputFile)));
-		try {
-			p.compilation_unit(false);
-			rootDocument.addChild(p.getRoot());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		CSharpParser p = new CSharpParser(new OffsetCharStream(
+				new FileInputStream(inputFile)));
+		p.compilation_unit(false);
+		rootDocument.addChild(p.getRoot());
 	}
 }

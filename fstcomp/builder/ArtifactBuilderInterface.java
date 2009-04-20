@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
+import cide.gparser.ParseException;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public interface ArtifactBuilderInterface {
@@ -16,6 +18,6 @@ public interface ArtifactBuilderInterface {
 
 	public abstract String getBaseDirectoryName();
 
-	public abstract void processFile(File inputFile) throws FileNotFoundException;
+	public abstract void processFile(File inputFile) throws FileNotFoundException, ParseException;
 
 }

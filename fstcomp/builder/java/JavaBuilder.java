@@ -15,16 +15,15 @@ public class JavaBuilder extends ArtifactBuilder {
 	public JavaBuilder() {
 		super(".java");
 	}
-	
-	public void processNode(FSTNonTerminal parent, StringTokenizer st, File inputFile) throws FileNotFoundException {
-		FSTNonTerminal rootDocument = new FSTNonTerminal("Java-File", st.nextToken());
+
+	public void processNode(FSTNonTerminal parent, StringTokenizer st,
+			File inputFile) throws FileNotFoundException, ParseException {
+		FSTNonTerminal rootDocument = new FSTNonTerminal("Java-File", st
+				.nextToken());
 		parent.addChild(rootDocument);
-		Java15Parser p = new Java15Parser(new OffsetCharStream( new FileInputStream(inputFile)));
-		try {
-			p.CompilationUnit(false);
-			rootDocument.addChild(p.getRoot());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		Java15Parser p = new Java15Parser(new OffsetCharStream(
+				new FileInputStream(inputFile)));
+		p.CompilationUnit(false);
+		rootDocument.addChild(p.getRoot());
 	}
 }

@@ -19,6 +19,8 @@ import modification.xmlParser.XmlParser;
 
 import org.xml.sax.SAXException;
 
+import cide.gparser.ParseException;
+
 import builder.ArtifactBuilderInterface;
 
 public class FileLoader {
@@ -33,10 +35,13 @@ public class FileLoader {
 
     private DirectoryFileFilter directoryFileFilter = new DirectoryFileFilter();
 
+    private composer.FSTGenComposer composer;
+
     private ModificationComposition modcomposition = new ModificationComposition();
 
-    public FileLoader() {
+    public FileLoader(FSTGenComposer genComposer) {
 	builderList = new LinkedList<ArtifactBuilderInterface>();
+	composer = genComposer;
     }
 
     public void registerArtifactBuilder(ArtifactBuilderInterface builder) {
@@ -53,14 +58,14 @@ public class FileLoader {
 
     public void loadFiles(String equationFileName,
 	    String equationBaseDirectoryName, boolean aheadEquation)
-	    throws FileNotFoundException {
+	    throws FileNotFoundException, ParseException {
 	parseEquationFile(equationFileName, equationBaseDirectoryName,
 		aheadEquation);
     }
 
     private void parseEquationFile(String equationFileName,
 	    String equationBaseDirectoryName, boolean aheadEquation)
-	    throws FileNotFoundException {
+	    throws FileNotFoundException, ParseException {
 	if (equationFileName == null || equationFileName.length() == 0)
 	    throw new FileNotFoundException();
 	File equationFile = new File(equationFileName);
@@ -115,7 +120,7 @@ public class FileLoader {
     }
 
     private void parseDirectory(File directory, boolean recursive)
-	    throws FileNotFoundException {
+	    throws FileNotFoundException, ParseException {
 	if (directory.getName().equals(MODIFICATION_FOLDER_TAG)) {
 	    // TODO _mod folder should only be allowed as direct subfolder of
 	    // feature folder
@@ -154,6 +159,13 @@ public class FileLoader {
 		    while (iterator.hasNext()) {
 			ArtifactBuilderInterface builder = iterator.next();
 			if (builder.acceptFile(files[i])) {
+               	try {
+            		builder.processFile(files[i]);
+            	}
+            	catch (ParseException e){
+            		composer.getErrorFiles().add(files[i]);
+            		composer.fireParseErrorOccured(e);
+            	}
 			    builder.processFile(files[i]);
 			}
 		    }
@@ -174,7 +186,14 @@ public class FileLoader {
 		    while (iterator.hasNext()) {
 			ArtifactBuilderInterface builder = iterator.next();
 			if (builder.acceptFile(files[i])) {
-			    builder.processFile(files[i]);
+               	try {
+            		builder.processFile(files[i]);
+            	}
+            	catch (ParseException e){
+            		composer.getErrorFiles().add(files[i]);
+            		composer.fireParseErrorOccured(e);
+            		e.printStackTrace();
+            	}
 			}
 		    }
 		}
