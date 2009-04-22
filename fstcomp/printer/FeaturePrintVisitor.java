@@ -59,7 +59,6 @@ public class FeaturePrintVisitor {
 				featurePath.mkdir();
 				folderPath = featurePath;
 				for(FSTNode child : nonterminal.getChildren()) {
-					assert(!(child instanceof FSTNonTerminal));
 					visit((FSTNonTerminal)child);
 				}
 			} else if(nonterminal.getType().equals("Folder")) {
@@ -67,7 +66,6 @@ public class FeaturePrintVisitor {
 				folderPath = new File(folderPath, nonterminal.getName());
 				folderPath.mkdir();
 				for(FSTNode child : nonterminal.getChildren()) {
-					assert(!(child instanceof FSTNonTerminal));
 					visit((FSTNonTerminal)child);
 				}
 				folderPath = oldFolderPath;
