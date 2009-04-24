@@ -430,6 +430,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Statement9") && expectedType.equals("Statement")) return true;
 		if (type.equals("ShiftOp2") && expectedType.equals("ShiftOp")) return true;
 		if (type.equals("PrimitiveType7") && expectedType.equals("PrimitiveType")) return true;
+		if (type.equals("CastLAOp9") && expectedType.equals("CastLAOp")) return true;
 		if (type.equals("AdditiveOp1") && expectedType.equals("AdditiveOp")) return true;
 		if (type.equals("CastLookahead2") && expectedType.equals("CastLookahead")) return true;
 		if (type.equals("Type2") && expectedType.equals("Type")) return true;

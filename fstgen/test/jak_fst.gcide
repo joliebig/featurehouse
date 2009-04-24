@@ -807,7 +807,7 @@ CastLookahead:
    "(" Type ")" CastLAOp
 ;
 
-CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "new"<NONE> |
+CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "Super" "(" [TypeList] ")" | "new"<NONE> |
 	 <IDENTIFIER> |
 	 Literal;
 
@@ -839,7 +839,7 @@ PrimaryPrefix:
 |
   "super" "." <IDENTIFIER>
 |
-  "Super" "(" [TypeList] ")" "." <IDENTIFIER>
+  "Super" "(" [TypeList] ")" 
 |
   "(" Expression ")"
 |

@@ -56,7 +56,7 @@
 			<param name="parserClass" value="JakParser" />
 			<param name="mainProduction" value="CompilationUnit" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.java" />
+			<param name="testFile" value="Test.jak" />
 		</antcall>
 	</target>
 

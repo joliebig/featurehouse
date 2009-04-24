@@ -948,11 +948,13 @@ FSTInfo CastLAOp(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"super"  {return productionEndTerminal("CastLAOp5","-","-","Replacement",first,token);}
  |
-	"new"  {return productionEndTerminal("CastLAOp6","-","-","Replacement",first,token);}
+	"Super" "(" [n=TypeList(true){ replaceName(n);}] ")" {return productionEndTerminal("CastLAOp6","-","-","Replacement",first,token);}
  |
-	<IDENTIFIER> {return productionEndTerminal("CastLAOp7","-","-","Replacement",first,token);}
+	"new"  {return productionEndTerminal("CastLAOp7","-","-","Replacement",first,token);}
  |
-	n=Literal(true){ replaceName(n);} {return productionEndTerminal("CastLAOp8","-","-","Replacement",first,token);}
+	<IDENTIFIER> {return productionEndTerminal("CastLAOp8","-","-","Replacement",first,token);}
+ |
+	n=Literal(true){ replaceName(n);} {return productionEndTerminal("CastLAOp9","-","-","Replacement",first,token);}
 
  )  }
 
@@ -998,7 +1000,7 @@ FSTInfo PrimaryPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"super" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix3","-","-","Replacement",first,token);}
  |
-	"Super" "(" [n=TypeList(true){ replaceName(n);}] ")" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix4","-","-","Replacement",first,token);}
+	"Super" "(" [n=TypeList(true){ replaceName(n);}] ")" {return productionEndTerminal("PrimaryPrefix4","-","-","Replacement",first,token);}
  |
 	"(" n=Expression(true){ replaceName(n);} ")" {return productionEndTerminal("PrimaryPrefix5","-","-","Replacement",first,token);}
  |
