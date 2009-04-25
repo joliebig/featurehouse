@@ -161,7 +161,7 @@ public class FSTGenComposer {
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 	}
 
