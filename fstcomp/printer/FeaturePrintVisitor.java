@@ -9,9 +9,9 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 public class FeaturePrintVisitor {
 	private String workingDir = ".";
 	private String expressionName = "default.expression";
-	private File featurePath;
-	private File folderPath;
-	private File oldFolderPath;
+	//private File featurePath;
+	//private File folderPath;
+	//private File oldFolderPath;
 	private LinkedList<PrintVisitorInterface> visitors = new LinkedList<PrintVisitorInterface>();
 	
 	public FeaturePrintVisitor() {	}
@@ -49,7 +49,11 @@ public class FeaturePrintVisitor {
 		return visitors;
 	}
 	
-	public void visit(FSTNonTerminal nonterminal) throws PrintVisitorException {
+	public void visit(FSTNonTerminal root) throws PrintVisitorException {
+		visit(root, null, null, null);
+	}
+	
+	private void visit(FSTNonTerminal nonterminal, File featurePath, File folderPath, File oldFolderPath) throws PrintVisitorException {
 		if(nonterminal != null) {
 			if(nonterminal.getType().equals("Feature")) {
 				StringBuffer sb = new StringBuffer(getExpressionName());
@@ -59,14 +63,14 @@ public class FeaturePrintVisitor {
 				featurePath.mkdir();
 				folderPath = featurePath;
 				for(FSTNode child : nonterminal.getChildren()) {
-					visit((FSTNonTerminal)child);
+					visit((FSTNonTerminal)child, featurePath, folderPath, oldFolderPath);
 				}
 			} else if(nonterminal.getType().equals("Folder")) {
 				oldFolderPath = folderPath;
 				folderPath = new File(folderPath, nonterminal.getName());
 				folderPath.mkdir();
 				for(FSTNode child : nonterminal.getChildren()) {
-					visit((FSTNonTerminal)child);
+					visit((FSTNonTerminal)child, featurePath, folderPath, oldFolderPath);
 				}
 				folderPath = oldFolderPath;
 			} else {

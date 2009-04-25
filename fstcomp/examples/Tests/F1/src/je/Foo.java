@@ -1,8 +1,8 @@
 package examples;
 
-public abstract class Foo extends A implements B, C {
-	static final public int i() { int i = 0; }
-	abstract private int j();
+class Foo extends X implements B, X, Y {
+	abstract static protected int i() { before(); original(); after(); }
+	final protected int j() {}
 	
 	int a;
 	int b = 1;

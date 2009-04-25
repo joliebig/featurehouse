@@ -2,6 +2,9 @@ package composer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -152,13 +155,13 @@ public class FSTGenComposer {
 				} catch (PrintVisitorException e) {
 					e.printStackTrace();
 				}
-				for (FSTNonTerminal feature : features) {
-					System.out.println(feature.toString());
-				}
+				//for (FSTNonTerminal feature : features) {
+				//	System.out.println(feature.toString());
+				//}
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {
-			// e1.printStackTrace();
+			e1.printStackTrace();
 		}
 	}
 
