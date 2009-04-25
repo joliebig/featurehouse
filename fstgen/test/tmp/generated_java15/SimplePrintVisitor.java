@@ -1,11 +1,7 @@
 package tmp.generated_java15;
 
 import java.util.*;
-import cide.gast.*;
-
 import java.io.PrintStream;
-
-import cide.languages.*;
 
 import de.ovgu.cide.fstgen.ast.*;
 
