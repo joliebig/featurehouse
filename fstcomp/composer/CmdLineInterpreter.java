@@ -115,7 +115,7 @@ public class CmdLineInterpreter {
 		if (errorOccured) {
 			System.out.println("Insufficient command line parameters!");
 		}
-		System.out.println("Use `java -jar FeatureHouse-0.1.jar " 
+		System.out.println("Use `java -jar FeatureHouse-<VERSION>.jar " 
 				+ INPUT_OPTION_EQUATIONFILE + " <file name> ["
 				+ INPUT_OPTION_BASE_DIRECTORY + " <directory name>]'"
 );

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="C:/Dokumente und Einstellungen/Sven Apel/Desktop/FeatureHouse-0.2.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.2.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <jar path="C:/Dokumente und Einstellungen/Sven Apel/Desktop/FeatureHouse-0.2.2.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.2.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" mainClassHandleIdentifier="=fstcomp/&lt;composer{FSTGenComposer.java[FSTGenComposer" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -10,12 +10,11 @@
             <packagesToUnSeal/>
         </sealing>
     </manifest>
-    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+    <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="true">
         <folder path="/CIDE2_ast/META-INF"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
         <javaElement handleIdentifier="=fstgen/test"/>
         <folder path="/fstcomp/examples/ArithHaskellFull"/>
-        <file path="/fstcomp/examples/GPL.tar.gz"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.csharp"/>
         <folder path="/fstcomp/examples/FFJGrammar"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.phaskell"/>
