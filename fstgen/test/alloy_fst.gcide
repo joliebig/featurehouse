@@ -1,0 +1,83 @@
+	<bigLetter> ::= (“A“ | “B“ | “C“ | “D“ | “E“ | “F“ | “G“ | “H“ | “I“ | “J“ | “K“ | “L“ | “M“ | 			   “N“ | “O“ |  “P“ | “Q“ | “R“ | “S“ | “T“ | “U“ | “V“ | “W“ | “X“ | “Y“ | “Z“) 
+
+	<smallLetter> ::= (“a“ | “b“ | “c“ | “d“ | “e“ | “f“ | “g“ | “h“ | “i“ | “j“ | “k“ | “l“ | “m“ | “n“ | 			       “o“ | “p“ | “q“ | “r“ | “s“ | “t“ | “u“ | “v“ | “w“ | “x“ | “y“ | “z“)
+
+	<letter> ::= (<smallLetter> | <bigLetter>)
+
+	<name> ::= (<bigLetter> | <smallLetter>) {<bigLetter> | <smallLetter>}
+
+	<domName> ::= <name>
+
+	<predName> ::= <name>
+
+	<factName> ::= <name>
+
+	<assertName> ::= <name>
+
+	<funName> ::= <name>
+
+	<varName> ::= <name>
+
+	<sigName> ::= <name>
+
+	<moduleName> ::= <letter> {(<natInteger> | <letter>} {[“/“] <letter> {(<natInteger> | 				        <letter>}}
+
+	<digitNo0> ::= (“1“ | “2“ | “3“ | “4“ | “5“ | “6“ | “7“ | “8“ | “9“)
+
+	<digit> ::= (<digitNo0> | “0“)
+
+	<natInteger> ::= <digitNo0> {<digit>}
+
+	<Integer> ::= [-] <digitNo0> {<natInteger>}
+
+	<Body> ::= “{“ “}“
+
+	<quantifier> ::= (“one“ |  “some“ | “lone“ | “all“ | “no“)
+
+	<mult> ::= “lone“ | “some“ | “one“
+
+	<multSet> ::= (<mult> | “set“)
+
+	<multAll> ::= (<mult> | “all“)
+
+	<operator1> ::= (“->“ | “in“ | “+“ | “&“ | “-“)
+
+	<sig> ::= [<mult>] [“abstract“]  “sig“ <name> [<extends>] <Body>
+
+	<sigWithAppFact> ::= <sig> <Body>
+
+	<extends> ::= ("in" | “extends“) <ref> {"+" <ref>}
+
+	<enum> ::= "enum" <name> "{" <name>  {"," <name>}  "}"
+
+	<fact> ::= “fact“ <factName> <Body>
+
+	<assert> ::= “assert“ <assertName> <Body>
+
+	<ref> ::= <thisOrName> | "univ" | "Int" | "seq/Int"
+
+	<thisOrName> ::= ["this" | <sigName>]  {"/" <sigName>}
+
+	<param> ::= ([(<multAll> | “disj“)] <varName> {“,“ <varName>} “:“ [<multSet>] <sigName> | [(<multAll> | “disj“)] <varName> {“,“ <varName>} “:“ <ref> 				          <operator1> <ref>)
+
+	<function> ::=  [“private“] “fun“ <funName> [“[“ <param> {“,“ <param>}  “]“] <Body>
+
+	<predicate> ::= [“private“] “pred“ <predName> “[“<param> {“,“ <param>}“]“ <Body>
+
+	<checkCmd> ::=  “check“ <assertName> <natInteger> [“but“ <natInteger> <sigName> {“,“ <natInteger> <sigName>}]
+
+RunCmd : "run" PredName "for" NatInteger SigName ( "," NatInteger SigName )* ;
+
+Module : [ ModuleName [ SigName ( "," SigName> )* ] ] (Open)* (Content)* ;
+				
+Open : ["private"] "open" ModuleName "[" SigName ( "," SigName )* "]" [ "as" Name ]	;
+
+Content	: Sig  
+		| Enum 
+		| Fact 
+		| Assert 
+		| CheckCmd 
+		| Fun 
+		| Pred 
+		| RunCmd
+		;
