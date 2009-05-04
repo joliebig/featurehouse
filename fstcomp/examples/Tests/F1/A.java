@@ -1,3 +1,4 @@
 class A {
-	public int x = 0;
+	private int x = 1;
+
 }

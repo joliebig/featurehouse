@@ -20,7 +20,6 @@ public class ModifierListSpecialization {
 			return;
 		}
 
-	
 		StringTokenizer st = new StringTokenizer(terminalB.getBody() + " " + terminalA.getBody());
 		
 		LinkedHashSet<String> modifierSet = new LinkedHashSet<String>(); 
