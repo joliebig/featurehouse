@@ -481,7 +481,7 @@ ClassOrInterfaceBodyDeclaration:
     LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
 	Modifiers ConstructorDeclaration :: ConstructorDecl
 |
-  	@FSTTerminal(name="{FieldDeclaration}")
+  	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers FieldDeclaration :: FieldDecl
 |

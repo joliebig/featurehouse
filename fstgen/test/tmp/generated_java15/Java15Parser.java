@@ -905,7 +905,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       n = FieldDeclaration(true);
                                                                                                                                                    replaceName("FieldDeclaration", n);
                                                                                                                                                                                          replaceName(n);
-                                                                                                                                                                                                           {if (true) return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
+                                                                                                                                                                                                           {if (true) return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding",first,token);}
     } else if (jj_2_10(2)) {
       n = Modifiers(true);
                                         replaceName(n);

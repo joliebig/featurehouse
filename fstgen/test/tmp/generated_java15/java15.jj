@@ -481,7 +481,7 @@ FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null
  |
 	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") n=Modifiers(true){ replaceName(n);} n=ConstructorDeclaration(true){ replaceName(n);} {return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","ConstructorConcatenation",first,token);}
  |
-	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
+	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding",first,token);}
  |
 	LOOKAHEAD(2) n=Modifiers(true){ replaceName(n);} n=MethodDeclaration(true){ replaceName("MethodDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("MethodDecl","{MethodDeclaration}","{MethodDeclaration}","JavaMethodOverriding",first,token);}
  |

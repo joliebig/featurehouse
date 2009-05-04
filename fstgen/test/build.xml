@@ -9,7 +9,7 @@
      ====================================================================== -->
 <project name="test_fstgen" default="testJava">
 	<echo>${java.class.path}</echo>
-	<eclipse.convertPath resourcePath="fstgen_sven" property="fstgen_dir" />
+	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
 	<eclipse.convertPath resourcePath="CIDE_generateAST/bin" property="astgen_dir" />
 

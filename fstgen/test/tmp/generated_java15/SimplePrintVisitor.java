@@ -1,7 +1,11 @@
 package tmp.generated_java15;
 
 import java.util.*;
+import cide.gast.*;
+
 import java.io.PrintStream;
+
+import cide.languages.*;
 
 import de.ovgu.cide.fstgen.ast.*;
 
@@ -365,7 +369,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
-
 	protected boolean isSubtype(String type, String expectedType) {
 		if (type.equals(expectedType)) return true;
 		if (type.equals("ClassDeclaration") && expectedType.equals("TypeDeclaration")) return true;
