@@ -148,16 +148,16 @@ public class FSTGenComposer {
 				FSTNode composition = compose(features);
 //				modify(composition);
 
-				// if(composition != null)
-				// System.err.println(composition.toString());
+				//if(composition != null)
+				//	System.err.println(composition.toString());
 				try {
 					featureVisitor.visit((FSTNonTerminal) composition);
 				} catch (PrintVisitorException e) {
 					e.printStackTrace();
 				}
-				//for (FSTNonTerminal feature : features) {
-				//	System.out.println(feature.toString());
-				//}
+				for (FSTNonTerminal feature : features) {
+					System.out.println(feature.toString());
+				}
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {
@@ -292,9 +292,9 @@ public class FSTGenComposer {
 							terminalComp, nonterminalParent);
 				} else if (terminalA.getCompositionMechanism().equals(
 						ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Modifier list specification: " +
-					// terminalA.toString() + " specializes " +
-					// terminalB.toString());
+					 System.out.println("Modifier list specialization: " +
+					 terminalA.toString() + " specializes " +
+					 terminalB.toString());
 					ModifierListSpecialization.compose(terminalA, terminalB,
 							terminalComp, nonterminalParent);
 				} else if (terminalA.getCompositionMechanism().equals(

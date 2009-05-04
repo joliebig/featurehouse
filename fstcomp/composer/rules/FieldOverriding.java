@@ -11,6 +11,7 @@ public class FieldOverriding {
 		String compBody;
 
 		if(!bodyB.contains(",") && !bodyA.contains(",")) {
+
 			if(bodyB.contains("=")) {
 				if(bodyA.contains("="))
 					compBody = bodyA;

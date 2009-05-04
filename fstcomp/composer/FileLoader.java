@@ -153,7 +153,8 @@ public class FileLoader {
 	} else if (recursive) {
 	    File[] files = directory.listFiles(fileFilter);
 	    if (files != null) {
-		for (int i = 0; i < files.length; i++) {
+
+    	for (int i = 0; i < files.length; i++) {
 		    Iterator<ArtifactBuilderInterface> iterator = builderList
 			    .iterator();
 		    while (iterator.hasNext()) {
@@ -161,12 +162,13 @@ public class FileLoader {
 			if (builder.acceptFile(files[i])) {
                	try {
             		builder.processFile(files[i]);
+            		
             	}
             	catch (ParseException e){
             		composer.getErrorFiles().add(files[i]);
             		composer.fireParseErrorOccured(e);
             	}
-			    builder.processFile(files[i]);
+			    //builder.processFile(files[i]);
 			}
 		    }
 		}

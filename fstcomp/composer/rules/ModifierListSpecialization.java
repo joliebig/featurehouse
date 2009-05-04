@@ -9,6 +9,8 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class ModifierListSpecialization {
 	public final static String COMPOSITION_RULE_NAME = "ModifierListSpecialization";
 	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+
+		
 		if(terminalA.getBody().length() == 0) {
 			terminalComp.setBody(terminalB.getBody());
 			return;
@@ -17,7 +19,8 @@ public class ModifierListSpecialization {
 			terminalComp.setBody(terminalA.getBody());
 			return;
 		}
-		
+
+	
 		StringTokenizer st = new StringTokenizer(terminalB.getBody() + " " + terminalA.getBody());
 		
 		LinkedHashSet<String> modifierSet = new LinkedHashSet<String>(); 
@@ -31,6 +34,7 @@ public class ModifierListSpecialization {
 	    boolean isProtected = false;
 	    boolean isAbstract = false;
 
+   
 	    for(int i = 0; i < modifierArray.length; i++) {
 	    	String modifier = modifierArray[i].trim(); 
 			if(modifier.equals("private") && !isPublic && !isProtected) {
