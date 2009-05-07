@@ -7,7 +7,7 @@
                    
      ckaestne                                                                
      ====================================================================== -->
-<project name="test_fstgen" default="testJava">
+<project name="test_fstgen" default="testAlloy">
 	<echo>${java.class.path}</echo>
 	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
@@ -79,6 +79,7 @@
 				<param name="testFile" value="Test.c" />
 			</antcall>
 		</target>
+	
 	<target name="testHaskell">
 			<antcall target="testGrammar">
 				<param name="language" value="haskell" />
@@ -150,6 +151,16 @@
 		</antcall>
 	</target>
 
+	<target name="testAlloy">
+		<antcall target="testGrammar">
+			<param name="language" value="alloy" />
+			<param name="parserClass" value="AlloyParser" />
+			<param name="mainProduction" value="Specification" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.als" />
+		</antcall>
+	</target>
+	
 	<target name="testXMI">
 			<antcall target="testGrammar">
 				<param name="language" value="xmi" />

@@ -1,83 +1,284 @@
-	<bigLetter> ::= (“A“ | “B“ | “C“ | “D“ | “E“ | “F“ | “G“ | “H“ | “I“ | “J“ | “K“ | “L“ | “M“ | 			   “N“ | “O“ |  “P“ | “Q“ | “R“ | “S“ | “T“ | “U“ | “V“ | “W“ | “X“ | “Y“ | “Z“) 
+options {
+  STATIC = false;
+}
 
-	<smallLetter> ::= (“a“ | “b“ | “c“ | “d“ | “e“ | “f“ | “g“ | “h“ | “i“ | “j“ | “k“ | “l“ | “m“ | “n“ | 			       “o“ | “p“ | “q“ | “r“ | “s“ | “t“ | “u“ | “v“ | “w“ | “x“ | “y“ | “z“)
+PARSER_BEGIN(AlloyParser)
 
-	<letter> ::= (<smallLetter> | <bigLetter>)
+import cide.gast.*;
+import cide.gparser.*;
 
-	<name> ::= (<bigLetter> | <smallLetter>) {<bigLetter> | <smallLetter>}
 
-	<domName> ::= <name>
+public class AlloyParser extends AbstractFSTParser
+{
+ 	public AlloyParser(){}
+}
 
-	<predName> ::= <name>
+PARSER_END(AlloyParser)
 
-	<factName> ::= <name>
+/* WHITE SPACE */
 
-	<assertName> ::= <name>
+SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
 
-	<funName> ::= <name>
+/* COMMENTS */
 
-	<varName> ::= <name>
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
 
-	<sigName> ::= <name>
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
 
-	<moduleName> ::= <letter> {(<natInteger> | <letter>} {[“/“] <letter> {(<natInteger> | 				        <letter>}}
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
 
-	<digitNo0> ::= (“1“ | “2“ | “3“ | “4“ | “5“ | “6“ | “7“ | “8“ | “9“)
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
 
-	<digit> ::= (<digitNo0> | “0“)
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
+}
 
-	<natInteger> ::= <digitNo0> {<digit>}
+/* RESERVED WORDS AND LITERALS */
 
-	<Integer> ::= [-] <digitNo0> {<natInteger>}
+TOKEN :
+{
 
-	<Body> ::= “{“ “}“
 
-	<quantifier> ::= (“one“ |  “some“ | “lone“ | “all“ | “no“)
+      < LARROW: "->"> | < INT: "int"> | < INTT: "Int"> | < AND: "&">  | < COLON: ":" >
 
-	<mult> ::= “lone“ | “some“ | “one“
+ 	  | < AT: "@" >| < IN: "in" > | < EXACTLY: "exactly" > | < EXPECT: "expect" >
 
-	<multSet> ::= (<mult> | “set“)
+      | < ALL: "all" > | < NO: "no" > | < LONE: "lone" > | < SOME: "SOME" >
 
-	<multAll> ::= (<mult> | “all“)
+      | < ONE: "one" > | < SET: "set" > | < OPEN: "open" > | < AS: "as" >
 
-	<operator1> ::= (“->“ | “in“ | “+“ | “&“ | “-“)
+      | < ABSTRACT: "abstract"> | < SIG: "sig"> | < EXTENDS: "extends">
 
-	<sig> ::= [<mult>] [“abstract“]  “sig“ <name> [<extends>] <Body>
+      | < ENUM: "enum" > | < FACT: "fact" > | < ASSERT: "assert" > | < UNIV: "univ" >
 
-	<sigWithAppFact> ::= <sig> <Body>
+      | < THIS: "this" > | < SEQINT: "seq/Int" > | < PRIVATE: "private" > | < DISJ: "disj" >
 
-	<extends> ::= ("in" | “extends“) <ref> {"+" <ref>}
+      | < FUN: "fun" >  | < PRED: "pred" > | < FOR: "for" > | < BUT: "but" > | < RUN: "run" >
+}
 
-	<enum> ::= "enum" <name> "{" <name>  {"," <name>}  "}"
+/* LITERALS */
 
-	<fact> ::= “fact“ <factName> <Body>
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+}
 
-	<assert> ::= “assert“ <assertName> <Body>
+/* IDENTIFIERS */
 
-	<ref> ::= <thisOrName> | "univ" | "Int" | "seq/Int"
+TOKEN :
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be7"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
 
-	<thisOrName> ::= ["this" | <sigName>]  {"/" <sigName>}
+/* SEPARATORS */
 
-	<param> ::= ([(<multAll> | “disj“)] <varName> {“,“ <varName>} “:“ [<multSet>] <sigName> | [(<multAll> | “disj“)] <varName> {“,“ <varName>} “:“ <ref> 				          <operator1> <ref>)
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < COMMA: "," >
+| < DOT: "." >
+}
 
-	<function> ::=  [“private“] “fun“ <funName> [“[“ <param> {“,“ <param>}  “]“] <Body>
+/* OPERATORS */
 
-	<predicate> ::= [“private“] “pred“ <predName> “[“<param> {“,“ <param>}“]“ <Body>
+TOKEN :
+{
+  < PLUS: "+" >
+| < MINUS: "-" >
+| < STAR: "*" >
+| < SLASH: "/" >
+}
 
-	<checkCmd> ::=  “check“ <assertName> <natInteger> [“but“ <natInteger> <sigName> {“,“ <natInteger> <sigName>}]
+GRAMMARSTART
 
-RunCmd : "run" PredName "for" NatInteger SigName ( "," NatInteger SigName )* ;
+DigitNo0 : "1" | "2" |  "3" | "4" |"5" |"6" |"7" |"8" | "9" ;
 
-Module : [ ModuleName [ SigName ( "," SigName> )* ] ] (Open)* (Content)* ;
-				
-Open : ["private"] "open" ModuleName "[" SigName ( "," SigName )* "]" [ "as" Name ]	;
+Digit : DigitNo0 | "0" ;
 
-Content	: Sig  
-		| Enum 
-		| Fact 
-		| Assert 
-		| CheckCmd 
-		| Fun 
-		| Pred 
-		| RunCmd
-		;
+NatInteger : DigitNo0 (Digit)* ;
+
+Integer : "-" DigitNo0 (NatInteger)* | DigitNo0 (NatInteger)*;
+
+Specification : 
+	[Module] 
+	(Open)* 
+	(Paragraph)*
+	<EOF>
+	;
+
+Module : "module" Name  [ ExactlyClause ] ;
+
+ExactlyClause : "["  [<EXACTLY>] Name  (ExactlyClauseListElement)* "]" ;
+
+ExactlyClauseListElement : "," [<EXACTLY>] NatInteger ;
+
+Open : [<PRIVATE>] <OPEN>  Name  [RefClause]  [ AsClause ] ;
+
+RefClause :  "[" Ref ( "," Ref )+ "]" ;
+
+AsClause : "as" Name ;
+
+Paragraph : FactDecl | AssertDecl | FunDecl | CmdDecl | EnumDecl | SigDecl ;
+
+FactDecl : "fact" [Name] Block ;
+
+AssertDecl : "assert" [Name] Block ;
+
+FunDecl : [<PRIVATE>] "fun" [Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
+         |[<PRIVATE>] "fun" [Ref "."] Name ":" Expr Block
+         |[<PRIVATE>] "pred" [Ref "."] Name "(" Decl ("," Decl)* ")" Block
+         |[<PRIVATE>] "pred" [Ref "."] Name Block ;
+
+CmdDecl :[ Name ":" ] [ RunOrCheck ] [ NameOrBlock ] Scope ;
+
+RunOrCheck : "run" | "check" ;
+
+NameOrBlock : Name | Block ;
+
+Scope :  "for" NatInteger [ <EXPECT> ]
+       | "for" NatInteger "but" TypeScope ("," TypeScope)+ [ <EXPECT> ]
+       | "for" TypeScope ("," TypeScope)+ [ <EXPECT> ]
+       | [ <EXPECT> ] ;
+
+TypeScope : [ <EXACTLY> ] NatInteger [ TypeScopeClause ] ;
+
+TypeScopeClause : Name | "int" | "seq" ;
+
+SigDecl : (SigQual)* "sig" Name (Name ",")+ [SigExt] "{" Decl ("," Decl)* "}" [Block] ;
+
+EnumDecl : "enum" Name "{" Name  ( "," Name )*  "}" ;
+
+SigQual : "abstract" | "lone" | "one" | "some" | "private" ;
+
+SigExt : "extends" Ref | "in" Ref ( "+" Ref )* ;
+
+Expr : "let" LetDecl ("," LetDecl)+ BlockOrBar
+       | Quant Decl ("," Decl)+ BlockOrBar
+       | UnOp Expr
+       | Expr BinOp   Expr
+       | Expr ArrowOp Expr
+       | Expr [ NotClause ] "?" CompareOp Expr
+       | Expr [ ImpliesClause ] Expr "else" Expr
+       | Expr "[" Expr ("," Expr)* "]"
+       | NatInteger
+       | "-" NatInteger
+       | "none"
+       | "iden"
+       | "univ"
+       | "Int"
+       | "seq/Int"
+       | "(" Expr ")"
+       | [<AT>] Name
+       | Block
+       | "{" Decl ("," Decl)+ BlockOrBar "}" ;
+
+NotClause : "!" | "not" ;
+
+ImpliesClause : "=>" | "implies" ;
+Decl : [ <PRIVATE> ] [ <DISJ> ] Name ("," Name)+ ":" [ <DISJ> ] Expr ;
+
+LetDecl : Name "=" Expr ;
+
+Quant : "all" | "no" | "some" | "lone" | "one" | "sum" ;
+
+BinOp : "||" | "or" | "&&" | "and" | "&" | "<=>" | "iff"
+        | "=>" | "implies" | "+" | "-" | "++" | "<:" | ":>" | "." | "<<" | ">>" | ">>>" ;
+
+ArrowOp :  [ArrowOpClause] "->" [ArrowOpClause] ;
+
+ArrowOpClause : "some" | "one" | "lone" | "set" ;
+
+CompareOp : "=" | "in" | "<" | ">" | "=<" | ">=" ;
+
+UnOp : "!" | "not" | "no" | "some" | "lone" | "one" | "set" | "seq" | "#" | "~" | "*" | "^" ;
+
+Block : "{" (Expr)* "}" ;
+
+BlockOrBar : Block | "|" Expr ;
+
+Name : [ NameClause ] ( "/" <IDENTIFIER> )* ;
+
+NameClause : "this" | <IDENTIFIER> ;
+
+Ref : Name | "univ" | "Int" | "seq/Int" ;
