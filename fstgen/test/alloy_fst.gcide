@@ -107,6 +107,8 @@ TOKEN :
 {
   < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
 |
+  < NUMBER: (<DIGIT>)* >
+|
   < #LETTER:
       [
        "\u0041"-"\u005a",
@@ -148,13 +150,9 @@ TOKEN :
 
 GRAMMARSTART
 
-DigitNo0 : "1" | "2" |  "3" | "4" |"5" |"6" |"7" |"8" | "9" ;
+NatInteger : <NUMBER> ;
 
-Digit : DigitNo0 | "0" ;
-
-NatInteger : DigitNo0 (Digit)* ;
-
-Integer : "-" DigitNo0 (NatInteger)* | DigitNo0 (NatInteger)*;
+Integer : "-" NatInteger | NatInteger;
 
 Specification : 
 	[Module] 
@@ -169,22 +167,22 @@ ExactlyClause : "["  [<EXACTLY>] Name  (ExactlyClauseListElement)* "]" ;
 
 ExactlyClauseListElement : "," [<EXACTLY>] NatInteger ;
 
-Open : [<PRIVATE>] <OPEN>  Name  [RefClause]  [ AsClause ] ;
+Open : [<PRIVATE>] "open"  Name  [RefClause]  [ AsClause ] ;
 
 RefClause :  "[" Ref ( "," Ref )+ "]" ;
 
 AsClause : "as" Name ;
 
-Paragraph : FactDecl | AssertDecl | FunDecl | CmdDecl | EnumDecl | SigDecl ;
+Paragraph : FactDecl | AssertDecl | FunDecl | CmdDecl | EnumDecl | SigDecl ; 
 
 FactDecl : "fact" Block ;
 
 AssertDecl : "assert" Block ;
 
-FunDecl : [<PRIVATE>] "fun" [Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
-         |[<PRIVATE>] "fun" [Ref "."] Name ":" Expr Block
-         |[<PRIVATE>] "pred" [Ref "."] Name "(" Decl ("," Decl)* ")" Block
-         |[<PRIVATE>] "pred" [Ref "."] Name Block ;
+FunDecl :  ["private" <NONE>] "fun" [Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
+         | ["private" <NONE>] "fun" [Ref "."] Name ":" Expr Block
+         | ["private" <NONE>] "pred" [Ref "."] Name "(" Decl ("," Decl)* ")" Block
+         | ["private" <NONE>] "pred" [Ref "."] Name Block ;
 
 CmdDecl : [ CmdDeclClause ] [ RunOrCheck ] NameOrBlock Scope ;
 
@@ -212,14 +210,29 @@ SigQual : "abstract" | "lone" | "one" | "some" | "private" ;
 
 SigExt : "extends" Ref | "in" Ref ( "+" Ref )* ;
 
-Expr : "let" LetDecl ("," LetDecl)+ BlockOrBar
+Expr : Expr1 [ BinOpExpr ] ;
+
+BinOpExpr : BinOp Expr;
+
+Expr1 : Expr2 [ ArrowOpExpr ] ;
+
+ArrowOpExpr : ArrowOp Expr ;
+
+Expr2 : Expr3 [ CompareOpExpr ] ;
+
+CompareOpExpr : [ NotClause ] "?" CompareOp Expr ;
+
+Expr3 : Expr4 [ ElseExpr ] ;
+
+ElseExpr : [ ImpliesClause ] Expr "else" Expr ;
+
+Expr4 :  Expr5 [ ExprList ] ;
+
+ExprList : "[" Expr ("," Expr)* "]" ;
+
+Expr5 : "let" LetDecl ("," LetDecl)+ BlockOrBar
        | Quant Decl ("," Decl)+ BlockOrBar
        | UnOp Expr
-       | Expr BinOp Expr
-       | Expr ArrowOp Expr
-       | Expr [ NotClause ] "?" CompareOp Expr
-       | Expr [ ImpliesClause ] Expr "else" Expr
-       | Expr "[" Expr ("," Expr)* "]"
        | NatInteger
        | "-" NatInteger
        | "none"
