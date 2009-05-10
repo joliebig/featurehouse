@@ -3,7 +3,8 @@ open color[Edge, Node]
 
 sig Graph {
 	node: some Node,
-	edge: set Edge
+	edge: set Edge,
+	id: one Int
 }
 
 // A node in the graph

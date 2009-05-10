@@ -3,10 +3,10 @@ options {
 }
 
 PARSER_BEGIN(AlloyParser)
-
+package tmp.generated_alloy;
 import cide.gast.*;
 import cide.gparser.*;
-
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 
 public class AlloyParser extends AbstractFSTParser
 {
@@ -82,6 +82,13 @@ TOKEN :
       | < THIS: "this" > | < SEQINT: "seq/Int" > | < PRIVATE: "private" > | < DISJ: "disj" >
 
       | < FUN: "fun" >  | < PRED: "pred" > | < FOR: "for" > | < BUT: "but" > | < RUN: "run" >
+      
+      | < OR: "or" >  | < AND1: "and" > | < IFF: "iff" > | < SUM: "sum" > | < seq: "seq" >
+      
+      | < LET: "let" >  | < NOT: "not" > | < SOME1: "some" > | < ELSE: "else" > | < NONE1: "none" >
+      
+      | < IDEN: "iden" >  | < CHECK: "check" > | < MODULE: "module" > | < IMPLIES: "implies" >
+
 }
 
 /* LITERALS */
@@ -107,7 +114,7 @@ TOKEN :
 {
   < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
 |
-  < NUMBER: (<DIGIT>)* >
+  < NUMBER: <DIGIT> (<DIGIT>)* >
 |
   < #LETTER:
       [
@@ -156,7 +163,7 @@ Integer : "-" NatInteger | NatInteger;
 
 Specification : 
 	[Module] 
-	(Open)* 
+	(LL(10) Open)* 
 	(Paragraph)*
 	<EOF>
 	;
@@ -173,18 +180,18 @@ RefClause :  "[" Ref ( "," Ref )+ "]" ;
 
 AsClause : "as" Name ;
 
-Paragraph : FactDecl | AssertDecl | FunDecl | CmdDecl | EnumDecl | SigDecl ; 
+Paragraph : FactDecl | AssertDecl | LL(10) FunDecl | CmdDecl | EnumDecl | SigDecl ; 
 
 FactDecl : "fact" Block ;
 
 AssertDecl : "assert" Block ;
 
-FunDecl :  ["private" <NONE>] "fun" [Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
-         | ["private" <NONE>] "fun" [Ref "."] Name ":" Expr Block
-         | ["private" <NONE>] "pred" [Ref "."] Name "(" Decl ("," Decl)* ")" Block
-         | ["private" <NONE>] "pred" [Ref "."] Name Block ;
+FunDecl :  LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
+         | LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name ":" Expr Block
+         | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name "(" Decl ("," Decl)* ")" Block
+         | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name Block ;
 
-CmdDecl : [ CmdDeclClause ] [ RunOrCheck ] NameOrBlock Scope ;
+CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock Scope ;
 
 CmdDeclClause : Name ":" ;
 
@@ -192,9 +199,9 @@ RunOrCheck : "run" | "check" ;
 
 NameOrBlock : Name | Block | <NONE>;
 
-Scope :  "for" NatInteger [ <EXPECT> ]
-       | "for" NatInteger "but" TypeScope ("," TypeScope)+ [ <EXPECT> ]
-       | "for" TypeScope ("," TypeScope)+ [ <EXPECT> ]
+Scope :  LL(3) "for" NatInteger [ <EXPECT> ]
+       | LL(3) "for" NatInteger "but" TypeScope ("," TypeScope)+ [ <EXPECT> ]
+       | LL(3) "for" TypeScope ("," TypeScope)+ [ <EXPECT> ]
 //     | [ <EXPECT> ]
        ;
 
@@ -202,7 +209,9 @@ TypeScope : [ <EXACTLY> ] NatInteger TypeScopeClause ;
 
 TypeScopeClause : Name | "int" | "seq" | <NONE>;
 
-SigDecl : (SigQual)* "sig" Name (Name ",")+ [SigExt] "{" Decl ("," Decl)* "}" [Block] ;
+SigDecl : (SigQual)* "sig" Name ("," Name)* [SigExt] "{" [Decls] "}" [LL(1) Block] ;
+
+Decls : Decl ("," Decl)* ;
 
 EnumDecl : "enum" Name "{" Name  ( "," Name )*  "}" ;
 
@@ -210,28 +219,28 @@ SigQual : "abstract" | "lone" | "one" | "some" | "private" ;
 
 SigExt : "extends" Ref | "in" Ref ( "+" Ref )* ;
 
-Expr : Expr1 [ BinOpExpr ] ;
+Expr : Expr1 [ LL(2) BinOpExpr ] ;
 
 BinOpExpr : BinOp Expr;
 
-Expr1 : Expr2 [ ArrowOpExpr ] ;
+Expr1 : Expr2 [ LL(2) ArrowOpExpr ] ;
 
 ArrowOpExpr : ArrowOp Expr ;
 
-Expr2 : Expr3 [ CompareOpExpr ] ;
+Expr2 : Expr3 [ LL(2) CompareOpExpr ] ;
 
 CompareOpExpr : [ NotClause ] "?" CompareOp Expr ;
 
-Expr3 : Expr4 [ ElseExpr ] ;
+Expr3 : Expr4 [ LL(2) ElseExpr ] ;
 
 ElseExpr : [ ImpliesClause ] Expr "else" Expr ;
 
-Expr4 :  Expr5 [ ExprList ] ;
+Expr4 :  Expr5 [ LL(2) ExprList ] ;
 
 ExprList : "[" Expr ("," Expr)* "]" ;
 
-Expr5 : "let" LetDecl ("," LetDecl)+ BlockOrBar
-       | Quant Decl ("," Decl)+ BlockOrBar
+Expr5 : "let" LetDecl ("," LetDecl)* BlockOrBar
+       | LL(3) Quant Decl ("," Decl)* BlockOrBar
        | UnOp Expr
        | NatInteger
        | "-" NatInteger
@@ -241,15 +250,16 @@ Expr5 : "let" LetDecl ("," LetDecl)+ BlockOrBar
        | "Int"
        | "seq/Int"
        | "(" Expr ")"
-       | Block
+       | LL(3) Block
        | [ "as" <NONE> ] NonEmptyName
-       | "{" Decl ("," Decl)+ BlockOrBar "}" 
+       | "{" Decl ("," Decl)* BlockOrBar "}" 
        ;
 
 NotClause : "!" | "not" ;
 
 ImpliesClause : "=>" | "implies" ;
-Decl : [ <PRIVATE> ] [ <DISJ> ] Name ("," Name)+ ":" [ <DISJ> ] Expr ;
+
+Decl : [ "private" <NONE> ] [ "disj" <NONE> ] Name ("," Name)* ":" [ "disj" <NONE> ] Expr ;
 
 LetDecl : Name "=" Expr ;
 
@@ -258,7 +268,7 @@ Quant : "all" | "no" | "some" | "lone" | "one" | "sum" ;
 BinOp : "||" | "or" | "&&" | "and" | "&" | "<=>" | "iff"
         | "=>" | "implies" | "+" | "-" | "++" | "<:" | ":>" | "." | "<<" | ">>" | ">>>" ;
 
-ArrowOp :  [ArrowOpClause] "->" [ArrowOpClause] ;
+ArrowOp :  [LL(2) ArrowOpClause] "->" [LL(2) ArrowOpClause] ;
 
 ArrowOpClause : "some" | "one" | "lone" | "set" ;
 
@@ -270,7 +280,7 @@ Block : "{" (Expr)* "}" ;
 
 BlockOrBar : Block | "|" Expr ;
 
-Name :  NameClause  ( "/" <IDENTIFIER> )* ;
+Name :  NameClause  ( LL(2) "/" <IDENTIFIER> )* ;
 
 NameClause : "this" | <IDENTIFIER> | <NONE> ;
 
