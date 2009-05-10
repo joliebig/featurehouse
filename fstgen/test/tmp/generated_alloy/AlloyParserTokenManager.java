@@ -15,7 +15,7 @@ private final int jjStopStringLiteralDfa_0(int pos, long active0, long active1)
       case 0:
          if ((active0 & 0x140L) != 0L || (active1 & 0x8000L) != 0L)
             return 2;
-         if ((active0 & 0xffffffffff8c000L) != 0L)
+         if ((active0 & 0xffffffffff8c000L) != 0L || (active1 & 0x800L) != 0L)
          {
             jjmatchedKind = 64;
             return 8;
@@ -147,7 +147,7 @@ private final int jjMoveStringLiteralDfa0_0()
          jjmatchedKind = 77;
          return jjMoveStringLiteralDfa1_0(0x2000L, 0x0L);
       case 46:
-         return jjStopAtPos(0, 75);
+         return jjStartNfaWithStates_0(0, 64, 8);
       case 47:
          jjmatchedKind = 79;
          return jjMoveStringLiteralDfa1_0(0x140L, 0x0L);
@@ -678,6 +678,12 @@ private final int jjMoveNfa_0(int startState, int curPos)
                         kind = 65;
                      jjCheckNAdd(9);
                   }
+                  else if (curChar == 46)
+                  {
+                     if (kind > 64)
+                        kind = 64;
+                     jjCheckNAdd(8);
+                  }
                   else if (curChar == 47)
                      jjstateSet[jjnewStateCnt++] = 2;
                   if ((0x3fe000000000000L & l) != 0L)
@@ -719,12 +725,19 @@ private final int jjMoveNfa_0(int startState, int curPos)
                      kind = 60;
                   jjCheckNAddTwoStates(5, 6);
                   break;
-               case 8:
-                  if ((0x3ff000000000000L & l) == 0L)
+               case 7:
+                  if (curChar != 46)
                      break;
                   if (kind > 64)
                      kind = 64;
-                  jjstateSet[jjnewStateCnt++] = 8;
+                  jjCheckNAdd(8);
+                  break;
+               case 8:
+                  if ((0x3ff400000000000L & l) == 0L)
+                     break;
+                  if (kind > 64)
+                     kind = 64;
+                  jjCheckNAdd(8);
                   break;
                case 9:
                   if ((0x3ff000000000000L & l) == 0L)

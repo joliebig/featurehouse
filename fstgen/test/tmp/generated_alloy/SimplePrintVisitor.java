@@ -83,8 +83,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("FunDecl1") && expectedType.equals("FunDecl")) return true;
 		if (type.equals("BinOp17") && expectedType.equals("BinOp")) return true;
 		if (type.equals("Expr57") && expectedType.equals("Expr5")) return true;
-		if (type.equals("TypeScopeClause1") && expectedType.equals("TypeScopeClause")) return true;
 		if (type.equals("SigQual1") && expectedType.equals("SigQual")) return true;
+		if (type.equals("TypeScopeClause1") && expectedType.equals("TypeScopeClause")) return true;
 		if (type.equals("BinOp3") && expectedType.equals("BinOp")) return true;
 		if (type.equals("NameOrBlock3") && expectedType.equals("NameOrBlock")) return true;
 		if (type.equals("UnOp3") && expectedType.equals("UnOp")) return true;
@@ -105,6 +105,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("TypeScopeClause3") && expectedType.equals("TypeScopeClause")) return true;
 		if (type.equals("Expr511") && expectedType.equals("Expr5")) return true;
 		if (type.equals("BinOp5") && expectedType.equals("BinOp")) return true;
+		if (type.equals("FunDecl6") && expectedType.equals("FunDecl")) return true;
 		if (type.equals("NameOrBlock1") && expectedType.equals("NameOrBlock")) return true;
 		if (type.equals("ArrowOpClause4") && expectedType.equals("ArrowOpClause")) return true;
 		if (type.equals("RunOrCheck2") && expectedType.equals("RunOrCheck")) return true;
@@ -118,6 +119,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("BinOp18") && expectedType.equals("BinOp")) return true;
 		if (type.equals("TypeScopeClause4") && expectedType.equals("TypeScopeClause")) return true;
 		if (type.equals("Expr510") && expectedType.equals("Expr5")) return true;
+		if (type.equals("FunDecl5") && expectedType.equals("FunDecl")) return true;
 		if (type.equals("Expr58") && expectedType.equals("Expr5")) return true;
 		if (type.equals("Paragraph1") && expectedType.equals("Paragraph")) return true;
 		if (type.equals("BinOp6") && expectedType.equals("BinOp")) return true;

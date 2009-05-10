@@ -118,6 +118,7 @@ TOKEN :
 |
   < #LETTER:
       [
+       "\u002e",
        "\u0041"-"\u005a",
        "\u005f",
        "\u0061"-"\u007a"
@@ -186,10 +187,12 @@ FactDecl : "fact" Block ;
 
 AssertDecl : "assert" Block ;
 
-FunDecl :  LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name "(" Decl ("," Decl)* ")" ":" Expr Block
-         | LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name ":" Expr Block
-         | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name "(" Decl ("," Decl)* ")" Block
-         | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name Block ;
+FunDecl : LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name "(" [Decls] ")" ":" Expr Block
+        | LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name "[" [Decls] "]" ":" Expr Block
+        | LL(7) ["private" <NONE>] "fun" [LL(1) Ref "."] Name                 ":" Expr Block
+        | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name "(" [Decls] ")" Block
+        | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name "[" [Decls] "]" Block
+        | LL(7) ["private" <NONE>] "pred" [LL(1) Ref "."] Name Block ;
 
 CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock Scope ;
 

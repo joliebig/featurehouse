@@ -1,48 +1,34 @@
-module basicGraph
-open color[Edge, Node]
+/**
+ * An incomplete model of an address book.
+ */
 
-sig Graph {
-	node: some Node,
-	edge: set Edge,
-	id: one Int
+abstract sig Target {}
+sig Name extends Target {}
+sig Addr extends Target {}
+
+sig Book { addr: Name -> Target }
+
+pred init [b: Book] { no b.addr }
+
+pred inv [b: Book] {
+  let addr = b.addr | all n: Name {
+    n not in n.^addr
+    some addr.n => some n.addr
+  }
 }
 
-// A node in the graph
-sig Node {
-	id: one Int
+fun lookup [b: Book, n: Name] : set Addr {
+  n.^(b.addr) & Addr
 }
 
-// there is at least one node in the graph - redundant
-assert atLeastOneNode {
-	all g: Graph |some g.node
+assert namesResolve {
+  all b: Book | inv[b] =>
+    all n: Name | some b.addr[n] => some lookup[b, n]
 }
+check namesResolve for 4
 
-// all nodes are disjunct
-fact a {
-	all disj n1, n2: Node | n1.id != n2.id
+pred add [b, b': Book, n: Name, t: Target] {
+  b'.addr = b.addr + n->t
 }
+run add
 
-// a node can only be in one Graph
-fact b {
-	all n: Node | some g: Graph | n in g.node
-}
-
-// An edge in the graph
-sig Edge {
-	n1, n2: Node
-} 
-
-// an edge can only be in one Graph
-fact c {
-	all e: Edge | one g: Graph | e in g.edge
-}
-
-// add one Node 
-pred addNode [n: Node, g: Graph] {
-	g.node = g.node + n	
-}
-
-// check it for a scope of 5
-check atLeastOneNode for 5
-
-run addNode for 5 Node, 1 Graph, 2 Edge 
