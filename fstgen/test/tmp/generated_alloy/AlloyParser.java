@@ -43,8 +43,8 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case MODULE:
-      n = Module(true);
-                         replaceName(n);
+      n = Module(inTerminal);
+                               replaceName(n);
       break;
     default:
       jj_la1[1] = jj_gen;
@@ -57,8 +57,8 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       } else {
         break label_1;
       }
-      n = Open(true);
-                                                                        replaceName(n);
+      n = Open(inTerminal);
+                                                                                    replaceName(n);
     }
     label_2:
     while (true) {
@@ -75,7 +75,6 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       case PRIVATE:
       case FUN:
       case PRED:
-      case FOR:
       case RUN:
       case SOME1:
       case CHECK:
@@ -88,11 +87,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         jj_la1[2] = jj_gen;
         break label_2;
       }
-      n = Paragraph(true);
-                                                                                                               replaceName(n);
+      n = Paragraph(inTerminal);
+                                                                                                                                 replaceName(n);
     }
     jj_consume_token(0);
-                                                                                                                                         {if (true) return productionEndTerminal("Specification","-","-","Replacement",first,token);}
+                                                                                                                                                           {if (true) return productionEndNonTerminal("Specification","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -100,18 +99,19 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(MODULE);
-    n = Name(true);
-                               replaceName(n);
+    n = Name(inTerminal);
+                                     replaceName("Name", n);
+                                                               replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
-      n = ExactlyClause(true);
-                                                                        replaceName(n);
+      n = ExactlyClause(inTerminal);
+                                                                                                              replaceName(n);
       break;
     default:
       jj_la1[3] = jj_gen;
       ;
     }
-                                                                                           {if (true) return productionEndTerminal("Module","-","-","Replacement",first,token);}
+                                                                                                                                 {if (true) return productionEndNonTerminal("Module","{Name}","{Name}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -177,12 +177,13 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       ;
     }
     jj_consume_token(OPEN);
-    n = Name(true);
-                                         replaceName(n);
+    n = Name(inTerminal);
+                                               replaceName("Name", n);
+                                                                         replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
-      n = RefClause(true);
-                                                                              replaceName(n);
+      n = RefClause(inTerminal);
+                                                                                                                    replaceName(n);
       break;
     default:
       jj_la1[8] = jj_gen;
@@ -190,14 +191,14 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case AS:
-      n = AsClause(true);
-                                                                                                                   replaceName(n);
+      n = AsClause(inTerminal);
+                                                                                                                                                               replaceName(n);
       break;
     default:
       jj_la1[9] = jj_gen;
       ;
     }
-                                                                                                                                      {if (true) return productionEndTerminal("Open","-","-","Replacement",first,token);}
+                                                                                                                                                                                  {if (true) return productionEndNonTerminal("Open","{Name}","{Name}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -209,9 +210,6 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                          replaceName(n);
     label_4:
     while (true) {
-      jj_consume_token(COMMA);
-      n = Ref(true);
-                                                            replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
         ;
@@ -220,6 +218,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         jj_la1[10] = jj_gen;
         break label_4;
       }
+      jj_consume_token(COMMA);
+      n = Ref(true);
+                                                            replaceName(n);
     }
     jj_consume_token(RBRACKET);
                                                                                     {if (true) return productionEndTerminal("RefClause","-","-","Replacement",first,token);}
@@ -241,39 +242,43 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FACT:
-      n = FactDecl(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Paragraph1","-","-","Replacement",first,token);}
+      n = FactDecl(inTerminal);
+                                replaceName("FactDecl", n);
+                                                              replaceName(n);
+                                                                                {if (true) return productionEndNonTerminal("Paragraph1","{FactDecl}","{FactDecl}");}
       break;
     case ASSERT:
-      n = AssertDecl(true);
-                            replaceName(n);
-                                              {if (true) return productionEndTerminal("Paragraph2","-","-","Replacement",first,token);}
+      n = AssertDecl(inTerminal);
+                                  replaceName("AssertDecl", n);
+                                                                  replaceName(n);
+                                                                                    {if (true) return productionEndNonTerminal("Paragraph2","{AssertDecl}","{AssertDecl}");}
       break;
     default:
       jj_la1[11] = jj_gen;
-      if (jj_2_2(10)) {
-        n = FunDecl(true);
-                                       replaceName(n);
-                                                         {if (true) return productionEndTerminal("Paragraph3","-","-","Replacement",first,token);}
+      if (jj_2_2(2)) {
+        n = FunDecl(inTerminal);
+                                            replaceName("FunDecl", n);
+                                                                         replaceName(n);
+                                                                                           {if (true) return productionEndNonTerminal("Paragraph3","{FunDecl}","{FunDecl}");}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COLON:
         case THIS:
-        case FOR:
         case RUN:
         case CHECK:
         case IDENTIFIER:
         case LBRACE:
         case SLASH:
-          n = CmdDecl(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("Paragraph4","-","-","Replacement",first,token);}
+          n = CmdDecl(inTerminal);
+                               replaceName("CmdDecl", n);
+                                                            replaceName(n);
+                                                                              {if (true) return productionEndNonTerminal("Paragraph4","{CmdDecl}","{CmdDecl}");}
           break;
         case ENUM:
-          n = EnumDecl(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Paragraph5","-","-","Replacement",first,token);}
+          n = EnumDecl(inTerminal);
+                                replaceName("EnumDecl", n);
+                                                              replaceName(n);
+                                                                                {if (true) return productionEndNonTerminal("Paragraph5","{EnumDecl}","{EnumDecl}");}
           break;
         case LONE:
         case ONE:
@@ -281,9 +286,10 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         case SIG:
         case PRIVATE:
         case SOME1:
-          n = SigDecl(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("Paragraph6","-","-","Replacement",first,token);}
+          n = SigDecl(inTerminal);
+                               replaceName("SigDecl", n);
+                                                            replaceName(n);
+                                                                              {if (true) return productionEndNonTerminal("Paragraph6","{SigDecl}","{SigDecl}");}
           break;
         default:
           jj_la1[12] = jj_gen;
@@ -299,19 +305,12 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(FACT);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case THIS:
-    case IDENTIFIER:
-      n = NonEmptyName(true);
-                                      replaceName(n);
-      break;
-    default:
-      jj_la1[13] = jj_gen;
-      ;
-    }
-    n = Block(true);
+    n = MaybeName(inTerminal);
+                                        replaceName("MaybeName", n);
                                                                        replaceName(n);
-                                                                                         {if (true) return productionEndTerminal("FactDecl","-","-","Replacement",first,token);}
+    n = Block(inTerminal);
+                                                                                                             replaceName(n);
+                                                                                                                               {if (true) return productionEndNonTerminal("FactDecl","{MaybeName}","{MaybeName}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -319,19 +318,12 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ASSERT);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case THIS:
-    case IDENTIFIER:
-      n = NonEmptyName(true);
-                                        replaceName(n);
-      break;
-    default:
-      jj_la1[14] = jj_gen;
-      ;
-    }
-    n = Block(true);
+    n = MaybeName(inTerminal);
+                                          replaceName("MaybeName", n);
                                                                          replaceName(n);
-                                                                                           {if (true) return productionEndTerminal("AssertDecl","-","-","Replacement",first,token);}
+    n = Block(inTerminal);
+                                                                                                               replaceName(n);
+                                                                                                                                 {if (true) return productionEndNonTerminal("AssertDecl","{MaybeName}","{MaybeName}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -344,43 +336,117 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         jj_consume_token(PRIVATE);
         break;
       default:
-        jj_la1[15] = jj_gen;
+        jj_la1[13] = jj_gen;
         ;
       }
       jj_consume_token(FUN);
       if (jj_2_3(2147483647)) {
-        n = Ref(true);
-                                                                           replaceName(n);
+        n = Ref(inTerminal);
+                                                                                 replaceName(n);
         jj_consume_token(DOT);
       } else {
         ;
       }
-      n = Name(true);
-                                                                                                               replaceName(n);
+      n = Name(inTerminal);
+                                                                                                                           replaceName("Name", n);
+                                                                                                                                                     replaceName(n);
       jj_consume_token(LPAREN);
+      n = FunParams(inTerminal);
+                                                                                                                                                                                                   replaceName("FunParams", n);
+                                                                                                                                                                                                                                  replaceName(n);
+      jj_consume_token(RPAREN);
+      jj_consume_token(COLON);
+      n = Expr(inTerminal);
+                                                                                                                                                                                                                                                                               replaceName(n);
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                                                                     replaceName(n);
+                                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("FunDecl1","{Name}({FunParams})","{Name}({FunParams})");}
+    } else if (jj_2_10(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COLON:
-      case THIS:
       case PRIVATE:
-      case DISJ:
-      case IDENTIFIER:
-      case COMMA:
-      case SLASH:
-        n = Decls(true);
-                                                                                                                                                    replaceName(n);
+        jj_consume_token(PRIVATE);
+        break;
+      default:
+        jj_la1[14] = jj_gen;
+        ;
+      }
+      jj_consume_token(FUN);
+      if (jj_2_4(2147483647)) {
+        n = Ref(inTerminal);
+                                                                                 replaceName(n);
+        jj_consume_token(DOT);
+      } else {
+        ;
+      }
+      n = Name(inTerminal);
+                                                                                                                           replaceName("Name", n);
+                                                                                                                                                     replaceName(n);
+      jj_consume_token(LBRACKET);
+      n = FunParams(inTerminal);
+                                                                                                                                                                                                   replaceName("FunParams", n);
+                                                                                                                                                                                                                                  replaceName(n);
+      jj_consume_token(RBRACKET);
+      jj_consume_token(COLON);
+      n = Expr(inTerminal);
+                                                                                                                                                                                                                                                                               replaceName(n);
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                                                                     replaceName(n);
+                                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("FunDecl2","{Name}({FunParams})","{Name}({FunParams})");}
+    } else if (jj_2_11(7)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case PRIVATE:
+        jj_consume_token(PRIVATE);
+        break;
+      default:
+        jj_la1[15] = jj_gen;
+        ;
+      }
+      jj_consume_token(FUN);
+      if (jj_2_5(2147483647)) {
+        n = Ref(inTerminal);
+                                                                                 replaceName(n);
+        jj_consume_token(DOT);
+      } else {
+        ;
+      }
+      n = Name(inTerminal);
+                                                                                                                           replaceName("Name", n);
+                                                                                                                                                     replaceName(n);
+      jj_consume_token(COLON);
+      n = Expr(inTerminal);
+                                                                                                                                                                                              replaceName(n);
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                    replaceName(n);
+                                                                                                                                                                                                                                                      {if (true) return productionEndNonTerminal("FunDecl3","{Name}({FunParams})","{Name}({FunParams})");}
+    } else if (jj_2_12(7)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case PRIVATE:
+        jj_consume_token(PRIVATE);
         break;
       default:
         jj_la1[16] = jj_gen;
         ;
       }
+      jj_consume_token(PRED);
+      if (jj_2_6(2147483647)) {
+        n = Ref(inTerminal);
+                                                                                  replaceName(n);
+        jj_consume_token(DOT);
+      } else {
+        ;
+      }
+      n = Name(inTerminal);
+                                                                                                                            replaceName("Name", n);
+                                                                                                                                                      replaceName(n);
+      jj_consume_token(LPAREN);
+      n = FunParams(inTerminal);
+                                                                                                                                                                                                    replaceName("FunParams", n);
+                                                                                                                                                                                                                                   replaceName(n);
       jj_consume_token(RPAREN);
-      jj_consume_token(COLON);
-      n = Expr(true);
-                                                                                                                                                                                            replaceName(n);
-      n = Block(true);
-                                                                                                                                                                                                                            replaceName(n);
-                                                                                                                                                                                                                                              {if (true) return productionEndTerminal("FunDecl1","-","-","Replacement",first,token);}
-    } else if (jj_2_10(7)) {
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                             replaceName(n);
+                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("FunDecl4","{Name}({FunParams})","{Name}({FunParams})");}
+    } else if (jj_2_13(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
         jj_consume_token(PRIVATE);
@@ -389,168 +455,74 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         jj_la1[17] = jj_gen;
         ;
       }
-      jj_consume_token(FUN);
-      if (jj_2_4(2147483647)) {
-        n = Ref(true);
-                                                                           replaceName(n);
-        jj_consume_token(DOT);
-      } else {
-        ;
-      }
-      n = Name(true);
-                                                                                                               replaceName(n);
-      jj_consume_token(LBRACKET);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COLON:
-      case THIS:
-      case PRIVATE:
-      case DISJ:
-      case IDENTIFIER:
-      case COMMA:
-      case SLASH:
-        n = Decls(true);
-                                                                                                                                                    replaceName(n);
-        break;
-      default:
-        jj_la1[18] = jj_gen;
-        ;
-      }
-      jj_consume_token(RBRACKET);
-      jj_consume_token(COLON);
-      n = Expr(true);
-                                                                                                                                                                                            replaceName(n);
-      n = Block(true);
-                                                                                                                                                                                                                            replaceName(n);
-                                                                                                                                                                                                                                              {if (true) return productionEndTerminal("FunDecl2","-","-","Replacement",first,token);}
-    } else if (jj_2_11(7)) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PRIVATE:
-        jj_consume_token(PRIVATE);
-        break;
-      default:
-        jj_la1[19] = jj_gen;
-        ;
-      }
-      jj_consume_token(FUN);
-      if (jj_2_5(2147483647)) {
-        n = Ref(true);
-                                                                           replaceName(n);
-        jj_consume_token(DOT);
-      } else {
-        ;
-      }
-      n = Name(true);
-                                                                                                               replaceName(n);
-      jj_consume_token(COLON);
-      n = Expr(true);
-                                                                                                                                                  replaceName(n);
-      n = Block(true);
-                                                                                                                                                                                  replaceName(n);
-                                                                                                                                                                                                    {if (true) return productionEndTerminal("FunDecl3","-","-","Replacement",first,token);}
-    } else if (jj_2_12(7)) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PRIVATE:
-        jj_consume_token(PRIVATE);
-        break;
-      default:
-        jj_la1[20] = jj_gen;
-        ;
-      }
-      jj_consume_token(PRED);
-      if (jj_2_6(2147483647)) {
-        n = Ref(true);
-                                                                            replaceName(n);
-        jj_consume_token(DOT);
-      } else {
-        ;
-      }
-      n = Name(true);
-                                                                                                                replaceName(n);
-      jj_consume_token(LPAREN);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COLON:
-      case THIS:
-      case PRIVATE:
-      case DISJ:
-      case IDENTIFIER:
-      case COMMA:
-      case SLASH:
-        n = Decls(true);
-                                                                                                                                                     replaceName(n);
-        break;
-      default:
-        jj_la1[21] = jj_gen;
-        ;
-      }
-      jj_consume_token(RPAREN);
-      n = Block(true);
-                                                                                                                                                                                          replaceName(n);
-                                                                                                                                                                                                            {if (true) return productionEndTerminal("FunDecl4","-","-","Replacement",first,token);}
-    } else if (jj_2_13(7)) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PRIVATE:
-        jj_consume_token(PRIVATE);
-        break;
-      default:
-        jj_la1[22] = jj_gen;
-        ;
-      }
       jj_consume_token(PRED);
       if (jj_2_7(2147483647)) {
-        n = Ref(true);
-                                                                            replaceName(n);
+        n = Ref(inTerminal);
+                                                                                  replaceName(n);
         jj_consume_token(DOT);
       } else {
         ;
       }
-      n = Name(true);
-                                                                                                                replaceName(n);
+      n = Name(inTerminal);
+                                                                                                                            replaceName("Name", n);
+                                                                                                                                                      replaceName(n);
       jj_consume_token(LBRACKET);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COLON:
-      case THIS:
-      case PRIVATE:
-      case DISJ:
-      case IDENTIFIER:
-      case COMMA:
-      case SLASH:
-        n = Decls(true);
-                                                                                                                                                     replaceName(n);
-        break;
-      default:
-        jj_la1[23] = jj_gen;
-        ;
-      }
+      n = FunParams(inTerminal);
+                                                                                                                                                                                                    replaceName("FunParams", n);
+                                                                                                                                                                                                                                   replaceName(n);
       jj_consume_token(RBRACKET);
-      n = Block(true);
-                                                                                                                                                                                          replaceName(n);
-                                                                                                                                                                                                            {if (true) return productionEndTerminal("FunDecl5","-","-","Replacement",first,token);}
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                             replaceName(n);
+                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("FunDecl5","{Name}({FunParams})","{Name}({FunParams})");}
     } else if (jj_2_14(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
         jj_consume_token(PRIVATE);
         break;
       default:
-        jj_la1[24] = jj_gen;
+        jj_la1[18] = jj_gen;
         ;
       }
       jj_consume_token(PRED);
       if (jj_2_8(2147483647)) {
-        n = Ref(true);
-                                                                            replaceName(n);
+        n = Ref(inTerminal);
+                                                                                  replaceName(n);
         jj_consume_token(DOT);
       } else {
         ;
       }
-      n = Name(true);
-                                                                                                                replaceName(n);
-      n = Block(true);
-                                                                                                                                                replaceName(n);
-                                                                                                                                                                  {if (true) return productionEndTerminal("FunDecl6","-","-","Replacement",first,token);}
+      n = Name(inTerminal);
+                                                                                                                            replaceName("Name", n);
+                                                                                                                                                      replaceName(n);
+      n = Block(inTerminal);
+                                                                                                                                                                                            replaceName(n);
+                                                                                                                                                                                                              {if (true) return productionEndNonTerminal("FunDecl6","{Name}({FunParams})","{Name}({FunParams})");}
     } else {
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo FunParams(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case COLON:
+    case THIS:
+    case PRIVATE:
+    case DISJ:
+    case IDENTIFIER:
+    case COMMA:
+    case SLASH:
+      n = Decls(inTerminal);
+                              replaceName(n);
+      break;
+    default:
+      jj_la1[19] = jj_gen;
+      ;
+    }
+                                                 {if (true) return productionEndNonTerminal("FunParams","{TOSTRING}","{TOSTRING}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -562,28 +534,35 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     case THIS:
     case IDENTIFIER:
     case SLASH:
-      n = CmdDeclClause(true);
-                                             replaceName(n);
+      n = CmdDeclClause(inTerminal);
+                                                   replaceName(n);
       break;
     default:
-      jj_la1[25] = jj_gen;
+      jj_la1[20] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RUN:
     case CHECK:
-      n = RunOrCheck(true);
-                                                                                    replaceName(n);
+      n = RunOrCheck(inTerminal);
+                                                                                                replaceName(n);
       break;
     default:
-      jj_la1[26] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
-    n = NameOrBlock(true);
-                                                                                                                           replaceName(n);
-    n = Scope(true);
-                                                                                                                                                           replaceName(n);
-                                                                                                                                                                             {if (true) return productionEndTerminal("CmdDecl","-","-","Replacement",first,token);}
+    n = NameOrBlock(inTerminal);
+                                                                                                                                             replaceName(n);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case FOR:
+      n = Scope(inTerminal);
+                                                                                                                                                                                    replaceName(n);
+      break;
+    default:
+      jj_la1[22] = jj_gen;
+      ;
+    }
+                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("CmdDecl","{AUTO}","{AUTO}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -610,7 +589,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                   {if (true) return productionEndTerminal("RunOrCheck2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[23] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -620,9 +599,23 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   final public FSTInfo NameOrBlock(boolean inTerminal) throws ParseException {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = Name(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("NameOrBlock1","-","-","Replacement",first,token);}
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case THIS:
+    case IDENTIFIER:
+      n = NonEmptyName(inTerminal);
+                                    replaceName(n);
+                                                      {if (true) return productionEndNonTerminal("NameOrBlock1","-","-");}
+      break;
+    case LBRACE:
+      n = Block(inTerminal);
+                             replaceName(n);
+                                               {if (true) return productionEndNonTerminal("NameOrBlock2","-","-");}
+      break;
+    default:
+      jj_la1[24] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
     throw new Error("Missing return statement in function");
   }
 
@@ -643,7 +636,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
           ;
           break;
         default:
-          jj_la1[28] = jj_gen;
+          jj_la1[25] = jj_gen;
           break label_5;
         }
         jj_consume_token(COMMA);
@@ -664,7 +657,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
             ;
             break;
           default:
-            jj_la1[29] = jj_gen;
+            jj_la1[26] = jj_gen;
             break label_6;
           }
           jj_consume_token(COMMA);
@@ -674,7 +667,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                               {if (true) return productionEndTerminal("Scope2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[27] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -690,7 +683,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(EXACTLY);
       break;
     default:
-      jj_la1[31] = jj_gen;
+      jj_la1[28] = jj_gen;
       ;
     }
     n = NatInteger(true);
@@ -724,15 +717,16 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         ;
         break;
       default:
-        jj_la1[32] = jj_gen;
+        jj_la1[29] = jj_gen;
         break label_7;
       }
-      n = SigQual(true);
-                          replaceName(n);
+      n = SigQual(inTerminal);
+                                replaceName(n);
     }
     jj_consume_token(SIG);
-    n = Name(true);
-                                                                 replaceName(n);
+    n = Name(inTerminal);
+                                                                             replaceName("Name", n);
+                                                                                                       replaceName(n);
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -740,24 +734,44 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         ;
         break;
       default:
-        jj_la1[33] = jj_gen;
+        jj_la1[30] = jj_gen;
         break label_8;
       }
       jj_consume_token(COMMA);
-      n = Name(true);
-                                                                                                     replaceName(n);
+      n = Name(inTerminal);
+                                                                                                                                                 replaceName("Name", n);
+                                                                                                                                                                           replaceName(n);
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IN:
     case EXTENDS:
-      n = SigExt(true);
-                                                                                                                                         replaceName(n);
+      n = SigExt(inTerminal);
+                                                                                                                                                                                                                     replaceName(n);
       break;
     default:
-      jj_la1[34] = jj_gen;
+      jj_la1[31] = jj_gen;
       ;
     }
     jj_consume_token(LBRACE);
+    n = SigBody(inTerminal);
+                                                                                                                                                                                                                                                                  replaceName(n);
+    jj_consume_token(RBRACE);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LBRACE:
+      n = Block(inTerminal);
+                                                                                                                                                                                                                                                                                                                          replaceName(n);
+      break;
+    default:
+      jj_la1[32] = jj_gen;
+      ;
+    }
+                                                                                                                                                                                                                                                                                                                                             {if (true) return productionEndNonTerminal("SigDecl","{Name}","{Name}");}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo SigBody(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COLON:
     case THIS:
@@ -766,32 +780,22 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     case IDENTIFIER:
     case COMMA:
     case SLASH:
-      n = Decls(true);
-                                                                                                                                                                               replaceName(n);
+      n = Decls(inTerminal);
+                              replaceName(n);
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[33] = jj_gen;
       ;
     }
-    jj_consume_token(RBRACE);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LBRACE:
-      n = Block(true);
-                                                                                                                                                                                                                                  replaceName(n);
-      break;
-    default:
-      jj_la1[36] = jj_gen;
-      ;
-    }
-                                                                                                                                                                                                                                                     {if (true) return productionEndTerminal("SigDecl","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndNonTerminal("SigBody","SigBody","SigBody");}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo Decls(boolean inTerminal) throws ParseException {
                                       Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = Decl(true);
-                      replaceName(n);
+    n = Decl(inTerminal);
+                            replaceName(n);
     label_9:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -799,26 +803,39 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         ;
         break;
       default:
-        jj_la1[37] = jj_gen;
+        jj_la1[34] = jj_gen;
         break label_9;
       }
       jj_consume_token(COMMA);
-      n = Decl(true);
-                                                          replaceName(n);
+      n = Decl(inTerminal);
+                                                                      replaceName(n);
     }
-                                                                              {if (true) return productionEndTerminal("Decls","-","-","Replacement",first,token);}
+                                                                                          {if (true) return productionEndNonTerminal("Decls","-","-");}
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo EnumDecl(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;FSTInfo n;
+  final public FSTInfo Decl(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(ENUM);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case PRIVATE:
+      jj_consume_token(PRIVATE);
+      break;
+    default:
+      jj_la1[35] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case DISJ:
+      jj_consume_token(DISJ);
+      break;
+    default:
+      jj_la1[36] = jj_gen;
+      ;
+    }
     n = Name(true);
-                             replaceName(n);
-    jj_consume_token(LBRACE);
-    n = Name(true);
-                                                                replaceName(n);
+                                             replaceName("Name", n);
+                                                                       replaceName(n);
     label_10:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -826,15 +843,57 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         ;
         break;
       default:
-        jj_la1[38] = jj_gen;
+        jj_la1[37] = jj_gen;
         break label_10;
       }
       jj_consume_token(COMMA);
       n = Name(true);
-                                                                                                    replaceName(n);
+                                                                                                           replaceName("Name", n);
+                                                                                                                                     replaceName(n);
+    }
+    jj_consume_token(COLON);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case DISJ:
+      jj_consume_token(DISJ);
+      break;
+    default:
+      jj_la1[38] = jj_gen;
+      ;
+    }
+    n = Expr(true);
+                                                                                                                                                                                    replaceName(n);
+                                                                                                                                                                                                      {if (true) return productionEndTerminal("Decl","{Name}","{Name}","Replacement",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo EnumDecl(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(ENUM);
+    n = Name(inTerminal);
+                                   replaceName("Name", n);
+                                                             replaceName(n);
+    jj_consume_token(LBRACE);
+    n = Name(inTerminal);
+                                                                                                      replaceName("Name", n);
+                                                                                                                                replaceName(n);
+    label_11:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case COMMA:
+        ;
+        break;
+      default:
+        jj_la1[39] = jj_gen;
+        break label_11;
+      }
+      jj_consume_token(COMMA);
+      n = Name(inTerminal);
+                                                                                                                                                                          replaceName("Name", n);
+                                                                                                                                                                                                    replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                            {if (true) return productionEndTerminal("EnumDecl","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                            {if (true) return productionEndNonTerminal("EnumDecl","{Name}","{Name}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -844,26 +903,26 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ABSTRACT:
       jj_consume_token(ABSTRACT);
-                     {if (true) return productionEndTerminal("SigQual1","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("SigQual1","SigQual","SigQual","Replacement",first,token);}
       break;
     case LONE:
       jj_consume_token(LONE);
-                 {if (true) return productionEndTerminal("SigQual2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("SigQual2","SigQual","SigQual","Replacement",first,token);}
       break;
     case ONE:
       jj_consume_token(ONE);
-                {if (true) return productionEndTerminal("SigQual3","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("SigQual3","SigQual","SigQual","Replacement",first,token);}
       break;
     case SOME1:
       jj_consume_token(SOME1);
-                 {if (true) return productionEndTerminal("SigQual4","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("SigQual4","SigQual","SigQual","Replacement",first,token);}
       break;
     case PRIVATE:
       jj_consume_token(PRIVATE);
-                    {if (true) return productionEndTerminal("SigQual5","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("SigQual5","SigQual","SigQual","Replacement",first,token);}
       break;
     default:
-      jj_la1[39] = jj_gen;
+      jj_la1[40] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -878,30 +937,30 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(EXTENDS);
       n = Ref(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("SigExt1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("SigExt1","SigExt","SigExt","Replacement",first,token);}
       break;
     case IN:
       jj_consume_token(IN);
       n = Ref(true);
                           replaceName(n);
-      label_11:
+      label_12:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
           ;
           break;
         default:
-          jj_la1[40] = jj_gen;
-          break label_11;
+          jj_la1[41] = jj_gen;
+          break label_12;
         }
         jj_consume_token(PLUS);
         n = Ref(true);
                                                              replaceName(n);
       }
-                                                                                 {if (true) return productionEndTerminal("SigExt2","-","-","Replacement",first,token);}
+                                                                                 {if (true) return productionEndTerminal("SigExt2","SigExt","SigExt","Replacement",first,token);}
       break;
     default:
-      jj_la1[41] = jj_gen;
+      jj_la1[42] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -919,7 +978,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                            {if (true) return productionEndTerminal("Expr","-","-","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("Expr","{AUTO}","{AUTO}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -985,7 +1044,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                             replaceName(n);
       break;
     default:
-      jj_la1[42] = jj_gen;
+      jj_la1[43] = jj_gen;
       ;
     }
     n = CompareOp(true);
@@ -1021,7 +1080,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                 replaceName(n);
       break;
     default:
-      jj_la1[43] = jj_gen;
+      jj_la1[44] = jj_gen;
       ;
     }
     n = Expr(true);
@@ -1054,15 +1113,15 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_consume_token(LBRACKET);
     n = Expr(true);
                           replaceName(n);
-    label_12:
+    label_13:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
         ;
         break;
       default:
-        jj_la1[44] = jj_gen;
-        break label_12;
+        jj_la1[45] = jj_gen;
+        break label_13;
       }
       jj_consume_token(COMMA);
       n = Expr(true);
@@ -1081,48 +1140,50 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(LET);
       n = LetDecl(true);
                                replaceName(n);
-      label_13:
+      label_14:
       while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case COMMA:
+        if (jj_2_21(2)) {
           ;
-          break;
-        default:
-          jj_la1[45] = jj_gen;
-          break label_13;
+        } else {
+          break label_14;
         }
         jj_consume_token(COMMA);
         n = LetDecl(true);
-                                                                      replaceName(n);
+                                                                                   replaceName(n);
       }
-      n = BlockOrBar(true);
-                                                                                                             replaceName(n);
-                                                                                                                               {if (true) return productionEndTerminal("Expr51","-","-","Replacement",first,token);}
+      if (jj_2_22(2)) {
+        n = BlockOrBar(true);
+                                                                                                                                        replaceName(n);
+      } else {
+        ;
+      }
+                                                                                                                                                           {if (true) return productionEndTerminal("Expr51","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[49] = jj_gen;
-      if (jj_2_21(3)) {
+      jj_la1[48] = jj_gen;
+      if (jj_2_25(3)) {
         n = Quant(true);
                                     replaceName(n);
         n = Decl(true);
                                                                    replaceName(n);
-        label_14:
+        label_15:
         while (true) {
-          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-          case COMMA:
+          if (jj_2_23(2)) {
             ;
-            break;
-          default:
-            jj_la1[46] = jj_gen;
-            break label_14;
+          } else {
+            break label_15;
           }
           jj_consume_token(COMMA);
           n = Decl(true);
-                                                                                                       replaceName(n);
+                                                                                                                    replaceName(n);
         }
-        n = BlockOrBar(true);
-                                                                                                                                              replaceName(n);
-                                                                                                                                                                {if (true) return productionEndTerminal("Expr52","-","-","Replacement",first,token);}
+        if (jj_2_24(2)) {
+          n = BlockOrBar(true);
+                                                                                                                                                                         replaceName(n);
+        } else {
+          ;
+        }
+                                                                                                                                                                                            {if (true) return productionEndTerminal("Expr52","-","-","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case NO:
@@ -1182,8 +1243,8 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                 {if (true) return productionEndTerminal("Expr511","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[50] = jj_gen;
-          if (jj_2_22(3)) {
+          jj_la1[49] = jj_gen;
+          if (jj_2_26(3)) {
             n = Block(true);
                                     replaceName(n);
                                                       {if (true) return productionEndTerminal("Expr512","-","-","Replacement",first,token);}
@@ -1197,7 +1258,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                 jj_consume_token(AS);
                 break;
               default:
-                jj_la1[47] = jj_gen;
+                jj_la1[46] = jj_gen;
                 ;
               }
               n = NonEmptyName(true);
@@ -1208,15 +1269,15 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
               jj_consume_token(LBRACE);
               n = Decl(true);
                           replaceName(n);
-              label_15:
+              label_16:
               while (true) {
                 switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
                 case COMMA:
                   ;
                   break;
                 default:
-                  jj_la1[48] = jj_gen;
-                  break label_15;
+                  jj_la1[47] = jj_gen;
+                  break label_16;
                 }
                 jj_consume_token(COMMA);
                 n = Decl(true);
@@ -1228,7 +1289,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                                                            {if (true) return productionEndTerminal("Expr514","-","-","Replacement",first,token);}
               break;
             default:
-              jj_la1[51] = jj_gen;
+              jj_la1[50] = jj_gen;
               jj_consume_token(-1);
               throw new ParseException();
             }
@@ -1252,7 +1313,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                 {if (true) return productionEndTerminal("NotClause2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[52] = jj_gen;
+      jj_la1[51] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1272,60 +1333,10 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                     {if (true) return productionEndTerminal("ImpliesClause2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[53] = jj_gen;
+      jj_la1[52] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Decl(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case PRIVATE:
-      jj_consume_token(PRIVATE);
-      break;
-    default:
-      jj_la1[54] = jj_gen;
-      ;
-    }
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case DISJ:
-      jj_consume_token(DISJ);
-      break;
-    default:
-      jj_la1[55] = jj_gen;
-      ;
-    }
-    n = Name(true);
-                                             replaceName(n);
-    label_16:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case COMMA:
-        ;
-        break;
-      default:
-        jj_la1[56] = jj_gen;
-        break label_16;
-      }
-      jj_consume_token(COMMA);
-      n = Name(true);
-                                                                                 replaceName(n);
-    }
-    jj_consume_token(COLON);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case DISJ:
-      jj_consume_token(DISJ);
-      break;
-    default:
-      jj_la1[57] = jj_gen;
-      ;
-    }
-    n = Expr(true);
-                                                                                                                                replaceName(n);
-                                                                                                                                                  {if (true) return productionEndTerminal("Decl","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1370,7 +1381,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                 {if (true) return productionEndTerminal("Quant6","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[58] = jj_gen;
+      jj_la1[53] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1454,7 +1465,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                 {if (true) return productionEndTerminal("BinOp18","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[59] = jj_gen;
+      jj_la1[54] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1464,14 +1475,14 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   final public FSTInfo ArrowOp(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_23(2)) {
+    if (jj_2_27(2)) {
       n = ArrowOpClause(true);
                                              replaceName(n);
     } else {
       ;
     }
     jj_consume_token(LARROW);
-    if (jj_2_24(2)) {
+    if (jj_2_28(2)) {
       n = ArrowOpClause(true);
                                                                                                          replaceName(n);
     } else {
@@ -1502,7 +1513,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                 {if (true) return productionEndTerminal("ArrowOpClause4","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[60] = jj_gen;
+      jj_la1[55] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1538,7 +1549,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                {if (true) return productionEndTerminal("CompareOp6","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[61] = jj_gen;
+      jj_la1[56] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1598,7 +1609,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
               {if (true) return productionEndTerminal("UnOp12","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[62] = jj_gen;
+      jj_la1[57] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1642,14 +1653,14 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         ;
         break;
       default:
-        jj_la1[63] = jj_gen;
+        jj_la1[58] = jj_gen;
         break label_17;
       }
-      n = Expr(true);
-                           replaceName(n);
+      n = Expr(inTerminal);
+                                 replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                   {if (true) return productionEndTerminal("Block","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndNonTerminal("Block","Block","Block");}
     throw new Error("Missing return statement in function");
   }
 
@@ -1669,7 +1680,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                             {if (true) return productionEndTerminal("BlockOrBar2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[64] = jj_gen;
+      jj_la1[59] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1683,7 +1694,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                             replaceName(n);
     label_18:
     while (true) {
-      if (jj_2_25(2)) {
+      if (jj_2_29(2)) {
         ;
       } else {
         break label_18;
@@ -1691,7 +1702,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(SLASH);
       jj_consume_token(IDENTIFIER);
     }
-                                                                               {if (true) return productionEndTerminal("Name","-","-","Replacement",first,token);}
+                                                                               {if (true) return productionEndTerminal("Name","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1708,7 +1719,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                       {if (true) return productionEndTerminal("NameClause2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[65] = jj_gen;
+      jj_la1[60] = jj_gen;
           {if (true) return productionEndTerminal("NameClause3","-","-","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
@@ -1721,18 +1732,15 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                     replaceName(n);
     label_19:
     while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case SLASH:
+      if (jj_2_30(2)) {
         ;
-        break;
-      default:
-        jj_la1[66] = jj_gen;
+      } else {
         break label_19;
       }
       jj_consume_token(SLASH);
       jj_consume_token(IDENTIFIER);
     }
-                                                                          {if (true) return productionEndTerminal("NonEmptyName","-","-","Replacement",first,token);}
+                                                                                       {if (true) return productionEndTerminal("NonEmptyName","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1749,10 +1757,27 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                       {if (true) return productionEndTerminal("NonEmptyNameClause2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[67] = jj_gen;
+      jj_la1[61] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo MaybeName(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case THIS:
+    case IDENTIFIER:
+      n = NonEmptyName(true);
+                               replaceName(n);
+      break;
+    default:
+      jj_la1[62] = jj_gen;
+      ;
+    }
+                                                  {if (true) return productionEndTerminal("MaybeName","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1940,65 +1965,90 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     finally { jj_save(24, xla); }
   }
 
-  final private boolean jj_3R_74() {
-    if (jj_3R_101()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_18()) jj_scanpos = xsp;
-    return false;
+  final private boolean jj_2_26(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_26(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(25, xla); }
   }
 
-  final private boolean jj_3R_29() {
-    if (jj_3R_50()) return true;
-    return false;
+  final private boolean jj_2_27(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_27(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(26, xla); }
   }
 
-  final private boolean jj_3R_37() {
-    if (jj_3R_54()) return true;
+  final private boolean jj_2_28(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_28(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(27, xla); }
+  }
+
+  final private boolean jj_2_29(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_29(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(28, xla); }
+  }
+
+  final private boolean jj_2_30(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_30(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(29, xla); }
+  }
+
+  final private boolean jj_3R_33() {
+    if (jj_3R_52()) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_25() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_51() {
-    if (jj_3R_74()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_17()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_36() {
-    if (jj_3R_53()) return true;
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_73() {
+  final private boolean jj_3R_102() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_41()) return true;
     return false;
   }
 
   final private boolean jj_3R_26() {
-    if (jj_3R_51()) return true;
+    if (jj_3R_50()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_16()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_50() {
-    if (jj_3R_41()) return true;
+  final private boolean jj_3R_39() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(39)) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(40)) jj_scanpos = xsp;
+    if (jj_3R_24()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_64()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(COLON)) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(40)) jj_scanpos = xsp;
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_74() {
+    if (jj_3R_39()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_73()) { jj_scanpos = xsp; break; }
+      if (jj_3R_102()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  final private boolean jj_3R_43() {
+    if (jj_3R_70()) return true;
     return false;
   }
 
@@ -2010,6 +2060,12 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   final private boolean jj_3_8() {
     if (jj_3R_22()) return true;
     if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_30() {
+    if (jj_scan_token(SLASH)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
@@ -2037,30 +2093,13 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_35() {
+  final private boolean jj_3R_32() {
     if (jj_3R_22()) return true;
     if (jj_scan_token(DOT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_140() {
-    if (jj_scan_token(SLASH)) return true;
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_44() {
-    if (jj_3R_69()) return true;
     return false;
   }
 
   final private boolean jj_3_3() {
-    if (jj_3R_22()) return true;
-    if (jj_scan_token(DOT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_33() {
     if (jj_3R_22()) return true;
     if (jj_scan_token(DOT)) return true;
     return false;
@@ -2078,6 +2117,17 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
+  final private boolean jj_3R_42() {
+    if (jj_3R_69()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_29() {
+    if (jj_3R_22()) return true;
+    if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_28() {
     if (jj_3R_22()) return true;
     if (jj_scan_token(DOT)) return true;
@@ -2090,29 +2140,67 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3_25() {
+  final private boolean jj_3R_47() {
+    if (jj_scan_token(SEQINT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_46() {
+    if (jj_scan_token(INTT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_45() {
+    if (jj_scan_token(UNIV)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_29() {
     if (jj_scan_token(SLASH)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_48() {
-    if (jj_scan_token(SEQINT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_47() {
-    if (jj_scan_token(INTT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_46() {
-    if (jj_scan_token(UNIV)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_45() {
+  final private boolean jj_3R_44() {
     if (jj_3R_24()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_22() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_44()) {
+    jj_scanpos = xsp;
+    if (jj_3R_45()) {
+    jj_scanpos = xsp;
+    if (jj_3R_46()) {
+    jj_scanpos = xsp;
+    if (jj_3R_47()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_49() {
+    if (jj_3R_74()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_144() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_143() {
+    if (jj_scan_token(THIS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_25() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_49()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2122,9 +2210,19 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_scan_token(39)) jj_scanpos = xsp;
     if (jj_scan_token(PRED)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_35()) jj_scanpos = xsp;
+    if (jj_3R_32()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_140() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_143()) {
+    jj_scanpos = xsp;
+    if (jj_3R_144()) return true;
+    }
     return false;
   }
 
@@ -2134,11 +2232,10 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_scan_token(39)) jj_scanpos = xsp;
     if (jj_scan_token(PRED)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_33()) jj_scanpos = xsp;
+    if (jj_3R_31()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_scan_token(LBRACKET)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_34()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
     if (jj_scan_token(RBRACKET)) return true;
     if (jj_3R_27()) return true;
     return false;
@@ -2150,39 +2247,12 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_scan_token(39)) jj_scanpos = xsp;
     if (jj_scan_token(PRED)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_31()) jj_scanpos = xsp;
+    if (jj_3R_30()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_scan_token(LPAREN)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_32()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
     if (jj_scan_token(RPAREN)) return true;
     if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_22() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_45()) {
-    jj_scanpos = xsp;
-    if (jj_3R_46()) {
-    jj_scanpos = xsp;
-    if (jj_3R_47()) {
-    jj_scanpos = xsp;
-    if (jj_3R_48()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_148() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_43() {
-    if (jj_3R_68()) return true;
     return false;
   }
 
@@ -2192,16 +2262,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_scan_token(39)) jj_scanpos = xsp;
     if (jj_scan_token(FUN)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_30()) jj_scanpos = xsp;
+    if (jj_3R_29()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_26()) return true;
     if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_147() {
-    if (jj_scan_token(THIS)) return true;
     return false;
   }
 
@@ -2214,12 +2279,25 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_3R_28()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_scan_token(LBRACKET)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_29()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
     if (jj_scan_token(RBRACKET)) return true;
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_26()) return true;
     if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_73() {
+    return false;
+  }
+
+  final private boolean jj_3R_125() {
+    if (jj_3R_140()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_30()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
@@ -2232,8 +2310,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_3R_23()) jj_scanpos = xsp;
     if (jj_3R_24()) return true;
     if (jj_scan_token(LPAREN)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_25()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
     if (jj_scan_token(RPAREN)) return true;
     if (jj_scan_token(COLON)) return true;
     if (jj_3R_26()) return true;
@@ -2241,13 +2318,13 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_139() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_147()) {
-    jj_scanpos = xsp;
-    if (jj_3R_148()) return true;
-    }
+  final private boolean jj_3R_72() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_71() {
+    if (jj_scan_token(THIS)) return true;
     return false;
   }
 
@@ -2273,45 +2350,57 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_100() {
+  final private boolean jj_3R_101() {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_22()) return true;
     return false;
   }
 
-  final private boolean jj_3R_72() {
+  final private boolean jj_3R_48() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_71()) {
+    jj_scanpos = xsp;
+    if (jj_3R_72()) {
+    jj_scanpos = xsp;
+    if (jj_3R_73()) return true;
+    }
+    }
     return false;
   }
 
-  final private boolean jj_3R_124() {
-    if (jj_3R_139()) return true;
+  final private boolean jj_3R_24() {
+    if (jj_3R_48()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_140()) { jj_scanpos = xsp; break; }
+      if (jj_3_29()) { jj_scanpos = xsp; break; }
     }
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    if (jj_scan_token(IDENTIFIER)) return true;
+  final private boolean jj_3R_57() {
+    if (jj_scan_token(98)) return true;
+    if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_scan_token(THIS)) return true;
+  final private boolean jj_3R_56() {
+    if (jj_3R_27()) return true;
     return false;
   }
 
-  final private boolean jj_3R_49() {
+  final private boolean jj_3R_51() {
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_38() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_70()) {
+    if (jj_3R_56()) {
     jj_scanpos = xsp;
-    if (jj_3R_71()) {
-    jj_scanpos = xsp;
-    if (jj_3R_72()) return true;
-    }
+    if (jj_3R_57()) return true;
     }
     return false;
   }
@@ -2321,39 +2410,8 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_24() {
-    if (jj_3R_49()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_25()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_150() {
-    if (jj_scan_token(98)) return true;
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_149() {
-    if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_52() {
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_144() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_149()) {
-    jj_scanpos = xsp;
-    if (jj_3R_150()) return true;
-    }
+  final private boolean jj_3_28() {
+    if (jj_3R_41()) return true;
     return false;
   }
 
@@ -2362,73 +2420,87 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3_24() {
-    if (jj_3R_42()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_27() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_52()) { jj_scanpos = xsp; break; }
+      if (jj_3R_51()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_138() {
+  final private boolean jj_3R_139() {
     if (jj_scan_token(97)) return true;
     return false;
   }
 
-  final private boolean jj_3R_69() {
+  final private boolean jj_3R_138() {
+    if (jj_scan_token(STAR)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_137() {
+    if (jj_scan_token(96)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_136() {
+    if (jj_scan_token(95)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_135() {
+    if (jj_scan_token(seq)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_134() {
+    if (jj_scan_token(SET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_70() {
     if (jj_scan_token(AS)) return true;
     if (jj_3R_24()) return true;
     return false;
   }
 
-  final private boolean jj_3R_137() {
-    if (jj_scan_token(STAR)) return true;
+  final private boolean jj_3R_133() {
+    if (jj_scan_token(ONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_136() {
-    if (jj_scan_token(96)) return true;
+  final private boolean jj_3R_132() {
+    if (jj_scan_token(LONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_135() {
-    if (jj_scan_token(95)) return true;
+  final private boolean jj_3R_131() {
+    if (jj_scan_token(SOME1)) return true;
     return false;
   }
 
-  final private boolean jj_3R_68() {
+  final private boolean jj_3R_69() {
     if (jj_scan_token(LBRACKET)) return true;
     if (jj_3R_22()) return true;
     Token xsp;
-    if (jj_3R_100()) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_100()) { jj_scanpos = xsp; break; }
+      if (jj_3R_101()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_134() {
-    if (jj_scan_token(seq)) return true;
+  final private boolean jj_3R_130() {
+    if (jj_scan_token(NO)) return true;
     return false;
   }
 
-  final private boolean jj_3R_133() {
-    if (jj_scan_token(SET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_132() {
-    if (jj_scan_token(ONE)) return true;
+  final private boolean jj_3R_129() {
+    if (jj_scan_token(NOT)) return true;
     return false;
   }
 
@@ -2439,42 +2511,20 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     if (jj_scan_token(OPEN)) return true;
     if (jj_3R_24()) return true;
     xsp = jj_scanpos;
-    if (jj_3R_43()) jj_scanpos = xsp;
+    if (jj_3R_42()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_44()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_131() {
-    if (jj_scan_token(LONE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_130() {
-    if (jj_scan_token(SOME1)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_129() {
-    if (jj_scan_token(NO)) return true;
+    if (jj_3R_43()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_128() {
-    if (jj_scan_token(NOT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_127() {
     if (jj_scan_token(79)) return true;
     return false;
   }
 
-  final private boolean jj_3R_122() {
+  final private boolean jj_3R_123() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_127()) {
-    jj_scanpos = xsp;
     if (jj_3R_128()) {
     jj_scanpos = xsp;
     if (jj_3R_129()) {
@@ -2495,7 +2545,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_scanpos = xsp;
     if (jj_3R_137()) {
     jj_scanpos = xsp;
-    if (jj_3R_138()) return true;
+    if (jj_3R_138()) {
+    jj_scanpos = xsp;
+    if (jj_3R_139()) return true;
     }
     }
     }
@@ -2510,41 +2562,44 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_99() {
+  final private boolean jj_3R_100() {
     if (jj_scan_token(94)) return true;
     return false;
   }
 
-  final private boolean jj_3R_98() {
+  final private boolean jj_3R_99() {
     if (jj_scan_token(93)) return true;
     return false;
   }
 
-  final private boolean jj_3R_97() {
+  final private boolean jj_3R_98() {
     if (jj_scan_token(92)) return true;
     return false;
   }
 
-  final private boolean jj_3R_96() {
+  final private boolean jj_3R_97() {
     if (jj_scan_token(91)) return true;
     return false;
   }
 
-  final private boolean jj_3R_95() {
+  final private boolean jj_3_24() {
+    if (jj_3R_38()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_96() {
     if (jj_scan_token(IN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_94() {
+  final private boolean jj_3R_95() {
     if (jj_scan_token(81)) return true;
     return false;
   }
 
-  final private boolean jj_3R_56() {
+  final private boolean jj_3R_55() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_94()) {
-    jj_scanpos = xsp;
     if (jj_3R_95()) {
     jj_scanpos = xsp;
     if (jj_3R_96()) {
@@ -2553,7 +2608,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_scanpos = xsp;
     if (jj_3R_98()) {
     jj_scanpos = xsp;
-    if (jj_3R_99()) return true;
+    if (jj_3R_99()) {
+    jj_scanpos = xsp;
+    if (jj_3R_100()) return true;
     }
     }
     }
@@ -2562,169 +2619,166 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_67() {
+  final private boolean jj_3R_68() {
     if (jj_scan_token(SET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_66() {
+  final private boolean jj_3R_67() {
     if (jj_scan_token(LONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_65() {
+  final private boolean jj_3R_66() {
     if (jj_scan_token(ONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_123() {
-    if (jj_scan_token(INTEGER_LITERAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_64() {
+  final private boolean jj_3R_65() {
     if (jj_scan_token(SOME1)) return true;
     return false;
   }
 
-  final private boolean jj_3R_42() {
+  final private boolean jj_3R_41() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_64()) {
-    jj_scanpos = xsp;
     if (jj_3R_65()) {
     jj_scanpos = xsp;
     if (jj_3R_66()) {
     jj_scanpos = xsp;
-    if (jj_3R_67()) return true;
+    if (jj_3R_67()) {
+    jj_scanpos = xsp;
+    if (jj_3R_68()) return true;
     }
     }
     }
     return false;
   }
 
-  final private boolean jj_3_23() {
-    if (jj_3R_42()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_54() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_23()) jj_scanpos = xsp;
-    if (jj_scan_token(LARROW)) return true;
-    xsp = jj_scanpos;
-    if (jj_3_24()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_92() {
-    if (jj_scan_token(90)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_91() {
-    if (jj_scan_token(89)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_90() {
-    if (jj_scan_token(88)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_89() {
-    if (jj_scan_token(DOT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_63() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_88() {
-    if (jj_scan_token(87)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_87() {
-    if (jj_scan_token(86)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_86() {
-    if (jj_scan_token(85)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_85() {
-    if (jj_scan_token(MINUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_84() {
-    if (jj_scan_token(PLUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_83() {
-    if (jj_scan_token(IMPLIES)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_82() {
-    if (jj_scan_token(80)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_81() {
-    if (jj_scan_token(IFF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_80() {
-    if (jj_scan_token(84)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_79() {
-    if (jj_scan_token(AND)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_78() {
-    if (jj_scan_token(AND1)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_77() {
-    if (jj_scan_token(83)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_145() {
-    if (jj_scan_token(COMMA)) return true;
+  final private boolean jj_3_27() {
     if (jj_3R_41()) return true;
     return false;
   }
 
-  final private boolean jj_3R_76() {
-    if (jj_scan_token(OR)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_75() {
-    if (jj_scan_token(82)) return true;
+  final private boolean jj_3R_124() {
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
     return false;
   }
 
   final private boolean jj_3R_53() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_75()) {
-    jj_scanpos = xsp;
+    if (jj_3_27()) jj_scanpos = xsp;
+    if (jj_scan_token(LARROW)) return true;
+    xsp = jj_scanpos;
+    if (jj_3_28()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_93() {
+    if (jj_scan_token(90)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_92() {
+    if (jj_scan_token(89)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_91() {
+    if (jj_scan_token(88)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_90() {
+    if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_89() {
+    if (jj_scan_token(87)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_22() {
+    if (jj_3R_38()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_88() {
+    if (jj_scan_token(86)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_87() {
+    if (jj_scan_token(85)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_86() {
+    if (jj_scan_token(MINUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_85() {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_84() {
+    if (jj_scan_token(IMPLIES)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_83() {
+    if (jj_scan_token(80)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_82() {
+    if (jj_scan_token(IFF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_81() {
+    if (jj_scan_token(84)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_23() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_39()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_80() {
+    if (jj_scan_token(AND)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_79() {
+    if (jj_scan_token(AND1)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_78() {
+    if (jj_scan_token(83)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_77() {
+    if (jj_scan_token(OR)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_76() {
+    if (jj_scan_token(82)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_52() {
+    Token xsp;
+    xsp = jj_scanpos;
     if (jj_3R_76()) {
     jj_scanpos = xsp;
     if (jj_3R_77()) {
@@ -2757,7 +2811,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_scanpos = xsp;
     if (jj_3R_91()) {
     jj_scanpos = xsp;
-    if (jj_3R_92()) return true;
+    if (jj_3R_92()) {
+    jj_scanpos = xsp;
+    if (jj_3R_93()) return true;
     }
     }
     }
@@ -2778,38 +2834,32 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_62() {
+  final private boolean jj_3R_63() {
     if (jj_scan_token(SUM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_61() {
+  final private boolean jj_3R_62() {
     if (jj_scan_token(ONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_60() {
+  final private boolean jj_3R_61() {
     if (jj_scan_token(LONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_59() {
+  final private boolean jj_3R_60() {
     if (jj_scan_token(SOME1)) return true;
     return false;
   }
 
-  final private boolean jj_3R_146() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_41()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_58() {
+  final private boolean jj_3R_59() {
     if (jj_scan_token(NO)) return true;
     return false;
   }
 
-  final private boolean jj_3R_57() {
+  final private boolean jj_3R_58() {
     if (jj_scan_token(ALL)) return true;
     return false;
   }
@@ -2817,8 +2867,6 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   final private boolean jj_3R_40() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_57()) {
-    jj_scanpos = xsp;
     if (jj_3R_58()) {
     jj_scanpos = xsp;
     if (jj_3R_59()) {
@@ -2827,7 +2875,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_scanpos = xsp;
     if (jj_3R_61()) {
     jj_scanpos = xsp;
-    if (jj_3R_62()) return true;
+    if (jj_3R_62()) {
+    jj_scanpos = xsp;
+    if (jj_3R_63()) return true;
     }
     }
     }
@@ -2836,27 +2886,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_121() {
+  final private boolean jj_3R_37() {
     if (jj_3R_24()) return true;
     if (jj_scan_token(81)) return true;
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_41() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(39)) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(40)) jj_scanpos = xsp;
-    if (jj_3R_24()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_63()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(COLON)) return true;
-    xsp = jj_scanpos;
-    if (jj_scan_token(40)) jj_scanpos = xsp;
     if (jj_3R_26()) return true;
     return false;
   }
@@ -2866,9 +2898,9 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_143() {
+  final private boolean jj_3_21() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_121()) return true;
+    if (jj_3R_37()) return true;
     return false;
   }
 
@@ -2877,7 +2909,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_125() {
+  final private boolean jj_3R_126() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_141()) {
@@ -2887,64 +2919,56 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_103() {
+  final private boolean jj_3R_105() {
     if (jj_scan_token(NOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_102() {
+  final private boolean jj_3R_104() {
     if (jj_scan_token(79)) return true;
     return false;
   }
 
-  final private boolean jj_3R_126() {
+  final private boolean jj_3R_127() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_93() {
+  final private boolean jj_3R_94() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_102()) {
+    if (jj_3R_104()) {
     jj_scanpos = xsp;
-    if (jj_3R_103()) return true;
+    if (jj_3R_105()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_119() {
+  final private boolean jj_3R_121() {
     if (jj_scan_token(LBRACE)) return true;
-    if (jj_3R_41()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_146()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_3R_144()) return true;
-    if (jj_scan_token(RBRACE)) return true;
+    if (jj_3R_39()) return true;
     return false;
   }
 
-  final private boolean jj_3R_118() {
+  final private boolean jj_3R_120() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(29)) jj_scanpos = xsp;
-    if (jj_3R_124()) return true;
+    if (jj_3R_125()) return true;
     return false;
   }
 
-  final private boolean jj_3_22() {
+  final private boolean jj_3_26() {
     if (jj_3R_27()) return true;
     return false;
   }
 
   final private boolean jj_3_20() {
-    if (jj_3R_39()) return true;
+    if (jj_3R_36()) return true;
     return false;
   }
 
-  final private boolean jj_3R_117() {
+  final private boolean jj_3R_119() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_26()) return true;
     if (jj_scan_token(RPAREN)) return true;
@@ -2956,92 +2980,76 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_116() {
+  final private boolean jj_3R_118() {
     if (jj_scan_token(SEQINT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_115() {
+  final private boolean jj_3R_117() {
     if (jj_scan_token(INTT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_114() {
+  final private boolean jj_3R_116() {
     if (jj_scan_token(UNIV)) return true;
     return false;
   }
 
-  final private boolean jj_3R_113() {
+  final private boolean jj_3R_115() {
     if (jj_scan_token(IDEN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_112() {
+  final private boolean jj_3R_114() {
     if (jj_scan_token(NONE1)) return true;
     return false;
   }
 
-  final private boolean jj_3R_105() {
-    if (jj_3R_107()) return true;
+  final private boolean jj_3R_107() {
+    if (jj_3R_109()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_113() {
+    if (jj_scan_token(MINUS)) return true;
+    if (jj_3R_124()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_112() {
+    if (jj_3R_124()) return true;
     return false;
   }
 
   final private boolean jj_3R_111() {
-    if (jj_scan_token(MINUS)) return true;
     if (jj_3R_123()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_110() {
-    if (jj_3R_123()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_109() {
-    if (jj_3R_122()) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3_21() {
+  final private boolean jj_3_25() {
     if (jj_3R_40()) return true;
-    if (jj_3R_41()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_145()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_3R_144()) return true;
+    if (jj_3R_39()) return true;
     return false;
   }
 
-  final private boolean jj_3R_108() {
+  final private boolean jj_3R_110() {
     if (jj_scan_token(LET)) return true;
-    if (jj_3R_121()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_143()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_3R_144()) return true;
+    if (jj_3R_37()) return true;
     return false;
   }
 
   final private boolean jj_3_18() {
-    if (jj_3R_38()) return true;
+    if (jj_3R_35()) return true;
     return false;
   }
 
-  final private boolean jj_3R_106() {
+  final private boolean jj_3R_108() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_108()) {
-    jj_scanpos = xsp;
-    if (jj_3_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_109()) {
-    jj_scanpos = xsp;
     if (jj_3R_110()) {
+    jj_scanpos = xsp;
+    if (jj_3_25()) {
     jj_scanpos = xsp;
     if (jj_3R_111()) {
     jj_scanpos = xsp;
@@ -3057,11 +3065,15 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_scanpos = xsp;
     if (jj_3R_117()) {
     jj_scanpos = xsp;
-    if (jj_3_22()) {
-    jj_scanpos = xsp;
     if (jj_3R_118()) {
     jj_scanpos = xsp;
-    if (jj_3R_119()) return true;
+    if (jj_3R_119()) {
+    jj_scanpos = xsp;
+    if (jj_3_26()) {
+    jj_scanpos = xsp;
+    if (jj_3R_120()) {
+    jj_scanpos = xsp;
+    if (jj_3R_121()) return true;
     }
     }
     }
@@ -3078,40 +3090,46 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     return false;
   }
 
-  final private boolean jj_3R_39() {
+  final private boolean jj_3R_36() {
     if (jj_scan_token(LBRACKET)) return true;
     if (jj_3R_26()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_126()) { jj_scanpos = xsp; break; }
+      if (jj_3R_127()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3_17() {
-    if (jj_3R_37()) return true;
+  final private boolean jj_3R_64() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_24()) return true;
     return false;
   }
 
-  final private boolean jj_3R_104() {
-    if (jj_3R_106()) return true;
+  final private boolean jj_3_17() {
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_106() {
+    if (jj_3R_108()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_20()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_120() {
-    if (jj_3R_125()) return true;
+  final private boolean jj_3R_122() {
+    if (jj_3R_126()) return true;
     return false;
   }
 
-  final private boolean jj_3R_107() {
+  final private boolean jj_3R_109() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_120()) jj_scanpos = xsp;
+    if (jj_3R_122()) jj_scanpos = xsp;
     if (jj_3R_26()) return true;
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_26()) return true;
@@ -3119,39 +3137,51 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   }
 
   final private boolean jj_3_16() {
-    if (jj_3R_36()) return true;
+    if (jj_3R_33()) return true;
     return false;
   }
 
-  final private boolean jj_3R_55() {
-    if (jj_3R_93()) return true;
+  final private boolean jj_3R_54() {
+    if (jj_3R_94()) return true;
     return false;
   }
 
-  final private boolean jj_3R_101() {
-    if (jj_3R_104()) return true;
+  final private boolean jj_3R_103() {
+    if (jj_3R_106()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_105()) jj_scanpos = xsp;
+    if (jj_3R_107()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_38() {
+  final private boolean jj_3R_35() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_55()) jj_scanpos = xsp;
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) jj_scanpos = xsp;
+    if (jj_3R_55()) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_34() {
-    if (jj_3R_50()) return true;
+  final private boolean jj_3R_75() {
+    if (jj_3R_103()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_18()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_32() {
-    if (jj_3R_50()) return true;
+  final private boolean jj_3R_34() {
+    if (jj_3R_53()) return true;
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_50() {
+    if (jj_3R_75()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_17()) jj_scanpos = xsp;
     return false;
   }
 
@@ -3163,7 +3193,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[68];
+  final private int[] jj_la1 = new int[63];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -3175,18 +3205,18 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_la1_3();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0xc5020000,0x0,0x100000,0x0,0x100000,0x0,0x0,0x20000000,0x0,0x0,0xc5020000,0x0,0x0,0x0,0x20000,0x0,0x20000,0x0,0x0,0x20000,0x0,0x20000,0x0,0x20000,0x0,0x0,0x0,0x0,0x0,0x100000,0x45000000,0x0,0x80000,0x20000,0x0,0x0,0x0,0x45000000,0x0,0x80000,0x0,0x0,0x0,0x0,0x0,0x20000000,0x0,0x0,0xd808000,0x20000000,0x0,0x0,0x0,0x0,0x0,0x0,0x5c00000,0x10000,0xd000000,0x80000,0xd800000,0x2dc08000,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0xc5020000,0x0,0x100000,0x0,0x100000,0x0,0x0,0x20000000,0x0,0x0,0xc5020000,0x0,0x0,0x0,0x0,0x0,0x0,0x20000,0x20000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100000,0x45000000,0x0,0x80000,0x0,0x20000,0x0,0x0,0x0,0x0,0x0,0x0,0x45000000,0x0,0x80000,0x0,0x0,0x0,0x20000000,0x0,0x0,0xd808000,0x20000000,0x0,0x0,0x5c00000,0x10000,0xd000000,0x80000,0xd800000,0x2dc08000,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x10000000,0x4000000,0x2202eae,0x0,0x0,0x0,0x0,0x80,0x0,0x0,0x0,0xc,0x22028a2,0x20,0x20,0x80,0x1a0,0x80,0x1a0,0x80,0x80,0x1a0,0x80,0x1a0,0x80,0x20,0x2002000,0x2002000,0x0,0x0,0x800,0x0,0x200080,0x0,0x1,0x1a0,0x0,0x0,0x0,0x200080,0x0,0x1,0x100000,0x8000000,0x0,0x0,0x0,0x0,0x0,0x80000,0x11b40050,0x20,0x100000,0x8000000,0x80,0x100,0x0,0x100,0x220000,0x801c000,0x200000,0x0,0x340000,0x11be0070,0x0,0x20,0x0,0x20,};
+      jj_la1_1 = new int[] {0x10000000,0x4000000,0x22026ae,0x0,0x0,0x0,0x0,0x80,0x0,0x0,0x0,0xc,0x22020a2,0x80,0x80,0x80,0x80,0x80,0x80,0x1a0,0x20,0x2002000,0x800,0x2002000,0x20,0x0,0x0,0x800,0x0,0x200080,0x0,0x1,0x0,0x1a0,0x0,0x80,0x100,0x0,0x100,0x0,0x200080,0x0,0x1,0x100000,0x8000000,0x0,0x0,0x0,0x80000,0x11b40050,0x20,0x100000,0x8000000,0x220000,0x801c000,0x200000,0x0,0x340000,0x11be0070,0x0,0x20,0x20,0x20,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x1000,0x0,0x4021,0x80,0x0,0x200,0x0,0x0,0x80,0x0,0x200,0x0,0x4021,0x1,0x1,0x0,0x4201,0x0,0x4201,0x0,0x0,0x4201,0x0,0x4201,0x0,0x4001,0x0,0x0,0x200,0x200,0x0,0x0,0x0,0x200,0x0,0x4201,0x20,0x200,0x200,0x0,0x800,0x0,0x8000,0x10000,0x200,0x200,0x200,0x0,0x200,0x0,0x8000b008,0x21,0x8000,0x10000,0x0,0x0,0x200,0x0,0x0,0x7fd1c00,0x0,0x78020000,0x8000a000,0x8000b029,0x20,0x1,0x4000,0x1,};
+      jj_la1_2 = new int[] {0x1000,0x0,0x4021,0x80,0x0,0x200,0x0,0x0,0x80,0x0,0x200,0x0,0x4021,0x0,0x0,0x0,0x0,0x0,0x0,0x4201,0x4001,0x0,0x0,0x0,0x21,0x200,0x200,0x0,0x0,0x0,0x200,0x0,0x20,0x4201,0x200,0x0,0x0,0x200,0x0,0x200,0x0,0x800,0x0,0x8000,0x10000,0x200,0x0,0x200,0x0,0x8000b008,0x21,0x8000,0x10000,0x0,0x7fd1c00,0x0,0x78020000,0x8000a000,0x8000b029,0x20,0x1,0x1,0x1,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x3,0x4,0x0,0x0,0x0,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3,0x3,0x4,0x0,0x0,0x0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[25];
+  final private JJCalls[] jj_2_rtns = new JJCalls[30];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -3195,7 +3225,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 68; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 63; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3204,7 +3234,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 68; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 63; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3213,7 +3243,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 68; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 63; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3222,7 +3252,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 68; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 63; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3341,7 +3371,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 68; i++) {
+    for (int i = 0; i < 63; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -3384,7 +3414,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 30; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -3416,6 +3446,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
             case 22: jj_3_23(); break;
             case 23: jj_3_24(); break;
             case 24: jj_3_25(); break;
+            case 25: jj_3_26(); break;
+            case 26: jj_3_27(); break;
+            case 27: jj_3_28(); break;
+            case 28: jj_3_29(); break;
+            case 29: jj_3_30(); break;
           }
         }
         p = p.next;

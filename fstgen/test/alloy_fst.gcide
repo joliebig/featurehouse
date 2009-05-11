@@ -160,6 +160,7 @@ NatInteger : <INTEGER_LITERAL> ;
 
 Integer : "-" NatInteger | NatInteger;
 
+@FSTNonTerminal()
 Specification : 
 	[Module] 
 	(LL(10) Open)* 
@@ -167,38 +168,54 @@ Specification :
 	<EOF>
 	;
 
+@FSTNonTerminal(name="{Name}")
 Module : "module" Name  [ ExactlyClause ] ;
 
 ExactlyClause : "["  [<EXACTLY>] Name  (ExactlyClauseListElement)* "]" ;
 
 ExactlyClauseListElement : "," [<EXACTLY>] NatInteger ;
 
+@FSTNonTerminal(name="{Name}")
 Open : [<PRIVATE>] "open"  Name  [RefClause]  [ AsClause ] ;
 
-RefClause :  "[" Ref ( "," Ref )+ "]" ;
+RefClause :  "[" Ref ( "," Ref )* "]" ;
 
 AsClause : "as" Name ;
 
-Paragraph : FactDecl | AssertDecl | LL(10) FunDecl | CmdDecl | EnumDecl | SigDecl ; 
+Paragraph : @FSTNonTerminal(name="{FactDecl}") FactDecl 
+          | @FSTNonTerminal(name="{AssertDecl}") AssertDecl 
+          | @FSTNonTerminal(name="{FunDecl}") LL(2) FunDecl 
+          | @FSTNonTerminal(name="{CmdDecl}") CmdDecl 
+          | @FSTNonTerminal(name="{EnumDecl}") EnumDecl 
+          | @FSTNonTerminal(name="{SigDecl}") SigDecl 
+          ; 
 
-FactDecl : "fact" [NonEmptyName] Block ;
+@FSTNonTerminal(name="{MaybeName}")
+FactDecl : "fact" MaybeName Block ;
 
-AssertDecl : "assert" [NonEmptyName] Block ;
+@FSTNonTerminal(name="{MaybeName}")
+AssertDecl : "assert" MaybeName Block ;
 
-FunDecl : LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "(" [Decls] ")" ":" Expr Block
-        | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "[" [Decls] "]" ":" Expr Block
+@FSTNonTerminal(name="{Name}({FunParams})") 
+FunDecl : LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "(" FunParams ")" ":" Expr Block
+        | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" ":" Expr Block
         | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name                 ":" Expr Block
-        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "(" [Decls] ")" Block
-        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "[" [Decls] "]" Block
+        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "(" FunParams ")" Block
+        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" Block
         | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name Block ;
 
-CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock Scope ;
+@FSTNonTerminal(name="{TOSTRING}")
+FunParams : [Decls];
+
+@FSTNonTerminal(name="{AUTO}")
+CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock [Scope] ;
 
 CmdDeclClause : Name ":" ;
 
 RunOrCheck : "run" | "check" ;
 
-NameOrBlock : Name | Block | <NONE>;
+@FSTNonTerminal()
+NameOrBlock : NonEmptyName | Block;
 
 Scope :  LL("\"but\"") "for" NatInteger "but" TypeScope ("," TypeScope)*
        | "for" TypeScope ("," TypeScope)*
@@ -208,16 +225,28 @@ TypeScope : [ "exactly" <NONE> ] NatInteger TypeScopeClause ;
 
 TypeScopeClause : Name | "int" | "seq" | <NONE>;
 
-SigDecl : (SigQual)* "sig" Name ("," Name)* [SigExt] "{" [Decls] "}" [LL(1) Block] ;
+@FSTNonTerminal(name="{Name}")
+SigDecl : (SigQual)* "sig" &LI Name ("," &LI Name)* [SigExt] "{" SigBody "}" [LL(1) Block] ;
 
-Decls : Decl ("," Decl)* ;
+@FSTNonTerminal(name="SigBody")
+SigBody : [Decls] ;
 
-EnumDecl : "enum" Name "{" Name  ( "," Name )*  "}" ;
+@FSTNonTerminal()
+Decls : &LI Decl ("," &LI Decl )* ;
 
+@FSTTerminal(name="{Name}")
+Decl : [ "private" <NONE> ] [ "disj" <NONE> ] &LI Name ("," &LI Name)* ":" [ "disj" <NONE> ] Expr ;
+
+@FSTNonTerminal(name="{Name}")
+EnumDecl : "enum" Name "{" &LI Name  ( "," &LI Name )*  "}" ;
+
+@FSTTerminal(name="SigQual")
 SigQual : "abstract" | "lone" | "one" | "some" | "private" ;
 
+@FSTTerminal(name="SigExt")
 SigExt : "extends" Ref | "in" Ref ( "+" Ref )* ;
 
+@FSTTerminal(name="{AUTO}")
 Expr : Expr1 [ LL(2) BinOpExpr ] ;
 
 BinOpExpr : BinOp Expr;
@@ -238,8 +267,8 @@ Expr4 :  Expr5 [ LL(2) ExprList ] ;
 
 ExprList : "[" Expr ("," Expr)* "]" ;
 
-Expr5 : "let" LetDecl ("," LetDecl)* BlockOrBar
-       | LL(3) Quant Decl ("," Decl)* BlockOrBar
+Expr5 : "let" LetDecl (LL(2) "," LetDecl)* [LL(2) BlockOrBar]
+       | LL(3) Quant Decl (LL(2) "," Decl)* [LL(2) BlockOrBar]
        | UnOp Expr
        | NatInteger
        | "-" NatInteger
@@ -258,8 +287,6 @@ NotClause : "!" | "not" ;
 
 ImpliesClause : "=>" | "implies" ;
 
-Decl : [ "private" <NONE> ] [ "disj" <NONE> ] Name ("," Name)* ":" [ "disj" <NONE> ] Expr ;
-
 LetDecl : Name "=" Expr ;
 
 Quant : "all" | "no" | "some" | "lone" | "one" | "sum" ;
@@ -275,16 +302,22 @@ CompareOp : "=" | "in" | "<" | ">" | "=<" | ">=" ;
 
 UnOp : "!" | "not" | "no" | "some" | "lone" | "one" | "set" | "seq" | "#" | "~" | "*" | "^" ;
 
+@FSTNonTerminal(name="Block")
 Block : "{" (Expr)* "}" ;
 
 BlockOrBar : Block | "|" Expr ;
 
+@FSTTerminal(name="{TOSTRING}")
 Name :  NameClause  ( LL(2) "/" <IDENTIFIER> )* ;
 
 NameClause : "this" | <IDENTIFIER> | <NONE> ;
 
-NonEmptyName : NonEmptyNameClause ( "/" <IDENTIFIER> )* ;
+@FSTTerminal(name="{TOSTRING}")
+NonEmptyName : NonEmptyNameClause (  LL(2) "/" <IDENTIFIER> )* ;
 
 NonEmptyNameClause : "this" | <IDENTIFIER>;
+
+@FSTTerminal(name="{TOSTRING}")
+MaybeName : [NonEmptyName] ;
 
 Ref : Name | "univ" | "Int" | "seq/Int" ;

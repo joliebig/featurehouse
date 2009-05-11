@@ -17,6 +17,525 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("Specification")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Module");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"Open")) {
+				v.accept(this);
+			}
+			for (FSTNode v : getChildren(nonTerminal,"Paragraph")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Module")) {
+			printFeatures(nonTerminal,true);
+			printToken("module");
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "ExactlyClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Open")) {
+			printFeatures(nonTerminal,true);
+			printToken("open");
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "RefClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "AsClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "FactDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "AssertDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph3")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "FunDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph4")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "CmdDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph5")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "EnumDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Paragraph6")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SigDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FactDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken("fact");
+			{
+				FSTNode v=getChild(nonTerminal, "MaybeName");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("AssertDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken("assert");
+			{
+				FSTNode v=getChild(nonTerminal, "MaybeName");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl1")) {
+			printFeatures(nonTerminal,true);
+			printToken("fun");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("(");
+			{
+				FSTNode v=getChild(nonTerminal, "FunParams");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			printToken(":");
+			{
+				FSTNode v=getChild(nonTerminal, "Expr");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl2")) {
+			printFeatures(nonTerminal,true);
+			printToken("fun");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("[");
+			{
+				FSTNode v=getChild(nonTerminal, "FunParams");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("]");
+			printToken(":");
+			{
+				FSTNode v=getChild(nonTerminal, "Expr");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl3")) {
+			printFeatures(nonTerminal,true);
+			printToken("fun");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(":");
+			{
+				FSTNode v=getChild(nonTerminal, "Expr");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl4")) {
+			printFeatures(nonTerminal,true);
+			printToken("pred");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("(");
+			{
+				FSTNode v=getChild(nonTerminal, "FunParams");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(")");
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl5")) {
+			printFeatures(nonTerminal,true);
+			printToken("pred");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("[");
+			{
+				FSTNode v=getChild(nonTerminal, "FunParams");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("]");
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunDecl6")) {
+			printFeatures(nonTerminal,true);
+			printToken("pred");
+			{
+				FSTNode v=getChild(nonTerminal, "Ref");
+				if (v!=null) {
+					v.accept(this);
+					printToken(".");
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("FunParams")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Decls");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("CmdDecl")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "CmdDeclClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "RunOrCheck");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "NameOrBlock");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Scope");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("NameOrBlock1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "NonEmptyName");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("NameOrBlock2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SigDecl")) {
+			printFeatures(nonTerminal,true);
+			Iterator<FSTNode> listElements = getChildren(nonTerminal, "Name").iterator();
+			for (FSTNode v : getChildren(nonTerminal,"SigQual")) {
+				v.accept(this);
+			}
+			printToken("sig");
+			if (listElements.hasNext()) {
+				listElements.next().accept(this);
+			}
+			while (listElements.hasNext()) {
+				printToken(",");
+				listElements.next().accept(this);
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "SigExt");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("{");
+			{
+				FSTNode v=getChild(nonTerminal, "SigBody");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("}");
+			{
+				FSTNode v=getChild(nonTerminal, "Block");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SigBody")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Decls");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Decls")) {
+			printFeatures(nonTerminal,true);
+			Iterator<FSTNode> listElements = getChildren(nonTerminal, "Decl").iterator();
+			if (listElements.hasNext()) {
+				listElements.next().accept(this);
+			}
+			while (listElements.hasNext()) {
+				printToken(",");
+				listElements.next().accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("EnumDecl")) {
+			printFeatures(nonTerminal,true);
+			Iterator<FSTNode> listElements = getChildren(nonTerminal, "Name").iterator();
+			printToken("enum");
+			{
+				FSTNode v=getChild(nonTerminal, "Name");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("{");
+			if (listElements.hasNext()) {
+				listElements.next().accept(this);
+			}
+			while (listElements.hasNext()) {
+				printToken(",");
+				listElements.next().accept(this);
+			}
+			printToken("}");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Block")) {
+			printFeatures(nonTerminal,true);
+			printToken("{");
+			for (FSTNode v : getChildren(nonTerminal,"Expr")) {
+				v.accept(this);
+			}
+			printToken("}");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
@@ -82,10 +601,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("FunDecl1") && expectedType.equals("FunDecl")) return true;
 		if (type.equals("BinOp17") && expectedType.equals("BinOp")) return true;
 		if (type.equals("Expr57") && expectedType.equals("Expr5")) return true;
-		if (type.equals("SigQual1") && expectedType.equals("SigQual")) return true;
 		if (type.equals("TypeScopeClause1") && expectedType.equals("TypeScopeClause")) return true;
+		if (type.equals("SigQual1") && expectedType.equals("SigQual")) return true;
 		if (type.equals("BinOp3") && expectedType.equals("BinOp")) return true;
-		if (type.equals("NameOrBlock3") && expectedType.equals("NameOrBlock")) return true;
 		if (type.equals("UnOp3") && expectedType.equals("UnOp")) return true;
 		if (type.equals("CompareOp1") && expectedType.equals("CompareOp")) return true;
 		if (type.equals("Paragraph6") && expectedType.equals("Paragraph")) return true;
