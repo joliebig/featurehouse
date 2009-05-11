@@ -1940,11 +1940,6 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     finally { jj_save(24, xla); }
   }
 
-  final private boolean jj_3R_32() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_74() {
     if (jj_3R_101()) return true;
     Token xsp;
@@ -3151,6 +3146,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
   }
 
   final private boolean jj_3R_34() {
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_32() {
     if (jj_3R_50()) return true;
     return false;
   }
