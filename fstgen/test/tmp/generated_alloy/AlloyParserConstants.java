@@ -59,21 +59,20 @@ public interface AlloyParserConstants {
   int HEX_LITERAL = 62;
   int OCTAL_LITERAL = 63;
   int IDENTIFIER = 64;
-  int NUMBER = 65;
-  int LETTER = 66;
-  int DIGIT = 67;
-  int LPAREN = 68;
-  int RPAREN = 69;
-  int LBRACE = 70;
-  int RBRACE = 71;
-  int LBRACKET = 72;
-  int RBRACKET = 73;
-  int COMMA = 74;
-  int DOT = 75;
-  int PLUS = 76;
-  int MINUS = 77;
-  int STAR = 78;
-  int SLASH = 79;
+  int LETTER = 65;
+  int DIGIT = 66;
+  int LPAREN = 67;
+  int RPAREN = 68;
+  int LBRACE = 69;
+  int RBRACE = 70;
+  int LBRACKET = 71;
+  int RBRACKET = 72;
+  int COMMA = 73;
+  int DOT = 74;
+  int PLUS = 75;
+  int MINUS = 76;
+  int STAR = 77;
+  int SLASH = 78;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -146,7 +145,6 @@ public interface AlloyParserConstants {
     "<HEX_LITERAL>",
     "<OCTAL_LITERAL>",
     "<IDENTIFIER>",
-    "<NUMBER>",
     "<LETTER>",
     "<DIGIT>",
     "\"(\"",
@@ -161,7 +159,6 @@ public interface AlloyParserConstants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
-    "\"?\"",
     "\"!\"",
     "\"=>\"",
     "\"=\"",

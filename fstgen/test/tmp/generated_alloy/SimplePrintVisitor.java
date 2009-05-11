@@ -73,7 +73,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("UnOp4") && expectedType.equals("UnOp")) return true;
 		if (type.equals("Expr514") && expectedType.equals("Expr5")) return true;
 		if (type.equals("Quant2") && expectedType.equals("Quant")) return true;
-		if (type.equals("Scope3") && expectedType.equals("Scope")) return true;
 		if (type.equals("BinOp2") && expectedType.equals("BinOp")) return true;
 		if (type.equals("ArrowOpClause1") && expectedType.equals("ArrowOpClause")) return true;
 		if (type.equals("UnOp10") && expectedType.equals("UnOp")) return true;
