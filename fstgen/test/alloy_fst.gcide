@@ -182,21 +182,21 @@ RefClause :  "[" Ref ( "," Ref )* "]" ;
 
 AsClause : "as" Name ;
 
-Paragraph : @FSTNonTerminal(name="{FactDecl}") FactDecl 
-          | @FSTNonTerminal(name="{AssertDecl}") AssertDecl 
-          | @FSTNonTerminal(name="{FunDecl}") LL(2) FunDecl 
-          | @FSTNonTerminal(name="{CmdDecl}") CmdDecl 
+Paragraph : @FSTTerminal(name="{FactDecl}") FactDecl 
+          | @FSTTerminal(name="{AssertDecl}") AssertDecl 
+          | @FSTTerminal(name="{FunDecl}") LL(2) FunDecl 
+          | @FSTTerminal(name="{CmdDecl}") CmdDecl 
           | @FSTNonTerminal(name="{EnumDecl}") EnumDecl 
           | @FSTNonTerminal(name="{SigDecl}") SigDecl 
           ; 
 
-@FSTNonTerminal(name="{MaybeName}")
+@FSTExportName("{MaybeName}")
 FactDecl : "fact" MaybeName Block ;
 
-@FSTNonTerminal(name="{MaybeName}")
+@FSTExportName(name="{MaybeName}")
 AssertDecl : "assert" MaybeName Block ;
 
-@FSTNonTerminal(name="{Name}({FunParams})") 
+@FSTExportName("{Name}({FunParams})") 
 FunDecl : LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "(" FunParams ")" ":" Expr Block
         | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" ":" Expr Block
         | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name                 ":" Expr Block
@@ -204,10 +204,10 @@ FunDecl : LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "(" Fu
         | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" Block
         | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name Block ;
 
-@FSTNonTerminal(name="{TOSTRING}")
+@FSTExportName("{TOSTRING}")
 FunParams : [Decls];
 
-@FSTNonTerminal(name="{AUTO}")
+@FSTExportName("{AUTO}")
 CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock [Scope] ;
 
 CmdDeclClause : Name ":" ;
@@ -259,9 +259,9 @@ Expr2 : Expr3 [ LL(2) CompareOpExpr ] ;
 
 CompareOpExpr : [ NotClause ] CompareOp Expr ;
 
-Expr3 : Expr4 [ LL("\"else\"") ElseExpr ] ;
+Expr3 : Expr4 [ LL("ElseExpr()") ElseExpr ] ;
 
-ElseExpr : [ ImpliesClause ] Expr "else" Expr ;
+ElseExpr : [ImpliesClause] Expr "else" Expr ;
 
 Expr4 :  Expr5 [ LL(2) ExprList ] ;
 

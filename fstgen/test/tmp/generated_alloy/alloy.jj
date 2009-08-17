@@ -211,13 +211,13 @@ FSTInfo AsClause(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Paragraph(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=FactDecl(inTerminal){ replaceName("FactDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("Paragraph1","{FactDecl}","{FactDecl}");}
+	n=FactDecl(true){ replaceName("FactDecl", n);}{ replaceName(n);} {return productionEndTerminal("Paragraph1","{FactDecl}","{FactDecl}","Replacement",first,token);}
  |
-	n=AssertDecl(inTerminal){ replaceName("AssertDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("Paragraph2","{AssertDecl}","{AssertDecl}");}
+	n=AssertDecl(true){ replaceName("AssertDecl", n);}{ replaceName(n);} {return productionEndTerminal("Paragraph2","{AssertDecl}","{AssertDecl}","Replacement",first,token);}
  |
-	LOOKAHEAD(2) n=FunDecl(inTerminal){ replaceName("FunDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("Paragraph3","{FunDecl}","{FunDecl}");}
+	LOOKAHEAD(2) n=FunDecl(true){ replaceName("FunDecl", n);}{ replaceName(n);} {return productionEndTerminal("Paragraph3","{FunDecl}","{FunDecl}","Replacement",first,token);}
  |
-	n=CmdDecl(inTerminal){ replaceName("CmdDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("Paragraph4","{CmdDecl}","{CmdDecl}");}
+	n=CmdDecl(true){ replaceName("CmdDecl", n);}{ replaceName(n);} {return productionEndTerminal("Paragraph4","{CmdDecl}","{CmdDecl}","Replacement",first,token);}
  |
 	n=EnumDecl(inTerminal){ replaceName("EnumDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("Paragraph5","{EnumDecl}","{EnumDecl}");}
  |
@@ -227,41 +227,41 @@ FSTInfo Paragraph(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo FactDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"fact" n=MaybeName(inTerminal){ replaceName("MaybeName", n);}{ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FactDecl","{MaybeName}","{MaybeName}");}
+	"fact" n=MaybeName(true){ replaceName("MaybeName", n);}{ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("FactDecl","-","{MaybeName}","Replacement",first,token);}
 
  )  }
 
 FSTInfo AssertDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"assert" n=MaybeName(inTerminal){ replaceName("MaybeName", n);}{ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("AssertDecl","{MaybeName}","{MaybeName}");}
+	"assert" n=MaybeName(true){ replaceName("MaybeName", n);}{ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("AssertDecl","-","{MaybeName}","Replacement",first,token);}
 
  )  }
 
 FSTInfo FunDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} "(" n=FunParams(inTerminal){ replaceName("FunParams", n);}{ replaceName(n);} ")" ":" n=Expr(inTerminal){ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl1","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} "(" n=FunParams(true){ replaceName("FunParams", n);}{ replaceName(n);} ")" ":" n=Expr(true){ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl1","-","{Name}({FunParams})","Replacement",first,token);}
  |
-	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} "[" n=FunParams(inTerminal){ replaceName("FunParams", n);}{ replaceName(n);} "]" ":" n=Expr(inTerminal){ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl2","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} "[" n=FunParams(true){ replaceName("FunParams", n);}{ replaceName(n);} "]" ":" n=Expr(true){ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl2","-","{Name}({FunParams})","Replacement",first,token);}
  |
-	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} ":" n=Expr(inTerminal){ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl3","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "fun" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} ":" n=Expr(true){ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl3","-","{Name}({FunParams})","Replacement",first,token);}
  |
-	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} "(" n=FunParams(inTerminal){ replaceName("FunParams", n);}{ replaceName(n);} ")" n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl4","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} "(" n=FunParams(true){ replaceName("FunParams", n);}{ replaceName(n);} ")" n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl4","-","{Name}({FunParams})","Replacement",first,token);}
  |
-	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} "[" n=FunParams(inTerminal){ replaceName("FunParams", n);}{ replaceName(n);} "]" n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl5","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} "[" n=FunParams(true){ replaceName("FunParams", n);}{ replaceName(n);} "]" n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl5","-","{Name}({FunParams})","Replacement",first,token);}
  |
-	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(inTerminal){ replaceName(n);} "."] n=Name(inTerminal){ replaceName("Name", n);}{ replaceName(n);} n=Block(inTerminal){ replaceName(n);} {return productionEndNonTerminal("FunDecl6","{Name}({FunParams})","{Name}({FunParams})");}
+	LOOKAHEAD(7) ["private" ] "pred" [LOOKAHEAD(Ref() ".") n=Ref(true){ replaceName(n);} "."] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} n=Block(true){ replaceName(n);} {return productionEndTerminal("FunDecl6","-","{Name}({FunParams})","Replacement",first,token);}
 
  )  }
 
 FSTInfo FunParams(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=Decls(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("FunParams","{TOSTRING}","{TOSTRING}");}
+	[n=Decls(true){ replaceName(n);}] {return productionEndTerminal("FunParams","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
 FSTInfo CmdDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[LOOKAHEAD(1) n=CmdDeclClause(inTerminal){ replaceName(n);}] [n=RunOrCheck(inTerminal){ replaceName(n);}] n=NameOrBlock(inTerminal){ replaceName(n);} [n=Scope(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("CmdDecl","{AUTO}","{AUTO}");}
+	[LOOKAHEAD(1) n=CmdDeclClause(true){ replaceName(n);}] [n=RunOrCheck(true){ replaceName(n);}] n=NameOrBlock(true){ replaceName(n);} [n=Scope(true){ replaceName(n);}] {return productionEndTerminal("CmdDecl","-","{AUTO}","Replacement",first,token);}
 
  )  }
 
@@ -403,7 +403,7 @@ FSTInfo CompareOpExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Expr3(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Expr4(true){ replaceName(n);} [LOOKAHEAD("else") n=ElseExpr(true){ replaceName(n);}] {return productionEndTerminal("Expr3","-","-","Replacement",first,token);}
+	n=Expr4(true){ replaceName(n);} [LOOKAHEAD(ElseExpr()) n=ElseExpr(true){ replaceName(n);}] {return productionEndTerminal("Expr3","-","-","Replacement",first,token);}
 
  )  }
 

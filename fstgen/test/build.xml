@@ -157,7 +157,7 @@
 			<param name="parserClass" value="AlloyParser" />
 			<param name="mainProduction" value="Specification" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test3.als" />
+			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
 	
