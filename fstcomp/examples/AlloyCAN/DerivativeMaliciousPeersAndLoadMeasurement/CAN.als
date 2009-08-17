@@ -1,5 +1,5 @@
 module CAN
 
-fun getOverallNumberOfItems [peer: Peer]: Int {
-	sum #((peer.*neighbors).data - DummyItem)
+fun getAllItems [peer: Peer]: set Item {
+	(peer.*neighbors).data - DummyItem
 }

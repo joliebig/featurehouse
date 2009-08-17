@@ -1,9 +1,10 @@
 BasicCAN
 BoundedSpace
-#SinglePartition
+SinglePartition
 DistanceMetric
 Routing
 Retrieval
-#LoadMeasurement
+LoadMeasurement
 MaliciousPeers
-#DerivativeMaliciousPeersAndRetrieval
+DerivativeMaliciousPeersAndRetrieval
+DerivativeMaliciousPeersAndLoadMeasurement
