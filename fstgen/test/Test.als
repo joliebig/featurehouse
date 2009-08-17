@@ -7,11 +7,11 @@ assert isConnected {
 check isConnected for 4
 
 fun getOverallNumberOfItems [peer: Peer]: Int {
-	sum #((peer.*neighbors).data)
+	#((peer.*neighbors).data)
 }
 
 fun getOverallNumberOfPeers [peer: Peer]: Int {
-	sum #(peer.*neighbors)
+	#(peer.*neighbors)
 }
 
 fun getAverageLoad [peer: Peer]: Int {
