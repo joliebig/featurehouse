@@ -20,6 +20,7 @@ import printer.binary.BinaryPrintVisitor;
 import printer.capprox.CApproxPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
 import printer.haskell.HaskellPrintVisitor;
+import printer.alloy.AlloyPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
 import printer.text.TextPrintVisitor;
@@ -28,7 +29,8 @@ import builder.ArtifactBuilderInterface;
 import builder.binary.BinaryBuilder;
 import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;
-import builder.haskell.HaskellBuilder; //import builder.lhaskell.HaskellBuilder;
+import builder.haskell.HaskellBuilder;
+import builder.alloy.AlloyBuilder;
 import builder.java.JavaBuilder;
 import builder.javacc.JavaCCBuilder;
 import builder.text.TextBuilder;
@@ -78,20 +80,20 @@ public class FSTGenComposer {
 	}
 
 	public FSTGenComposer() {
+		registerArtifactBuilder(new AlloyBuilder());
 		registerArtifactBuilder(new JavaBuilder());
 		registerArtifactBuilder(new CSharpBuilder());
 		registerArtifactBuilder(new CApproxBuilder());
-		// composer.registerArtifactBuilder(new PHaskellBuilder());
 		registerArtifactBuilder(new HaskellBuilder());
 		registerArtifactBuilder(new JavaCCBuilder());
 		registerArtifactBuilder(new XMIBuilder());
 		registerArtifactBuilder(new TextBuilder(".properties"));
 		registerArtifactBuilder(new BinaryBuilder(".jpg"));
+		registerPrintVisitor(new AlloyPrintVisitor());
 		registerPrintVisitor(new JavaPrintVisitor());
 		registerPrintVisitor(new CSharpPrintVisitor());
 		registerPrintVisitor(new CApproxPrintVisitor());
 		registerPrintVisitor(new JavaCCPrintVisitor());
-		// composer.registerPrintVisitor(new PHaskellPrintVisitor());
 		registerPrintVisitor(new HaskellPrintVisitor());
 		registerPrintVisitor(new XMIPrintVisitor());
 		registerPrintVisitor(new TextPrintVisitor(".properties"));
@@ -145,20 +147,22 @@ public class FSTGenComposer {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
+				for (FSTNonTerminal feature : features) {
+					System.out.println(feature.toString());
+				}
+
+
+				
 				FSTNode composition = compose(features);
 //				modify(composition);
 
-				//if(composition != null)
-				//	System.err.println(composition.toString());
+				if(composition != null)
+					System.err.println(composition.toString());
 				try {
 					featureVisitor.visit((FSTNonTerminal) composition);
 				} catch (PrintVisitorException e) {
 					e.printStackTrace();
 				}
-/*				for (FSTNonTerminal feature : features) {
-					System.out.println(feature.toString());
-				}
-*/
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {
