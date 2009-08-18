@@ -15,5 +15,5 @@ assert moveAddsRemovesNone {
     mv[fs, fs', f, d] => fs.objects = fs'.objects
 }
 
-check moveAddsRemovesNone for 5   // passes
+check moveAddsRemovesNone for 5 but exactly 2 AMap // passes
 

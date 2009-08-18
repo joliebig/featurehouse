@@ -62,5 +62,5 @@ assert sameFilesystemState {
 }
 
 run partitionResize for 5
-check sameFilesystemState for 5
+check sameFilesystemState for 5 but 2 AMap
 

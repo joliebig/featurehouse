@@ -18,7 +18,7 @@ pred changedPartition[fs1, fs2: AMap] {
 	fs1 != fs2
 	fs1.designation = fs2.designation
 }
-run changedPartition for 6
+run changedPartition for 6 but exactly 2 AMap
 
 sig Block { }
 

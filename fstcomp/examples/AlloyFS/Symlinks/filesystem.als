@@ -23,6 +23,5 @@ pred symLinksAcrossPartitions[disj fs1,fs2: AMap, link: SymLink] {
 	link.(fs1.symlinks) in fs2.objects
 }
 
-run symLinksAcrossPartitions for 5
-
+run symLinksAcrossPartitions for 4 but 2 AMap, 8 Inode
 

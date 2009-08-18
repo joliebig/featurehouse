@@ -26,9 +26,9 @@ pred rm_r(fs, fs': AMap, f: Inode) {
 	changedFS[fs, fs'] 
 }
 
-run rm for 4
-run rmdir for 4
-run rm_r for 4
+run rm for 4 but 2 AMap, 4 Inode
+run rmdir for 4 but 2 AMap, 4 Inode
+run rm_r for 4 but 2 AMap, 4 Inode
 
 // rm removes exactly the specified file
 assert rmRemovesOneFile {

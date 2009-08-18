@@ -17,8 +17,8 @@ pred mkdir(disj fs, fs': AMap, cd: Dir, dir: Dir) {
 	changedFS[fs, fs'] 
 }
 
-run creat for 4
-run mkdir for 4
+run creat for 4 but 2 AMap, 4 Inode
+run mkdir for 4 but 2 AMap, 4 Inode
 
 // Creating a file or a directory adds exactly one Inode
 assert creatAddsOneFile {

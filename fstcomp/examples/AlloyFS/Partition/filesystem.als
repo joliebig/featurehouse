@@ -19,7 +19,7 @@ pred disjointPartitions[fs1, fs2: AMap] {
 pred allDisjointPartitions {
 	all disj fs1, fs2: AMap | disjointPartitions[fs1, fs2]
 }
-run allDisjointPartitions for 6
+run allDisjointPartitions for 6 but 3 AMap
 
 
 

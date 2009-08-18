@@ -38,7 +38,7 @@ pred changedFS[fs1, fs2: AMap] {
 	fs1.designation = fs2.designation
 	fs1.root = fs2.root
 }
-run changedFS for 6
+run changedFS for 6 but exactly 2 AMap
 
 
 // These are two different partitions on the same system
