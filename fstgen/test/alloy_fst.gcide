@@ -217,7 +217,7 @@ RunOrCheck : "run" | "check" ;
 @FSTNonTerminal()
 NameOrBlock : NonEmptyName | Block;
 
-Scope :  LL("\"but\"") "for" NatInteger "but" TypeScope ("," TypeScope)*
+Scope :  LL("\"for\" NatInteger()\"but\"") "for" NatInteger "but" TypeScope ("," TypeScope)*
        | "for" TypeScope ("," TypeScope)*
        ;
 

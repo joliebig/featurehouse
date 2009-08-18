@@ -289,7 +289,7 @@ FSTInfo NameOrBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Scope(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD("but") "for" n=NatInteger(true){ replaceName(n);} "but" n=TypeScope(true){ replaceName(n);} ("," n=TypeScope(true){ replaceName(n);})* {return productionEndTerminal("Scope1","-","-","Replacement",first,token);}
+	LOOKAHEAD("for" NatInteger()"but") "for" n=NatInteger(true){ replaceName(n);} "but" n=TypeScope(true){ replaceName(n);} ("," n=TypeScope(true){ replaceName(n);})* {return productionEndTerminal("Scope1","-","-","Replacement",first,token);}
  |
 	"for" n=TypeScope(true){ replaceName(n);} ("," n=TypeScope(true){ replaceName(n);})* {return productionEndTerminal("Scope2","-","-","Replacement",first,token);}
 
