@@ -1,6 +1,5 @@
 module filesystem
 
-
 // rm frees memory (in this model, every file uses at least one block)
 assert rmFreesMemory {
   all fs, fs': AMap, f: File |

@@ -1,9 +1,22 @@
 module filesystem
 
+fun find [cd: Dir, n: Inode] : set Inode {
+	n in cd.*(Dir <: AMap.contents) => n else 0
+}
+
+// directory listing
+fun ls[cd: Dir] : set Inode {
+	cd.(Dir <: AMap.contents)
+}
+
+// recursive directory listing
+fun ls_r[cd: Dir] : set Inode {
+	cd.^(Dir <: AMap.contents)
+}
 
 // recursive directory listing following symbolic links, inifinite loop aware (as Alloy naturally is)
 fun ls_rH[cd: Dir] : set Inode {
-	cd.^(AMap.contents + AMap.symlinks)
+	cd.^(AMap.contents)
 }
 
 // there is an Inode in a different file system reachable with ls_rH

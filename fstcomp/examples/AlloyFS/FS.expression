@@ -1,7 +1,7 @@
 Partition
-Blocks
 Filesystem
-#DerivativeBlocksAndFilesystem
+Blocks
+DerivativeBlocksAndFilesystem
 Create
 DerivativeBlocksAndCreate
 List
@@ -11,5 +11,4 @@ Remove
 DerivativeBlocksAndRemove
 Symlinks
 DerivativeSymlinksAndList
-
 

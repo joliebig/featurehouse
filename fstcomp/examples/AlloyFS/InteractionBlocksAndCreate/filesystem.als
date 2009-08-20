@@ -1,6 +1,5 @@
 module filesystem
 
-
 assert CreatNeedsFreeSpace {
   all fs, fs': AMap, cd: Dir, f: File |
     creat[fs, fs', cd, f]=> df[fs] > 0

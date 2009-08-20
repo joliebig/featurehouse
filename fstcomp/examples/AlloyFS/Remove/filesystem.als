@@ -1,5 +1,11 @@
 module filesystem
 
+// must weaken changedFS to be able to remove
+//pred changedFS[fs1, fs2: AMap] {
+//	fs1 != fs2
+//	fs1.designation = fs2.designation
+//	fs1.root = fs2.root
+//}
 
 // Delete the file f
 pred rm (fs, fs': AMap, f: File) {
