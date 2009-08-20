@@ -3,12 +3,12 @@ Filesystem
 Blocks
 DerivativeBlocksAndFilesystem
 Create
-DerivativeBlocksAndCreate
+TestBlocksAndCreate
 List
 Move
-DerivativeBlocksAndMove
+TestBlocksAndMove
 Remove
-DerivativeBlocksAndRemove
+TestBlocksAndRemove
 Symlinks
 DerivativeSymlinksAndList
 
