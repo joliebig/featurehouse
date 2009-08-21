@@ -10,7 +10,7 @@
             <packagesToUnSeal/>
         </sealing>
     </manifest>
-    <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="true">
+    <selectedElements exportClassFiles="false" exportJavaFiles="false" exportOutputFolder="true">
         <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
         <folder path="/CIDE2_ast/META-INF"/>
         <javaElement handleIdentifier="=fstgen/test"/>
