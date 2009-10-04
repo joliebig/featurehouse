@@ -99,13 +99,11 @@ public class JavaMethodOverriding {
 
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
-		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@")) {
-			
-			
-		} else {
-	
-			StringTokenizer stA = new StringTokenizer(terminalA.getBody(), "(");
-			StringTokenizer stB = new StringTokenizer(terminalB.getBody(), "(");
+		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
+			return;
+		
+		StringTokenizer stA = new StringTokenizer(terminalA.getBody(), "(");
+		StringTokenizer stB = new StringTokenizer(terminalB.getBody(), "(");
 
 		if (stA.hasMoreTokens() && stB.hasMoreTokens()) {
 			stA = new StringTokenizer(stA.nextToken(), " ");
@@ -193,7 +191,7 @@ public class JavaMethodOverriding {
 
 			terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
 			terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
-		}
+			
 		}
 	}
 }
