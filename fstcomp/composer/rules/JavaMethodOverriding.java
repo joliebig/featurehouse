@@ -49,7 +49,12 @@ public class JavaMethodOverriding {
 				auxBody = st.nextToken();
 			}
 
-			st = new StringTokenizer(auxBody, " ");
+			//System.err.println(oldMethodName);
+			//System.err.println(auxBody);
+			
+			//String sep = "";
+			
+			st = new StringTokenizer(auxBody);
 			String prefix = "";
 			boolean found = false;
 			while (st.hasMoreTokens() && !found) {
@@ -72,8 +77,12 @@ public class JavaMethodOverriding {
 					modPrefix += String.valueOf(c);
 			}
 
-			prefix = modPrefix;
+			prefix = modPrefix.trim();
 
+			//System.err.println("-------" + prefix);
+			//System.err.println("--------" + terminalComp2.getBody());
+			//System.err.println("---------" + terminalComp2.getBody().replaceFirst(prefix, ""));
+			
 			terminalComp2.setBody(prefix
 					+ terminalComp2.getBody().replaceFirst(prefix, "")
 							.replaceFirst(oldMethodName, newMethodName));
@@ -87,7 +96,7 @@ public class JavaMethodOverriding {
 		else
 			return getFeatureName(node.getParent());
 	}
-	
+
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
 		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@")) {
@@ -98,90 +107,93 @@ public class JavaMethodOverriding {
 			StringTokenizer stA = new StringTokenizer(terminalA.getBody(), "(");
 			StringTokenizer stB = new StringTokenizer(terminalB.getBody(), "(");
 
-			if (stA.hasMoreTokens() && stB.hasMoreTokens()) {
-				stA = new StringTokenizer(stA.nextToken(), " ");
-				LinkedHashSet<String> modifierSetA = new LinkedHashSet<String>();
-				while (stA.hasMoreTokens()) {
-					modifierSetA.add(stA.nextToken());
-				}
-				stB = new StringTokenizer(stB.nextToken(), " ");
-				LinkedHashSet<String> modifierSetB = new LinkedHashSet<String>();
-				while (stB.hasMoreTokens()) {
-					modifierSetB.add(stB.nextToken());
-				}
+		if (stA.hasMoreTokens() && stB.hasMoreTokens()) {
+			stA = new StringTokenizer(stA.nextToken(), " ");
+			LinkedHashSet<String> modifierSetA = new LinkedHashSet<String>();
+			while (stA.hasMoreTokens()) {
+				modifierSetA.add(stA.nextToken());
+			}
+			stB = new StringTokenizer(stB.nextToken(), " ");
+			LinkedHashSet<String> modifierSetB = new LinkedHashSet<String>();
+			while (stB.hasMoreTokens()) {
+				modifierSetB.add(stB.nextToken());
+			}
 
-				String[] modifierArrayA = new String[modifierSetA.size()];
-				modifierSetA.toArray(modifierArrayA);
+			String[] modifierArrayA = new String[modifierSetA.size()];
+			modifierSetA.toArray(modifierArrayA);
 
-				String[] modifierArrayB = new String[modifierSetB.size()];
-				modifierSetB.toArray(modifierArrayB);
+			String[] modifierArrayB = new String[modifierSetB.size()];
+			modifierSetB.toArray(modifierArrayB);
 
-				if (!modifierArrayA[modifierArrayA.length - 2].equals(modifierArrayB[modifierArrayB.length - 2])) {
-					System.err.println("Warning: return types of the two methods `"
+			if(modifierArrayA.length <=1 || modifierArrayB.length <= 1) 
+				return;
+			
+			if (!modifierArrayA[modifierArrayA.length - 2]
+					.equals(modifierArrayB[modifierArrayB.length - 2])) {
+				System.err.println("Warning: return types of the two methods `"
 						+ modifierArrayA[modifierArrayA.length - 1]
 						+ "' are not compatible: "
 						+ modifierArrayA[modifierArrayA.length - 2] + " != "
 						+ modifierArrayB[modifierArrayB.length - 2]);
-				}
+			}
 
-				String removedDuplicates = new String();
-				String[] modifierArrayRes = new String[modifierArrayA.length + modifierArrayB.length - 2];
-				System.arraycopy(modifierArrayB, 0, modifierArrayRes, 0, modifierArrayB.length - 2);
-				System.arraycopy(modifierArrayA, 0, modifierArrayRes, modifierArrayB.length - 2, modifierArrayA.length);
+			String removedDuplicates = new String();
+			String[] modifierArrayRes = new String[modifierArrayA.length + modifierArrayB.length - 2];
+			System.arraycopy(modifierArrayB, 0, modifierArrayRes, 0, modifierArrayB.length - 2);
+			System.arraycopy(modifierArrayA, 0, modifierArrayRes, modifierArrayB.length - 2, modifierArrayA.length);
 
-				boolean isPublic = false;
-				boolean isProtected = false;
-				boolean isPrivate = false;
-				boolean isAbstract = false;
-				LinkedList<String> otherModifiers = new LinkedList<String>();
+			boolean isPublic = false;
+			boolean isProtected = false;
+			boolean isPrivate = false;
+			boolean isAbstract = false;
+			LinkedList<String> otherModifiers = new LinkedList<String>();
 			
-				for (int i = 0; i < modifierArrayRes.length; i++) {
-					String modifier = modifierArrayRes[i].trim();
-					if (modifier.equals("private") && !isPublic && !isProtected && !isPrivate) {
-						isPrivate = true;
-						removedDuplicates += modifier + " ";
-					} else if (modifier.equals("protected") && !isPublic && !isProtected ) {
-						isProtected = true;
-						removedDuplicates = removedDuplicates.replaceAll("private",
-						"");
-						removedDuplicates += modifier + " ";
-					} else if (modifier.equals("public") && !isPublic) {
-						isPublic = true;
-						removedDuplicates = removedDuplicates.replaceAll("private",
-						"");
+			for (int i = 0; i < modifierArrayRes.length; i++) {
+				String modifier = modifierArrayRes[i].trim();
+				if (modifier.equals("private") && !isPublic && !isProtected && !isPrivate) {
+					isPrivate = true;
+					removedDuplicates += modifier + " ";
+				} else if (modifier.equals("protected") && !isPublic && !isProtected ) {
+					isProtected = true;
+					removedDuplicates = removedDuplicates.replaceAll("private",
+							"");
+					removedDuplicates += modifier + " ";
+				} else if (modifier.equals("public") && !isPublic) {
+					isPublic = true;
+					removedDuplicates = removedDuplicates.replaceAll("private",
+							"");
+					removedDuplicates = removedDuplicates.replaceAll(
+							"protected", "");
+					removedDuplicates += modifier + " ";
+				} else if (!modifier.equals("public")
+						&& !modifier.equals("protected")
+						&& !modifier.equals("private")) {
+					if (modifier.equals("abstract")) {
+						isAbstract = true;
 						removedDuplicates = removedDuplicates.replaceAll(
-								"protected", "");
+								"final", "");
 						removedDuplicates += modifier + " ";
-					} else if (!modifier.equals("public")
-							&& !modifier.equals("protected")
-							&& !modifier.equals("private")) {
-						if (modifier.equals("abstract")) {
-							isAbstract = true;
-							removedDuplicates = removedDuplicates.replaceAll(
-									"final", "");
-							removedDuplicates += modifier + " ";
-						} else if (modifier.equals("final") && !isAbstract) {
-							removedDuplicates += modifier + " ";
-						} else if (!modifier.equals("abstract")
-								&& !modifier.equals("final")) {
+					} else if (modifier.equals("final") && !isAbstract) {
+						removedDuplicates += modifier + " ";
+					} else if (!modifier.equals("abstract")
+							&& !modifier.equals("final")) {
 						
-							boolean in = false;
-							for(String otherModifier : otherModifiers) {
-								if(otherModifier.equals(modifier))
-									in = true;
-							}
-							if(!in) {
-								removedDuplicates += modifier + " ";
-								otherModifiers.add(modifier);
-							}
+						boolean in = false;
+						for(String otherModifier : otherModifiers) {
+							if(otherModifier.equals(modifier))
+								in = true;
+						}
+						if(!in) {
+							removedDuplicates += modifier + " ";
+							otherModifiers.add(modifier);
 						}
 					}
 				}
-
-				terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
-				terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
 			}
-			
+
+			terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
+			terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
+		}
 		}
 	}
 }

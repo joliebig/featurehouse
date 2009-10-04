@@ -163,6 +163,10 @@ public class FSTGenComposer {
 				} catch (PrintVisitorException e) {
 					e.printStackTrace();
 				}
+				//for (FSTNonTerminal feature : features) {
+				//	System.out.println(feature.toString());
+				//}
+
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {
@@ -348,5 +352,6 @@ public class FSTGenComposer {
 	public void fireParseErrorOccured(cide.gparser.ParseException e1) {
 		for (IParseErrorListener listener : parseErrorListeners)
 			listener.parseErrorOccured(e1);
+		e1.printStackTrace();
 	}
 }
