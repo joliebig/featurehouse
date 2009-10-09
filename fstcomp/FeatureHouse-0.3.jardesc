@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="/home/apel/Desktop/FeatureHouse-0.3.1.jar"/>
+    <jar path="C:/Users/apel/Desktop/FeatureHouse-0.3.2.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.3.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -54,5 +54,4 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.alloy"/>
     </selectedElements>
-    <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
 </jardesc>
