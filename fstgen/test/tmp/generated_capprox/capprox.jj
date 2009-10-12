@@ -577,7 +577,7 @@ FSTInfo Function(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo FunctionHeader(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=Modifier(true){ replaceName(n);})* n=FunctionReturnType(true){ replaceName(n);} ["*" ] [LOOKAHEAD(1) n=FunctionExoticStuff(true){ replaceName(n);}] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));} "(" {return productionEndTerminal("FunctionHeader","-","{<IDENTIFIER>}","Replacement",first,token);}
+	(n=Modifier(true){ replaceName(n);})* n=FunctionReturnType(true){ replaceName(n);} ["*" ] [LOOKAHEAD(1) n=FunctionExoticStuff(true){ replaceName(n);}] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "(" {return productionEndTerminal("FunctionHeader","-","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 
