@@ -401,7 +401,15 @@ FSTInfo CodeUnit_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	LOOKAHEAD(3) n=ExternDecl(true){ replaceName("ExternDecl", n);}{ replaceName(n);} {return productionEndTerminal("ExternDec","{ExternDecl}","{ExternDecl}","Replacement",first,token);}
  |
+	LOOKAHEAD(3) n=StructDecl(inTerminal){ replaceName("StructDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("CodeUnit_TopLevel8","{StructDecl}","{StructDecl}");}
+ |
 	n=Statement(true){ replaceName("Statement", n);}{ replaceName(n);} {return productionEndTerminal("StmtTL","{Statement}","{Statement}","Replacement",first,token);}
+
+ )  }
+
+FSTInfo StructDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"struct" t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "{" (n=Statement(inTerminal){ replaceName(n);})* "}" ";" {return productionEndNonTerminal("StructDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
 
  )  }
 
@@ -435,7 +443,7 @@ FSTInfo CodeUnit_InBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=AnyStmtToken(true){ replaceName(n);})* ";" {return productionEndTerminal("Statement","-","{TOSTRING}","Replacement",first,token);}
+	(n=AnyStmtToken(true){ replaceName(n);})* ";" {return productionEndTerminal("Statement","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 

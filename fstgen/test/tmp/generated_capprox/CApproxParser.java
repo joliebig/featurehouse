@@ -357,6 +357,11 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                          replaceName("ExternDecl", n);
                                                                          replaceName(n);
                                                                                            {if (true) return productionEndTerminal("ExternDec","{ExternDecl}","{ExternDecl}","Replacement",first,token);}
+        } else if (jj_2_8(3)) {
+          n = StructDecl(inTerminal);
+                                               replaceName("StructDecl", n);
+                                                                               replaceName(n);
+                                                                                                 {if (true) return productionEndNonTerminal("CodeUnit_TopLevel8","{StructDecl}","{StructDecl}");}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case LITERAL:
@@ -412,22 +417,84 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     throw new Error("Missing return statement in function");
   }
 
+  final public FSTInfo StructDecl(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(STRUCT);
+    t = jj_consume_token(IDENTIFIER);
+                                 replaceName(new FSTInfo("<IDENTIFIER>",t.image));
+    jj_consume_token(OCB);
+    label_2:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LITERAL:
+      case INCLUDE:
+      case DEFINE:
+      case IFDEF:
+      case IFNDEF:
+      case ELIF:
+      case ELSIF:
+      case PPLINE:
+      case PPPRAGMA:
+      case PPERROR:
+      case ENUM:
+      case EXTERN:
+      case UNSIGNED:
+      case CONST:
+      case STATIC:
+      case STRUCT:
+      case INLINE:
+      case INLINE2:
+      case INLINE3:
+      case WEIREDSTUFF2:
+      case IF:
+      case ELSE:
+      case FOR:
+      case WHILE:
+      case SEMI:
+      case COLON:
+      case COMMA:
+      case LT:
+      case GT:
+      case OB:
+      case CB:
+      case OCB:
+      case STAR:
+      case EQ:
+      case PIPE:
+      case IDENTIFIER:
+      case OTHER:
+        ;
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        break label_2;
+      }
+      n = Statement(inTerminal);
+                                                                                                                  replaceName(n);
+    }
+    jj_consume_token(CCB);
+    jj_consume_token(SEMI);
+                                                                                                                                              {if (true) return productionEndNonTerminal("StructDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+    throw new Error("Missing return statement in function");
+  }
+
   final public FSTInfo CodeUnit_InBlock(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_8(2)) {
+    if (jj_2_9(2)) {
       n = PPIfDef_BlockLevel(true);
                                                  replaceName(n);
                                                                    {if (true) return productionEndTerminal("IfDefBL","-","-","Replacement",first,token);}
-    } else if (jj_2_9(2)) {
+    } else if (jj_2_10(2)) {
       n = PPIncludeStatement(true);
                                                  replaceName(n);
                                                                    {if (true) return productionEndTerminal("IncludeBL","-","-","Replacement",first,token);}
-    } else if (jj_2_10(2)) {
+    } else if (jj_2_11(2)) {
       n = PPDefineStatement(true);
                                                 replaceName(n);
                                                                   {if (true) return productionEndTerminal("DefineBL","-","-","Replacement",first,token);}
-    } else if (jj_2_11(2)) {
+    } else if (jj_2_12(2)) {
       jj_consume_token(HASH);
       n = PPOtherIgnore(true);
                                                 replaceName(n);
@@ -461,8 +528,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                 {if (true) return productionEndTerminal("Switch","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[2] = jj_gen;
-        if (jj_2_12(2)) {
+        jj_la1[3] = jj_gen;
+        if (jj_2_13(2)) {
           n = GotoLabel(true);
                                         replaceName(n);
                                                           {if (true) return productionEndTerminal("CodeUnit_InBlock10","-","-","Replacement",first,token);}
@@ -514,7 +581,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                              {if (true) return productionEndTerminal("Stmt","-","-","Replacement",first,token);}
             break;
           default:
-            jj_la1[3] = jj_gen;
+            jj_la1[4] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -527,7 +594,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo Statement(boolean inTerminal) throws ParseException {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_2:
+    label_3:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LITERAL:
@@ -569,14 +636,14 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         ;
         break;
       default:
-        jj_la1[4] = jj_gen;
-        break label_2;
+        jj_la1[5] = jj_gen;
+        break label_3;
       }
       n = AnyStmtToken(true);
                                replaceName(n);
     }
     jj_consume_token(SEMI);
-                                                       {if (true) return productionEndTerminal("Statement","-","{TOSTRING}","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("Statement","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -594,7 +661,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                                                                replaceName(n);
       break;
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[6] = jj_gen;
       ;
     }
                                                                                                                                   {if (true) return productionEndTerminal("IfStatement","-","-","Replacement",first,token);}
@@ -654,7 +721,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     jj_consume_token(OB);
     findEndCB();
     jj_consume_token(OCB);
-    label_3:
+    label_4:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CASE:
@@ -662,8 +729,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         ;
         break;
       default:
-        jj_la1[6] = jj_gen;
-        break label_3;
+        jj_la1[7] = jj_gen;
+        break label_4;
       }
       n = SwCase(true);
                                                       replaceName(n);
@@ -693,20 +760,20 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         jj_consume_token(CB);
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[8] = jj_gen;
         ;
       }
       n = SwCaseLabel(true);
                                                                         replaceName(n);
-      label_4:
+      label_5:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PIPE:
           ;
           break;
         default:
-          jj_la1[8] = jj_gen;
-          break label_4;
+          jj_la1[9] = jj_gen;
+          break label_5;
         }
         n = MoreSwCaseLabel(true);
                                                                                                                    replaceName(n);
@@ -717,7 +784,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                                                                                                                                                {if (true) return productionEndTerminal("SwCase2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[9] = jj_gen;
+      jj_la1[10] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -739,14 +806,14 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         jj_consume_token(OTHER);
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[11] = jj_gen;
         ;
       }
       jj_consume_token(LITERAL);
                              {if (true) return productionEndTerminal("SwCaseLabel2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[11] = jj_gen;
+      jj_la1[12] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -787,12 +854,12 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo PPDefineStatement(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_13(2)) {
+    if (jj_2_14(2)) {
       jj_consume_token(HASH);
       jj_consume_token(DEFINE);
       findLineEnd();
                                                  {if (true) return productionEndTerminal("PPDefineStatement1","-","{TOSTRING}","Replacement",first,token);}
-    } else if (jj_2_14(2)) {
+    } else if (jj_2_15(2)) {
       jj_consume_token(HASH);
       jj_consume_token(PPUNDEF);
       findLineEnd();
@@ -811,17 +878,17 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                            replaceName(n);
     n = Sequence_CodeUnit_TopLevel(true);
                                                                                 replaceName(n);
-    label_5:
+    label_6:
     while (true) {
-      if (jj_2_15(2)) {
+      if (jj_2_16(2)) {
         ;
       } else {
-        break label_5;
+        break label_6;
       }
       n = IfElseIf_TopLevel(true);
                                                                                                                                           replaceName(n);
     }
-    if (jj_2_16(2)) {
+    if (jj_2_17(2)) {
       jj_consume_token(HASH);
       jj_consume_token(ELSE);
       n = Sequence_CodeUnit_TopLevel(true);
@@ -842,17 +909,17 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                            replaceName(n);
     n = Sequence_CodeUnit_InBlock(true);
                                                                                replaceName(n);
-    label_6:
+    label_7:
     while (true) {
-      if (jj_2_17(2)) {
+      if (jj_2_18(2)) {
         ;
       } else {
-        break label_6;
+        break label_7;
       }
       n = IfElseIf_BlockLevel(true);
                                                                                                                                            replaceName(n);
     }
-    if (jj_2_18(2)) {
+    if (jj_2_19(2)) {
       jj_consume_token(HASH);
       jj_consume_token(ELSE);
       n = Sequence_CodeUnit_InBlock(true);
@@ -883,7 +950,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                   {if (true) return productionEndTerminal("PPOtherIgnore3","-","{TOSTRING}","Replacement",first,token);}
       break;
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[13] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -893,12 +960,12 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo IfDefLine(boolean inTerminal) throws ParseException {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_19(2)) {
+    if (jj_2_20(2)) {
       jj_consume_token(HASH);
       jj_consume_token(IFDEF);
       jj_consume_token(IDENTIFIER);
                                                {if (true) return productionEndTerminal("IfDefLine1","-","-","Replacement",first,token);}
-    } else if (jj_2_20(2)) {
+    } else if (jj_2_21(2)) {
       jj_consume_token(HASH);
       jj_consume_token(IFNDEF);
       jj_consume_token(IDENTIFIER);
@@ -912,7 +979,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                 {if (true) return productionEndTerminal("IfDefLine3","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -923,7 +990,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo IfElseIf(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_21(2)) {
+    if (jj_2_22(2)) {
       jj_consume_token(HASH);
       jj_consume_token(ELIF);
                                   {if (true) return productionEndTerminal("IfElseIf1","-","-","Replacement",first,token);}
@@ -935,7 +1002,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                       {if (true) return productionEndTerminal("IfElseIf2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -998,7 +1065,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                                                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       ;
     }
     jj_consume_token(CB);
@@ -1011,7 +1078,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo FunctionHeader(boolean inTerminal) throws ParseException {
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_7:
+    label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case EXTERN:
@@ -1023,8 +1090,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         ;
         break;
       default:
-        jj_la1[16] = jj_gen;
-        break label_7;
+        jj_la1[17] = jj_gen;
+        break label_8;
       }
       n = Modifier(true);
                            replaceName(n);
@@ -1036,7 +1103,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_consume_token(STAR);
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1045,7 +1112,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                                                                                              replaceName(n);
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[19] = jj_gen;
       ;
     }
     t = jj_consume_token(IDENTIFIER);
@@ -1063,7 +1130,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_consume_token(CONST);
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1071,7 +1138,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_consume_token(STRUCT);
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -1079,7 +1146,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_consume_token(UNSIGNED);
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[22] = jj_gen;
       ;
     }
     jj_consume_token(IDENTIFIER);
@@ -1116,7 +1183,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                          {if (true) return productionEndTerminal("Modifier6","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[22] = jj_gen;
+      jj_la1[23] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1139,15 +1206,15 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
      first=getToken(1); productionStart(inTerminal);
     n = FunctionParameter(true);
                                    replaceName(n);
-    label_8:
+    label_9:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case COMMA:
         ;
         break;
       default:
-        jj_la1[23] = jj_gen;
-        break label_8;
+        jj_la1[24] = jj_gen;
+        break label_9;
       }
       jj_consume_token(COMMA);
       n = FunctionParameter(true);
@@ -1160,7 +1227,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo FunctionParameter(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_9:
+    label_10:
     while (true) {
       n = VarDeclToken(true);
                                replaceName(n);
@@ -1187,8 +1254,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         ;
         break;
       default:
-        jj_la1[24] = jj_gen;
-        break label_9;
+        jj_la1[25] = jj_gen;
+        break label_10;
       }
     }
                                                    {if (true) return productionEndTerminal("FunctionParameter","-","-","Replacement",first,token);}
@@ -1218,12 +1285,12 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo Sequence_CodeUnit_InBlock(boolean inTerminal) throws ParseException {
                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_10:
+    label_11:
     while (true) {
-      if (jj_2_22(2)) {
+      if (jj_2_23(2)) {
         ;
       } else {
-        break label_10;
+        break label_11;
       }
       n = CodeUnit_InBlock(true);
                                                 replaceName(n);
@@ -1265,7 +1332,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     case PIPE:
     case IDENTIFIER:
     case OTHER:
-      label_11:
+      label_12:
       while (true) {
         n = VarDecl(true);
                           replaceName(n);
@@ -1294,8 +1361,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
           ;
           break;
         default:
-          jj_la1[25] = jj_gen;
-          break label_11;
+          jj_la1[26] = jj_gen;
+          break label_12;
         }
       }
       n = Block(true);
@@ -1303,7 +1370,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                               {if (true) return productionEndTerminal("BlockOrSemi3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[26] = jj_gen;
+      jj_la1[27] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1363,7 +1430,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                     {if (true) return productionEndTerminal("BlockOrSingleStatement2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[28] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1373,10 +1440,10 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo TypeDef(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_23(2)) {
+    if (jj_2_24(2)) {
       jj_consume_token(TYPEDEF);
       jj_consume_token(ENUM);
-      label_12:
+      label_13:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LITERAL:
@@ -1419,8 +1486,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
           ;
           break;
         default:
-          jj_la1[28] = jj_gen;
-          break label_12;
+          jj_la1[29] = jj_gen;
+          break label_13;
         }
         n = AnyTypeDefToken(true);
                                                                 replaceName(n);
@@ -1431,7 +1498,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case TYPEDEF:
         jj_consume_token(TYPEDEF);
-        label_13:
+        label_14:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case LITERAL:
@@ -1473,8 +1540,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
             ;
             break;
           default:
-            jj_la1[29] = jj_gen;
-            break label_13;
+            jj_la1[30] = jj_gen;
+            break label_14;
           }
           n = AnyStmtToken(true);
                                          replaceName(n);
@@ -1483,7 +1550,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                  {if (true) return productionEndTerminal("TypeDef2","-","{TOSTRING}","Replacement",first,token);}
         break;
       default:
-        jj_la1[30] = jj_gen;
+        jj_la1[31] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1501,7 +1568,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                            replaceName(n);
       break;
     default:
-      jj_la1[31] = jj_gen;
+      jj_la1[32] = jj_gen;
       ;
     }
     jj_consume_token(OCB);
@@ -1519,7 +1586,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_consume_token(IDENTIFIER);
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[33] = jj_gen;
       ;
     }
     jj_consume_token(OCB);
@@ -1591,7 +1658,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                 {if (true) return productionEndTerminal("AnyTypeDefToken3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[33] = jj_gen;
+      jj_la1[34] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1660,8 +1727,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                   {if (true) return productionEndTerminal("AnyStmtToken14","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[34] = jj_gen;
-      if (jj_2_24(3)) {
+      jj_la1[35] = jj_gen;
+      if (jj_2_25(3)) {
         n = EnumBlock(true);
                                         replaceName(n);
                                                           {if (true) return productionEndTerminal("AnyStmtToken15","-","-","Replacement",first,token);}
@@ -1676,8 +1743,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
               {if (true) return productionEndTerminal("AnyStmtToken17","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[35] = jj_gen;
-          if (jj_2_25(2147483647)) {
+          jj_la1[36] = jj_gen;
+          if (jj_2_26(2147483647)) {
             n = BlockAssignment(true);
                                                             replaceName(n);
                                                                               {if (true) return productionEndTerminal("AnyStmtToken18","-","-","Replacement",first,token);}
@@ -1745,7 +1812,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                      {if (true) return productionEndTerminal("AnyStmtToken31","-","-","Replacement",first,token);}
               break;
             default:
-              jj_la1[36] = jj_gen;
+              jj_la1[37] = jj_gen;
               jj_consume_token(-1);
               throw new ParseException();
             }
@@ -1759,7 +1826,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   final public FSTInfo VarDecl(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_14:
+    label_15:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LITERAL:
@@ -1785,8 +1852,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
         ;
         break;
       default:
-        jj_la1[37] = jj_gen;
-        break label_14;
+        jj_la1[38] = jj_gen;
+        break label_15;
       }
       n = VarDeclTokenOrComma(true);
                                       replaceName(n);
@@ -1828,7 +1895,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
               {if (true) return productionEndTerminal("VarDeclTokenOrComma2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[39] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1898,7 +1965,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                          {if (true) return productionEndTerminal("VarDeclToken12","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[39] = jj_gen;
+      jj_la1[40] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2088,301 +2155,263 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     finally { jj_save(24, xla); }
   }
 
-  final private boolean jj_3R_102() {
-    if (jj_scan_token(CONST)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_24() {
-    if (jj_3R_40()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_101() {
-    if (jj_3R_19()) return true;
-    return false;
+  final private boolean jj_2_26(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_26(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(25, xla); }
   }
 
   final private boolean jj_3R_100() {
-    if (jj_scan_token(ELSIF)) return true;
+    if (jj_scan_token(INCLUDE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_99() {
+  final private boolean jj_3_22() {
+    if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(ELIF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_25() {
-    if (jj_3R_40()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_55() {
-    if (jj_scan_token(HASH)) return true;
-    if (jj_scan_token(ELSIF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_28() {
-    if (jj_3R_48()) return true;
+  final private boolean jj_3R_99() {
+    if (jj_scan_token(DEFINE)) return true;
     return false;
   }
 
   final private boolean jj_3R_98() {
-    if (jj_scan_token(INCLUDE)) return true;
+    if (jj_scan_token(IFNDEF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_26() {
+    if (jj_scan_token(EQ)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_30()) jj_scanpos = xsp;
+    if (jj_scan_token(OCB)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_97() {
+    if (jj_scan_token(IFDEF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_42() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_22()) {
+    jj_scanpos = xsp;
+    if (jj_3R_57()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_54() {
+    if (jj_scan_token(HASH)) return true;
+    if (jj_scan_token(IF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_96() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
   final private boolean jj_3_21() {
     if (jj_scan_token(HASH)) return true;
-    if (jj_scan_token(ELIF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_97() {
-    if (jj_scan_token(DEFINE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_96() {
     if (jj_scan_token(IFNDEF)) return true;
     return false;
   }
 
-  final private boolean jj_3_25() {
-    if (jj_scan_token(EQ)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_28()) jj_scanpos = xsp;
-    if (jj_scan_token(OCB)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_95() {
-    if (jj_scan_token(IFDEF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_40() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_21()) {
-    jj_scanpos = xsp;
-    if (jj_3R_55()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_52() {
-    if (jj_scan_token(HASH)) return true;
-    if (jj_scan_token(IF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_94() {
-    if (jj_3R_53()) return true;
+    if (jj_scan_token(COLON)) return true;
     return false;
   }
 
   final private boolean jj_3_20() {
     if (jj_scan_token(HASH)) return true;
-    if (jj_scan_token(IFNDEF)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_93() {
-    if (jj_scan_token(COLON)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_19() {
-    if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(IFDEF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_92() {
+  final private boolean jj_3R_94() {
     if (jj_scan_token(EQ)) return true;
     return false;
   }
 
-  final private boolean jj_3R_91() {
-    if (jj_3R_105()) return true;
+  final private boolean jj_3R_93() {
+    if (jj_3R_107()) return true;
     return false;
   }
 
-  final private boolean jj_3R_90() {
+  final private boolean jj_3R_92() {
     if (jj_scan_token(STAR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_32() {
+  final private boolean jj_3R_34() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_19()) {
-    jj_scanpos = xsp;
     if (jj_3_20()) {
     jj_scanpos = xsp;
-    if (jj_3R_52()) return true;
+    if (jj_3_21()) {
+    jj_scanpos = xsp;
+    if (jj_3R_54()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_35() {
+  final private boolean jj_3R_37() {
     if (jj_scan_token(PPERROR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_89() {
+  final private boolean jj_3R_91() {
     if (jj_scan_token(ENUM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_34() {
+  final private boolean jj_3R_36() {
     if (jj_scan_token(PPPRAGMA)) return true;
     return false;
   }
 
-  final private boolean jj_3_24() {
-    if (jj_3R_27()) return true;
+  final private boolean jj_3_25() {
+    if (jj_3R_29()) return true;
     return false;
   }
 
-  final private boolean jj_3R_33() {
+  final private boolean jj_3R_35() {
     if (jj_scan_token(PPLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_88() {
+  final private boolean jj_3R_90() {
     if (jj_scan_token(WHILE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_87() {
+  final private boolean jj_3R_89() {
     if (jj_scan_token(FOR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_86() {
+  final private boolean jj_3R_88() {
     if (jj_scan_token(ELSE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_19() {
+  final private boolean jj_3R_20() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_33()) {
+    if (jj_3R_35()) {
     jj_scanpos = xsp;
-    if (jj_3R_34()) {
+    if (jj_3R_36()) {
     jj_scanpos = xsp;
-    if (jj_3R_35()) return true;
+    if (jj_3R_37()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_85() {
+  final private boolean jj_3R_87() {
     if (jj_scan_token(IF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_84() {
-    if (jj_3R_39()) return true;
+  final private boolean jj_3R_86() {
+    if (jj_3R_41()) return true;
     return false;
   }
 
-  final private boolean jj_3R_83() {
+  final private boolean jj_3R_85() {
     if (jj_scan_token(CB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_22() {
-    if (jj_3R_32()) return true;
+  final private boolean jj_3R_24() {
+    if (jj_3R_34()) return true;
     return false;
   }
 
-  final private boolean jj_3R_82() {
+  final private boolean jj_3R_84() {
     if (jj_scan_token(OB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_81() {
+  final private boolean jj_3R_83() {
     if (jj_scan_token(GT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_80() {
+  final private boolean jj_3R_82() {
     if (jj_scan_token(LT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_18() {
-    if (jj_3R_32()) return true;
+  final private boolean jj_3R_19() {
+    if (jj_3R_34()) return true;
     return false;
   }
 
-  final private boolean jj_3_14() {
+  final private boolean jj_3_15() {
     if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(PPUNDEF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_79() {
+  final private boolean jj_3R_81() {
     if (jj_scan_token(PIPE)) return true;
     return false;
   }
 
-  final private boolean jj_3_13() {
+  final private boolean jj_3_14() {
     if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(DEFINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_78() {
+  final private boolean jj_3R_80() {
     if (jj_scan_token(COMMA)) return true;
     return false;
   }
 
-  final private boolean jj_3R_77() {
+  final private boolean jj_3R_79() {
     if (jj_scan_token(OTHER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_76() {
+  final private boolean jj_3R_78() {
     if (jj_scan_token(LITERAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_17() {
+  final private boolean jj_3R_18() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_13()) {
+    if (jj_3_14()) {
     jj_scanpos = xsp;
-    if (jj_3_14()) return true;
+    if (jj_3_15()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_75() {
+  final private boolean jj_3R_77() {
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_16() {
+  final private boolean jj_3R_17() {
     if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(INCLUDE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_72() {
+  final private boolean jj_3R_74() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_75()) {
-    jj_scanpos = xsp;
-    if (jj_3R_76()) {
-    jj_scanpos = xsp;
     if (jj_3R_77()) {
     jj_scanpos = xsp;
     if (jj_3R_78()) {
@@ -2407,11 +2436,11 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     jj_scanpos = xsp;
     if (jj_3R_88()) {
     jj_scanpos = xsp;
-    if (jj_3_24()) {
-    jj_scanpos = xsp;
     if (jj_3R_89()) {
     jj_scanpos = xsp;
     if (jj_3R_90()) {
+    jj_scanpos = xsp;
+    if (jj_3_25()) {
     jj_scanpos = xsp;
     if (jj_3R_91()) {
     jj_scanpos = xsp;
@@ -2439,7 +2468,11 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     jj_scanpos = xsp;
     if (jj_3R_103()) {
     jj_scanpos = xsp;
-    if (jj_3R_104()) return true;
+    if (jj_3R_104()) {
+    jj_scanpos = xsp;
+    if (jj_3R_105()) {
+    jj_scanpos = xsp;
+    if (jj_3R_106()) return true;
     }
     }
     }
@@ -2473,43 +2506,43 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3R_21() {
+  final private boolean jj_3R_22() {
     if (jj_scan_token(EXTERN)) return true;
     if (jj_scan_token(LITERAL)) return true;
-    if (jj_3R_39()) return true;
+    if (jj_3R_41()) return true;
     return false;
   }
 
-  final private boolean jj_3_18() {
+  final private boolean jj_3_19() {
     if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(ELSE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_48() {
+  final private boolean jj_3R_50() {
     if (jj_scan_token(OB)) return true;
-    if (jj_3R_37()) return true;
+    if (jj_3R_39()) return true;
     if (jj_scan_token(CB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_106() {
-    if (jj_3R_48()) return true;
+  final private boolean jj_3R_108() {
+    if (jj_3R_50()) return true;
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    if (jj_3R_72()) return true;
+  final private boolean jj_3R_73() {
+    if (jj_3R_74()) return true;
     return false;
   }
 
-  final private boolean jj_3_16() {
+  final private boolean jj_3_17() {
     if (jj_scan_token(HASH)) return true;
     if (jj_scan_token(ELSE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_27() {
+  final private boolean jj_3R_29() {
     if (jj_scan_token(ENUM)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -2519,151 +2552,166 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3R_38() {
-    if (jj_3R_54()) return true;
+  final private boolean jj_3R_40() {
+    if (jj_3R_56()) return true;
     return false;
   }
 
-  final private boolean jj_3R_105() {
+  final private boolean jj_3R_107() {
     if (jj_scan_token(EQ)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_106()) jj_scanpos = xsp;
+    if (jj_3R_108()) jj_scanpos = xsp;
     if (jj_scan_token(OCB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_61() {
+  final private boolean jj_3R_63() {
     if (jj_scan_token(TYPEDEF)) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_71()) { jj_scanpos = xsp; break; }
+      if (jj_3R_73()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(SEMI)) return true;
     return false;
   }
 
-  final private boolean jj_3_23() {
+  final private boolean jj_3_24() {
     if (jj_scan_token(TYPEDEF)) return true;
     if (jj_scan_token(ENUM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_60() {
+  final private boolean jj_3R_62() {
     if (jj_scan_token(SWITCH)) return true;
     if (jj_scan_token(OB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_50() {
+  final private boolean jj_3R_52() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_23()) {
+    if (jj_3_24()) {
     jj_scanpos = xsp;
-    if (jj_3R_61()) return true;
+    if (jj_3R_63()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_74() {
-    if (jj_3R_26()) return true;
+  final private boolean jj_3R_76() {
+    if (jj_3R_28()) return true;
     return false;
   }
 
-  final private boolean jj_3R_73() {
-    if (jj_3R_39()) return true;
+  final private boolean jj_3R_75() {
+    if (jj_3R_41()) return true;
     return false;
   }
 
-  final private boolean jj_3R_59() {
+  final private boolean jj_3R_61() {
     if (jj_scan_token(DO)) return true;
-    if (jj_3R_69()) return true;
+    if (jj_3R_71()) return true;
     return false;
   }
 
-  final private boolean jj_3R_69() {
+  final private boolean jj_3R_71() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_73()) {
+    if (jj_3R_75()) {
     jj_scanpos = xsp;
-    if (jj_3R_74()) return true;
+    if (jj_3R_76()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_58() {
+  final private boolean jj_3R_60() {
     if (jj_scan_token(WHILE)) return true;
     if (jj_scan_token(OB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_57() {
+  final private boolean jj_3R_59() {
     if (jj_scan_token(FOR)) return true;
     if (jj_scan_token(OB)) return true;
     return false;
   }
 
-  final private boolean jj_3_22() {
-    if (jj_3R_26()) return true;
+  final private boolean jj_3_23() {
+    if (jj_3R_28()) return true;
     return false;
   }
 
-  final private boolean jj_3R_70() {
+  final private boolean jj_3R_72() {
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3_22()) { jj_scanpos = xsp; break; }
+      if (jj_3_23()) { jj_scanpos = xsp; break; }
     }
     return false;
   }
 
-  final private boolean jj_3R_62() {
-    if (jj_3R_72()) return true;
+  final private boolean jj_3R_64() {
+    if (jj_3R_74()) return true;
     return false;
   }
 
-  final private boolean jj_3R_56() {
+  final private boolean jj_3R_58() {
     if (jj_scan_token(IF)) return true;
     if (jj_scan_token(OB)) return true;
     return false;
   }
 
-  final private boolean jj_3R_23() {
+  final private boolean jj_3R_25() {
     if (jj_scan_token(IDENTIFIER)) return true;
     if (jj_scan_token(COLON)) return true;
     return false;
   }
 
-  final private boolean jj_3R_51() {
+  final private boolean jj_3R_53() {
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_62()) { jj_scanpos = xsp; break; }
+      if (jj_3R_64()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(SEMI)) return true;
     return false;
   }
 
-  final private boolean jj_3R_47() {
-    if (jj_3R_51()) return true;
+  final private boolean jj_3R_49() {
+    if (jj_3R_53()) return true;
     return false;
   }
 
-  final private boolean jj_3R_46() {
-    if (jj_3R_39()) return true;
+  final private boolean jj_3R_48() {
+    if (jj_3R_41()) return true;
     return false;
   }
 
-  final private boolean jj_3R_39() {
+  final private boolean jj_3R_41() {
     if (jj_scan_token(OCB)) return true;
-    if (jj_3R_70()) return true;
+    if (jj_3R_72()) return true;
     if (jj_scan_token(CCB)) return true;
     return false;
   }
 
-  final private boolean jj_3_12() {
-    if (jj_3R_23()) return true;
+  final private boolean jj_3_13() {
+    if (jj_3R_25()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_47() {
+    if (jj_3R_62()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_18() {
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_46() {
+    if (jj_3R_61()) return true;
     return false;
   }
 
@@ -2672,8 +2720,8 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3_17() {
-    if (jj_3R_25()) return true;
+  final private boolean jj_3_16() {
+    if (jj_3R_26()) return true;
     return false;
   }
 
@@ -2687,24 +2735,14 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3_15() {
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_42() {
-    if (jj_3R_57()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_41() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3_12() {
+    if (jj_scan_token(HASH)) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
   final private boolean jj_3_11() {
-    if (jj_scan_token(HASH)) return true;
-    if (jj_3R_19()) return true;
+    if (jj_3R_18()) return true;
     return false;
   }
 
@@ -2713,12 +2751,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3_9() {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_54() {
+  final private boolean jj_3R_56() {
     if (jj_scan_token(WEIREDSTUFF1)) return true;
     if (jj_scan_token(OB)) return true;
     if (jj_scan_token(LITERAL)) return true;
@@ -2726,50 +2759,41 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3R_68() {
+  final private boolean jj_3R_70() {
     if (jj_scan_token(WEIREDSTUFF2)) return true;
     return false;
   }
 
-  final private boolean jj_3_8() {
-    if (jj_3R_22()) return true;
+  final private boolean jj_3_9() {
+    if (jj_3R_24()) return true;
     return false;
   }
 
-  final private boolean jj_3R_67() {
+  final private boolean jj_3R_69() {
     if (jj_scan_token(EXTERN)) return true;
     return false;
   }
 
-  final private boolean jj_3_6() {
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_66() {
+  final private boolean jj_3R_68() {
     if (jj_scan_token(INLINE3)) return true;
     return false;
   }
 
-  final private boolean jj_3R_65() {
+  final private boolean jj_3R_67() {
     if (jj_scan_token(INLINE2)) return true;
     return false;
   }
 
-  final private boolean jj_3R_26() {
+  final private boolean jj_3R_28() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_8()) {
-    jj_scanpos = xsp;
     if (jj_3_9()) {
     jj_scanpos = xsp;
     if (jj_3_10()) {
     jj_scanpos = xsp;
     if (jj_3_11()) {
     jj_scanpos = xsp;
-    if (jj_3R_41()) {
-    jj_scanpos = xsp;
-    if (jj_3R_42()) {
+    if (jj_3_12()) {
     jj_scanpos = xsp;
     if (jj_3R_43()) {
     jj_scanpos = xsp;
@@ -2777,11 +2801,15 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     jj_scanpos = xsp;
     if (jj_3R_45()) {
     jj_scanpos = xsp;
-    if (jj_3_12()) {
-    jj_scanpos = xsp;
     if (jj_3R_46()) {
     jj_scanpos = xsp;
-    if (jj_3R_47()) return true;
+    if (jj_3R_47()) {
+    jj_scanpos = xsp;
+    if (jj_3_13()) {
+    jj_scanpos = xsp;
+    if (jj_3R_48()) {
+    jj_scanpos = xsp;
+    if (jj_3R_49()) return true;
     }
     }
     }
@@ -2793,6 +2821,70 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     }
     }
     }
+    return false;
+  }
+
+  final private boolean jj_3R_66() {
+    if (jj_scan_token(INLINE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_65() {
+    if (jj_scan_token(STATIC)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_23() {
+    if (jj_scan_token(STRUCT)) return true;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(OCB)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_33() {
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_8() {
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_55() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_65()) {
+    jj_scanpos = xsp;
+    if (jj_3R_66()) {
+    jj_scanpos = xsp;
+    if (jj_3R_67()) {
+    jj_scanpos = xsp;
+    if (jj_3R_68()) {
+    jj_scanpos = xsp;
+    if (jj_3R_69()) {
+    jj_scanpos = xsp;
+    if (jj_3R_70()) return true;
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3_7() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_32() {
+    if (jj_3R_52()) return true;
     return false;
   }
 
@@ -2801,80 +2893,12 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_scan_token(INLINE)) return true;
+  final private boolean jj_3R_38() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
-  final private boolean jj_3_7() {
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_63() {
-    if (jj_scan_token(STATIC)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_30() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_29() {
-    if (jj_3R_49()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_5() {
-    if (jj_scan_token(HASH)) return true;
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_53() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_63()) {
-    jj_scanpos = xsp;
-    if (jj_3R_64()) {
-    jj_scanpos = xsp;
-    if (jj_3R_65()) {
-    jj_scanpos = xsp;
-    if (jj_3R_66()) {
-    jj_scanpos = xsp;
-    if (jj_3R_67()) {
-    jj_scanpos = xsp;
-    if (jj_3R_68()) return true;
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_4() {
-    if (jj_3R_18()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_3() {
-    if (jj_3R_17()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    if (jj_3R_16()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_36() {
-    if (jj_3R_53()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_37() {
+  final private boolean jj_3R_39() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(33)) jj_scanpos = xsp;
@@ -2886,7 +2910,49 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     return false;
   }
 
-  final private boolean jj_3R_15() {
+  final private boolean jj_3_5() {
+    if (jj_scan_token(HASH)) return true;
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_4() {
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_3R_18()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_21() {
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_38()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_3R_39()) return true;
+    xsp = jj_scanpos;
+    if (jj_scan_token(58)) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_40()) jj_scanpos = xsp;
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(OB)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_3R_17()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_51() {
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_16() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_2()) {
@@ -2897,13 +2963,16 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     jj_scanpos = xsp;
     if (jj_3_5()) {
     jj_scanpos = xsp;
-    if (jj_3R_29()) {
+    if (jj_3R_31()) {
     jj_scanpos = xsp;
-    if (jj_3R_30()) {
+    if (jj_3R_32()) {
     jj_scanpos = xsp;
     if (jj_3_7()) {
     jj_scanpos = xsp;
-    if (jj_3R_31()) return true;
+    if (jj_3_8()) {
+    jj_scanpos = xsp;
+    if (jj_3R_33()) return true;
+    }
     }
     }
     }
@@ -2915,38 +2984,58 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   }
 
   final private boolean jj_3_1() {
-    if (jj_3R_15()) return true;
+    if (jj_3R_16()) return true;
     return false;
   }
 
-  final private boolean jj_3R_20() {
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_36()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_3R_37()) return true;
-    xsp = jj_scanpos;
-    if (jj_scan_token(58)) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_38()) jj_scanpos = xsp;
-    if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_scan_token(OB)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_49() {
-    if (jj_3R_20()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_104() {
+  final private boolean jj_3R_106() {
     if (jj_scan_token(UNSIGNED)) return true;
     return false;
   }
 
-  final private boolean jj_3R_103() {
+  final private boolean jj_3R_105() {
     if (jj_scan_token(STRUCT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_104() {
+    if (jj_scan_token(CONST)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_26() {
+    if (jj_3R_42()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_103() {
+    if (jj_3R_20()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_102() {
+    if (jj_scan_token(ELSIF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_101() {
+    if (jj_scan_token(ELIF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
+    if (jj_3R_42()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_57() {
+    if (jj_scan_token(HASH)) return true;
+    if (jj_scan_token(ELSIF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_30() {
+    if (jj_3R_50()) return true;
     return false;
   }
 
@@ -2958,7 +3047,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[40];
+  final private int[] jj_la1 = new int[41];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -2968,15 +3057,15 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_la1_2();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x20000000,0xdbbc0200,0x0,0xdbbc0200,0xdbbc0200,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x1a000000,0x0,0x0,0xda000200,0x80000000,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0xda000200,0xda000200,0xda000200,0xdbbc0200,0xdbbc0200,0xdbbc0200,0x20000000,0x0,0x0,0xdbbc0200,0x200,0x40000000,0x9bbc0000,0xda000200,0xda000200,0xda000200,};
+      jj_la1_0 = new int[] {0x20000000,0xdbbc0200,0xdbbc0200,0x0,0xdbbc0200,0xdbbc0200,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x1a000000,0x0,0x0,0xda000200,0x80000000,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0xda000200,0xda000200,0xda000200,0xdbbc0200,0xdbbc0200,0xdbbc0200,0x20000000,0x0,0x0,0xdbbc0200,0x200,0x40000000,0x9bbc0000,0xda000200,0xda000200,0xda000200,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x6dfe1f7f,0x7a00,0x6dfe1f7f,0x6dfc1f7f,0x400,0x18000,0x400000,0x20000000,0x18000,0x0,0x40000000,0x0,0x10000000,0x10000000,0x6440017f,0x174,0x4000000,0x80,0x2,0x8,0x1,0x174,0x80000,0x6440017f,0x644a017f,0x654a017f,0x7dfe7f7f,0x6ffc1f7f,0x6dfc1f7f,0x0,0x400000,0x40000000,0x6ffc1f7f,0x61f81e00,0x4000000,0x804017f,0x6448017f,0x6448017f,0x6440017f,};
+      jj_la1_1 = new int[] {0x0,0x6dfe1f7f,0x6dfe1f7f,0x7a00,0x6dfe1f7f,0x6dfc1f7f,0x400,0x18000,0x400000,0x20000000,0x18000,0x0,0x40000000,0x0,0x10000000,0x10000000,0x6440017f,0x174,0x4000000,0x80,0x2,0x8,0x1,0x174,0x80000,0x6440017f,0x644a017f,0x654a017f,0x7dfe7f7f,0x6ffc1f7f,0x6dfc1f7f,0x0,0x400000,0x40000000,0x6ffc1f7f,0x61f81e00,0x4000000,0x804017f,0x6448017f,0x6448017f,0x6440017f,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0x2,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x2,0x2,0x2,0x2,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x2,0x2,0x2,};
+      jj_la1_2 = new int[] {0x0,0x2,0x2,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x2,0x2,0x2,0x2,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x2,0x2,0x2,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[25];
+  final private JJCalls[] jj_2_rtns = new JJCalls[26];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2985,7 +3074,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2994,7 +3083,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3003,7 +3092,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3012,7 +3101,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 40; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 41; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -3131,7 +3220,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 41; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -3171,7 +3260,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 25; i++) {
+    for (int i = 0; i < 26; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -3203,6 +3292,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
             case 22: jj_3_23(); break;
             case 23: jj_3_24(); break;
             case 24: jj_3_25(); break;
+            case 25: jj_3_26(); break;
           }
         }
         p = p.next;

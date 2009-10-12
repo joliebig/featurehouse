@@ -37,6 +37,29 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
+		if (nonTerminal.getType().equals("CodeUnit_TopLevel8")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "StructDecl");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("StructDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken("struct");
+			printToken("{");
+			for (FSTNode v : getChildren(nonTerminal,"Statement")) {
+				v.accept(this);
+			}
+			printToken("}");
+			printToken(";");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
@@ -93,6 +116,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("PPOtherIgnore2") && expectedType.equals("PPOtherIgnore")) return true;
 		if (type.equals("AnyStmtToken20") && expectedType.equals("AnyStmtToken")) return true;
 		if (type.equals("Stmt") && expectedType.equals("CodeUnit_InBlock")) return true;
+		if (type.equals("CodeUnit_TopLevel8") && expectedType.equals("CodeUnit_TopLevel")) return true;
 		if (type.equals("BlockOrSemi3") && expectedType.equals("BlockOrSemi")) return true;
 		if (type.equals("VarDeclToken4") && expectedType.equals("VarDeclToken")) return true;
 		if (type.equals("VarDeclToken1") && expectedType.equals("VarDeclToken")) return true;

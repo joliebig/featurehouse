@@ -392,7 +392,11 @@ CodeUnit_TopLevel:
 	@FSTTerminal(name="{Function}",compose="JavaMethodOverriding") LL("FunctionHeader()") Function :: Func | 
 	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
 	@FSTTerminal(name="{ExternDecl}") LL(3) ExternDecl :: ExternDec |
+	@FSTNonTerminal(name="{StructDecl}") LL(3) StructDecl |
 	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
+	
+@FSTNonTerminal(name="{<IDENTIFIER>}")	
+StructDecl : "struct" <IDENTIFIER> "{" (Statement)* "}" ";";
 	
 CodeUnit_InBlock:
 	LL(2) PPIfDef_BlockLevel :: IfDefBL |
@@ -408,7 +412,7 @@ CodeUnit_InBlock:
 	LL(1) Block :: Blck |
 	Statement :: Stmt;	
 
-@FSTExportName("{TOSTRING}")		
+@FSTTerminal(name="{TOSTRING}")		
 Statement:
 	(AnyStmtToken)* ";" @!;
 	
