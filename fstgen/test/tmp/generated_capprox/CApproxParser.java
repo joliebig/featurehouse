@@ -351,17 +351,70 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                         {if (true) return productionEndTerminal("TypeDef_","{TypeDef}","{TypeDef}","Replacement",first,token);}
         break;
       default:
-        jj_la1[0] = jj_gen;
+        jj_la1[1] = jj_gen;
         if (jj_2_7(3)) {
           n = ExternDecl(true);
                                          replaceName("ExternDecl", n);
                                                                          replaceName(n);
                                                                                            {if (true) return productionEndTerminal("ExternDec","{ExternDecl}","{ExternDecl}","Replacement",first,token);}
         } else if (jj_2_8(3)) {
-          n = StructDecl(inTerminal);
-                                               replaceName("StructDecl", n);
-                                                                               replaceName(n);
-                                                                                                 {if (true) return productionEndNonTerminal("CodeUnit_TopLevel8","{StructDecl}","{StructDecl}");}
+          jj_consume_token(STRUCT);
+          n = Id(inTerminal);
+                                                replaceName("Id", n);
+                                                                        replaceName(n);
+          jj_consume_token(OCB);
+          label_2:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case LITERAL:
+            case INCLUDE:
+            case DEFINE:
+            case IFDEF:
+            case IFNDEF:
+            case ELIF:
+            case ELSIF:
+            case PPLINE:
+            case PPPRAGMA:
+            case PPERROR:
+            case ENUM:
+            case EXTERN:
+            case UNSIGNED:
+            case CONST:
+            case STATIC:
+            case STRUCT:
+            case INLINE:
+            case INLINE2:
+            case INLINE3:
+            case WEIREDSTUFF2:
+            case IF:
+            case ELSE:
+            case FOR:
+            case WHILE:
+            case SEMI:
+            case COLON:
+            case COMMA:
+            case LT:
+            case GT:
+            case OB:
+            case CB:
+            case OCB:
+            case STAR:
+            case EQ:
+            case PIPE:
+            case IDENTIFIER:
+            case OTHER:
+              ;
+              break;
+            default:
+              jj_la1[0] = jj_gen;
+              break label_2;
+            }
+            n = Statement(inTerminal);
+                                                                                                                       replaceName(n);
+          }
+          jj_consume_token(CCB);
+          jj_consume_token(SEMI);
+                                                                                                                                                   {if (true) return productionEndNonTerminal("StructDec","{Id}","{Id}");}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case LITERAL:
@@ -407,7 +460,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
                                                                             {if (true) return productionEndTerminal("StmtTL","{Statement}","{Statement}","Replacement",first,token);}
             break;
           default:
-            jj_la1[1] = jj_gen;
+            jj_la1[2] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -417,65 +470,12 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo StructDecl(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
+  final public FSTInfo Id(boolean inTerminal) throws ParseException {
+                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(STRUCT);
     t = jj_consume_token(IDENTIFIER);
-                                 replaceName(new FSTInfo("<IDENTIFIER>",t.image));
-    jj_consume_token(OCB);
-    label_2:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LITERAL:
-      case INCLUDE:
-      case DEFINE:
-      case IFDEF:
-      case IFNDEF:
-      case ELIF:
-      case ELSIF:
-      case PPLINE:
-      case PPPRAGMA:
-      case PPERROR:
-      case ENUM:
-      case EXTERN:
-      case UNSIGNED:
-      case CONST:
-      case STATIC:
-      case STRUCT:
-      case INLINE:
-      case INLINE2:
-      case INLINE3:
-      case WEIREDSTUFF2:
-      case IF:
-      case ELSE:
-      case FOR:
-      case WHILE:
-      case SEMI:
-      case COLON:
-      case COMMA:
-      case LT:
-      case GT:
-      case OB:
-      case CB:
-      case OCB:
-      case STAR:
-      case EQ:
-      case PIPE:
-      case IDENTIFIER:
-      case OTHER:
-        ;
-        break;
-      default:
-        jj_la1[2] = jj_gen;
-        break label_2;
-      }
-      n = Statement(inTerminal);
-                                                                                                                  replaceName(n);
-    }
-    jj_consume_token(CCB);
-    jj_consume_token(SEMI);
-                                                                                                                                              {if (true) return productionEndNonTerminal("StructDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                        replaceName(new FSTInfo("<IDENTIFIER>",t.image));
+                                                                            {if (true) return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2840,9 +2840,7 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   }
 
   final private boolean jj_3R_23() {
-    if (jj_scan_token(STRUCT)) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_scan_token(OCB)) return true;
     return false;
   }
 
@@ -2852,7 +2850,9 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
   }
 
   final private boolean jj_3_8() {
+    if (jj_scan_token(STRUCT)) return true;
     if (jj_3R_23()) return true;
+    if (jj_scan_token(OCB)) return true;
     return false;
   }
 
@@ -3057,13 +3057,13 @@ public class CApproxParser extends AbstractFSTParser implements CApproxParserCon
       jj_la1_2();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x20000000,0xdbbc0200,0xdbbc0200,0x0,0xdbbc0200,0xdbbc0200,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x1a000000,0x0,0x0,0xda000200,0x80000000,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0xda000200,0xda000200,0xda000200,0xdbbc0200,0xdbbc0200,0xdbbc0200,0x20000000,0x0,0x0,0xdbbc0200,0x200,0x40000000,0x9bbc0000,0xda000200,0xda000200,0xda000200,};
+      jj_la1_0 = new int[] {0xdbbc0200,0x20000000,0xdbbc0200,0x0,0xdbbc0200,0xdbbc0200,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x1a000000,0x0,0x0,0xda000200,0x80000000,0x0,0x0,0x0,0x0,0x0,0x80000000,0x0,0xda000200,0xda000200,0xda000200,0xdbbc0200,0xdbbc0200,0xdbbc0200,0x20000000,0x0,0x0,0xdbbc0200,0x200,0x40000000,0x9bbc0000,0xda000200,0xda000200,0xda000200,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x6dfe1f7f,0x6dfe1f7f,0x7a00,0x6dfe1f7f,0x6dfc1f7f,0x400,0x18000,0x400000,0x20000000,0x18000,0x0,0x40000000,0x0,0x10000000,0x10000000,0x6440017f,0x174,0x4000000,0x80,0x2,0x8,0x1,0x174,0x80000,0x6440017f,0x644a017f,0x654a017f,0x7dfe7f7f,0x6ffc1f7f,0x6dfc1f7f,0x0,0x400000,0x40000000,0x6ffc1f7f,0x61f81e00,0x4000000,0x804017f,0x6448017f,0x6448017f,0x6440017f,};
+      jj_la1_1 = new int[] {0x6dfe1f7f,0x0,0x6dfe1f7f,0x7a00,0x6dfe1f7f,0x6dfc1f7f,0x400,0x18000,0x400000,0x20000000,0x18000,0x0,0x40000000,0x0,0x10000000,0x10000000,0x6440017f,0x174,0x4000000,0x80,0x2,0x8,0x1,0x174,0x80000,0x6440017f,0x644a017f,0x654a017f,0x7dfe7f7f,0x6ffc1f7f,0x6dfc1f7f,0x0,0x400000,0x40000000,0x6ffc1f7f,0x61f81e00,0x4000000,0x804017f,0x6448017f,0x6448017f,0x6440017f,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0x2,0x2,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x2,0x2,0x2,0x2,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x2,0x2,0x2,};
+      jj_la1_2 = new int[] {0x2,0x0,0x2,0x0,0x2,0x2,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x2,0x2,0x2,0x2,0x0,0x0,0x0,0x2,0x2,0x0,0x0,0x2,0x2,0x2,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[26];
   private boolean jj_rescan = false;

@@ -392,12 +392,12 @@ CodeUnit_TopLevel:
 	@FSTTerminal(name="{Function}",compose="JavaMethodOverriding") LL("FunctionHeader()") Function :: Func | 
 	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
 	@FSTTerminal(name="{ExternDecl}") LL(3) ExternDecl :: ExternDec |
-	@FSTNonTerminal(name="{StructDecl}") LL(3) StructDecl |
+	@FSTNonTerminal(name="{Id}") LL(3) "struct" Id "{" (Statement)* "}" ";" :: StructDec |
 	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
 	
-@FSTNonTerminal(name="{<IDENTIFIER>}")	
-StructDecl : "struct" <IDENTIFIER> "{" (Statement)* "}" ";";
-	
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id: <IDENTIFIER>;
+
 CodeUnit_InBlock:
 	LL(2) PPIfDef_BlockLevel :: IfDefBL |
 	LL(2) PPIncludeStatement :: IncludeBL | 

@@ -401,15 +401,15 @@ FSTInfo CodeUnit_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	LOOKAHEAD(3) n=ExternDecl(true){ replaceName("ExternDecl", n);}{ replaceName(n);} {return productionEndTerminal("ExternDec","{ExternDecl}","{ExternDecl}","Replacement",first,token);}
  |
-	LOOKAHEAD(3) n=StructDecl(inTerminal){ replaceName("StructDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("CodeUnit_TopLevel8","{StructDecl}","{StructDecl}");}
+	LOOKAHEAD(3) "struct" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=Statement(inTerminal){ replaceName(n);})* "}" ";" {return productionEndNonTerminal("StructDec","{Id}","{Id}");}
  |
 	n=Statement(true){ replaceName("Statement", n);}{ replaceName(n);} {return productionEndTerminal("StmtTL","{Statement}","{Statement}","Replacement",first,token);}
 
  )  }
 
-FSTInfo StructDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+FSTInfo Id(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"struct" t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "{" (n=Statement(inTerminal){ replaceName(n);})* "}" ";" {return productionEndNonTerminal("StructDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} {return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 

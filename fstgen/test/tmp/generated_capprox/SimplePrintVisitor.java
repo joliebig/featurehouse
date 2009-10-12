@@ -37,20 +37,15 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("CodeUnit_TopLevel8")) {
+		if (nonTerminal.getType().equals("StructDec")) {
 			printFeatures(nonTerminal,true);
+			printToken("struct");
 			{
-				FSTNode v=getChild(nonTerminal, "StructDecl");
+				FSTNode v=getChild(nonTerminal, "Id");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("StructDecl")) {
-			printFeatures(nonTerminal,true);
-			printToken("struct");
 			printToken("{");
 			for (FSTNode v : getChildren(nonTerminal,"Statement")) {
 				v.accept(this);
@@ -111,12 +106,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("TypeDef_") && expectedType.equals("CodeUnit_TopLevel")) return true;
 		if (type.equals("AnyStmtToken14") && expectedType.equals("AnyStmtToken")) return true;
 		if (type.equals("SwCase2") && expectedType.equals("SwCase")) return true;
+		if (type.equals("StructDec") && expectedType.equals("CodeUnit_TopLevel")) return true;
 		if (type.equals("IfDefLine1") && expectedType.equals("IfDefLine")) return true;
 		if (type.equals("VarDeclToken8") && expectedType.equals("VarDeclToken")) return true;
 		if (type.equals("PPOtherIgnore2") && expectedType.equals("PPOtherIgnore")) return true;
 		if (type.equals("AnyStmtToken20") && expectedType.equals("AnyStmtToken")) return true;
 		if (type.equals("Stmt") && expectedType.equals("CodeUnit_InBlock")) return true;
-		if (type.equals("CodeUnit_TopLevel8") && expectedType.equals("CodeUnit_TopLevel")) return true;
 		if (type.equals("BlockOrSemi3") && expectedType.equals("BlockOrSemi")) return true;
 		if (type.equals("VarDeclToken4") && expectedType.equals("VarDeclToken")) return true;
 		if (type.equals("VarDeclToken1") && expectedType.equals("VarDeclToken")) return true;
