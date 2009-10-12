@@ -147,26 +147,22 @@ public class FSTGenComposer {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-//				for (FSTNonTerminal feature : features) {
-//					System.out.println(feature.toString());
-//				}
+				for (FSTNonTerminal feature : features) {
+					System.out.println(feature.toString());
+				}
 
 
 				
 				FSTNode composition = compose(features);
 //				modify(composition);
 
-//				if(composition != null)
-//					System.err.println(composition.toString());
+				if(composition != null)
+					System.err.println(composition.toString());
 				try {
 					featureVisitor.visit((FSTNonTerminal) composition);
 				} catch (PrintVisitorException e) {
 					e.printStackTrace();
 				}
-				//for (FSTNonTerminal feature : features) {
-				//	System.out.println(feature.toString());
-				//}
-
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
 		} catch (FileNotFoundException e1) {

@@ -1,3 +1,9 @@
+
+struct X {
+	int z;
+	int y;
+};
+
   void
   outgoing(Msg n) {
     encrypt(msg);
