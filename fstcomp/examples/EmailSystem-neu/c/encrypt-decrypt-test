@@ -1,0 +1,37 @@
+# the "call later" is some kind of non-deterministic. the sense in it is the feature's lack of knowledge about the actions between incoming(msg) and deliver(msg). since this behavior is caused by modularization there is probably no propper way to fix or change this. but in our simple client we could use the fact that the program terminates. the termination sets the point in time to grab the messages out of buffer and inbox queues.
+
+isEncrypted(msg)
+[and isEncryptionValid(msg)]  // could be merged in isEncrypted(msg)
+and call(incoming(msg))
+implies later
+	call(deliver(msg))
+	and not isEncrypted(msg)
+	[isReadable(msg)]  // could be a sensible deployment of this method in the meaning of "human readable"
+
+and
+
+# not allowed
+not
+	isEncrypted(msg)
+	and call(outgoing(msg))
+
+and
+
+# outgoing messages have to be encrypted [if the fitting key is provisioned]
+call(outgoing(msg))
+[and key provisioned] // mentioned in interaction no 9, not implemented yet.
+implies later
+	call(deliver(msg))
+	and isEncrypted(msg)
+	[and isEncryptionValid(msg)]
+
+and
+
+# interaction no 9.
+isEncrypted(msg)
+[and isEncryptionValid(msg)]
+and call(incoming(msg))
+implies later
+	not
+		call(mail(msg))  // difficulty here: msg is probably altered, e.g. by forward(msg)
+		and isEncrypted(msg)
