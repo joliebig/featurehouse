@@ -1,0 +1,32 @@
+23.09.2009:
+meeting with sven. change of plans: since java architecture is growing more and more complex and time is running out because sven needs some c-code demo to integrate the validation tool, we switch over to a step-wise development, i.e. leaving software-architecture outside while trying very ad-hoc methods to implement at least some basic features and their interactions. Those are en-/decryption, signing/validation and forwarding.
+
+26.09.2009:
+decision:
+encryption and signing are implemented ad flags being put in the emails message body before the original message body, e.g. [encrypted]. decryption works by scanning for that flag and removing it if possible. verification is analogous.
+decision: encryption should be implemented by a basic but realistic encryption-algorithm instead of the flag.
+    
+28.09.2009:
+implemented most features in client.c. still missing is a dynamic data-structure to grab mails reaching the mail and the delivered state. Implementation will be tricky since there are no native dynamich data structures in libc.
+decision: emails reching the upon mentioned states will be put in a queue. test.c can access and grab the mails there to compare or print them e.g.
+decision: email and email-queue should be put in seperate source-files for a better overview.
+
+29.09.2009:
+further work on the email queue. pointer arihmetics in c are a bit tricky.
+question: what is the c-pendant to a field in java? every client should have exactly one email-queue.
+
+30.09.2009:
+finished a functional email queue. still work to to in organizing source code.
+decision: capsulating email and email queue in source files containing struct(s) and methods. methods contain references to structs, i.e. myObject.myMethod() is here myClassMyMethod(myObject). forwarding also functional now.
+
+01.10.2009:
+began to write test-cases in a syntax "invented" on-the-fly. it's a mixture of pointcut-like statements as in aspectJ and boolean algebra.
+problem: the modularity of features makes it difficult to determine the points in time when certain assertments should be true. here we can use the fact that the program terminates to grab those points, but in a distributed system it wouldn't be that easy, maybe it's not even possible to make assertions there.
+
+15.10.2009:
+skiped a few entries for the past days: restructured code to some sort of object oriented architecture as mentioned above. sven also introduced featureHouse to the c-part of the project.
+today: tried the necessary functionality to extend structs: working. but the pre-processor annotations for singleton declaration of header-files won't work since the corresponding "#endif" is displaced from the end of the header file to somewhere in the middle. this behaviour is caused by the string concatenation in source files when composing features.
+
+19.10.2009:
+added "external include guards".
+finally implemented Sign an Encrypt based on list. this list makes it possible to decide per receiver, whether to an a signature or encryption. this behaviour is needed for interactions 9 and 4.
