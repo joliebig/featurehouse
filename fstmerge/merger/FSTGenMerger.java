@@ -140,97 +140,11 @@ public class FSTGenMerger extends FSTGenProcessor {
 	private static String mergeBody(String bodyA, String bodyB) {
 		if (bodyA.equals(bodyB) || bodyB.length() == 0) {
 			return bodyA;
-		} else
-			return bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
+		} else {
+			if (bodyA.contains("~"))
+				return bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
+			else
+				return "~ " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
+		}
 	}
-	
-/*	private static FSTNode merge(List<FSTNonTerminal> tl) throws MergeException {
-		
-		if(tl.size() != 3)
-			throw new MergeException(tl);
-		
-		return merge(tl.get(0), tl.get(1), tl.get(2));
-	}
-
-	private static FSTNode merge(FSTNode var1, FSTNode base, FSTNode var2) {
-		return merge(var1, base, var2, null);
-	}
-
-	private static FSTNode merge(FSTNode var1, FSTNode base, FSTNode var2, FSTNode compParent) {
-
-		if (base.compatibleWith(var1) && base.compatibleWith(var2)) {
-			FSTNode compNode = getHollowClone(base);
-			compNode.setParent(compParent);
-
-			if (var1 instanceof FSTNonTerminal && base instanceof FSTNonTerminal && var2 instanceof FSTNonTerminal) {
-				FSTNonTerminal ntVar1 = (FSTNonTerminal) var1;
-				FSTNonTerminal ntBase = (FSTNonTerminal) base;
-				FSTNonTerminal ntVar2 = (FSTNonTerminal) var2;
-				FSTNonTerminal ntComp = (FSTNonTerminal) compNode;
-
-				for (FSTNode childBase : ntBase.getChildren()) {
-					FSTNode childVar1 = ntVar1.getCompatibleChild(childBase);
-					FSTNode childVar2 = ntVar2.getCompatibleChild(childBase);
-					if (childVar1 == null)
-						childVar1 = getHollowClone(childBase);
-					if (childVar2 == null)
-						childVar2 = getHollowClone(childBase);
-					ntComp.addChild(merge(childVar1, childBase, childVar2, ntComp));
-				}
-				for (FSTNode childVar1 : ntVar1.getChildren()) {
-					FSTNode childBase = ntBase.getCompatibleChild(childVar1);
-					FSTNode childVar2 = ntVar2.getCompatibleChild(childVar1);
-					if (childBase == null) {
-						if (childVar2 == null)
-							childVar2 = getHollowClone(childVar1);
-						ntComp.addChild(merge(childVar1, getHollowClone(childVar1), childVar2, ntComp));
-					}
-				}
-				for (FSTNode childVar2 : ntVar2.getChildren()) {
-					FSTNode childVar1 = ntVar1.getCompatibleChild(childVar2);
-					FSTNode childBase = ntBase.getCompatibleChild(childVar2);
-					if (childBase == null && childVar1 == null) {
-						ntComp.addChild(childVar2.getDeepClone());
-					}
-				}
-
-				return ntComp;
-			} else if (var1 instanceof FSTTerminal && base instanceof FSTTerminal && var2 instanceof FSTTerminal && compParent instanceof FSTNonTerminal) {
-				FSTTerminal tVar1 = (FSTTerminal) var1;
-				FSTTerminal tBase = (FSTTerminal) base;
-				FSTTerminal tVar2 = (FSTTerminal) var2;
-				FSTTerminal tComp = (FSTTerminal) compNode;
-
-				tComp.setBody(mergeBody(tVar1.getBody(), tBase.getBody(), tVar2.getBody()));
-
-				return tComp;
-			}
-			return null;
-		} else
-			return null;
-	}
-	
-	private static String mergeBody(String sVar1, String sBase, String sVar2) {
-		if (sVar1.equals(sBase) && sVar1.equals(sVar2)) {
-			return sBase;
-		} else if (sVar1.equals(sBase)) {
-			if (sVar1.length() == 0) return sVar2;
-			else if (sVar2.length() == 0) return sVar1;
-		} else if (sVar2.equals(sBase)) {
-			if (sVar2.length() == 0) return sVar1;
-			else if (sVar1.length() == 0) return sVar2;
-		} else if (sVar1.equals(sVar2)) {
-			if (sVar1.length() == 0) return sBase;
-			else if (sBase.length() == 0) return sVar1;
-		} 
-		return sVar1 + " # " + sBase + " # " + sVar2;
-	}
-	
-	private static FSTNode getHollowClone(FSTNode node) {
-		if (node instanceof FSTTerminal)
-			return new FSTTerminal(node.getType(), node.getName(), "", ((FSTTerminal)node).getSpecialTokenPrefix(), ((FSTTerminal)node).getCompositionMechanism());
-		else
-			return node.getShallowClone();
-	}
-*/
 }
