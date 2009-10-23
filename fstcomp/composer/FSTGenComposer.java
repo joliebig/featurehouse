@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,9 +12,7 @@ import modification.ContentModification;
 import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import modification.traversalLanguageParser.addressManagement.DuplicateFreeLinkedList;
-import printer.FeaturePrintVisitor;
 import printer.PrintVisitorException;
-import printer.PrintVisitorInterface;
 import printer.binary.BinaryPrintVisitor;
 import printer.capprox.CApproxPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
@@ -52,86 +49,19 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class FSTGenComposer {
+public class FSTGenComposer extends FSTGenProcessor {
 
 	private CmdLineInterpreter cmd = new CmdLineInterpreter();
 
-	private FileLoader fileLoader = new FileLoader(this);
-
-	private FeaturePrintVisitor featureVisitor = new FeaturePrintVisitor();
-
-	/**
-	 * to collect all files in which an error occurred
-	 */
-	private DuplicateFreeLinkedList<File> errorFiles;
-
-	private ArrayList<FSTNode> fstnodes;
-
-	public void setFstnodes(ArrayList<FSTNode> fstnodes) {
-		this.fstnodes = fstnodes;
-	}
-
-	public ArrayList<FSTNode> getFstnodes() {
-		return fstnodes;
-	}
-
-	public DuplicateFreeLinkedList<File> getErrorFiles() {
-		return errorFiles;
-	}
-
 	public FSTGenComposer() {
-		registerArtifactBuilder(new AlloyBuilder());
-		registerArtifactBuilder(new JavaBuilder());
-		registerArtifactBuilder(new CSharpBuilder());
-		registerArtifactBuilder(new CApproxBuilder());
-		registerArtifactBuilder(new HaskellBuilder());
-		registerArtifactBuilder(new JavaCCBuilder());
-		registerArtifactBuilder(new XMIBuilder());
-		registerArtifactBuilder(new TextBuilder(".properties"));
-		registerArtifactBuilder(new BinaryBuilder(".jpg"));
-		registerPrintVisitor(new AlloyPrintVisitor());
-		registerPrintVisitor(new JavaPrintVisitor());
-		registerPrintVisitor(new CSharpPrintVisitor());
-		registerPrintVisitor(new CApproxPrintVisitor());
-		registerPrintVisitor(new JavaCCPrintVisitor());
-		registerPrintVisitor(new HaskellPrintVisitor());
-		registerPrintVisitor(new XMIPrintVisitor());
-		registerPrintVisitor(new TextPrintVisitor(".properties"));
-		registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
-
-		errorFiles = new DuplicateFreeLinkedList<File>();
-	}
-
-	public void registerArtifactBuilder(ArtifactBuilderInterface builder) {
-		fileLoader.registerArtifactBuilder(builder);
-	}
-
-	public void unregisterArtifactBuilder(ArtifactBuilderInterface builder) {
-		fileLoader.unregisterArtifactBuilder(builder);
-	}
-
-	public LinkedList<ArtifactBuilderInterface> getArtifactBuilders() {
-		return fileLoader.getArtifactBuilders();
-	}
-
-	public void registerPrintVisitor(PrintVisitorInterface visitor) {
-		this.featureVisitor.registerPrintVisitor(visitor);
-	}
-
-	public void unregisterPrintVisitor(PrintVisitorInterface visitor) {
-		this.featureVisitor.unregisterPrintVisitor(visitor);
-	}
-
-	public LinkedList<PrintVisitorInterface> getPrintVisitors() {
-		return featureVisitor.getPrintVisitors();
+		super();
 	}
 
 	public void run(String[] args) {
 		cmd.parseCmdLineArguments(args);
 		try {
 			try {
-				fileLoader.loadFiles(cmd.equationFileName,
-						cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
+				fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
 			} catch (cide.gparser.ParseException e1) {
 				System.out.println("error");
 				fireParseErrorOccured(e1);
@@ -146,6 +76,7 @@ public class FSTGenComposer {
 
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
+
 
 //				for (FSTNonTerminal feature : features) {
 //					System.out.println(feature.toString());
@@ -332,22 +263,5 @@ public class FSTGenComposer {
 			return null;
 		} else
 			return null;
-	}
-
-	private LinkedList<IParseErrorListener> parseErrorListeners = new LinkedList<IParseErrorListener>();
-
-	public void addParseErrorListener(IParseErrorListener listener) {
-		if (!parseErrorListeners.contains(listener))
-			parseErrorListeners.add(listener);
-	}
-
-	public void removeParseErrorListener(IParseErrorListener listener) {
-		parseErrorListeners.remove(listener);
-	}
-
-	public void fireParseErrorOccured(cide.gparser.ParseException e1) {
-		for (IParseErrorListener listener : parseErrorListeners)
-			listener.parseErrorOccured(e1);
-		e1.printStackTrace();
 	}
 }

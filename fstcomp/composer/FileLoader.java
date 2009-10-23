@@ -35,11 +35,11 @@ public class FileLoader {
 
     private DirectoryFileFilter directoryFileFilter = new DirectoryFileFilter();
 
-    private composer.FSTGenComposer composer;
+    private FSTGenProcessor composer;
 
     private ModificationComposition modcomposition = new ModificationComposition();
 
-    public FileLoader(FSTGenComposer genComposer) {
+    public FileLoader(FSTGenProcessor genComposer) {
 	builderList = new LinkedList<ArtifactBuilderInterface>();
 	composer = genComposer;
     }
