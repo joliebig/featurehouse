@@ -235,11 +235,11 @@ public class AbstractFSTParser {
 		Token t = token.specialToken;
 		while (t != null) {
 			result.append(t.image);
-			t = t.next;
+			t = t.specialToken;
 		}
 		return result.toString();
 	}
-
+	
 	protected void replaceName(FSTInfo value) {
 		cc().nameReplacements.add(new Replacement(value.type, value));
 	}
