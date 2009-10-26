@@ -6,17 +6,10 @@ import java.util.List;
 
 import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
+
 import composer.FSTGenProcessor;
-import composer.rules.CSharpMethodOverriding;
-import composer.rules.CompositionError;
-import composer.rules.ConstructorConcatenation;
-import composer.rules.ExpansionOverriding;
-import composer.rules.FieldOverriding;
-import composer.rules.ImplementsListMerging;
-import composer.rules.JavaMethodOverriding;
-import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
-import composer.rules.StringConcatenation;
+
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -24,13 +17,17 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenMerger extends FSTGenProcessor {
 	
-	private static final String MERGE_SEPARATOR = "#";
+	static final String MERGE_SEPARATOR = "#";
+	static final String SEMANTIC_MERGE_MARKER = "~";
 	private CmdLineInterpreter cmd = new CmdLineInterpreter();
 	
+	private MergeVisitor mergeVisitor = new MergeVisitor();
+		
 	public FSTGenMerger() {
 		super();
+		mergeVisitor.registerMerger(new LineBasedMerger());
 	}
-
+	
 	public void run(String[] args) {
 		cmd.parseCmdLineArguments(args);
 		try {
@@ -54,6 +51,9 @@ public class FSTGenMerger extends FSTGenProcessor {
 				
 				if(features.size() != 0) {
 					merged = merge(features);
+					
+					mergeVisitor.visit(merged);
+					
 					try {
 						featureVisitor.visit((FSTNonTerminal) merged);
 					} catch (PrintVisitorException e) {
@@ -80,23 +80,21 @@ public class FSTGenMerger extends FSTGenProcessor {
 		if(tl.size() != 3)
 			throw new MergeException(tl);
 		
-		FSTNode mergeLeftBase = merge(tl.get(0), tl.get(1));
-		FSTNode mergeLeftBaseRight = merge(mergeLeftBase, tl.get(2));
+		FSTNode mergeLeftBase = merge(tl.get(0), tl.get(1), true);
+		FSTNode mergeLeftBaseRight = merge(mergeLeftBase, tl.get(2), false);
 		return mergeLeftBaseRight;
 	}
 
-	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB) {
-		return merge(nodeA, nodeB, null);
+	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, boolean firstPass) {
+		return merge(nodeA, nodeB, null, firstPass);
 	}
 
-	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, FSTNode compParent) {
+	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, FSTNode compParent, boolean firstPass) {
 
 		if (nodeA.compatibleWith(nodeB)) {
 			FSTNode compNode = nodeA.getShallowClone();
 			compNode.setParent(compParent);
 
-			// composed SubTree-stub is integrated in the new Tree, needs
-			// children
 			if (nodeA instanceof FSTNonTerminal	&& nodeB instanceof FSTNonTerminal) {
 				FSTNonTerminal nonterminalA = (FSTNonTerminal) nodeA;
 				FSTNonTerminal nonterminalB = (FSTNonTerminal) nodeB;
@@ -104,20 +102,15 @@ public class FSTGenMerger extends FSTGenProcessor {
 
 				for (FSTNode childB : nonterminalB.getChildren()) {
 					FSTNode childA = nonterminalA.getCompatibleChild(childB);
-					// for each child of B get the first compatible child of A
-					// (CompatibleChild means a Child which root equals B's
-					// root)
 					if (childA == null) {
-						// no compatible child, FST-node only in B
 						nonterminalComp.addChild(childB.getDeepClone());
 					} else {
-						nonterminalComp.addChild(merge(childA, childB, nonterminalComp));
+						nonterminalComp.addChild(merge(childA, childB, nonterminalComp, firstPass));
 					}
 				}
 				for (FSTNode childA : nonterminalA.getChildren()) {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
-						// no compatible child, FST-node only in A
 						nonterminalComp.addChild(childA.getDeepClone());
 					}
 				}
@@ -128,7 +121,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 
 				if (!terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME)) {
-					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody()));
+					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody(), firstPass));
 				} 
 				return terminalComp;
 			}
@@ -137,14 +130,20 @@ public class FSTGenMerger extends FSTGenProcessor {
 			return null;
 	}
 	
-	private static String mergeBody(String bodyA, String bodyB) {
-		if (bodyA.equals(bodyB) || bodyB.length() == 0) {
+	private static String mergeBody(String bodyA, String bodyB, boolean firstPass) {
+		if (bodyA.equals(bodyB)) {
 			return bodyA;
 		} else {
-			if (bodyA.contains("~"))
-				return bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
-			else
-				return "~ " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
+			if (bodyA.contains(SEMANTIC_MERGE_MARKER)) {
+				return bodyA + " " + bodyB;
+			}
+			else {
+				if(firstPass)
+					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB + " " + MERGE_SEPARATOR;
+				else
+					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + MERGE_SEPARATOR + " " + bodyB;
+			}
+
 		}
 	}
 }

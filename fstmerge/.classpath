@@ -6,5 +6,9 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/CIDE_generateAST"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CIDE2_ast"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/fstgen"/>
+	<classpathentry kind="lib" path="/home/apel/usr/share/eclipse-3.5/plugins/org.eclipse.compare.core_3.5.0.I20090430-0408.jar"/>
+	<classpathentry kind="lib" path="/home/apel/usr/share/eclipse-3.5/plugins/org.eclipse.compare_3.5.0.I20090514-0808.jar"/>
+	<classpathentry kind="lib" path="/home/apel/usr/share/eclipse-3.5/plugins/org.eclipse.equinox.common_3.5.1.R35x_v20090807-1100.jar"/>
+	<classpathentry kind="lib" path="/home/apel/usr/share/eclipse-3.5/plugins/org.eclipse.osgi_3.5.1.R35x_v20090827.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

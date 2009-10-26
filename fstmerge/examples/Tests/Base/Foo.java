@@ -4,5 +4,6 @@ class Foo implements A {
     public class Bar implements B {
     	private int x;
     	protected int y;
+    	public int q;
     }
 }
