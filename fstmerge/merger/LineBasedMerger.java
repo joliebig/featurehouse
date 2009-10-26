@@ -2,18 +2,12 @@ package merger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
-
-import org.eclipse.compare.internal.merge.DocumentMerger;
-import org.eclipse.compare.internal.merge.TextStreamMerger;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -26,8 +20,6 @@ public class LineBasedMerger implements MergerInterface {
 		if(!node.getType().equals("MethodDecl"))
 			return;
 		
-		TextStreamMerger textMerger = new TextStreamMerger();
-			
 		StringTokenizer st = new StringTokenizer(node.getBody(), FSTGenMerger.MERGE_SEPARATOR);
 		
 		if((st.countTokens() < 2))
@@ -57,19 +49,7 @@ public class LineBasedMerger implements MergerInterface {
 
 			Runtime run = Runtime.getRuntime();
 
-			String formatCmd = "astyle --style=java " + fileVar1.getPath();
-			Process pr = run.exec(formatCmd);
-			pr.waitFor();
-
-			formatCmd = "astyle --style=java " + fileBase.getPath();
-			pr = run.exec(formatCmd);
-			pr.waitFor();
-
-			formatCmd = "astyle --style=java " + fileVar2.getPath();
-			pr = run.exec(formatCmd);
-			pr.waitFor();
-
-			pr = run.exec(mergeCmd);
+			Process pr = run.exec(mergeCmd);
 			pr.waitFor();
 			
 			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
