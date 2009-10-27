@@ -234,7 +234,7 @@ public class AbstractFSTParser {
 		StringBuffer result = new StringBuffer();
 		Token t = token.specialToken;
 		while (t != null) {
-			result.append(t.image);
+			result.insert(0,t.image);
 			t = t.specialToken;
 		}
 		return result.toString();
