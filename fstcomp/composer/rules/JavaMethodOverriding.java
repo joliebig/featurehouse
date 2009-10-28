@@ -3,8 +3,6 @@ package composer.rules;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
-import java.util.regex.Pattern;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -37,10 +35,8 @@ public class JavaMethodOverriding {
 			
 
 			String toReplace = "original\\s*\\(";
-			String newMethodName = oldMethodName + "__wrappee__"
-					+ getFeatureName(terminalB);
-			String newBody = terminalComp.getBody().replaceAll(toReplace,
-					newMethodName + "(");
+			String newMethodName = oldMethodName + "__wrappee__" + getFeatureName(terminalB);
+			String newBody = terminalComp.getBody().replaceAll(toReplace, newMethodName + "(");
 			terminalComp.setBody(newBody);
 
 			String auxBody = "";
@@ -73,19 +69,19 @@ public class JavaMethodOverriding {
 					modPrefix += "\\[";
 				else if (c == ']')
 					modPrefix += "\\]";
+				else if (c == '*')
+					modPrefix += "\\*";
 				else
 					modPrefix += String.valueOf(c);
 			}
 
-			prefix = modPrefix.trim();
+			modPrefix = modPrefix.trim();
 
-			//System.err.println("-------" + prefix);
-			//System.err.println("--------" + terminalComp2.getBody());
-			//System.err.println("---------" + terminalComp2.getBody().replaceFirst(prefix, ""));
+			System.err.println("-------" + prefix);
+			System.err.println("#######" + terminalComp2.getBody());
+			System.err.println("+++++++" + terminalComp2.getBody().replaceFirst(modPrefix, ""));
 			
-			terminalComp2.setBody(prefix
-					+ terminalComp2.getBody().replaceFirst(prefix, "")
-							.replaceFirst(oldMethodName, newMethodName));
+			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(modPrefix, "").replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
 		}
 	}

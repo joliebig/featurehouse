@@ -1,5 +1,5 @@
 public class Foo {
-	void outgoing(Msg n) {
+	String[] outgoing(Msg[] n) {
 		int x = 0;
 	}
 }
