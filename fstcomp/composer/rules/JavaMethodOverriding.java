@@ -77,9 +77,9 @@ public class JavaMethodOverriding {
 
 			modPrefix = modPrefix.trim();
 
-			System.err.println("-------" + prefix);
-			System.err.println("#######" + terminalComp2.getBody());
-			System.err.println("+++++++" + terminalComp2.getBody().replaceFirst(modPrefix, ""));
+			//System.err.println("-------" + prefix);
+			//System.err.println("#######" + terminalComp2.getBody());
+			//System.err.println("+++++++" + terminalComp2.getBody().replaceFirst(modPrefix, ""));
 			
 			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(modPrefix, "").replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
