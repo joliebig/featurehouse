@@ -5,7 +5,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import printer.PrintVisitorException;
+import printer.PrintVisitorInterface;
+import printer.java.JavaPrintVisitor;
+import printer.javam.JavaMergePrintVisitor;
 import builder.ArtifactBuilderInterface;
+import builder.java.JavaBuilder;
+import builder.javam.JavaMergeBuilder;
 
 import composer.FSTGenProcessor;
 import composer.rules.Replacement;
@@ -26,6 +31,21 @@ public class FSTGenMerger extends FSTGenProcessor {
 	public FSTGenMerger() {
 		super();
 		mergeVisitor.registerMerger(new LineBasedMerger());
+		ArtifactBuilderInterface stdJavaBuilder = null;
+		for(ArtifactBuilderInterface builder : this.getArtifactBuilders()) {
+			if(builder instanceof JavaBuilder)
+				stdJavaBuilder = builder;
+		}
+		unregisterArtifactBuilder(stdJavaBuilder);
+		registerArtifactBuilder(new JavaMergeBuilder());
+		PrintVisitorInterface stdJavaPrinter = null;
+		for(PrintVisitorInterface printer : this.getPrintVisitors()) {
+			if(printer instanceof JavaPrintVisitor)
+				stdJavaPrinter = printer;
+		}
+		unregisterPrintVisitor(stdJavaPrinter);
+		registerPrintVisitor(new JavaMergePrintVisitor());
+
 	}
 	
 	public void run(String[] args) {
@@ -47,6 +67,9 @@ public class FSTGenMerger extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
+				//for(FSTNonTerminal feature : features)
+				//	System.out.println(feature.toString());
+				
 				FSTNode merged;
 				
 				if(features.size() != 0) {
