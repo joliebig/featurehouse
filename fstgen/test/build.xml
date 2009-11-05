@@ -50,6 +50,16 @@
 		</antcall>
 	</target>
 	
+	<target name="testJavaMerge">
+		<antcall target="testGrammar">
+			<param name="language" value="java15_merge" />
+			<param name="parserClass" value="Java15MergeParser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.java" />
+		</antcall>
+	</target>
+	
 	<target name="testJak">
 		<antcall target="testGrammar">
 			<param name="language" value="jak" />

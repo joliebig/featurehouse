@@ -14,7 +14,7 @@ public @interface Test {
     }
 }
 
- class Testb {
+ class Testb implements X, Y, Z {
 	int a;
 	int b,c[][];
 	void b(){
@@ -31,7 +31,7 @@ public @interface Test {
 	static private class A{
 		int b;
 	}
-	public class B{
+	public class B implements C {
 		void x(){}
 		class X{
 			int b;
