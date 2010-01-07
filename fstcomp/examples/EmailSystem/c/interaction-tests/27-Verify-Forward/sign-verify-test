@@ -1,0 +1,35 @@
+isSigned(msg)
+[and isSignatureValid(msg)]  // could be merged in isSigned(msg)
+and call(incoming(msg))
+implies later
+	call(deliver(msg))
+	and not isSigned(msg)
+	and is Validated(msg)
+	[isReadable(msg)]
+
+and
+
+# not allowed
+not 
+	isSigned(msg)
+	and call(outgoing(msg))
+
+and
+
+isSigned(msg)
+and call(outgoing(msg))
+implies later
+	call(deliver(msg))
+	and not isSigned(msg)
+	and is Validated(msg)
+	[isReadable(msg)]
+
+and
+
+# interaction no 27
+isSigned(msg)
+and call(incoming(msg))
+implies later
+	not
+		call(mail(msg))  // difficulty here: msg is probably altered, e.g. by forward(msg)
+		and isValidated(msg)
