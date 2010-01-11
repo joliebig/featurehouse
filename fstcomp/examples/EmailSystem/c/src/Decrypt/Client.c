@@ -6,6 +6,7 @@ decrypt (struct client *client, struct email *msg)
 {
   // VERIFICATION HOOK
   int verificationHook_isKeyPairValid = isKeyPairValid (msg->encryptionKey, client->privateKey);
+  printf("\n> hook\n%i\n\n", verificationHook_isKeyPairValid);
   // VERIFICATION HOOK END
   if (!client->privateKey)
     return;

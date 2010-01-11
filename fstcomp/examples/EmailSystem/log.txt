@@ -66,3 +66,15 @@ Verify implies Sign since it contains email refinements, e.g. a flag.
 messing around with encryption, decryption, sign and verify to reproduce the inconsistent-key scenarios.
 idea: field for signature and encryption key that holds a key which is symmetric.
 problem: transform inconsistent-key interactions into graphs
+
+graph process
+01-AddressBook-Encrypt: graph done
+TODO 03-Sign-Verify: key problem
+TODO 04-Sign-Forward: 
+06-Encrypt-Decrypt: graph done
+07-Encrypt-Verify: graph done
+TODO 08-Encrypt-AutoResponder:
+09-Encrypt-Forward: graph done
+TODO 11-Decrypt-AutoResponder: key problem, covered through graph 06
+27-Verify-Forward: graph done
+Decrypt-Forward: graph done

@@ -2,6 +2,9 @@
 void
 verify (struct client *client, struct email *msg)
 {
+  // VERIFICATION HOOK
+  int verificationHook_isReadable = isReadable (msg);
+  // VERIFICATION HOOK END
   if (!isReadable (msg) || !msg->isSigned)
     return;
   NODE *foundPublicKeyPair =

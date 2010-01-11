@@ -7,22 +7,13 @@
 #include "slist.h"
 struct  client {
   char *name; 
-  NODE *outgoingBuffer; 
-  NODE *userPublicKeyPairs; 
-  char *privateKey; 
-  NODE *addressBook; 
-  int idCounter;};
+  NODE *addressBook;};
 
 
 void outgoing (struct client *client, struct email *msg);
 
 
 void incoming (struct client *client, struct email *msg);
-struct  userPublicKeyPair {
-  char *user; 
-  char *publicKey;};
-// TODO remove
-void encrypt (struct client *client, struct email *msg);
 struct  addressBookEntry {
   char *alias; 
   NODE *address;};
@@ -30,11 +21,6 @@ struct  addressBookEntry {
 
 // TODO remove after fixing the composition-function-order-problem
 void resolveAlias (struct client *client, struct email *msg);
-// TODO remove
-void decrypt (struct client *client, struct email *msg);
-
-
-void addMessageID (struct client *client, struct email *msg);
 
 //fstcomp> generated include-guard 
 #endif
