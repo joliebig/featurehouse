@@ -3,6 +3,15 @@ void
 verify (struct client *client, struct email *msg)
 {
   // VERIFICATION HOOK
+  int verificationHook_isKeyPairValid =
+    isKeyPairValid (((struct userPublicKeyPair
+		     *) (list_find (client->userPublicKeyPairs,
+				    findUserPublicKeyPair,
+				    msg->from)->data))->publicKey,
+		    msg->signKey);
+  printf("\n> hook\n%i\n\n", verificationHook_isKeyPairValid);
+  // VERIFICATION HOOK END
+  // VERIFICATION HOOK
   int verificationHook_isReadable = isReadable (msg);
   // VERIFICATION HOOK END
   if (!isReadable (msg) || !msg->isSigned)

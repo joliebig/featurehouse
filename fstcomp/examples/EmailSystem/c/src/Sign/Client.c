@@ -14,3 +14,12 @@ outgoing (struct client *client, struct email *msg)
   sign (client, msg);
   original (client, msg);
 }
+
+void
+mail (struct client *client, struct email *msg)
+{
+// VERIFICATION HOOK
+  int verificationHook_isSigned = isSigned (msg);
+// VERIFICATION HOOK END
+  original (client, msg);
+}

@@ -6,8 +6,8 @@ encrypt (struct client *client, struct email *msg)
   if (foundPublicKeyPair)
     {
       msg->encryptionKey =
-	strdup (((struct userPublicKeyPair *) foundPublicKeyPair->
-		 data)->publicKey);
+	strdup (((struct userPublicKeyPair *) foundPublicKeyPair->data)->
+		publicKey);
       msg->isEncrypted = 1;
     }
 }

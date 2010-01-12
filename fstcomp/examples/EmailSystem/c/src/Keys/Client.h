@@ -11,3 +11,5 @@ struct userPublicKeyPair
   char *user;
   char *publicKey;
 };
+
+int isKeyPairValid (char *publicKey, char *privateKey);

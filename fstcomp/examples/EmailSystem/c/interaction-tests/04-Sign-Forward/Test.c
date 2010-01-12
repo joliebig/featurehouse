@@ -33,7 +33,7 @@ main (void)
   outgoing (bob, mail);
   incoming (rjh, mail);
   // chucknorris receives a forwarded message by rjh but doesn't verify the signature of the originator bob though chucknorris has a valid public key of bob.
-  incoming (chucknorris, (struct email *)rjh->outgoingBuffer->data);
+  incoming (chucknorris, (struct email *) rjh->outgoingBuffer->data);
 
   return 0;
 }

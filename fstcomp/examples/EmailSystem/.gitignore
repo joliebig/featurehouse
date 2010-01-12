@@ -2,3 +2,5 @@
 *.swp
 *src-composed
 *bin
+CVS*
+.project
