@@ -1,0 +1,173 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/jabref/!svn/ver/2802/branches/beta_2.4/src/java/net/sf/jabref/export
+END
+VerifyingWriter.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/VerifyingWriter.java
+END
+FileActions.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2793/branches/beta_2.4/src/java/net/sf/jabref/export/FileActions.java
+END
+RtfSelection.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/RtfSelection.java
+END
+ExportToClipboardAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/ExportToClipboardAction.java
+END
+SaveSession.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/SaveSession.java
+END
+IExportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/IExportFormat.java
+END
+LatexFieldFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/LatexFieldFormatter.java
+END
+MSBibExportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/MSBibExportFormat.java
+END
+FieldFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/FieldFormatter.java
+END
+MySQLExport.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/MySQLExport.java
+END
+CustomExportList.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2688/branches/beta_2.4/src/java/net/sf/jabref/export/CustomExportList.java
+END
+OpenDocumentSpreadsheetCreator.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/OpenDocumentSpreadsheetCreator.java
+END
+PluginBasedExportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2784/branches/beta_2.4/src/java/net/sf/jabref/export/PluginBasedExportFormat.java
+END
+ExportComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/ExportComparator.java
+END
+ModsExportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/ModsExportFormat.java
+END
+ExportFormats.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2688/branches/beta_2.4/src/java/net/sf/jabref/export/ExportFormats.java
+END
+SaveException.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/SaveException.java
+END
+IExportFormatProvider.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/IExportFormatProvider.java
+END
+SaveDatabaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2713/branches/beta_2.4/src/java/net/sf/jabref/export/SaveDatabaseAction.java
+END
+OpenDocumentRepresentation.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/OpenDocumentRepresentation.java
+END
+ExpandEndnoteFilters.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/ExpandEndnoteFilters.java
+END
+OOCalcDatabase.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/OOCalcDatabase.java
+END
+SaveAllAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/SaveAllAction.java
+END
+ExportFileFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/ExportFileFilter.java
+END
+ExportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2784/branches/beta_2.4/src/java/net/sf/jabref/export/ExportFormat.java
+END
+ExportCustomizationDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svnroot/jabref/!svn/ver/2688/branches/beta_2.4/src/java/net/sf/jabref/export/ExportCustomizationDialog.java
+END
+CustomExportDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/CustomExportDialog.java
+END
+OpenOfficeDocumentCreator.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/export/OpenOfficeDocumentCreator.java
+END

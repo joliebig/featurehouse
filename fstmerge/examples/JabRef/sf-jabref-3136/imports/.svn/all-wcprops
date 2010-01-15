@@ -1,0 +1,341 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svnroot/jabref/!svn/ver/3122/trunk/jabref/src/java/net/sf/jabref/imports
+END
+MedlineImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/MedlineImporter.java
+END
+ImportInspector.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/ImportInspector.java
+END
+CustomImportList.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/CustomImportList.java
+END
+AutosaveStartupPrompter.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/3047/trunk/jabref/src/java/net/sf/jabref/imports/AutosaveStartupPrompter.java
+END
+CheckForNewEntryTypesAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2488/trunk/jabref/src/java/net/sf/jabref/imports/CheckForNewEntryTypesAction.java
+END
+BibTeXMLHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/BibTeXMLHandler.java
+END
+CiteSeerFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2537/trunk/jabref/src/java/net/sf/jabref/imports/CiteSeerFetcher.java
+END
+PostOpenAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2037/trunk/jabref/src/java/net/sf/jabref/imports/PostOpenAction.java
+END
+ImportFormats.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2564/trunk/jabref/src/java/net/sf/jabref/imports/ImportFormats.java
+END
+IsiImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/3047/trunk/jabref/src/java/net/sf/jabref/imports/IsiImporter.java
+END
+SPIRESFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/SPIRESFetcher.java
+END
+CopacImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/CopacImporter.java
+END
+ImportMenuItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2950/trunk/jabref/src/java/net/sf/jabref/imports/ImportMenuItem.java
+END
+EndnoteImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/3122/trunk/jabref/src/java/net/sf/jabref/imports/EndnoteImporter.java
+END
+MsBibImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/MsBibImporter.java
+END
+ImportFileFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/ImportFileFilter.java
+END
+SilverPlatterImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/SilverPlatterImporter.java
+END
+ACMPortalFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/ACMPortalFetcher.java
+END
+OpenDatabaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/3075/trunk/jabref/src/java/net/sf/jabref/imports/OpenDatabaseAction.java
+END
+SixpackImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/SixpackImporter.java
+END
+ZipFileChooser.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2488/trunk/jabref/src/java/net/sf/jabref/imports/ZipFileChooser.java
+END
+CiteSeerEntryFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/CiteSeerEntryFetcher.java
+END
+BibteXMLImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/BibteXMLImporter.java
+END
+OAI2Handler.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2488/trunk/jabref/src/java/net/sf/jabref/imports/OAI2Handler.java
+END
+ScifinderImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/3077/trunk/jabref/src/java/net/sf/jabref/imports/ScifinderImporter.java
+END
+TextAnalyzer.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/TextAnalyzer.java
+END
+FieldContentParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2865/trunk/jabref/src/java/net/sf/jabref/imports/FieldContentParser.java
+END
+OAI2Fetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2552/trunk/jabref/src/java/net/sf/jabref/imports/OAI2Fetcher.java
+END
+HTMLConverter.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/HTMLConverter.java
+END
+BiomailImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/imports/BiomailImporter.java
+END
+IEEEXploreFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/3047/trunk/jabref/src/java/net/sf/jabref/imports/IEEEXploreFetcher.java
+END
+EntryFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2552/trunk/jabref/src/java/net/sf/jabref/imports/EntryFetcher.java
+END
+JSTORFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2552/trunk/jabref/src/java/net/sf/jabref/imports/JSTORFetcher.java
+END
+InspecImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/InspecImporter.java
+END
+ImportFormatReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/ImportFormatReader.java
+END
+MedlineHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2903/trunk/jabref/src/java/net/sf/jabref/imports/MedlineHandler.java
+END
+ImportInspectionCommandLine.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2864/trunk/jabref/src/java/net/sf/jabref/imports/ImportInspectionCommandLine.java
+END
+GeneralFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2552/trunk/jabref/src/java/net/sf/jabref/imports/GeneralFetcher.java
+END
+MedlineFetcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/MedlineFetcher.java
+END
+RisImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/3047/trunk/jabref/src/java/net/sf/jabref/imports/RisImporter.java
+END
+PdfXmpImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/PdfXmpImporter.java
+END
+ImportFormat.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/ImportFormat.java
+END
+ImportCustomizationDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/2950/trunk/jabref/src/java/net/sf/jabref/imports/ImportCustomizationDialog.java
+END
+JstorImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/JstorImporter.java
+END
+OvidImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/OvidImporter.java
+END
+RepecNepImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/RepecNepImporter.java
+END
+BooleanAssign.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/415/trunk/jabref/src/java/net/sf/jabref/imports/BooleanAssign.java
+END
+CiteSeerEntryFetcherHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2543/trunk/jabref/src/java/net/sf/jabref/imports/CiteSeerEntryFetcherHandler.java
+END
+CiteSeerUndoHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2488/trunk/jabref/src/java/net/sf/jabref/imports/CiteSeerUndoHandler.java
+END
+CsaImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/3107/trunk/jabref/src/java/net/sf/jabref/imports/CsaImporter.java
+END
+AppendDatabaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2950/trunk/jabref/src/java/net/sf/jabref/imports/AppendDatabaseAction.java
+END
+BibtexParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2867/trunk/jabref/src/java/net/sf/jabref/imports/BibtexParser.java
+END
+ParserResult.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/3054/trunk/jabref/src/java/net/sf/jabref/imports/ParserResult.java
+END
+CiteSeerCitationHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/imports/CiteSeerCitationHandler.java
+END
+SPIRESBibtexFilterReader.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/imports/SPIRESBibtexFilterReader.java
+END
+BiblioscapeImporter.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/imports/BiblioscapeImporter.java
+END

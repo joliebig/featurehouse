@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svnroot/jabref/!svn/ver/3071/trunk/jabref/src/java/net/sf/jabref/sql
+END
+DBConnectDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/sql/DBConnectDialog.java
+END
+DBStrings.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/2441/trunk/jabref/src/java/net/sf/jabref/sql/DBStrings.java
+END
+DbConnectAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/sql/DbConnectAction.java
+END
+SQLutil.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/3071/trunk/jabref/src/java/net/sf/jabref/sql/SQLutil.java
+END
+DbImportAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2734/trunk/jabref/src/java/net/sf/jabref/sql/DbImportAction.java
+END

@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab
+END
+InfoPane.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/InfoPane.java
+END
+ChangeScanner.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/ChangeScanner.java
+END
+GroupChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/GroupChange.java
+END
+FileUpdatePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/FileUpdatePanel.java
+END
+EntryChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/EntryChange.java
+END
+StringChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/StringChange.java
+END
+StringNameChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/StringNameChange.java
+END
+EntryAddChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/EntryAddChange.java
+END
+StringAddChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/StringAddChange.java
+END
+Change.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/Change.java
+END
+FileUpdateListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/FileUpdateListener.java
+END
+StringRemoveChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/StringRemoveChange.java
+END
+FileUpdateMonitor.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/FileUpdateMonitor.java
+END
+EntryDeleteChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/EntryDeleteChange.java
+END
+ChangeDisplayDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/ChangeDisplayDialog.java
+END
+PreambleChange.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2620/branches/beta_2.4/src/java/net/sf/jabref/collab/PreambleChange.java
+END
