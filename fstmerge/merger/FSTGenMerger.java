@@ -3,14 +3,18 @@ package merger;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
 import printer.java.JavaPrintVisitor;
 import printer.javam.JavaMergePrintVisitor;
+import printer.textm.TextMergePrintVisitor;
 import builder.ArtifactBuilderInterface;
 import builder.java.JavaBuilder;
 import builder.javam.JavaMergeBuilder;
+import builder.textm.TextMergeBuilder;
 
 import composer.FSTGenProcessor;
 import composer.rules.Replacement;
@@ -22,9 +26,10 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenMerger extends FSTGenProcessor {
 	
-	static final String MERGE_SEPARATOR = "#";
-	static final String SEMANTIC_MERGE_MARKER = "~";
+	static final String MERGE_SEPARATOR = "##FSTMerge##";
+	static final String SEMANTIC_MERGE_MARKER = "~~FSTMerge~~";
 	private CmdLineInterpreter cmd = new CmdLineInterpreter();
+	private static LinkedList<FSTNode> baseNodes = new LinkedList<FSTNode>();
 	
 	private MergeVisitor mergeVisitor = new MergeVisitor();
 		
@@ -38,6 +43,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		}
 		unregisterArtifactBuilder(stdJavaBuilder);
 		registerArtifactBuilder(new JavaMergeBuilder());
+		registerArtifactBuilder(new TextMergeBuilder(".java"));
 		PrintVisitorInterface stdJavaPrinter = null;
 		for(PrintVisitorInterface printer : this.getPrintVisitors()) {
 			if(printer instanceof JavaPrintVisitor)
@@ -45,6 +51,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		}
 		unregisterPrintVisitor(stdJavaPrinter);
 		registerPrintVisitor(new JavaMergePrintVisitor());
+		registerPrintVisitor(new TextMergePrintVisitor(".java"));
 
 	}
 	
@@ -105,6 +112,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		
 		FSTNode mergeLeftBase = merge(tl.get(0), tl.get(1), true);
 		FSTNode mergeLeftBaseRight = merge(mergeLeftBase, tl.get(2), false);
+		removeLoneBaseNodes(mergeLeftBaseRight);
 		return mergeLeftBaseRight;
 	}
 
@@ -126,7 +134,11 @@ public class FSTGenMerger extends FSTGenProcessor {
 				for (FSTNode childB : nonterminalB.getChildren()) {
 					FSTNode childA = nonterminalA.getCompatibleChild(childB);
 					if (childA == null) {
-						nonterminalComp.addChild(childB.getDeepClone());
+						FSTNode cloneB = childB.getDeepClone();
+						nonterminalComp.addChild(cloneB);
+						if(firstPass) {
+							baseNodes.add(cloneB);
+						}
 					} else {
 						nonterminalComp.addChild(merge(childA, childB, nonterminalComp, firstPass));
 					}
@@ -134,7 +146,16 @@ public class FSTGenMerger extends FSTGenProcessor {
 				for (FSTNode childA : nonterminalA.getChildren()) {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
-						nonterminalComp.addChild(childA.getDeepClone());
+						FSTNode cloneA = childA.getDeepClone();
+						nonterminalComp.addChild(cloneA);
+						if(baseNodes.contains(childA)) {
+							baseNodes.remove(childA);
+							baseNodes.add(cloneA);
+						}
+					} else {
+						if(!firstPass) {
+							baseNodes.remove(childA);
+						}
 					}
 				}
 				return nonterminalComp;
@@ -167,6 +188,24 @@ public class FSTGenMerger extends FSTGenProcessor {
 					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + MERGE_SEPARATOR + " " + bodyB;
 			}
 
+		}
+	}
+	private static void removeLoneBaseNodes(FSTNode mergeLeftBaseRight) {
+		boolean removed = false;
+		for(FSTNode loneBaseNode : baseNodes) {
+			if(mergeLeftBaseRight == loneBaseNode) {
+				FSTNonTerminal parent = (FSTNonTerminal)mergeLeftBaseRight.getParent();
+				if(parent != null) {
+					parent.removeChild(mergeLeftBaseRight);
+					removed = true;
+				}
+			}
+		}
+		if(!removed && mergeLeftBaseRight instanceof FSTNonTerminal) {
+			Object[] children = ((FSTNonTerminal)mergeLeftBaseRight).getChildren().toArray();
+			for(Object child : children) {
+				removeLoneBaseNodes((FSTNode)child);
+			}
 		}
 	}
 }

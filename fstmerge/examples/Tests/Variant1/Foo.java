@@ -1,4 +1,5 @@
 class Foo {
+	String s = "#";
     public void bar1() {}
     public void spam1() {}
     public void bar2() {}

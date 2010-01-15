@@ -1,4 +1,5 @@
 class Foo implements A {
+	int gggggggggggggg;
     public void bar1() {}
     public void bar2() {}
     public class Bar implements B {

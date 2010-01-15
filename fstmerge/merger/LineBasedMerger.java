@@ -17,12 +17,18 @@ public class LineBasedMerger implements MergerInterface {
 
 	public void merge(FSTTerminal node) throws ContentMergeException {
 		
-		if(!node.getType().equals("MethodDecl"))
+		if(!(node.getType().equals("MethodDecl") || node.getType().contains("-Content")))
+		//if(!node.getType().equals("MethodDecl"))
 			return;
 		
-		StringTokenizer st = new StringTokenizer(node.getBody(), FSTGenMerger.MERGE_SEPARATOR);
+		//System.err.println(node.getBody());
 		
-		if((st.countTokens() < 2))
+		String[] tokens = node.getBody().split(FSTGenMerger.MERGE_SEPARATOR);
+		
+		//StringTokenizer st = new StringTokenizer(node.getBody(), FSTGenMerger.MERGE_SEPARATOR);
+		
+		//if((st.countTokens() < 2))
+		if(tokens.length < 2)
 			throw new ContentMergeException(node.getBody());
 		
 	    try {
@@ -34,23 +40,27 @@ public class LineBasedMerger implements MergerInterface {
 			File fileVar2 = File.createTempFile("fstmerge_var2_", "", tmpDir);
 			
 	    	BufferedWriter writerVar1 = new BufferedWriter(new FileWriter(fileVar1));
-	        writerVar1.write(st.nextToken().replaceAll(FSTGenMerger.SEMANTIC_MERGE_MARKER, ""));
+	        //writerVar1.write(st.nextToken().replaceAll(FSTGenMerger.SEMANTIC_MERGE_MARKER, ""));
+	    	writerVar1.write(tokens[0].replaceAll(FSTGenMerger.SEMANTIC_MERGE_MARKER, ""));
 	        writerVar1.close();
 	        BufferedWriter writerBase = new BufferedWriter(new FileWriter(fileBase));
-	        writerBase.write(st.nextToken());
+	        //writerBase.write(st.nextToken());
+	        writerBase.write(tokens[1]);
 	        writerBase.close();
 	        BufferedWriter writerVar2 = new BufferedWriter(new FileWriter(fileVar2));
 	        
-	        if(st.hasMoreTokens()) writerVar2.write(st.nextToken());
+	        //if(st.hasMoreTokens()) writerVar2.write(st.nextToken());
+	        if(tokens.length > 2) writerVar2.write(tokens[2]);
 	        else writerVar2.write("");
 	        writerVar2.close();
 
-	        String mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
-
+	        
+	        String mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
+	        //System.err.println(mergeCmd);
 			Runtime run = Runtime.getRuntime();
 
 			Process pr = run.exec(mergeCmd);
-			pr.waitFor();
+			//pr.waitFor();
 			
 			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			String line = "";
@@ -58,9 +68,8 @@ public class LineBasedMerger implements MergerInterface {
 			while ((line=buf.readLine())!=null) {
 				res += line + "\n";
 			}
-			
 			node.setBody(res);
-
+			
 			buf = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
 			while ((line=buf.readLine())!=null) {
 				System.err.println(line);
@@ -73,9 +82,9 @@ public class LineBasedMerger implements MergerInterface {
 
 	    } catch (IOException e) {
 	    	e.printStackTrace();
-	    } catch (InterruptedException e) {
-	    	e.printStackTrace();
-	    }
+	    } //catch (InterruptedException e) {
+	    	//e.printStackTrace();
+	    //}
 	    
  
 		
