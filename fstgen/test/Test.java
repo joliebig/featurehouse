@@ -22,6 +22,8 @@ public @interface Test {
 	}
 	void b(int a, Object b){
 		b();
+		@SupressWarnings("xxx")
+		for (final ExportFormatExtension e : plugin.getExportFormatExtensions()) {}
 	}
 	
 	{}

@@ -461,6 +461,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("RelationalOp1") && expectedType.equals("RelationalOp")) return true;
 		if (type.equals("PrimitiveType8") && expectedType.equals("PrimitiveType")) return true;
 		if (type.equals("AnnotationInnerClass") && expectedType.equals("AnnotationTypeMemberDeclaration")) return true;
+		if (type.equals("BlockStatement4") && expectedType.equals("BlockStatement")) return true;
 		if (type.equals("AssignmentOperator1") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("CastLookahead1") && expectedType.equals("CastLookahead")) return true;
@@ -553,6 +554,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Modifier1") && expectedType.equals("Modifier")) return true;
 		if (type.equals("Statement4") && expectedType.equals("Statement")) return true;
 		if (type.equals("ConstructorDecl") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;
+		if (type.equals("ForStatementInternal3") && expectedType.equals("ForStatementInternal")) return true;
 		if (type.equals("Literal3") && expectedType.equals("Literal")) return true;
 		if (type.equals("BooleanLiteral2") && expectedType.equals("BooleanLiteral")) return true;
 		if (type.equals("InnerEnumDecl") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;

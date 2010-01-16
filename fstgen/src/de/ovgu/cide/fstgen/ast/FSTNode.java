@@ -4,6 +4,7 @@ public abstract class FSTNode {
 	private String name;
 	private String type;
 	private FSTNode parent = null;
+	public int index = -1;
 
 	protected FSTNode(String type, String name) {
 		this.setType(type);

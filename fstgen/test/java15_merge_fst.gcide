@@ -971,6 +971,8 @@ BlockStatement:
 |
   Statement
 |
+	Annotation
+|
   ClassOrInterfaceDeclaration
 ;
 
@@ -1035,10 +1037,15 @@ ForStatement:
 
 ForStatementInternal:
    LOOK_AHEAD("Type() <IDENTIFIER> \":\"")
-      Type <IDENTIFIER> ":" Expression 
+      [ FINAL_T ] Type <IDENTIFIER> ":" Expression 
+    |
+   LOOK_AHEAD("FINAL_T() Type() <IDENTIFIER> \":\"")
+      FINAL_T Type <IDENTIFIER> ":" Expression 
     |
      [ ForInit ] ";" [ Expression ] ";" [ ForUpdate ]
   ;
+
+FINAL_T : "final";
 
 ForInit:
   LOOK_AHEAD( "[ \"final\" ] Type() <IDENTIFIER>" )
