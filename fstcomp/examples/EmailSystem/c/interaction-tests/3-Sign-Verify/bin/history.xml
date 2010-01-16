@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc noversion nomachine -c">
+      <target file="Client.o" lastModified="1262301e600">
+         <source file="../src-composed/Client.c" lastModified="1262301de30"/>
+      </target>
+      <target file="Test.o" lastModified="1262301e600">
+         <source file="../src-composed/Test.c" lastModified="1262301de30"/>
+      </target>
+      <target file="Email.o" lastModified="1262301e600">
+         <source file="../src-composed/Email.c" lastModified="1262301de30"/>
+      </target>
+      <target file="slist.o" lastModified="1262301e600">
+         <source file="../src-composed/slist.c" lastModified="1262301de30"/>
+      </target>
+   </processor>
+   <processor signature="gcc">
+      <target file="test" lastModified="1262301e600">
+         <source file="Email.o" lastModified="1262301e600"/>
+         <source file="Client.o" lastModified="1262301e600"/>
+         <source file="Test.o" lastModified="1262301e600"/>
+         <source file="slist.o" lastModified="1262301e600"/>
+      </target>
+   </processor>
+</history>

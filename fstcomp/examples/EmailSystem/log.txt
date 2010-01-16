@@ -68,13 +68,13 @@ idea: field for signature and encryption key that holds a key which is symmetric
 problem: transform inconsistent-key interactions into graphs
 
 graph process
-01-AddressBook-Encrypt: done
-03-Sign-Verify: key problem, done
-TODO 04-Sign-Forward: 
-06-Encrypt-Decrypt: done
-07-Encrypt-Verify: done
-TODO 08-Encrypt-AutoResponder:
-09-Encrypt-Forward: done
-11-Decrypt-AutoResponder: key problem, covered through graph 06, done
+1-AddressBook-Encrypt: done
+3-Sign-Verify: key problem, done
+4-Sign-Forward: covered by graph 03, done
+6-Encrypt-Decrypt: done
+7-Encrypt-Verify: done
+8-Encrypt-AutoResponder: covered by graph 09, done
+9-Encrypt-Forward: done
+11-Decrypt-AutoResponder: key problem, covered by graph 06, done
 27-Verify-Forward: done
 Decrypt-Forward: done

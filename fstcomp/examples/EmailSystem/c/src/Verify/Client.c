@@ -3,13 +3,21 @@ void
 verify (struct client *client, struct email *msg)
 {
   // VERIFICATION HOOK
-  int verificationHook_isKeyPairValid =
-    isKeyPairValid (((struct userPublicKeyPair
-		     *) (list_find (client->userPublicKeyPairs,
-				    findUserPublicKeyPair,
-				    msg->from)->data))->publicKey,
-		    msg->signKey);
-  printf("\n> hook\n%i\n\n", verificationHook_isKeyPairValid);
+  int verificationHook_list_find =
+    list_find (client->userPublicKeyPairs, findUserPublicKeyPair, msg->from) != NULL;
+  printf ("\n> hook\n%i\n\n", verificationHook_list_find);
+  // VERIFICATION HOOK END
+  // VERIFICATION HOOK
+  if (verificationHook_list_find)
+    {
+      int verificationHook_isKeyPairValid =
+	isKeyPairValid (((struct userPublicKeyPair
+			  *) (list_find (client->userPublicKeyPairs,
+					 findUserPublicKeyPair,
+					 msg->from)->data))->publicKey,
+			msg->signKey);
+      printf ("\n> hook\n%i\n\n", verificationHook_isKeyPairValid);
+    }
   // VERIFICATION HOOK END
   // VERIFICATION HOOK
   int verificationHook_isReadable = isReadable (msg);

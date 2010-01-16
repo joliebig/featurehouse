@@ -130,8 +130,8 @@ verify (struct client *client, struct email *msg)
     list_find (client->userPublicKeyPairs, findUserPublicKeyPair, msg->from);
   if (foundPublicKeyPair
       && 0 == strcmp (msg->signKey,
-		      ((struct userPublicKeyPair *) foundPublicKeyPair->
-		       data)->publicKey))
+		      ((struct userPublicKeyPair *)
+		       foundPublicKeyPair->data)->publicKey))
     {
       msg->isSignatureVerified = 1;
     }

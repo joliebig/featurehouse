@@ -3,14 +3,16 @@
 #define __EMAIL_H
 //fstcomp> /generated include-guard 
 
-struct  email {
-  char *id; 
-  char *from; 
-  char *to; 
-  char *subject; 
-  char *body; 
-  int isEncrypted; 
-  char *encryptionKey;};
+struct email
+{
+  char *id;
+  char *from;
+  char *to;
+  char *subject;
+  char *body;
+  int isEncrypted;
+  char *encryptionKey;
+};
 
 
 struct email *cloneEmail (struct email *msg);

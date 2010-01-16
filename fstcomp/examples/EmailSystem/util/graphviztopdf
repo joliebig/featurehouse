@@ -1,0 +1,2 @@
+#!/bin/bash
+dot $1 -Tps | ps2eps -q | $(dirname $0)/rightBB.pl | epstopdf --filter > $1.pdf

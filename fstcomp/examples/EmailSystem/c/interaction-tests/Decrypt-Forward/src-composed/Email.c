@@ -7,8 +7,8 @@
 #include "Email.h"
 
 
-struct email * 
-cloneEmail__wrappee__Keys  (struct email *msg)
+struct email *
+cloneEmail__wrappee__Keys (struct email *msg)
 {
   struct email *clone = (struct email *) malloc (sizeof (struct email));
   if (msg->id)
@@ -28,7 +28,7 @@ cloneEmail__wrappee__Keys  (struct email *msg)
 struct email *
 cloneEmail (struct email *msg)
 {
-  struct email *clone = cloneEmail__wrappee__Keys(msg);
+  struct email *clone = cloneEmail__wrappee__Keys (msg);
   clone->isEncrypted = msg->isEncrypted;
   if (msg->encryptionKey)
     clone->encryptionKey = strdup (msg->encryptionKey);
@@ -36,7 +36,7 @@ cloneEmail (struct email *msg)
 }
 
 
-void 
+void
 printMail__wrappee__Keys (struct email *msg)
 {
   printf ("ID:\n  %s\n", msg->id);
@@ -46,16 +46,17 @@ printMail__wrappee__Keys (struct email *msg)
   printf ("IS_READABLE\n  %i\n", isReadable (msg));
   printf ("BODY:\n  %s\n", msg->body);
 }
+
 void
 printMail (struct email *msg)
 {
-  printMail__wrappee__Keys(msg);
+  printMail__wrappee__Keys (msg);
   printf ("ENCRYPTED\n  %i\n", msg->isEncrypted);
   printf ("ENCRYPTION KEY\n  %s\n", msg->encryptionKey);
 }
 
 
-int 
+int
 isReadable__wrappee__Keys (struct email *msg)
 {
   return 1;
@@ -66,7 +67,7 @@ int
 isReadable (struct email *msg)
 {
   if (0 == isEncrypted (msg))
-    return isReadable__wrappee__Keys(msg);
+    return isReadable__wrappee__Keys (msg);
   else
     return 0;
 }

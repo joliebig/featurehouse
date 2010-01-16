@@ -5,22 +5,26 @@
 
 #include "Email.h"
 #include "slist.h"
-struct  client {
-  char *name; 
-  NODE *outgoingBuffer; 
-  NODE *userPublicKeyPairs; 
-  char *privateKey; 
-  char *forwardReceiver; 
-  int idCounter;};
+struct client
+{
+  char *name;
+  NODE *outgoingBuffer;
+  NODE *userPublicKeyPairs;
+  char *privateKey;
+  char *forwardReceiver;
+  int idCounter;
+};
 
 
 void outgoing (struct client *client, struct email *msg);
 
 
 void incoming (struct client *client, struct email *msg);
-struct  userPublicKeyPair {
-  char *user; 
-  char *publicKey;};
+struct userPublicKeyPair
+{
+  char *user;
+  char *publicKey;
+};
 // TODO remove
 void encrypt (struct client *client, struct email *msg);
 // TODO remove

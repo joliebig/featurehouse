@@ -7,7 +7,7 @@
 
 
 // outgoing emails leave the client at this point. here they are put in an outgoing queue instead.
-void 
+void
 mail__wrappee__Keys (struct client *client, struct email *msg)
 {
   //TODO 
@@ -27,23 +27,23 @@ mail (struct client *client, struct email *msg)
 // VERIFICATION HOOK
   int verificationHook_isEncrypted = isEncrypted (msg);
 // VERIFICATION HOOK END
-  mail__wrappee__Keys(client, msg);
+  mail__wrappee__Keys (client, msg);
 }
 
 
 // emails to be sent are processed by this method before beeing mailed.
-void 
+void
 outgoing__wrappee__Keys (struct client *client, struct email *msg)
 {
   mail (client, msg);
 }
 
 
-void 
+void
 outgoing__wrappee__Forward (struct client *client, struct email *msg)
 {
   encrypt (client, msg);
-  outgoing__wrappee__Keys(client, msg);
+  outgoing__wrappee__Keys (client, msg);
 }
 
 
@@ -52,7 +52,7 @@ void
 outgoing (struct client *client, struct email *msg)
 {
   addMessageID (client, msg);
-  outgoing__wrappee__Forward(client, msg);
+  outgoing__wrappee__Forward (client, msg);
 }
 
 
@@ -67,28 +67,28 @@ deliver (struct client *client, struct email *msg)
 
 
 // incoming emails are processed by this method before delivery.
-void 
+void
 incoming__wrappee__Keys (struct client *client, struct email *msg)
 {
   deliver (client, msg);
 }
 
 
-void 
+void
 incoming__wrappee__Encrypt (struct client *client, struct email *msg)
 {
 // VERIFICATION HOOK
   int verificationHook_isEncrypted = isEncrypted (msg);
 // VERIFICATION HOOK END
-  incoming__wrappee__Keys(client, msg);
+  incoming__wrappee__Keys (client, msg);
 }
 
 
-void 
+void
 incoming__wrappee__Decrypt (struct client *client, struct email *msg)
 {
   decrypt (client, msg);
-  incoming__wrappee__Encrypt(client, msg);
+  incoming__wrappee__Encrypt (client, msg);
 }
 
 
@@ -96,7 +96,7 @@ void
 incoming (struct client *client, struct email *msg)
 {
   forward (client, msg);
-  incoming__wrappee__Decrypt(client, msg);
+  incoming__wrappee__Decrypt (client, msg);
 }
 
 
@@ -107,6 +107,7 @@ findUserPublicKeyPair (void *listdata, void *searchdata)
     (((struct userPublicKeyPair *) listdata)->user,
      (char *) searchdata) ? 0 : 1;
 }
+
 void
 encrypt (struct client *client, struct email *msg)
 {
@@ -139,7 +140,7 @@ decrypt (struct client *client, struct email *msg)
 void
 forward (struct client *client, struct email *msg)
 {
-  if (!client->forwardReceiver || !isReadable(msg))
+  if (!client->forwardReceiver || !isReadable (msg))
     return;
   // VERIFICATION HOOK
   int verificationHook_isReadable = isReadable (msg);
@@ -155,7 +156,7 @@ addMessageID (struct client *client, struct email *msg)
 {
   if (!msg->id)
     {
-      msg->id = (char *) malloc (sizeof (int) + strlen(client->name));
+      msg->id = (char *) malloc (sizeof (int) + strlen (client->name));
       sprintf (msg->id, "%s%i", client->name, client->idCounter);
       client->idCounter++;
     }

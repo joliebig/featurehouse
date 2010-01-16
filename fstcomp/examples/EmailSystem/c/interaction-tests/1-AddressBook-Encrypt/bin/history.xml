@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="gcc noversion nomachine -c">
+      <target file="Test.o" lastModified="1258d4ce2e0">
+         <source file="../src-composed/Test.c" lastModified="1258d4cdef8"/>
+      </target>
+      <target file="Email.o" lastModified="1258d4ce2e0">
+         <source file="../src-composed/Email.c" lastModified="1258d4cdef8"/>
+      </target>
+      <target file="slist.o" lastModified="1258d4ce2e0">
+         <source file="../src-composed/slist.c" lastModified="1258d4cdef8"/>
+      </target>
+   </processor>
+</history>
