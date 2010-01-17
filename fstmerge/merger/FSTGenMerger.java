@@ -110,6 +110,10 @@ public class FSTGenMerger extends FSTGenProcessor {
 		if(tl.size() != 3)
 			throw new MergeException(tl);
 		
+		tl.get(0).index = 0;
+		tl.get(1).index = 1;
+		tl.get(2).index = 2;
+		
 		FSTNode mergeLeftBase = merge(tl.get(0), tl.get(1), true);
 		FSTNode mergeLeftBaseRight = merge(mergeLeftBase, tl.get(2), false);
 		removeLoneBaseNodes(mergeLeftBaseRight);
@@ -121,9 +125,13 @@ public class FSTGenMerger extends FSTGenProcessor {
 	}
 
 	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, FSTNode compParent, boolean firstPass) {
-
+		
+		//System.err.println("nodeA: " + nodeA.getName() + " index: " + nodeA.index);
+		//System.err.println("nodeB: " + nodeB.getName() + " index: " + nodeB.index);
+		
 		if (nodeA.compatibleWith(nodeB)) {
 			FSTNode compNode = nodeA.getShallowClone();
+			compNode.index = nodeB.index;
 			compNode.setParent(compParent);
 
 			if (nodeA instanceof FSTNonTerminal	&& nodeB instanceof FSTNonTerminal) {
@@ -135,11 +143,19 @@ public class FSTGenMerger extends FSTGenProcessor {
 					FSTNode childA = nonterminalA.getCompatibleChild(childB);
 					if (childA == null) {
 						FSTNode cloneB = childB.getDeepClone();
+						if(childB.index == -1)
+							childB.index = nodeB.index;
+						cloneB.index = childB.index;
 						nonterminalComp.addChild(cloneB);
+						//System.err.println("cloneB: " + cloneB.getName() + " index: " + cloneB.index);
 						if(firstPass) {
 							baseNodes.add(cloneB);
 						}
 					} else {
+						if(childA.index == -1)
+							childA.index = nodeA.index;
+						if(childB.index == -1)
+							childB.index = nodeB.index;
 						nonterminalComp.addChild(merge(childA, childB, nonterminalComp, firstPass));
 					}
 				}
@@ -147,7 +163,11 @@ public class FSTGenMerger extends FSTGenProcessor {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
 						FSTNode cloneA = childA.getDeepClone();
+						if(childA.index == -1)
+							childA.index = nodeA.index;
+						cloneA.index = childA.index;
 						nonterminalComp.addChild(cloneA);
+						//System.err.println("cloneA: " + cloneA.getName() + " index: " + cloneA.index);
 						if(baseNodes.contains(childA)) {
 							baseNodes.remove(childA);
 							baseNodes.add(cloneA);
@@ -165,7 +185,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 
 				if (!terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME)) {
-					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody(), firstPass));
+					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody(), firstPass, terminalA.index, terminalB.index));
 				} 
 				return terminalComp;
 			}
@@ -174,20 +194,24 @@ public class FSTGenMerger extends FSTGenProcessor {
 			return null;
 	}
 	
-	private static String mergeBody(String bodyA, String bodyB, boolean firstPass) {
-		if (bodyA.equals(bodyB)) {
-			return bodyA;
-		} else {
-			if (bodyA.contains(SEMANTIC_MERGE_MARKER)) {
-				return bodyA + " " + bodyB;
-			}
-			else {
-				if(firstPass)
-					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB + " " + MERGE_SEPARATOR;
-				else
-					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + MERGE_SEPARATOR + " " + bodyB;
-			}
+	private static String mergeBody(String bodyA, String bodyB, boolean firstPass, int indexA, int indexB) {
 
+		//System.err.println(firstPass);
+		//System.err.println("#" + bodyA + "#");
+		//System.err.println("#" + bodyB + "#");
+		
+		if (bodyA.contains(SEMANTIC_MERGE_MARKER)) {
+			return bodyA + " " + bodyB;
+		}
+		else {
+			if(firstPass) {
+				return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB + " " + MERGE_SEPARATOR;
+			} else {
+				if(indexA == 0)
+					return SEMANTIC_MERGE_MARKER + " " + bodyA + " " + MERGE_SEPARATOR + " " + MERGE_SEPARATOR + " " + bodyB;
+				else
+					return SEMANTIC_MERGE_MARKER + " " + MERGE_SEPARATOR + " " + bodyA + " " + MERGE_SEPARATOR + " " + bodyB;
+			}	
 		}
 	}
 	private static void removeLoneBaseNodes(FSTNode mergeLeftBaseRight) {

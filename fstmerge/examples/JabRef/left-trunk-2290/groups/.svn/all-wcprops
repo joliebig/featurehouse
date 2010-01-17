@@ -1,0 +1,161 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups
+END
+GroupsTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/GroupsTree.java
+END
+GroupMatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/GroupMatcher.java
+END
+TransferableEntrySelection.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/groups/TransferableEntrySelection.java
+END
+KeywordGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/KeywordGroup.java
+END
+GroupTreeCellRenderer.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/groups/GroupTreeCellRenderer.java
+END
+AutoGroupDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/AutoGroupDialog.java
+END
+GroupsPrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/groups/GroupsPrefsTab.java
+END
+AddToGroupAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/groups/AddToGroupAction.java
+END
+GroupDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/GroupDialog.java
+END
+EntryTableTransferHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/EntryTableTransferHandler.java
+END
+UnsupportedVersionException.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/998/trunk/jabref/src/java/net/sf/jabref/groups/UnsupportedVersionException.java
+END
+UndoableModifyGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/998/trunk/jabref/src/java/net/sf/jabref/groups/UndoableModifyGroup.java
+END
+AllEntriesGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/AllEntriesGroup.java
+END
+AbstractGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/AbstractGroup.java
+END
+GroupTreeNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/GroupTreeNode.java
+END
+SearchGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/SearchGroup.java
+END
+UndoableChangeAssignment.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/UndoableChangeAssignment.java
+END
+VersionHandling.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/VersionHandling.java
+END
+UndoableModifySubtree.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/UndoableModifySubtree.java
+END
+RemoveFromGroupAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/groups/RemoveFromGroupAction.java
+END
+UndoableResetGroups.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/998/trunk/jabref/src/java/net/sf/jabref/groups/UndoableResetGroups.java
+END
+GroupSelector.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/groups/GroupSelector.java
+END
+AndOrSearchRuleSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/AndOrSearchRuleSet.java
+END
+UndoableMoveGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/998/trunk/jabref/src/java/net/sf/jabref/groups/UndoableMoveGroup.java
+END
+ExplicitGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/groups/ExplicitGroup.java
+END
+UndoableAddOrRemoveGroup.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/998/trunk/jabref/src/java/net/sf/jabref/groups/UndoableAddOrRemoveGroup.java
+END

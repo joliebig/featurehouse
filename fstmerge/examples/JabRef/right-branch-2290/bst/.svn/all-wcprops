@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst
+END
+FormatNameFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/FormatNameFunction.java
+END
+BibtexTextPrefix.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BibtexTextPrefix.java
+END
+VMException.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/VMException.java
+END
+BibtexCaseChanger.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BibtexCaseChanger.java
+END
+BibtexNameFormatter.java
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BibtexNameFormatter.java
+END
+BstParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BstParser.java
+END
+Warn.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/Warn.java
+END
+TextPrefixFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/TextPrefixFunction.java
+END
+BibtexPurify.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BibtexPurify.java
+END
+BibtexWidth.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BibtexWidth.java
+END
+VM.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/VM.java
+END
+PurifyFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/PurifyFunction.java
+END
+WidthFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/WidthFunction.java
+END
+ChangeCaseFunction.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/ChangeCaseFunction.java
+END
+BstLexer.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/BstLexer.java
+END
+bst.g
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/bst/bst.g
+END

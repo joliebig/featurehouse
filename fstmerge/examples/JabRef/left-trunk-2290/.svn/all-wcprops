@@ -1,0 +1,611 @@
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/jabref/!svn/ver/2284/trunk/jabref/src/java/net/sf/jabref
+END
+EntryEditorTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryEditorTab.java
+END
+CrossRefEntryComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/CrossRefEntryComparator.java
+END
+EntrySorter.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/EntrySorter.java
+END
+BibtexEntryType.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/BibtexEntryType.java
+END
+EntryEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryEditor.java
+END
+RightClickMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/RightClickMenu.java
+END
+MetaData.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/MetaData.java
+END
+KeyCollisionException.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/KeyCollisionException.java
+END
+Globals.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/Globals.java
+END
+EntryTypeDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryTypeDialog.java
+END
+UrlDragDrop.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/UrlDragDrop.java
+END
+AppearancePrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/AppearancePrefsTab.java
+END
+HelpAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/1726/trunk/jabref/src/java/net/sf/jabref/HelpAction.java
+END
+FontSelectorDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/FontSelectorDialog.java
+END
+SidePane.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SidePane.java
+END
+JabRef.java
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svnroot/jabref/!svn/ver/2278/trunk/jabref/src/java/net/sf/jabref/JabRef.java
+END
+EntryComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryComparator.java
+END
+ClipBoardManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/ClipBoardManager.java
+END
+BasePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/BasePanel.java
+END
+AbstractWorker.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/864/trunk/jabref/src/java/net/sf/jabref/AbstractWorker.java
+END
+AuthorList.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2110/trunk/jabref/src/java/net/sf/jabref/AuthorList.java
+END
+CustomEntryType.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/CustomEntryType.java
+END
+BrowseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/BrowseAction.java
+END
+FieldComparatorStack.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/FieldComparatorStack.java
+END
+BibtexDatabase.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/BibtexDatabase.java
+END
+BibtexFields.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/BibtexFields.java
+END
+OpenFileFilter.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/OpenFileFilter.java
+END
+SearchRuleSet.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SearchRuleSet.java
+END
+ExternalTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/ExternalTab.java
+END
+EntryCustomizationDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryCustomizationDialog.java
+END
+JabRefPreferences.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2210/trunk/jabref/src/java/net/sf/jabref/JabRefPreferences.java
+END
+DatabaseChangeEvent.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/1304/trunk/jabref/src/java/net/sf/jabref/DatabaseChangeEvent.java
+END
+DuplicateResolverDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/DuplicateResolverDialog.java
+END
+FieldTextMenu.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/FieldTextMenu.java
+END
+ContentSelectorDialog2.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/ContentSelectorDialog2.java
+END
+TablePrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/TablePrefsTab.java
+END
+FieldContentSelector.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/FieldContentSelector.java
+END
+FieldTextArea.java
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/FieldTextArea.java
+END
+HelpContent.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2283/trunk/jabref/src/java/net/sf/jabref/HelpContent.java
+END
+SidePaneManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SidePaneManager.java
+END
+ErrorMessageDisplay.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/950/trunk/jabref/src/java/net/sf/jabref/ErrorMessageDisplay.java
+END
+FieldEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/1938/trunk/jabref/src/java/net/sf/jabref/FieldEditor.java
+END
+ContentSelectorDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/ContentSelectorDialog.java
+END
+EntryEditorTabList.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryEditorTabList.java
+END
+FieldTextField.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2110/trunk/jabref/src/java/net/sf/jabref/FieldTextField.java
+END
+BibtexStringComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/BibtexStringComparator.java
+END
+SimpleUrlDragDrop.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SimpleUrlDragDrop.java
+END
+FieldEditorFocusListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/FieldEditorFocusListener.java
+END
+DuplicateSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/DuplicateSearch.java
+END
+PreviewPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/PreviewPanel.java
+END
+SidePaneHeader.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SidePaneHeader.java
+END
+TabLabelPattern.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/TabLabelPattern.java
+END
+BibtexString.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/509/trunk/jabref/src/java/net/sf/jabref/BibtexString.java
+END
+GeneralRenderer.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/GeneralRenderer.java
+END
+GeneralTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/GeneralTab.java
+END
+JabRefFrame.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/JabRefFrame.java
+END
+IconStringRenderer.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/IconStringRenderer.java
+END
+SimpleSearchRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/SimpleSearchRule.java
+END
+HelpDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/HelpDialog.java
+END
+Worker.java
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/svnroot/jabref/!svn/ver/586/trunk/jabref/src/java/net/sf/jabref/Worker.java
+END
+FieldComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/FieldComparator.java
+END
+JabRefFileChooser.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/JabRefFileChooser.java
+END
+IncrementalSearcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/IncrementalSearcher.java
+END
+FocusRequester.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/1304/trunk/jabref/src/java/net/sf/jabref/FocusRequester.java
+END
+MergeDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/MergeDialog.java
+END
+TableColumnsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/TableColumnsTab.java
+END
+PrefsDialog2.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/PrefsDialog2.java
+END
+TitleLabel.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/TitleLabel.java
+END
+ReplaceStringDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/ReplaceStringDialog.java
+END
+SearchManager2.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SearchManager2.java
+END
+UnknownEntryType.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/UnknownEntryType.java
+END
+FieldNameLabel.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/FieldNameLabel.java
+END
+StringDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/StringDialog.java
+END
+GUIGlobals.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/GUIGlobals.java
+END
+DatabaseSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/DatabaseSearch.java
+END
+CheckBoxMessage.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/CheckBoxMessage.java
+END
+MarkedComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/MarkedComparator.java
+END
+XmpPrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/XmpPrefsTab.java
+END
+CallBack.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svnroot/jabref/!svn/ver/586/trunk/jabref/src/java/net/sf/jabref/CallBack.java
+END
+SearchRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SearchRule.java
+END
+PreambleEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/1584/trunk/jabref/src/java/net/sf/jabref/PreambleEditor.java
+END
+BibtexEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/BibtexEntry.java
+END
+EntryEditorPrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/EntryEditorPrefsTab.java
+END
+FileHistory.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/FileHistory.java
+END
+GlobalFocusListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/GlobalFocusListener.java
+END
+PrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/jabref/!svn/ver/1904/trunk/jabref/src/java/net/sf/jabref/PrefsTab.java
+END
+BaseAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svnroot/jabref/!svn/ver/646/trunk/jabref/src/java/net/sf/jabref/BaseAction.java
+END
+PreviewPrefsTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/PreviewPrefsTab.java
+END
+SidePaneComponent.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SidePaneComponent.java
+END
+Util.java
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/svnroot/jabref/!svn/ver/2270/trunk/jabref/src/java/net/sf/jabref/Util.java
+END
+DatabaseChangeListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/1304/trunk/jabref/src/java/net/sf/jabref/DatabaseChangeListener.java
+END
+PrefsDialog3.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/PrefsDialog3.java
+END
+RegExpRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/RegExpRule.java
+END
+MnemonicAwareAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/MnemonicAwareAction.java
+END
+IdComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/IdComparator.java
+END
+KeyBindingsDialog.java
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/KeyBindingsDialog.java
+END
+TransferableBibtexEntry.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/TransferableBibtexEntry.java
+END
+StrictDuplicateSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/StrictDuplicateSearch.java
+END
+SplashScreen.java
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/SplashScreen.java
+END
+NameFormatterTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/NameFormatterTab.java
+END
+AdvancedTab.java
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/AdvancedTab.java
+END

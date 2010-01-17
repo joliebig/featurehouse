@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label
+END
+LabelMaker.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/LabelMaker.java
+END
+InproceedingsLabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/InproceedingsLabelRule.java
+END
+BookLabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/BookLabelRule.java
+END
+KeyWord.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/KeyWord.java
+END
+LabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/LabelRule.java
+END
+IncollectionLabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/IncollectionLabelRule.java
+END
+ArticleLabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/ArticleLabelRule.java
+END
+DefaultLabelRule.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/label/DefaultLabelRule.java
+END

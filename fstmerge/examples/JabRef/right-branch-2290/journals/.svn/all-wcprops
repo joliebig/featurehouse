@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals
+END
+AbbreviateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals/AbbreviateAction.java
+END
+JournalAbbreviations.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals/JournalAbbreviations.java
+END
+ManageJournalsAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals/ManageJournalsAction.java
+END
+UnabbreviateAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals/UnabbreviateAction.java
+END
+ManageJournalsPanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svnroot/jabref/!svn/ver/2119/branches/beta_2.3/jabref/src/java/net/sf/jabref/journals/ManageJournalsPanel.java
+END

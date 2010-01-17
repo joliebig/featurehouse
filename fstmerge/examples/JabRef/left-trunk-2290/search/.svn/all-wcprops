@@ -1,0 +1,95 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/search
+END
+Parser.g
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svnroot/jabref/!svn/ver/1289/trunk/jabref/src/java/net/sf/jabref/search/Parser.g
+END
+SearchExpressionParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionParser.java
+END
+NoSearchMatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/search/NoSearchMatcher.java
+END
+BasicSearch.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/search/BasicSearch.java
+END
+SearchExpressionTreeParserTokenTypes.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionTreeParserTokenTypes.java
+END
+SearchMatcher.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/search/SearchMatcher.java
+END
+HitOrMissComparator.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2268/trunk/jabref/src/java/net/sf/jabref/search/HitOrMissComparator.java
+END
+SearchExpressionLexerTokenTypes.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/jabref/!svn/ver/1290/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionLexerTokenTypes.java
+END
+RegExNode.java
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svnroot/jabref/!svn/ver/345/trunk/jabref/src/java/net/sf/jabref/search/RegExNode.java
+END
+TreeParser.g
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/svnroot/jabref/!svn/ver/1291/trunk/jabref/src/java/net/sf/jabref/search/TreeParser.g
+END
+SearchExpressionTreeParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionTreeParser.java
+END
+Lexer.g
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svnroot/jabref/!svn/ver/354/trunk/jabref/src/java/net/sf/jabref/search/Lexer.g
+END
+SearchExpressionLexer.java
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionLexer.java
+END
+SearchExpression.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2275/trunk/jabref/src/java/net/sf/jabref/search/SearchExpression.java
+END
+SearchExpressionParserTokenTypes.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svnroot/jabref/!svn/ver/2209/trunk/jabref/src/java/net/sf/jabref/search/SearchExpressionParserTokenTypes.java
+END

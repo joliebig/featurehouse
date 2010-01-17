@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svnroot/jabref/!svn/ver/2114/trunk/jabref/src/java/net/sf/jabref/external
+END
+PushToApplicationButton.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/1961/trunk/jabref/src/java/net/sf/jabref/external/PushToApplicationButton.java
+END
+ExternalFilePanel.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2110/trunk/jabref/src/java/net/sf/jabref/external/ExternalFilePanel.java
+END
+AccessLinksForEntries.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svnroot/jabref/!svn/ver/2114/trunk/jabref/src/java/net/sf/jabref/external/AccessLinksForEntries.java
+END
+PushToApplicationAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/1700/trunk/jabref/src/java/net/sf/jabref/external/PushToApplicationAction.java
+END
+UnknownExternalFileType.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2052/trunk/jabref/src/java/net/sf/jabref/external/UnknownExternalFileType.java
+END
+PushToApplication.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/1715/trunk/jabref/src/java/net/sf/jabref/external/PushToApplication.java
+END
+ConfirmCloseFileListEntryEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svnroot/jabref/!svn/ver/2078/trunk/jabref/src/java/net/sf/jabref/external/ConfirmCloseFileListEntryEditor.java
+END
+DownloadExternalFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2114/trunk/jabref/src/java/net/sf/jabref/external/DownloadExternalFile.java
+END
+ExternalFileTypeEntryEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svnroot/jabref/!svn/ver/2052/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileTypeEntryEditor.java
+END
+WriteXMPAction.java
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svnroot/jabref/!svn/ver/2110/trunk/jabref/src/java/net/sf/jabref/external/WriteXMPAction.java
+END
+FileLinksUpgradeWarning.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svnroot/jabref/!svn/ver/2074/trunk/jabref/src/java/net/sf/jabref/external/FileLinksUpgradeWarning.java
+END
+PushToLyx.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/1715/trunk/jabref/src/java/net/sf/jabref/external/PushToLyx.java
+END
+SynchronizeFileField.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2114/trunk/jabref/src/java/net/sf/jabref/external/SynchronizeFileField.java
+END
+ExternalFileType.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svnroot/jabref/!svn/ver/2052/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileType.java
+END
+ExternalFileMenuItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2053/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileMenuItem.java
+END
+PushToLatexEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svnroot/jabref/!svn/ver/2020/trunk/jabref/src/java/net/sf/jabref/external/PushToLatexEditor.java
+END
+AutoSetExternalFileForEntries.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svnroot/jabref/!svn/ver/2110/trunk/jabref/src/java/net/sf/jabref/external/AutoSetExternalFileForEntries.java
+END
+PushToEmacs.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svnroot/jabref/!svn/ver/1871/trunk/jabref/src/java/net/sf/jabref/external/PushToEmacs.java
+END
+ExternalFileTypeEditor.java
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svnroot/jabref/!svn/ver/2014/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileTypeEditor.java
+END
+DroppedFileHandler.java
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svnroot/jabref/!svn/ver/2047/trunk/jabref/src/java/net/sf/jabref/external/DroppedFileHandler.java
+END
+UpgradeExternalLinks.java
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svnroot/jabref/!svn/ver/2058/trunk/jabref/src/java/net/sf/jabref/external/UpgradeExternalLinks.java
+END
+PushToWinEdt.java
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svnroot/jabref/!svn/ver/2020/trunk/jabref/src/java/net/sf/jabref/external/PushToWinEdt.java
+END
+PushToVim.java
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svnroot/jabref/!svn/ver/2024/trunk/jabref/src/java/net/sf/jabref/external/PushToVim.java
+END
