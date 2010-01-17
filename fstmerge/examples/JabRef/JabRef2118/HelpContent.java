@@ -1,0 +1,280 @@
+
+package net.sf.jabref; 
+
+import java.awt.Graphics; 
+import java.awt.Graphics2D; 
+import java.awt.Point; 
+import java.awt.RenderingHints; 
+import java.awt.event.ActionEvent; 
+import java.io.File; 
+import java.io.IOException; 
+import java.net.MalformedURLException; 
+import java.net.URL; 
+import java.util.Stack; 
+
+import javax.swing.Action; 
+import javax.swing.JComponent; 
+import javax.swing.JScrollPane; 
+import javax.swing.JTextPane; 
+import javax.swing.JViewport; 
+import javax.swing.SwingConstants; 
+import javax.swing.event.HyperlinkEvent; 
+import javax.swing.event.HyperlinkListener; 
+import javax.swing.text.DefaultEditorKit; 
+import javax.swing.text.JTextComponent; 
+import javax.swing.text.TextAction; 
+import javax.swing.text.html.HTMLEditorKit; 
+
+import javax.swing.*; 
+
+import org.apache.commons.logging.Log; 
+import org.apache.commons.logging.LogFactory; 
+
+public  class  HelpContent  extends JTextPane {
+	
+	
+	JScrollPane pane;
+
+	
+
+	
+
+	
+
+	JabRefPreferences prefs;
+
+	
+
+	public HelpContent(JabRefPreferences prefs_) {
+		super();
+		pane = new JScrollPane(this, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		pane.setDoubleBuffered(true);
+		prefs = prefs_;
+		history = new Stack<URL>();
+		forw = new Stack<URL>();
+		setEditorKitForContentType("text/html", new MyEditorKit());
+		setContentType("text/html");
+		setText("");
+		setEditable(false);
+		
+		
+		final HyperlinkListener hyperLinkListener = new HyperlinkListener() {
+			public void hyperlinkUpdate(final HyperlinkEvent e) {
+				if (e.getDescription().startsWith("#")) {
+					scrollToReference(e.getDescription().substring(1));
+				}
+			}
+		};
+		addHyperlinkListener(hyperLinkListener);
+	}
+
+
+	
+
+	public boolean back() {
+		if (!history.empty()) {
+			URL prev = (history.pop());
+			forw.push(getPage());
+			setPageOnly(prev);
+		}
+		return !history.empty();
+	}
+
+
+	
+
+	public boolean forward() {
+		if (!forw.empty()) {
+			URL next = (forw.pop());
+			history.push(getPage());
+			setPageOnly(next);
+		}
+		return !forw.empty();
+	}
+
+
+	
+
+	public void reset() {
+		forw.removeAllElements();
+		history.removeAllElements();
+	}
+
+
+	
+
+	public void setPage(String filename) {
+		
+		
+		int indexOf = filename.indexOf('#');
+		String file;
+		String reference;
+		
+		if (indexOf != -1) {
+			file = filename.substring(0, indexOf);
+			reference = filename.substring(indexOf + 1);
+		} else {
+			file = filename;
+			reference = "";
+		}
+		
+		String middle = prefs.get("language") + "/";
+		if (middle.equals("en/"))
+			middle = ""; 
+		
+		URL old = getPage();
+		try {
+			
+			URL resource = JabRef.class.getResource(GUIGlobals.helpPre + middle + file);
+            
+			
+			if (resource == null) {
+            	resource = JabRef.class.getResource(GUIGlobals.helpPre + file);
+            }
+			
+			
+            if (resource == null){
+            	
+            	log.error("Could not find html-help for file '" + file + "'.");
+            	return;
+            }
+            setPageOnly(new URL(resource.toString() + "#" + reference));
+            
+        } catch (IOException ex) {
+            ex.printStackTrace();
+		}
+
+		forw.removeAllElements();
+		if (old != null)
+			history.push(old);
+
+	}
+
+
+	
+
+	
+	public void setPage(URL url) {
+		File f = new File(url.getPath());
+		setPage(f.getName());
+	}
+
+
+	
+
+	private void setPageOnly(URL url) {
+		try {
+			super.setPage(url);
+		} catch (IOException ex) {
+			if (url == null) {
+				System.out.println("Error: Help file not set");
+			} else {
+				System.out.println("Error: Help file not found '" + url.getFile() + "'");
+			}
+		}
+	}
+
+
+	
+
+	public JComponent getPane() {
+		return pane;
+	}
+
+
+	
+
+	public  class  MyNextVisualPositionAction  extends TextAction {
+		
+		private Action textActn;
+
+		
+
+		private int direction;
+
+		
+
+		private MyNextVisualPositionAction(Action textActn, int direction) {
+			super((String) textActn.getValue(Action.NAME));
+			this.textActn = textActn;
+			this.direction = direction;
+		}
+
+
+		
+
+		public void actionPerformed(ActionEvent e) {
+			JTextComponent c = getTextComponent(e);
+
+			if (c.getParent() instanceof JViewport) {
+				JViewport viewport = (JViewport) c.getParent();
+				Point p = viewport.getViewPosition();
+
+				if (this.direction == SwingConstants.NORTH) {
+					c.setCaretPosition(c.viewToModel(p));
+				} else {
+					p.y += viewport.getExtentSize().height;
+					c.setCaretPosition(c.viewToModel(p));
+				}
+			}
+
+			textActn.actionPerformed(e);
+		}
+
+
+
+	}
+
+	
+
+	public  class  MyEditorKit  extends HTMLEditorKit {
+		
+		private Action[] myActions;
+
+		
+
+		public Action[] getActions() {
+			if (myActions == null) {
+				Action[] actions = super.getActions();
+				Action[] newActions = new Action[2];
+
+				for (int i = 0; i < actions.length; i++) {
+					Action actn = actions[i];
+
+					String name = (String) actn.getValue(Action.NAME);
+
+					if (name.equals(DefaultEditorKit.upAction)) {
+						newActions[0] = new MyNextVisualPositionAction(actions[i],
+							SwingConstants.NORTH);
+					} else if (name.equals(DefaultEditorKit.downAction)) {
+						newActions[1] = new MyNextVisualPositionAction(actions[i],
+							SwingConstants.SOUTH);
+					}
+				}
+
+				myActions = TextAction.augmentList(actions, newActions);
+			}
+
+			return myActions;
+		}
+
+
+
+	}
+
+	
+
+	
+
+
+	
+
+	static Log log = LogFactory.getLog(HelpContent.class);
+
+	
+
+	private Stack<URL> history, forw;
+
+
+}
