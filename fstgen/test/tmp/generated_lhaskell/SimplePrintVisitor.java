@@ -1,13 +1,9 @@
 package tmp.generated_lhaskell;
 
-import java.util.*;
-import cide.gast.*;
-
 import java.io.PrintStream;
 
-import cide.languages.*;
-
-import de.ovgu.cide.fstgen.ast.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {

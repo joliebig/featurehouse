@@ -1,6 +1,5 @@
 package de.ovgu.cide.fstgen.ast;
 
-import java.util.LinkedList;
 
 public class FSTFeatureNode extends FSTNonTerminal {
 	public FSTFeatureNode(String name) {
