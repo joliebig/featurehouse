@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-import cide.gparser.ParseException;
-
 import builder.ArtifactBuilder;
+import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class XMIBuilder extends ArtifactBuilder {

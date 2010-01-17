@@ -2,7 +2,6 @@ package modification.content;
 
 import java.io.FileNotFoundException;
 
-
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 

@@ -7,7 +7,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public abstract class XMINonTerminal extends FSTNonTerminal implements XMINodeInterface {

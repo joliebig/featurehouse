@@ -3,7 +3,6 @@ package modification.content.Parseables;
 import java.io.StringReader;
 
 import modification.content.Content;
-
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
 

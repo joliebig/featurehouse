@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import modification.content.Content;
-
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
 

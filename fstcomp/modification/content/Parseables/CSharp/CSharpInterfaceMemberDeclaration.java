@@ -5,12 +5,11 @@ package modification.content.Parseables.CSharp;
 
 import java.io.FileNotFoundException;
 
-import tmp.generated_csharp.CSharpParser;
-
-import cide.gparser.ParseException;
-import de.ovgu.cide.fstgen.ast.FSTNode;
 import modification.content.InvalidFSTTraversalException;
 import modification.content.Parseables.ParseableCodeSnippet;
+import tmp.generated_csharp.CSharpParser;
+import cide.gparser.ParseException;
+import de.ovgu.cide.fstgen.ast.FSTNode;
 
 /**
  * @author boxleitner

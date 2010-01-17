@@ -3,14 +3,13 @@ package modification.traversalLanguageParser;
 
 import java.io.Reader;
 import java.io.StringReader;
-import java.util.List;
 import java.util.LinkedList;
+import java.util.List;
 
 import modification.traversalLanguageParser.addressManagement.NameTypePatternToken;
 import modification.traversalLanguageParser.addressManagement.TreeAddress;
 import modification.traversalLanguageParser.addressManagement.TreeAddressToken;
 import modification.traversalLanguageParser.addressManagement.WildcardToken;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 

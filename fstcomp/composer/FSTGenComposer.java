@@ -1,37 +1,13 @@
 package composer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import modification.ContentModification;
 import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
-import modification.traversalLanguageParser.addressManagement.DuplicateFreeLinkedList;
 import printer.PrintVisitorException;
-import printer.binary.BinaryPrintVisitor;
-import printer.capprox.CApproxPrintVisitor;
-import printer.csharp.CSharpPrintVisitor;
-import printer.haskell.HaskellPrintVisitor;
-import printer.alloy.AlloyPrintVisitor;
-import printer.java.JavaPrintVisitor;
-import printer.javacc.JavaCCPrintVisitor;
-import printer.text.TextPrintVisitor;
-import printer.xmi.XMIPrintVisitor;
 import builder.ArtifactBuilderInterface;
-import builder.binary.BinaryBuilder;
-import builder.capprox.CApproxBuilder;
-import builder.csharp.CSharpBuilder;
-import builder.haskell.HaskellBuilder;
-import builder.alloy.AlloyBuilder;
-import builder.java.JavaBuilder;
-import builder.javacc.JavaCCBuilder;
-import builder.text.TextBuilder;
-import builder.xmi.XMIBuilder;
 
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;

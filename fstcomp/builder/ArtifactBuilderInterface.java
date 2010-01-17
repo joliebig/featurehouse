@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 
 import cide.gparser.ParseException;
-
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public interface ArtifactBuilderInterface {

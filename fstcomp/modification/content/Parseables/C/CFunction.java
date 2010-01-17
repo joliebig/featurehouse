@@ -6,7 +6,6 @@ package modification.content.Parseables.C;
 import java.io.FileNotFoundException;
 
 import modification.content.Parseables.ParseableCodeSnippet;
-
 import tmp.generated_capprox.CApproxParser;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;

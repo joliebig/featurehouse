@@ -19,9 +19,8 @@ import modification.xmlParser.XmlParser;
 
 import org.xml.sax.SAXException;
 
-import cide.gparser.ParseException;
-
 import builder.ArtifactBuilderInterface;
+import cide.gparser.ParseException;
 
 public class FileLoader {
 

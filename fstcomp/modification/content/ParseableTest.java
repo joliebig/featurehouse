@@ -1,23 +1,14 @@
 package modification.content;
 
-import java.io.File;
-import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
 
+import modification.content.Parseables.CSharp.CSharpMethod;
+
 import composer.FSTGenComposer;
 
-import cide.gparser.OffsetCharStream;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
-
-import tmp.generated_java15.Java15Parser;
-
-import modification.JavaMethodBodyOverrideModification;
-import modification.content.Parseables.CSharp.CSharpFile;
-import modification.content.Parseables.CSharp.CSharpMethod;
-import modification.content.Parseables.java.JavaMethod;
-import modification.content.Parseables.java.JavaMethodBody;
 
 public class ParseableTest {
 

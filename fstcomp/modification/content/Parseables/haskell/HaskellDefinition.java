@@ -3,7 +3,6 @@ package modification.content.Parseables.haskell;
 import java.io.FileNotFoundException;
 
 import modification.content.Parseables.ParseableCodeSnippet;
-
 import tmp.generated_haskell.HaskellParser;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
