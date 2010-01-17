@@ -1,8 +1,4 @@
-/**
- * RegExNode.java
- *
- * @author Created by Omnicore CodeGuide
- */
+
 
 package net.sf.jabref.search;
 
@@ -14,7 +10,7 @@ public class RegExNode extends CommonAST {
 	public RegExNode(int tokenType, String text, boolean caseSensitive, boolean regex) {
 		initialize(tokenType,text);
 		pattern = Pattern.compile(
-			regex ? text : "\\Q" + text + "\\E", // quote if !regex
+			regex ? text : "\\Q" + text + "\\E", 
 			caseSensitive ? 0 : Pattern.CASE_INSENSITIVE);
 	}
 	public Pattern getPattern() {

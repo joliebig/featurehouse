@@ -1,20 +1,10 @@
-/*
- * DBStrings.java
- *
- * Created on October 1, 2007, 6:33 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 
 package net.sf.jabref.sql;
 
 import net.sf.jabref.Globals;
 
-/**
- *
- * @author pattonlk
- */
+
 public class DBStrings {
    
     private String serverType;
@@ -27,7 +17,7 @@ public class DBStrings {
     private boolean isInitialized;
     private boolean configValid;
 
-    /** Creates a new instance of DBStrings */
+    
     public DBStrings() {
         this.setServerType(null);
         this.setServerHostname(null);
@@ -39,7 +29,7 @@ public class DBStrings {
     }
 
     public void initialize() {
-        //String [] servers = {Globals.lang("MySQL"), Globals.lang("Derby")};
+        
         String [] servers = {Globals.lang("MySQL")};
         setServerTypes(servers);
         setServerType(Globals.lang("MySQL"));

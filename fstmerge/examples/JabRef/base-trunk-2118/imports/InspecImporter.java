@@ -13,44 +13,35 @@ import net.sf.jabref.AuthorList;
 import java.util.regex.Pattern;
 import net.sf.jabref.BibtexFields;
 
-/**
- * INSPEC format importer.
- */
+
 public class InspecImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
         return "INSPEC";
     }
 
-  /*
-   *  (non-Javadoc)
-   * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-   */
+  
   public String getCLIId() {
     return "inspec";
   }
 
-  /**
-   * Check whether the source is in the correct format for this importer.
-   */
+  
   public boolean isRecognizedFormat(InputStream stream)
     throws IOException {
-    // Our strategy is to look for the "PY <year>" line.
+    
     BufferedReader in =
       new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
-    //Pattern pat1 = Pattern.compile("PY:  \\d{4}");
+    
     Pattern pat1 = Pattern.compile("Record.*INSPEC.*");
 
-    //was PY \\\\d{4}? before
+    
     String str;
 
     while ((str = in.readLine()) != null) {
-      //Inspec and IEEE seem to have these strange " - " between key and value
-      //str = str.replace(" - ", "");
-      //System.out.println(str);
+      
+      
+      
 
       if (pat1.matcher(str).find())
         return true;
@@ -59,10 +50,7 @@ public class InspecImporter extends ImportFormat {
     return false;
   }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List importEntries(InputStream stream) throws IOException {
         ArrayList bibitems = new ArrayList();
         StringBuffer sb = new StringBuffer();
@@ -84,7 +72,7 @@ public class InspecImporter extends ImportFormat {
 
             String[] fields = entries[i].split("__NEWFIELD__");
             for (int j = 0; j < fields.length; j++){
-                //System.out.println(fields[j]);
+                
                 String s = fields[j];
                 String f3 = s.substring(0, 2);
                 String frest = s.substring(5);
@@ -124,8 +112,8 @@ public class InspecImporter extends ImportFormat {
                 }
             }
             BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals
-                                            .getEntryType(Type)); // id assumes an existing database so don't
-            // create one here
+                                            .getEntryType(Type)); 
+            
             b.setField(h);
 
             bibitems.add(b);

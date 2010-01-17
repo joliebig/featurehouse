@@ -88,28 +88,14 @@ public class BibtexCaseChanger {
 		}
 	}
 
-	/**
-	 * We're dealing with a special character (usually either an undotted `\i'
-	 * or `\j', or an accent like one in Table~3.1 of the \LaTeX\ manual, or a
-	 * foreign character like one in Table~3.2) if the first character after the
-	 * |left_brace| is a |backslash|; the special character ends with the
-	 * matching |right_brace|. How we handle what's in between depends on the
-	 * special character. In general, this code will do reasonably well if there
-	 * is other stuff, too, between braces, but it doesn't try to do anything
-	 * special with |colon|s.
-	 * 
-	 * @param c
-	 * @param i
-	 * @param format
-	 * @return
-	 */
+	
 	public int convertSpecialChar(StringBuffer sb, char[] c, int i, char format) {
 
-		sb.append(c[i]); i++; // skip over open brace
+		sb.append(c[i]); i++; 
 
 		while (i < c.length && braceLevel > 0) {
 			sb.append(c[i]); i++;
-			// skip over the |backslash|
+			
 
 			String s = findSpecialChar(c, i);
 			if (s != null) {
@@ -128,18 +114,7 @@ public class BibtexCaseChanger {
 		return i;
 	}
 
-	/**
-	 * Convert the given string according to the format character (title, lower,
-	 * up) and append the result to the stringBuffer, return the updated
-	 * position.
-	 * 
-	 * @param c
-	 * @param pos
-	 * @param s
-	 * @param sb
-	 * @param format
-	 * @return
-	 */
+	
 	int convertAccented(char[] c, int pos, String s, StringBuffer sb, char format) {
 		pos += s.length();
 
@@ -156,7 +131,7 @@ public class BibtexCaseChanger {
 				sb.append(s.toUpperCase());
 			else if ("i j ss".indexOf(s) != -1) {
 
-				sb.deleteCharAt(sb.length() - 1); // Kill backslash
+				sb.deleteCharAt(sb.length() - 1); 
 				sb.append(s.toUpperCase());
 				while (pos < c.length && Character.isWhitespace(c[pos])) {
 					pos++;

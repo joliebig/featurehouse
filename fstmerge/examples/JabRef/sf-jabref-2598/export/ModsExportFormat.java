@@ -14,9 +14,7 @@ import java.util.Set;
 import java.io.IOException;
 import java.io.File;
 
-/**
- * ExportFormat for exporting in MODS XML format.
- */
+
 class ModsExportFormat extends ExportFormat {
     public ModsExportFormat() {
         super(Globals.lang("MODS"), "mods", null, null, ".xml");

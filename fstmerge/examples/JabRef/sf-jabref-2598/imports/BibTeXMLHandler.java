@@ -10,19 +10,14 @@ import net.sf.jabref.Util;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * Reader for the BibTeXML format. See
- * <a href="http://bibtexml.sourceforge.net/">bibtexml.sf.net</a>.
- *
- * @author Egon Willighagen
- */
+
 public class BibTeXMLHandler extends DefaultHandler {
 
     private ArrayList<BibtexEntry> bibitems;
 
-    private BibtexEntry b; // the entry being read
+    private BibtexEntry b; 
 
-    // XML parsing stuff
+    
     private String currentChars;
 
     public BibTeXMLHandler() {
@@ -31,7 +26,7 @@ public class BibTeXMLHandler extends DefaultHandler {
 
     public ArrayList<BibtexEntry> getItems(){ return bibitems;}
 
-    // SAX parsing methods
+    
 
     public void doctypeDecl(String name, String publicId,
         String systemId) {}
@@ -87,7 +82,7 @@ public class BibTeXMLHandler extends DefaultHandler {
             bibitems.add( b  );
         } else if (name.startsWith("bibtex:")) {
             b.setField(local, currentChars);
-            // Util.pr(local+ " "+currentChars);
+            
         }
         currentChars = "";
     }

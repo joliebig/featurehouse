@@ -17,10 +17,7 @@ import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 import net.sf.jabref.OutputPrinter;
 
-/**
- * Fetch or search from Pubmed http://www.ncbi.nlm.nih.gov/sites/entrez/
- * 
- */
+
 public class MedlineFetcher implements EntryFetcher {
 
     protected class SearchResult {
@@ -41,9 +38,7 @@ public class MedlineFetcher implements EntryFetcher {
         }
     }
 
-    /**
-     * How many entries to query in one request
-     */
+    
     public static final int PACING = 20;
 
     boolean shouldContinue;
@@ -67,9 +62,7 @@ public class MedlineFetcher implements EntryFetcher {
         return in;
     }
 
-    /**
-     * Gets the initial list of ids
-     */
+    
     public SearchResult getIds(String term, int start, int pacing) {
 
         String baseUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils";
@@ -85,12 +78,12 @@ public class MedlineFetcher implements EntryFetcher {
         SearchResult result = new SearchResult();
         try {
             URL ncbi = new URL(medlineUrl + term);
-            // get the ids
+            
             BufferedReader in = new BufferedReader(new InputStreamReader(ncbi.openStream()));
             String inLine;
             while ((inLine = in.readLine()) != null) {
 
-                // get the count
+                
                 Matcher idMatcher = idPattern.matcher(inLine);
                 if (idMatcher.find()) {
                     result.addID(idMatcher.group(1));
@@ -109,10 +102,10 @@ public class MedlineFetcher implements EntryFetcher {
                     doCount = false;
                 }
             }
-        } catch (MalformedURLException e) { // new URL() failed
+        } catch (MalformedURLException e) { 
             System.out.println("bad url");
             e.printStackTrace();
-        } catch (IOException e) { // openConnection() failed
+        } catch (IOException e) { 
             System.out.println("connection failed");
             e.printStackTrace();
 
@@ -137,7 +130,7 @@ public class MedlineFetcher implements EntryFetcher {
     }
 
     public JPanel getOptionsPanel() {
-        // No Option Panel
+        
         return null;
     }
 
@@ -171,7 +164,7 @@ public class MedlineFetcher implements EntryFetcher {
 
             String searchTerm = toSearchTerm(query);
 
-            // get the ids from entrez
+            
             SearchResult result = getIds(searchTerm, 0, 1);
 
             if (result.count == 0) {
@@ -208,7 +201,7 @@ public class MedlineFetcher implements EntryFetcher {
 
                 int noToFetch = Math.min(PACING, numberToFetch - i);
                 
-                // get the ids from entrez
+                
                 result = getIds(searchTerm, i, noToFetch);
 
                 List<BibtexEntry> bibs = MedlineImporter.fetchMedline(result.ids);

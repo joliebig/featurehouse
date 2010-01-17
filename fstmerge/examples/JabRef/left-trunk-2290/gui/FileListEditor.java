@@ -23,9 +23,7 @@ import net.sf.jabref.undo.UndoableFieldChange;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Created by Morten O. Alver 2007.02.22
- */
+
 public class FileListEditor extends JTable implements FieldEditor,
         DownloadExternalFile.DownloadCallback {
 
@@ -107,7 +105,7 @@ public class FileListEditor extends JTable implements FieldEditor,
         panel.add(sPane, BorderLayout.CENTER);
         panel.add(builder.getPanel(), BorderLayout.EAST);
 
-        // Add an input/action pair for deleting entries:
+        
         getInputMap().put(KeyStroke.getKeyStroke("DELETE"), "delete");
         getActionMap().put("delete", new AbstractAction() {
             public void actionPerformed(ActionEvent actionEvent) {
@@ -119,7 +117,7 @@ public class FileListEditor extends JTable implements FieldEditor,
             }
         });
 
-        // Add an input/action pair for inserting an entry:
+        
         getInputMap().put(KeyStroke.getKeyStroke("INSERT"), "insert");
         getActionMap().put("insert", new AbstractAction() {
 
@@ -135,17 +133,12 @@ public class FileListEditor extends JTable implements FieldEditor,
         return fieldName;
     }
 
-    /*
-      * Returns the component to be added to a container. Might be a JScrollPane
-    * or the component itself.
-    */
+    
     public JComponent getPane() {
         return panel;
     }
 
-    /*
-     * Returns the text component itself.
-    */
+    
     public JComponent getTextComponent() {
         return this;
     }
@@ -249,21 +242,7 @@ public class FileListEditor extends JTable implements FieldEditor,
 
     }
 
-    /**
-     * Automatically add links for this set of entries, based on the globally stored list of
-     * external file types. The entries are modified, and corresponding UndoEdit elements
-     * added to the NamedCompound given as argument. Furthermore, all entries which are modified
-     * are added to the Set of entries given as an argument.
-     *
-     * The entries' bibtex keys must have been set - entries lacking key are ignored.
-     * The operation is done in a new thread, which is returned for the caller to wait for
-     * if needed.
-     *
-     * @param entries A collection of BibtexEntry objects to find links for.
-     * @param ce A NamedCompound to add UndoEdit elements to.
-     * @param changedEntries A Set of BibtexEntry objects to which all modified entries is added.
-     * @return the thread performing the autosetting
-     */
+    
     public static Thread autoSetLinks(final Collection<BibtexEntry> entries, final NamedCompound ce,
                                       final Set<BibtexEntry> changedEntries) {
 
@@ -279,11 +258,11 @@ public class FileListEditor extends JTable implements FieldEditor,
                     final ExternalFileType type = types[i];
                     extensions.add(type.getExtension());
                 }
-                // Run the search operation:
+                
                 Map<BibtexEntry, java.util.List<File>> result =
                         Util.findAssociatedFiles(entries, extensions, dirs);
 
-                // Iterate over the entries:
+                
                 for (Iterator<BibtexEntry> i=result.keySet().iterator(); i.hasNext();) {
                     BibtexEntry anEntry = i.next();
                     FileListTableModel tableModel = new FileListTableModel();
@@ -294,10 +273,10 @@ public class FileListEditor extends JTable implements FieldEditor,
                     for (File f : files) {
 			f = relativizePath(f, dirs);
                         boolean alreadyHas = false;
-			//System.out.println("File: "+f.getPath());
+			
                         for (int j = 0; j < tableModel.getRowCount(); j++) {
                             FileListEntry existingEntry = tableModel.getEntry(j);
-			    //System.out.println("Comp: "+existingEntry.getLink());
+			    
 			    if (new File(existingEntry.getLink()).equals(f)) {
                                 alreadyHas = true;
                                 break;
@@ -334,23 +313,7 @@ public class FileListEditor extends JTable implements FieldEditor,
     }
 
 
-    /**
-     * Automatically add links for this entry to the table model given as an argument, based on
-     * the globally stored list of external file types. The entry itself is not modified. The entry's
-     * bibtex key must have been set.
-     * The operation is done in a new thread, which is returned for the caller to wait for
-     * if needed.
-     *
-     * @param entry The BibtexEntry to find links for.
-     * @param tableModel The table model to insert links into. Already existing links are not duplicated or removed.
-     * @param metaData The MetaData providing the relevant file directory, if any.
-     * @param callback An ActionListener that is notified (on the event dispatch thread) when the search is
-     *  finished. The ActionEvent has id=0 if no new links were added, and id=1 if one or more links were added.
-     *  This parameter can be null, which means that no callback will be notified.
-     * @param diag An instantiated modal JDialog which will be used to display the progress of the autosetting.
-     *      This parameter can be null, which means that no progress update will be shown.
-     * @return the thread performing the autosetting
-     */
+    
     public static Thread autoSetLinks(final BibtexEntry entry, final FileListTableModel tableModel,
                                       final MetaData metaData, final ActionListener callback,
                                       final JDialog diag) {
@@ -383,11 +346,11 @@ public class FileListEditor extends JTable implements FieldEditor,
                     final ExternalFileType type = types[i];
                     extensions.add(type.getExtension());
                 }
-                // Run the search operation:
+                
                 Map<BibtexEntry, java.util.List<File>> result =
                         Util.findAssociatedFiles(entries, extensions, dirs);
 
-                // Iterate over the entries:
+                
                 for (Iterator<BibtexEntry> i=result.keySet().iterator(); i.hasNext();) {
                     BibtexEntry anEntry = i.next();
                     List<File> files = result.get(anEntry);
@@ -438,10 +401,7 @@ public class FileListEditor extends JTable implements FieldEditor,
         return t;
     }
 
-    /**
-     * If the file is below one of the directories in a list, return a File specifying
-     * a path relative to that directory.
-     */
+    
     public static File relativizePath(File f, ArrayList<File> dirs) {
 	String pth = f.getPath();
 	for (File dir : dirs) {
@@ -456,9 +416,7 @@ public class FileListEditor extends JTable implements FieldEditor,
     }
 
 
-    /**
-     * Run a file download operation.
-     */
+    
     private void downloadFile() {
         String bibtexKey = entryEditor.getEntry().getCiteKey();
         if (bibtexKey == null) {
@@ -481,11 +439,7 @@ public class FileListEditor extends JTable implements FieldEditor,
         }
     }
 
-    /**
-     * This is the callback method that the DownloadExternalFile class uses to report the result
-     * of a download operation. This call may never come, if the user cancelled the operation.
-     * @param file The FileListEntry linking to the resulting local file.
-     */
+    
     public void downloadComplete(FileListEntry file) {
         tableModel.addEntry(tableModel.getRowCount(), file);
         entryEditor.updateField(this);

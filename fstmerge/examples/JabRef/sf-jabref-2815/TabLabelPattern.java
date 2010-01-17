@@ -1,6 +1,4 @@
-/*
- * Created on 09-Dec-2003
- */
+
 package net.sf.jabref;
 
 import java.awt.*;
@@ -19,9 +17,7 @@ import net.sf.jabref.labelPattern.LabelPatternUtil;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * The Preferences panel for key generation.
- */
+
 public class TabLabelPattern extends JPanel implements PrefsTab{
 	
     private String def = Globals.lang("Default");
@@ -42,8 +38,8 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 
     private JTextField defaultPat = new JTextField();
 
-    //private JTextField basenamePatternRegex = new JTextField(20);
-    //private JTextField basenamePatternReplacement = new JTextField(20);
+    
+    
     private JTextField KeyPatternRegex = new JTextField(20);
     private JTextField KeyPatternReplacement = new JTextField(20);
 
@@ -52,33 +48,27 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 
     private HelpAction help;
 	
-	/**
-	 * The constructor
-	 */
+	
 	public TabLabelPattern(JabRefPreferences prefs, HelpDialog helpDiag) {
 		_prefs = prefs;
-		//_keypatterns = _prefs.getKeyPattern();
+		
 		help = new HelpAction(helpDiag, GUIGlobals.labelPatternHelp,
 				      "Help on key patterns");
 		buildGUI();
-        //fillTextfields();
+        
 	}
 
-	/**
-	 * Store changes to table preferences. This method is called when
-	 * the user clicks Ok.
-	 *
-	 */
+	
 	public void storeSettings() {
 
-         // Set the default value:
+         
          Globals.prefs.put("defaultLabelPattern", defaultPat.getText());
 
          Globals.prefs.putBoolean("warnBeforeOverwritingKey", warnBeforeOverwriting.isSelected());
          Globals.prefs.putBoolean("avoidOverwritingKey", dontOverwrite.isSelected());
 
-         //Globals.prefs.put("basenamePatternRegex", basenamePatternRegex.getText());
-         //Globals.prefs.put("basenamePatternReplacement", basenamePatternReplacement.getText());
+         
+         
          Globals.prefs.put("KeyPatternRegex", KeyPatternRegex.getText());
          Globals.prefs.put("KeyPatternReplacement", KeyPatternReplacement.getText());
          Globals.prefs.putBoolean("generateKeysAfterInspection", autoGenerateOnImport.isSelected());
@@ -89,13 +79,13 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    LabelPattern defKeyPattern = _keypatterns.getParent();
 	    _keypatterns = new LabelPattern(defKeyPattern);
 	    
-	    // then we rebuild... 
+	    
 	    Iterator<String> i=textFields.keySet().iterator();
-	    //String defa = (String)LabelPatternUtil.DEFAULT_LABELPATTERN.get(0);
+	    
 	    while (i.hasNext()) {
 		String s = i.next(),
 		    text = textFields.get(s).getText();
-		if (!"".equals(text.trim())) //(!defa.equals(text))
+		if (!"".equals(text.trim())) 
 		    _keypatterns.addLabelPattern(s, text);
 	    }
 
@@ -117,7 +107,7 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	gbl.setConstraints( lab, con );
 	c.add( lab );
 	
-	JTextField tf = new JTextField();//_keypatterns.getValue(name).get(0).toString());
+	JTextField tf = new JTextField();
 	tf.setColumns( 15 );
 	con.gridx = 1;
 	con.fill = GridBagConstraints.HORIZONTAL;
@@ -147,15 +137,12 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
         if (_keypatterns.isDefaultValue(fieldName))
             tf.setText("");
         else {
-            //System.out.println(":: "+_keypatterns.getValue(fieldName).get(0).toString());
+            
             tf.setText(_keypatterns.getValue(fieldName).get(0).toString());
         }
     }
 
-	/**
-	 * Method to build GUI
-	 *
-	 */
+	
 	private void buildGUI(){
 
 	    JPanel pan = new JPanel();
@@ -163,7 +150,7 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    sp.setBorder(BorderFactory.createEmptyBorder());
 	    pan.setLayout(gbl);
 	    setLayout(gbl);	    
-	    // The header - can be removed
+	    
 	    lblEntryType = new JLabel(Globals.lang("Entry type"));
 	    Font f = new Font("plain", Font.BOLD, 12);
 	    lblEntryType.setFont(f);
@@ -181,7 +168,7 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    lblKeyPattern.setFont(f);
 	    con.gridx = 1;
 	    con.gridy = 0;
-	    //con.gridwidth = 2;
+	    
 	    con.gridheight = 1;
 	    con.fill = GridBagConstraints.HORIZONTAL;
 	    con.anchor = GridBagConstraints.WEST;
@@ -224,12 +211,12 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    gbl.setConstraints(sp, con );
 	    add(sp);
 
-	    // A help button
+	    
 	    con.gridwidth = 1;
 	    con.gridx = 1;
 	    con.gridy = 2;
 	    con.fill = GridBagConstraints.HORIZONTAL;
-	    //
+	    
 	    con.weightx = 0;
 	    con.weighty = 0;
 	    con.anchor = GridBagConstraints.SOUTHEAST;
@@ -240,12 +227,12 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    add(hlb);
 	    hlb.addActionListener(help);
 	    
-	    // And finally a button to reset everything
+	    
 	    btnDefaultAll = new JButton(Globals.lang("Reset all"));
 	    con.gridx = 2;
 	    con.gridy = 2;
 
-	    //con.fill = GridBagConstraints.BOTH;
+	    
 	    con.weightx = 1;
 	    con.weighty = 0;
 	    con.anchor = GridBagConstraints.SOUTHEAST;
@@ -255,9 +242,9 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 	    add( btnDefaultAll );
 
 
-        // Build a panel for checkbox settings:
+        
         FormLayout layout = new FormLayout
-	        ("1dlu, 8dlu, left:pref, 8dlu, left:pref", "");//, 8dlu, 20dlu, 8dlu, fill:pref", "");
+	        ("1dlu, 8dlu, left:pref, 8dlu, left:pref", "");
         pan = new JPanel();
 	    DefaultFormBuilder builder = new DefaultFormBuilder(layout);
         builder.appendSeparator(Globals.lang("Key generator settings"));
@@ -293,87 +280,38 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
 
         dontOverwrite.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                // Warning before overwriting is only relevant if overwriting can happen:
+                
                 warnBeforeOverwriting.setEnabled(!dontOverwrite.isSelected());
             }
         });
 
-      /*
-       Simon Fischer's patch for replacing a regexp in keys before converting to filename:
-
-	layout = new FormLayout
-	        ("left:pref, 8dlu, left:pref, left:pref", "");
-	builder = new DefaultFormBuilder(layout);
-        builder.appendSeparator(Globals.lang("Bibkey to filename conversion"));
-        builder.nextLine();
-	builder.append(Globals.lang("Replace"), basenamePatternRegex);
-        builder.nextLine();
-	builder.append(Globals.lang("by"), basenamePatternReplacement);
-        builder.nextLine();
-
-        builder.getPanel().setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        con.gridx = 2;
- 	con.gridy = 3;
-	con.gridwidth = GridBagConstraints.REMAINDER;
-	con.weightx = 1;
-	con.fill = GridBagConstraints.BOTH;
-	gbl.setConstraints(builder.getPanel(), con);
-        add(builder.getPanel());
-        */
+      
 	}
 	
-	/**
-	 * Method for filling the text fields with user defined key patterns or default.
-	 * The method used (<code>getValue(key)</code>) to get the ArrayList 
-	 * corrosponding to an entry type throws a <code>NullPointerException</code>
-	 * and <code>?</code> if an entry cannot be found. It really shouln't be
-	 * nessesary to catch those exceptions here... 
-	 */
-    /*	private void fillTextfields(){
-		txtArticle.setText(_keypatterns.getValue("article").get(0).toString());
-		txtBook.setText(_keypatterns.getValue("book").get(0).toString());
-		txtBooklet.setText(_keypatterns.getValue("booklet").get(0).toString());
-		txtConference.setText(_keypatterns.getValue("conference").get(0).toString());
-		txtInbook.setText(_keypatterns.getValue("inbook").get(0).toString());
-		txtIncollection.setText(_keypatterns.getValue("incollection").get(0).toString());
-		txtInproceedings.setText(_keypatterns.getValue("inproceedings").get(0).toString());
-		txtManual.setText(_keypatterns.getValue("manual").get(0).toString());
-		txtMastersthesis.setText(_keypatterns.getValue("mastersthesis").get(0).toString());
-		txtMisc.setText(_keypatterns.getValue("misc").get(0).toString());
-		txtPhdthesis.setText(_keypatterns.getValue("phdthesis").get(0).toString());
-		txtProceedings.setText(_keypatterns.getValue("proceedings").get(0).toString());
-		txtTechreport.setText(_keypatterns.getValue("techreport").get(0).toString());
-		txtUnpublished.setText(_keypatterns.getValue("unpublished").get(0).toString());
-	}
-
-    */
-	/**
-	 * An inner class to handle button actions
-	 * @author Ulrik Stervbo (ulriks AT ruc.dk)
-	 */
+	
+    
+	
 	class buttonHandler implements ActionListener{
 		public void actionPerformed(ActionEvent evt){
 
 		    if (evt.getSource() == btnDefaultAll) {
-			// All to default
+			
 			Iterator<String> i=textFields.keySet().iterator();
 			while (i.hasNext()) {
 			    String s = i.next();
-			    //_keypatterns.removeLabelPattern(s);
+			    
 			    JTextField tf = textFields.get(s);
                             tf.setText("");
-    			    /*tf.setText(_keypatterns.getParent()
-				       .getValue(s).get(0).toString());*/
+    			    
 			}
 
 			return;
 		    }
 
-		    //_keypatterns.removeLabelPattern(evt.getActionCommand());
+		    
 		    JTextField tf = textFields.get(evt.getActionCommand());
                     tf.setText("");
-		    /*tf.setText(_keypatterns.getParent()
-			       .getValue(evt.getActionCommand()).get(0).toString());*/
+		    
 		}
 	    
 	}
@@ -389,7 +327,7 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
         generateOnSave.setSelected(Globals.prefs.getBoolean("generateKeysBeforeSaving"));
         autoGenerateOnImport.setSelected(Globals.prefs.getBoolean("generateKeysAfterInspection"));
         warnBeforeOverwriting.setSelected(Globals.prefs.getBoolean("warnBeforeOverwritingKey"));
-        // Warning before overwriting is only relevant if overwriting can happen:
+        
         warnBeforeOverwriting.setEnabled(!dontOverwrite.isSelected());
 	    for (Iterator<String> i=textFields.keySet().iterator(); i.hasNext();) {
             String name = i.next();
@@ -400,8 +338,8 @@ public class TabLabelPattern extends JPanel implements PrefsTab{
         KeyPatternRegex.setText(Globals.prefs.get("KeyPatternRegex"));
         KeyPatternReplacement.setText(Globals.prefs.get("KeyPatternReplacement"));
 
-	    //basenamePatternRegex.setText(Globals.prefs.get("basenamePatternRegex"));
-	    //basenamePatternReplacement.setText(Globals.prefs.get("basenamePatternReplacement"));
+	    
+	    
     }
 
 	public String getTabName() {

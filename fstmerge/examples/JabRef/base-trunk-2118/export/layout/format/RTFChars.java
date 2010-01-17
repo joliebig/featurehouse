@@ -3,23 +3,7 @@ package net.sf.jabref.export.layout.format;
 import net.sf.jabref.export.layout.*;
 import net.sf.jabref.Globals;
 
-/**
- * Transform a LaTeX-String to RTF.
- * 
- * This method will:
- * 
- *   1.) Remove LaTeX-Command sequences.
- *   
- *   2.) Replace LaTeX-Special chars with RTF aquivalents.
- *   
- *   3.) Replace emph and textit and textbf with their RTF replacements.
- *   
- *   4.) Take special care to save all unicode characters correctly. 
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:03:46 $)
- *
- */
+
 public class RTFChars implements LayoutFormatter {
 
 	public String format(String field) {
@@ -39,20 +23,20 @@ public class RTFChars implements LayoutFormatter {
 				incommand = true;
 				currentCommand = new StringBuffer();
 			} else if (!incommand && (c == '{' || c == '}')) {
-				// Swallow the brace.
+				
 			} else if (Character.isLetter((char) c)
 				|| (Globals.SPECIAL_COMMAND_CHARS.indexOf("" + (char) c) >= 0)) {
 				escaped = false;
 				if (!incommand){
 					sb.append((char) c);
 				} else {
-					// Else we are in a command, and should not keep the letter.
+					
 					currentCommand.append((char) c);
 
 					testCharCom: if ((currentCommand.length() == 1)
 						&& (Globals.SPECIAL_COMMAND_CHARS.indexOf(currentCommand.toString()) >= 0)) {
-						// This indicates that we are in a command of the type
-						// \^o or \~{n}
+						
+						
 						if (i >= field.length() - 1)
 							break testCharCom;
 
@@ -80,19 +64,19 @@ public class RTFChars implements LayoutFormatter {
 				}
 
 			} else {
-				// if (!incommand || ((c!='{') && !Character.isWhitespace(c)))
+				
 				testContent: if (!incommand || (!Character.isWhitespace(c) && (c != '{')))
 					sb.append((char) c);
 				else {
-					// First test if we are already at the end of the string.
+					
 					if (i >= field.length() - 1)
 						break testContent;
 
 					if (c == '{') {
 
 						String command = currentCommand.toString();
-						// Then test if we are dealing with a italics or bold
-						// command. If so, handle.
+						
+						
 						if (command.equals("emph") || command.equals("textit")) {
 							IntAndString part = getPart(field, i);
 							i += part.i;

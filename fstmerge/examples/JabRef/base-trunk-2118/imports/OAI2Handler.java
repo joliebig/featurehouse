@@ -6,16 +6,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * SAX-Handler to parse OAI2-xml files.
- * 
- * @author Ulrich St&auml;rk
- * @author Christian Kopf
- * @author Christopher Oezbek
- * 
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:00:36 $)
- * 
- */
+
 public class OAI2Handler extends DefaultHandler {
 
 	BibtexEntry entry;

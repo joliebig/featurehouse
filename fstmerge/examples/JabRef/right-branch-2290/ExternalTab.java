@@ -75,9 +75,9 @@ public class ExternalTab extends JPanel implements PrefsTab {
         BrowseAction browse;
 
 		FormLayout layout = new FormLayout(
-			"1dlu, 8dlu, left:pref, 4dlu, fill:200dlu, 4dlu, fill:pref",// 4dlu,
-																		// left:pref,
-																		// 4dlu",
+			"1dlu, 8dlu, left:pref, 4dlu, fill:200dlu, 4dlu, fill:pref",
+																		
+																		
 			"");
 
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
@@ -120,25 +120,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 
 		builder.appendSeparator(Globals.lang("External programs"));
 
-		/*builder.nextLine();
-		lab = new JLabel(Globals.lang("Path to PDF viewer") + ":");
-		builder.append(pan);
-		builder.append(lab);
-		builder.append(pdf);
-		browse = new BrowseAction(_frame, pdf, false);
-		if (Globals.ON_WIN)
-			browse.setEnabled(false);
-		builder.append(new JButton(browse));
-		builder.nextLine();
-		lab = new JLabel(Globals.lang("Path to PS viewer") + ":");
-		builder.append(pan);
-		builder.append(lab);
-		builder.append(ps);
-		browse = new BrowseAction(_frame, ps, false);
-		if (Globals.ON_WIN)
-			browse.setEnabled(false);
-		builder.append(new JButton(browse));
-		*/
+		
 		builder.nextLine();
 		lab = new JLabel(Globals.lang("Path to HTML viewer") + ":");
 		builder.append(pan);
@@ -188,7 +170,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 
 		builder.append(Globals.lang("Cite command (for Emacs/WinEdt)") + ":");
 		builder.append(citeCommand);
-		// builder.appendSeparator();
+		
 
         builder.nextLine();
         builder.append(pan);
@@ -236,7 +218,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 			_prefs.put(JabRefPreferences.REG_EXP_SEARCH_EXPRESSION_KEY, regExpTextField.getText());
 		}
 
-		// We should maybe do some checking on the validity of the contents?
+		
 		_prefs.put("pdfDirectory", pdfDir.getText());
 		_prefs.put("psDirectory", psDir.getText());
         _prefs.put(GUIGlobals.FILE_FIELD+"Directory", fileDir.getText());

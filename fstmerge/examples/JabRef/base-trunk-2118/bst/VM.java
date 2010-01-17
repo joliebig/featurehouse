@@ -27,18 +27,7 @@ import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.tree.CommonTree;
 import org.antlr.runtime.tree.Tree;
 
-/**
- * 
- * A Bibtex Virtual machine that can execute .bst files.
- * 
- * Documentation can be found in the original bibtex distribution:
- * 
- * http://texcatalogue.sarovar.org/entries/bibtex.html#Download
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:04:55 $)
- * 
- */
+
 
 public class VM implements Warn {
 
@@ -107,11 +96,7 @@ public class VM implements Warn {
 		this.buildInFunctions = new HashMap(37);
 
 		buildInFunctions.put(">", new BstFunction() {
-			/**
-			 * Pops the top two (integer) literals, compares them, and pushes
-			 * the integer 1 if the second is greater than the first, 0
-			 * otherwise.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation >");
@@ -138,7 +123,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("<", new BstFunction() {
-			/** Analogous. */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation <");
@@ -166,10 +151,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("=", new BstFunction() {
-			/**
-			 * Pops the top two (both integer or both string) literals, compares
-			 * them, and pushes the integer 1 if they're equal, 0 otherwise.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation =");
@@ -192,7 +174,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("+", new BstFunction() {
-			/** Pops the top two (integer) literals and pushes their sum. */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation +");
@@ -209,10 +191,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("-", new BstFunction() {
-			/**
-			 * Pops the top two (integer) literals and pushes their difference
-			 * (the first subtracted from the second).
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation -");
@@ -229,11 +208,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("*", new BstFunction() {
-			/**
-			 * Pops the top two (string) literals, concatenates them (in reverse
-			 * order, that is, the order in which pushed), and pushes the
-			 * resulting string.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation *");
@@ -250,10 +225,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put(":=", new BstFunction() {
-			/**
-			 * Pops the top two literals and assigns to the first (which must be
-			 * a global or entry variable) the value of the second.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Invalid call to operation :=");
@@ -269,11 +241,7 @@ public class VM implements Warn {
 
 			Pattern p = Pattern.compile("([^\\.\\?\\!\\}\\s])(\\}|\\s)*$");
 
-			/**
-			 * Pops the top (string) literal, adds a `.' to it if the last non
-			 * '}' character isn't a `.', `?', or `!', and pushes this resulting
-			 * string.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation add.period$");
@@ -302,16 +270,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("call.type$", new BstFunction() {
-			/**
-			 * Executes the function whose name is the entry type of an entry.
-			 * For example if an entry is of type book, this function executes
-			 * the book function. When given as an argument to the ITERATE
-			 * command, call.type$ actually produces the output for the entries.
-			 * For an entry with an unknown type, it executes the function
-			 * default.type. Thus you should define (before the READ command)
-			 * one function for each standard entry type as well as a
-			 * default.type function.
-			 */
+			
 			public void execute(BstEntry context) {
 
 				if (context == null) {
@@ -325,11 +284,7 @@ public class VM implements Warn {
 		buildInFunctions.put("change.case$", new ChangeCaseFunction(this));
 
 		buildInFunctions.put("chr.to.int$", new BstFunction() {
-			/**
-			 * Pops the top (string) literal, makes sure it's a single
-			 * character, converts it to the corresponding ASCII integer, and
-			 * pushes this integer.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation chr.to.int$");
@@ -347,19 +302,14 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("cite$", new BstFunction() {
-			/**
-			 * Pushes the string that was the \cite-command argument for this
-			 * entry.
-			 */
+			
 			public void execute(BstEntry context) {
 				stack.push(context.entry.getCiteKey());
 			}
 		});
 
 		buildInFunctions.put("duplicate$", new BstFunction() {
-			/**
-			 * Pops the top literal from the stack and pushes two copies of it.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation duplicate$");
@@ -372,11 +322,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("empty$", new BstFunction() {
-			/**
-			 * Pops the top literal and pushes the integer 1 if it's a missing
-			 * field or a string having no non-white-space characters, 0
-			 * otherwise.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation empty$");
@@ -401,12 +347,7 @@ public class VM implements Warn {
 		buildInFunctions.put("format.name$", new FormatNameFunction(this));
 
 		buildInFunctions.put("if$", new BstFunction() {
-			/**
-			 * Pops the top three literals (they are two function literals and
-			 * an integer literal, in that order); if the integer is greater
-			 * than 0, it executes the second literal, else it executes the
-			 * first.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 3) {
 					throw new VMException("Not enough operands on stack for operation =");
@@ -431,11 +372,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("int.to.chr$", new BstFunction() {
-			/**
-			 * Pops the top (integer) literal, interpreted as the ASCII integer
-			 * value of a single character, converts it to the corresponding
-			 * single-character string, and pushes this string.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation int.to.chr$");
@@ -453,10 +390,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("int.to.str$", new BstFunction() {
-			/**
-			 * Pops the top (integer) literal, converts it to its (unique)
-			 * string equivalent, and pushes this string.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation int.to.str$");
@@ -473,10 +407,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("missing$", new BstFunction() {
-			/**
-			 * Pops the top literal and pushes the integer 1 if it's a missing
-			 * field, 0 otherwise.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation missing$");
@@ -499,25 +430,14 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("newline$", new BstFunction() {
-			/**
-			 * Writes onto the bbl file what's accumulated in the output buffer.
-			 * It writes a blank line if and only if the output buffer is empty.
-			 * Since write$ does reasonable line breaking, you should use this
-			 * function only when you want a blank line or an explicit line
-			 * break.
-			 */
+			
 			public void execute(BstEntry context) {
 				VM.this.bbl.append('\n');
 			}
 		});
 
 		buildInFunctions.put("num.names$", new BstFunction() {
-			/**
-			 * Pops the top (string) literal and pushes the number of names the
-			 * string represents one plus the number of occurrences of the
-			 * substring "and" (ignoring case differences) surrounded by
-			 * non-null white-space at the top brace level.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation num.names$");
@@ -534,23 +454,14 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("pop$", new BstFunction() {
-			/**
-			 * Pops the top of the stack but doesn't print it; this gets rid of
-			 * an unwanted stack literal.
-			 */
+			
 			public void execute(BstEntry context) {
 				stack.pop();
 			}
 		});
 
 		buildInFunctions.put("preamble$", new BstFunction() {
-			/**
-			 * The |built_in| function {\.{preamble\$}} pushes onto the stack
-			 * the concatenation of all the \.{preamble} strings read from the
-			 * database files. (or the empty string if there where none)
-			 * 
-			 * @PREAMBLE strings read from the database files.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (preamble != null) {
 					stack.push(preamble);
@@ -561,38 +472,25 @@ public class VM implements Warn {
 			}
 		});
 
-		/**
-		 * Pops the top (string) literal, removes nonalphanumeric characters
-		 * except for white-space characters and hyphens and ties (these all get
-		 * converted to a space), removes certain alphabetic characters
-		 * contained in the control sequences associated with a \special
-		 * character", and pushes the resulting string.
-		 */
+		
 		buildInFunctions.put("purify$", new PurifyFunction(this));
 
 		buildInFunctions.put("quote$", new BstFunction() {
-			/**
-			 * Pushes the string consisting of the double-quote character.
-			 */
+			
 			public void execute(BstEntry context) {
 				stack.push("\"");
 			}
 		});
 
 		buildInFunctions.put("skip$", new BstFunction() {
-			/**
-			 * Is a no-op.
-			 */
+			
 			public void execute(BstEntry context) {
-				// Nothing to do! Yeah!
+				
 			}
 		});
 
 		buildInFunctions.put("stack$", new BstFunction() {
-			/**
-			 * Pops and prints the whole stack; it's meant to be used for style
-			 * designers while debugging.
-			 */
+			
 			public void execute(BstEntry context) {
 				while (!stack.empty()) {
 					System.out.println(stack.pop());
@@ -601,15 +499,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("substring$", new BstFunction() {
-			/**
-			 * Pops the top three literals (they are the two integers literals
-			 * len and start, and a string literal, in that order). It pushes
-			 * the substring of the (at most) len consecutive characters
-			 * starting at the startth character (assuming 1-based indexing) if
-			 * start is positive, and ending at the start-th character
-			 * (including) from the end if start is negative (where the first
-			 * character from the end is the last character).
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 3) {
 					throw new VMException("Not enough operands on stack for operation substring$");
@@ -648,14 +538,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("swap$", new BstFunction() {
-			/**
-			 * Swaps the top two literals on the stack. text.length$ Pops the
-			 * top (string) literal, and pushes the number of text char- acters
-			 * it contains, where an accented character (more precisely, a
-			 * \special character", defined in Section 4) counts as a single
-			 * text character, even if it's missing its matching right brace,
-			 * and where braces don't count as text characters.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation swap$");
@@ -669,17 +552,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("text.length$", new BstFunction() {
-			/**
-			 * text.length$ Pops the top (string) literal, and pushes the number
-			 * of text characters it contains, where an accented character (more
-			 * precisely, a "special character", defined in Section 4) counts as
-			 * a single text character, even if it's missing its matching right
-			 * brace, and where braces don't count as text characters.
-			 * 
-			 * From BibTeXing: For the purposes of counting letters in labels,
-			 * BibTEX considers everything contained inside the braces as a
-			 * single letter.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 1) {
 					throw new VMException("Not enough operands on stack for operation text.length$");
@@ -694,113 +567,93 @@ public class VM implements Warn {
 				char[] c = s.toCharArray();
 				int result = 0;
 
-				// Comments from bibtex.web:
+				
 
-				// sp_ptr := str_start[pop_lit1];
+				
 				int i = 0;
 
-				// sp_end := str_start[pop_lit1+1];
+				
 				int n = s.length();
 
-				// sp_brace_level := 0;
+				
 				int braceLevel = 0;
 
-				// while (sp_ptr < sp_end) do begin
+				
 				while (i < n) {
-					// incr(sp_ptr);
+					
 					i++;
-					// if (str_pool[sp_ptr-1] = left_brace) then
-					// begin
+					
+					
 					if (c[i - 1] == '{') {
-						// incr(sp_brace_level);
+						
 						braceLevel++;
-						// if ((sp_brace_level = 1) and (sp_ptr < sp_end)) then
+						
 						if (braceLevel == 1 && i < n)
-							// if (str_pool[sp_ptr] = backslash) then
-							// begin
+							
+							
 							if (c[i] == '\\') {
-								// incr(sp_ptr); {skip over the |backslash|}
-								i++; // skip over backslash
-								// while ((sp_ptr < sp_end) and (sp_brace_level
-								// > 0)) do begin
+								
+								i++; 
+								
+								
 								while (i < n && braceLevel > 0) {
-									// if (str_pool[sp_ptr] = right_brace) then
+									
 									if (c[i] == '}')
-										// decr(sp_brace_level)
+										
 										braceLevel--;
-									// else if (str_pool[sp_ptr] = left_brace)
-									// then
+									
+									
 									else if (c[i] == '{')
 
-										// incr(sp_brace_level);
+										
 										braceLevel++;
-									// incr(sp_ptr);
+									
 									i++;
-									// end;
+									
 								}
-								// incr(num_text_chars);
+								
 								result++;
-								// end;
+								
 							}
-						// end
+						
 					}
-					// else if (str_pool[sp_ptr-1] = right_brace) then
-					// begin
+					
+					
 					else if (c[i - 1] == '}') {
-						// if (sp_brace_level > 0) then
+						
 						if (braceLevel > 0)
-							// decr(sp_brace_level);
+							
 							braceLevel--;
-						// end
+						
 					}
-					// else
+					
 					else
-						// incr(num_text_chars);
+						
 						result++;
 				}
 				stack.push(new Integer(result));
 			}
 		});
 
-		/**
-		 * Pops the top two literals (the integer literal len and a string
-		 * literal, in that order). It pushes the substring of the (at most) len
-		 * consecutive text characters starting from the beginning of the
-		 * string. This function is similar to substring$, but this one
-		 * considers a \special character", even if it's missing its matching
-		 * right brace, to be a single text character (rather than however many
-		 * ASCII characters it actually comprises), and this function doesn't
-		 * consider braces to be text characters; furthermore, this function
-		 * appends any needed matching right braces.
-		 */
+		
 		buildInFunctions.put("text.prefix$", new TextPrefixFunction(this));
 
 		buildInFunctions.put("top$", new BstFunction() {
-			/**
-			 * Pops and prints the top of the stack on the terminal and log
-			 * file. It's useful for debugging.
-			 */
+			
 			public void execute(BstEntry context) {
 				System.out.println(stack.pop());
 			}
 		});
 
 		buildInFunctions.put("type$", new BstFunction() {
-			/**
-			 * Pushes the current entry's type (book, article, etc.), but pushes
-			 * the null string if the type is either unknown or undefined.
-			 */
+			
 			public void execute(BstEntry context) {
 				stack.push(context.entry.getType().getName());
 			}
 		});
 
 		buildInFunctions.put("warning$", new BstFunction() {
-			/**
-			 * Pops the top (string) literal and prints it following a warning
-			 * message. This also increments a count of the number of warning
-			 * messages issued.
-			 */
+			
 			int warning = 1;
 
 			public void execute(BstEntry context) {
@@ -809,11 +662,7 @@ public class VM implements Warn {
 		});
 
 		buildInFunctions.put("while$", new BstFunction() {
-			/**
-			 * Pops the top two (function) literals, and keeps executing the
-			 * second as long as the (integer) literal left on the stack by
-			 * executing the first is greater than 0.
-			 */
+			
 			public void execute(BstEntry context) {
 				if (stack.size() < 2) {
 					throw new VMException("Not enough operands on stack for operation while$");
@@ -845,11 +694,7 @@ public class VM implements Warn {
 		buildInFunctions.put("width$", new WidthFunction(this));
 
 		buildInFunctions.put("write$", new BstFunction() {
-			/**
-			 * Pops the top (string) literal and writes it on the output buffer
-			 * (which will result in stuff being written onto the bbl file when
-			 * the buffer fills up).
-			 */
+			
 			public void execute(BstEntry context) {
 				String s = (String) stack.pop();
 				System.out.println(s);
@@ -910,7 +755,7 @@ public class VM implements Warn {
 
 		reset();
 
-		{ // Create entries
+		{ 
 			entries = new Vector(bibtex.size());
 			ListIterator i = entries.listIterator();
 			Iterator j = bibtex.iterator();
@@ -919,9 +764,9 @@ public class VM implements Warn {
 			}
 		}
 
-		// assert tree.getType() == Bst.COMMANDS;
+		
 
-		// Go
+		
 		for (int i = 0; i < tree.getChildCount(); i++) {
 			Tree child = tree.getChild(i);
 			switch (child.getType()) {
@@ -978,16 +823,7 @@ public class VM implements Warn {
 		stack = new Stack();
 	}
 
-	/**
-	 * Dredges up from the database file the field values for each entry in the
-	 * list. It has no arguments. If a database entry doesn't have a value for a
-	 * field (and probably no database entry will have a value for every field),
-	 * that field variable is marked as missing for the entry.
-	 * 
-	 * We use null for the missing entry designator.
-	 * 
-	 * @param child
-	 */
+	
 	private void read() {
 
 		Iterator i = entries.iterator();
@@ -1013,18 +849,7 @@ public class VM implements Warn {
 		}
 	}
 
-	/**
-	 * Defines a string macro. It has two arguments; the first is the macro's
-	 * name, which is treated like any other variable or function name, and the
-	 * second is its definition, which must be double-quote-delimited. You must
-	 * have one for each three-letter month abbreviation; in addition, you
-	 * should have one for common journal names. The user's database may
-	 * override any definition you define using this command. If you want to
-	 * define a string the user can't touch, use the FUNCTION command, which has
-	 * a compatible syntax.
-	 * 
-	 * @param child
-	 */
+	
 	private void macro(Tree child) {
 		String name = child.getChild(0).getText();
 		String replacement = child.getChild(1).getText();
@@ -1044,20 +869,12 @@ public class VM implements Warn {
 		}
 	}
 
-	/*
-	 * Declares the fields and entry variables. It has three arguments, each a
-	 * (possibly empty) list of variable names. The three lists are of: fields,
-	 * integer entry variables, and string entry variables. There is an
-	 * additional field that BibTEX automatically declares, crossref, used for
-	 * cross ref- erencing. And there is an additional string entry variable
-	 * automatically declared, sort.key$, used by the SORT command. Each of
-	 * these variables has a value for each entry on the list.
-	 */
+	
 	private void entry(Tree child) {
 
-		{ // Fields first
+		{ 
 			Tree t = child.getChild(0);
-			// assert t.getType() == Bst.IDLIST;
+			
 
 			for (int i = 0; i < t.getChildCount(); i++) {
 				String name = t.getChild(i).getText();
@@ -1069,9 +886,9 @@ public class VM implements Warn {
 				}
 			}
 		}
-		{ // Integers
+		{ 
 			Tree t = child.getChild(1);
-			// assert t.getType() == Bst.IDLIST;
+			
 
 			for (int i = 0; i < t.getChildCount(); i++) {
 				String name = t.getChild(i).getText();
@@ -1082,9 +899,9 @@ public class VM implements Warn {
 				}
 			}
 		}
-		{ // Strings
+		{ 
 			Tree t = child.getChild(2);
-			// assert t.getType() == Bst.IDLIST;
+			
 
 			for (int i = 0; i < t.getChildCount(); i++) {
 				String name = t.getChild(i).getText();
@@ -1121,12 +938,7 @@ public class VM implements Warn {
 		}
 	}
 
-	/**
-	 * Sorts the entry list using the values of the string entry variable
-	 * sort.key$. It has no arguments.
-	 * 
-	 * @param child
-	 */
+	
 	private void sort(Tree child) {
 		Collections.sort(entries, new Comparator() {
 			public int compare(Object x1, Object x2) {
@@ -1160,7 +972,7 @@ public class VM implements Warn {
 		}
 
 		public StackFunction(Tree stack) {
-			// assert stack.getType() == Bst.STACK;
+			
 			tree = stack;
 		}
 
@@ -1248,18 +1060,10 @@ public class VM implements Warn {
 
 	}
 
-	/**
-	 * Declares global integer variables. It has one argument, a list of
-	 * variable names. There are two such automatically-declared variables,
-	 * entry.max$ and global.max$, used for limiting the lengths of string vari-
-	 * ables. You may have any number of these commands, but a variable's
-	 * declaration must precede its use.
-	 * 
-	 * @param child
-	 */
+	
 	private void integers(Tree child) {
 		Tree t = child.getChild(0);
-		// assert t.getType() == Bst.IDLIST;
+		
 
 		for (int i = 0; i < t.getChildCount(); i++) {
 			String name = t.getChild(i).getText();
@@ -1267,16 +1071,10 @@ public class VM implements Warn {
 		}
 	}
 
-	/**
-	 * Declares global string variables. It has one argument, a list of variable
-	 * names. You may have any number of these commands, but a variable's
-	 * declaration must precede its use.
-	 * 
-	 * @param child
-	 */
+	
 	private void strings(Tree child) {
 		Tree t = child.getChild(0);
-		// assert t.getType() == Bst.IDLIST;
+		
 
 		for (int i = 0; i < t.getChildCount(); i++) {
 			String name = t.getChild(i).getText();
@@ -1292,11 +1090,11 @@ public class VM implements Warn {
 
 		BibtexEntry entry;
 
-		// Map<String, String> strings = new HashMap<String, String>();
+		
 
-		// Map<String, String> fields = new HashMap<String, String>();
+		
 
-		// Map<String, Integer> integers = new HashMap<String, Integer>();
+		
 
 		Map strings = new HashMap();
 
@@ -1313,19 +1111,19 @@ public class VM implements Warn {
 		}
 	}
 
-	// Vector<BstEntry> entries;
+	
 	Vector entries;
 
-	// Map<String, String> strings = new HashMap<String, String>();
+	
 	Map strings = new HashMap();
 
-	// Map<String, Integer> integers = new HashMap<String, Integer>();
+	
 	Map integers = new HashMap();
 
-	// Map<String, BstFunction> functions = new HashMap<String, BstFunction>();
+	
 	Map functions = new HashMap();
 
-	// Stack<Object> stack = new Stack<Object>();
+	
 	Stack stack = new Stack();
 
 	public void push(Integer integer) {
@@ -1340,15 +1138,7 @@ public class VM implements Warn {
 		stack.push(identifier);
 	}
 
-	/*
-	 * public Map<String, String> getStrings() { return strings; }
-	 * 
-	 * public Map<String, Integer> getIntegers() { return integers; }
-	 * 
-	 * public Vector<BstEntry> getEntries() { return entries; }
-	 * 
-	 * public Map<String, BstFunction> getFunctions() { return functions; }
-	 */
+	
 
 	public Map getStrings() {
 		return strings;

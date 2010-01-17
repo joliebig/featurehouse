@@ -14,31 +14,22 @@ import java.util.regex.Pattern;
 import net.sf.jabref.BibtexFields;
 
 
-/**
- * Importer for the ISI Web of Science format.
- */
+
 public class BiomailImporter extends ImportFormat {
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
         return "Biomail";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "biomail";
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream stream)
             throws IOException {
-        // Our strategy is to look for the "BioMail" line.
+        
         BufferedReader in =
                 new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
         Pattern pat1 = Pattern.compile("BioMail");
@@ -55,10 +46,7 @@ public class BiomailImporter extends ImportFormat {
     }
 
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
         ArrayList<BibtexEntry> bibitems = new ArrayList<BibtexEntry>();
         StringBuffer sb = new StringBuffer();
@@ -72,17 +60,17 @@ public class BiomailImporter extends ImportFormat {
             if (str.length() < 3)
                 continue;
 
-            // begining of a new item
+            
             if (str.substring(0, 6).equals("PMID- "))
                 sb.append("::").append(str);
             else {
                 String beg = str.substring(0, 6);
 
                 if (beg.indexOf(" ") > 0) {
-                    sb.append(" ## "); // mark the begining of each field
+                    sb.append(" ## "); 
                     sb.append(str);
                 } else {
-                    sb.append("EOLEOL"); // mark the end of each line
+                    sb.append("EOLEOL"); 
                     sb.append(str.trim());
                 }
             }
@@ -90,7 +78,7 @@ public class BiomailImporter extends ImportFormat {
 
         String[] entries = sb.toString().split("::");
 
-        // skip the first entry as it is either empty or has document header
+        
         HashMap<String, String> hm = new HashMap<String, String>();
 
         for (int i = 0; i < entries.length; i++) {
@@ -108,7 +96,7 @@ public class BiomailImporter extends ImportFormat {
             for (int j = 0; j < fields.length; j++) {
                 System.out.println(">>>"+fields[j]+"<<<");
 
-                //empty field don't do anything
+                
                 if (fields[j].length() <= 2)
                     continue;
 
@@ -117,8 +105,8 @@ public class BiomailImporter extends ImportFormat {
                 value = value.trim();
 
                 if (beg.equals("PT  - ")) {
-                    // PT = value.replaceAll("JOURNAL ARTICLE", "article").replaceAll("Journal Article", "article");
-                    Type = "article"; //make all of them PT?
+                    
+                    Type = "article"; 
                 } else if (beg.equals("TY  - ")) {
                     if ("CONF".equals(value))
                         Type = "inproceedings";
@@ -127,7 +115,7 @@ public class BiomailImporter extends ImportFormat {
                 else if (beg.equals("FAU - ")) {
                     String tmpauthor = value.replaceAll("EOLEOL", " and ");
 
-                    // if there is already someone there then append with "and"
+                    
                     if (!"".equals(fullauthor))
                         fullauthor = fullauthor + " and " + tmpauthor;
                     else
@@ -135,7 +123,7 @@ public class BiomailImporter extends ImportFormat {
                 } else if (beg.equals("AU  - ")) {
                     String tmpauthor = value.replaceAll("EOLEOL", " and ").replaceAll(" ", ", ");
 
-                    // if there is already someone there then append with "and"
+                    
                     if (!"".equals(shortauthor))
                         shortauthor = shortauthor + " and " + tmpauthor;
                     else
@@ -151,7 +139,7 @@ public class BiomailImporter extends ImportFormat {
                 else if (beg.equals("IP  - "))
                     hm.put("number", value);
                 else if (beg.equals("DP  - ")) {
-                    String[] parts = value.split(" "); // sometimes this is just year, sometimes full date
+                    String[] parts = value.split(" "); 
                     hm.put("year", parts[0]);
                 } else if (beg.equals("VI  - "))
                     hm.put("volume", value);
@@ -172,14 +160,14 @@ public class BiomailImporter extends ImportFormat {
                 hm.put("author", shortauthor);
 
             BibtexEntry b =
-                    new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals.getEntryType(Type)); // id assumes an existing database so don't
+                    new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals.getEntryType(Type)); 
 
-            // create one here
+            
             b.setField(hm);
 
-            // the first bibitem is always empty, presumably as a result of trying
-            // to parse header informaion. So add only if we have at least author or
-            // title fields.
+            
+            
+            
             if (hm.get("author") != null || hm.get("title") != null)
                 bibitems.add(b);
         }

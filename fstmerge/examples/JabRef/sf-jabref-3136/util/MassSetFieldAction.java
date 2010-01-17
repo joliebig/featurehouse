@@ -17,14 +17,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * An Action for launching mass field.
- *
- * Functionality:
- * * Defaults to selected entries, or all entries if none are selected.
- * * Input field name
- * * Either set field, or clear field.
- */
+
 public class MassSetFieldAction extends MnemonicAwareAction {
     private JabRefFrame frame;
     private JDialog diag;
@@ -59,19 +52,19 @@ public class MassSetFieldAction extends MnemonicAwareAction {
         rename.setToolTipText(Globals.lang("Move contents of a field into a field with a different name"));
         set.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                // Entering a text is only relevant if we are setting, not clearing:
+                
                 text.setEnabled(set.isSelected());
             }
         });
         clear.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
-                // Overwrite protection makes no sense if we are clearing the field:
+                
                 overwrite.setEnabled(!clear.isSelected());
             }
         });
         rename.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                // Entering a text is only relevant if we are renaming
+                
                 renameTo.setEnabled(rename.isSelected());
             }
         });
@@ -119,13 +112,13 @@ public class MassSetFieldAction extends MnemonicAwareAction {
 
         ok.addActionListener(new ActionListener() {
            public void actionPerformed(ActionEvent e) {
-               // Check if the user tries to rename multiple fields:
+               
                if (rename.isSelected()) {
                     String[] fields = getFieldNames(field.getText());
                    if (fields.length > 1) {
                        JOptionPane.showMessageDialog(diag, Globals.lang("You can only rename one field at a time"),
                                "", JOptionPane.ERROR_MESSAGE);
-                       return; // Do not close the dialog.
+                       return; 
                    }
                }
                 cancelled = false;
@@ -141,7 +134,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             };
         cancel.addActionListener(cancelAction);
 
-        // Key bindings:
+        
         ActionMap am = builder.getPanel().getActionMap();
         InputMap im = builder.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -154,7 +147,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             selected.setSelected(true);
         else
             all.setSelected(true);
-        // Make sure one of the following ones is selected:
+        
         if (!set.isSelected() && !clear.isSelected() && !rename.isSelected())
             set.setSelected(true);
     }
@@ -164,7 +157,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
         if (bp == null)
             return;
         BibtexEntry[] entries = bp.getSelectedEntries();
-        // Lazy creation of the dialog:
+        
         if (diag == null)
             createDialog();
         cancelled = true;
@@ -175,7 +168,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             return;
 
         Collection<BibtexEntry> entryList;
-        // If all entries should be treated, change the entries array:
+        
         if (all.isSelected())
             entryList = bp.database().getEntries();
         else
@@ -187,7 +180,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
         NamedCompound ce = new NamedCompound(Globals.lang("Set field"));
         if (rename.isSelected()) {
             if (fields.length > 1) {
-                // TODO: message: can only rename a single field
+                
             }
             else {
                 ce.addEdit(Util.massRenameField(entryList, fields[0], renameTo.getText(),

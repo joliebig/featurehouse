@@ -1,14 +1,6 @@
 package net.sf.jabref.util;
 
-/**
- * This little contraption is used if a generic type is needed that is either a
- * S or a T.
- * 
- * @author oezbek
- * 
- * @param <S>
- * @param <T>
- */
+
 public class TypeOr<S, T> {
 
 	public S s;

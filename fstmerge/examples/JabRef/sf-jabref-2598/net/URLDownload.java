@@ -1,7 +1,4 @@
-/*
- * Created on 1-Dec-2004
- *
- */
+
 package net.sf.jabref.net;
 
 import java.awt.Component;
@@ -11,9 +8,7 @@ import java.net.URLConnection;
 
 import javax.swing.ProgressMonitorInputStream;
 
-/**
- * @author Erik Putrycz erik.putrycz-at-nrc-cnrc.gc.ca
- */
+
 
 public class URLDownload {  
     

@@ -11,40 +11,25 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.AuthorList;
 import net.sf.jabref.BibtexFields;
 
-/**
- * Imports a Biblioscape Tag File. The format is described on
- * http://www.biblioscape.com/manual_bsp/Biblioscape_Tag_File.htm Several
- * Biblioscape field types are ignored. Others are only included in the BibTeX
- * field "comment".
- */
+
 public class ScifinderImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
     return "Scifinder";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "scifinder";
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream in) throws IOException {
     return true;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List importEntries(InputStream stream) throws IOException {
     ArrayList bibitems = new ArrayList();
     StringBuffer sb = new StringBuffer();
@@ -59,13 +44,13 @@ public class ScifinderImporter extends ImportFormat {
     for (int i = 1; i < entries.length; i++){
         String[] fields = entries[i].split("FIELD ");
         String Type = "";
-        hm.clear(); // reset
+        hm.clear(); 
         for (int j = 0; j < fields.length; j++)
         if (fields[j].indexOf(":") >= 0){
             String tmp[] = new String[2];
             tmp[0] = fields[j].substring(0, fields[j].indexOf(":"));
             tmp[1] = fields[j].substring(fields[j].indexOf(":") + 1).trim();
-            if (tmp.length > 1){//==2
+            if (tmp.length > 1){
             if (tmp[0].equals("Author")) hm.put("author", AuthorList.fixAuthor_lastNameFirst(tmp[1].replaceAll(";", " and ")));
             else if (tmp[0].equals("Title")) hm.put("title", tmp[1]);
 
@@ -89,8 +74,8 @@ public class ScifinderImporter extends ImportFormat {
         }
 
         BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals
-                        .getEntryType(Type)); // id assumes an existing database so don't
-        // create one here
+                        .getEntryType(Type)); 
+        
         b.setField(hm);
         bibitems.add(b);
 

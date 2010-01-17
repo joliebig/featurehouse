@@ -1,7 +1,4 @@
-/* Aaron Chen
- * 08-28-2007
- * ACM Portal support
- */
+
 
 package net.sf.jabref.imports;
 
@@ -31,13 +28,7 @@ import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 import net.sf.jabref.OutputPrinter;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Mar 25, 2006
- * Time: 1:09:32 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class ACMPortalFetcher implements EntryFetcher {
 
 	ImportInspector dialog = null;
@@ -47,9 +38,9 @@ public class ACMPortalFetcher implements EntryFetcher {
     String startUrl = "http://portal.acm.org/";
     String searchUrlPart = "results.cfm?query=";
     String searchUrlPartII = "&dl=";
-    String endUrl = "&coll=Portal&short=1";//&start=";
+    String endUrl = "&coll=Portal&short=1";
 
-    private static final int MAX_FETCH = 50; // 20 when short=0
+    private static final int MAX_FETCH = 50; 
     private int perPage = MAX_FETCH, hits = 0, unparseable = 0, parsed = 0;
     private boolean shouldContinue = false;
     private JRadioButton acmButton = new JRadioButton(Globals.lang("The ACM Digital Library"));
@@ -95,12 +86,12 @@ public class ACMPortalFetcher implements EntryFetcher {
         try {
             URL url = new URL(address);
 
-            //dialog.setVisible(true);
+            
             String page = getResults(url);
-            //System.out.println(address);
+            
             hits = getNumberOfHits(page, "Found", hitsPattern);
-            //System.out.println(page);
-            //System.out.printf("Hit %d\n", hits);
+            
+            
             
             if (hits == 0) {
                 status.showMessage(Globals.lang("No entries found for the search string '%0'",
@@ -110,12 +101,12 @@ public class ACMPortalFetcher implements EntryFetcher {
             }
 
             int maxHits = getNumberOfHits(page, "<td>Results", maxHitsPattern);
-            //System.out.printf("maxHit %d\n", maxHits);
-            //String page = getResultsFromFile(new File("/home/alver/div/temp50.txt"));
+            
+            
 
-            //List entries = new ArrayList();
-            //System.out.println("Number of hits: "+hits);
-            //System.out.println("Maximum returned: "+maxHits);
+            
+            
+            
             if (hits > maxHits)
                 hits = maxHits;
             
@@ -124,23 +115,23 @@ public class ACMPortalFetcher implements EntryFetcher {
                         +"only %1 will be downloaded.",
                                 new String[] {String.valueOf(hits), String.valueOf(MAX_FETCH)}),
                         Globals.lang("Search ACM Portal"), JOptionPane.INFORMATION_MESSAGE);
-                dialog.toFront(); // if it is a dialog, bring it to the front.
+                dialog.toFront(); 
                 hits = MAX_FETCH;
             }
         
             fetchingAbstracts = fetchAstracts.isSelected();
-            //parse(dialog, page, 0, 51);
-            //dialog.setProgress(perPage/2, hits);
+            
+            
             parse(dialog, page, 0, 1);
-            //System.out.println(page);
+            
             int firstEntry = perPage;
             while (shouldContinue && (firstEntry < hits)) {
-                //System.out.println("Fetching from: "+firstEntry);
+                
                 address = makeUrl(firstEntry);
-                //System.out.println(address);
+                
                 page = getResults(new URL(address));
                 
-                //dialog.setProgress(firstEntry+perPage/2, hits);
+                
                 if (!shouldContinue)
                     break;
 
@@ -187,7 +178,7 @@ public class ACMPortalFetcher implements EntryFetcher {
                 parsed++;
             }
             entryNumber++;
-            //break;
+            
         }
     }
 
@@ -213,7 +204,7 @@ public class ACMPortalFetcher implements EntryFetcher {
 						entry.setField("abstract", convertHTMLChars(absBlock).trim());
 					} else {
 						System.out.println("No abstract matched.");
-						//System.out.println(page);
+						
 					}
 				}
 				return entry;
@@ -237,7 +228,7 @@ public class ACMPortalFetcher implements EntryFetcher {
                 .append(entryNumber).append("</strong>").toString();
         int index = allText.indexOf(toFind, startIndex);
         int endIndex = allText.indexOf("</table>", index+1);
-        //if (endIndex < 0)
+        
             endIndex = allText.length();
 
         BibtexEntry entry = null;
@@ -245,44 +236,37 @@ public class ACMPortalFetcher implements EntryFetcher {
         if (index >= 0) {
             piv = index+1;
             String text = allText.substring(index, endIndex);
-            // Always try RIS import first
+            
 			Matcher fullCitation =
 				fullCitationPattern.matcher(text);
 			if (fullCitation.find()) {
 				try {
 					entry = parseEntryBibTeX(fullCitation.group(1), fetchingAbstracts);
 				} catch (IOException e) {
-					e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+					e.printStackTrace();  
 				}
 			} else {
 				System.out.printf("Citation Unmatched %d\n", entryNumber);
 				System.out.printf(text);
 			}
-            if (entry != null) { // fetch successful
+            if (entry != null) { 
                 return entry;
             }
         }
-        //System.out.println(allText);
-        //System.out.println(toFind);
-        //System.out.println("Parse Failed");
+        
+        
+        
         return null;
     }
 
-    /**
-     * This method must convert HTML style char sequences to normal characters.
-     * @param text The text to handle.
-     * @return The converted text.
-     */
+    
     private String convertHTMLChars(String text) {
 
         return htmlConverter.format(text);
     }
 
 
-    /**
-     * Find out how many hits were found.
-     * @param page
-     */
+    
     private int getNumberOfHits(String page, String marker, Pattern pattern) throws IOException {
         int ind = page.indexOf(marker);
         if (ind < 0)
@@ -291,15 +275,15 @@ public class ACMPortalFetcher implements EntryFetcher {
         Matcher m = pattern.matcher(substring);
         if (!m.find()) {
         	System.out.println("Unmatched!");
-        	//System.out.println(substring);
+        	
         } else if (m.groupCount() >= 1) {
             try {
-            	// get rid of ,
+            	
             	String number = m.group(1);
-            	//NumberFormat nf = NumberFormat.getInstance();
-            	//return nf.parse(number).intValue();
+            	
+            	
             	number = number.replaceAll(",", "");
-            	//System.out.println(number);
+            	
                 return Integer.parseInt(number);
             } catch (NumberFormatException ex) {
                 throw new IOException(Globals.lang("Could not parse number of hits"));
@@ -310,12 +294,7 @@ public class ACMPortalFetcher implements EntryFetcher {
         throw new IOException(Globals.lang("Could not parse number of hits"));
     }
 
-    /**
-     * Download the URL and return contents as a String.
-     * @param source
-     * @return
-     * @throws IOException
-     */
+    
     public String getResults(URL source) throws IOException {
         
         InputStream in = source.openStream();
@@ -330,12 +309,7 @@ public class ACMPortalFetcher implements EntryFetcher {
         return sb.toString();
     }
 
-    /**
-     * Read results from a file instead of an URL. Just for faster debugging.
-     * @param f
-     * @return
-     * @throws IOException
-     */
+    
     public String getResultsFromFile(File f) throws IOException {
         InputStream in = new BufferedInputStream(new FileInputStream(f));
         StringBuffer sb = new StringBuffer();
@@ -366,22 +340,22 @@ public class ACMPortalFetcher implements EntryFetcher {
 	    return "Search ACM Portal";
 	}
 	
-	// This method is called by the dialog when the user has cancelled the import.
+	
 	public void cancelled() {
 	    shouldContinue = false;
 	}
 	
-	// This method is called by the dialog when the user has selected the
-	//wanted entries, and clicked Ok. The callback object can update status
-	//line etc.
+	
+	
+	
 	public void done(int entriesImported) {
-	    //System.out.println("Number of entries parsed: "+parsed);
-	    //System.out.println("Parsing failed for "+unparseable+" entries");
+	    
+	    
 	}
 	
-	// This method is called by the dialog when the user has cancelled or
-	//signalled a stop. It is expected that any long-running fetch operations
-	//will stop after this method is called.
+	
+	
+	
 	public void stopFetching() {
 	    shouldContinue = false;
 	}

@@ -12,10 +12,7 @@ import org.java.plugin.registry.ExtensionPoint;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-/**
- * Do not modify this file, as it was auto generated and will be overwritten!
- * User modifications should go in net.sf.jabref.plugin.core.JabRefPlugin.
- */
+
 public abstract class _JabRefPlugin extends Plugin {
 
     public static String getId(){
@@ -94,9 +91,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.export.IExportFormat getExportFormat(){
           return (net.sf.jabref.export.IExportFormat)getClassParameter("exportFormat");
         }
@@ -138,9 +133,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.plugin.SidePanePlugin getSidePanePlugin(){
           return (net.sf.jabref.plugin.SidePanePlugin)getClassParameter("sidePanePlugin");
         }
@@ -177,9 +170,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.imports.EntryFetcher getEntryFetcher(){
           return (net.sf.jabref.imports.EntryFetcher)getClassParameter("entryFetcher");
         }
@@ -216,9 +207,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.export.IExportFormatProvider getFormatProvider(){
           return (net.sf.jabref.export.IExportFormatProvider)getClassParameter("formatProvider");
         }
@@ -255,9 +244,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.external.PushToApplication getPushToApp(){
           return (net.sf.jabref.external.PushToApplication)getClassParameter("pushToApp");
         }
@@ -294,9 +281,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.export.layout.LayoutFormatter getLayoutFormatter(){
           return (net.sf.jabref.export.layout.LayoutFormatter)getClassParameter("layoutFormatter");
         }
@@ -333,9 +318,7 @@ public abstract class _JabRefPlugin extends Plugin {
         }
                 
 	     
-              /**
-         * @return A singleton instance of the class parameter or null if the class could not be found!
-         */
+              
         public net.sf.jabref.imports.ImportFormat getImportFormat(){
           return (net.sf.jabref.imports.ImportFormat)getClassParameter("importFormat");
         }

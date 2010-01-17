@@ -1,27 +1,4 @@
-/*
- * Copyright (C) 2003 Morten O. Alver and Nizar N. Batada
- *
- * All programs in this directory and subdirectories are published under the GNU
- * General Public License as described below.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- *
- * Further information about the GNU GPL is available at:
- * http://www.gnu.org/copyleft/gpl.ja.html
- *
- */
+
 package net.sf.jabref.imports;
 
 import java.io.*;
@@ -38,7 +15,7 @@ public class ImportFormatReader {
 
     public static String BIBTEX_FORMAT = "BibTeX";
 
-  /** all import formats, in the default order of import formats */
+  
   private SortedSet<ImportFormat> formats = new TreeSet<ImportFormat>();
 
   public ImportFormatReader() {
@@ -48,8 +25,8 @@ public class ImportFormatReader {
   public void resetImportFormats() {
     formats.clear();
     
-    // Add all our importers to the TreeMap. The map is used to build the import
-    // menus, and .
+    
+    
     formats.add(new CsaImporter());   
     formats.add(new IsiImporter());
     formats.add(new EndnoteImporter());
@@ -68,9 +45,7 @@ public class ImportFormatReader {
     formats.add(new CopacImporter());
     formats.add(new MsBibImporter());
 
-    /**
-     * Get import formats that are plug-ins
-     */
+    
     JabRefPlugin jabrefPlugin = JabRefPlugin.getInstance(PluginCore.getManager());
 	if (jabrefPlugin != null){
 		for (ImportFormatExtension ext : jabrefPlugin.getImportFormatExtensions()){
@@ -81,9 +56,7 @@ public class ImportFormatReader {
 		}
 	}
 	
-	/**
-	 * Get custom import formats
-	 */
+	
     for (CustomImportList.Importer importer : Globals.prefs.customImports){
        try {
         ImportFormat imFo = importer.getInstance();
@@ -95,15 +68,7 @@ public class ImportFormatReader {
     }
   }
   
-  /**
-   * Format for a given CLI-ID.
-   * 
-   * <p>Will return the first format according to the default-order of
-   * format that matches the given ID.</p>
-   * 
-   * @param cliId  CLI-Id
-   * @return  Import Format or <code>null</code> if none matches
-   */
+  
   public ImportFormat getByCliId(String cliId) {
     for (ImportFormat format : formats){
       if (format.getCLIId().equals(cliId)) {
@@ -122,7 +87,7 @@ public class ImportFormatReader {
 
     List<BibtexEntry> res = importer.importEntries(in);
 
-    // Remove all empty entries
+    
     if (res != null)
       purgeEmptyEntries(res);
 
@@ -184,13 +149,7 @@ public class ImportFormatReader {
     return database;
   }
 
-  /**
-   * All custom importers.
-   * 
-   * <p>Elements are in default order.</p>
-   * 
-   * @return all custom importers, elements are of type InputFormat
-   */
+  
   public SortedSet<ImportFormat> getCustomImportFormats() {
     SortedSet<ImportFormat> result = new TreeSet<ImportFormat>();
     for (ImportFormat format : formats){
@@ -201,13 +160,7 @@ public class ImportFormatReader {
     return result;
   }
   
-  /**
-   * All built-in importers.
-   * 
-   * <p>Elements are in default order.</p>
-   * 
-   * @return all custom importers, elements are of type InputFormat
-   */
+  
   public SortedSet<ImportFormat> getBuiltInInputFormats() {
 		SortedSet<ImportFormat> result = new TreeSet<ImportFormat>();
 		for (ImportFormat format : formats) {
@@ -218,26 +171,12 @@ public class ImportFormatReader {
 		return result;
 	}
   
-  /**
-	 * All importers.
-	 * 
-	 * <p>
-	 * Elements are in default order.
-	 * </p>
-	 * 
-	 * @return all custom importers, elements are of type InputFormat
-	 */
+  
   public SortedSet<ImportFormat> getImportFormats() {
     return this.formats;
   }
 
-  /**
-   * Human readable list of all known import formats (name and CLI Id).
-   * 
-   * <p>List is in default-order.</p>
-   * 
-   * @return  human readable list of all known import formats
-   */
+  
   public String getImportFormatList() {
     StringBuffer sb = new StringBuffer();
 
@@ -256,15 +195,11 @@ public class ImportFormatReader {
 
     String res = sb.toString();
 
-    return res; //.substring(0, res.length()-1);
+    return res; 
   }
 
 
-    /**
-     * Expand initials, e.g. EH Wissler -> E. H. Wissler or Wissler, EH -> Wissler, E. H.
-     * @param name
-     * @return The name after expanding initials.
-     */
+    
     public static String expandAuthorInitials(String name) {
       String[] authors = name.split(" and ");
       StringBuffer sb = new StringBuffer();
@@ -297,15 +232,15 @@ public class ImportFormatReader {
       return sb.toString().trim();
   }
   
-//------------------------------------------------------------------------------
+
 
 
     public static String expandAll(String s) {
-        //System.out.println("'"+s+"'");
-        // Avoid arrayindexoutof.... :
+        
+        
         if (s.length() == 0)
           return s;
-        // If only one character (uppercase letter), add a dot and return immediately:
+        
         if ((s.length() == 1) && (Character.isLetter(s.charAt(0)) &&
                 Character.isUpperCase(s.charAt(0))))
           return s+".";
@@ -349,9 +284,9 @@ public class ImportFormatReader {
       return f;
   }
 
-  //==================================================
-  // Set a field, unless the string to set is empty.
-  //==================================================
+  
+  
+  
   public static void setIfNecessary(BibtexEntry be, String field, String content) {
     if (!content.equals(""))
       be.setField(field, content);
@@ -394,10 +329,10 @@ public class ImportFormatReader {
     if (bibentries == null)
       throw new IOException(Globals.lang("Import failed"));
 
-    // Remove all empty entries:
+    
     purgeEmptyEntries(bibentries);
 
-    // Add entries to database.
+    
     database = new BibtexDatabase();
 
     Iterator<BibtexEntry> it = bibentries.iterator();
@@ -409,7 +344,7 @@ public class ImportFormatReader {
         entry.setId(Util.createNeutralId());
         database.insertEntry(entry);
       } catch (KeyCollisionException ex) {
-        //ignore
+        
         System.err.println("KeyCollisionException [ addBibEntries(...) ]");
       }
     }
@@ -417,34 +352,23 @@ public class ImportFormatReader {
     return database;
   }
 
-  /**
-   * Receives an ArrayList of BibtexEntry instances, iterates through them, and
-   * removes all entries that have no fields set. This is useful for rooting out
-   * an unsucessful import (wrong format) that returns a number of empty entries.
-   */
+  
   public static void purgeEmptyEntries(Collection<BibtexEntry> entries) {
     for (Iterator<BibtexEntry> i = entries.iterator(); i.hasNext();) {
       BibtexEntry entry = i.next();
 
-      // If there are no fields, remove the entry:
+      
       if (entry.getAllFields().size() == 0)
         i.remove();
     }
   }
 
-  /**
-	 * Tries to import a file by iterating through the available import filters,
-	 * and keeping the import that seems most promising.
-	 * 
-	 * If all fails this method attempts to read this file as bibtex.
-	 * 
-	 * @throws IOException 
-	 */
+  
 	public Pair<String, ParserResult> importUnknownFormat(String filename) throws IOException {
 
 		Pair<String, ParserResult> result = null;
 		
-		// Cycle through all importers:
+		
 		int bestResult = 0;
 
         for (ImportFormat imFo : getImportFormats()) {
@@ -464,14 +388,14 @@ public class ImportFormatReader {
                     new ParserResult(entries));
                 }
             } catch (IOException ex) {
-                // The import didn't succeed. Go on.
+                
             }
         }
 		
 		if (result != null)
 			return result;
 		
-		// Finally, if all else fails, see if it is a BibTeX file:
+		
 		ParserResult pr = OpenDatabaseAction.loadDatabase(new File(filename),
 			Globals.prefs.get("defaultEncoding"));
 		if ((pr.getDatabase().getEntryCount() > 0)

@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003  Nizar N. Batada, Morten O. Alver
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref;
 
 import java.util.Iterator;
@@ -36,13 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-/**
- * Manages visibility of SideShowComponents in a given newly constructed
- * sidePane.
- * 
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:18 $)
- * 
- */
+
 public class SidePaneManager {
 
 	JabRefFrame frame;
@@ -57,11 +26,7 @@ public class SidePaneManager {
 
 	public SidePaneManager(JabRefFrame frame) {
 		this.frame = frame;
-		/*
-		 * Change by Morten Alver 2005.12.04: By postponing the updating of the
-		 * side pane components, we get rid of the annoying latency when
-		 * switching tabs:
-		 */
+		
 		frame.tabbedPane.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent event) {
 				SwingUtilities.invokeLater(new Runnable() {
@@ -128,7 +93,7 @@ public class SidePaneManager {
 
 	private synchronized void show(SidePaneComponent component) {
 		if (!visible.contains(component)) {
-			// Put the new component at the top of the group
+			
 			visible.add(0, component);
 			updateView();
 			component.componentOpening();
@@ -160,12 +125,7 @@ public class SidePaneManager {
 
 
 
-	/**
-	 * Update all side pane components to show information from the given
-	 * BasePanel.
-	 * 
-	 * @param panel
-	 */
+	
 	public void setActiveBasePanel(BasePanel panel) {
 		for (Iterator i = components.keySet().iterator(); i.hasNext();) {
 			Object key = i.next();

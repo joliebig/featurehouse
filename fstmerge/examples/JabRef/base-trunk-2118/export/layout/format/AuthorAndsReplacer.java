@@ -1,22 +1,12 @@
-/*
- * Created on 10/10/2004
- * 
- */
+
 package net.sf.jabref.export.layout.format;
 
 import net.sf.jabref.export.layout.LayoutFormatter;
 
-/**
- * Replaces and's for & (in case of two authors) and ; (in case
- * of more than two authors).
- * 
- * @author Carlos Silla
- */
+
 public class AuthorAndsReplacer implements LayoutFormatter {
 
-	/* (non-Javadoc)
-	 * @see net.sf.jabref.export.layout.LayoutFormatter#format(java.lang.String)
-	 */
+	
 	public String format(String fieldText) {
 
         if (fieldText == null)
@@ -26,7 +16,7 @@ public class AuthorAndsReplacer implements LayoutFormatter {
 	
 		switch(authors.length) {
 			case 1:
-				//Does nothing;
+				
 				s = authors[0];
 			break;
 			case 2:

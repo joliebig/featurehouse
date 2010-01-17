@@ -18,11 +18,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.*;
 
-/**
- * This action goes through all selected entries in the BasePanel, and attempts to autoset the
- * given external file (pdf, ps, ...) based on the same algorithm used for the "Auto" button in
- * EntryEditor.
- */
+
 public class SynchronizeFileField extends AbstractWorker {
 
     private String fieldName = GUIGlobals.FILE_FIELD;
@@ -49,7 +45,7 @@ public class SynchronizeFileField extends AbstractWorker {
         sel = new BibtexEntry[col.size()];
         sel = col.toArray(sel);
 
-        // Ask about rules for the operation:
+        
         if (optDiag == null)
             optDiag = new SynchronizeFileField.OptionsDialog(panel.frame(), panel.metaData(), fieldName);
         Util.placeDialog(optDiag, panel.frame());
@@ -71,7 +67,7 @@ public class SynchronizeFileField extends AbstractWorker {
         }
         panel.frame().setProgressBarValue(0);
         panel.frame().setProgressBarVisible(true);
-        int weightAutoSet = 10; // autoSet takes 10 (?) times longer than checkExisting
+        int weightAutoSet = 10; 
         int progressBarMax = (autoSet ? weightAutoSet * sel.length : 0)
                 + (checkExisting ? sel.length : 0);
         panel.frame().setProgressBarMaximum(progressBarMax);
@@ -79,83 +75,65 @@ public class SynchronizeFileField extends AbstractWorker {
         brokenLinks = 0;
         final NamedCompound ce = new NamedCompound(Globals.lang("Autoset %0 field", fieldName));
 
-        //final OpenFileFilter off = Util.getFileFilterForField(fieldName);
+        
 
-        //ExternalFilePanel extPan = new ExternalFilePanel(fieldName, panel.metaData(), null, null, off);
-        //FieldTextField editor = new FieldTextField(fieldName, "", false);
+        
+        
 
-        // Find the default directory for this field type:
+        
         String dir = panel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
         Set<BibtexEntry> changedEntries = new HashSet<BibtexEntry>();
 
-        // First we try to autoset fields
+        
         if (autoSet) {
             Collection<BibtexEntry> entries = new ArrayList<BibtexEntry>();
             for (int i = 0; i < sel.length; i++) {
                 entries.add(sel[i]);
             }
 
-            // We need to specify which directories to search in:
+            
             ArrayList<File> dirs = new ArrayList<File>();
             String dr = panel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
             if (dr != null)
                 dirs.add(new File(dr));
 
-            // Start the autosetting process:                
+            
             Thread t = FileListEditor.autoSetLinks(entries, ce, changedEntries, dirs);
-            // Wait for the autosetting to finish:
+            
             try {
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            /*
-                progress += weightAutoSet;
-                panel.frame().setProgressBarValue(progress);
-
-                Object old = sel[i].getField(fieldName);
-                FileListTableModel tableModel = new FileListTableModel();
-                if (old != null)
-                    tableModel.setContent((String)old);
-                Thread t = FileListEditor.autoSetLinks(sel[i], tableModel, null, null);
-
-                if (!tableModel.getStringRepresentation().equals(old)) {
-                    String toSet = tableModel.getStringRepresentation();
-                    if (toSet.length() == 0)
-                        toSet = null;
-                    ce.addEdit(new UndoableFieldChange(sel[i], fieldName, old, toSet));
-                    sel[i].setField(fieldName, toSet);
-                    entriesChanged++;
-                }
-            }    */
+            
 
         }
         progress += sel.length*weightAutoSet;
         panel.frame().setProgressBarValue(progress);
-        //System.out.println("Done setting");
-        // The following loop checks all external links that are already set.
+        
+        
         if (checkExisting) {
             boolean removeAllBroken = false;
             mainLoop:
             for (int i = 0; i < sel.length; i++) {
                 panel.frame().setProgressBarValue(progress++);
                 final String old = sel[i].getField(fieldName);
-                // Check if a extension is set:
+                
                 if ((old != null) && !old.equals("")) {
                     FileListTableModel tableModel = new FileListTableModel();
                     tableModel.setContentDontGuessTypes(old);
                     for (int j=0; j<tableModel.getRowCount(); j++) {
                         FileListEntry flEntry = tableModel.getEntry(j);
-                        // See if the link looks like an URL:
+                        
                         boolean httpLink = flEntry.getLink().toLowerCase().startsWith("http");
                         if (httpLink)
-                            continue; // Don't check the remote file.
-                        // TODO: should there be an option to check remote links?
+                            continue; 
+                        
 
-                        // A variable to keep track of whether this link gets deleted:
+                        
                         boolean deleted = false;
 
-                        // Get an absolute path representation:
+                        
                         File file = Util.expandFilename(flEntry.getLink(), new String[]{dir, "."});
                         if ((file == null) || !file.exists()) {
                             int answer;
@@ -168,36 +146,36 @@ public class SynchronizeFileField extends AbstractWorker {
                                     JOptionPane.QUESTION_MESSAGE, null, brokenLinkOptions, brokenLinkOptions[0]);
                             }
                             else {
-                                answer = 2; // We should delete this link.
+                                answer = 2; 
                             }
                             switch (answer) {
                                 case 1:
-                                    // Assign new file.
+                                    
                                     FileListEntryEditor flEditor = new FileListEntryEditor
                                             (panel.frame(), flEntry, false, true, panel.metaData());
                                     flEditor.setVisible(true, true);
                                     break;
                                 case 2:
-                                    // Clear field:
+                                    
                                     tableModel.removeEntry(j);
-                                    deleted = true; // Make sure we don't investigate this link further.
-                                    j--; // Step back in the iteration, because we removed an entry.
+                                    deleted = true; 
+                                    j--; 
                                     break;
                                 case 3:
-                                    // Clear field:
+                                    
                                     tableModel.removeEntry(j);
-                                    deleted = true; // Make sure we don't investigate this link further.
-                                    j--; // Step back in the iteration, because we removed an entry.
-                                    removeAllBroken = true; // Notify for further cases.
+                                    deleted = true; 
+                                    j--; 
+                                    removeAllBroken = true; 
                                     break;
                                 case 4:
-                                    // Cancel
+                                    
                                     break mainLoop;
                             }
                             brokenLinks++;
                         }
 
-                        // Unless we deleted this link, see if its file type is recognized:
+                        
                         if (!deleted && (flEntry.getType() instanceof UnknownExternalFileType)) {
                             String[] options = new String[]
                                     {Globals.lang("Define '%0'", flEntry.getType().getName()),
@@ -208,15 +186,15 @@ public class SynchronizeFileField extends AbstractWorker {
                                     Globals.lang("Undefined file type"), JOptionPane.YES_NO_CANCEL_OPTION,
                                     JOptionPane.QUESTION_MESSAGE, null, options, defOption);
                             if (answer == JOptionPane.CANCEL_OPTION) {
-                                // User doesn't want to handle this unknown link type.
+                                
                             }
                             else if (answer == JOptionPane.YES_OPTION) {
-                                // User wants to define the new file type. Show the dialog:
+                                
                                 ExternalFileType newType = new ExternalFileType(flEntry.getType().getName(), "", "", "", "new");
                                 ExternalFileTypeEntryEditor editor = new ExternalFileTypeEntryEditor(panel.frame(), newType);
                                 editor.setVisible(true);
                                 if (editor.okPressed()) {
-                                    // Get the old list of types, add this one, and update the list in prefs:
+                                    
                                     java.util.List<ExternalFileType> fileTypes = new ArrayList<ExternalFileType>();
                                     ExternalFileType[] oldTypes = Globals.prefs.getExternalFileTypeSelection();
                                     for (int k = 0; k < oldTypes.length; k++) {
@@ -229,8 +207,8 @@ public class SynchronizeFileField extends AbstractWorker {
                                 }
                             }
                             else {
-                                // User wants to change the type of this link.
-                                // First get a model of all file links for this entry:
+                                
+                                
                                 FileListEntryEditor editor = new FileListEntryEditor
                                         (panel.frame(), flEntry, false, true, panel.metaData());
                                 editor.setVisible(true, false);
@@ -239,7 +217,7 @@ public class SynchronizeFileField extends AbstractWorker {
                     }
 
                     if (!tableModel.getStringRepresentation().equals(old)) {
-                        // The table has been modified. Store the change:
+                        
                         String toSet = tableModel.getStringRepresentation();
                         if (toSet.length() == 0)
                             toSet = null;
@@ -247,7 +225,7 @@ public class SynchronizeFileField extends AbstractWorker {
                                 toSet));
                         sel[i].setField(fieldName, toSet);
                         changedEntries.add(sel[i]);
-                        //System.out.println("Changed to: "+tableModel.getStringRepresentation());
+                        
                     }
 
 
@@ -256,10 +234,10 @@ public class SynchronizeFileField extends AbstractWorker {
         }
 
         entriesChangedCount = changedEntries.size();
-	//for (BibtexEntry entr : changedEntries)
-	//    System.out.println(entr.getCiteKey());
+	
+	
         if (entriesChangedCount > 0) {
-            // Add the undo edit:
+            
             ce.end();
             panel.undoManager.addEdit(ce);
             
@@ -324,11 +302,11 @@ public class SynchronizeFileField extends AbstractWorker {
             FormLayout layout = new FormLayout("fill:pref", "");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             description = new JLabel("<HTML>" +
-                    Globals.lang(//"This function helps you keep your external %0 links up-to-date." +
+                    Globals.lang(
                             "Attempt to autoset %0 links for your entries. Autoset works if "
                                     + "a %0 file in your %0 directory or a subdirectory<BR>is named identically to an entry's BibTeX key, plus extension.", fn)
                     + "</HTML>");
-            //            name.setVerticalAlignment(JLabel.TOP);
+            
             builder.appendSeparator(Globals.lang("Autoset"));
             builder.append(description);
             builder.nextLine();

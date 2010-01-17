@@ -26,9 +26,9 @@ public class PushToLyx implements PushToApplication {
         String lyxpipeSetting = Globals.prefs.get("lyxpipe");
         if (!lyxpipeSetting.endsWith(".in"))
             lyxpipeSetting = lyxpipeSetting+".in";
-        File lp = new File(lyxpipeSetting); // this needs to fixed because it gives "asdf" when going prefs.get("lyxpipe")
+        File lp = new File(lyxpipeSetting); 
         if( !lp.exists() || !lp.canWrite()){
-            // See if it helps to append ".in":
+            
             lp = new File(lyxpipeSetting+".in");
             if( !lp.exists() || !lp.canWrite()){
                 couldNotFindPipe = true;
@@ -58,8 +58,7 @@ public class PushToLyx implements PushToApplication {
 
 
 	    t.start();
-	    /*new Timeout(2000, t, Globals.lang("Error")+": "+
-            Globals.lang("unable to access LyX-pipe"));*/
+	    
         try {
             t.join();
         } catch (InterruptedException e) {
@@ -123,18 +122,6 @@ public class PushToLyx implements PushToApplication {
         settings.add(new JLabel(Globals.lang("Path to LyX pipe") + ":"));
         settings.add(lyxPipe);
     }
-    /*class Timeout extends javax.swing.Timer
-    {
-      public Timeout(int timeout, final Thread toStop, final String message) {
-        super(timeout, new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            toStop.stop();         // !!! <- deprecated
-            // toStop.interrupt(); // better ?, interrupts wait and IO
-            //stop();
-            //output(message);
-          }
-        });
-      }
-    } */
+    
 
 }

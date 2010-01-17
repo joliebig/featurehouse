@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2005 Andreas Rudert, based on ExportCustomizationDialog by ??
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref.imports;
 
 import java.awt.BorderLayout;
@@ -44,9 +19,7 @@ import net.sf.jabref.gui.FileDialogs;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * Dialog to manage custom importers.
- */
+
 public class ImportCustomizationDialog extends JDialog {
 
   private final JabRefFrame frame;
@@ -63,10 +36,7 @@ public class ImportCustomizationDialog extends JDialog {
   private JabRefPreferences prefs = Globals.prefs;
   private ImportCustomizationDialog importCustomizationDialog;
 
-  /*
-  *  (non-Javadoc)
-  * @see java.awt.Component#getSize()
-  */
+  
   public Dimension getSize() {
     int width = GUIGlobals.IMPORT_DIALOG_COL_0_WIDTH
               + GUIGlobals.IMPORT_DIALOG_COL_1_WIDTH
@@ -75,16 +45,10 @@ public class ImportCustomizationDialog extends JDialog {
     return new Dimension(width, width/2);
   }
 
-  /**
-   * Converts a path relative to a base-path into a class name.
-   * 
-   * @param basePath  base path
-   * @param path  path that includes base-path as a prefix
-   * @return  class name
-   */
+  
   private String pathToClass(File basePath, File path) {
     String className = null;
-    // remove leading basepath from path
+    
     while (!path.equals(basePath)) {
       className = path.getName() + (className != null ? "." + className : "");
       path = path.getParentFile();
@@ -93,22 +57,14 @@ public class ImportCustomizationDialog extends JDialog {
     return className;
   }
 
-  /**
-   * Adds an importer to the model that underlies the custom importers.
-   * 
-   * @param importer  importer
-   */
+  
   void addOrReplaceImporter(CustomImportList.Importer importer) {
     prefs.customImports.replaceImporter(importer);
     Globals.importFormatReader.resetImportFormats();
     ((ImportTableModel)customImporterTable.getModel()).fireTableDataChanged();
   }
 
-  /**
-   * 
-   * @param frame_
-   * @throws HeadlessException
-   */
+  
   public ImportCustomizationDialog(JabRefFrame frame_) throws HeadlessException {
     super(frame_, Globals.lang("Manage custom imports"), false);
     this.importCustomizationDialog = this;
@@ -234,7 +190,7 @@ public class ImportCustomizationDialog extends JDialog {
       customImporterTable.setRowSelectionInterval(0, 0);
     }
 
-    // Key bindings:
+    
     ActionMap am = mainPanel.getActionMap();
     InputMap im = mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     im.put(frame.prefs().getKey("Close dialog"), "close");
@@ -261,9 +217,7 @@ public class ImportCustomizationDialog extends JDialog {
     new FocusRequester(customImporterTable);
   }
 
-  /**
-   * Table model for the custom importer table.
-   */
+  
   class ImportTableModel extends AbstractTableModel {
     private String[] columnNames = new String[] {
       Globals.lang("Import name"),

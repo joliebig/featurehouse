@@ -1,9 +1,6 @@
 package net.sf.jabref.util;
 
-/**
- * A String tokenizer that works just like StringTokenizer, but considers quoted
- * characters (which do not act as delimiters).
- */
+
 public class QuotedStringTokenizer {
     private final String m_content;
     private final int m_contentLength;
@@ -11,22 +8,13 @@ public class QuotedStringTokenizer {
     private final char m_quoteChar;
     private int m_index = 0;
     
-    /**
-     * @param content
-     *            The String to be tokenized.
-     * @param delimiters
-     *            The delimiter characters.
-     * @param quoteCharacter
-     *            The quoting character. Every character (including, but not
-     *            limited to, delimiters) that is preceded by this character is
-     *            not treated as a delimiter, but as a token component.
-     */
+    
     public QuotedStringTokenizer(String content, String delimiters, char quoteCharacter) {
         m_content = content;
         m_delimiters = delimiters;
         m_quoteChar = quoteCharacter;
         m_contentLength = m_content.length();
-        // skip leading delimiters
+        
         while (isDelimiter(m_content.charAt(m_index)) && m_index < m_contentLength)
             ++m_index;
     }
@@ -36,13 +24,13 @@ public class QuotedStringTokenizer {
         StringBuffer sb = new StringBuffer();
         while (m_index < m_contentLength) {
     		c = m_content.charAt(m_index);
-    		if (c == m_quoteChar) { // next is quoted
+    		if (c == m_quoteChar) { 
     		    ++m_index;
-    		    if (m_index < m_contentLength) // sanity check
+    		    if (m_index < m_contentLength) 
     		        sb.append(m_content.charAt(m_index));
-    			// ignore for delimiter search!
-    		} else if (isDelimiter(c)) { // unit finished
-    		    // advance index until next token or end
+    			
+    		} else if (isDelimiter(c)) { 
+    		    
     		    do {
     		        ++m_index;
     		    } while (m_index < m_contentLength && isDelimiter(m_content.charAt(m_index)));

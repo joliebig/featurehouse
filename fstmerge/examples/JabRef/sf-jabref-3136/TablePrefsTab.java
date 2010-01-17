@@ -28,23 +28,12 @@ class TablePrefsTab extends JPanel implements PrefsTab {
 
 	private JTextField priField, secField, terField, numericFields;
 
-	/**
-	 * Customization of external program paths.
-	 * 
-	 * @param prefs
-	 *            a <code>JabRefPreferences</code> value
-	 */
+	
 	public TablePrefsTab(JabRefPreferences prefs, JabRefFrame frame) {
 		_prefs = prefs;
 		setLayout(new BorderLayout());
 
-		/**
-		 * Added Bibtexkey to combobox.
-		 * 
-		 * [ 1540646 ] default sort order: bibtexkey
-		 * 
-		 * http://sourceforge.net/tracker/index.php?func=detail&aid=1540646&group_id=92314&atid=600306
-		 */
+		
 		Vector<String> v = new Vector<String>(Arrays.asList(BibtexFields.getAllFieldNames()));
 		v.add(BibtexFields.KEY_FIELD);
 		Collections.sort(v);
@@ -153,13 +142,13 @@ class TablePrefsTab extends JPanel implements PrefsTab {
 		builder.append(pan);
 		builder.append(nameBuilder.getPanel());
 		builder.nextLine();
-		// builder.append(pan); builder.append(noAbbrNames); builder.nextLine();
-		// builder.append(pan); builder.append(abbrNames); builder.nextLine();
-		// builder.append(pan); builder.append(lastNamesOnly);
-		// builder.nextLine();
+		
+		
+		
+		
 
 		builder.appendSeparator(Globals.lang("Default sort criteria"));
-		// Create a new panel with its own FormLayout for these items:
+		
 		FormLayout layout2 = new FormLayout(
 			"left:pref, 8dlu, fill:pref, 4dlu, fill:60dlu, 4dlu, left:pref", "");
 		DefaultFormBuilder builder2 = new DefaultFormBuilder(layout2);
@@ -258,11 +247,7 @@ class TablePrefsTab extends JPanel implements PrefsTab {
             numericFields.setText(numF);
 	}
 
-	/**
-	 * Store changes to table preferences. This method is called when the user
-	 * clicks Ok.
-	 * 
-	 */
+	
 	public void storeSettings() {
 
 		_prefs.putBoolean("namesAsIs", namesAsIs.isSelected());
@@ -280,16 +265,16 @@ class TablePrefsTab extends JPanel implements PrefsTab {
 		_prefs.putBoolean("priDescending", priDesc.isSelected());
 		_prefs.putBoolean("secDescending", secDesc.isSelected());
 		_prefs.putBoolean("terDescending", terDesc.isSelected());
-		// _prefs.put("secSort",
-		// GUIGlobals.ALL_FIELDS[secSort.getSelectedIndex()]);
-		// _prefs.put("terSort",
-		// GUIGlobals.ALL_FIELDS[terSort.getSelectedIndex()]);
+		
+		
+		
+		
 		_prefs.put("priSort", priField.getText().toLowerCase().trim());
 		_prefs.put("secSort", secField.getText().toLowerCase().trim());
 		_prefs.put("terSort", terField.getText().toLowerCase().trim());
 
 		_prefs.putBoolean("floatMarkedEntries", floatMarked.isSelected());
-		// updatefont
+		
 
         String oldVal = _prefs.get("numericFields");
         String newVal = numericFields.getText().trim();

@@ -11,10 +11,7 @@ import java.util.TreeMap;
 import java.util.Comparator;
 import java.util.Iterator;
 
-/**
- * This action rearranges all tabs in the main tabbed pane of the given JabRefFrame
- * in alphabetical order.
- */
+
 public class SortTabsAction extends MnemonicAwareAction implements Comparator {
     private JabRefFrame frame;
 
@@ -26,7 +23,7 @@ public class SortTabsAction extends MnemonicAwareAction implements Comparator {
 
     public void actionPerformed(ActionEvent e) {
         JTabbedPane tabbedPane = frame.getTabbedPane();
-       // Make a sorted Map that compares case-insensitively:
+       
         TreeMap map = new TreeMap(this);
 
         for (int i=0; i<tabbedPane.getTabCount(); i++) {

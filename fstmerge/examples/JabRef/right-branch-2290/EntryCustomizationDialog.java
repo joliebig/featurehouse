@@ -1,28 +1,4 @@
-/*
-Copyright (C) 2002-2003 Nizar N. Batada nbatada@stanford.edu
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 package net.sf.jabref;
 
 import java.util.*;
@@ -44,9 +20,9 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
     JLabel messageLabel=new JLabel("", SwingConstants.CENTER);
 
     JTextField name = new JTextField("", width);
-    JTextArea req_ta=new JTextArea("",5,width),//10 row, 20 columns
-	opt_ta=new JTextArea("",5,width);//10 row, 20 columns
-    // need to get FIeld name from somewhere
+    JTextArea req_ta=new JTextArea("",5,width),
+	opt_ta=new JTextArea("",5,width);
+    
 
     JComboBox types_cb = new JComboBox();
 
@@ -61,16 +37,16 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 
     public EntryCustomizationDialog(JabRefFrame parent)
     {
-	//Type=Article, Book etc
-	// templateName will be used to put on the dialog frame
-	// create 10 default entries
-	// return an array
+	
+	
+	
+	
 	super(parent,Globals.lang("Customize entry types"), false);
 	this.parent = parent;
 	help = new HelpAction(parent.helpDiag, GUIGlobals.customEntriesHelp,
 			      "Help", GUIGlobals.getIconUrl("helpSmall"));
 	setTypeSelection();
-	//setSize(440,400);
+	
 	initialize();
 	makeButtons();
 
@@ -80,17 +56,17 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	optSP = new JScrollPane(opt_ta,
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	//helpButton = new JButton(help);
-	//helpButton.setText(null);
+	
+	
         JToolBar tlb = new JToolBar();
         tlb.setFloatable(false);
         tlb.add(help);
-	//panel.setBackground(GUIGlobals.lightGray);
-	//buttonPanel.setBackground(GUIGlobals.lightGray);
+	
+	
 	panel.setLayout(gbl);
 	typePanel.setLayout(gbl);
 	fieldPanel.setLayout(gbl);
-	//panel.setBorder(BorderFactory.createEtchedBorder());
+	
 	fieldPanel.setBorder(BorderFactory.createEtchedBorder());
 	typePanel.setBorder(BorderFactory.createEtchedBorder());
 
@@ -107,14 +83,14 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	con.fill = GridBagConstraints.NONE;
 	con.gridwidth = GridBagConstraints.REMAINDER;
 	con.weightx = 0;
-	//gbl.setConstraints(helpButton, con);
+	
 	gbl.setConstraints(tlb, con);
 	con.gridwidth = 1;
 	typePanel.add(lab);
 	typePanel.add(types_cb);
 	typePanel.add(lab2);
 	typePanel.add(name);
-	//typePanel.add(helpButton);
+	
 	typePanel.add(tlb);
 	lab = new JLabel(Globals.lang("Required fields"));
 	con.fill = GridBagConstraints.BOTH;
@@ -145,7 +121,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	panel.add(fieldPanel);
 	panel.add(messageLabel);
 
-        // Key bindings:
+        
         ActionMap am = panel.getActionMap();
         InputMap im = panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -231,13 +207,13 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	ok = new JButton(Globals.lang("Store"));
 	cancel=new JButton(Globals.lang("Close"));
 	delete = new JButton(Globals.lang("Delete custom"));
-        //genFields = new JButton(Globals.lang("Set general fields"));
+        
 	importTypes = new JButton(Globals.lang("Import"));
 	exportTypes = new JButton(Globals.lang("Export"));
         buttonPanel.add( ok );
 	buttonPanel.add(delete);
         buttonPanel.add(Box.createHorizontalStrut(5));
-        //buttonPanel.add(genFields);
+        
 	buttonPanel.add(importTypes);
 	buttonPanel.add(exportTypes);
         buttonPanel.add(Box.createHorizontalStrut(5));
@@ -252,13 +228,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 		    dispose();
 		}
 	    });
-        /*genFields.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-            GenFieldsCustomizer gf = new GenFieldsCustomizer(parent, ths);
-            Util.placeDialog(gf, parent);
-            gf.show();
-          }
-        });*/
+        
 	delete.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    BibtexEntryType type = BibtexEntryType
@@ -312,7 +282,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 			    while (i.hasNext()) {
 				Object o=BibtexEntryType.ALL_TYPES.get(i.next());
 				if (o instanceof CustomEntryType) {
-				    // Store this entry type.
+				    
 				    ((CustomEntryType)o).save(out);
 				}
 			    }
@@ -320,7 +290,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 			} catch (IOException ex) {
 			    JOptionPane.showMessageDialog
 				(ths, Globals.lang("Could not export entry types")+": "+ex.getMessage(), Globals.lang("Export preferences"), JOptionPane.ERROR_MESSAGE);
-			    //ex.printStackTrace();
+			    
 			}
 		    }
 
@@ -344,10 +314,10 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 			    if ((line.length() > 9+GUIGlobals.ENTRYTYPE_FLAG.length())
 				&& line.substring(0, 9+GUIGlobals.ENTRYTYPE_FLAG.length()).equals("@comment{"+GUIGlobals.ENTRYTYPE_FLAG)
 				&& line.substring(line.length()-1).equals("}")) {
-				// Matches a @comment{jabref-entrytype: ...} section.
+				
 				CustomEntryType type = CustomEntryType.parseEntryType(line.substring(9, line.length()-1));
 				if (type != null) {
-				    // Parsing succeeded.
+				    
 				    BibtexEntryType.ALL_TYPES.put(type.getName().toLowerCase(), type);
 				    count++;
 				}
@@ -364,7 +334,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 		    } catch (IOException ex) {
 			JOptionPane.showMessageDialog
 			    (ths, Globals.lang("Could not import entry types")+": "+ex.getMessage(), Globals.lang("Import entry types"), JOptionPane.ERROR_MESSAGE);
-			//ex.printStackTrace();
+			
 		    }
 		}
 
@@ -372,12 +342,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	    });
     }
 
-    /**
-     * Cycle through all databases, and make sure everything is updated with
-     * the new type customization. This includes making sure all entries have
-     * a valid type, that no obsolete entry editors are around, and that
-     * the right-click menus' change type menu is up-to-date.
-     */
+    
     private void updateTypesForEntries(String typeName) {
 	if (parent.tabbedPane.getTabCount() == 0)
 	    return;
@@ -388,7 +353,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 	    BasePanel bp = (BasePanel)parent.tabbedPane.getComponentAt(i);
 	    boolean anyChanges = false;
 	    bp.entryEditors.remove(typeName);
-	    //bp.rcm.populateTypeMenu(); // Update type menu for change type.
+	    
 	    base = bp.database;
 	    iter = base.getKeySet().iterator();
 	    while (iter.hasNext()) {
@@ -403,7 +368,7 @@ class EntryCustomizationDialog extends JDialog implements ItemListener
 
     public void itemStateChanged(ItemEvent e) {
 	if (types_cb.getSelectedIndex() > 0) {
-	    // User has selected one of the existing types.
+	    
 	    String name = (String)types_cb.getSelectedItem();
 	    updateToType((name.split(" "))[0]);
 	} else {

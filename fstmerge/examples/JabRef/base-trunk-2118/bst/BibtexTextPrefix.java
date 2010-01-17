@@ -1,33 +1,11 @@
-// $Id: BibtexTextPrefix.java,v 1.1 2010-01-17 00:04:55 apel Exp $
+
 package net.sf.jabref.bst;
 
 
-/**
- * The |built_in| function {\.{text.prefix\$}} pops the top two literals (the
- * integer literal |pop_lit1| and a string literal, in that order). It pushes
- * the substring of the (at most) |pop_lit1| consecutive text characters
- * starting from the beginning of the string. This function is similar to
- * {\.{substring\$}}, but this one considers an accented character (or more
- * precisely, a ``special character''$\!$, even if it's missing its matching
- * |right_brace|) to be a single text character (rather than however many
- * |ASCII_code| characters it actually comprises), and this function doesn't
- * consider braces to be text characters; furthermore, this function appends any
- * needed matching |right_brace|s. If any of the types is incorrect, it
- * complains and pushes the null string.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:04:55 $)
- * 
- */
+
 public class BibtexTextPrefix {
 
-	/**
-	 * 
-	 * @param numOfChars
-	 * @param toPrefix
-	 * @param warn may-be-null
-	 * @return
-	 */
+	
 	public static String textPrefix(int numOfChars, String toPrefix, Warn warn) {
 
 		StringBuffer sb = new StringBuffer();
@@ -44,7 +22,7 @@ public class BibtexTextPrefix {
 			if (c == '{') {
 				braceLevel++;
 				if (braceLevel == 1 && i < n && (cs[i] == '\\')) {
-					i++; // skip backslash
+					i++; 
 					while (i < n && braceLevel > 0) {
 						if (cs[i] == '}') {
 							braceLevel--;

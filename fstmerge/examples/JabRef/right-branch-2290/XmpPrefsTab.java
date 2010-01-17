@@ -20,15 +20,7 @@ import javax.swing.table.TableModel;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Preference Tab for XMP.
- * 
- * Allows the user to enable and configure the XMP privacy filter.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:36 $)
- * 
- */
+
 class XmpPrefsTab extends JPanel implements PrefsTab {
 
 	boolean tableChanged = false;
@@ -42,9 +34,7 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 
 	Vector tableRows = new Vector(10);
 
-	/**
-	 * Customization of external program paths.
-	 */
+	
 	public XmpPrefsTab() {
 		setLayout(new BorderLayout());
 
@@ -114,7 +104,7 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 
 		tablePanel.add(toolbar, BorderLayout.EAST);
 
-		// Build Prefs Tabs
+		
 		builder.appendSeparator(Globals.lang("XMP Export Privacy Settings"));
 		builder.nextLine();
 
@@ -165,7 +155,7 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 		public void actionPerformed(ActionEvent e) {
 			int[] rows = table.getSelectedRows();
 			if (rows.length == 0) {
-				// No rows selected, so we just add one at the end.
+				
 				rowCount++;
 				table.revalidate();
 				table.repaint();
@@ -184,9 +174,7 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 		}
 	}
 
-	/**
-	 * Load settings from the preferences and initialize the table.
-	 */
+	
 	public void setValues() {
 		tableRows.clear();
 		String[] names = JabRefPreferences.getInstance().getStringArray("xmpPrivacyFilters");
@@ -199,11 +187,7 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 			"useXmpPrivacyFilter"));
 	}
 
-	/**
-	 * Store changes to table preferences. This method is called when the user
-	 * clicks Ok.
-	 * 
-	 */
+	
 	public void storeSettings() {
 
 		if (table.isEditing()) {
@@ -212,17 +196,17 @@ class XmpPrefsTab extends JPanel implements PrefsTab {
 			table.getCellEditor(row, col).stopCellEditing();
 		}
 
-		// Now we need to make sense of the contents the user has made to the
-		// table setup table.
+		
+		
 		if (tableChanged) {
 
-			// First we remove all rows with empty names.
+			
 			for (int i = tableRows.size() - 1; i >= 0; i--) {
 				if (tableRows.elementAt(i).equals(""))
 					tableRows.removeElementAt(i);
 			}
 
-			// Finally, we store the new preferences.
+			
 			JabRefPreferences.getInstance().putStringArray("xmpPrivacyFilters",
 				(String[]) tableRows.toArray(new String[tableRows.size()]));
 		}

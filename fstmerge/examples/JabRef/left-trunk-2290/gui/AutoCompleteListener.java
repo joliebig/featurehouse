@@ -5,9 +5,7 @@ import javax.swing.text.BadLocationException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-/**
- * Created by Morten O. Alver, 16 Feb. 2007
- */
+
 public class AutoCompleteListener extends KeyAdapter {
 
 
@@ -18,7 +16,7 @@ public class AutoCompleteListener extends KeyAdapter {
     protected Object[] lastCompletions = null;
     protected int lastShownCompletion = 0;
 
-    // These variables keep track of the situation from time to time.
+    
 
     public AutoCompleteListener(AutoCompleter completer) {
         this.completer = completer;
@@ -33,7 +31,7 @@ public class AutoCompleteListener extends KeyAdapter {
             e.consume();
             return;
         }
-        // Cycle through alternative completions when user presses PGUP/PGDN:
+        
         else if ((e.getKeyCode() == KeyEvent.VK_PAGE_DOWN) && (lastCompletions != null)) {
             cycle((JTextComponent) e.getSource(), 1);
             e.consume();
@@ -57,7 +55,7 @@ public class AutoCompleteListener extends KeyAdapter {
         alltext.delete(comp.getSelectionStart(), comp.getSelectionEnd());
         int cp = comp.getCaretPosition() - deletedChars;
         alltext.insert(cp, toSetIn);
-        //Util.pr(alltext.toString());
+        
         comp.setText(alltext.toString());
         comp.setCaretPosition(cp+toSetIn.length());
         comp.select(cp, cp + sno.length() - lastBeginning.length());
@@ -70,19 +68,19 @@ public class AutoCompleteListener extends KeyAdapter {
             JTextComponent comp = (JTextComponent) e.getSource();
             if ((toSetIn != null) && (toSetIn.length() > 1) &&
                     (ch == toSetIn.charAt(1))) {
-                // User continues on the word that was suggested.
+                
                 toSetIn = toSetIn.substring(1);
                 if (toSetIn.length() > 0) {
                     int cp = comp.getCaretPosition();
-                    //comp.setCaretPosition(cp+1-toSetIn.);
-                    //Util.pr(cp-toSetIn.length()+" - "+cp);
+                    
+                    
                     comp.select(cp + 1 - toSetIn.length(), cp);
                     lastBeginning = lastBeginning + ch;
 
                     e.consume();
                     lastCaretPosition = comp.getCaretPosition();
 
-                    //Util.pr("'"+toSetIn+"'");
+                    
 
                     if (toSetIn.length() < 2)
                         toSetIn = null;
@@ -92,7 +90,7 @@ public class AutoCompleteListener extends KeyAdapter {
 
             if ((toSetIn != null) && ((toSetIn.length() < 1) ||
                     (ch != toSetIn.charAt(1)))) {
-                // User discontinues the word that was suggested.
+                
                 lastBeginning = lastBeginning + ch;
                 Object[] completed =
                         completer.complete(lastBeginning);
@@ -103,7 +101,7 @@ public class AutoCompleteListener extends KeyAdapter {
                     int lastLen = toSetIn.length() - 1;
                     toSetIn = sno.substring(lastBeginning.length() - 1);
                     String text = comp.getText();
-                    //Util.pr(""+lastLen);
+                    
                     comp.setText(text.substring(0, lastCaretPosition - lastLen)
                             + toSetIn
                             + text.substring(lastCaretPosition));
@@ -125,17 +123,17 @@ public class AutoCompleteListener extends KeyAdapter {
                 return;
             currentword.append(ch);
             Object[] completed = completer.complete(currentword.toString());
-            int no = 0; // We use the first word in the array of completions.
+            int no = 0; 
             if ((completed != null) && (completed.length > 0)) {
                 lastShownCompletion = 0;
                 lastCompletions = completed;
                 String sno = (String) (completed[no]);
                 toSetIn = sno.substring(currentword.length() - 1);
-                //Util.pr("AutoCompListener: Found "+completed[0]);
+                
                 StringBuffer alltext = new StringBuffer(comp.getText());
                 int cp = comp.getCaretPosition();
                 alltext.insert(cp, toSetIn);
-                //Util.pr(alltext.toString());
+                
                 comp.setText(alltext.toString());
                 comp.setCaretPosition(cp);
                 comp.select(cp + 1, cp + 1 + sno.length() - currentword.length());
@@ -145,7 +143,7 @@ public class AutoCompleteListener extends KeyAdapter {
                 return;
             }
         }
-        //Util.pr("#hm");
+        
         toSetIn = null;
         lastCompletions = null;
 
@@ -169,10 +167,10 @@ public class AutoCompleteListener extends KeyAdapter {
                     found = true;
                 else piv--;
             }
-            //if (piv < 0)
-            //piv = 0;
+            
+            
             res.append(upToCaret.substring(piv + 1));
-            //Util.pr("AutoCompListener: "+res.toString());
+            
         } catch (BadLocationException ex) {
         }
 

@@ -16,9 +16,7 @@ import net.sf.jabref.BibtexEntry;
 import net.sf.jabref.Globals;
 import net.sf.jabref.net.URLDownload;
 
-/**
- * Utility class for trying to resolve URLs to full-text PDF for articles.
- */
+
 public class FindFullText {
 
     public final static int
@@ -40,28 +38,28 @@ public class FindFullText {
     public FindResult findFullText(BibtexEntry entry) {
         String urlText = entry.getField("url");
         String doiText = entry.getField("doi");
-        // First try the DOI link, if defined:
+        
         if ((doiText != null) && (doiText.trim().length() > 0)) {
             FindResult resDoi = lookForFullTextAtURL(Globals.DOI_LOOKUP_PREFIX+doiText);
             if (resDoi.status == FOUND_PDF)
                 return resDoi;
-            // The DOI link failed, try falling back on the URL link, if defined:
+            
             else if ((urlText != null) && (urlText.trim().length() > 0)) {
                 FindResult resUrl = lookForFullTextAtURL(urlText);
                 if (resUrl.status == FOUND_PDF)
                     return resUrl;
                 else {
-                    return resDoi; // If both URL and DOI fail, we assume that the error code for DOI is
-                                   // probably the most relevant.
+                    return resDoi; 
+                                   
                 }
             }
             else return resDoi;
         }
-        // No DOI? Try URL:
+        
         else if ((urlText != null) && (urlText.trim().length() > 0)) {
             return lookForFullTextAtURL(urlText);
         }
-        // No URL either? Return error code.
+        
         else return new FindResult(NO_URLS_DEFINED, null);
     }
 
@@ -76,8 +74,8 @@ public class FindFullText {
                     URL result = finder.findFullTextURL(url);
                     if (result != null) {
                         
-                        // Check the MIME type of this URL to see if it is a PDF. If not,
-                        // it could be because the user doesn't have access:
+                        
+                        
                         try {
                             URLDownload udl = new URLDownload(null, result, null);
                             udl.openConnectionOnly();
@@ -113,15 +111,7 @@ public class FindFullText {
         return null;
     }
 
-    /**
-     * Follow redirects until the final location is reached. This is necessary to handle DOI links, which
-     * redirect to publishers' web sites. We need to know the publisher's domain name in order to choose
-     * which FullTextFinder to use.
-     * @param url The url to start with.
-     * @param redirectCount The number of previous redirects. We will follow a maximum of 5 redirects.
-     * @return the final URL, or the initial one in case there is no redirect.
-     * @throws IOException for connection error
-     */
+    
     private URL resolveRedirects(URL url, int redirectCount) throws IOException {
         URLConnection uc = url.openConnection();
         if (uc instanceof HttpURLConnection) {
@@ -132,15 +122,15 @@ public class FindFullText {
             String location = huc.getHeaderField("location");
             huc.disconnect();
             if ((responseCode == HttpURLConnection.HTTP_MOVED_TEMP) && (redirectCount < 5)) {
-                //System.out.println(responseCode);
-                //System.out.println(location);
+                
+                
                 try {
                     URL newUrl = new URL(location);
                     return resolveRedirects(newUrl, redirectCount+1);
                 } catch (MalformedURLException ex) {
-                    return url; // take the previous one, since this one didn't make sense.
-                    // TODO: this could be caused by location being a relative link, but this would just give
-                    // the default page in the case of www.springerlink.com, not the article page. Don't know why.
+                    return url; 
+                    
+                    
                 }
 
             }
@@ -169,7 +159,7 @@ public class FindFullText {
                 return sb.toString();
             }
             else
-                return null; // TODO: are other types of connection (https?) relevant?
+                return null; 
         } finally {
             try {
                 if (in != null) in.close();

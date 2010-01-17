@@ -18,13 +18,7 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.JabRef;
 import net.sf.jabref.imports.ParserResult;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Aug 14, 2005
- * Time: 8:11:58 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class RemoteListener extends Thread {
 
     private JabRef jabref;
@@ -81,10 +75,10 @@ public class RemoteListener extends Thread {
                         if (!pr.toOpenTab()) {
                             jabref.jrf.addTab(pr.getDatabase(), pr.getFile(), pr.getMetaData(), pr.getEncoding(), (i == 0));
                         } else {
-                            // Add the entries to the open tab.
+                            
                             BasePanel panel = jabref.jrf.basePanel();
                             if (panel == null) {
-                                // There is no open tab to add to, so we create a new tab:
+                                
                                 jabref.jrf.addTab(pr.getDatabase(), pr.getFile(), pr.getMetaData(), pr.getEncoding(), (i == 0));
                             } else {
                                 List<BibtexEntry> entries = new ArrayList<BibtexEntry>(pr.getDatabase().getEntries());
@@ -97,7 +91,7 @@ public class RemoteListener extends Thread {
                     newSocket.close();
 
                 } catch (SocketTimeoutException ex) {
-                    //System.out.println("timeout");
+                    
                     in.close();
                     out.close();
                     newSocket.close();
@@ -107,7 +101,7 @@ public class RemoteListener extends Thread {
 
             } catch (SocketException ex) {
                 active = false;
-                //ex.printStackTrace();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -129,11 +123,7 @@ public class RemoteListener extends Thread {
 
     }
 
-    /**
-     * Attempt to send command line arguments to already running JabRef instance.
-     * @param args Command line arguments.
-     * @return true if successful, false otherwise.
-     */
+    
     public static boolean sendToActiveJabRefInstance(String[] args) {
         try {
             InetAddress local = InetAddress.getByName("localhost");

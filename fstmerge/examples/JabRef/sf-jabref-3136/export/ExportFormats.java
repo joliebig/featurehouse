@@ -16,25 +16,19 @@ import net.sf.jabref.plugin.core.generated._JabRefPlugin.ExportFormatExtension;
 import net.sf.jabref.plugin.core.generated._JabRefPlugin.ExportFormatProviderExtension;
 import net.sf.jabref.plugin.core.generated._JabRefPlugin.ExportFormatTemplateExtension;
 
-/**
- * User: alver
- * 
- * Date: Oct 18, 2006 
- * 
- * Time: 9:35:08 PM 
- */
+
 public class ExportFormats {
 
 	private static Map<String,IExportFormat> exportFormats = new TreeMap<String,IExportFormat>();
 
-    // Global variable that is used for counting output entries when exporting:
+    
     public static int entryNumber = 0;
 
     public static void initAllExports() {
 
         exportFormats.clear();
 
-        // Initialize Build-In Export Formats
+        
         putFormat(new ExportFormat(
                 Globals.lang("HTML"), "html", "html", null, ".html"));
         putFormat(new ExportFormat(
@@ -61,11 +55,11 @@ public class ExportFormats {
         putFormat(new MSBibExportFormat());
         putFormat(new MySQLExport());
     
-        // Add Export Formats contributed by Plugins
+        
         JabRefPlugin plugin = JabRefPlugin.getInstance(PluginCore.getManager());
 		if (plugin != null){
 			
-			// 1. ExportFormats based on Templates
+			
 			for (ExportFormatTemplateExtension e; plugin.getExportFormatTemplateExtensions();){
 				ExportFormat format = PluginBasedExportFormat.getFormat(e);
 				if (format != null){
@@ -73,7 +67,7 @@ public class ExportFormats {
 				}
 			}
 
-			// 2. ExportFormat classed 
+			
 			for (final ExportFormatExtension e; plugin.getExportFormatExtensions();) {
 				putFormat(new IExportFormat(){
 
@@ -101,7 +95,7 @@ public class ExportFormats {
 				});
 			}
 		
-			// 3. Formatters provided by Export Format Providers
+			
 			for (ExportFormatProviderExtension e : plugin.getExportFormatProviderExtensions()) {
 				IExportFormatProvider formatProvider = e.getFormatProvider();
 				for (IExportFormat exportFormat : formatProvider.getExportFormats()) {
@@ -110,23 +104,14 @@ public class ExportFormats {
 			}
 		}
 		
-        // Now add custom export formats
+        
         TreeMap<String, ExportFormat> customFormats = Globals.prefs.customExports.getCustomExportFormats();
         for (IExportFormat format : customFormats.values()){
             putFormat(format);
         }
     }
 
-	/**
-	 * Build a string listing of all available export formats.
-	 * 
-	 * @param maxLineLength
-	 *            The max line length before a line break must be added.
-	 * @param linePrefix
-	 *            If a line break is added, this prefix will be inserted at the
-	 *            beginning of the next line.
-	 * @return The string describing available formats.
-	 */
+	
 	public static String getConsoleExportList(int maxLineLength, int firstLineSubtr,
 		String linePrefix) {
 		StringBuffer sb = new StringBuffer();
@@ -146,37 +131,18 @@ public class ExportFormats {
 		return sb.toString();
 	}
 
-    /**
-     * Get a Map of all export formats.
-     * @return A Map containing all export formats, mapped to their console names.
-     */
+    
     public static Map<String, IExportFormat> getExportFormats() {
-        // It is perhaps overly paranoid to make a defensive copy in this case:
+        
         return Collections.unmodifiableMap(exportFormats);
     } 
 
-    /**
-	 * Look up the named export format.
-	 * 
-	 * @param consoleName
-	 *            The export name given in the JabRef console help information.
-	 * @return The ExportFormat, or null if no exportformat with that name is
-	 *         registered.
-	 */
+    
 	public static IExportFormat getExportFormat(String consoleName) {
 		return exportFormats.get(consoleName);
 	}
 
-	/**
-	 * Create an AbstractAction for performing an export operation.
-	 * 
-	 * @param frame
-	 *            The JabRefFrame of this JabRef instance.
-	 * @param selectedOnly
-	 *            true indicates that only selected entries should be exported,
-	 *            false indicates that all entries should be exported.
-	 * @return The action.
-	 */
+	
 	public static AbstractAction getExportAction(JabRefFrame frame, boolean selectedOnly) {
 
 		class ExportAction extends MnemonicAwareAction {
@@ -211,7 +177,7 @@ public class ExportFormats {
                         path = path + eff.getExtension();
                     file = new File(path);
                     if (file.exists()) {
-                        // Warn that the file exists:
+                        
                         if (JOptionPane.showConfirmDialog(frame, "'" + file.getName() + "' "
                             + Globals.lang("exists. Overwrite file?"), Globals.lang("Export"),
                             JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION)
@@ -228,14 +194,14 @@ public class ExportFormats {
                         }
                     }
 
-                    // Set the global variable for this database's file directory before exporting,
-                    // so formatters can resolve linked files correctly.
-                    // (This is an ugly hack!)
+                    
+                    
+                    
                     Globals.prefs.fileDirForDatabase = frame.basePanel().metaData()
                             .getFileDirectory(GUIGlobals.FILE_FIELD);                    
 
-                    // Make sure we remember which filter was used, to set
-                    // the default for next time:
+                    
+                    
                     Globals.prefs.put("lastUsedExport", format.getConsoleName());
                     Globals.prefs.put("exportWorkingDirectory", file.getParent());
                     
@@ -260,15 +226,15 @@ public class ExportFormats {
                         }
 
                         public void update() {
-                            // No error message. Report success:
+                            
                             if (errorMessage == null) {
                                 frame.output(Globals.lang("%0 export successful", format.getDisplayName()));
                             }
-                            // ... or show an error dialog:
+                            
                             else {
                                 frame.output(Globals.lang("Could not save file")
                                         + " - " + errorMessage);
-                                // Need to warn the user that saving failed!
+                                
                                 JOptionPane.showMessageDialog(frame, Globals.lang("Could not save file")
                                     + ".\n" + errorMessage, Globals.lang("Save database"),
                                     JOptionPane.ERROR_MESSAGE);
@@ -276,9 +242,9 @@ public class ExportFormats {
                         }
                     };
 
-                    // Run the export action in a background thread:
+                    
                     (exportWorker.getWorker()).run();
-                    // Run the update method:
+                    
                     exportWorker.update();
                 }
 			}

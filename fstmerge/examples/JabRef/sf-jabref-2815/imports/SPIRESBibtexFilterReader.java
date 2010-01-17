@@ -5,17 +5,7 @@ import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 
-/**
- * 
- * Warning -- it is not a generic filter, only read is implemented!
- * 
- * @author Fedor Bezrukov
- * 
- * @version $Id: SPIRESBibtexFilterReader.java,v 1.1 2010-01-15 13:09:30 apel Exp $
- * 
- * TODO: Fix grammar in bibtex entries -- it ma return invalid bibkeys (with space)
- * 
- */
+
 public class SPIRESBibtexFilterReader extends FilterReader {
 
     protected BufferedReader in;
@@ -50,9 +40,9 @@ public class SPIRESBibtexFilterReader extends FilterReader {
     private String fixBibkey(String in) {
     	if (in== null)
     		return null;
-    	//System.out.println(in);
+    	
     	if ( in.matches("@Article\\{.*,") ) {
-    		//System.out.println(in.replace(' ','_'));
+    		
     		return in.replace(' ', '_');
     	} else
     		return in;

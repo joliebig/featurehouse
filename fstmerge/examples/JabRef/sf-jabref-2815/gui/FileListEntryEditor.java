@@ -27,15 +27,7 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 
-/**
- * This class produces a dialog box for editing a single file link from a Bibtex entry.
- *
- * The information to be edited includes the file description, the link itself and the
- * file type. The dialog also includes convenience buttons for quick linking.
- *
- * For use when downloading files, this class also offers a progress bar and a "Downloading..."
- * label that can be hidden when the download is complete.
- */
+
 public class FileListEntryEditor {
 
     JDialog diag;
@@ -62,12 +54,12 @@ public class FileListEntryEditor {
 
         okAction = new AbstractAction() {
                 public void actionPerformed(ActionEvent e) {
-                    // If OK button is disabled, ignore this event:
+                    
                     if (!ok.isEnabled())
                         return;
-                    // If necessary, ask the external confirm object whether we are ready to close.
+                    
                     if (externalConfirm != null) {
-                        // Construct an updated FileListEntry:
+                        
                         FileListEntry testEntry = new FileListEntry("", "", null);
                         storeSettings(testEntry);
                         if (!externalConfirm.confirmClose(testEntry))
@@ -111,8 +103,8 @@ public class FileListEntryEditor {
         
         ButtonBarBuilder bb = new ButtonBarBuilder();
         bb.addGlue();
-        //bb.addGridded(open);
-        //bb.addRelatedGap();
+        
+        
         bb.addRelatedGap();
         bb.addGridded(ok);
         bb.addGridded(cancel);
@@ -120,7 +112,7 @@ public class FileListEntryEditor {
 
 
         ok.addActionListener(okAction);
-        // Add OK action to the two text fields to simplify entering:
+        
         link.addActionListener(okAction);
         description.addActionListener(okAction);
 
@@ -138,7 +130,7 @@ public class FileListEntryEditor {
         cancel.addActionListener(cancelAction);
 
 
-        // Key bindings:
+        
         ActionMap am = builder.getPanel().getActionMap();
         InputMap im = builder.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -169,7 +161,7 @@ public class FileListEntryEditor {
     private void checkExtension() {
         if ((types.getSelectedIndex() == -1) &&
                 (link.getText().trim().length() > 0)) {
-            // Try to guess the file type:
+            
             String theLink = link.getText().trim();
             int index = theLink.lastIndexOf('.');
             if ((index >= 0) && (index < theLink.length()-1)) {
@@ -227,14 +219,14 @@ public class FileListEntryEditor {
     public void setValues(FileListEntry entry) {
         description.setText(entry.getDescription());
         link.setText(entry.getLink());
-        //if (link.getText().length() > 0)
-        //    checkExtension();
+        
+        
         types.setModel(new DefaultComboBoxModel(Globals.prefs.getExternalFileTypeSelection()));
         types.setSelectedIndex(-1);
-        // See what is a reasonable selection for the type combobox:
+        
         if ((entry.getType() != null) && !(entry.getType() instanceof UnknownExternalFileType))
             types.setSelectedItem(entry.getType());
-        // If the entry has a link but not a file type, try to deduce the file type:
+        
         else if ((entry.getLink() != null) && (entry.getLink().length() > 0)) {
             checkExtension();    
         }
@@ -243,7 +235,7 @@ public class FileListEntryEditor {
 
     public void storeSettings(FileListEntry entry) {
         entry.setDescription(description.getText().trim());
-	// See if we should trim the file link to be relative to the file directory:
+	
 	try {
         String fileDir = metaData.getFileDirectory(GUIGlobals.FILE_FIELD);
         if ((fileDir == null) ||(fileDir.equals(""))) {
@@ -261,7 +253,7 @@ public class FileListEntryEditor {
     } catch (java.io.IOException ex)
 	{ 
 		ex.printStackTrace();
-		// Don't think this should happen, but set the file link directly as a fallback:
+		
 		entry.setLink(link.getText().trim());
 	}
 	
@@ -284,17 +276,17 @@ public class FileListEntryEditor {
         public void actionPerformed(ActionEvent e) {
             File initial = new File(comp.getText().trim());
             if (comp.getText().trim().length() == 0) {
-                // Nothing in the field. Go to the last file dir used:
+                
                 initial = new File(Globals.prefs.get("fileWorkingDirectory"));
             }
             String chosen = Globals.getNewFile(parent, initial, Globals.NONE,
                 JFileChooser.OPEN_DIALOG, false);
             if (chosen != null) {
                 File newFile = new File(chosen);
-                // Store the directory for next time:
+                
                 Globals.prefs.put("fileWorkingDirectory", newFile.getParent());
 
-                // If the file is below the file directory, make the path relative:
+                
                 ArrayList<File> dirs = new ArrayList<File>();
                 String fileDir = metaData.getFileDirectory(GUIGlobals.FILE_FIELD);
                 if (fileDir != null)

@@ -1,8 +1,4 @@
-/*
- * ExpandEndnoteFilters.java
- *
- * Created on January 22, 2005, 6:31 PM
- */
+
 
 package net.sf.jabref.export;
 
@@ -20,17 +16,14 @@ import net.sf.jabref.gui.FileDialogs;
 import net.sf.jabref.util.ResourceExtractor;
 import spin.Spin;
 
-/**
- *
- * @author alver
- */
+
 public class ExpandEndnoteFilters extends MnemonicAwareAction implements Worker {
     
     JabRefFrame frame;
     File file = null;
     final String FILENAME = "/EndNote.zip";
     
-    /** Creates a new instance of ExpandEndnoteFilters */
+    
     public ExpandEndnoteFilters(JabRefFrame frame) {
         this.frame = frame;
         putValue(NAME, "Unpack EndNote filter set");
@@ -46,8 +39,8 @@ public class ExpandEndnoteFilters extends MnemonicAwareAction implements Worker 
         if (filename == null)
             return;
         
-        //if (!filename.substring(4).equalsIgnoreCase(".zip"))
-        //    filename += ".zip";
+        
+        
         file = new File(filename);
         if (file.exists()) {
             int confirm = JOptionPane.showConfirmDialog(frame, "'"+file.getName()+"' "+
@@ -57,15 +50,13 @@ public class ExpandEndnoteFilters extends MnemonicAwareAction implements Worker 
                 return;
         }
         
-        // Spin off the GUI thread, and run the run() method.
+        
        ((Worker)Spin.off(this)).run(); 
        
        file = null;
     }
     
-    /**
-     * Worker method.
-     */
+    
     public void run() {
         ResourceExtractor re = new ResourceExtractor(frame, FILENAME, file);
         re.run();

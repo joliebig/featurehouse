@@ -1,24 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
-//  Filename: $RCSfile: XMLChars.java,v $
-//  Purpose:  Atom representation.
-//  Language: Java
-//  Compiler: JDK 1.4
-//  Authors:  Joerg K. Wegner, Morten O. Alver
-//  Version:  $Revision: 1.1 $
-//            $Date: 2010-01-17 00:03:45 $
-//            $Author: apel $
-//
-//  Copyright (c) Dept. Computer Architecture, University of Tuebingen, Germany
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation version 2 of the License.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 package net.sf.jabref.export.layout.format;
 
@@ -28,16 +28,11 @@ import java.util.Iterator;
 import net.sf.jabref.Util;
 import net.sf.jabref.Globals;
 
-/**
- * Changes {\^o} or {\^{o}} to ?
- *
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class XMLChars implements LayoutFormatter
 {
-    //~ Methods ////////////////////////////////////////////////////////////////
-    //Pattern pattern = Pattern.compile(".*\\{..[a-zA-Z].\\}.*");
+    
+    
     Pattern pattern = Pattern.compile(".*\\{\\\\.*[a-zA-Z]\\}.*");
   
     public String format(String fieldText)
@@ -45,8 +40,8 @@ public class XMLChars implements LayoutFormatter
  
 	fieldText = firstFormat(fieldText);
 
-	//if (!pattern.matcher(fieldText).matches())
-	//    return restFormat(fieldText);
+	
+	
         
 	for (Iterator i=Globals.HTML_CHARS.keySet().iterator(); i.hasNext();) {
 	    String s = (String)i.next();         
@@ -54,7 +49,7 @@ public class XMLChars implements LayoutFormatter
             if (repl != null)
                 fieldText = fieldText.replaceAll(s, repl);
 	}
-	//RemoveBrackets rb = new RemoveBrackets();
+	
 	return restFormat(fieldText);
     }
 
@@ -65,8 +60,8 @@ public class XMLChars implements LayoutFormatter
     private String restFormat(String s) {
 		String fieldText=s.replaceAll("\\}","").replaceAll("\\{","");
 		
-		// now some copy-paste problems most often occuring in abstracts when copied from PDF
-		// AND: this is accepted in the abstract of bibtex files, so are forced to catch those cases
+		
+		
 		int code;
 		char character;
 		StringBuffer buffer=new StringBuffer(fieldText.length()<<1);
@@ -74,13 +69,13 @@ public class XMLChars implements LayoutFormatter
     {
     	character = fieldText.charAt(i);
       code = ((int) character);
-      //System.out.println(""+character+" "+code);
+      
       if((code<40 && code!=32)||code>125){
       	buffer.append("&#" + code+";");
       }
       else 
       {
-      	// TODO: highly inefficient, create look-up array with all 255 codes only once and use code as key!!!
+      	
       	int[] forceReplace=new int[]{44,45,63,64,94,95,96,124};
       	boolean alphabet=true;
       	for(int ii=0;ii<forceReplace.length;ii++){
@@ -90,13 +85,13 @@ public class XMLChars implements LayoutFormatter
       			break;
       		}
       	}
-    		// force roundtripping
+    		
       	if(alphabet)buffer.append((char)code);
       }
     }
     fieldText=buffer.toString();
 
-		// use common abbreviations for <, > instead of code
+		
 		for (Iterator i=Globals.ASCII2XML_CHARS.keySet().iterator(); i.hasNext();) {
 	    String ss = (String)i.next();         
             String repl = (String)Globals.ASCII2XML_CHARS.get(ss);
@@ -107,6 +102,6 @@ public class XMLChars implements LayoutFormatter
 		return fieldText;
     }
 }
-///////////////////////////////////////////////////////////////////////////////
-//  END OF FILE.
-///////////////////////////////////////////////////////////////////////////////
+
+
+

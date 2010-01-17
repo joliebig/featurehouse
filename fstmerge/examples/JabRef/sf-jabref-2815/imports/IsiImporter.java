@@ -16,51 +16,23 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.Util;
 import net.sf.jabref.util.CaseChanger;
 
-/**
- * Importer for the ISI Web of Science, INSPEC and Medline format.
- * 
- * Documentation about ISI WOS format:
- * 
- * <ul>
- * <li>http://wos.isitrial.com/help/helpprn.html</li>
- * </ul>
- * 
- * <ul>
- * <li>Check compatibility with other ISI2Bib tools like:
- * http://www-lab.imr.tohoku.ac.jp/~t-nissie/computer/software/isi/ or
- * http://www.tug.org/tex-archive/biblio/bibtex/utils/isi2bibtex/isi2bibtex or
- * http://web.mit.edu/emilio/www/utils.html</li>
- * <li>Deal with capitalization correctly</li>
- * </ul>
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:09:27 $)
- * 
- */
+
 public class IsiImporter extends ImportFormat {
-	/**
-	 * Return the name of this import format.
-	 */
+	
 	public String getFormatName() {
 		return "ISI";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-	 */
+	
 	public String getCLIId() {
 		return "isi";
 	}
 
-    // 2006.09.05: Modified pattern to avoid false positives for other files due to an
-    // extra | at the end:
+    
+    
     static final Pattern isiPattern = Pattern.compile("FN ISI Export Format|VR 1.|PY \\d{4}");
 
-	/**
-	 * Check whether the source is in the correct format for this importer.
-	 */
+	
 	public boolean isRecognizedFormat(InputStream stream) throws IOException {
 
 		BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
@@ -69,13 +41,7 @@ public class IsiImporter extends ImportFormat {
         int i=0;
         while (((str = in.readLine()) != null) && (i < 50)) {
 
-			/**
-			 * The following line gives false positives for RIS files, so it
-			 * should not be uncommented. The hypen is a characteristic of the
-			 * RIS format.
-			 * 
-			 * str = str.replace(" - ", "")
-			 */
+			
 			if (isiPattern.matcher(str).find())
 				return true;
 
@@ -100,9 +66,9 @@ public class IsiImporter extends ImportFormat {
 				while (m.find()) {
 
 					String group2 = m.group(2);
-					group2 = group2.replaceAll("\\$", "\\\\\\\\\\\\\\$"); // Escaping
-					// insanity!
-					// :-)
+					group2 = group2.replaceAll("\\$", "\\\\\\\\\\\\\\$"); 
+					
+					
 					if (group2.length() > 1) {
 						group2 = "{" + group2 + "}";
 					}
@@ -136,10 +102,7 @@ public class IsiImporter extends ImportFormat {
 		}
 	}
 
-	/**
-	 * Parse the entries in the source, and return a List of BibtexEntry
-	 * objects.
-	 */
+	
 	public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
 		if (stream == null) {
 			throw new IOException("No stream given.");
@@ -150,29 +113,29 @@ public class IsiImporter extends ImportFormat {
 
 		BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
 
-		// Pattern fieldPattern = Pattern.compile("^AU |^TI |^SO |^DT |^C1 |^AB
-		// |^ID |^BP |^PY |^SE |^PY |^VL |^IS ");
+		
+		
 		String str;
 
 		while ((str = in.readLine()) != null) {
 			if (str.length() < 3)
 				continue;
 
-			// begining of a new item
+			
 			if (str.substring(0, 3).equals("PT "))
 				sb.append("::").append(str);
 			else {
 				String beg = str.substring(0, 3).trim();
 
-				// I could have used the fieldPattern regular expression instead
-				// however this seems to be
-				// quick and dirty and it works!
+				
+				
+				
 				if (beg.length() == 2) {
-					sb.append(" ## "); // mark the begining of each field
+					sb.append(" ## "); 
 					sb.append(str);
 				} else {
-					sb.append("EOLEOL"); // mark the end of each line
-					sb.append(str.trim()); // remove the initial spaces
+					sb.append("EOLEOL"); 
+					sb.append(str.trim()); 
 				}
 			}
 		}
@@ -181,7 +144,7 @@ public class IsiImporter extends ImportFormat {
 
 		HashMap<String, String> hm = new HashMap<String, String>();
 
-		// skip the first entry as it is either empty or has document header
+		
 		for (int i = 0; i < entries.length; i++) {
 			String[] fields = entries[i].split(" ## ");
 
@@ -194,7 +157,7 @@ public class IsiImporter extends ImportFormat {
 			hm.clear();
 
 			nextField: for (int j = 0; j < fields.length; j++) {
-				// empty field don't do anything
+				
 				if (fields[j].length() <= 2)
 					continue;
 
@@ -211,7 +174,7 @@ public class IsiImporter extends ImportFormat {
 					} else {
 						PT = value;
 					}
-					Type = "article"; // make all of them PT?
+					Type = "article"; 
 				} else if (beg.equals("TY")) {
 					if ("JOUR".equals(value))
 						Type = "article";
@@ -222,7 +185,7 @@ public class IsiImporter extends ImportFormat {
 				else if (beg.equals("AU")) {
 					String author = isiAuthorsConvert(value.replaceAll("EOLEOL", " and "));
 
-					// if there is already someone there then append with "and"
+					
 					if (hm.get("author") != null)
 						author = hm.get("author") + " and " + author;
 
@@ -249,7 +212,7 @@ public class IsiImporter extends ImportFormat {
 				else if (beg.equals("EP")) {
 					int detpos = value.indexOf(' ');
 
-					// tweak for IEEE Explore
+					
 					if (detpos != -1 && value.substring(0, detpos).trim().length() > 0)
 						value = value.substring(0, detpos);
 
@@ -277,7 +240,7 @@ public class IsiImporter extends ImportFormat {
 				} else if (beg.equals("DT")) {
 					Type = value;
 					if (Type.equals("Review")) {
-						Type = "article"; // set "Review" in Note/Comment?
+						Type = "article"; 
 					} else if (Type.startsWith("Article") || Type.startsWith("Journal")
 						|| PT.equals("article")) {
 						Type = "article";
@@ -288,7 +251,7 @@ public class IsiImporter extends ImportFormat {
 				} else if (beg.equals("CR")) {
 					hm.put("CitedReferences", value.replaceAll("EOLEOL", " ; ").trim());
 				} else {
-					// Preserve all other entries except
+					
 					if (beg.equals("ER") || beg.equals("EF") || beg.equals("VR")
 						|| beg.equals("FN"))
 						continue nextField;
@@ -299,15 +262,15 @@ public class IsiImporter extends ImportFormat {
 			if (!"".equals(pages))
 				hm.put("pages", pages);
 
-			// Skip empty entries
+			
 			if (hm.size() == 0)
 				continue;
 
 			BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals
 				.getEntryType(Type));
-			// id assumes an existing database so don't
+			
 
-			// Remove empty fields:
+			
 			ArrayList<Object> toRemove = new ArrayList<Object>();
 			for (Iterator<String> it = hm.keySet().iterator(); it.hasNext();) {
 				Object key = it.next();
@@ -320,7 +283,7 @@ public class IsiImporter extends ImportFormat {
 
 			}
 
-			// Polish entries
+			
 			processSubSup(hm);
 			processCapitalization(hm);
 
@@ -346,7 +309,7 @@ public class IsiImporter extends ImportFormat {
 			}
 		}
 
-		// Try two digit month
+		
 		for (int ii = 0; ii < parts.length; ii++) {
 			int number;
 			try {
@@ -361,13 +324,7 @@ public class IsiImporter extends ImportFormat {
 		return null;
 	}
 
-	/**
-	 * Will expand ISI first names.
-	 * 
-	 * Fixed bug from:
-	 * http://sourceforge.net/tracker/index.php?func=detail&aid=1542552&group_id=92314&atid=600306
-	 * 
-	 */
+	
 	public static String isiAuthorConvert(String author) {
 
 		String[] s = author.split(",");
@@ -387,7 +344,7 @@ public class IsiImporter extends ImportFormat {
 
 			first = firstParts[i];
 
-			// Do we have only uppercase chars?
+			
 			if (first.toUpperCase().equals(first)) {
 				first = first.replaceAll("\\.", "");
 				for (int j = 0; j < first.length(); j++) {

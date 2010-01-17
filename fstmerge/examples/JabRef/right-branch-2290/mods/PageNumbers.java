@@ -1,10 +1,4 @@
-/*
- * Created on Oct 29, 2004
- * Updated on May 03, 2007
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 package net.sf.jabref.mods;
 import net.sf.jabref.export.layout.format.*;
 import net.sf.jabref.export.layout.*;
@@ -17,13 +11,7 @@ import org.w3c.dom.*;
 import java.util.*;
 import java.io.*;
 import java.util.regex.*;
-/**
- * @author Michael Wrighton
- * @author S M Mahbub Murshed
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 public class PageNumbers {
 	String freeform = null;
 	int start, end;

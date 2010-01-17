@@ -12,10 +12,7 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.external.ExternalFileType;
 import net.sf.jabref.external.UnknownExternalFileType;
 
-/**
- * Data structure to contain a list of file links, parseable from a coded string.
- * Doubles as a table model for the file list editor.
-*/
+
 public class FileListTableModel extends AbstractTableModel {
 
     private final ArrayList<FileListEntry> list = new ArrayList<FileListEntry>();
@@ -63,12 +60,7 @@ public class FileListTableModel extends AbstractTableModel {
 
     }
 
-    /**
-     * Add an entry to the table model, and fire a change event. The change event
-     * is fired on the event dispatch thread.
-     * @param index The row index to insert the entry at.
-     * @param entry The entry to insert.
-     */
+    
     public void addEntry(final int index, final FileListEntry entry) {
         synchronized (list) {
             list.add(index, entry);
@@ -87,10 +79,7 @@ public class FileListTableModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
     }
 
-    /**
-     * Set up the table contents based on the flat string representation of the file list
-     * @param value The string representation
-     */
+    
     public void setContent(String value) {
         setContent(value, false, true);
     }
@@ -113,14 +102,14 @@ public class FileListTableModel extends AbstractTableModel {
                 escaped = true;
                 continue;
             }
-            // Check if we are entering an XML special character construct such
-            // as "&#44;", because we need to know in order to ignore the semicolon.
+            
+            
             else if (!escaped && (c == '&') && !inXmlChar) {
                 sb.append(c);
                 if ((value.length() > i+1) && (value.charAt(i+1) == '#'))
                     inXmlChar = true;
             }
-            // Check if we are exiting an XML special character construct:
+            
             else if (!escaped && inXmlChar && (c == ';')) {
                 sb.append(c);
                 inXmlChar = false;
@@ -159,16 +148,7 @@ public class FileListTableModel extends AbstractTableModel {
         return null;
     }
 
-    /**
-     * Convenience method for finding a label corresponding to the type of the
-     * first file link in the given field content. The difference between using
-     * this method and using setContent() on an instance of FileListTableModel
-     * is a slight optimization: with this method, parsing is discontinued after
-     * the first entry has been found.
-     * @param content The file field content, as fed to this class' setContent() method.
-     * @return A JLabel set up with no text and the icon of the first entry's file type,
-     *  or null if no entry was found or the entry had no icon.
-     */
+    
     public static JLabel getFirstLabel(String content) {
         FileListTableModel tm = new FileListTableModel();
         FileListEntry entry = tm.setContent(content, true, true);
@@ -182,8 +162,8 @@ public class FileListTableModel extends AbstractTableModel {
         ExternalFileType type = Globals.prefs.getExternalFileTypeByName
                         (getElementIfAvailable(contents, 2));
         if (deduceUnknownType && (type instanceof UnknownExternalFileType)) {
-            // No file type was recognized. Try to find a usable file type based
-            // on the extension:
+            
+            
             ExternalFileType typeGuess = null;
             String link = getElementIfAvailable(contents, 1);
             int index = link.lastIndexOf('.');
@@ -207,11 +187,7 @@ public class FileListTableModel extends AbstractTableModel {
         else return "";
     }
 
-    /**
-     * Transform the file list shown in the table into a flat string representable
-     * as a BibTeX field:
-     * @return String representation.
-     */
+    
     public String getStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         for (Iterator<FileListEntry> iterator = list.iterator(); iterator.hasNext();) {
@@ -223,11 +199,7 @@ public class FileListTableModel extends AbstractTableModel {
         return sb.toString();
     }
 
-    /**
-     * Transform the file list shown in the table into a HTML string representation
-     * suitable for displaying the contents in a tooltip.
-     * @return Tooltip representation.
-     */
+    
     public String getToolTipHTMLRepresentation() {
         StringBuilder sb = new StringBuilder("<html>");
         for (Iterator<FileListEntry> iterator = list.iterator(); iterator.hasNext();) {

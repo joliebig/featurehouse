@@ -1,31 +1,11 @@
-// $Id: BibtexWidth.java,v 1.1 2010-01-15 13:13:23 apel Exp $
+
 package net.sf.jabref.bst;
 
 
-/**
- * 
- * The |built_in| function {\.{purify\$}} pops the top (string) literal, removes
- * nonalphanumeric characters except for |white_space| and |sep_char| characters
- * (these get converted to a |space|) and removes certain alphabetic characters
- * contained in the control sequences associated with a special character, and
- * pushes the resulting string. If the literal isn't a string, it complains and
- * pushes the null string.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:13:23 $)
- * 
- */
+
 public class BibtexWidth {
 
-	/*
-	 * Quoted from Bibtex:
-	 * 
-	 * Now we initialize the system-dependent |char_width| array, for which
-	 * |space| is the only |white_space| character given a nonzero printing
-	 * width. The widths here are taken from Stanford's June~'87 $cmr10$~font
-	 * and represent hundredths of a point (rounded), but since they're used
-	 * only for relative comparisons, the units have no meaning.
-	 */
+	
 
 	static int[] widths;
 
@@ -48,13 +28,13 @@ public class BibtexWidth {
 	public static int getCharWidth(char c) {
 
 		if (widths == null) {
-			// Watch out octals!!
+			
 			widths = new int[0200];
 
 			for (int i = 0; i < 0200; i++) {
 				widths[i] = 0;
 			}
-			// Watch out octals!!
+			
 			widths[040] = 278;
 			widths[041] = 278;
 			widths[042] = 500;
@@ -159,19 +139,10 @@ public class BibtexWidth {
 		}
 	}
 
-	/**
-	 * 
-	 * @param toMeasure
-	 * @param warn
-	 *            may-be-null
-	 * @return
-	 */
+	
 	public static int width(String toMeasure, Warn warn) {
 		
-		/*
-		 * From Bibtex: We use the natural width for all but special characters,
-		 * and we complain if the string isn't brace-balanced.
-		 */
+		
 
 		int i = 0;
 		int n = toMeasure.length();
@@ -180,30 +151,21 @@ public class BibtexWidth {
 		int result = 0;
 
 		
-		/*
-		 * From Bibtex:
-		 * 
-		 * We use the natural widths of all characters except that some
-		 * characters have no width: braces, control sequences (except for the
-		 * usual 13 accented and foreign characters, whose widths are given in
-		 * the next module), and |white_space| following control sequences (even
-		 * a null control sequence).
-		 * 
-		 */
+		
 		while (i < n){
 			if (c[i] == '{'){
 				braceLevel++;
 				if (braceLevel == 1 && i + 1 < n && (c[i+1] == '\\')){
-					i++; // skip brace
+					i++; 
 					while (i < n && braceLevel > 0){
-						i++; // skip backslash
+						i++; 
 						
 						int afterBackslash = i;
 						while (i < n && Character.isLetter(c[i])){
 							i++;
 						}
 						if (i < n && i == afterBackslash){
-							i++; // Skip non-alpha control seq
+							i++; 
 						} else {
 							if (BibtexCaseChanger.findSpecialChar(c, afterBackslash) != null) {
 								result += getSpecialCharWidth(c, afterBackslash);

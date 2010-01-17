@@ -1,28 +1,4 @@
-/*
- Copyright (C) 2003 Morten O. Alver
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
 
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref.export.layout;
 
 import java.util.ArrayList;
@@ -39,19 +15,14 @@ import net.sf.jabref.plugin.core.generated._JabRefPlugin.LayoutFormatterExtensio
 import wsi.ra.tool.WSITools;
 import wsi.ra.types.StringInt;
 
-/**
- * DOCUMENT ME!
- * 
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class LayoutEntry {
-	// ~ Instance fields
-	// ////////////////////////////////////////////////////////
+	
+	
 
 	private LayoutFormatter[] option;
 
-    // Formatter to be run after other formatters:
+    
     private LayoutFormatter postFormatter = null;
 
 	private String text;
@@ -64,8 +35,8 @@ public class LayoutEntry {
 
     private ArrayList<String> invalidFormatter = null;
 
-	// ~ Constructors
-	// ///////////////////////////////////////////////////////////
+	
+	
 
 	public LayoutEntry(StringInt si, String classPrefix_) throws Exception {
 		type = si.i;
@@ -87,7 +58,7 @@ public class LayoutEntry {
 				text = v.get(0).trim();
 
 				option = getOptionalLayout(v.get(1), classPrefix);
-                // See if there was an undefined formatter:
+                
                 for (int i = 0; i < option.length; i++) {
                     if (option[i] instanceof NotFoundFormatter) {
                         String notFound = ((NotFoundFormatter)option[i]).getNotFound();
@@ -125,7 +96,7 @@ public class LayoutEntry {
 		for (int i = 1; i < (parsedEntries.size() - 1); i++) {
 			si = parsedEntries.get(i);
 
-			// System.out.println("PARSED-ENTRY: "+si.s+"="+si.i);
+			
 			if (si.i == LayoutHelper.IS_LAYOUT_TEXT) {
 			} else if (si.i == LayoutHelper.IS_SIMPLE_FIELD) {
 			} else if ((si.i == LayoutHelper.IS_FIELD_START)
@@ -147,11 +118,11 @@ public class LayoutEntry {
 			} else if (si.i == LayoutHelper.IS_OPTION_FIELD) {
 			}
 
-			// else if (si.i == LayoutHelper.IS_OPTION_FIELD_PARAM)
-			// {
-			// }
+			
+			
+			
 			if (blockEntries == null) {
-				// System.out.println("BLOCK ADD: "+si.s+"="+si.i);
+				
 				tmpEntries.add(new LayoutEntry(si, classPrefix));
 			} else {
 				blockEntries.add(si);
@@ -163,7 +134,7 @@ public class LayoutEntry {
 		for (int i = 0; i < tmpEntries.size(); i++) {
 			layoutEntries[i] = tmpEntries.get(i);
 
-            // Note if one of the entries has an invalid formatter:
+            
             if (layoutEntries[i].isInvalidFormatter()) {
                 if (invalidFormatter == null)
                     invalidFormatter = new ArrayList<String>(1);
@@ -224,8 +195,8 @@ public class LayoutEntry {
 							}
 						}
 					} else {
-						// if previous was skipped --> remove leading line
-						// breaks
+						
+						
 						if (previousSkipped) {
 							int eol = 0;
 
@@ -238,8 +209,8 @@ public class LayoutEntry {
 								sb.append(fieldText.substring(eol));
 							}
 						} else {
-							// System.out.println("ENTRY-BLOCK: " +
-							// layoutEntries[i].doLayout(bibtex));
+							
+							
 							sb.append(fieldText);
 						}
 					}
@@ -259,11 +230,11 @@ public class LayoutEntry {
 			if (text.equals("bibtextype")) {
 				fieldEntry = bibtex.getType().getName();
 			} else {
-				// changed section begin - arudert
-				// resolve field (recognized by leading backslash) or text
+				
+				
 				String field = text.startsWith("\\") ? BibtexDatabase.getResolvedField(text.substring(1), bibtex, database)
 					: BibtexDatabase.getText(text, database);
-				// changed section end - arudert
+				
 				if (field == null) {
 					fieldEntry = "";
 				} else {
@@ -271,23 +242,23 @@ public class LayoutEntry {
 				}
 			}
 
-			// System.out.println("OPTION: "+option);
+			
 			if (option != null) {
 				for (int i = 0; i < option.length; i++) {
 					fieldEntry = option[i].format(fieldEntry);
 				}
 			}
 
-            // If a post formatter has been set, call it:
+            
             if (postFormatter != null)
                 fieldEntry = postFormatter.format(fieldEntry);
 
 			return fieldEntry;
 		}
         case LayoutHelper.IS_ENCODING_NAME: {
-            // Printing the encoding name is not supported in entry layouts, only
-            // in begin/end layouts. This prevents breakage if some users depend
-            // on a field called "encoding". We simply return this field instead:
+            
+            
+            
             return BibtexDatabase.getResolvedField("encoding", bibtex, database);
         }
         default:
@@ -295,14 +266,8 @@ public class LayoutEntry {
 		}
 	}
 
-	// added section - begin (arudert)
-	/**
-	 * Do layout for general formatters (no bibtex-entry fields).
-	 * 
-	 * @param database
-	 *            Bibtex Database
-	 * @return
-	 */
+	
+	
 	public String doLayout(BibtexDatabase database, String encoding) {
 		if (type == LayoutHelper.IS_LAYOUT_TEXT) {
 			return text;
@@ -322,20 +287,20 @@ public class LayoutEntry {
 					field = option[i].format(field);
 				}
 			}
-            // If a post formatter has been set, call it:
+            
             if (postFormatter != null)
                 field = postFormatter.format(field);
 
 			return field;
 		} else if (type == LayoutHelper.IS_ENCODING_NAME) {
-            // Try to translate from Java encoding name to common name:
+            
             String commonName = Globals.ENCODING_NAMES_LOOKUP.get(encoding);
             return commonName != null ? commonName : encoding;
         }
 		return "";
 	}
 
-	// added section - end (arudert)
+	
 
 	static Map<String, LayoutFormatter> pluginLayoutFormatter;
 	
@@ -356,8 +321,8 @@ public class LayoutEntry {
 				}
 			}
 		}
-        // We need to make a new instance of this LayoutFormatter, in case it is a
-        // parameter-accepting layout formatter:
+        
+        
         if (pluginLayoutFormatter.containsKey(formatterName)) {
             Class<? extends LayoutFormatter> c = pluginLayoutFormatter.get(formatterName).getClass();
             try {
@@ -391,11 +356,7 @@ public class LayoutEntry {
 		return null;
 	}
 
-	/**
-	 * Return an array of LayoutFormatters found in the given formatterName
-	 * string (in order of appearance).
-	 * 
-	 */
+	
 	public static LayoutFormatter[] getOptionalLayout(String formatterName,
 			String classPrefix) throws Exception {
 
@@ -411,7 +372,7 @@ public class LayoutEntry {
 
             String className = strings[0].trim();
                         
-            // Check if this is a name formatter defined by this export filter:
+            
             if (Globals.prefs.customExportNameFormatters != null) {
                 String contents = Globals.prefs.customExportNameFormatters.get(className);
                 if (contents != null) {
@@ -422,12 +383,12 @@ public class LayoutEntry {
                 }
             }
 
-            // Try to load from formatters in formatter folder
+            
 			try {
 				LayoutFormatter f = getLayoutFormatterByClassName(className,
 						classPrefix);
-                // If this formatter accepts an argument, check if we have one, and
-                // set it if so:
+                
+                
                 if (f instanceof ParamLayoutFormatter) {
                     if (strings.length >= 2)
                         ((ParamLayoutFormatter)f).setArgument(strings[1]);
@@ -437,7 +398,7 @@ public class LayoutEntry {
 			} catch (Exception e) {
 			}
 
-			// Then check whether this is a user defined formatter
+			
 			String formatterParameter = userNameFormatter
 					.get(className);
 
@@ -448,11 +409,11 @@ public class LayoutEntry {
 				continue;
 			}
 
-			// Last load from plug-ins
+			
 			LayoutFormatter f = getLayoutFormatterFromPlugins(className);
 			if (f != null) {
-                // If this formatter accepts an argument, check if we have one, and
-                // set it if so:
+                
+                
                 if (f instanceof ParamLayoutFormatter) {
                     if (strings.length >= 2) {
                         ((ParamLayoutFormatter)f).setArgument(strings[1]);
@@ -462,10 +423,10 @@ public class LayoutEntry {
 				continue;
 			}
 
-			// If not found throw exception...
-            //return new LayoutFormatter[] {new NotFoundFormatter(className)};
+			
+            
             results.add(new NotFoundFormatter(className));
-			//throw new Exception(Globals.lang("Formatter not found") + ": "+ className);
+			
 		}
 
 		return results.toArray(new LayoutFormatter[] {});

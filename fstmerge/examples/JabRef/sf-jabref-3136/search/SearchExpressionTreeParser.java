@@ -1,4 +1,4 @@
-// $ANTLR : "TreeParser.g" -> "SearchExpressionTreeParser.java"$
+
 
 package net.sf.jabref.search;
 import java.util.regex.Matcher;
@@ -16,8 +16,8 @@ import antlr.collections.AST;
 public class SearchExpressionTreeParser extends antlr.TreeParser       implements SearchExpressionTreeParserTokenTypes
  {
 
-    // Formatter used on every field before searching. Removes Latex commands that
-    // may interfere with the search:
+    
+    
     static RemoveLatexCommands removeLatexCommands = new RemoveLatexCommands();
 
     private static final int MATCH_EXACT = 0;
@@ -31,7 +31,7 @@ public class SearchExpressionTreeParser extends antlr.TreeParser       implement
 
      public int apply(AST ast, BibtexEntry bibtexEntry) throws antlr.RecognitionException {
 		this.bibtexEntry = bibtexEntry;
-		// specification of fields to search is done in the search expression itself
+		
 		this.searchKeys = bibtexEntry.getAllFields().toArray();
 		return tSearchExpression(ast) ? 1 : 0;
 	}
@@ -47,7 +47,7 @@ public SearchExpressionTreeParser() {
 			boolean a = false, b = false;
 		
 		
-		try {      // for error handling
+		try {      
 			if (_t==null) _t=ASTNULL;
 			switch ( _t.getType()) {
 			case And:
@@ -150,7 +150,7 @@ public SearchExpressionTreeParser() {
 			int matchType = 0;
 		
 		
-		try {      // for error handling
+		try {      
 			AST __t94 = _t;
 			AST tmp6_AST_in = _t;
 			match(_t,ExpressionSearch);
@@ -167,7 +167,7 @@ public SearchExpressionTreeParser() {
 						Pattern fieldSpec = ((RegExNode)var_f).getPattern();
 						Pattern valueSpec = ((RegExNode)var_v).getPattern();
 			boolean noSuchField = true;
-						// this loop iterates over all regular keys, then over pseudo keys like "type"
+						
 						for (int i = 0; i < searchKeys.length + PSEUDOFIELD_TYPE && !ret; ++i) {
 							String content;
 							switch (i - searchKeys.length + 1) {
@@ -176,7 +176,7 @@ public SearchExpressionTreeParser() {
 										continue;
 									content = bibtexEntry.getType().getName();
 									break;
-								default: // regular field
+								default: 
 									if (!fieldSpec.matcher(searchKeys[i].toString()).matches())
 										continue;
 									content = removeLatexCommands.format(
@@ -184,7 +184,7 @@ public SearchExpressionTreeParser() {
 							}
 			noSuchField = false;
 							if (content == null)
-								continue; // paranoia
+								continue; 
 							Matcher matcher = valueSpec.matcher(content);
 							switch (matchType) {
 							case MATCH_CONTAINS:
@@ -199,7 +199,7 @@ public SearchExpressionTreeParser() {
 							}
 						}
 			if (noSuchField && matchType == MATCH_DOES_NOT_CONTAIN)
-			ret = true; // special case
+			ret = true; 
 					
 			_t = __t94;
 			_t = _t.getNextSibling();
@@ -217,7 +217,7 @@ public SearchExpressionTreeParser() {
 
         AST tSearchType_AST_in = (_t == ASTNULL) ? null : (AST)_t;
 		
-		try {      // for error handling
+		try {      
 			if (_t==null) _t=ASTNULL;
 			switch ( _t.getType()) {
 			case LITERAL_contains:

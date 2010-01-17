@@ -1,4 +1,4 @@
-// $ANTLR : "Lexer.g" -> "SearchExpressionLexer.java"$
+
 
 package net.sf.jabref.search;
 
@@ -54,8 +54,8 @@ tryAgain:
 		Token _token = null;
 		int _ttype = Token.INVALID_TYPE;
 		resetText();
-		try {   // for char stream error handling
-			try {   // for lexical error handling
+		try {   
+			try {   
 				switch ( LA(1)) {
 				case '\t':  case ' ':
 				{
@@ -107,7 +107,7 @@ tryAgain:
 				else {throw new NoViableAltForCharException(LA(1), getFilename(), getLine(), getColumn());}
 				}
 				}
-				if ( _returnToken==null ) continue tryAgain; // found SKIP token
+				if ( _returnToken==null ) continue tryAgain; 
 				_ttype = _returnToken.getType();
 				_returnToken.setType(_ttype);
 				return _returnToken;

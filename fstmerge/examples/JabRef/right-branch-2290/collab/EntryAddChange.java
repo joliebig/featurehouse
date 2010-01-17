@@ -11,7 +11,7 @@ import javax.swing.JScrollPane;
 public class EntryAddChange extends Change {
 
   BibtexEntry diskEntry;
-//  boolean isModifiedLocally, modificationsAgree;[[[[[[
+
   PreviewPanel pp;
   JScrollPane sp;
 

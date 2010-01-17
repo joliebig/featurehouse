@@ -1,7 +1,4 @@
-/*
- * Created on April 01, 2007
- * Updated on May 03, 2007
- * */
+
 
 package net.sf.jabref.msbib;
 import java.io.IOException;
@@ -18,25 +15,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-/**
- * @author S M Mahbub Murshed
- * @email udvranto@yahoo.com
- *
- * @version 2.0.0
- * @see http://mahbub.wordpress.com/2007/03/24/details-of-microsoft-office-2007-bibliographic-format-compared-to-bibtex/
- * @see http://mahbub.wordpress.com/2007/03/22/deciphering-microsoft-office-2007-bibliography-format/
- * 
- * Date: May 15, 2007; May 03, 2007
- * 
- * History:
- * May 03, 2007 - Added suport for export
- * May 15, 2007 - Added suport for import
- */
+
 public class MSBibDatabase {
 	protected Set<MSBibEntry> entries;
 	
 	public MSBibDatabase() {
-		// maybe make this sorted later...
+		
 		entries = new HashSet<MSBibEntry>();
 	}
 	
@@ -76,8 +60,8 @@ public class MSBibDatabase {
    		}
    		if(rootLst.getLength()==0)
    			return bibitems;
-//    	if(docin!= null && docin.getDocumentElement().getTagName().contains("Sources") == false)
-//    		return bibitems;
+
+
 
    		NodeList sourceList = ((Element)(rootLst.item(0))).getElementsByTagName(bcol+"Source");
    		for(int i=0; i<sourceList.getLength(); i++) {

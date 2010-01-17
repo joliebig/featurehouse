@@ -14,44 +14,25 @@ import javax.xml.parsers.SAXParserFactory;
 
 import net.sf.jabref.BibtexEntry;
 
-/**
- * Importer for the Refer/Endnote format.
- * 
- * check here for details on the format
- * http://www.ecst.csuchico.edu/~jacobsd/bib/formats/endnote.html
- */
+
 public class MedlineImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
         return "Medline";
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
         return "medline";
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream in) throws IOException {
         return true;
     }
 
-    /**
-     * Fetch and parse an medline item from eutils.ncbi.nlm.nih.gov.
-     * 
-     * @param id One or several ids, separated by ","
-     * 
-     * @return Will return an empty list on error.
-     */
+    
     public static List<BibtexEntry> fetchMedline(String id) {
         String baseUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=citation&id=" +
             id;
@@ -64,31 +45,28 @@ public class MedlineImporter extends ImportFormat {
         }
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
 
-        // Obtain a factory object for creating SAX parsers
+        
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 
-        // Configure the factory object to specify attributes of the parsers it
-        // creates
+        
+        
         parserFactory.setValidating(true);
         parserFactory.setNamespaceAware(true);
 
-        // Now create a SAXParser object
+        
         ArrayList<BibtexEntry> bibItems = null;
         try {
-            SAXParser parser = parserFactory.newSAXParser(); // May throw
-            // exceptions
+            SAXParser parser = parserFactory.newSAXParser(); 
+            
             MedlineHandler handler = new MedlineHandler();
-            // Start the parser. It reads the file and calls methods of the
-            // handler.
+            
+            
             parser.parse(stream, handler);
 
-            // Switch this to true if you want to make a local copy for testing.
+            
             if (false) {
                 stream.reset();
                 FileOutputStream out = new FileOutputStream(new File("/home/alver/ut.txt"));
@@ -99,8 +77,8 @@ public class MedlineImporter extends ImportFormat {
                 out.close();
             }
 
-            // When you're done, report the results stored by your handler
-            // object
+            
+            
             bibItems = handler.getItems();
         } catch (javax.xml.parsers.ParserConfigurationException e1) {
             e1.printStackTrace();

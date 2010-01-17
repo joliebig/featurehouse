@@ -13,10 +13,7 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * List event, mouse, key and focus listener for the main table that makes up the
- * most part of the BasePanel for a single bib database.
- */
+
 public class MainTableSelectionListener implements ListEventListener, MouseListener,
         KeyListener, FocusListener {
 
@@ -29,16 +26,16 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
     private boolean previewActive = Globals.prefs.getBoolean("previewEnabled");
     private boolean workingOnPreview = false;
 
-    // Register the last character pressed to quick jump in the table. Together
-    // with storing the last row number jumped to, this is used to let multiple
-    // key strokes cycle between all entries starting with the same letter:
+    
+    
+    
     private int[] lastPressed = new int[20];
     private int lastPressedCount = 0;
     private int lastQuickJumpRow = -1;
     private long lastPressedTime = 0;
     private long QUICK_JUMP_TIMEOUT = 2000;
 
-    //private int lastCharPressed = -1;
+    
 
     public MainTableSelectionListener(BasePanel panel, MainTable table) {
         this.table = table;
@@ -67,13 +64,13 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
     }
 
     public void listChanged(ListEvent e) {
-        //System.out.println(e);
+        
         EventList selected = e.getSourceList();
         Object newSelected = null;
         while (e.next()) {
             if (e.getType() == ListEvent.INSERT) {
                 if (newSelected != null)
-                    return; // More than one new selected. Do nothing.
+                    return; 
                 else {
                     if (e.getIndex() < selected.size())
                         newSelected = selected.get(e.getIndex());
@@ -85,20 +82,20 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
 
         if (newSelected != null) {
 
-            // Ok, we have a single new entry that has been selected. Now decide what to do with it:
+            
             final BibtexEntry toShow = (BibtexEntry) newSelected;
-            final int mode = panel.getMode(); // What is the panel already showing?
+            final int mode = panel.getMode(); 
             if ((mode == BasePanel.WILL_SHOW_EDITOR) || (mode == BasePanel.SHOWING_EDITOR)) {
-                // An entry is currently being edited.
+                
                 EntryEditor oldEditor = panel.getCurrentEditor();
-                // Get an old or new editor for the entry to edit:
+                
                 EntryEditor newEditor = panel.getEntryEditor(toShow);
-                // Show the new editor unless it was already visible:
+                
                 if ((newEditor != oldEditor) || (mode != BasePanel.SHOWING_EDITOR)) {
                     panel.showEntryEditor(newEditor);
                 }
             } else {
-                // Either nothing or a preview was shown. Update the preview.
+                
                 if (previewActive) {
                     updatePreview(toShow, false);
                 }
@@ -115,7 +112,7 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
     private void updatePreview(final BibtexEntry toShow, final boolean changedPreview, int repeats) {
         if (workingOnPreview) {
             if (repeats > 0)
-                return; // We've already waited once. Give up on this selection.
+                return; 
             Timer t = new Timer(50, new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
                     updatePreview(toShow, changedPreview, 1);
@@ -126,7 +123,7 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
             return;
         }
         EventList list = table.getSelected();
-        // Check if the entry to preview is still selected:
+        
         if ((list.size() != 1) || ((BibtexEntry)list.get(0) != toShow)) {
             return;
         }
@@ -134,7 +131,7 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
         workingOnPreview = true;
         final Runnable update = new Runnable() {
             public void run() {
-                // If nothing was already shown, set the preview and move the separator:
+                
                 if (changedPreview || (mode == BasePanel.SHOWING_NOTHING)) {
                     panel.showPreview(preview);
                     panel.adjustSplitter();
@@ -168,10 +165,10 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
     }
 
     public void mouseReleased(MouseEvent e) {
-        // First find the column on which the user has clicked.
+        
         final int col = table.columnAtPoint(e.getPoint()),
                 row = table.rowAtPoint(e.getPoint());
-        // Check if the user has right-clicked. If so, open the right-click menu.
+        
         if (e.isPopupTrigger()) {
             processPopupTrigger(e, row);
             return;
@@ -180,21 +177,21 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
 
      public void mousePressed(MouseEvent e) {
          
-        // First find the column on which the user has clicked.
+        
         final int col = table.columnAtPoint(e.getPoint()),
                 row = table.rowAtPoint(e.getPoint());
 
-        // A double click on an entry should open the entry's editor.
+        
         if (e.getClickCount() == 2) {
 
             BibtexEntry toShow = (BibtexEntry) tableRows.get(row);
             editSignalled(toShow);
         }
 
-        // Check if the user has clicked on an icon cell to open url or pdf.
+        
         final String[] iconType = table.getIconTypeForColumn(col);
 
-        // Check if the user has right-clicked. If so, open the right-click menu.
+        
         if (e.isPopupTrigger()) {
             if (iconType == null)
                 processPopupTrigger(e, row);
@@ -208,11 +205,11 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
         if (iconType != null) {
 
             Object value = table.getValueAt(row, col);
-            if (value == null) return; // No icon here, so we do nothing.
+            if (value == null) return; 
 
             final BibtexEntry entry = (BibtexEntry) tableRows.get(row);
 
-            // Get the icon type. Corresponds to the field name.
+            
             int hasField = -1;
             for (int i = iconType.length - 1; i >= 0; i--)
                 if (entry.getField(iconType[i]) != null)
@@ -221,7 +218,7 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
                 return;
             final String fieldName = iconType[hasField];
 
-            // Open it now. We do this in a thread, so the program won't freeze during the wait.
+            
             (new Thread() {
                 public void run() {
                     panel.output(Globals.lang("External viewer called") + ".");
@@ -229,18 +226,18 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
                     Object link = entry.getField(fieldName);
                     if (iconType == null) {
                         Globals.logger("Error: no link to " + fieldName + ".");
-                        return; // There is an icon, but the field is not set.
+                        return; 
                     }
 
                     try {
-                        // See if this is a simple file link field, or if it is a file-list
-                        // field that can specify a list of links:
+                        
+                        
                         if (fieldName.equals(GUIGlobals.FILE_FIELD)) {
 
-                            // We use a FileListTableModel to parse the field content:
+                            
                             FileListTableModel fileList = new FileListTableModel();
                             fileList.setContent((String)link);
-                            // If there are one or more links, open the first one:
+                            
                             if (fileList.getRowCount() > 0) {
                                 FileListEntry flEntry = fileList.getEntry(0);
                                 ExternalFileMenuItem item = new ExternalFileMenuItem
@@ -261,46 +258,32 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
         }
     }
 
-    /**
-     * Process general right-click events on the table. Show the table context menu at
-     * the position where the user right-clicked.
-     * @param e The mouse event defining the popup trigger.
-     * @param row The row where the event occured.
-     */
+    
     protected void processPopupTrigger(MouseEvent e, int row) {
          int selRow = table.getSelectedRow();
-         if (selRow == -1 ||// (getSelectedRowCount() == 0))
+         if (selRow == -1 ||
                  !table.isRowSelected(table.rowAtPoint(e.getPoint()))) {
              table.setRowSelectionInterval(row, row);
-             //panel.updateViewToSelected();
+             
          }
          RightClickMenu rightClickMenu = new RightClickMenu(panel, panel.metaData());
          rightClickMenu.show(table, e.getX(), e.getY());
      }
 
-    /**
-     * Process popup trigger events occuring on an icon cell in the table. Show
-     * a menu where the user can choose which external resource to open for the
-     * entry. If no relevant external resources exist, let the normal popup trigger
-     * handler do its thing instead.
-     * @param e The mouse event defining this popup trigger.
-     * @param row The row where the event occured.
-     * @param iconType A string array containing the resource fields associated with
-     *  this table cell.
-     */
+    
     private void showIconRightClickMenu(MouseEvent e, int row, String[] iconType) {
         BibtexEntry entry = (BibtexEntry) tableRows.get(row);
         JPopupMenu menu = new JPopupMenu();
         int count = 0;
 
-        // See if this is a simple file link field, or if it is a file-list
-        // field that can specify a list of links:
+        
+        
         if (iconType[0].equals(GUIGlobals.FILE_FIELD)) {
-            // We use a FileListTableModel to parse the field content:
+            
             Object o = entry.getField(iconType[0]);
             FileListTableModel fileList = new FileListTableModel();
             fileList.setContent((String)o);
-            // If there are one or more links, open the first one:
+            
             for (int i=0; i<fileList.getRowCount(); i++) {
                 FileListEntry flEntry = fileList.getEntry(i);
                 String description = flEntry.getDescription();
@@ -379,13 +362,9 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
         }
     }
 
-    /**
-     * We should implement a faster method than the one below, but this one doesn't
-     * work currently.
-     * @param e The KeyEvent
-     */
+    
     public void keyTyped_(KeyEvent e) {
-        //System.out.println(e.getKeyChar()+" "+table.getSortingColumn());
+        
         if ((!e.isActionKey()) && Character.isLetterOrDigit(e.getKeyChar())) {
             int sortingColumn = table.getSortingColumn(0);
             if (sortingColumn < 0)
@@ -400,7 +379,7 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
             if ((comp == null) || !(comp instanceof FieldComparator))
                 return;
 
-            // Ok, after all of this we should have either found a field name to go by
+            
             String field = ((FieldComparator)comp).getFieldName();
             System.out.println(String.valueOf(e.getKeyChar())+" "+field);
             SortedList list = table.getSortedForTable();
@@ -411,37 +390,29 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
         }
     }
 
-    /**
-     * Receive key event on the main table. If the key is a letter or a digit,
-     * we should select the first entry in the table which starts with the given
-     * letter in the column by which the table is sorted.
-     * @param e The KeyEvent
-     */
+    
     public void keyTyped(KeyEvent e) {
         if ((!e.isActionKey()) && Character.isLetterOrDigit(e.getKeyChar())
-	    //&& !e.isControlDown() && !e.isAltDown() && !e.isMetaDown()) {
+	    
 	    && (e.getModifiers() == 0)) {
             long time = System.currentTimeMillis();
             if (time - lastPressedTime > QUICK_JUMP_TIMEOUT)
-                lastPressedCount = 0; // Reset last pressed character
-            // Update timestamp:
+                lastPressedCount = 0; 
+            
             lastPressedTime = time;
-            // Add the new char to the search array:
+            
             int c = e.getKeyChar();
             if (lastPressedCount < lastPressed.length)
                 lastPressed[lastPressedCount++] = c;
 
             int sortingColumn = table.getSortingColumn(0);
             if (sortingColumn == -1)
-                return; // No sorting? TODO: look up by author, etc.?
-            // TODO: the following lookup should be done by a faster algorithm,
-            // such as binary search. But the table may not be sorted properly,
-            // due to marked entries, search etc., which rules out the binary search.
+                return; 
+            
+            
+            
             int startRow = 0;
-            /*if ((c == lastPressed) && (lastQuickJumpRow >= 0)) {
-                if (lastQuickJumpRow < table.getRowCount()-1)
-                    startRow = lastQuickJumpRow+1;
-            }*/
+            
 
             boolean done = false;
             while (!done) {
@@ -453,20 +424,20 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
                     if (s.length() >= lastPressedCount)
                         for (int j=0; j<lastPressedCount; j++) {
                             if (s.charAt(j) != lastPressed[j])
-                                break; // Escape the loop immediately when we find a mismatch
+                                break; 
                             else if (j == lastPressedCount-1) {
-                                // We found a match:
+                                
                                 table.setRowSelectionInterval(i, i);
                                 table.ensureVisible(i);
                                 lastQuickJumpRow = i;
                                 return;
                             }
                         }
-                    //if ((s.length() >= 1) && (s.charAt(0) == c)) {
-                    //}
+                    
+                    
                 }
-                // Finished, no result. If we didn't start at the beginning of
-                // the table, try that. Otherwise, exit the while loop.
+                
+                
                 if (startRow > 0)
                     startRow = 0;
                 else
@@ -491,6 +462,6 @@ public class MainTableSelectionListener implements ListEventListener, MouseListe
     }
 
     public void focusLost(FocusEvent e) {
-        lastPressedCount = 0; // Reset quick jump when focus is lost.
+        lastPressedCount = 0; 
     }
 }

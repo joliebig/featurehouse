@@ -25,19 +25,13 @@ import java.util.Collections;
 import java.net.URL;
 import java.net.MalformedURLException;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Sep 19, 2005
- * Time: 7:57:29 PM
- * To browseOld this template use File | Settings | File Templates.
- */
+
 public class ManageJournalsPanel extends JPanel{
 
     JabRefFrame frame;
     JTextField personalFile = new JTextField();
     AbbreviationsTableModel tableModel = new AbbreviationsTableModel();
-    JTable userTable; // builtInTable
+    JTable userTable; 
     JPanel userPanel = new JPanel(),
         journalEditPanel,
         externalFilesPanel = new JPanel(),
@@ -45,7 +39,7 @@ public class ManageJournalsPanel extends JPanel{
     JTextField nameTf = new JTextField(),
         newNameTf = new JTextField(),
         abbrTf = new JTextField();
-    java.util.List externals = new ArrayList(); // To hold references to external journal lists.
+    java.util.List externals = new ArrayList(); 
     JDialog dialog;
     JRadioButton newFile = new JRadioButton(Globals.lang("New file")),
         oldFile = new JRadioButton(Globals.lang("Existing file"));
@@ -71,32 +65,30 @@ public class ManageJournalsPanel extends JPanel{
         addExtPan.setLayout(new BorderLayout());
         addExtPan.add(addExt, BorderLayout.EAST);
         addExtPan.setToolTipText(Globals.lang("Add"));
-        //addExtPan.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.red));
+        
         FormLayout layout = new FormLayout
-                ("1dlu, 8dlu, left:pref, 4dlu, fill:200dlu:grow, 4dlu, fill:pref", // 4dlu, left:pref, 4dlu",
-                        "pref, 20dlu, 20dlu, fill:200dlu, 4dlu, pref");//150dlu");
+                ("1dlu, 8dlu, left:pref, 4dlu, fill:200dlu:grow, 4dlu, fill:pref", 
+                        "pref, 20dlu, 20dlu, fill:200dlu, 4dlu, pref");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
 
         CellConstraints cc = new CellConstraints();
 
-        /*JLabel description = new JLabel("<HTML>"+Globals.lang("JabRef can switch journal names between "
-            +"abbreviated and full form. Since it knows only a limited number of journal names, "
-            +"you may need to add your own definitions.")+"</HTML>");*/
+        
         builder.addSeparator(Globals.lang("Personal journal list"), cc.xyw(2,1,6));
 
-        //builder.add(description, cc.xyw(2,1,6));
+        
         builder.add(newFile, cc.xy(3,2));
         builder.add(newNameTf, cc.xy(5,2));
         builder.add(browseNew, cc.xy(7,2));
         builder.add(oldFile, cc.xy(3,3));
         builder.add(personalFile, cc.xy(5,3));
-        //BrowseAction action = new BrowseAction(personalFile, false);
-        //JButton browse = new JButton(Globals.lang("Browse"));
-        //browse.addActionListener(action);
+        
+        
+        
         builder.add(browseOld, cc.xy(7,3));
 
         userPanel.setLayout(new BorderLayout());
-        //builtInTable = new JTable(Globals.journalAbbrev.getTableModel());
+        
         builder.add(userPanel, cc.xyw(2,4,4));
         ButtonStackBuilder butBul = new ButtonStackBuilder();
         butBul.addGridded(add);
@@ -107,10 +99,10 @@ public class ManageJournalsPanel extends JPanel{
 
         builder.addSeparator(Globals.lang("External files"), cc.xyw(2,6,6));
         externalFilesPanel.setLayout(new BorderLayout());
-        //builder.add(/*new JScrollPane(*/externalFilesPanel/*)*/, cc.xyw(2,8,6));
+        
 
         setLayout(new BorderLayout());
-        builder.getPanel().setBorder(BorderFactory.createEmptyBorder(5,5,5,5));//createMatteBorder(1,1,1,1,Color.green));
+        builder.getPanel().setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         add(builder.getPanel(), BorderLayout.NORTH);
         add(externalFilesPanel, BorderLayout.CENTER);
         ButtonBarBuilder bb = new ButtonBarBuilder();
@@ -125,9 +117,9 @@ public class ManageJournalsPanel extends JPanel{
         dialog.getContentPane().add(this, BorderLayout.CENTER);
         dialog.getContentPane().add(bb.getPanel(), BorderLayout.SOUTH);
 
-        //add(new JScrollPane(builtInTable), BorderLayout.CENTER);
+        
 
-        // Set up panel for editing a single journal, to be used in a dialog box:
+        
         FormLayout layout2 = new FormLayout
                 ("right:pref, 4dlu, fill:180dlu", "");
         DefaultFormBuilder builder2 = new DefaultFormBuilder(layout2);
@@ -194,7 +186,7 @@ public class ManageJournalsPanel extends JPanel{
             }
         });
 
-        //dialog.pack();
+        
         int xSize = getPreferredSize().width;
         dialog.setSize(xSize+10,700);
     }
@@ -232,8 +224,8 @@ public class ManageJournalsPanel extends JPanel{
         builder.nextLine();
         builder.append(Box.createVerticalGlue());
 
-        //builder.getPanel().setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.green));
-        //externalFilesPanel.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.red));
+        
+        
         JScrollPane pane = new JScrollPane(builder.getPanel());
         pane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         externalFilesPanel.setMinimumSize(new Dimension(400,400));
@@ -259,8 +251,8 @@ public class ManageJournalsPanel extends JPanel{
 
         }
 
-        //efe = new ExternalFileEntry();
-        //externals.add(efe);
+        
+        
 
     }
 
@@ -309,9 +301,9 @@ public class ManageJournalsPanel extends JPanel{
         if (newFile.isSelected()) {
             if (newNameTf.getText().length() > 0) {
                 f = new File(newNameTf.getText());
-            }// else {
-            //    return; // Nothing to do.
-            //}
+            }
+            
+            
         } else
             f = new File(personalFile.getText());
 
@@ -345,7 +337,7 @@ public class ManageJournalsPanel extends JPanel{
             Globals.prefs.put("personalJournalList", filename);
         }
 
-        // Store the list of external files set up:
+        
         ArrayList extFiles = new ArrayList();
         for (Iterator i=externals.iterator(); i.hasNext();) {
             ExternalFileEntry efe = (ExternalFileEntry)i.next();
@@ -391,9 +383,9 @@ public class ManageJournalsPanel extends JPanel{
                 ud.download();
                 comp.setText(toFile.getPath());
             } catch (MalformedURLException ex) {
-                ex.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                ex.printStackTrace();  
             } catch (IOException ex2) {
-                ex2.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                ex2.printStackTrace();  
             }
         }
     }
@@ -502,17 +494,17 @@ public class ManageJournalsPanel extends JPanel{
 
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == add) {
-                //int sel = userTable.getSelectedRow();
-                //if (sel < 0)
-                //    sel = 0;
+                
+                
+                
 
                 nameTf.setText("");
                 abbrTf.setText("");
                 if (JOptionPane.showConfirmDialog(dialog, journalEditPanel, Globals.lang("Edit journal"),
                         JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     journals.add(new JournalEntry(nameTf.getText(), abbrTf.getText()));
-                    //setValueAt(nameTf.getText(), sel, 0);
-                    //setValueAt(abbrTf.getText(), sel, 1);
+                    
+                    
                     Collections.sort(journals);
                     fireTableDataChanged();
                 }

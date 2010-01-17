@@ -49,7 +49,7 @@ public class StringChange extends Change {
       string.setContent(disk);
       undoEdit.addEdit(new UndoableStringChange(panel, string, false, mem, disk));
     } else {
-      // The string was removed or renamed locally. We guess that it was removed.
+      
 	String newId = Util.createNeutralId();
 	BibtexString bs = new BibtexString(newId, label, disk);
 	try {

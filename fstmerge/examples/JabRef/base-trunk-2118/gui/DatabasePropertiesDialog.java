@@ -14,13 +14,7 @@ import java.awt.event.ActionEvent;
 import java.util.HashMap;
 import java.util.Vector;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Oct 31, 2005
- * Time: 10:46:03 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class DatabasePropertiesDialog extends JDialog {
 
     MetaData metaData;
@@ -29,7 +23,7 @@ public class DatabasePropertiesDialog extends JDialog {
     JButton ok, cancel;
     JTextField fileDir = new JTextField(40),
             pdfDir = new JTextField(40), psDir = new JTextField(40);
-    String oldFileVal="", oldPdfVal="", oldPsVal=""; // Remember old values to see if they are changed.
+    String oldFileVal="", oldPdfVal="", oldPsVal=""; 
 
     public DatabasePropertiesDialog(JFrame parent) {
         super(parent, Globals.lang("Database properties"), false);
@@ -110,7 +104,7 @@ public class DatabasePropertiesDialog extends JDialog {
         if (fileD == null)
             fileDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (fileD.size() >= 1)
                 fileDir.setText(((String)fileD.get(0)).trim());
         }
@@ -119,7 +113,7 @@ public class DatabasePropertiesDialog extends JDialog {
         if (pdfD == null)
             pdfDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (pdfD.size() >= 1)
                 pdfDir.setText(((String)pdfD.get(0)).trim());
         }
@@ -128,12 +122,12 @@ public class DatabasePropertiesDialog extends JDialog {
         if (psD == null)
             psDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (psD.size() >= 1)
                 psDir.setText(((String)psD.get(0)).trim());
         }
 
-        // Store original values to see if they get changed:
+        
         oldFileVal = fileDir.getText();
         oldPdfVal = pdfDir.getText();
         oldPsVal = psDir.getText();
@@ -171,12 +165,12 @@ public class DatabasePropertiesDialog extends JDialog {
         else
             metaData.remove("psDirectory");
 
-        // See if any of the values have been modified:
+        
         boolean changed = !newEncoding.equals(oldEncoding)
             || !oldPdfVal.equals(pdfDir.getText())
             || !oldPsVal.equals(psDir.getText());
-        // ... if so, mark base changed. Prevent the Undo button from removing
-        // change marking:
+        
+        
         if (changed)
             panel.markNonUndoableBaseChanged();
     }

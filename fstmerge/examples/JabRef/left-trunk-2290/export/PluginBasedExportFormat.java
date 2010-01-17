@@ -6,22 +6,12 @@ import java.net.URL;
 import net.sf.jabref.Globals;
 import net.sf.jabref.plugin.core.generated._JabRefPlugin.ExportFormatTemplateExtension;
 
-/**
- * Class for export formats defined in plugins.
- * 
- * Needed since resources might be loaded from a plugin-jar.
- * 
- */
+
 public class PluginBasedExportFormat extends ExportFormat {
 
 	public ExportFormatTemplateExtension extension;
 
-	/**
-	 * Load the plugin from the given extension. Might be null if extension could not be loaded.
-	 * 
-	 * @param extension
-	 * @return
-	 */
+	
 	public static PluginBasedExportFormat getFormat(
 			ExportFormatTemplateExtension extension) {
 
@@ -53,7 +43,7 @@ public class PluginBasedExportFormat extends ExportFormat {
 
 		Reader reader;
 
-		// If that didn't work, try loading as a normal file URL:
+		
 		if (reso != null) {
 			try {
 				reader = new InputStreamReader(reso.openStream());

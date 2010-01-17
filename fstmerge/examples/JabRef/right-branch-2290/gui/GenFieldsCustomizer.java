@@ -10,14 +10,7 @@ import java.util.Iterator;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.layout.Sizes;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- * @author not attributable
- * @version 1.0
- */
+
 
 public class GenFieldsCustomizer extends JDialog {
   JPanel buttons = new JPanel();
@@ -36,13 +29,13 @@ public class GenFieldsCustomizer extends JDialog {
   GridBagLayout gridBagLayout2 = new GridBagLayout();
   JabRefFrame parent;
   JButton revert = new JButton();
-  //EntryCustomizationDialog diag;
+  
   HelpAction help;
 
-  public GenFieldsCustomizer(JabRefFrame frame/*, EntryCustomizationDialog diag*/) {
+  public GenFieldsCustomizer(JabRefFrame frame) {
     super(frame, Globals.lang("Set general fields"), false);
     parent = frame;
-    //this.diag = diag;
+    
     help = new HelpAction(parent.helpDiag, GUIGlobals.generalFieldsHelp,
           "Help", GUIGlobals.getIconUrl("helpSmall"));
     helpBut = new JButton(Globals.lang("Help"));
@@ -61,17 +54,17 @@ public class GenFieldsCustomizer extends JDialog {
     ok.addActionListener(new GenFieldsCustomizer_ok_actionAdapter(this));
     cancel.setText(Globals.lang("Cancel"));
     cancel.addActionListener(new GenFieldsCustomizer_cancel_actionAdapter(this));
-    //buttons.setBackground(GUIGlobals.lightGray);
+    
     jLabel1.setText(Globals.lang("Delimit fields with semicolon, ex.")+": url;pdf;note");
     jPanel3.setLayout(gridBagLayout2);
     jPanel4.setBorder(BorderFactory.createEtchedBorder());
     jPanel4.setLayout(gridBagLayout1);
     jLabel2.setText(Globals.lang("General fields"));
 
-    //    fieldsArea.setText(parent.prefs.get("generalFields"));
+    
     setFieldsText();
 
-    //jPanel3.setBackground(GUIGlobals.lightGray);
+    
     revert.setText(Globals.lang("Default"));
     revert.addActionListener(new GenFieldsCustomizer_revert_actionAdapter(this));
     this.getContentPane().add(buttons, BorderLayout.SOUTH);
@@ -96,14 +89,14 @@ public class GenFieldsCustomizer extends JDialog {
     jPanel4.add(jLabel2,    new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0
             ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 5, 5, 5), 0, 0));
 
-  // Key bindings:
+  
   ActionMap am = buttons.getActionMap();
   InputMap im = buttons.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
   im.put(Globals.prefs.getKey("Close dialog"), "close");
   am.put("close", new AbstractAction() {
     public void actionPerformed(ActionEvent e) {
       dispose();
-      //diag.requestFocus();
+      
     }
   });
 
@@ -115,7 +108,7 @@ public class GenFieldsCustomizer extends JDialog {
       for (; i < lines.length; i++) {
           String[] parts = lines[i].split(":");
           if (parts.length != 2) {
-              // Report error and exit.
+              
               String field = Globals.lang("field");
               JOptionPane.showMessageDialog(this, Globals.lang("Each line must be on the following form") + " '" +
                       Globals.lang("Tabname") + ":" + field + "1;" + field + "2;...;" + field + "N'",
@@ -124,7 +117,7 @@ public class GenFieldsCustomizer extends JDialog {
           }
           String testString = Util.checkLegalKey(parts[1]);
           if (!testString.equals(parts[1]) || (parts[1].indexOf('&') >= 0)) {
-              // Report error and exit.
+              
               JOptionPane.showMessageDialog(this, Globals.lang("Field names are not allowed to contain white space or the following "
                       + "characters") + ": # { } ~ , ^ &",
                       Globals.lang("Error"), JOptionPane.ERROR_MESSAGE);
@@ -138,20 +131,16 @@ public class GenFieldsCustomizer extends JDialog {
       Globals.prefs.purgeSeries(Globals.prefs.CUSTOM_TAB_NAME, i);
       Globals.prefs.purgeSeries(Globals.prefs.CUSTOM_TAB_FIELDS, i);
       Globals.prefs.updateEntryEditorTabList();
-      /*
-    String delimStr = fieldsArea.getText().replaceAll("\\s+","")
-        .replaceAll("\\n+","").trim();
-    parent.prefs.putStringArray("generalFields", Util.delimToStringArray(delimStr, ";"));
-      */
+      
 
       parent.removeCachedEntryEditors();
       dispose();
-      //diag.requestFocus();
+      
   }
 
   void cancel_actionPerformed(ActionEvent e) {
     dispose();
-    //diag.requestFocus();
+    
   }
 
     void setFieldsText() {

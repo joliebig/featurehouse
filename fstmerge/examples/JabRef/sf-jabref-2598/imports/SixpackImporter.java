@@ -11,40 +11,25 @@ import net.sf.jabref.BibtexEntryType;
 import net.sf.jabref.Globals;
 import net.sf.jabref.Util;
 
-/**
- * Imports a Biblioscape Tag File. The format is described on
- * http://www.biblioscape.com/manual_bsp/Biblioscape_Tag_File.htm Several
- * Biblioscape field types are ignored. Others are only included in the BibTeX
- * field "comment".
- */
+
 public class SixpackImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
 	return "Sixpack";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "sixpack";
     }
     
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream in) throws IOException {
 	return true;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
 
 	final String SEPARATOR = new String(new char[] { 0, 48 });
@@ -89,11 +74,11 @@ public class SixpackImporter extends ImportFormat {
 	BibtexEntry entry = null;
 	lines: while ((s = in.readLine()) != null){
 	    try{
-		s = s.replaceAll("<par>", ""); // What is <par> ????
+		s = s.replaceAll("<par>", ""); 
 		String[] fields = s.split(SEPARATOR);
-		// Check type and create entry:
+		
 		if (fields.length < 2)
-		    continue lines; // Avoid ArrayIndexOutOfBoundsException
+		    continue lines; 
 		BibtexEntryType typ = BibtexEntryType
 		    .getType(fields[1].toLowerCase());
 		if (typ == null){
@@ -115,7 +100,7 @@ public class SixpackImporter extends ImportFormat {
 			else if (fld.equals("pages")) ImportFormatReader.setIfNecessary(entry, fld, fields[i]
 							       .replaceAll("-", "--"));
             else if (fld.equals("file")) {
-                String fieldName = "pdf"; // We set pdf as default.
+                String fieldName = "pdf"; 
                 if (fields[i].endsWith("ps") || fields[i].endsWith("ps.gz"))
                     fieldName = "ps";
                 else if (fields[i].endsWith("html"))

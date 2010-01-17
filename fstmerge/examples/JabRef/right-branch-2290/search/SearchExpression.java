@@ -1,8 +1,4 @@
-/**
- * SearchExpression.java
- *
- * @author Created by Omnicore CodeGuide
- */
+
 
 package net.sf.jabref.search;
 
@@ -25,20 +21,20 @@ public class SearchExpression implements SearchRule {
 		throws TokenStreamException, RecognitionException, PatternSyntaxException
 	{
 		this.prefs = prefs;
-		// parse search expression
+		
 		SearchExpressionParser parser = new SearchExpressionParser(new SearchExpressionLexer(new StringReader(
-			searchOptions.elements().nextElement().toString()))); // supports only single entry
+			searchOptions.elements().nextElement().toString()))); 
 		parser.caseSensitive = this.prefs.getBoolean("caseSensitiveSearch");
 		parser.regex = this.prefs.getBoolean("regExpSearch");
-		parser.searchExpression(); // this is the "global" rule
-		ast = parser.getAST(); // remember abstract syntax tree
+		parser.searchExpression(); 
+		ast = parser.getAST(); 
 	}
 	public int applyRule(Map searchStrings, BibtexEntry bibtexEntry) {
 		try {
 			return treeParser.apply(ast,bibtexEntry);
 		} catch (RecognitionException e) {
-			return 0; // this should never occur
-		} //catch (NullPointerException ex) { return 0; } // Just testing (Morten)
+			return 0; 
+		} 
 	}
 }
 

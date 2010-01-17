@@ -1,28 +1,4 @@
-/* (C) 2003 Nizar N. Batada, Morten O. Alver
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref;
 
 import java.awt.FileDialog;
@@ -46,23 +22,21 @@ import net.sf.jabref.util.TBuildInfo;
 
 public class Globals {
 
-	public static int SHORTCUT_MASK,// =
-		// Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-		FUTURE_YEAR = 2050, // Needs to give a year definitely in the future.
-		// Used for guessing the
-		// year field when parsing textual data. :-)
+	public static int SHORTCUT_MASK,
+		
+		FUTURE_YEAR = 2050, 
+		
+		
 
-		STANDARD_EXPORT_COUNT = 5, // The number of standard export formats.
-		METADATA_LINE_LENGTH = 70; // The line length used to wrap metadata.
+		STANDARD_EXPORT_COUNT = 5, 
+		METADATA_LINE_LENGTH = 70; 
 
 	private static String resourcePrefix = "resource/JabRef", menuResourcePrefix = "resource/Menu",
 		integrityResourcePrefix = "resource/IntegrityMessage";
 
 	private static final String buildInfos = "/resource/build.properties";
 
-	/*
-	 * some extra field definitions
-	 */
+	
 	public static final String additionalFields = "/resource/fields/fields.xml";
 
 	public static ResourceBundle messages, menuTitles, intMessages;
@@ -81,12 +55,12 @@ public class Globals {
 		BUILD = bi.getBUILD_NUMBER();
 		BUILD_DATE = bi.getBUILD_DATE();
 
-		// TODO: Error console initialization here. When should it be used?
+		
 		errorConsole = ErrorConsole.getInstance();
 	}
 
-	// public static ResourceBundle preferences =
-	// ResourceBundle.getBundle("resource/defaultPrefs");
+	
+	
 	public static Locale locale;
 
 	public static final String FILETYPE_PREFS_EXT = "_dir", SELECTOR_META_PREFIX = "selector_",
@@ -98,20 +72,20 @@ public class Globals {
 
 	private static Handler consoleHandler = new java.util.logging.ConsoleHandler();
 
-	public static String[] ENCODINGS, ALL_ENCODINGS = // (String[])
-		// Charset.availableCharsets().keySet().toArray(new
-		// String[]{});
+	public static String[] ENCODINGS, ALL_ENCODINGS = 
+		
+		
 		new String[] { "ISO8859_1", "UTF8", "UTF-16", "ASCII", "Cp1250", "Cp1251", "Cp1252",
 			"Cp1253", "Cp1254", "Cp1257", "JIS", "SJIS",
-			"EUC_JP", // Added Japanese encodings.
+			"EUC_JP", 
 			"Big5", "Big5_HKSCS", "GBK", "ISO8859_2", "ISO8859_3", "ISO8859_4", "ISO8859_5",
 			"ISO8859_6", "ISO8859_7", "ISO8859_8", "ISO8859_9", "ISO8859_13", "ISO8859_15" };
 
-	// String array that maps from month number to month string label:
+	
 	public static String[] MONTHS = new String[] { "jan", "feb", "mar", "apr", "may", "jun", "jul",
 		"aug", "sep", "oct", "nov", "dec" };
 
-	// Map that maps from month string labels to
+	
 	public static Map<String, String> MONTH_STRINGS = new HashMap<String, String>();
 	static {
 		MONTH_STRINGS.put("jan", "January");
@@ -127,8 +101,8 @@ public class Globals {
 		MONTH_STRINGS.put("nov", "November");
 		MONTH_STRINGS.put("dec", "December");
 
-		// Build list of encodings, by filtering out all that are not supported
-		// on this system:
+		
+		
 		List<String> encodings = new ArrayList<String>();
 		for (int i = 0; i < ALL_ENCODINGS.length; i++) {
 			if (Charset.isSupported(ALL_ENCODINGS[i])) {
@@ -155,42 +129,33 @@ public class Globals {
 	public static final String NEWLINE = System.getProperty("line.separator");
     public static final int NEWLINE_LENGTH = System.getProperty("line.separator").length();
 
-	/**
-	 * true if we have unix newlines
-	 */
+	
 	public static final boolean UNIX_NEWLINE = NEWLINE.equals("\n");
 
-	/**
-	 * 	"Fieldname" to indicate that a field should be treated as a bibtex 
-	 * string. Used when writing database to file.
-	 */
+	
 	public static final String BIBTEX_STRING = "__string";
 
 	public static void logger(String s) {
 		Logger.global.info(s);
 	}
 
-	public static void turnOffLogging() { // only log exceptions
+	public static void turnOffLogging() { 
 		Logger.global.setLevel(java.util.logging.Level.SEVERE);
 	}
 
-	/**
-	 * Should be only called once
-	 */
+	
 	public static void turnOnConsoleLogging() {
 		Logger.global.addHandler(consoleHandler);
 	}
 
-	/**
-	 * Should be only called once
-	 */
+	
 	public static void turnOnFileLogging() {
 		Logger.global.setLevel(java.util.logging.Level.ALL);
 		java.util.logging.Handler handler;
 		handler = new ConsoleHandler();
 		Logger.global.addHandler(handler);
 
-		handler.setFilter(new Filter() { // select what gets logged
+		handler.setFilter(new Filter() { 
 				public boolean isLoggable(LogRecord record) {
 					return true;
 				}
@@ -214,7 +179,7 @@ public class Globals {
 			if (Globals.messages != null) 
 				translation = Globals.messages.getString(key.replaceAll(" ", "_"));
 		} catch (MissingResourceException ex) {
-			//logger("Warning: could not get translation for \"" + key + "\"");
+			
 		}
 		if (translation == null)
 			translation = key;
@@ -238,16 +203,16 @@ public class Globals {
 							if (params != null && index >= 0 && index <= params.length)
 								sb.append(params[index]);
 						} catch (NumberFormatException e) {
-							// append literally (for quoting) or insert special
-							// symbol
+							
+							
 							switch (c) {
-							case 'c': // colon
+							case 'c': 
 								sb.append(':');
 								break;
-							case 'e': // equal
+							case 'e': 
 								sb.append('=');
 								break;
-							default: // anything else, e.g. %
+							default: 
 								sb.append(c);
 							}
 						}
@@ -284,8 +249,8 @@ public class Globals {
 		} catch (MissingResourceException ex) {
 			translation = key;
 
-			//System.err.println("Warning: could not get menu item translation for \""
-			//+ key + "\"");
+			
+			
 
 		}
 		if ((translation != null) && (translation.length() != 0)) {
@@ -304,9 +269,9 @@ public class Globals {
 		} catch (MissingResourceException ex) {
 			translation = key;
 
-			// System.err.println("Warning: could not get menu item translation
-			// for \""
-			// + key + "\"");
+			
+			
+			
 		}
 		if ((translation != null) && (translation.length() != 0)) {
 			return translation;
@@ -315,71 +280,34 @@ public class Globals {
 		}
 	}
 
-	// ============================================================
-	// Using the hashmap of entry types found in BibtexEntryType
-	// ============================================================
+	
+	
+	
 	public static BibtexEntryType getEntryType(String type) {
-		// decide which entryType object to return
+		
 		Object o = BibtexEntryType.ALL_TYPES.get(type);
 		if (o != null) {
 			return (BibtexEntryType) o;
 		} else {
 			return BibtexEntryType.OTHER;
 		}
-		/*
-		 * if(type.equals("article")) return BibtexEntryType.ARTICLE; else
-		 * if(type.equals("book")) return BibtexEntryType.BOOK; else
-		 * if(type.equals("inproceedings")) return
-		 * BibtexEntryType.INPROCEEDINGS;
-		 */
+		
 	}
 
-	/**
-	 * This method provides the correct opening brace to use when writing a
-	 * field to BibTeX format.
-	 * 
-	 * @return A String containing the braces to use.
-	 */
+	
 	public static String getOpeningBrace() {
 		return "{";
-		/*
-		 * As of version 2.0, storing all fields with double braces is no longer
-		 * supported, because it causes problems with e.g. the author field.
-		 * 
-		 * if (prefs.getBoolean("autoDoubleBraces")) return "{{"; else return
-		 * "{";
-		 */
+		
 	}
 
-	/**
-	 * This method provides the correct closing brace to use when writing a
-	 * field to BibTeX format.
-	 * 
-	 * @return A String containing the braces to use.
-	 */
+	
 	public static String getClosingBrace() {
 		return "}";
-		/*
-		 * As of version 2.0, storing all fields with double braces is no longer
-		 * supported, because it causes problems with e.g. the author field.
-		 * 
-		 * if (prefs.getBoolean("autoDoubleBraces")) return "}}"; else
-		 */
+		
 
 	}
 
-	/**
-	 * Will return the names of multiple files selected in the given directory
-	 * and the given extensions.
-	 * 
-	 * Will return an empty String array if no entry is found.
-	 * 
-	 * @param owner
-	 * @param directory
-	 * @param extension
-	 * @param updateWorkingdirectory
-	 * @return
-	 */
+	
 	public static String[] getMultipleFiles(JFrame owner, File directory, String extension,
 		boolean updateWorkingdirectory) {
 
@@ -395,8 +323,8 @@ public class Globals {
 		if (files instanceof String[]) {
 			return (String[]) files;
 		}
-		// Fix for:
-		// http://sourceforge.net/tracker/index.php?func=detail&aid=1538769&group_id=92314&atid=600306
+		
+		
 		if (files != null) {
 			return new String[] { (String) files };
 		}
@@ -465,11 +393,11 @@ public class Globals {
                         if (accessory != null)
                             fc.setAccessory(accessory);
 		} catch (InternalError errl) {
-			// This try/catch clause was added because a user reported an
-			// InternalError getting thrown on WinNT, presumably because of a
-			// bug in JGoodies Windows PLAF. This clause can be removed if the
-			// bug is fixed, but for now we just resort to the native file
-			// dialog, using the same method as is always used on Mac:
+			
+			
+			
+			
+			
 			return getNewFileForMac(owner, directory, extension, dialogType,
 				updateWorkingDirectory, dirOnly, off);
 		}
@@ -492,24 +420,24 @@ public class Globals {
 			dialogResult = fc.showDialog(owner, description);
 		}
 
-		// the getSelectedFile method returns a valid fileselection
-		// (if something is selected) indepentently from dialog return status
+		
+		
 		if (dialogResult != JFileChooser.APPROVE_OPTION)
 			return null;
 
-		// okay button
+		
 		File selectedFile = fc.getSelectedFile();
-		if (selectedFile == null) { // cancel
+		if (selectedFile == null) { 
 			return null;
 		}
 
-		// If this is a save dialog, and the user has not chosen "All files" as
-		// filter
-		// we enforce the given extension. But only if extension is not null.
+		
+		
+		
 		if ((extension != null) && (dialogType == JFileChooser.SAVE_DIALOG)
 			&& (fc.getFileFilter() == off) && !off.accept(selectedFile)) {
 
-			// add the first extension if there are multiple extensions
+			
 			selectedFile = new File(selectedFile.getPath() + extension.split("[, ]+", 0)[0]);
 		}
 
@@ -533,7 +461,7 @@ public class Globals {
 
 		FileDialog fc = new FileDialog(owner);
 
-		// fc.setFilenameFilter(filter);
+		
 		if (directory != null) {
 			fc.setDirectory(directory.getParent());
 		}
@@ -543,7 +471,7 @@ public class Globals {
 			fc.setMode(FileDialog.SAVE);
 		}
 
-		fc.setVisible(true); // fc.show(); -> deprecated since 1.5
+		fc.setVisible(true); 
 
 		if (fc.getFile() != null) {
 			Globals.prefs.put("workingDirectory", fc.getDirectory() + fc.getFile());
@@ -561,20 +489,15 @@ public class Globals {
 
 	static {
 
-		// System.out.println(journalAbbrev.getAbbreviatedName("Journal of Fish
-		// Biology", true));
-		// System.out.println(journalAbbrev.getAbbreviatedName("Journal of Fish
-		// Biology", false));
-		// System.out.println(journalAbbrev.getFullName("Aquaculture Eng."));
-		/*
-		 * for (Iterator i=journalAbbrev.fullNameIterator(); i.hasNext();) {
-		 * String s = (String)i.next();
-		 * System.out.println(journalAbbrev.getFullName(s)+" :
-		 * "+journalAbbrev.getAbbreviatedName(s, true)); }
-		 */
+		
+		
+		
+		
+		
+		
 
-		// Start the thread that monitors file time stamps.
-		// Util.pr("Starting FileUpdateMonitor thread. Globals line 293.");
+		
+		
 		fileUpdateMonitor.start();
 
 		try {
@@ -583,8 +506,8 @@ public class Globals {
 
 		}
 
-		// Special characters in URLs need to be replaced to ensure that the URL
-		// opens properly on all platforms:
+		
+		
 		URL_CHARS.put("<", "%3c");
 		URL_CHARS.put(">", "%3e");
 		URL_CHARS.put("(", "%28");
@@ -593,256 +516,256 @@ public class Globals {
 		URL_CHARS.put("&", "%26");
 		URL_CHARS.put("$", "%24");
 
-		// HTMLCHARS.put("\"a", "&auml;");
-		// HTMLCHARS.put("\"A", "&Auml;");
-		// HTMLCHARS.put("\"e", "&euml;");
-		// HTMLCHARS.put("\"E", "&Euml;");
-		// HTMLCHARS.put("\"i", "&iuml;");
-		// HTMLCHARS.put("\"I", "&Iuml;");
-		// HTMLCHARS.put("\"o", "&ouml;");
-		// HTMLCHARS.put("\"O", "&Ouml;");
-		// HTMLCHARS.put("\"u", "&uuml;");
-		// HTMLCHARS.put("\"U", "&Uuml;");
-		// HTMLCHARS.put("`a", "&agrave;");
-		// HTMLCHARS.put("`A", "&Agrave;");
-		// HTMLCHARS.put("`e", "&egrave;");
-		// HTMLCHARS.put("`E", "&Egrave;");
-		// HTMLCHARS.put("`i", "&igrave;");
-		// HTMLCHARS.put("`I", "&Igrave;");
-		// HTMLCHARS.put("`o", "&ograve;");
-		// HTMLCHARS.put("`O", "&Ograve;");
-		// HTMLCHARS.put("`u", "&ugrave;");
-		// HTMLCHARS.put("`U", "&Ugrave;");
-		// HTMLCHARS.put("'e", "&eacute;");
-		// HTMLCHARS.put("'E", "&Eacute;");
-		// HTMLCHARS.put("'i", "&iacute;");
-		// HTMLCHARS.put("'I", "&Iacute;");
-		// HTMLCHARS.put("'o", "&oacute;");
-		// HTMLCHARS.put("'O", "&Oacute;");
-		// HTMLCHARS.put("'u", "&uacute;");
-		// HTMLCHARS.put("'U", "&Uacute;");
-		// HTMLCHARS.put("'a", "&aacute;");
-		// HTMLCHARS.put("'A", "&Aacute;");
-		// HTMLCHARS.put("^a", "&ocirc;");
-		// HTMLCHARS.put("^A", "&Ocirc;");
-		// HTMLCHARS.put("^o", "&ocirc;");
-		// HTMLCHARS.put("^O", "&Ocirc;");
-		// HTMLCHARS.put("^u", "&ucirc;");
-		// HTMLCHARS.put("^U", "&Ucirc;");
-		// HTMLCHARS.put("^e", "&ecirc;");
-		// HTMLCHARS.put("^E", "&Ecirc;");
-		// HTMLCHARS.put("^i", "&icirc;");
-		// HTMLCHARS.put("^I", "&Icirc;");
-		// HTMLCHARS.put("~o", "&otilde;");
-		// HTMLCHARS.put("~O", "&Otilde;");
-		// HTMLCHARS.put("~n", "&ntilde;");
-		// HTMLCHARS.put("~N", "&Ntilde;");
-		// HTMLCHARS.put("~a", "&atilde;");
-		// HTMLCHARS.put("~A", "&Atilde;");
-		// HTMLCHARS.put("cc", "&ccedil;");
-		// HTMLCHARS.put("cC", "&Ccedil;");
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
-		// Following character definitions contributed by Ervin Kolenovic:
-		// HTML named entities from #192 - #255 (UNICODE Latin-1)
-		HTMLCHARS.put("`A", "&Agrave;"); // #192
-		HTMLCHARS.put("'A", "&Aacute;"); // #193
-		HTMLCHARS.put("^A", "&Acirc;"); // #194
-		HTMLCHARS.put("~A", "&Atilde;"); // #195
-		HTMLCHARS.put("\"A", "&Auml;"); // #196
-		HTMLCHARS.put("AA", "&Aring;"); // #197
-		HTMLCHARS.put("AE", "&AElig;"); // #198
-		HTMLCHARS.put("cC", "&Ccedil;"); // #199
-		HTMLCHARS.put("`E", "&Egrave;"); // #200
-		HTMLCHARS.put("'E", "&Eacute;"); // #201
-		HTMLCHARS.put("^E", "&Ecirc;"); // #202
-		HTMLCHARS.put("\"E", "&Euml;"); // #203
-		HTMLCHARS.put("`I", "&Igrave;"); // #204
-		HTMLCHARS.put("'I", "&Iacute;"); // #205
-		HTMLCHARS.put("^I", "&Icirc;"); // #206
-		HTMLCHARS.put("\"I", "&Iuml;"); // #207
-		HTMLCHARS.put("DH", "&ETH;"); // #208
-		HTMLCHARS.put("~N", "&Ntilde;"); // #209
-		HTMLCHARS.put("`O", "&Ograve;"); // #210
-		HTMLCHARS.put("'O", "&Oacute;"); // #211
-		HTMLCHARS.put("^O", "&Ocirc;"); // #212
-		HTMLCHARS.put("~O", "&Otilde;"); // #213
-		HTMLCHARS.put("\"O", "&Ouml;"); // #214
-		// According to ISO 8859-1 the "\times" symbol should be placed here
-		// (#215).
-		// Omitting this, because it is a mathematical symbol.
-		HTMLCHARS.put("O", "&Oslash;"); // #216
-		HTMLCHARS.put("`U", "&Ugrave;"); // #217
-		HTMLCHARS.put("'U", "&Uacute;"); // #218
-		HTMLCHARS.put("^U", "&Ucirc;"); // #219
-		HTMLCHARS.put("\"U", "&Uuml;"); // #220
-		HTMLCHARS.put("'Y", "&Yacute;"); // #221
-		HTMLCHARS.put("TH", "&THORN;"); // #222
-		HTMLCHARS.put("ss", "&szlig;"); // #223
-		HTMLCHARS.put("`a", "&agrave;"); // #224
-		HTMLCHARS.put("'a", "&aacute;"); // #225
-		HTMLCHARS.put("^a", "&acirc;"); // #226
-		HTMLCHARS.put("~a", "&atilde;"); // #227
-		HTMLCHARS.put("\"a", "&auml;"); // #228
-		HTMLCHARS.put("aa", "&aring;"); // #229
-		HTMLCHARS.put("ae", "&aelig;"); // #230
-		HTMLCHARS.put("cc", "&ccedil;"); // #231
-		HTMLCHARS.put("`e", "&egrave;"); // #232
-		HTMLCHARS.put("'e", "&eacute;"); // #233
-		HTMLCHARS.put("^e", "&ecirc;"); // #234
-		HTMLCHARS.put("\"e", "&euml;"); // #235
-		HTMLCHARS.put("`i", "&igrave;"); // #236
-		HTMLCHARS.put("'i", "&iacute;"); // #237
-		HTMLCHARS.put("^i", "&icirc;"); // #238
-		HTMLCHARS.put("\"i", "&iuml;"); // #239
-		HTMLCHARS.put("dh", "&eth;"); // #240
-		HTMLCHARS.put("~n", "&ntilde;"); // #241
-		HTMLCHARS.put("`o", "&ograve;"); // #242
-		HTMLCHARS.put("'o", "&oacute;"); // #243
-		HTMLCHARS.put("^o", "&ocirc;"); // #244
-		HTMLCHARS.put("~o", "&otilde;"); // #245
-		HTMLCHARS.put("\"o", "&ouml;"); // #246
-		// According to ISO 8859-1 the "\div" symbol should be placed here
-		// (#247).
-		// Omitting this, because it is a mathematical symbol.
-		HTMLCHARS.put("o", "&oslash;"); // #248
-		HTMLCHARS.put("`u", "&ugrave;"); // #249
-		HTMLCHARS.put("'u", "&uacute;"); // #250
-		HTMLCHARS.put("^u", "&ucirc;"); // #251
-		HTMLCHARS.put("\"u", "&uuml;"); // #252
-		HTMLCHARS.put("'y", "&yacute;"); // #253
-		HTMLCHARS.put("th", "&thorn;"); // #254
-		HTMLCHARS.put("\"y", "&yuml;"); // #255
+		
+		
+		HTMLCHARS.put("`A", "&Agrave;"); 
+		HTMLCHARS.put("'A", "&Aacute;"); 
+		HTMLCHARS.put("^A", "&Acirc;"); 
+		HTMLCHARS.put("~A", "&Atilde;"); 
+		HTMLCHARS.put("\"A", "&Auml;"); 
+		HTMLCHARS.put("AA", "&Aring;"); 
+		HTMLCHARS.put("AE", "&AElig;"); 
+		HTMLCHARS.put("cC", "&Ccedil;"); 
+		HTMLCHARS.put("`E", "&Egrave;"); 
+		HTMLCHARS.put("'E", "&Eacute;"); 
+		HTMLCHARS.put("^E", "&Ecirc;"); 
+		HTMLCHARS.put("\"E", "&Euml;"); 
+		HTMLCHARS.put("`I", "&Igrave;"); 
+		HTMLCHARS.put("'I", "&Iacute;"); 
+		HTMLCHARS.put("^I", "&Icirc;"); 
+		HTMLCHARS.put("\"I", "&Iuml;"); 
+		HTMLCHARS.put("DH", "&ETH;"); 
+		HTMLCHARS.put("~N", "&Ntilde;"); 
+		HTMLCHARS.put("`O", "&Ograve;"); 
+		HTMLCHARS.put("'O", "&Oacute;"); 
+		HTMLCHARS.put("^O", "&Ocirc;"); 
+		HTMLCHARS.put("~O", "&Otilde;"); 
+		HTMLCHARS.put("\"O", "&Ouml;"); 
+		
+		
+		
+		HTMLCHARS.put("O", "&Oslash;"); 
+		HTMLCHARS.put("`U", "&Ugrave;"); 
+		HTMLCHARS.put("'U", "&Uacute;"); 
+		HTMLCHARS.put("^U", "&Ucirc;"); 
+		HTMLCHARS.put("\"U", "&Uuml;"); 
+		HTMLCHARS.put("'Y", "&Yacute;"); 
+		HTMLCHARS.put("TH", "&THORN;"); 
+		HTMLCHARS.put("ss", "&szlig;"); 
+		HTMLCHARS.put("`a", "&agrave;"); 
+		HTMLCHARS.put("'a", "&aacute;"); 
+		HTMLCHARS.put("^a", "&acirc;"); 
+		HTMLCHARS.put("~a", "&atilde;"); 
+		HTMLCHARS.put("\"a", "&auml;"); 
+		HTMLCHARS.put("aa", "&aring;"); 
+		HTMLCHARS.put("ae", "&aelig;"); 
+		HTMLCHARS.put("cc", "&ccedil;"); 
+		HTMLCHARS.put("`e", "&egrave;"); 
+		HTMLCHARS.put("'e", "&eacute;"); 
+		HTMLCHARS.put("^e", "&ecirc;"); 
+		HTMLCHARS.put("\"e", "&euml;"); 
+		HTMLCHARS.put("`i", "&igrave;"); 
+		HTMLCHARS.put("'i", "&iacute;"); 
+		HTMLCHARS.put("^i", "&icirc;"); 
+		HTMLCHARS.put("\"i", "&iuml;"); 
+		HTMLCHARS.put("dh", "&eth;"); 
+		HTMLCHARS.put("~n", "&ntilde;"); 
+		HTMLCHARS.put("`o", "&ograve;"); 
+		HTMLCHARS.put("'o", "&oacute;"); 
+		HTMLCHARS.put("^o", "&ocirc;"); 
+		HTMLCHARS.put("~o", "&otilde;"); 
+		HTMLCHARS.put("\"o", "&ouml;"); 
+		
+		
+		
+		HTMLCHARS.put("o", "&oslash;"); 
+		HTMLCHARS.put("`u", "&ugrave;"); 
+		HTMLCHARS.put("'u", "&uacute;"); 
+		HTMLCHARS.put("^u", "&ucirc;"); 
+		HTMLCHARS.put("\"u", "&uuml;"); 
+		HTMLCHARS.put("'y", "&yacute;"); 
+		HTMLCHARS.put("th", "&thorn;"); 
+		HTMLCHARS.put("\"y", "&yuml;"); 
 
-		// HTML special characters without names (UNICODE Latin Extended-A),
-		// indicated by UNICODE number
-		HTMLCHARS.put("=A", "&#256;"); // "Amacr"
-		HTMLCHARS.put("=a", "&#257;"); // "amacr"
-		HTMLCHARS.put("uA", "&#258;"); // "Abreve"
-		HTMLCHARS.put("ua", "&#259;"); // "abreve"
-		HTMLCHARS.put("kA", "&#260;"); // "Aogon"
-		HTMLCHARS.put("ka", "&#261;"); // "aogon"
-		HTMLCHARS.put("'C", "&#262;"); // "Cacute"
-		HTMLCHARS.put("'c", "&#263;"); // "cacute"
-		HTMLCHARS.put("^C", "&#264;"); // "Ccirc"
-		HTMLCHARS.put("^c", "&#265;"); // "ccirc"
-		HTMLCHARS.put(".C", "&#266;"); // "Cdot"
-		HTMLCHARS.put(".c", "&#267;"); // "cdot"
-		HTMLCHARS.put("vC", "&#268;"); // "Ccaron"
-		HTMLCHARS.put("vc", "&#269;"); // "ccaron"
-		HTMLCHARS.put("vD", "&#270;"); // "Dcaron"
-		// Symbol #271 (d´) has no special Latex command
-		HTMLCHARS.put("DJ", "&#272;"); // "Dstrok"
-		HTMLCHARS.put("dj", "&#273;"); // "dstrok"
-		HTMLCHARS.put("=E", "&#274;"); // "Emacr"
-		HTMLCHARS.put("=e", "&#275;"); // "emacr"
-		HTMLCHARS.put("uE", "&#276;"); // "Ebreve"
-		HTMLCHARS.put("ue", "&#277;"); // "ebreve"
-		HTMLCHARS.put(".E", "&#278;"); // "Edot"
-		HTMLCHARS.put(".e", "&#279;"); // "edot"
-		HTMLCHARS.put("kE", "&#280;"); // "Eogon"
-		HTMLCHARS.put("ke", "&#281;"); // "eogon"
-		HTMLCHARS.put("vE", "&#282;"); // "Ecaron"
-		HTMLCHARS.put("ve", "&#283;"); // "ecaron"
-		HTMLCHARS.put("^G", "&#284;"); // "Gcirc"
-		HTMLCHARS.put("^g", "&#285;"); // "gcirc"
-		HTMLCHARS.put("uG", "&#286;"); // "Gbreve"
-		HTMLCHARS.put("ug", "&#287;"); // "gbreve"
-		HTMLCHARS.put(".G", "&#288;"); // "Gdot"
-		HTMLCHARS.put(".g", "&#289;"); // "gdot"
-		HTMLCHARS.put("cG", "&#290;"); // "Gcedil"
-		HTMLCHARS.put("'g", "&#291;"); // "gacute"
-		HTMLCHARS.put("^H", "&#292;"); // "Hcirc"
-		HTMLCHARS.put("^h", "&#293;"); // "hcirc"
-		HTMLCHARS.put("Hstrok", "&#294;"); // "Hstrok"
-		HTMLCHARS.put("hstrok", "&#295;"); // "hstrok"
-		HTMLCHARS.put("~I", "&#296;"); // "Itilde"
-		HTMLCHARS.put("~i", "&#297;"); // "itilde"
-		HTMLCHARS.put("=I", "&#298;"); // "Imacr"
-		HTMLCHARS.put("=i", "&#299;"); // "imacr"
-		HTMLCHARS.put("uI", "&#300;"); // "Ibreve"
-		HTMLCHARS.put("ui", "&#301;"); // "ibreve"
-		HTMLCHARS.put("kI", "&#302;"); // "Iogon"
-		HTMLCHARS.put("ki", "&#303;"); // "iogon"
-		HTMLCHARS.put(".I", "&#304;"); // "Idot"
-		HTMLCHARS.put("i", "&#305;"); // "inodot"
-		// Symbol #306 (IJ) has no special Latex command
-		// Symbol #307 (ij) has no special Latex command
-		HTMLCHARS.put("^J", "&#308;"); // "Jcirc"
-		HTMLCHARS.put("^j", "&#309;"); // "jcirc"
-		HTMLCHARS.put("cK", "&#310;"); // "Kcedil"
-		HTMLCHARS.put("ck", "&#311;"); // "kcedil"
-		// Symbol #312 (k) has no special Latex command
-		HTMLCHARS.put("'L", "&#313;"); // "Lacute"
-		HTMLCHARS.put("'l", "&#314;"); // "lacute"
-		HTMLCHARS.put("cL", "&#315;"); // "Lcedil"
-		HTMLCHARS.put("cl", "&#316;"); // "lcedil"
-		// Symbol #317 (L´) has no special Latex command
-		// Symbol #318 (l´) has no special Latex command
-		HTMLCHARS.put("Lmidot", "&#319;"); // "Lmidot"
-		HTMLCHARS.put("lmidot", "&#320;"); // "lmidot"
-		HTMLCHARS.put("L", "&#321;"); // "Lstrok"
-		HTMLCHARS.put("l", "&#322;"); // "lstrok"
-		HTMLCHARS.put("'N", "&#323;"); // "Nacute"
-		HTMLCHARS.put("'n", "&#324;"); // "nacute"
-		HTMLCHARS.put("cN", "&#325;"); // "Ncedil"
-		HTMLCHARS.put("cn", "&#326;"); // "ncedil"
-		HTMLCHARS.put("vN", "&#327;"); // "Ncaron"
-		HTMLCHARS.put("vn", "&#328;"); // "ncaron"
-		// Symbol #329 (´n) has no special Latex command
-		HTMLCHARS.put("NG", "&#330;"); // "ENG"
-		HTMLCHARS.put("ng", "&#331;"); // "eng"
-		HTMLCHARS.put("=O", "&#332;"); // "Omacr"
-		HTMLCHARS.put("=o", "&#333;"); // "omacr"
-		HTMLCHARS.put("uO", "&#334;"); // "Obreve"
-		HTMLCHARS.put("uo", "&#335;"); // "obreve"
-		HTMLCHARS.put("HO", "&#336;"); // "Odblac"
-		HTMLCHARS.put("Ho", "&#337;"); // "odblac"
-		HTMLCHARS.put("OE", "&#338;"); // "OElig"
-		HTMLCHARS.put("oe", "&#339;"); // "oelig"
-		HTMLCHARS.put("'R", "&#340;"); // "Racute"
-		HTMLCHARS.put("'r", "&#341;"); // "racute"
-		HTMLCHARS.put("cR", "&#342;"); // "Rcedil"
-		HTMLCHARS.put("cr", "&#343;"); // "rcedil"
-		HTMLCHARS.put("vR", "&#344;"); // "Rcaron"
-		HTMLCHARS.put("vr", "&#345;"); // "rcaron"
-		HTMLCHARS.put("'S", "&#346;"); // "Sacute"
-		HTMLCHARS.put("'s", "&#347;"); // "sacute"
-		HTMLCHARS.put("^S", "&#348;"); // "Scirc"
-		HTMLCHARS.put("^s", "&#349;"); // "scirc"
-		HTMLCHARS.put("cS", "&#350;"); // "Scedil"
-		HTMLCHARS.put("cs", "&#351;"); // "scedil"
-		HTMLCHARS.put("vS", "&#352;"); // "Scaron"
-		HTMLCHARS.put("vs", "&#353;"); // "scaron"
-		HTMLCHARS.put("cT", "&#354;"); // "Tcedil"
-		HTMLCHARS.put("ct", "&#355;"); // "tcedil"
-		HTMLCHARS.put("vT", "&#356;"); // "Tcaron"
-		// Symbol #357 (t´) has no special Latex command
-		HTMLCHARS.put("Tstrok", "&#358;"); // "Tstrok"
-		HTMLCHARS.put("tstrok", "&#359;"); // "tstrok"
-		HTMLCHARS.put("~U", "&#360;"); // "Utilde"
-		HTMLCHARS.put("~u", "&#361;"); // "utilde"
-		HTMLCHARS.put("=U", "&#362;"); // "Umacr"
-		HTMLCHARS.put("=u", "&#363;"); // "umacr"
-		HTMLCHARS.put("uU", "&#364;"); // "Ubreve"
-		HTMLCHARS.put("uu", "&#365;"); // "ubreve"
-		HTMLCHARS.put("rU", "&#366;"); // "Uring"
-		HTMLCHARS.put("ru", "&#367;"); // "uring"
-		HTMLCHARS.put("HU", "&#368;"); // "Odblac"
-		HTMLCHARS.put("Hu", "&#369;"); // "odblac"
-		HTMLCHARS.put("kU", "&#370;"); // "Uogon"
-		HTMLCHARS.put("ku", "&#371;"); // "uogon"
-		HTMLCHARS.put("^W", "&#372;"); // "Wcirc"
-		HTMLCHARS.put("^w", "&#373;"); // "wcirc"
-		HTMLCHARS.put("^Y", "&#374;"); // "Ycirc"
-		HTMLCHARS.put("^y", "&#375;"); // "ycirc"
-		HTMLCHARS.put("\"Y", "&#376;"); // "Yuml"
-		HTMLCHARS.put("'Z", "&#377;"); // "Zacute"
-		HTMLCHARS.put("'z", "&#378;"); // "zacute"
-		HTMLCHARS.put(".Z", "&#379;"); // "Zdot"
-		HTMLCHARS.put(".z", "&#380;"); // "zdot"
-		HTMLCHARS.put("vZ", "&#381;"); // "Zcaron"
-		HTMLCHARS.put("vz", "&#382;"); // "zcaron"
-		// Symbol #383 (f) has no special Latex command
+		
+		
+		HTMLCHARS.put("=A", "&#256;"); 
+		HTMLCHARS.put("=a", "&#257;"); 
+		HTMLCHARS.put("uA", "&#258;"); 
+		HTMLCHARS.put("ua", "&#259;"); 
+		HTMLCHARS.put("kA", "&#260;"); 
+		HTMLCHARS.put("ka", "&#261;"); 
+		HTMLCHARS.put("'C", "&#262;"); 
+		HTMLCHARS.put("'c", "&#263;"); 
+		HTMLCHARS.put("^C", "&#264;"); 
+		HTMLCHARS.put("^c", "&#265;"); 
+		HTMLCHARS.put(".C", "&#266;"); 
+		HTMLCHARS.put(".c", "&#267;"); 
+		HTMLCHARS.put("vC", "&#268;"); 
+		HTMLCHARS.put("vc", "&#269;"); 
+		HTMLCHARS.put("vD", "&#270;"); 
+		
+		HTMLCHARS.put("DJ", "&#272;"); 
+		HTMLCHARS.put("dj", "&#273;"); 
+		HTMLCHARS.put("=E", "&#274;"); 
+		HTMLCHARS.put("=e", "&#275;"); 
+		HTMLCHARS.put("uE", "&#276;"); 
+		HTMLCHARS.put("ue", "&#277;"); 
+		HTMLCHARS.put(".E", "&#278;"); 
+		HTMLCHARS.put(".e", "&#279;"); 
+		HTMLCHARS.put("kE", "&#280;"); 
+		HTMLCHARS.put("ke", "&#281;"); 
+		HTMLCHARS.put("vE", "&#282;"); 
+		HTMLCHARS.put("ve", "&#283;"); 
+		HTMLCHARS.put("^G", "&#284;"); 
+		HTMLCHARS.put("^g", "&#285;"); 
+		HTMLCHARS.put("uG", "&#286;"); 
+		HTMLCHARS.put("ug", "&#287;"); 
+		HTMLCHARS.put(".G", "&#288;"); 
+		HTMLCHARS.put(".g", "&#289;"); 
+		HTMLCHARS.put("cG", "&#290;"); 
+		HTMLCHARS.put("'g", "&#291;"); 
+		HTMLCHARS.put("^H", "&#292;"); 
+		HTMLCHARS.put("^h", "&#293;"); 
+		HTMLCHARS.put("Hstrok", "&#294;"); 
+		HTMLCHARS.put("hstrok", "&#295;"); 
+		HTMLCHARS.put("~I", "&#296;"); 
+		HTMLCHARS.put("~i", "&#297;"); 
+		HTMLCHARS.put("=I", "&#298;"); 
+		HTMLCHARS.put("=i", "&#299;"); 
+		HTMLCHARS.put("uI", "&#300;"); 
+		HTMLCHARS.put("ui", "&#301;"); 
+		HTMLCHARS.put("kI", "&#302;"); 
+		HTMLCHARS.put("ki", "&#303;"); 
+		HTMLCHARS.put(".I", "&#304;"); 
+		HTMLCHARS.put("i", "&#305;"); 
+		
+		
+		HTMLCHARS.put("^J", "&#308;"); 
+		HTMLCHARS.put("^j", "&#309;"); 
+		HTMLCHARS.put("cK", "&#310;"); 
+		HTMLCHARS.put("ck", "&#311;"); 
+		
+		HTMLCHARS.put("'L", "&#313;"); 
+		HTMLCHARS.put("'l", "&#314;"); 
+		HTMLCHARS.put("cL", "&#315;"); 
+		HTMLCHARS.put("cl", "&#316;"); 
+		
+		
+		HTMLCHARS.put("Lmidot", "&#319;"); 
+		HTMLCHARS.put("lmidot", "&#320;"); 
+		HTMLCHARS.put("L", "&#321;"); 
+		HTMLCHARS.put("l", "&#322;"); 
+		HTMLCHARS.put("'N", "&#323;"); 
+		HTMLCHARS.put("'n", "&#324;"); 
+		HTMLCHARS.put("cN", "&#325;"); 
+		HTMLCHARS.put("cn", "&#326;"); 
+		HTMLCHARS.put("vN", "&#327;"); 
+		HTMLCHARS.put("vn", "&#328;"); 
+		
+		HTMLCHARS.put("NG", "&#330;"); 
+		HTMLCHARS.put("ng", "&#331;"); 
+		HTMLCHARS.put("=O", "&#332;"); 
+		HTMLCHARS.put("=o", "&#333;"); 
+		HTMLCHARS.put("uO", "&#334;"); 
+		HTMLCHARS.put("uo", "&#335;"); 
+		HTMLCHARS.put("HO", "&#336;"); 
+		HTMLCHARS.put("Ho", "&#337;"); 
+		HTMLCHARS.put("OE", "&#338;"); 
+		HTMLCHARS.put("oe", "&#339;"); 
+		HTMLCHARS.put("'R", "&#340;"); 
+		HTMLCHARS.put("'r", "&#341;"); 
+		HTMLCHARS.put("cR", "&#342;"); 
+		HTMLCHARS.put("cr", "&#343;"); 
+		HTMLCHARS.put("vR", "&#344;"); 
+		HTMLCHARS.put("vr", "&#345;"); 
+		HTMLCHARS.put("'S", "&#346;"); 
+		HTMLCHARS.put("'s", "&#347;"); 
+		HTMLCHARS.put("^S", "&#348;"); 
+		HTMLCHARS.put("^s", "&#349;"); 
+		HTMLCHARS.put("cS", "&#350;"); 
+		HTMLCHARS.put("cs", "&#351;"); 
+		HTMLCHARS.put("vS", "&#352;"); 
+		HTMLCHARS.put("vs", "&#353;"); 
+		HTMLCHARS.put("cT", "&#354;"); 
+		HTMLCHARS.put("ct", "&#355;"); 
+		HTMLCHARS.put("vT", "&#356;"); 
+		
+		HTMLCHARS.put("Tstrok", "&#358;"); 
+		HTMLCHARS.put("tstrok", "&#359;"); 
+		HTMLCHARS.put("~U", "&#360;"); 
+		HTMLCHARS.put("~u", "&#361;"); 
+		HTMLCHARS.put("=U", "&#362;"); 
+		HTMLCHARS.put("=u", "&#363;"); 
+		HTMLCHARS.put("uU", "&#364;"); 
+		HTMLCHARS.put("uu", "&#365;"); 
+		HTMLCHARS.put("rU", "&#366;"); 
+		HTMLCHARS.put("ru", "&#367;"); 
+		HTMLCHARS.put("HU", "&#368;"); 
+		HTMLCHARS.put("Hu", "&#369;"); 
+		HTMLCHARS.put("kU", "&#370;"); 
+		HTMLCHARS.put("ku", "&#371;"); 
+		HTMLCHARS.put("^W", "&#372;"); 
+		HTMLCHARS.put("^w", "&#373;"); 
+		HTMLCHARS.put("^Y", "&#374;"); 
+		HTMLCHARS.put("^y", "&#375;"); 
+		HTMLCHARS.put("\"Y", "&#376;"); 
+		HTMLCHARS.put("'Z", "&#377;"); 
+		HTMLCHARS.put("'z", "&#378;"); 
+		HTMLCHARS.put(".Z", "&#379;"); 
+		HTMLCHARS.put(".z", "&#380;"); 
+		HTMLCHARS.put("vZ", "&#381;"); 
+		HTMLCHARS.put("vz", "&#382;"); 
+		
 
 		XML_CHARS.put("\\{\\\\\\\"\\{a\\}\\}", "&#x00E4;");
 		XML_CHARS.put("\\{\\\\\\\"\\{A\\}\\}", "&#x00C4;");
@@ -967,7 +890,7 @@ public class Globals {
 		UNICODE_CHARS.put("\u", "U");
 		UNICODE_CHARS.put("\u", "U");
 		UNICODE_CHARS.put("\u", "U");
-		UNICODE_CHARS.put("\u", "Ue"); // U umlaut ..
+		UNICODE_CHARS.put("\u", "Ue"); 
 		UNICODE_CHARS.put("\u", "Y");
 		UNICODE_CHARS.put("\u", "ss");
 		UNICODE_CHARS.put("\u", "a");
@@ -997,7 +920,7 @@ public class Globals {
 		UNICODE_CHARS.put("\u", "u");
 		UNICODE_CHARS.put("\u", "u");
 		UNICODE_CHARS.put("\u", "u");
-		UNICODE_CHARS.put("\u", "ue"); // u umlaut...
+		UNICODE_CHARS.put("\u", "ue"); 
 		UNICODE_CHARS.put("\u", "y");
 		UNICODE_CHARS.put("\u", "y");
 		UNICODE_CHARS.put("\u", "A");
@@ -1045,7 +968,7 @@ public class Globals {
 		UNICODE_CHARS.put("\u", "i");
 		UNICODE_CHARS.put("\u", "I");
 		UNICODE_CHARS.put("\u", "i");
-		// UNICODE_CHARS.put("\u", "");
+		
 
 		RTFCHARS.put("`a", "\\'e0");
 		RTFCHARS.put("`e", "\\'e8");
@@ -1089,259 +1012,259 @@ public class Globals {
 		RTFCHARS.put("\"O", "\\'d6");
 		RTFCHARS.put("\"U", "\\'dc");
 		
-		// Use UNICODE characters for RTF-Chars which can not be found in the
-		// standard codepage
+		
+		
 
-		// RTFCHARS.put("`A", "\\u"); // "Agrave" exists in standard
-		// codepage
-		RTFCHARS.put("'A", "\\u"); // "Aacute"
-		// RTFCHARS.put("^A", "\\u"); // "Acirc" exists in standard
-		// codepage
-		RTFCHARS.put("~A", "\\u"); // "Atilde"
-		// RTFCHARS.put("\"A", "\\u"); // "Auml" exists in standard
-		// codepage
-		RTFCHARS.put("AA", "\\u"); // "Aring"
-		RTFCHARS.put("AE", "{\\u\\u}"); // "AElig"
-		RTFCHARS.put("cC", "\\u"); // "Ccedil"
-		// RTFCHARS.put("`E", "\\u"); // "Egrave" exists in standard
-		// codepage
-		RTFCHARS.put("'E", "\\u"); // "Eacute"
-		// RTFCHARS.put("^E", "\\u"); // "Ecirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"E", "\\u"); // "Euml" exists in standard
-		// codepage
-		// RTFCHARS.put("`I", "\\u"); // "Igrave" exists in standard
-		// codepage
-		RTFCHARS.put("'I", "\\u"); // "Iacute"
-		// RTFCHARS.put("^I", "\\u"); // "Icirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"I", "\\u"); // "Iuml" exists in standard
-		// codepage
-		RTFCHARS.put("DH", "\\u"); // "ETH"
-		RTFCHARS.put("~N", "\\u"); // "Ntilde"
-		// RTFCHARS.put("`O", "\\u"); // "Ograve" exists in standard
-		// codepage
-		RTFCHARS.put("'O", "\\u"); // "Oacute"
-		// RTFCHARS.put("^O", "\\u"); // "Ocirc" exists in standard
-		// codepage
-		RTFCHARS.put("~O", "\\u"); // "Otilde"
-		// RTFCHARS.put("\"O", "\\u"); // "Ouml" exists in standard
-		// codepage
-		// According to ISO 8859-1 the "\times" symbol should be placed here
-		// (#215).
-		// Omitting this, because it is a mathematical symbol.
-		RTFCHARS.put("O", "\\u"); // "Oslash"
-		// RTFCHARS.put("`U", "\\u"); // "Ugrave" exists in standard
-		// codepage
-		RTFCHARS.put("'U", "\\u"); // "Uacute"
-		// RTFCHARS.put("^U", "\\u"); // "Ucirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"U", "\\u"); // "Uuml" exists in standard
-		// codepage
-		RTFCHARS.put("'Y", "\\u"); // "Yacute"
-		RTFCHARS.put("TH", "{\\u\\u}"); // "THORN"
-		RTFCHARS.put("ss", "{\\u\\u"); // "szlig"
-		// RTFCHARS.put("`a", "\\u"); // "agrave" exists in standard
-		// codepage
-		RTFCHARS.put("'a", "\\u"); // "aacute"
-		// RTFCHARS.put("^a", "\\u"); // "acirc" exists in standard
-		// codepage
-		RTFCHARS.put("~a", "\\u"); // "atilde"
-		// RTFCHARS.put("\"a", "\\u"); // "auml" exists in standard
-		// codepage
-		RTFCHARS.put("aa", "\\u"); // "aring"
-		RTFCHARS.put("ae", "{\\u\\u}"); // "aelig"
-		RTFCHARS.put("cc", "\\u"); // "ccedil"
-		// RTFCHARS.put("`e", "\\u"); // "egrave" exists in standard
-		// codepage
-		RTFCHARS.put("'e", "\\u"); // "eacute"
-		// RTFCHARS.put("^e", "\\u"); // "ecirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"e", "\\u"); // "euml" exists in standard
-		// codepage
-		// RTFCHARS.put("`i", "\\u"); // "igrave" exists in standard
-		// codepage
-		RTFCHARS.put("'i", "\\u"); // "iacute"
-		// RTFCHARS.put("^i", "\\u"); // "icirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"i", "\\u"); // "iuml" exists in standard
-		// codepage
-		RTFCHARS.put("dh", "\\u"); // "eth"
-		// RTFCHARS.put("~n", "\\u"); // "ntilde" exists in standard
-		// codepage
-		// RTFCHARS.put("`o", "\\u"); // "ograve" exists in standard
-		// codepage
-		RTFCHARS.put("'o", "\\u"); // "oacute"
-		// RTFCHARS.put("^o", "\\u"); // "ocirc" exists in standard
-		// codepage
-		RTFCHARS.put("~o", "\\u"); // "otilde"
-		// RTFCHARS.put("\"o", "\\u"); // "ouml" exists in standard
-		// codepage
-		// According to ISO 8859-1 the "\div" symbol should be placed here
-		// (#247).
-		// Omitting this, because it is a mathematical symbol.
-		RTFCHARS.put("o", "\\u"); // "oslash"
-		// RTFCHARS.put("`u", "\\u"); // "ugrave" exists in standard
-		// codepage
-		RTFCHARS.put("'u", "\\u"); // "uacute"
-		// RTFCHARS.put("^u", "\\u"); // "ucirc" exists in standard
-		// codepage
-		// RTFCHARS.put("\"u", "\\u"); // "uuml" exists in standard
-		// codepage
-		RTFCHARS.put("'y", "\\u"); // "yacute"
-		RTFCHARS.put("th", "{\\u\\u}"); // "thorn"
-		RTFCHARS.put("\"y", "\\u"); // "yuml"
+		
+		
+		RTFCHARS.put("'A", "\\u"); 
+		
+		
+		RTFCHARS.put("~A", "\\u"); 
+		
+		
+		RTFCHARS.put("AA", "\\u"); 
+		RTFCHARS.put("AE", "{\\u\\u}"); 
+		RTFCHARS.put("cC", "\\u"); 
+		
+		
+		RTFCHARS.put("'E", "\\u"); 
+		
+		
+		
+		
+		
+		
+		RTFCHARS.put("'I", "\\u"); 
+		
+		
+		
+		
+		RTFCHARS.put("DH", "\\u"); 
+		RTFCHARS.put("~N", "\\u"); 
+		
+		
+		RTFCHARS.put("'O", "\\u"); 
+		
+		
+		RTFCHARS.put("~O", "\\u"); 
+		
+		
+		
+		
+		
+		RTFCHARS.put("O", "\\u"); 
+		
+		
+		RTFCHARS.put("'U", "\\u"); 
+		
+		
+		
+		
+		RTFCHARS.put("'Y", "\\u"); 
+		RTFCHARS.put("TH", "{\\u\\u}"); 
+		RTFCHARS.put("ss", "{\\u\\u"); 
+		
+		
+		RTFCHARS.put("'a", "\\u"); 
+		
+		
+		RTFCHARS.put("~a", "\\u"); 
+		
+		
+		RTFCHARS.put("aa", "\\u"); 
+		RTFCHARS.put("ae", "{\\u\\u}"); 
+		RTFCHARS.put("cc", "\\u"); 
+		
+		
+		RTFCHARS.put("'e", "\\u"); 
+		
+		
+		
+		
+		
+		
+		RTFCHARS.put("'i", "\\u"); 
+		
+		
+		
+		
+		RTFCHARS.put("dh", "\\u"); 
+		
+		
+		
+		
+		RTFCHARS.put("'o", "\\u"); 
+		
+		
+		RTFCHARS.put("~o", "\\u"); 
+		
+		
+		
+		
+		
+		RTFCHARS.put("o", "\\u"); 
+		
+		
+		RTFCHARS.put("'u", "\\u"); 
+		
+		
+		
+		
+		RTFCHARS.put("'y", "\\u"); 
+		RTFCHARS.put("th", "{\\u\\u}"); 
+		RTFCHARS.put("\"y", "\\u"); 
 
-		RTFCHARS.put("=A", "\\u"); // "Amacr"
-		RTFCHARS.put("=a", "\\u"); // "amacr"
-		RTFCHARS.put("uA", "\\u"); // "Abreve"
-		RTFCHARS.put("ua", "\\u"); // "abreve"
-		RTFCHARS.put("kA", "\\u"); // "Aogon"
-		RTFCHARS.put("ka", "\\u"); // "aogon"
-		RTFCHARS.put("'C", "\\u"); // "Cacute"
-		RTFCHARS.put("'c", "\\u"); // "cacute"
-		RTFCHARS.put("^C", "\\u"); // "Ccirc"
-		RTFCHARS.put("^c", "\\u"); // "ccirc"
-		RTFCHARS.put(".C", "\\u"); // "Cdot"
-		RTFCHARS.put(".c", "\\u"); // "cdot"
-		RTFCHARS.put("vC", "\\u"); // "Ccaron"
-		RTFCHARS.put("vc", "\\u"); // "ccaron"
-		RTFCHARS.put("vD", "\\u"); // "Dcaron"
-		// Symbol #271 (d´) has no special Latex command
-		RTFCHARS.put("DJ", "\\u"); // "Dstrok"
-		RTFCHARS.put("dj", "\\u"); // "dstrok"
-		RTFCHARS.put("=E", "\\u"); // "Emacr"
-		RTFCHARS.put("=e", "\\u"); // "emacr"
-		RTFCHARS.put("uE", "\\u"); // "Ebreve"
-		RTFCHARS.put("ue", "\\u"); // "ebreve"
-		RTFCHARS.put(".E", "\\u"); // "Edot"
-		RTFCHARS.put(".e", "\\u"); // "edot"
-		RTFCHARS.put("kE", "\\u"); // "Eogon"
-		RTFCHARS.put("ke", "\\u"); // "eogon"
-		RTFCHARS.put("vE", "\\u"); // "Ecaron"
-		RTFCHARS.put("ve", "\\u"); // "ecaron"
-		RTFCHARS.put("^G", "\\u"); // "Gcirc"
-		RTFCHARS.put("^g", "\\u"); // "gcirc"
-		RTFCHARS.put("uG", "\\u"); // "Gbreve"
-		RTFCHARS.put("ug", "\\u"); // "gbreve"
-		RTFCHARS.put(".G", "\\u"); // "Gdot"
-		RTFCHARS.put(".g", "\\u"); // "gdot"
-		RTFCHARS.put("cG", "\\u"); // "Gcedil"
-		RTFCHARS.put("'g", "\\u"); // "gacute"
-		RTFCHARS.put("^H", "\\u"); // "Hcirc"
-		RTFCHARS.put("^h", "\\u"); // "hcirc"
-		RTFCHARS.put("Hstrok", "\\u"); // "Hstrok"
-		RTFCHARS.put("hstrok", "\\u"); // "hstrok"
-		RTFCHARS.put("~I", "\\u"); // "Itilde"
-		RTFCHARS.put("~i", "\\u"); // "itilde"
-		RTFCHARS.put("=I", "\\u"); // "Imacr"
-		RTFCHARS.put("=i", "\\u"); // "imacr"
-		RTFCHARS.put("uI", "\\u"); // "Ibreve"
-		RTFCHARS.put("ui", "\\u"); // "ibreve"
-		RTFCHARS.put("kI", "\\u"); // "Iogon"
-		RTFCHARS.put("ki", "\\u"); // "iogon"
-		RTFCHARS.put(".I", "\\u"); // "Idot"
-		RTFCHARS.put("i", "\\u"); // "inodot"
-		// Symbol #306 (IJ) has no special Latex command
-		// Symbol #307 (ij) has no special Latex command
-		RTFCHARS.put("^J", "\\u"); // "Jcirc"
-		RTFCHARS.put("^j", "\\u"); // "jcirc"
-		RTFCHARS.put("cK", "\\u"); // "Kcedil"
-		RTFCHARS.put("ck", "\\u"); // "kcedil"
-		// Symbol #312 (k) has no special Latex command
-		RTFCHARS.put("'L", "\\u"); // "Lacute"
-		RTFCHARS.put("'l", "\\u"); // "lacute"
-		RTFCHARS.put("cL", "\\u"); // "Lcedil"
-		RTFCHARS.put("cl", "\\u"); // "lcedil"
-		// Symbol #317 (L´) has no special Latex command
-		// Symbol #318 (l´) has no special Latex command
-		RTFCHARS.put("Lmidot", "\\u"); // "Lmidot"
-		RTFCHARS.put("lmidot", "\\u"); // "lmidot"
-		RTFCHARS.put("L", "\\u"); // "Lstrok"
-		RTFCHARS.put("l", "\\u"); // "lstrok"
-		RTFCHARS.put("'N", "\\u"); // "Nacute"
-		RTFCHARS.put("'n", "\\u"); // "nacute"
-		RTFCHARS.put("cN", "\\u"); // "Ncedil"
-		RTFCHARS.put("cn", "\\u"); // "ncedil"
-		RTFCHARS.put("vN", "\\u"); // "Ncaron"
-		RTFCHARS.put("vn", "\\u"); // "ncaron"
-		// Symbol #329 (´n) has no special Latex command
-		RTFCHARS.put("NG", "\\u"); // "ENG"
-		RTFCHARS.put("ng", "\\u"); // "eng"
-		RTFCHARS.put("=O", "\\u"); // "Omacr"
-		RTFCHARS.put("=o", "\\u"); // "omacr"
-		RTFCHARS.put("uO", "\\u"); // "Obreve"
-		RTFCHARS.put("uo", "\\u"); // "obreve"
-		RTFCHARS.put("HO", "\\u"); // "Odblac"
-		RTFCHARS.put("Ho", "\\u"); // "odblac"
-		RTFCHARS.put("OE", "{\\u\\u}"); // "OElig"
-		RTFCHARS.put("oe", "{\\u\\u}"); // "oelig"
-		RTFCHARS.put("'R", "\\u"); // "Racute"
-		RTFCHARS.put("'r", "\\u"); // "racute"
-		RTFCHARS.put("cR", "\\u"); // "Rcedil"
-		RTFCHARS.put("cr", "\\u"); // "rcedil"
-		RTFCHARS.put("vR", "\\u"); // "Rcaron"
-		RTFCHARS.put("vr", "\\u"); // "rcaron"
-		RTFCHARS.put("'S", "\\u"); // "Sacute"
-		RTFCHARS.put("'s", "\\u"); // "sacute"
-		RTFCHARS.put("^S", "\\u"); // "Scirc"
-		RTFCHARS.put("^s", "\\u"); // "scirc"
-		RTFCHARS.put("cS", "\\u"); // "Scedil"
-		RTFCHARS.put("cs", "\\u"); // "scedil"
-		RTFCHARS.put("vS", "\\u"); // "Scaron"
-		RTFCHARS.put("vs", "\\u"); // "scaron"
-		RTFCHARS.put("cT", "\\u"); // "Tcedil"
-		RTFCHARS.put("ct", "\\u"); // "tcedil"
-		RTFCHARS.put("vT", "\\u"); // "Tcaron"
-		// Symbol #357 (t´) has no special Latex command
-		RTFCHARS.put("Tstrok", "\\u"); // "Tstrok"
-		RTFCHARS.put("tstrok", "\\u"); // "tstrok"
-		RTFCHARS.put("~U", "\\u"); // "Utilde"
-		RTFCHARS.put("~u", "\\u"); // "utilde"
-		RTFCHARS.put("=U", "\\u"); // "Umacr"
-		RTFCHARS.put("=u", "\\u"); // "umacr"
-		RTFCHARS.put("uU", "\\u"); // "Ubreve"
-		RTFCHARS.put("uu", "\\u"); // "ubreve"
-		RTFCHARS.put("rU", "\\u"); // "Uring"
-		RTFCHARS.put("ru", "\\u"); // "uring"
-		RTFCHARS.put("HU", "\\u"); // "Odblac"
-		RTFCHARS.put("Hu", "\\u"); // "odblac"
-		RTFCHARS.put("kU", "\\u"); // "Uogon"
-		RTFCHARS.put("ku", "\\u"); // "uogon"
-		RTFCHARS.put("^W", "\\u"); // "Wcirc"
-		RTFCHARS.put("^w", "\\u"); // "wcirc"
-		RTFCHARS.put("^Y", "\\u"); // "Ycirc"
-		RTFCHARS.put("^y", "\\u"); // "ycirc"
-		RTFCHARS.put("\"Y","\\u"); // "Yuml"
-		RTFCHARS.put("'Z", "\\u"); // "Zacute"
-		RTFCHARS.put("'z", "\\u"); // "zacute"
-		RTFCHARS.put(".Z", "\\u"); // "Zdot"
-		RTFCHARS.put(".z", "\\u"); // "zdot"
-		RTFCHARS.put("vZ", "\\u"); // "Zcaron"
-		RTFCHARS.put("vz", "\\u"); // "zcaron"
-		// Symbol #383 (f) has no special Latex command
+		RTFCHARS.put("=A", "\\u"); 
+		RTFCHARS.put("=a", "\\u"); 
+		RTFCHARS.put("uA", "\\u"); 
+		RTFCHARS.put("ua", "\\u"); 
+		RTFCHARS.put("kA", "\\u"); 
+		RTFCHARS.put("ka", "\\u"); 
+		RTFCHARS.put("'C", "\\u"); 
+		RTFCHARS.put("'c", "\\u"); 
+		RTFCHARS.put("^C", "\\u"); 
+		RTFCHARS.put("^c", "\\u"); 
+		RTFCHARS.put(".C", "\\u"); 
+		RTFCHARS.put(".c", "\\u"); 
+		RTFCHARS.put("vC", "\\u"); 
+		RTFCHARS.put("vc", "\\u"); 
+		RTFCHARS.put("vD", "\\u"); 
+		
+		RTFCHARS.put("DJ", "\\u"); 
+		RTFCHARS.put("dj", "\\u"); 
+		RTFCHARS.put("=E", "\\u"); 
+		RTFCHARS.put("=e", "\\u"); 
+		RTFCHARS.put("uE", "\\u"); 
+		RTFCHARS.put("ue", "\\u"); 
+		RTFCHARS.put(".E", "\\u"); 
+		RTFCHARS.put(".e", "\\u"); 
+		RTFCHARS.put("kE", "\\u"); 
+		RTFCHARS.put("ke", "\\u"); 
+		RTFCHARS.put("vE", "\\u"); 
+		RTFCHARS.put("ve", "\\u"); 
+		RTFCHARS.put("^G", "\\u"); 
+		RTFCHARS.put("^g", "\\u"); 
+		RTFCHARS.put("uG", "\\u"); 
+		RTFCHARS.put("ug", "\\u"); 
+		RTFCHARS.put(".G", "\\u"); 
+		RTFCHARS.put(".g", "\\u"); 
+		RTFCHARS.put("cG", "\\u"); 
+		RTFCHARS.put("'g", "\\u"); 
+		RTFCHARS.put("^H", "\\u"); 
+		RTFCHARS.put("^h", "\\u"); 
+		RTFCHARS.put("Hstrok", "\\u"); 
+		RTFCHARS.put("hstrok", "\\u"); 
+		RTFCHARS.put("~I", "\\u"); 
+		RTFCHARS.put("~i", "\\u"); 
+		RTFCHARS.put("=I", "\\u"); 
+		RTFCHARS.put("=i", "\\u"); 
+		RTFCHARS.put("uI", "\\u"); 
+		RTFCHARS.put("ui", "\\u"); 
+		RTFCHARS.put("kI", "\\u"); 
+		RTFCHARS.put("ki", "\\u"); 
+		RTFCHARS.put(".I", "\\u"); 
+		RTFCHARS.put("i", "\\u"); 
+		
+		
+		RTFCHARS.put("^J", "\\u"); 
+		RTFCHARS.put("^j", "\\u"); 
+		RTFCHARS.put("cK", "\\u"); 
+		RTFCHARS.put("ck", "\\u"); 
+		
+		RTFCHARS.put("'L", "\\u"); 
+		RTFCHARS.put("'l", "\\u"); 
+		RTFCHARS.put("cL", "\\u"); 
+		RTFCHARS.put("cl", "\\u"); 
+		
+		
+		RTFCHARS.put("Lmidot", "\\u"); 
+		RTFCHARS.put("lmidot", "\\u"); 
+		RTFCHARS.put("L", "\\u"); 
+		RTFCHARS.put("l", "\\u"); 
+		RTFCHARS.put("'N", "\\u"); 
+		RTFCHARS.put("'n", "\\u"); 
+		RTFCHARS.put("cN", "\\u"); 
+		RTFCHARS.put("cn", "\\u"); 
+		RTFCHARS.put("vN", "\\u"); 
+		RTFCHARS.put("vn", "\\u"); 
+		
+		RTFCHARS.put("NG", "\\u"); 
+		RTFCHARS.put("ng", "\\u"); 
+		RTFCHARS.put("=O", "\\u"); 
+		RTFCHARS.put("=o", "\\u"); 
+		RTFCHARS.put("uO", "\\u"); 
+		RTFCHARS.put("uo", "\\u"); 
+		RTFCHARS.put("HO", "\\u"); 
+		RTFCHARS.put("Ho", "\\u"); 
+		RTFCHARS.put("OE", "{\\u\\u}"); 
+		RTFCHARS.put("oe", "{\\u\\u}"); 
+		RTFCHARS.put("'R", "\\u"); 
+		RTFCHARS.put("'r", "\\u"); 
+		RTFCHARS.put("cR", "\\u"); 
+		RTFCHARS.put("cr", "\\u"); 
+		RTFCHARS.put("vR", "\\u"); 
+		RTFCHARS.put("vr", "\\u"); 
+		RTFCHARS.put("'S", "\\u"); 
+		RTFCHARS.put("'s", "\\u"); 
+		RTFCHARS.put("^S", "\\u"); 
+		RTFCHARS.put("^s", "\\u"); 
+		RTFCHARS.put("cS", "\\u"); 
+		RTFCHARS.put("cs", "\\u"); 
+		RTFCHARS.put("vS", "\\u"); 
+		RTFCHARS.put("vs", "\\u"); 
+		RTFCHARS.put("cT", "\\u"); 
+		RTFCHARS.put("ct", "\\u"); 
+		RTFCHARS.put("vT", "\\u"); 
+		
+		RTFCHARS.put("Tstrok", "\\u"); 
+		RTFCHARS.put("tstrok", "\\u"); 
+		RTFCHARS.put("~U", "\\u"); 
+		RTFCHARS.put("~u", "\\u"); 
+		RTFCHARS.put("=U", "\\u"); 
+		RTFCHARS.put("=u", "\\u"); 
+		RTFCHARS.put("uU", "\\u"); 
+		RTFCHARS.put("uu", "\\u"); 
+		RTFCHARS.put("rU", "\\u"); 
+		RTFCHARS.put("ru", "\\u"); 
+		RTFCHARS.put("HU", "\\u"); 
+		RTFCHARS.put("Hu", "\\u"); 
+		RTFCHARS.put("kU", "\\u"); 
+		RTFCHARS.put("ku", "\\u"); 
+		RTFCHARS.put("^W", "\\u"); 
+		RTFCHARS.put("^w", "\\u"); 
+		RTFCHARS.put("^Y", "\\u"); 
+		RTFCHARS.put("^y", "\\u"); 
+		RTFCHARS.put("\"Y","\\u"); 
+		RTFCHARS.put("'Z", "\\u"); 
+		RTFCHARS.put("'z", "\\u"); 
+		RTFCHARS.put(".Z", "\\u"); 
+		RTFCHARS.put(".z", "\\u"); 
+		RTFCHARS.put("vZ", "\\u"); 
+		RTFCHARS.put("vz", "\\u"); 
+		
 
-		// XML_CHARS.put("\\u", "&#x00E1;");
+		
 	}
 
 	public static void initializeJournalNames() {
-		journalAbbrev = new JournalAbbreviations();// "/resource/journalList.txt");
+		journalAbbrev = new JournalAbbreviations();
 
-		// Read external lists, if any (in reverse order, so the upper lists
-		// override the lower):
+		
+		
 		String[] lists = prefs.getStringArray("externalJournalLists");
 		if ((lists != null) && (lists.length > 0)) {
 			for (int i = lists.length - 1; i >= 0; i--) {
 				try {
 					journalAbbrev.readJournalList(new File(lists[i]));
 				} catch (FileNotFoundException e) {
-					// The file couldn't be found... should we tell anyone?
+					
 					Globals.logger(e.getMessage());
 				}
 			}
 		}
 
-		// Read personal list, if set up:
+		
 		if (prefs.get("personalJournalList") != null) {
 			try {
 				journalAbbrev.readJournalList(new File(prefs.get("personalJournalList")));

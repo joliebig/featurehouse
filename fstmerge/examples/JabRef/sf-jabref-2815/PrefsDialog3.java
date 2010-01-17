@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003 JabRef project
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 
 package net.sf.jabref;
 
@@ -46,15 +21,7 @@ import net.sf.jabref.gui.MainTable;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * Preferences dialog. Contains a TabbedPane, and tabs will be defined in
- * separate classes. Tabs MUST implement the PrefsTab interface, since this
- * dialog will call the storeSettings() method of all tabs when the user presses
- * ok.
- * 
- * With this design, it should be very easy to add new tabs later.
- * 
- */
+
 public class PrefsDialog3 extends JDialog {
 
 	JPanel main;
@@ -82,9 +49,9 @@ public class PrefsDialog3 extends JDialog {
 		final CardLayout cardLayout = new CardLayout();
 		main.setLayout(cardLayout);
 
-		// ----------------------------------------------------------------
-		// Add tabs to tabbed here. Remember, tabs must implement PrefsTab.
-		// ----------------------------------------------------------------
+		
+		
+		
 		ArrayList<PrefsTab> tabs = new ArrayList<PrefsTab>();
 		tabs.add(new GeneralTab(frame, prefs));
         tabs.add(new FileTab(frame, prefs));
@@ -103,25 +70,25 @@ public class PrefsDialog3 extends JDialog {
 		Iterator<PrefsTab> it = tabs.iterator();
 		String[] names = new String[tabs.size()];
 		int i = 0;
-        //ArrayList<Component> comps = new ArrayList<Component>();
+        
         while (it.hasNext()) {
 			PrefsTab tab = it.next();
 			names[i++] = tab.getTabName(); 
 			main.add((Component) tab, tab.getTabName());
-            //comps.add((Component)tab); // for debug only
+            
         }
 
 		upper.setBorder(BorderFactory.createEtchedBorder());
 
 		chooser = new JList(names);
 		chooser.setBorder(BorderFactory.createEtchedBorder());
-		// Set a prototype value to control the width of the list:
+		
 		chooser.setPrototypeCellValue("This should be wide enough");
 		chooser.setSelectedIndex(0);
 		chooser.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		// Add the selection listener that will show the correct panel when
-		// selection changes:
+		
+		
 		chooser.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				if (e.getValueIsAdjusting())
@@ -152,16 +119,16 @@ public class PrefsDialog3 extends JDialog {
 		bb.addGridded(ok);
 		bb.addGridded(cancel);
 		bb.addGlue();
-		// lower.add(ok);
-		// lower.add(cancel);
+		
+		
 
-		// Key bindings:
+		
 		ActionMap am = chooser.getActionMap();
 		InputMap im = chooser.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		im.put(frame.prefs().getKey("Close dialog"), "close");
 		am.put("close", cancelAction);
 
-		// Import and export actions:
+		
 		exportPrefs.setToolTipText(Globals.lang("Export preferences to file"));
 		importPrefs.setToolTipText(Globals.lang("Import preferences from file"));
 		exportPrefs.addActionListener(new ActionListener() {
@@ -183,7 +150,7 @@ public class PrefsDialog3 extends JDialog {
 							.lang("Could not export preferences")
 							+ ": " + ex.getMessage(), Globals.lang("Export preferences"),
 							JOptionPane.ERROR_MESSAGE);
-						// ex.printStackTrace();
+						
 					}
 				}
 
@@ -208,7 +175,7 @@ public class PrefsDialog3 extends JDialog {
 						.lang("Could not import preferences")
 						+ ": " + ex.getMessage(), Globals.lang("Import preferences"),
 						JOptionPane.ERROR_MESSAGE);
-					// ex.printStackTrace();
+					
 				}
 			}
 
@@ -216,13 +183,9 @@ public class PrefsDialog3 extends JDialog {
 
 		setValues();
 
-		pack(); // setSize(440, 500);
+		pack(); 
 
-        /** Look through component sizes to find which tab is to blame
-         *  when the dialog grows too large:
-        for (Component co : comps) {
-            System.out.println(co.getPreferredSize());
-        }*/
+        
     }
 
 	class OkAction extends AbstractAction {
@@ -236,16 +199,16 @@ public class PrefsDialog3 extends JDialog {
 				boolean ready = true;
 
 				public void run() {
-					// First check that all tabs are ready to close:
+					
 					int count = main.getComponentCount();
 					Component[] comps = main.getComponents();
 					for (int i = 0; i < count; i++) {
 						if (!((PrefsTab) comps[i]).readyToClose()) {
 							ready = false;
-							return; // If not, break off.
+							return; 
 						}
 					}
-					// Then store settings and close:
+					
 					for (int i = 0; i < count; i++) {
 						((PrefsTab) comps[i]).storeSettings();
 					}
@@ -258,8 +221,8 @@ public class PrefsDialog3 extends JDialog {
 					setVisible(false);
 					MainTable.updateRenderers();
 					frame.setupAllTables();
-					frame.groupSelector.revalidateGroups(); // icons may have
-					// changed
+					frame.groupSelector.revalidateGroups(); 
+					
 					frame.output(Globals.lang("Preferences recorded."));
 				}
 			};
@@ -270,7 +233,7 @@ public class PrefsDialog3 extends JDialog {
 	}
 
 	public void setValues() {
-		// Update all field values in the tabs:
+		
 		int count = main.getComponentCount();
 		Component[] comps = main.getComponents();
 		for (int i = 0; i < count; i++) {

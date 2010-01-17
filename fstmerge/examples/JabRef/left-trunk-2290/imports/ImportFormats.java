@@ -14,13 +14,7 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.JabRefFrame;
 import net.sf.jabref.MnemonicAwareAction;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Oct 22, 2006
- * Time: 12:06:09 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class ImportFormats {
 
     public static JFileChooser createImportFileChooser(String currentDir) {
@@ -48,13 +42,7 @@ public class ImportFormats {
         return fc;
     }
 
-    /**
-     * Create an AbstractAction for performing an Import operation.
-     * @param frame The JabRefFrame of this JabRef instance.
-     * @param openInNew Indicate whether the action should open into a new database or
-     *  into the currently open one.
-     * @return The action.
-     */
+    
     public static AbstractAction getImportAction(JabRefFrame frame, boolean openInNew) {
 
         class ImportAction extends MnemonicAwareAction {
@@ -84,7 +72,7 @@ public class ImportFormats {
 
                 try {
                     if (!file.exists()) {
-                        // Warn that the file doesn't exists:
+                        
                         JOptionPane.showMessageDialog(frame,
                                 Globals.lang("File not found")+
                                 ": '"+file.getName()+"'.",
@@ -96,8 +84,8 @@ public class ImportFormats {
                     imi.automatedImport(new String[] {file.getAbsolutePath()});
 
 
-                    // Make sure we remember which filter was used, to set the default
-                    // for next time:
+                    
+                    
                     if (format != null)
                         Globals.prefs.put("lastUsedImport", format.getFormatName());
                     else

@@ -1,24 +1,4 @@
-/*
-All programs in this directory and subdirectories are published under the 
-GNU General Public License as described below.
 
-This program is free software; you can redistribute it and/or modify it 
-under the terms of the GNU General Public License as published by the Free 
-Software Foundation; either version 2 of the License, or (at your option) 
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT 
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
-FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
-more details.
-
-You should have received a copy of the GNU General Public License along 
-with this program; if not, write to the Free Software Foundation, Inc., 59 
-Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-*/
 
 package net.sf.jabref.groups;
 
@@ -39,9 +19,7 @@ public class AddToGroupAction extends AbstractAction {
     protected GroupTreeNode m_node;
     protected final boolean m_move;
     protected BasePanel m_panel;
-    /**
-     * @param move If true, remove node from all other groups.
-     */
+    
     public AddToGroupAction(GroupTreeNode node, boolean move,
             BasePanel panel) {
         super(node.getGroup().getName());
@@ -51,7 +29,7 @@ public class AddToGroupAction extends AbstractAction {
     }
     public AddToGroupAction(boolean move) {
         super(Globals.lang(move ? "Assign entry selection exclusively to this group"
-                : "Add entry selection to this group")); // JZTODO lyrics
+                : "Add entry selection to this group")); 
         m_move = move;
     }
     public void setBasePanel(BasePanel panel) {
@@ -62,10 +40,10 @@ public class AddToGroupAction extends AbstractAction {
     }
     public void actionPerformed(ActionEvent evt) {
         final BibtexEntry[] entries = m_panel.getSelectedEntries();
-        final Vector<GroupTreeNode> removeGroupsNodes = new Vector<GroupTreeNode>(); // used only when moving
+        final Vector<GroupTreeNode> removeGroupsNodes = new Vector<GroupTreeNode>(); 
         
         if (m_move) {
-            // collect warnings for removal
+            
             Enumeration<GroupTreeNode> e = ((GroupTreeNode) m_node.getRoot()).preorderEnumeration();
             GroupTreeNode node;
             while (e.hasMoreElements()) {
@@ -77,44 +55,44 @@ public class AddToGroupAction extends AbstractAction {
                         removeGroupsNodes.add(node);
                 }
             }
-            // warning for all groups from which the entries are removed, and 
-            // for the one to which they are added! hence the magical +1
+            
+            
             AbstractGroup[] groups = new AbstractGroup[removeGroupsNodes.size()+1];
             for (int i = 0; i < removeGroupsNodes.size(); ++i)
                 groups[i] = removeGroupsNodes.elementAt(i).getGroup();
             groups[groups.length-1] = m_node.getGroup();
             if (!Util.warnAssignmentSideEffects(groups,
                     entries, m_panel.getDatabase(), m_panel.frame()))
-                return; // user aborted operation
+                return; 
         } else {
-            // warn if assignment has undesired side effects (modifies a field != keywords)
+            
             if (!Util.warnAssignmentSideEffects(new AbstractGroup[]{m_node.getGroup()},
                     entries, m_panel.getDatabase(), m_panel.frame()))
-                return; // user aborted operation
+                return; 
         }
         
-        // if an editor is showing, its fields must be updated
-        // after the assignment, and before that, the current
-        // edit has to be stored:
+        
+        
+        
         m_panel.storeCurrentEdit();
         
         NamedCompound undoAll = new NamedCompound(Globals.lang("change assignment of entries")); 
         
         if (m_move) {
-            // first remove
+            
             for (int i = 0; i < removeGroupsNodes.size(); ++i) {
                 GroupTreeNode node = removeGroupsNodes.elementAt(i);
                 if (node.getGroup().containsAny(entries))
                     undoAll.addEdit(node.removeFromGroup(entries));
             }
-            // then add
+            
             AbstractUndoableEdit undoAdd = m_node.addToGroup(entries);
             if (undoAdd != null)
                 undoAll.addEdit(undoAdd);
         } else {
             AbstractUndoableEdit undoAdd = m_node.addToGroup(entries);
             if (undoAdd == null)
-                return; // no changed made
+                return; 
             undoAll.addEdit(undoAdd);
         }
         

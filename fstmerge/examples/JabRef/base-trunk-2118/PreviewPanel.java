@@ -21,13 +21,7 @@ import javax.swing.event.HyperlinkListener;
 import net.sf.jabref.export.layout.Layout;
 import net.sf.jabref.export.layout.LayoutHelper;
 
-/**
- * Displays an BibtexEntry using the given layout format.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:20 $)
- *
- */
+
 public class PreviewPanel extends JEditorPane implements VetoableChangeListener {
 
 	public String CONTENT_TYPE = "text/html";
@@ -36,10 +30,7 @@ public class PreviewPanel extends JEditorPane implements VetoableChangeListener 
 
 	MetaData metaData;
 
-	/**
-	 * If a database is set, the preview will attempt to resolve strings in the
-	 * previewed entry using that database.
-	 */
+	
 	BibtexDatabase database;
 
 	Layout layout;
@@ -70,12 +61,7 @@ public class PreviewPanel extends JEditorPane implements VetoableChangeListener 
 		this(null, metaData, entry, layoutFile);
 	}
 
-	/**
-	 * Emtpy Preview Panel constructor
-	 * 
-	 * @param metaData
-	 * @param layoutFile
-	 */
+	
 	public PreviewPanel(MetaData metaData, String layoutFile) {
 		this.metaData = metaData;
 		this.layoutFile = layoutFile;
@@ -141,7 +127,7 @@ public class PreviewPanel extends JEditorPane implements VetoableChangeListener 
 		invalidate();
 		revalidate();
 
-		// Scroll to top:
+		
 		final JScrollBar bar = sp.getVerticalScrollBar();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -167,14 +153,9 @@ public class PreviewPanel extends JEditorPane implements VetoableChangeListener 
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, hint);
 	}
 
-    /**
-     * The PreviewPanel has registered itself as an event listener with the currently displayed
-     * BibtexEntry. If the entry changes, an event is received here, and we can update the
-     * preview immediately.
-     */
+    
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
-        /*if (entry != null)
-            System.out.println("Updating: "+entry.getCiteKey());*/
+        
         
         update();
     }

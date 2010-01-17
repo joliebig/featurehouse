@@ -7,19 +7,7 @@ import net.sf.jabref.bst.VM.BstFunction;
 
 
 
-/**
- * 
- * The |built_in| function {\.{purify\$}} pops the top (string) literal, removes
- * nonalphanumeric characters except for |white_space| and |sep_char| characters
- * (these get converted to a |space|) and removes certain alphabetic characters
- * contained in the control sequences associated with a special character, and
- * pushes the resulting string. If the literal isn't a string, it complains and
- * pushes the null string.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:12:46 $)
- * 
- */
+
 public class PurifyFunction implements BstFunction {
 
 	VM vm;

@@ -15,20 +15,13 @@ import java.util.regex.Matcher;
 import net.sf.jabref.BibtexFields;
 
 
-/**
- * Importer for records downloaded from CSA: Cambridge Scientific Abstracts
- * in full text format.  Although the same basic format is used by all CSA
- * databases, this importer has been tailored and tested to handle
- * ASFA: Aquatic Sciences and Fisheries records.
- *
- * @author John Relph
- */
+
 public class CsaImporter extends ImportFormat {
 
-    // local fields
+    
     private int line;
 
-    // pre-compiled patterns
+    
     private final static Pattern FIELD_PATTERN =
         Pattern.compile("^([A-Z][A-Z]): ([A-Z].*)$");
     private final static Pattern VOLNOPP_PATTERN =
@@ -44,29 +37,24 @@ public class CsaImporter extends ImportFormat {
     private final static Pattern LT_PATTERN =
         Pattern.compile("\\[Lt\\]");
 
-    // other constants
+    
     private static final String MONS =
         "jan feb mar apr may jun jul aug sep oct nov dec";
     private static final String[] MONTHS =
         { "January", "February", "March", "April", "May", "June",
           "July", "August", "September", "October", "November", "December" };
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
         return "CSA";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "csa";
     }
 
-    // read a line
+    
     private String readLine(BufferedReader file) throws IOException {
         String str = file.readLine();
         if (str != null)
@@ -74,7 +62,7 @@ public class CsaImporter extends ImportFormat {
         return str;
     }
 
-    // append to the "note" field
+    
     private void addNote(HashMap hm, String note) {
 
         StringBuffer notebuf = new StringBuffer();
@@ -86,24 +74,24 @@ public class CsaImporter extends ImportFormat {
         hm.put("note", notebuf.toString());
     }
 
-    // parse the date from the Source field
+    
     private String parseDate(HashMap hm, String fstr) {
 
-        // find LAST matching date in string
+        
         int match = -1;
         Matcher pm = DATE_PATTERN.matcher(fstr);
         while (pm.find()) {
             match = pm.start();
-//	    System.out.println("MATCH: " + match + ": " + pm.group(0));
+
         }
 
         if (match == -1) {
-//	    System.out.println("NO MATCH: \"" + fstr + "\"");
+
             return fstr;
         }
 
         if (!pm.find(match)) {
-//	    System.out.println("MATCH FAILED: \"" + fstr + "\"");
+
             return fstr;
         }
 
@@ -113,7 +101,7 @@ public class CsaImporter extends ImportFormat {
         if (day == null)
             day = pm.group(5);
         else if (pm.group(5) != null)
-            return fstr;	// possible day found in two places
+            return fstr;	
 
         if (day != null && !day.equals("0")) {
             date.append(day);
@@ -125,20 +113,20 @@ public class CsaImporter extends ImportFormat {
         if (mon == null)
             mon = pm.group(4);
         else if (pm.group(4) != null)
-            return fstr;	// possible month found in two places
+            return fstr;	
 
         int idx = -1;
         if (mon != null) {
             String lmon = mon.toLowerCase();
             idx = MONS.indexOf(lmon);
-            if (idx == -1)  // not legal month, error
+            if (idx == -1)  
                 return fstr;
             date.append(mon);
             date.append(" ");
             idx = idx / 4;
             hm.put("month", MONTHS[idx]);
 
-        } else if (day != null) // day found but not month, error
+        } else if (day != null) 
             return fstr;
 
         String year = pm.group(3);
@@ -152,7 +140,7 @@ public class CsaImporter extends ImportFormat {
             addNote(hm, note.toString());
         }
 
-        // check if journal year matches PY field
+        
         if (hm.get("year") != null) {
             String oyear = (String)hm.get("year");
             if (!year.equals(oyear)) {
@@ -161,7 +149,7 @@ public class CsaImporter extends ImportFormat {
                 note.append(year);
                 note.append(".");
                 addNote(hm, note.toString());
-//		System.out.println(year + " != " + oyear);
+
             }
         } else
             hm.put("year", year);
@@ -175,11 +163,9 @@ public class CsaImporter extends ImportFormat {
         return newf.toString();
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream stream) throws IOException {
-        // CSA records start with "DN: Database Name"
+        
         BufferedReader in =
             new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
         String str;
@@ -191,10 +177,7 @@ public class CsaImporter extends ImportFormat {
         return false;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List importEntries(InputStream stream) throws IOException {
         ArrayList bibitems = new ArrayList();
         StringBuffer sb = new StringBuffer();
@@ -210,15 +193,15 @@ public class CsaImporter extends ImportFormat {
         line = 1;
         str = readLine(in);
         while (true) {
-            if (str == null || str.length() == 0) {	// end of record
-                if (!hm.isEmpty()) { // have a record
+            if (str == null || str.length() == 0) {	
+                if (!hm.isEmpty()) { 
                     if (Type == null) {
                         addNote(hm, "Publication Type: [NOT SPECIFIED]");
                         addNote(hm, "[PERHAPS NOT FULL FORMAT]");
                         Type = "article";
                     }
 
-                    // post-process Journal article
+                    
                     if (Type.equals("article") &&
                         hm.get("booktitle") != null) {
                         String booktitle = (String)hm.get("booktitle");
@@ -230,37 +213,37 @@ public class CsaImporter extends ImportFormat {
                         new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID,
                                         Globals.getEntryType(Type));
 
-                    // create one here
+                    
                     b.setField(hm);
 
                     bibitems.add(b);
                 }
-                hm.clear();	// ready for next record
+                hm.clear();	
                 first = true;
                 if (str == null)
-                    break;	// end of file
+                    break;	
                 str = readLine(in);
                 rline = line;
                 continue;
             }
 
-            int fline = line;	// save this before reading field contents
+            int fline = line;	
             Matcher fm = FIELD_PATTERN.matcher(str);
             if (fm.find()) {
 
-                // save the field name (long and short)
+                
                 String fabbr = fm.group(1);
                 String fname = fm.group(2);
 
-                // read the contents of the field
-                sb.setLength(0); // clear the buffer
+                
+                sb.setLength(0); 
                 while ((str = readLine(in)) != null) {
-                    if (! str.startsWith("    ")) // field contents?
-                        break;	// nope
+                    if (! str.startsWith("    ")) 
+                        break;	
                     if (sb.length() > 0) {
                         sb.append(" ");
                     }
-                    sb.append(str.substring(4)); // skip spaces
+                    sb.append(str.substring(4)); 
                 }
                 String fstr = sb.toString();
                 if (fstr == null || fstr.length() == 0) {
@@ -268,12 +251,12 @@ public class CsaImporter extends ImportFormat {
                     throw new IOException("illegal empty field at line " +
                                           line1);
                 }
-                // replace [Lt] with <
+                
                 fm = LT_PATTERN.matcher(fstr);
                 if (fm.find())
                     fstr = fm.replaceAll("<");
 
-                // check for start of new record
+                
                 if (fabbr.equals("DN") &&
                     fname.equalsIgnoreCase("Database Name")) {
                     if (first == false) {
@@ -281,7 +264,7 @@ public class CsaImporter extends ImportFormat {
                                               ": DN out of order");
                     }
                     first = false;
-                    rline = fline; // save start of record
+                    rline = fline; 
                 } else if (first == true) {
                     throw new IOException("format error at line " + fline +
                                               ": missing DN");
@@ -350,7 +333,7 @@ public class CsaImporter extends ImportFormat {
                             note.append(oyear);
                             note.append(".");
                             addNote(hm, note.toString());
-//			    System.out.println(fstr + " != " + oyear);
+
                         }
                     }
                 } else if (fabbr.equals("RL")) {
@@ -372,9 +355,9 @@ public class CsaImporter extends ImportFormat {
                 } else if (fabbr.equals("SO")) {
                     ftype = "booktitle";
 
-                    // see if we can extract journal information
+                    
 
-                    // compact vol(no):page-page:
+                    
                     Matcher pm = VOLNOPP_PATTERN.matcher(fstr);
                     if (pm.find()) {
                         hm.put("volume", pm.group(1));
@@ -383,7 +366,7 @@ public class CsaImporter extends ImportFormat {
                         fstr = pm.replaceFirst("");
                     }
 
-                    // pages
+                    
                     pm = PAGES_PATTERN.matcher(fstr);
                     StringBuffer pages = new StringBuffer();
                     while (pm.find()) {
@@ -401,24 +384,24 @@ public class CsaImporter extends ImportFormat {
                     if (pages.length() > 0)
                         hm.put("pages", pages.toString());
 
-                    // volume:
+                    
                     pm = VOLUME_PATTERN.matcher(fstr);
                     if (pm.find()) {
                         hm.put("volume", pm.group(1));
                         fstr = pm.replaceFirst("");
                     }
 
-                    // number:
+                    
                     pm = NUMBER_PATTERN.matcher(fstr);
                     if (pm.find()) {
                         hm.put("number", pm.group(1));
                         fstr = pm.replaceFirst("");
                     }
 
-                    // journal date:
+                    
                     fstr = parseDate(hm, fstr);
 
-                    // strip trailing whitespace
+                    
                     Pattern pp = Pattern.compile(",?\\s*$");
                     pm = pp.matcher(fstr);
                     if (pm.find())
@@ -426,11 +409,11 @@ public class CsaImporter extends ImportFormat {
 
                     if (fstr.equals(""))
                         continue;
-//		    System.out.println("SOURCE: \"" + fstr + "\"");
+
                 } else if (fabbr.equals("TI"))
                     ftype = "title";
                 else if (fabbr.equals("RE"))
-                    continue;	// throw away References
+                    continue;	
 
                 if (ftype != null) {
                     hm.put(ftype, fstr);

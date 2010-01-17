@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class JPanelXBoxPreferredSize extends JPanelXBox {
 	public JPanelXBoxPreferredSize() {
-		// nothing special
+		
 	}
 	public JPanelXBoxPreferredSize(Component c) {
 		add(c);

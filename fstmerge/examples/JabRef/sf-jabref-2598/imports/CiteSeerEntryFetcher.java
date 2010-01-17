@@ -18,10 +18,7 @@ import net.sf.jabref.Util;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * Fetcher for CiteSeer http://citeseer.ist.psu.edu/
- * 
- */
+
 public class CiteSeerEntryFetcher implements EntryFetcher {
 
     final static String OAI_URL = "http://cs1.ist.psu.edu/cgi-bin/oai.cgi?verb=GetRecord&metadataPrefix=oai_citeseer&identifier=oai:CiteSeerPSU:";
@@ -41,13 +38,13 @@ public class CiteSeerEntryFetcher implements EntryFetcher {
             if (stop)
                 break;
 
-            // Try to import based on the id:
+            
             String id = ids[i];
 
-            // Clean IDs
+            
             id = id.replaceAll("(http://citeseer.ist.psu.edu/|\\.html|oai:CiteSeerPSU:)", "");
 
-            // Can only fetch for numerical IDs
+            
             if (!id.matches("^\\d+$")) {
             	frame.showMessage(Globals.lang(
                     "Citeseer only supports numerical ids, '%0' is invalid.\n"
@@ -56,7 +53,7 @@ public class CiteSeerEntryFetcher implements EntryFetcher {
                 continue;
             }
 
-            // Create an empty entry
+            
             BibtexEntry entry = new BibtexEntry(Util.createNeutralId(), BibtexEntryType
                 .getType("article"));
             entry.setField("citeseerurl", id);
@@ -74,7 +71,7 @@ public class CiteSeerEntryFetcher implements EntryFetcher {
 
                 saxParser.parse(inputStream, handlerBase);
 
-                /* Correct line breaks and spacing */
+                
                 for (String name : entry.getAllFields()) {
                     entry.setField(name, OAI2Fetcher.correctLineBreaks(entry.getField(name)
                         .toString()));
@@ -106,7 +103,7 @@ public class CiteSeerEntryFetcher implements EntryFetcher {
     }
 
     public JPanel getOptionsPanel() {
-        // No Options
+        
         return null;
     }
 

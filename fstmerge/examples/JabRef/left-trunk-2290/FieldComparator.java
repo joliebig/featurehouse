@@ -2,23 +2,7 @@ package net.sf.jabref;
 
 import java.util.Comparator;
 
-/**
- * 
- * A comparator for BibtexEntry fields
- * 
- * Initial Version:
- * 
- * @author alver
- * @version Date: Oct 13, 2005 Time: 10:10:04 PM To
- * 
- * Current Version:
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:01:33 $)
- * 
- * TODO: Testcases
- * 
- */
+
 public class FieldComparator implements Comparator<BibtexEntry> {
 
 	String field;
@@ -45,53 +29,41 @@ public class FieldComparator implements Comparator<BibtexEntry> {
 		Object f1, f2;
 
 		if (isTypeHeader) {
-			// Sort by type.
+			
 			f1 = e1.getType().getName();
 			f2 = e2.getType().getName();
 		} else {
 
-			// If the field is author or editor, we rearrange names so they are
-			// sorted according to last name.
+			
+			
 			f1 = e1.getField(field);
 			f2 = e2.getField(field);
 		}
 
-		/*
-		 * [ 1598777 ] Month sorting
-		 * 
-		 * http://sourceforge.net/tracker/index.php?func=detail&aid=1598777&group_id=92314&atid=600306
-		 */
+		
 		int localMultiplier = multiplier;
 		if (isMonthField)
 			localMultiplier = -localMultiplier;
 		
-		// Catch all cases involving null:
+		
 		if (f1 == null)
 			return f2 == null ? 0 : localMultiplier;
 
 		if (f2 == null)
 			return -localMultiplier;
 
-		// Now we now that both f1 and f2 are != null
+		
 		if (isNameField) {
 			if (f1 != null)
 				f1 = AuthorList.fixAuthorForAlphabetization((String) f1);
 			if (f2 != null)
 				f2 = AuthorList.fixAuthorForAlphabetization((String) f2);
 		} else if (isYearField) {
-			/*
-			 * [ 1285977 ] Impossible to properly sort a numeric field
-			 * 
-			 * http://sourceforge.net/tracker/index.php?func=detail&aid=1285977&group_id=92314&atid=600307
-			 */
+			
 			f1 = Util.toFourDigitYear((String) f1);
 			f2 = Util.toFourDigitYear((String) f2);
 		} else if (isMonthField) {
-			/*
-			 * [ 1535044 ] Month sorting
-			 * 
-			 * http://sourceforge.net/tracker/index.php?func=detail&aid=1535044&group_id=92314&atid=600306
-			 */
+			
 			f1 = new Integer(Util.getMonthNumber((String)f1));			
 			f2 = new Integer(Util.getMonthNumber((String)f2));
 		}
@@ -113,11 +85,7 @@ public class FieldComparator implements Comparator<BibtexEntry> {
 		return result * localMultiplier;
 	}
 
-	/**
-	 * Returns the field this Comparator compares by.
-	 * 
-	 * @return The field name.
-	 */
+	
 	public String getFieldName() {
 		return field;
 	}

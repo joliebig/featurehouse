@@ -1,9 +1,4 @@
-/*
- * Created on Oct 23, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 package net.sf.jabref.export;
 
 import java.util.ArrayList;
@@ -26,25 +21,21 @@ import org.w3c.dom.Text;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.SortedList;
 
-/**
- * @author Morten O. Alver.
- * Based on net.sf.jabref.MODSDatabase by Michael Wrighton
- *
- */
+
 public class OOCalcDatabase {
     protected Collection<BibtexEntry> entries;
 
     @SuppressWarnings("unchecked")
 	public OOCalcDatabase(BibtexDatabase bibtex, Set<String> keySet) {
-        // Make a list of comparators for sorting the entries:
+        
         List<FieldComparator> comparators = new ArrayList<FieldComparator>();
         comparators.add(new FieldComparator("author"));
         comparators.add(new FieldComparator("year"));
         comparators.add(new FieldComparator(BibtexFields.KEY_FIELD));
-        // Use glazed lists to get a sorted view of the entries:
+        
         BasicEventList entryList = new BasicEventList();
-        // Set up a list of all entries, if keySet==null, or the entries whose
-        // ids are in keySet, otherwise:
+        
+        
         if (keySet == null)
             entryList.addAll(bibtex.getEntries());
         else {
@@ -61,7 +52,7 @@ public class OOCalcDatabase {
             DocumentBuilder dbuild = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             result = dbuild.newDocument();
             Element collection = result.createElement("office:document-content");
-            //collection.setAttribute("xmlns", "http://openoffice.org/2000/office");
+            
             collection.setAttribute("xmlns:office", "http://openoffice.org/2000/office");
             collection.setAttribute("xmlns:style", "http://openoffice.org/2000/style");
             collection.setAttribute("xmlns:text", "http://openoffice.org/2000/text");
@@ -137,7 +128,7 @@ public class OOCalcDatabase {
                 addTableCell(result, row, new GetOpenOfficeType().format(e.getType().getName()));
                 addTableCell(result, row, getField(e, "isbn"));
                 addTableCell(result, row, getField(e, BibtexFields.KEY_FIELD));
-                addTableCell(result, row, getField(e, "author"));//new AuthorLastFirst().format(getField(e, "author")));
+                addTableCell(result, row, getField(e, "author"));
                 addTableCell(result, row, new RemoveWhitespace().format(new RemoveBrackets().format(getField(e, "title"))));
                 addTableCell(result, row, getField(e, "journal"));
                 addTableCell(result, row, getField(e, "volume"));
@@ -152,7 +143,7 @@ public class OOCalcDatabase {
                 addTableCell(result, row, getField(e, "chapter"));
                 addTableCell(result, row, getField(e, "edition"));
                 addTableCell(result, row, getField(e, "series"));
-                addTableCell(result, row, getField(e, "editor"));//new AuthorLastFirst().format(getField(e, "editor")));
+                addTableCell(result, row, getField(e, "editor"));
                 addTableCell(result, row, getField(e, "publisher"));
                 addTableCell(result, row, getField(e, "reporttype"));
                 addTableCell(result, row, getField(e, "howpublished"));
@@ -189,7 +180,7 @@ public class OOCalcDatabase {
                 text = doc.createElement("text:p");
     Text textNode = doc.createTextNode(content);
     text.appendChild(textNode);
-        //text.setTextContent(content);
+        
         cell.appendChild(text);
         parent.appendChild(cell);
     }

@@ -20,12 +20,7 @@ public class Cookie {
      = new SimpleDateFormat("E, dd-MMM-yyyy k:m:s 'GMT'", Locale.US);
 
 
-  /**
-   * Construct a cookie from the URI and header fields
-   *
-   * @param uri URI for cookie
-   * @param header Set of attributes in header
-   */
+  
   public Cookie(URI uri, String header) {
     String attributes[] = header.split(";");
     String nameValue = attributes[0].trim();
@@ -93,13 +88,7 @@ public class Cookie {
     return uri;
   }
 
-  /**
-   * Check if cookie isn't expired and if URI matches,
-   * should cookie be included in response.
-   *
-   * @param uri URI to check against
-   * @return true if match, false otherwise
-   */
+  
   public boolean matches(URI uri) {
 
     if (hasExpired()) {

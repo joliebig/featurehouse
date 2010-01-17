@@ -6,29 +6,27 @@ import net.sf.jabref.BibtexEntry;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
 
-/**
- * Created by Morten O. Alver, 16 Feb. 2007
- */
+
 public class AutoCompleter {
     final int SHORTEST_WORD = 4,
             SHORTEST_TO_COMPLETE = 2;
 
     private TreeSet<String> words = new TreeSet<String>();
     private TreeSet<String> lastNames = null, firstNames = null;
-    private boolean nameField = false, // Attempt to store entire names?
-    // Crossref autocompleter should store info from the key field:
+    private boolean nameField = false, 
+    
         crossRefField = false,
-        entireField = false; // Set to true if the entire field should be stored
-		             // suitable e.g. for journal or publisher fields.
+        entireField = false; 
+		             
     public String fieldName;
 
     public AutoCompleter(String fieldName) {
         crossRefField = fieldName.equals("crossref");
         if (fieldName.equals("author") || fieldName.equals("editor")) {
             nameField = true;
-            // Name fields separate first names and last names. First names are
-            // put in the firstNames set, and last names in the lastNames set.
-            // All names are stored in the words set:
+            
+            
+            
             lastNames = new TreeSet<String>();
             firstNames = new TreeSet<String>();
         }
@@ -50,17 +48,11 @@ public class AutoCompleter {
             words.add(word);
     }
 
-    /**
-     * Add the information from the given object to this autocompleter.
-     * @param s The text string to add words from.
-     * @param entry The entry containing the text, if any. If the autocompleter
-     *  requires information from a different field, this can be looked up
-     *  from the given entry. The entry can be null.
-     */
+    
     public void addAll(Object s, BibtexEntry entry) {
         if (crossRefField) {
-            // Crossrefs reference bibtex keys, so we should add the words from
-            // the key field instead of the crossref field:
+            
+            
             if (entry != null) {
                 String key = entry.getCiteKey();
                 if (key != null)
@@ -81,7 +73,7 @@ public class AutoCompleter {
             StringTokenizer tok = new StringTokenizer(s.toString(), " .,\n");
             while (tok.hasMoreTokens()) {
                 String word = tok.nextToken();
-                //Util.pr(word);
+                
                 addWord(word);
             }
         }

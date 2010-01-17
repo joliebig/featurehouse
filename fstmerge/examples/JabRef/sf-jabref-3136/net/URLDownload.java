@@ -1,7 +1,4 @@
-/*
- * Created on 1-Dec-2004
- *
- */
+
 package net.sf.jabref.net;
 
 import java.awt.Component;
@@ -12,9 +9,7 @@ import java.net.CookieHandler;
 
 import javax.swing.ProgressMonitorInputStream;
 
-/**
- * @author Erik Putrycz erik.putrycz-at-nrc-cnrc.gc.ca
- */
+
 
 public class URLDownload {  
     
@@ -32,14 +27,14 @@ public class URLDownload {
         parent = _parent;
 
         try {
-            // This should set up JabRef to receive cookies properly
+            
             if ((cm = CookieHandler.getDefault()) == null) {
                 cm = new CookieHandlerImpl();
                 CookieHandler.setDefault(cm);
             }
         } catch (SecurityException e) {
-            // Setting or getting the system default cookie handler is forbidden
-            // In this case cookie handling is not possible.
+            
+            
         }
     }
 

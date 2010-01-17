@@ -21,9 +21,7 @@ import net.sf.jabref.MnemonicAwareAction;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.ButtonStackBuilder;
 
-/**
- * Editor for external file types.
- */
+
 public class ExternalFileTypeEditor extends JDialog {
 
     private JabRefFrame frame;
@@ -45,9 +43,7 @@ public class ExternalFileTypeEditor extends JDialog {
         init();
     }
 
-    /**
-     * Update the editor to show the current settings in Preferences.
-     */
+    
     public void setValues() {
         fileTypes.clear();
         ExternalFileType[] types = Globals.prefs.getExternalFileTypeSelection();
@@ -57,9 +53,7 @@ public class ExternalFileTypeEditor extends JDialog {
         Collections.sort(fileTypes);
     }
 
-    /**
-     * Store the list of external entry types to Preferences.
-     */
+    
     public void storeSettings() {
         Globals.prefs.setExternalFileTypes(fileTypes);
     }
@@ -77,22 +71,19 @@ public class ExternalFileTypeEditor extends JDialog {
                 dispose();
             }
         });
-        // The toDefaults resets the entire list to its default values.
+        
         toDefaults.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                /*int reply = JOptionPane.showConfirmDialog(ExternalFileTypeEditor.this,
-                        Globals.lang("All custom file types will be lost. Proceed?"),
-                        Globals.lang("Reset file type definitons"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);*/
-                //if (reply == JOptionPane.YES_OPTION) {
+                
+                
                     java.util.List<ExternalFileType> list = Globals.prefs.getDefaultExternalFileTypes();
                     fileTypes.clear();
                     fileTypes.addAll(list);
                     Collections.sort(fileTypes);
-                    //Globals.prefs.resetExternalFileTypesToDefault();
-                    //setValues();
+                    
+                    
                     tableModel.fireTableDataChanged();
-                //}
+                
             }
         });
 
@@ -151,23 +142,19 @@ public class ExternalFileTypeEditor extends JDialog {
         return entryEditor;
     }
 
-    /**
-     * Get an AbstractAction for opening the external file types editor.
-     * @param frame The JabRefFrame used as parent window for the dialog.
-     * @return An Action for opening the editor.
-     */
+    
     public static AbstractAction getAction(JabRefFrame frame) {
         return new EditExternalFileTypesAction(frame);
     }
 
     class AddListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            // Generate a new file type:
+            
             ExternalFileType type = new ExternalFileType("", "", "", "new");
-            // Show the file type editor:
+            
             getEditor(type).setVisible(true);
             if (entryEditor.okPressed()) {
-                // Ok was pressed. Add the new file type and update the table:
+                
                 fileTypes.add(type);
                 tableModel.fireTableDataChanged();
             }

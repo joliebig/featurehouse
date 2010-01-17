@@ -11,13 +11,7 @@ import java.util.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
-/**
- * User: alver
- * 
- * Date: Oct 18, 2006 
- * 
- * Time: 9:35:08 PM 
- */
+
 public class ExportFormats {
 
 	private static Map<String,ExportFormat> exportFormats = new TreeMap<String,ExportFormat>();
@@ -25,7 +19,7 @@ public class ExportFormats {
     public static void initAllExports() {
         exportFormats.clear();
 
-        // Initialize Build-In Export Formats
+        
         putFormat(new ExportFormat(
                 Globals.lang("HTML"), "html", "html", null, ".html"));
         putFormat(new ExportFormat(
@@ -47,23 +41,14 @@ public class ExportFormats {
         putFormat(new OpenDocumentSpreadsheetCreator());
         putFormat(new MSBibExportFormat());
     
-        // Now add custom export formats
+        
         TreeMap customExports = Globals.prefs.customExports.getCustomExportFormats();
         for (Iterator i=customExports.keySet().iterator(); i.hasNext();) {
             putFormat((ExportFormat)customExports.get(i.next()));
         }
     }
 
-	/**
-	 * Build a string listing of all available export formats.
-	 * 
-	 * @param maxLineLength
-	 *            The max line length before a line break must be added.
-	 * @param linePrefix
-	 *            If a line break is added, this prefix will be inserted at the
-	 *            beginning of the next line.
-	 * @return The string describing available formats.
-	 */
+	
 	public static String getConsoleExportList(int maxLineLength, int firstLineSubtr,
 		String linePrefix) {
 		StringBuffer sb = new StringBuffer();
@@ -83,37 +68,18 @@ public class ExportFormats {
 		return sb.toString();
 	}
 
-    /**
-     * Get a Map of all export formats.
-     * @return A Map containing all export formats, mapped to their console names.
-     */
+    
     public static Map getExportFormats() {
-        // It is perhaps overly paranoid to make a defensive copy in this case:
+        
         return Collections.unmodifiableMap(exportFormats);
     } 
 
-    /**
-	 * Look up the named export format.
-	 * 
-	 * @param consoleName
-	 *            The export name given in the JabRef console help information.
-	 * @return The ExportFormat, or null if no exportformat with that name is
-	 *         registered.
-	 */
+    
 	public static ExportFormat getExportFormat(String consoleName) {
 		return (ExportFormat) exportFormats.get(consoleName);
 	}
 
-	/**
-	 * Create an AbstractAction for performing an export operation.
-	 * 
-	 * @param frame
-	 *            The JabRefFrame of this JabRef instance.
-	 * @param selectedOnly
-	 *            true indicates that only selected entries should be exported,
-	 *            false indicates that all entries should be exported.
-	 * @return The action.
-	 */
+	
 	public static AbstractAction getExportAction(JabRefFrame frame, boolean selectedOnly) {
 
 		class ExportAction extends MnemonicAwareAction {
@@ -147,7 +113,7 @@ public class ExportFormats {
 							path = path + eff.getExportFormat().getExtension();
 						file = new File(path);
 						if (file.exists()) {
-							// Warn that the file exists:
+							
 							if (JOptionPane.showConfirmDialog(frame, "'" + file.getName() + "' "
 								+ Globals.lang("exists. Overwrite file?"), Globals.lang("Export"),
 								JOptionPane.OK_CANCEL_OPTION) != JOptionPane.OK_OPTION)
@@ -164,8 +130,8 @@ public class ExportFormats {
 							}
 						}
 						
-						// Make sure we remember which filter was used, to set
-						// the default for next time:
+						
+						
 						Globals.prefs.put("lastUsedExport", format.getConsoleName());
 						Globals.prefs.put("exportWorkingDirectory", file.getParent());
 						
@@ -177,7 +143,7 @@ public class ExportFormats {
 
 						frame.output(Globals.lang("Could not save file") + " - " + ex.getMessage());
 						
-						// Need to warn the user that saving failed!
+						
 						JOptionPane.showMessageDialog(frame, Globals.lang("Could not save file")
 							+ ".\n" + ex.getMessage(), Globals.lang("Save database"),
 							JOptionPane.ERROR_MESSAGE);

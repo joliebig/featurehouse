@@ -13,10 +13,7 @@ import javax.swing.JTextField;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Preferences tab for file options. These options were moved out from GeneralTab to
- * resolve the space issue.
- */
+
 public class FileTab extends JPanel implements PrefsTab {
 
     JabRefPreferences _prefs;
@@ -52,8 +49,8 @@ public class FileTab extends JPanel implements PrefsTab {
         nonWrappableFields = new JTextField(25);
         doNotResolveStringsFor = new JTextField(30);
         autoDoubleBraces = new JCheckBox(
-                //+ Globals.lang("Store fields with double braces, and remove extra braces when loading.<BR>"
-                //+ "Double braces signal that BibTeX should preserve character case.") + "</HTML>");
+                
+                
                 Globals.lang("Remove double braces around BibTeX fields when loading."));
 
         FormLayout layout = new FormLayout("left:pref, 4dlu, fill:pref", "");
@@ -104,7 +101,7 @@ public class FileTab extends JPanel implements PrefsTab {
             saveOriginalOrder.setSelected(true);
         else
             saveTableOrder.setSelected(true);
-        //preserveFormatting.setSelected(_prefs.getBoolean("preserveFieldFormatting"));
+        
         autoDoubleBraces.setSelected(_prefs.getBoolean("autoDoubleBraces"));
         resolveStringsAll.setSelected(_prefs.getBoolean("resolveStringsAllFields"));
         resolveStringsStandard.setSelected(!resolveStringsAll.isSelected());
@@ -133,7 +130,7 @@ public class FileTab extends JPanel implements PrefsTab {
             _prefs.put("nonWrappableFields", nonWrappableFields.getText());
             updateSpecialFields = true;
         }
-        // If either of the two last entries were changed, run the update for special field handling:
+        
         if (updateSpecialFields)
                 _prefs.updateSpecialFieldHandling();
 

@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 package net.sf.jabref.imports;
 
 import java.io.File;
@@ -43,11 +18,11 @@ public class ParserResult {
     private HashMap<String, BibtexEntryType> entryTypes;
     private File file = null;
     private ArrayList<String> warnings = new ArrayList<String>();
-    private String encoding = null; // Which encoding was used?
+    private String encoding = null; 
 
 
-    private String jabrefVersion = null; // Which JabRef version wrote the file, if any?
-    private int jabrefMajorVersion = 0, jabrefMinorVersion = 0; // Numeric version representation
+    private String jabrefVersion = null; 
+    private int jabrefMajorVersion = 0, jabrefMinorVersion = 0; 
     private boolean toOpenTab = false;
 
     public ParserResult(Collection<BibtexEntry> entries){
@@ -60,10 +35,7 @@ public class ParserResult {
 		this.entryTypes = entryTypes;
     }
 
-    /**
-     * Check if this base is marked to be added to the currently open tab. Default is false.
-     * @return
-     */
+    
     public boolean toOpenTab() {
         return toOpenTab;
     }
@@ -73,18 +45,12 @@ public class ParserResult {
     }
 
 
-    /**
-     * Find which version of JabRef, if any, produced this bib file.
-     * @return The version number string, or null if no JabRef signature could be read.
-     */
+    
     public String getJabrefVersion() {
         return jabrefVersion;
     }
 
-    /**
-     * Set the JabRef version number string for this parser result.
-     * @param jabrefVersion The version number string.                                         
-     */
+    
     public void setJabrefVersion(String jabrefVersion) {
         this.jabrefVersion = jabrefVersion;
     }
@@ -126,28 +92,17 @@ public class ParserResult {
       file = f;
     }
 
-    /**
-     * Sets the variable indicating which encoding was used during parsing.
-     *
-     * @param enc String the name of the encoding.
-     */
+    
     public void setEncoding(String enc) {
       encoding = enc;
     }
 
-    /**
-     * Returns the name of the encoding used during parsing, or null if not specified
-     * (indicates that prefs.get("defaultEncoding") was used).
-     */
+    
     public String getEncoding() {
       return encoding;
     }
 
-    /**
-     * Add a parser warning.
-     *
-     * @param s String Warning text. Must be pretranslated. Only added if there isn't already a dupe.
-     */
+    
     public void addWarning(String s) {
         if (!warnings.contains(s))
             warnings.add(s);

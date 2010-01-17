@@ -18,7 +18,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
     private JCheckBox backup, openLast,
     defSort, ctrlClick,
     useOwner, keyDuplicateWarningDialog, keyEmptyWarningDialog, autoDoubleBraces,
-    confirmDelete, allowEditing, /*preserveFormatting, */useImportInspector,
+    confirmDelete, allowEditing, useImportInspector,
     useImportInspectorForSingle, inspectionWarnDupli, useTimeStamp;
     private JRadioButton
         saveOriginalOrder, saveAuthorOrder, saveTableOrder,
@@ -45,7 +45,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         useTimeStamp = new JCheckBox(Globals.lang("Mark new entries with addition date") + ". "
             +Globals.lang("Date format")+ ":");
         keyDuplicateWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when a duplicate BibTeX key is entered"));
-        keyEmptyWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when an empty BibTeX key is entered")); // JZTODO lyrics
+        keyEmptyWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when an empty BibTeX key is entered")); 
         confirmDelete = new JCheckBox(Globals.lang("Show confirmation dialog when deleting entries"));
         saveAuthorOrder = new JRadioButton(Globals.lang("Save ordered by author/editor/year"));
         saveOriginalOrder = new JRadioButton(Globals.lang("Save entries in their original order"));
@@ -61,8 +61,8 @@ public class GeneralTab extends JPanel implements PrefsTab {
         bg.add(resolveStringsStandard);
         doNotResolveStringsFor = new JTextField(30);
         autoDoubleBraces = new JCheckBox(
-                //+ Globals.lang("Store fields with double braces, and remove extra braces when loading.<BR>"
-                //+ "Double braces signal that BibTeX should preserve character case.") + "</HTML>");
+                
+                
                 Globals.lang("Remove double braces around BibTeX fields when loading."));
         useImportInspector = new JCheckBox(Globals.lang("Display imported entries in an inspection window before they are added."));
         useImportInspectorForSingle = new JCheckBox(Globals.lang("Use inspection window also when a single entry is imported.")); 
@@ -80,8 +80,8 @@ public class GeneralTab extends JPanel implements PrefsTab {
         inspectionWarnDupli.setMargin(marg);
         bracesAroundCapitalsFields = new JTextField(25);
         nonWrappableFields = new JTextField(25);
-        // We need a listener on useImportInspector to enable and disable the
-        // import inspector related choices;
+        
+        
         useImportInspector.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 useImportInspectorForSingle.setEnabled(useImportInspector.isSelected());
@@ -91,7 +91,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         );
 
         FormLayout layout = new FormLayout
-                ("8dlu, left:pref, 8dlu, fill:pref, 4dlu, fill:pref", // 4dlu, left:pref, 4dlu",
+                ("8dlu, left:pref, 8dlu, fill:pref, 4dlu, fill:pref", 
                         "pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, "
                         +"pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, "
                         +"pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, "
@@ -120,8 +120,8 @@ public class GeneralTab extends JPanel implements PrefsTab {
         builder4.append(resolveStringsAll);
         builder4.append(doNotResolveStringsFor);
         builder.add(builder4.getPanel(), cc.xyw(2, 13, 1));
-        //builder.add(resolveStringsAll, cc.xy(2, 13));
-        //builder.add(doNotResolveStringsFor, cc.xyw(4, 13, 3));
+        
+        
 
         builder.addSeparator(Globals.lang("Miscellaneous"), cc.xyw(1, 15, 5));
         builder.add(useImportInspector, cc.xy(2, 17));
@@ -131,7 +131,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         builder.add(confirmDelete, cc.xy(2, 25));
         builder.add(keyDuplicateWarningDialog, cc.xy(2, 27));
         builder.add(keyEmptyWarningDialog, cc.xy(2, 29));
-        // Create a new panel with its own FormLayout for the last items:
+        
         FormLayout layout2 = new FormLayout
                 ("left:pref, 8dlu, fill:60dlu, 4dlu, left:pref, 4dlu, fill:60dlu, 4dlu, fill:pref", "");
         DefaultFormBuilder builder2 = new DefaultFormBuilder(layout2);
@@ -186,7 +186,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
             saveOriginalOrder.setSelected(true);
         else
             saveTableOrder.setSelected(true);
-        //preserveFormatting.setSelected(_prefs.getBoolean("preserveFieldFormatting"));
+        
         autoDoubleBraces.setSelected(_prefs.getBoolean("autoDoubleBraces"));
         resolveStringsAll.setSelected(_prefs.getBoolean("resolveStringsAllFields"));
         resolveStringsStandard.setSelected(!resolveStringsAll.isSelected());
@@ -211,7 +211,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         }
         String oldLan = _prefs.get("language");
 
-        // Language choice
+        
         int ilk = 0;
         for (String lan : GUIGlobals.LANGUAGES.values()){
             if (lan.equals(oldLan)) {
@@ -234,7 +234,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("saveInOriginalOrder", saveOriginalOrder.isSelected());
         _prefs.putBoolean("allowTableEditing", allowEditing.isSelected());
         _prefs.putBoolean("ctrlClick", ctrlClick.isSelected());
-        //_prefs.putBoolean("preserveFieldFormatting", preserveFormatting.isSelected());
+        
         _prefs.putBoolean("autoDoubleBraces", autoDoubleBraces.isSelected());
         _prefs.putBoolean("resolveStringsAllFields", resolveStringsAll.isSelected());
         _prefs.put("doNotResolveStringsFor", doNotResolveStringsFor.getText().trim());
@@ -242,7 +242,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("useImportInspectionDialog", useImportInspector.isSelected());
         _prefs.putBoolean("useImportInspectionDialogForSingle", useImportInspectorForSingle.isSelected());
         _prefs.putBoolean("warnAboutDuplicatesInInspection", inspectionWarnDupli.isSelected());
-        //_prefs.putBoolean("defaultAutoSort", defSorrrt.isSelected());
+        
         String owner = defOwnerField.getText().trim();
         _prefs.put("defaultOwner", owner);
         _prefs.WRAPPED_USERNAME = "["+owner+"]";
@@ -258,7 +258,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
             _prefs.put("nonWrappableFields", nonWrappableFields.getText());
             updateSpecialFields = true;
         }
-        // If either of the two last entries were changed, run the update for special field handling:
+        
         if (updateSpecialFields)
                 _prefs.updateSpecialFieldHandling();
 
@@ -274,7 +274,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
 
     public boolean readyToClose() {
         try {
-            // Test if date format is legal:
+            
             new SimpleDateFormat(timeStampFormat.getText());
 
         } catch (IllegalArgumentException ex2) {

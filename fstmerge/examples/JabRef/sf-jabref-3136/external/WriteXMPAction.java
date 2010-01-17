@@ -18,15 +18,7 @@ import net.sf.jabref.util.XMPUtil;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * 
- * This action goes through all selected entries in the BasePanel, and attempts
- * to write the XMP data to the external pdf.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:12:10 $)
- * 
- */
+
 public class WriteXMPAction extends AbstractWorker {
 
 	BasePanel panel;
@@ -47,7 +39,7 @@ public class WriteXMPAction extends AbstractWorker {
 
 	public void init() {
 
-		// Get entries and check if it makes sense to perform this operation
+		
 		entries = panel.getSelectedEntries();
 
 		if (entries.length == 0) {
@@ -96,17 +88,17 @@ public class WriteXMPAction extends AbstractWorker {
 
 			BibtexEntry entry = entries[i];
 
-            // Make a list of all PDFs linked from this entry:
+            
             List<File> files = new ArrayList<File>();
 
-            // First check the (legacy) "pdf" field:
+            
             String pdf = entry.getField("pdf");
             String dir = panel.metaData().getFileDirectory("pdf");
             File f = Util.expandFilename(pdf, new String[]{dir,"."});
             if (f != null)
                 files.add(f);
 
-            // Then check the "file" field:
+            
             dir = panel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
             String field = entry.getField(GUIGlobals.FILE_FIELD);
             if (field != null) {
@@ -227,7 +219,7 @@ public class WriteXMPAction extends AbstractWorker {
 
 			
 
-			// progressArea.setPreferredSize(new Dimension(300, 300));
+			
 
 			ButtonBarBuilder bb = new ButtonBarBuilder();
 			bb.addGlue();

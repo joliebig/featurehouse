@@ -32,12 +32,12 @@ public class OpenFileFilter extends javax.swing.filechooser.FileFilter implement
   public OpenFileFilter() {
     this( new String[] {
       ".bib",
-      ".dat",  // silverplatter ending
-      ".txt",  // windows puts ".txt" extentions and for scifinder
+      ".dat",  
+      ".txt",  
       ".ris",
-      ".ref",  // refer/endnote format
-      ".fcgi", // default for pubmed
-      ".bibx", // default for BibTeXML
+      ".ref",  
+      ".fcgi", 
+      ".bibx", 
       ".xml"
     });
   }
@@ -61,7 +61,7 @@ public class OpenFileFilter extends javax.swing.filechooser.FileFilter implement
     if (dotPos==-1)
       return false;
 
-    int dotDotPos = filenm.lastIndexOf(".", dotPos-1); // for dot.dot extensions
+    int dotDotPos = filenm.lastIndexOf(".", dotPos-1); 
 
     return extSet.contains(filenm.substring(dotPos)) ||
       (dotDotPos>=0 && extSet.contains(filenm.substring(dotDotPos)));
@@ -80,7 +80,7 @@ public class OpenFileFilter extends javax.swing.filechooser.FileFilter implement
     if (extSet.contains(suffix))
       return suffix;
 
-    dotPos = filenm.lastIndexOf(".", dotPos-1); // for dot.dot extensions
+    dotPos = filenm.lastIndexOf(".", dotPos-1); 
     if (dotPos==-1)
       return null;
 

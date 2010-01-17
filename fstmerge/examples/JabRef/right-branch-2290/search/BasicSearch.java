@@ -11,9 +11,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Search rule for simple search.
- */
+
 public class BasicSearch implements SearchRule {
     private boolean caseSensitive;
     private boolean regExp;
@@ -59,8 +57,8 @@ public class BasicSearch implements SearchRule {
             }
         }
 
-        //print(words);
-        // We need match for all words:
+        
+        
         boolean[] matchFound = new boolean[words.size()];
 
         Object fieldContentAsObject;
@@ -73,8 +71,8 @@ public class BasicSearch implements SearchRule {
                 if (!caseSensitive)
                     fieldContent = fieldContent.toLowerCase();
                 int index = 0;
-                // Check if we have a match for each of the query words, ignoring
-                // those words for which we already have a match:
+                
+                
                 for (int j=0; j<words.size(); j++) {
                     if (!regExp) {
                         String s = (String) words.get(j);
@@ -96,9 +94,9 @@ public class BasicSearch implements SearchRule {
         }
         for (int i = 0; i < matchFound.length; i++) {
             if (!matchFound[i])
-                return 0; // Didn't match all words.
+                return 0; 
         }
-        return 1; // Matched all words.
+        return 1; 
     }
 
     private ArrayList parseQuery(String query) {
@@ -108,11 +106,11 @@ public class BasicSearch implements SearchRule {
         boolean escaped = false, quoted = false;
         for (int i=0; i<query.length(); i++) {
             c = query.charAt(i);
-            // Check if we are entering an escape sequence:
+            
             if (!escaped && (c == '\\'))
                 escaped = true;
             else {
-                // See if we have reached the end of a word:
+                
                 if (!escaped && !quoted && Character.isWhitespace((char)c)) {
                     if (sb.length() > 0) {
                         result.add(sb.toString());
@@ -120,8 +118,8 @@ public class BasicSearch implements SearchRule {
                     }
                 }
                 else if (c == '"') {
-                    // Whether it is a start or end quote, store the current
-                    // word if any:
+                    
+                    
                     if (sb.length() > 0) {
                         result.add(sb.toString());
                         sb = new StringBuffer();
@@ -129,14 +127,14 @@ public class BasicSearch implements SearchRule {
                     quoted = !quoted;
                 }
                 else {
-                    // All other possibilities exhausted, we add the char to
-                    // the current word:
+                    
+                    
                     sb.append((char)c);
                 }
                 escaped = false;
             }
         }
-        // Finished with the loop. If we have a current word, add it:
+        
         if (sb.length() > 0) {
             result.add(sb.toString());
         }

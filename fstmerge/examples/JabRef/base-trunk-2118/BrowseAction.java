@@ -5,13 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-/**
- * Action used to produce a "Browse" button for one of the text fields.
- */
+
 public class BrowseAction extends AbstractAction implements ActionListener {
 
     JFrame frame=null;
-    //JDialog dialog=null;
+    
     JTextField comp;
     boolean dir;
 
@@ -23,13 +21,7 @@ public class BrowseAction extends AbstractAction implements ActionListener {
 
     }
 
-    /*public BrowseAction(JDialog dialog, JTextField tc, boolean dir) {
-        super(Globals.lang("Browse"));
-        this.dialog = dialog;
-        this.dir = dir;
-        comp = tc;
-
-    } */
+    
 
     public void actionPerformed(ActionEvent e) {
         String chosen = null;

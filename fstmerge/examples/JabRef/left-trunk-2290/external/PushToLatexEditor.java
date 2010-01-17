@@ -9,13 +9,7 @@ import net.sf.jabref.BibtexEntry;
 import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Apr 4, 2006
- * Time: 10:14:04 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class PushToLatexEditor implements PushToApplication {
 
     private boolean couldNotCall=false;
@@ -82,6 +76,6 @@ public class PushToLatexEditor implements PushToApplication {
     }
 
     public boolean requiresBibtexKeys() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;  
     }
 }

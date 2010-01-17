@@ -2,13 +2,7 @@ package net.sf.jabref;
 
 import java.util.Comparator;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Sep 1, 2005
- * Time: 11:35:02 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class MarkedComparator implements Comparator {
 
     Comparator next;

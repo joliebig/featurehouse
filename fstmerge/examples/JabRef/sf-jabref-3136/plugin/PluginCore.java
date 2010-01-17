@@ -21,20 +21,7 @@ import org.java.plugin.registry.PluginDescriptor;
 import org.java.plugin.standard.StandardPluginLocation;
 import org.java.plugin.util.ExtendedProperties;
 
-/**
- * Helper class for the plug-in system. Helps to retrieve the singleton instance
- * of the PluginManager, which then can be used to access all the plug-ins
- * registered.
- * 
- * For an example how this is done see
- * {@link net.sf.jabref.export.layout.LayoutEntry#getLayoutFormatterFromPlugins(String)}
- * 
- * The PluginCore relies on the generated class
- * {@link net.sf.jabref.plugin.core.JabRefPlugin} in the sub-package "core" for
- * finding the plugins and their extension.
- * 
- * @author Christopher Oezbek
- */
+
 public class PluginCore {
 
     static PluginManager singleton;
@@ -66,7 +53,7 @@ public class PluginCore {
     }
 
     static PluginManager initialize() {
-        // We do not want info messages from JPF.
+        
         Logger.getLogger("org.java.plugin").setLevel(Level.WARNING);
 
         Logger log = Logger.getLogger(PluginCore.class.getName());
@@ -76,9 +63,7 @@ public class PluginCore {
         PluginManager result = objectFactory.createManager();
 
         
-        /*
-         * Now find plug-ins! Check directories and jar.
-         */
+        
         try {
             DefaultPluginsCollector collector = new DefaultPluginsCollector();
             ExtendedProperties ep = new ExtendedProperties();
@@ -99,13 +84,13 @@ public class PluginCore {
                     directoriesToSearch.add(new File(parent, "/plugins"));
                 }
             } catch (Exception e) {
-                // no problem, we just use paths relative to current dir.
+                
             }
 
             StringBuilder sb = new StringBuilder();
             for (File directory : directoriesToSearch) {
-                // We don't want warnings if the default plug-in paths don't
-                // exist, we do that below
+                
+                
                 if (directory.exists()) {
                     if (sb.length() > 0)
                         sb.append(',');
@@ -120,15 +105,12 @@ public class PluginCore {
             Collection<PluginLocation> plugins = collector
                 .collectPluginLocations();
 
-            /**
-             * I know the following is really, really ugly, but I have found no
-             * way to automatically discover multiple plugin.xmls in JARs
-             */
+            
             String[] jarLocationsToSearch = new String[] {
                 "/plugins/net.sf.jabref.core/",
                 "/plugins/net.sf.jabref.export.misq/"};
                 
-            // Collection locations
+            
             for (String jarLocation : jarLocationsToSearch) {
                 PluginLocation location = getLocationInsideJar(jarLocation,
                     "plugin.xml");

@@ -5,9 +5,7 @@ import net.sf.jabref.undo.NamedCompound;
 
 import javax.swing.*;
 
-/**
- * Action for upgrading old-style (pre 2.3) PS/PDF links to the new "file" field.
- */
+
 public class UpgradeExternalLinks extends BaseAction {
 
     private BasePanel panel;

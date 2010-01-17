@@ -17,7 +17,7 @@ public class StringRemoveChange extends Change {
   public StringRemoveChange(BibtexString string, BibtexString inMem) {
     name = Globals.lang("Removed string")+": '"+string.getName()+"'";
     this.string = string;
-    this.inMem = inMem; // Holds the version in memory. Check if it has been modified...?
+    this.inMem = inMem; 
 
     StringBuffer sb = new StringBuffer();
     sb.append("<HTML><H2>");

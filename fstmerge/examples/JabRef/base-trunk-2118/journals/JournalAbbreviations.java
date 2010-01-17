@@ -18,13 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.net.URL;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Sep 16, 2005
- * Time: 10:49:08 PM
- * To browseOld this template use File | Settings | File Templates.
- */
+
 public class JournalAbbreviations {
 
     static String TOOLTIPTEXT = "<HTML>"+Globals.lang("Switches between full and abbreviated journal name "
@@ -48,10 +42,7 @@ public class JournalAbbreviations {
         readJournalList(file);
     }
 
-    /**
-     * Get an iterator for the known journals in alphabetical order.
-     * @return Iterator for journal full names
-     */
+    
     public Iterator fullNameIterator() {
         return fullNameKeyed.keySet().iterator();
     }
@@ -70,14 +61,7 @@ public class JournalAbbreviations {
         return name.replaceAll("\\.", " ").replaceAll("  ", " ").trim();
     }
 
-    /**
-     * Attempts to get the abbreviated name of the journal given. Returns null if no
-     * abbreviated name is known.
-     * @param journalName The journal name to abbreviate.
-     * @param withDots True if the abbreviation should have dots.
-     * if only the first character should be.
-     * @return The abbreviated name, or null if it couldn't be found.
-     */
+    
     public String getAbbreviatedName(String journalName, boolean withDots) {
         String s = journalName.toLowerCase();
         String abbr;
@@ -99,14 +83,9 @@ public class JournalAbbreviations {
         return abbr;
     }
 
-    /**
-     * Attempts to get the full name of the abbreviation given. Returns null if no
-     * full name is known.
-     * @param journalName The abbreviation to resolve.
-     * @return The full name, or null if it couldn't be found.
-     */
+    
     public String getFullName(String journalName) {
-        // Normalize name first:
+        
         String s = getAbbreviatedName(journalName, true);
 	if (s != null) 
 	    s = s.toLowerCase();
@@ -120,7 +99,7 @@ public class JournalAbbreviations {
                 return null;
         }
         s = (String)o;
-        return s;//caseChanger.changeCase(s, CaseChanger.UPPER_EACH_FIRST);
+        return s;
     }
 
     public void readJournalList(String resourceFileName) {
@@ -138,17 +117,13 @@ public class JournalAbbreviations {
         readJournalList(new FileReader(file));
     }
 
-    /**
-     * Read the given file, which should contain a list of journal names and their
-     * abbreviations. Each line should be formatted as: "Full Journal Name=Abbr. Journal Name"
-     * @param in
-     */
+    
     public void readJournalList(Reader in) throws FileNotFoundException {
         BufferedReader reader = new BufferedReader(in);
         try {
             String line;
             while ((line = reader.readLine()) != null) {
-                //System.out.println(line);
+                
                 if (line.startsWith("#"))
                     continue;
                 String[] parts = line.split("=");
@@ -163,9 +138,9 @@ public class JournalAbbreviations {
                     String abbrNameLC = abbrName.toLowerCase();
                     String abbrNoDots = dotsToNodots(abbrName);
                     String abbrNoDotsLC = abbrNoDots.toLowerCase();
-                    //System.out.println(abbrNoDots);
+                    
                     if ((fullName.length()>0) && (abbrName.length()>0)) {
-                        //System.out.println("'"+fullName+"' : '"+abbrNoDots+"'");
+                        
                         fullNameKeyed.put(fullNameLC, abbrName);
                         abbrNameKeyed.put(abbrNameLC, fullName);
                         abbrNoDotsToAbbr.put(abbrNoDotsLC, abbrName);
@@ -185,14 +160,7 @@ public class JournalAbbreviations {
         }
     }
 
-    /**
-     * Abbreviate the journal name of the given entry.
-     * @param entry The entry to be treated.
-     * @param fieldName The field name (e.g. "journal")
-     * @param ce If the entry is changed, add an edit to this compound.
-     * @param withDots True if the abbreviations should have dots.
-     * @return true if the entry was changed, false otherwise.
-     */
+    
     public boolean abbreviate(BibtexEntry entry, String fieldName, CompoundEdit ce, boolean withDots) {
         Object o = entry.getField(fieldName);
         if (o == null)
@@ -219,13 +187,7 @@ public class JournalAbbreviations {
         }
     }
 
-    /**
-     * Unabbreviate the journal name of the given entry.
-     * @param entry The entry to be treated.
-     * @param fieldName The field name (e.g. "journal")
-     * @param ce If the entry is changed, add an edit to this compound.
-     * @return true if the entry was changed, false otherwise.
-     */
+    
     public boolean unabbreviate(BibtexEntry entry, String fieldName, CompoundEdit ce) {
         Object o = entry.getField(fieldName);
         if (o == null)
@@ -247,12 +209,7 @@ public class JournalAbbreviations {
         return Collections.unmodifiableMap(all);
     }
 
-    /**
-     * Create a control panel for the entry editor's journal field, to toggle
-     * abbreviated/full journal name
-     * @param editor The FieldEditor for the journal field.
-     * @return The control panel for the entry editor.
-     */
+    
     public static JComponent getNameSwitcher(final EntryEditor entryEditor, final FieldEditor editor,
                                       final UndoManager undoManager) {
         JButton button = new JButton(Globals.lang("Toggle abbreviation"));
@@ -264,7 +221,7 @@ public class JournalAbbreviations {
                 if (Globals.journalAbbrev.isKnownName(text)) {
                     String s;
                     if (Globals.journalAbbrev.isAbbreviatedName(text)) {
-                        //System.out.println(withDots);
+                        
                         if (!withDots) {
                             s = Globals.journalAbbrev.getAbbreviatedName(text, false);
                             withDots = true;

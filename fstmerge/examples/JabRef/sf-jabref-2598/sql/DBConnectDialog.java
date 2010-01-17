@@ -1,11 +1,4 @@
-/*
- * DBConnectDialog.java
- *
- * Created on October 2, 2007, 10:39 AM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 
 package net.sf.jabref.sql;
 
@@ -33,21 +26,17 @@ import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
 
-/**
- * Dialog box for collecting database connection strings from the user
- *
- * @author pattonlk
- */
+
 public class DBConnectDialog extends JDialog {
 
-    // labels
+    
     JLabel lblServerType     = new JLabel();
     JLabel lblServerHostname = new JLabel();
     JLabel lblDatabase       = new JLabel();
     JLabel lblUsername       = new JLabel();
     JLabel lblPassword       = new JLabel();
 
-    // input fields
+    
     JComboBox cmbServerType = new JComboBox();
     JTextField txtServerHostname = new JTextField(40);
     JTextField txtDatabase = new JTextField(40);
@@ -56,7 +45,7 @@ public class DBConnectDialog extends JDialog {
     JButton btnConnect = new JButton();
     JButton btnCancel = new JButton();
 
-    // array for holding components on left-hand and right-hand sides
+    
     ArrayList<JLabel> lhs = new ArrayList<JLabel>();
     ArrayList<JComponent> rhs = new ArrayList<JComponent>();
 
@@ -64,7 +53,7 @@ public class DBConnectDialog extends JDialog {
 
     private boolean connectToDB = false;
 
-    /** Creates a new instance of DBConnectDialog */
+    
     public DBConnectDialog( JFrame parent, DBStrings dbs) {
 
         super(parent, Globals.lang("Connect to SQL Database"), true);
@@ -74,7 +63,7 @@ public class DBConnectDialog extends JDialog {
 
         dbStrings = dbs;
 
-        // build collections of components
+        
         lhs.add(lblServerType);
         lhs.add(lblServerHostname);
         lhs.add(lblDatabase);
@@ -87,23 +76,23 @@ public class DBConnectDialog extends JDialog {
         rhs.add(txtUsername);
         rhs.add(pwdPassword);
 
-        // setup label text
+        
         lblServerType.setText(Globals.lang("Server Type :"));
         lblServerHostname.setText(Globals.lang("Server Hostname :"));
         lblDatabase.setText(Globals.lang("Database :"));
         lblUsername.setText(Globals.lang("Username :"));
         lblPassword.setText(Globals.lang("Password :"));
 
-        // set label text alignment
+        
         for (JLabel label : lhs){
             label.setHorizontalAlignment(JLabel.RIGHT);
         }
         
-        // set button text
+        
         btnConnect.setText(Globals.lang("Connect"));
         btnCancel.setText(Globals.lang("Cancel"));
 
-        // init input fields to current DB strings
+        
         String[] srv = dbStrings.getServerTypes();
         for (int i=0; i<srv.length; i++) {
            cmbServerType.addItem(srv[i]);
@@ -115,14 +104,14 @@ public class DBConnectDialog extends JDialog {
         pwdPassword.setText(dbStrings.getPassword());
 
 
-        // construct dialog
+        
         DefaultFormBuilder builder = new DefaultFormBuilder(new
                                  FormLayout("right:pref, 4dlu, fill:pref", ""));
 
         builder.getPanel().setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
 
-        // add labels and input fields
+        
         builder.append(lblServerType);
         builder.append(cmbServerType);
         builder.nextLine();
@@ -139,17 +128,17 @@ public class DBConnectDialog extends JDialog {
         builder.append(pwdPassword);
         builder.nextLine();
 
-        // add the panel to the CENTER of your dialog:
+        
         getContentPane().add(builder.getPanel(), BorderLayout.CENTER);
 
-        // add buttons are added in a similar way:
+        
         ButtonBarBuilder bb = new ButtonBarBuilder();
         bb.addGlue();
         bb.addGridded(btnConnect);
         bb.addGridded(btnCancel);
         bb.addGlue();
 
-        // add the buttons to the SOUTH of your dialog:
+        
         getContentPane().add(bb.getPanel(), BorderLayout.SOUTH);
         pack();
 
@@ -180,12 +169,7 @@ public class DBConnectDialog extends JDialog {
 
     }
 
-    /**
-     * Checks the user input, and ensures that required fields have entries
-     *
-     * @return 
-     *      Appropriate error message to be displayed to user
-     */
+    
     private String checkInput () {
 
         String[] fields = {"Server Hostname", "Database", "Username"};
@@ -230,9 +214,7 @@ public class DBConnectDialog extends JDialog {
         return errMsg;
     }
 
-    /**
-     * Save user input.
-     */
+    
     private void storeSettings () {
         dbStrings.setServerType(cmbServerType.getSelectedItem().toString());
         dbStrings.setServerHostname(txtServerHostname.getText());

@@ -6,18 +6,16 @@ import java.util.TreeSet;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-/**
- * Created by Morten O. Alver, 16 Feb. 2007
- */
+
 public class AutoCompleter {
     final int SHORTEST_WORD = 4,
             SHORTEST_TO_COMPLETE = 2;
 
     private TreeSet words = new TreeSet();
     private HashMap hm = new HashMap();
-    private boolean nameField = false, // Attempt to store entire names?
-	entireField = false; // Set to true if the entire field should be stored 
-		             // suitable e.g. for journal or publisher fields.
+    private boolean nameField = false, 
+	entireField = false; 
+		             
 
     public AutoCompleter(String fieldName) {
         if (fieldName.equals("author") || fieldName.equals("editor"))
@@ -48,7 +46,7 @@ public class AutoCompleter {
             StringTokenizer tok = new StringTokenizer(s.toString(), " .,\n");
             while (tok.hasMoreTokens()) {
                 String word = tok.nextToken();
-                //Util.pr(word);
+                
                 addWord(word);
             }
         }

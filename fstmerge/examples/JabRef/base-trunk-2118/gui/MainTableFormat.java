@@ -15,13 +15,7 @@ import net.sf.jabref.Util;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.Matcher;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Oct 12, 2005
- * Time: 7:37:48 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class MainTableFormat implements TableFormat {
 
     public static final String[]
@@ -34,9 +28,9 @@ public class MainTableFormat implements TableFormat {
 
     BasePanel panel;
 
-    String[] columns; // Contains the current column names.
-    public int padleft = -1; // padleft indicates how many columns (starting from left) are
-    // special columns (number column or icon column).
+    String[] columns; 
+    public int padleft = -1; 
+    
     private HashMap iconCols = new HashMap();
     int[] nameCols = null;
     boolean namesAsIs, abbr_names, namesNatbib, namesFf, namesLf, namesLastOnly, showShort;
@@ -55,7 +49,7 @@ public class MainTableFormat implements TableFormat {
         } else if (getIconTypeForColumn(col) != null) {
             return "";
         }
-        else // try to find an alternative fieldname (for display)
+        else 
         {
           String disName = BibtexFields.getFieldDisplayName(columns[col - padleft]) ;
           if ( disName != null)
@@ -66,11 +60,7 @@ public class MainTableFormat implements TableFormat {
         return Util.nCase(columns[col - padleft]);
     }
 
-    /**
-     * This method returns a string array indicating the types of icons to be displayed in the given column.
-     * It returns null if the column is not an icon column, and thereby also serves to identify icon
-     * columns.
-     */
+    
     public String[] getIconTypeForColumn(int col) {
         Object o = iconCols.get(new Integer(col));
         if (o != null)
@@ -79,11 +69,7 @@ public class MainTableFormat implements TableFormat {
             return null;
     }
 
-    /**
-     * Finds the column index for the given column name.
-     * @param colName The column name
-     * @return The column index if any, or -1 if no column has that name.
-     */
+    
     public int getColumnIndex(String colName) {
         for (int i=0; i<columns.length; i++) {
             if (columns[i].equalsIgnoreCase(colName))
@@ -95,9 +81,9 @@ public class MainTableFormat implements TableFormat {
     public Object getColumnValue(Object object, int col) {
         Object o;
         BibtexEntry be = (BibtexEntry) object;
-        String[] iconType = getIconTypeForColumn(col); // If non-null, indicates an icon column's type.
+        String[] iconType = getIconTypeForColumn(col); 
         if (col == 0) {
-            o = "#";// + (row + 1);
+            o = "#";
         }
 
         else if (iconType != null) {
@@ -108,7 +94,7 @@ public class MainTableFormat implements TableFormat {
             if (hasField < 0)
                 return null;
 
-            // Ok, so we are going to display an icon. Find out which one, and return it:
+            
             o = GUIGlobals.getTableIcon(iconType[hasField]);
         } else if (columns[col - padleft].equals(GUIGlobals.TYPE_HEADER)) {
             o = be.getType().getName();
@@ -137,27 +123,27 @@ public class MainTableFormat implements TableFormat {
     }
 
     public boolean hasField(BibtexEntry be, String field) {
-        // Returns true iff the entry has a nonzero value in its
-        // 'search' field.
+        
+        
         return ((be != null) && (be.getField(field) != null));
     }
 
     public void updateTableFormat() {
 
-        // Read table columns from prefs:
+        
         columns = Globals.prefs.getStringArray("columnNames");
 
-        // Read name format options:
-        showShort = Globals.prefs.getBoolean("showShort");        //MK:
-        namesNatbib = Globals.prefs.getBoolean("namesNatbib");    //MK:
+        
+        showShort = Globals.prefs.getBoolean("showShort");        
+        namesNatbib = Globals.prefs.getBoolean("namesNatbib");    
         namesLastOnly = Globals.prefs.getBoolean("namesLastOnly");
         namesAsIs = Globals.prefs.getBoolean("namesAsIs");
-        abbr_names = Globals.prefs.getBoolean("abbrAuthorNames"); //MK:
+        abbr_names = Globals.prefs.getBoolean("abbrAuthorNames"); 
         namesFf = Globals.prefs.getBoolean("namesFf");
-        namesLf = !(namesAsIs || namesFf || namesNatbib || namesLastOnly); // None of the above.
+        namesLf = !(namesAsIs || namesFf || namesNatbib || namesLastOnly); 
 
-        // Set the icon columns, indicating the number of special columns to the left.
-        // We add those that are enabled in preferences.
+        
+        
         iconCols.clear();
         int coln = 1;
         if (Globals.prefs.getBoolean("fileColumn"))
@@ -169,12 +155,12 @@ public class MainTableFormat implements TableFormat {
         if (Globals.prefs.getBoolean("citeseerColumn"))
             iconCols.put(new Integer(coln++), CITESEER);
 
-        // Add 1 to the number of icon columns to get padleft.
+        
         padleft = 1 + iconCols.size();
 
-        // Set up the int[] nameCols, to mark which columns should be
-        // treated as lists of names. This is to provide a correct presentation
-        // of names as efficiently as possible.
+        
+        
+        
         Vector tmp = new Vector(2, 1);
         for (int i = 0; i < columns.length; i++) {
             if (columns[i].equals("author")

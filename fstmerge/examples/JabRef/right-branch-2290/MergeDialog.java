@@ -5,12 +5,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.event.*;
 
-/**
- * <p>Title: MergeDialog</p>
- * <p>Description: Asks for details about merge database operation.</p>
- * <p>Copyright: Copyright (c) 2003</p>
- * @author Morten O. Alver
- */
+
 
 public class MergeDialog extends JDialog {
   JPanel panel1 = new JPanel();
@@ -19,7 +14,7 @@ public class MergeDialog extends JDialog {
   JPanel jPanel2 = new JPanel();
   JButton ok = new JButton();
   JButton Cancel = new JButton();
-  //TitledBorder titledBorder1;
+  
   JCheckBox entries = new JCheckBox();
   JCheckBox strings = new JCheckBox();
   GridBagLayout gridBagLayout1 = new GridBagLayout();
@@ -48,7 +43,7 @@ public class MergeDialog extends JDialog {
   }
 
   private void jbInit(JabRefFrame parent) {
-    //  titledBorder1 = new TitledBorder(BorderFactory.createLineBorder(new Color(153, 153, 153),2),Globals.lang("Options"));
+    
     panel1.setLayout(borderLayout1);
     ok.setText(Globals.lang("Ok"));
     ok.addActionListener(new MergeDialog_ok_actionAdapter(this));
@@ -79,7 +74,7 @@ public class MergeDialog extends JDialog {
     jPanel1.add(selector,  new GridBagConstraints(0, 3, 1, 1, 0.0, 0.0
             ,GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
-    // Key bindings:
+    
     ActionMap am = jPanel1.getActionMap();
     InputMap im = jPanel1.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     im.put(parent.prefs.getKey("Close dialog"), "close");

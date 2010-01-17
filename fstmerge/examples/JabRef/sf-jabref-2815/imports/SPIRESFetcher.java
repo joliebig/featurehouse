@@ -17,18 +17,7 @@ import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 import net.sf.jabref.OutputPrinter;
 
-/**
- * 
- * This class allows to access the Slac SPIRES database.
- * 
- * It can either be a GeneralFetcher to pose requests to the database or fetch
- * individual entries.
- * 
- * @author Fedor Bezrukov
- * 
- * @version $Id: SPIRESFetcher.java,v 1.1 2010-01-15 13:09:29 apel Exp $
- * 
- */
+
 public class SPIRESFetcher implements EntryFetcher {
 
 	private static String spiresHost = "www-spires.slac.stanford.edu";
@@ -36,14 +25,7 @@ public class SPIRESFetcher implements EntryFetcher {
 	public SPIRESFetcher() {
 	}
 
-	/**
-	 * Construct the query URL
-	 * 
-	 * @param key
-	 *            The key of the OAI2 entry that the url should poitn to.
-	 * 
-	 * @return a String denoting the query URL
-	 */
+	
 	public String constructUrl(String key) {
 		String identifier = "";
 		try {
@@ -60,12 +42,7 @@ public class SPIRESFetcher implements EntryFetcher {
 		return sb.toString();
 	}
 
-	/**
-	 * Constructs a SPIRES query url from slaccitation field
-	 * 
-	 * @param slaccitation
-	 * @return query string
-	 */
+	
 	public static String constructUrlFromSlaccitation(String slaccitation) {
 		String cmd = "j";
 		String key = slaccitation.replaceAll("^%%CITATION = ", "").replaceAll(
@@ -84,12 +61,7 @@ public class SPIRESFetcher implements EntryFetcher {
 		return sb.toString();
 	}
 
-	/**
-	 * Construct an SPIRES query url from eprint field
-	 * 
-	 * @param eprint
-	 * @return query string
-	 */
+	
 	public static String constructUrlFromEprint(String eprint) {
 		String key = eprint.replaceAll(" [.*]$", "");
 		try {
@@ -105,14 +77,7 @@ public class SPIRESFetcher implements EntryFetcher {
 		return sb.toString();
 	}
 
-	/**
-	 * Import an entry from an OAI2 archive. The BibtexEntry provided has to
-	 * have the field OAI2_IDENTIFIER_FIELD set to the search string.
-	 * 
-	 * @param key
-	 *            The OAI2 key to fetch from ArXiv.
-	 * @return The imnported BibtexEntry or null if none.
-	 */
+	
 	private BibtexDatabase importSpiresEntries(String key, OutputPrinter frame) {
 		String url = constructUrl(key);
 		try {
@@ -141,21 +106,19 @@ public class SPIRESFetcher implements EntryFetcher {
 		return null;
 	}
 
-	// public void addSpiresURL(BibtexEntry entry) {
-	// String url = "http://"+spiresHost+"/spires/find/hep/www?texkey+";
-	// url = url+entry.getCiteKey();
-	// entry.setField("url", url);
-	// }
-	//
-	// public void addSpiresURLtoDatabase(BibtexDatabase db) {
-	// Iterator<BibtexEntry> iter = db.getEntries().iterator();
-	// while (iter.hasNext())
-	// addSpiresURL(iter.next());
-	// }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	/*
-	 * @see net.sf.jabref.imports.EntryFetcher
-	 */
+	
 	public String getHelpPage() {
 		return "Spires.html";
 	}
@@ -169,7 +132,7 @@ public class SPIRESFetcher implements EntryFetcher {
 	}
 
 	public JPanel getOptionsPanel() {
-		// we have no additional options
+		
 		return null;
 	}
 
@@ -177,9 +140,7 @@ public class SPIRESFetcher implements EntryFetcher {
 		return Globals.menuTitle(getKeyName());
 	}
 
-	/*
-	 * @see net.sf.jabref.gui.ImportInspectionDialog.CallBack
-	 */
+	
 	public void cancelled() {
 	}
 
@@ -189,27 +150,25 @@ public class SPIRESFetcher implements EntryFetcher {
 	public void stopFetching() {
 	}
 
-	/*
-	 * @see java.lang.Runnable
-	 */
+	
 	public boolean processQuery(String query, ImportInspector dialog,
 								OutputPrinter frame) {
 		try {
 			frame.setStatus("Fetching entries from Spires");
-			/* query the archive and load the results into the BibtexEntry */
+			
 			BibtexDatabase bd = importSpiresEntries(query,frame);
 
-			/* addSpiresURLtoDatabase(bd); */
+			
 
 			frame.setStatus("Adding fetched entries");
-			/* add the entry to the inspection dialog */
+			
 			if (bd.getEntryCount() > 0)
 		        for (BibtexEntry entry : bd.getEntries())
 		        	dialog.addEntry(entry);
 
-			/* update the dialogs progress bar */
-			// dialog.setProgress(i + 1, keys.length);
-			/* inform the inspection dialog, that we're done */
+			
+			
+			
 		} catch (Exception e) {
 			frame.showMessage(Globals.lang("Error while fetching from Spires: ")
 					+ e.getMessage());

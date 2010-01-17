@@ -55,7 +55,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         overwriteTimeStamp.setToolTipText(Globals.lang("If a pasted or imported entry already has "
             +"the field set, overwrite."));
         keyDuplicateWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when a duplicate BibTeX key is entered"));
-        keyEmptyWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when an empty BibTeX key is entered")); // JZTODO lyrics
+        keyEmptyWarningDialog = new JCheckBox(Globals.lang("Show warning dialog when an empty BibTeX key is entered")); 
         confirmDelete = new JCheckBox(Globals.lang("Show confirmation dialog when deleting entries"));
 
         useImportInspector = new JCheckBox(Globals.lang("Display imported entries in an inspection window before they are added."));
@@ -74,8 +74,8 @@ public class GeneralTab extends JPanel implements PrefsTab {
         inspectionWarnDupli.setMargin(marg);
 
         
-        // We need a listener on useImportInspector to enable and disable the
-        // import inspector related choices;
+        
+        
         useImportInspector.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 useImportInspectorForSingle.setEnabled(useImportInspector.isSelected());
@@ -109,7 +109,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         builder.nextLine();
         builder.append(memoryStick, 13);
         
-        // Create a new panel with its own FormLayout for the last items:
+        
         builder.append(useOwner, 3);
         builder.append(defOwnerField);
         builder.append(overwriteOwner);
@@ -177,7 +177,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
         }
         String oldLan = _prefs.get("language");
 
-        // Language choice
+        
         int ilk = 0;
         for (String lan : GUIGlobals.LANGUAGES.values()){
             if (lan.equals(oldLan)) {
@@ -205,11 +205,11 @@ public class GeneralTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("confirmDelete", confirmDelete.isSelected());
         _prefs.putBoolean("allowTableEditing", allowEditing.isSelected());
         _prefs.putBoolean("ctrlClick", ctrlClick.isSelected());
-        //_prefs.putBoolean("preserveFieldFormatting", preserveFormatting.isSelected());
+        
         _prefs.putBoolean("useImportInspectionDialog", useImportInspector.isSelected());
         _prefs.putBoolean("useImportInspectionDialogForSingle", useImportInspectorForSingle.isSelected());
         _prefs.putBoolean("warnAboutDuplicatesInInspection", inspectionWarnDupli.isSelected());
-        //_prefs.putBoolean("defaultAutoSort", defSorrrt.isSelected());
+        
         String owner = defOwnerField.getText().trim();
         _prefs.put("defaultOwner", owner);
         _prefs.WRAPPED_USERNAME = "["+owner+"]";
@@ -228,7 +228,7 @@ public class GeneralTab extends JPanel implements PrefsTab {
 
     public boolean readyToClose() {
         try {
-            // Test if date format is legal:
+            
             new SimpleDateFormat(timeStampFormat.getText());
 
         } catch (IllegalArgumentException ex2) {

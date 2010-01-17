@@ -11,13 +11,7 @@ import net.sf.jabref.BibtexEntry;
 import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Mar 7, 2007
- * Time: 6:55:56 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class PushToVim implements PushToApplication {
 
     private boolean couldNotConnect=false, couldNotRunClient=false;
@@ -64,7 +58,7 @@ public class PushToVim implements PushToApplication {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Error stream has been closed. See if there were any errors:
+                    
                     if (sb.toString().trim().length() > 0) {
 			System.out.println(sb.toString());
                         couldNotConnect = true;

@@ -53,47 +53,31 @@ public class FileUpdatePanel extends SidePaneComponent implements ActionListener
 		test.addActionListener(this);
 	}
 
-    /**
-     * We include a getter for the BasePanel this component refers to, because this
-     * component needs to be closed if the BasePanel is closed.
-     * @return the base panel this component refers to.
-     */
+    
     public BasePanel getPanel() {
         return panel;
     }
 
-    /**
-	 * Unregister when this component closes. We need that to avoid showing
-	 * two such external change warnings at the same time, only the latest one.
-	 */
+    
 	public void componentClosing() {
 	    manager.unregisterComponent(NAME);
     }
 
-	/**
-	 * actionPerformed
-	 * 
-	 * @param e
-	 *            ActionEvent
-	 */
+	
 	public void actionPerformed(ActionEvent e) {
 
-		// ChangeScanner scanner = new ChangeScanner(frame, panel); //,
-		// panel.database(), panel.metaData());
-		// try {
+		
+		
+		
 		scanner.displayResult(this);
-		// scanner.changeScan(panel.file());
+		
 
-		// } catch (IOException ex) {
-		// ex.printStackTrace();
-		// }
+		
+		
+		
 	}
 
-    /**
-     * Callback method for signalling that the change scanner has displayed the
-     * scan results to the user.
-     * @param resolved true if there were no changes, or if the user has resolved them.
-     */
+    
     public void scanResultsResolved(boolean resolved) {
         if (resolved) {
             manager.hideComponent(this);

@@ -1,8 +1,4 @@
-/*
- * FieldSetComponent.java
- *
- * Created on February 10, 2005, 8:32 PM
- */
+
 
 package net.sf.jabref.gui;
 
@@ -19,11 +15,8 @@ import java.util.Iterator;
 import java.util.Set;
 import javax.swing.event.ListDataListener;
 
-/**
- *
- * @author alver
- */
-public class FieldSetComponent extends JPanel implements ActionListener/*, ItemListener*/ {
+
+public class FieldSetComponent extends JPanel implements ActionListener {
 
     protected Set additionListeners = new HashSet();
     protected JList list;
@@ -38,18 +31,12 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
     protected boolean forceLowerCase, changesMade = false;
     protected Set modelListeners = new HashSet();
     
-    /** 
-     * Creates a new instance of FieldSetComponent, with preset selection
-     * values. These are put into a JComboBox.
-     */
+    
     public FieldSetComponent(String title, List fields, List preset, boolean arrows, boolean forceLowerCase) {
         this(title, fields, preset, "Add", "Remove", arrows, forceLowerCase);
     }
     
-    /**
-     * Creates a new instance of FieldSetComponent without preset selection
-     * values. Replaces the JComboBox with a JTextField.
-     */
+    
     public FieldSetComponent(String title, List fields, boolean arrows, boolean forceLowerCase) {
         this(title, fields, null, "Add", "Remove", arrows, forceLowerCase);
     }
@@ -67,7 +54,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
             listModel.addElement(i.next());
         list = new JList(listModel);
         list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        // Set up GUI:
+        
         add.addActionListener(this);
         remove.addActionListener(this);
         
@@ -110,11 +97,11 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         con.weightx = 1;
         con.gridwidth = GridBagConstraints.REMAINDER;
         
-        //Component b = Box.createHorizontalGlue();
-        //gbl.setConstraints(b, con);
-        //add(b);
         
-        //if (!arrows)
+        
+        
+        
+        
         con.gridwidth = GridBagConstraints.REMAINDER;
         gbl.setConstraints(remove, con);
         add(remove);
@@ -124,7 +111,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         if (preset != null) {
             sel = new JComboBox(preset.toArray());
             sel.setEditable(true);
-            //sel.addActionListener(this);
+            
             gbl.setConstraints(sel, con);
             add(sel);
         } else {
@@ -151,7 +138,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         if (idx >= 0)
             list.setSelectedIndex(idx);
         
-        // Make sure it is visible:
+        
         JViewport viewport = sp.getViewport();
         viewport.scrollRectToVisible(list.getCellBounds(idx, idx));
         
@@ -187,21 +174,9 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         list.setModel(newListModel);
     }
     
-    /*public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == e.DESELECTED)
-            return;
-        //sel.is
-        if (sel.isPopupVisible())
-            return;
-        String s = sel.getSelectedItem().toString();
-        addField(s);
-        sel.getEditor().selectAll();
-    }*/
+    
 
-    /**
-     * This method is called when a new field should be added to the list. Performs validation of the 
-     * field.
-     */
+    
     protected void addField(String s) {
         s = s.trim();
         if (forceLowerCase)
@@ -211,7 +186,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         
         String testString = Util.checkLegalKey(s);
         if (!testString.equals(s) || (s.indexOf('&') >= 0)) {
-            // Report error and exit.
+            
             JOptionPane.showMessageDialog(this, Globals.lang("Field names are not allowed to contain white space or the following "
                     +"characters")+": # { } ~ , ^ &",
                     Globals.lang("Error"), JOptionPane.ERROR_MESSAGE);
@@ -221,10 +196,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         addFieldUncritically(s);
     }
 
-    /**
-     * This method adds a new field to the list, without any regard to validation. This method can be
-     * useful for classes that overrides addField(s) to provide different validation.
-     */
+    
     protected void addFieldUncritically(String s) {
         listModel.addElement(s);
         changesMade = true;
@@ -247,33 +219,23 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         sel.requestFocus();
     }
     
-    /**
-     * Returns true if there have been changes to the field list. Reports true
-     * if changes have been made, regardless of whether the changes cancel each other.
-     */
+    
     public boolean changesMade() {
         return changesMade;
     }
     
-    /**
-     * Return the current list.
-     */
+    
     public List getFields() {
         Object[] o = listModel.toArray();
         return java.util.Arrays.asList(o);
     }
     
-    /**
-     * Add a ListSelectionListener to the JList component displayed as part of this component.
-     */
+    
     public void addListSelectionListener(ListSelectionListener l) {
         list.addListSelectionListener(l);
     }
     
-    /**
-     * Adds an ActionListener that will receive events each time a field is added. The ActionEvent
-     * will specify this component as source, and the added field as action command.
-     */
+    
     public void addAdditionActionListener(ActionListener l) {
         additionListeners.add(l);
     }
@@ -287,15 +249,13 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         modelListeners.add(l);
      }
     
-    /**
-     * If a field is selected in the list, move it dy positions.
-     */
+    
     public void move(int dy) {
         int oldIdx = list.getSelectedIndex();
         if  (oldIdx < 0)
             return;
         Object o = listModel.get(oldIdx);
-        // Compute the new index:
+        
         int newInd = Math.max(0, Math.min(listModel.size()-1, oldIdx+dy));
         listModel.remove(oldIdx);
         listModel.add(newInd, o);
@@ -306,7 +266,7 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
         Object src = e.getSource();
         
         if (src == add) {
-            // Selection has been made, or add button pressed:
+            
             if ((sel != null) && (sel.getSelectedItem() != null)) {
                 String s = sel.getSelectedItem().toString();
                 addField(s);
@@ -318,14 +278,14 @@ public class FieldSetComponent extends JPanel implements ActionListener/*, ItemL
             addField(input.getText());
         }
         else if (src == remove) {
-            // Remove button pressed:
+            
             removeSelected();
         }
         else if (src == sel) {
             if (e.getActionCommand().equals("comboBoxChanged") && (e.getModifiers() == 0))
-                // These conditions signify arrow key navigation in the dropdown list, so we should
-                // not react to it. I'm not sure if this is well defined enough to be guaranteed to work
-                // everywhere.
+                
+                
+                
                 return;
             String s = sel.getSelectedItem().toString();
             addField(s);

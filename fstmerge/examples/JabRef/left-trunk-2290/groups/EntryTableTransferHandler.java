@@ -1,24 +1,4 @@
-/*
- All programs in this directory and subdirectories are published under the 
- GNU General Public License as described below.
 
- This program is free software; you can redistribute it and/or modify it 
- under the terms of the GNU General Public License as published by the Free 
- Software Foundation; either version 2 of the License, or (at your option) 
- any later version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT 
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
- more details.
-
- You should have received a copy of the GNU General Public License along 
- with this program; if not, write to the Free Software Foundation, Inc., 59 
- Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
- */
 
 package net.sf.jabref.groups;
 
@@ -65,20 +45,7 @@ public class EntryTableTransferHandler extends TransferHandler {
 
 	protected static boolean DROP_ALLOWED = true;
 
-	/**
-	 * Construct the transfer handler.
-	 * 
-	 * @param entryTable
-	 *            The table this transfer handler should operate on. This
-	 *            argument is allowed to equal
-	 * @null, in which case the transfer handler can assume that it works for a
-	 *        JabRef instance with no databases open, attached to the empty
-	 *        tabbed pane.
-	 * @param frame
-	 *            The JabRefFrame instance.
-	 * @param panel
-	 *            The BasePanel this transferhandler works for.
-	 */
+	
 	public EntryTableTransferHandler(MainTable entryTable, JabRefFrame frame, BasePanel panel) {
 		this.entryTable = entryTable;
 		this.frame = frame;
@@ -92,36 +59,22 @@ public class EntryTableTransferHandler extends TransferHandler {
 		}
 	}
 
-	/**
-	 * Overriden to indicate which types of drags are supported (only LINK).
-	 * 
-	 * @override
-	 */
+	
 	public int getSourceActions(JComponent c) {
 		return DnDConstants.ACTION_LINK;
 	}
 
-	/**
-	 * This method is called when dragging stuff *from* the table.
-	 */
+	
 	public Transferable createTransferable(JComponent c) {
-		/* so we can assume it will never be called if entryTable==null: */
+		
 		return new TransferableEntrySelection(entryTable.getSelectedEntries());
 	}
 
-	/**
-	 * This method is called when stuff is drag to the component.
-	 * 
-	 * Imports the dropped URL or plain text as a new entry in the current
-	 * database.
-	 * 
-	 * @todo It would be nice to support dropping of pdfs onto the table as a
-	 *       way to link them to the corresponding entries.
-	 */
+	
 	public boolean importData(JComponent comp, Transferable t) {
 
-		// If the drop target is the main table, we want to record which
-		// row the item was dropped on, to identify the entry if needed:
+		
+		
 		int dropRow = -1;
 		if (comp instanceof JTable) {
 			dropRow = ((JTable) comp).getSelectedRow();
@@ -129,10 +82,10 @@ public class EntryTableTransferHandler extends TransferHandler {
 
 		try {
 
-			// This flavor is used for dragged file links in Windows:
+			
 			if (t.isDataFlavorSupported(DataFlavor.javaFileListFlavor)) {
-				// JOptionPane.showMessageDialog(null, "Received
-				// javaFileListFlavor");
+				
+				
 				@SuppressWarnings("unchecked")
 				List<File> l = (List<File>) t.getTransferData(DataFlavor.javaFileListFlavor);
 				return handleDraggedFiles(l, dropRow);
@@ -144,8 +97,8 @@ public class EntryTableTransferHandler extends TransferHandler {
 			}
 
 			if (t.isDataFlavorSupported(stringFlavor)) {
-				// JOptionPane.showMessageDialog(null, "Received stringFlavor:
-				// "+dropStr);
+				
+				
 				String dropStr = (String) t.getTransferData(stringFlavor);
 				return handleDropTransfer(dropStr, dropRow);
 			}
@@ -156,7 +109,7 @@ public class EntryTableTransferHandler extends TransferHandler {
 			System.err.println("drop type error: " + ufe.toString());
 		}
 
-		// all supported flavors failed
+		
 		System.err.println("can't transfer input: ");
 		DataFlavor inflavs[] = t.getTransferDataFlavors();
 		for (int i = 0; i < inflavs.length; i++) {
@@ -166,18 +119,12 @@ public class EntryTableTransferHandler extends TransferHandler {
 		return false;
 	}
 
-	/**
-	 * This method is called to query whether the transfer can be imported.
-	 * 
-	 * Will return true for urls, strings, javaFileLists
-	 * 
-	 * @override
-	 */
+	
 	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
 		if (!DROP_ALLOWED)
 			return false;
 
-		// accept this if any input flavor matches any of our supported flavors
+		
 		for (int i = 0; i < transferFlavors.length; i++) {
 			DataFlavor inflav = transferFlavors[i];
 			if (inflav.match(urlFlavor) || inflav.match(stringFlavor)
@@ -185,40 +132,40 @@ public class EntryTableTransferHandler extends TransferHandler {
 				return true;
 		}
 
-		// System.out.println("drop type forbidden");
-		// nope, never heard of this type
+		
+		
 		return false;
 	}
 
 	public void exportAsDrag(JComponent comp, InputEvent e, int action) {
-		// action is always LINK
+		
 		super.exportAsDrag(comp, e, DnDConstants.ACTION_LINK);
 	}
 
 	protected void exportDone(JComponent source, Transferable data, int action) {
-		// default implementation is OK
+		
 		super.exportDone(source, data, action);
 	}
 
 	public void exportToClipboard(JComponent comp, Clipboard clip, int action) {
-		// default implementation is OK
+		
 		super.exportToClipboard(comp, clip, action);
 	}
 
-	// add-ons -----------------------
+	
 
 	protected boolean handleDropTransfer(String dropStr, final int dropRow) throws IOException {
 		if (dropStr.startsWith("file:")) {
-			// This appears to be a dragged file link and not a reference
-			// format. Check if we can map this to a set of files:
+			
+			
 			if (handleDraggedFilenames(dropStr, dropRow))
 				return true;
-			// If not, handle it in the normal way...
+			
 		} else if (dropStr.startsWith("http:")) {
-			// This is the way URL links are received on OS X and KDE (Gnome?):
+			
 			URL url = new URL(dropStr);
-			// JOptionPane.showMessageDialog(null, "Making URL:
-			// "+url.toString());
+			
+			
 			return handleDropTransfer(url, dropRow);
 		}
 		File tmpfile = java.io.File.createTempFile("jabrefimport", "");
@@ -227,7 +174,7 @@ public class EntryTableTransferHandler extends TransferHandler {
 		fw.write(dropStr);
 		fw.close();
 
-		// System.out.println("importing from " + tmpfile.getAbsolutePath());
+		
 
 		ImportMenuItem importer = new ImportMenuItem(frame, false);
 		importer.automatedImport(new String[] { tmpfile.getAbsolutePath() });
@@ -235,17 +182,9 @@ public class EntryTableTransferHandler extends TransferHandler {
 		return true;
 	}
 
-	/**
-	 * Handle a String describing a set of files or URLs dragged into JabRef.
-	 * 
-	 * @param s
-	 *            String describing a set of files or URLs dragged into JabRef
-     * @param dropRow The row in the table where the files were dragged.
-     * @return success status for the operation
-     *
-	 */
+	
 	private boolean handleDraggedFilenames(String s, final int dropRow) {
-		// Split into lines:
+		
 		String[] lines = s.replaceAll("\r", "").split("\n");
 		List<File> files = new ArrayList<File>();
 		for (int i = 0; i < lines.length; i++) {
@@ -254,8 +193,8 @@ public class EntryTableTransferHandler extends TransferHandler {
 				line = line.substring(5);
 			else
 				continue;
-			// Under Gnome, the link is given as file:///...., so we
-			// need to strip the extra slashes:
+			
+			
 			if (line.startsWith("//"))
 				line = line.substring(2);
 			File f = new File(line);
@@ -267,14 +206,7 @@ public class EntryTableTransferHandler extends TransferHandler {
 
 	}
 
-	/**
-	 * Handle a List containing File objects for a set of files to import.
-	 * 
-	 * @param files
-	 *            A List containing File instances pointing to files.
-	 * @param dropRow @param dropRow The row in the table where the files were dragged.
-     * @return success status for the operation
-	 */
+	
 	private boolean handleDraggedFiles(List<File> files, final int dropRow) {
 		final String[] fileNames = new String[files.size()];
 		int i = 0;
@@ -283,9 +215,9 @@ public class EntryTableTransferHandler extends TransferHandler {
 			fileNames[i] = file.getAbsolutePath();
 			i++;
 		}
-		// Try to load bib files normally, and import the rest into the current
-		// database.
-		// This process must be spun off into a background thread:
+		
+		
+		
 		new Thread(new Runnable() {
 			public void run() {
 				loadOrImportFiles(fileNames, dropRow);
@@ -295,28 +227,20 @@ public class EntryTableTransferHandler extends TransferHandler {
 		return true;
 	}
 
-	/**
-	 * Take a set of filenames. Those with names indicating bib files are opened
-	 * as such if possible. All other files we will attempt to import into the
-	 * current database.
-	 * 
-	 * @param fileNames
-	 *            The names of the files to open.
-	 * @param dropRow success status for the operation
-	 */
+	
 	private void loadOrImportFiles(String[] fileNames, int dropRow) {
 
 		OpenDatabaseAction openAction = new OpenDatabaseAction(frame, false);
 		ArrayList<String> notBibFiles = new ArrayList<String>();
 		String encoding = Globals.prefs.get("defaultEncoding");
 		for (int i = 0; i < fileNames.length; i++) {
-			// Find the file's extension, if any:
+			
 			String extension = "";
 			ExternalFileType fileType = null;
 			int index = fileNames[i].lastIndexOf('.');
 			if ((index >= 0) && (index < fileNames[i].length())) {
 				extension = fileNames[i].substring(index + 1).toLowerCase();
-				// System.out.println(extension);
+				
 				fileType = Globals.prefs.getExternalFileTypeByExt(extension);
 			}
 			if (extension.equals("bib")) {
@@ -331,84 +255,28 @@ public class EntryTableTransferHandler extends TransferHandler {
                     }
 				} catch (IOException e) {
 					notBibFiles.add(fileNames[i]);
-					// No error message, since we want to try importing the
-					// file?
-					//
-					// Util.showQuickErrorDialog(frame, Globals.lang("Open
-					// database"), e);
+					
+					
+					
+					
+					
 				}
 				continue;
 			}
 
-			/*
-			 * This is a linkable file. If the user dropped it on an entry, we
-			 * should offer options for autolinking to this files:
-			 * 
-			 * TODO we should offer an option to highlight the row the user is on too.
-			 */
+			
 			if (fileType != null && dropRow >= 0) {
 
-				/*
-				 * TODO: need to signal if this is a local or autodownloaded
-				 * file
-				 */
+				
 				boolean local = true;
 
-				/*
-				 * TODO: make this an instance variable?
-				 */
+				
 				DroppedFileHandler dfh = new DroppedFileHandler(frame, panel);
 				dfh.handleDroppedfile(fileNames[i], fileType, local, entryTable, dropRow);
 
 				continue;
 			}
-/*
-			if (extension.equals("pdf")) {
-				Collection c;
-				try {
-					c = XMPUtil.readXMP(fileNames[i]);
-				} catch (IOException e1) {
-					c = null;
-					frame.output(Globals.lang("No XMP metadata found in " + fileNames[i]));
-				}
 
-				if (c != null && c.size() > 0) {
-					Iterator it = c.iterator();
-
-					BasePanel panel = frame.basePanel();
-
-					if (panel == null) {
-						// // Create a new, empty, database.
-						BibtexDatabase database = new BibtexDatabase();
-						frame.addTab(database, null, null, Globals.prefs.get("defaultEncoding"),
-							true);
-						frame.output(Globals.lang("New database created."));
-						panel = frame.basePanel();
-					}
-
-					BibtexDatabase database = frame.basePanel().database();
-
-					NamedCompound ce = new NamedCompound(Globals.lang("Drog PDF"));
-
-					while (it.hasNext()) {
-						BibtexEntry e = (BibtexEntry) it.next();
-
-						try {
-							e.setId(Util.createNeutralId());
-							database.insertEntry(e);
-							ce.addEdit(new UndoableInsertEntry(database, e, panel));
-						} catch (Exception e2) {
-							// Should not happen?
-						}
-					}
-
-					ce.end();
-					panel.undoManager.addEdit(ce);
-					panel.markBaseChanged();
-					continue;
-				}
-			}
-			*/
 
 			notBibFiles.add(fileNames[i]);
 		}
@@ -417,8 +285,8 @@ public class EntryTableTransferHandler extends TransferHandler {
 			String[] toImport = new String[notBibFiles.size()];
 			notBibFiles.toArray(toImport);
 
-			// Import into new if entryTable==null, otherwise into current
-			// database:
+			
+			
 			ImportMenuItem importer = new ImportMenuItem(frame, (entryTable == null));
 			importer.automatedImport(toImport);
 		}
@@ -428,12 +296,12 @@ public class EntryTableTransferHandler extends TransferHandler {
 		File tmpfile = java.io.File.createTempFile("jabrefimport", "");
 		tmpfile.deleteOnExit();
 
-		// System.out.println("Import url: " + dropLink.toString());
-		// System.out.println("Temp file: "+tmpfile.getAbsolutePath());
+		
+		
 
 		new URLDownload(entryTable, dropLink, tmpfile).download();
 
-		// Import into new if entryTable==null, otherwise into current database:
+		
 		ImportMenuItem importer = new ImportMenuItem(frame, (entryTable == null));
 		importer.automatedImport(new String[] { tmpfile.getAbsolutePath() });
 

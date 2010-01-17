@@ -1,7 +1,4 @@
-/*
- * Created on April 01, 2007
- * Updated on May 03, 2007
- * */
+
 package net.sf.jabref.msbib;
 import net.sf.jabref.*;
 import net.sf.jabref.export.layout.format.*;
@@ -17,24 +14,7 @@ import java.util.*;
 import java.io.*;
 import java.util.regex.*;
 
-/**
- * @author S M Mahbub Murshed
- * @email udvranto@yahoo.com
- *
- * @version 2.0.0
- * @see http://mahbub.wordpress.com/2007/03/24/details-of-microsoft-office-2007-bibliographic-format-compared-to-bibtex/
- * @see http://mahbub.wordpress.com/2007/03/22/deciphering-microsoft-office-2007-bibliography-format/
- * 
- * Date: May 15, 2007; May 03, 2007
- * 
- * History
- * May 03, 2007 - Added export functionality
- * May 15, 2007 - Added import functionality
- * May 16, 2007 - Changed all interger entries to strings,
- * 				  except LCID which must be an integer.
- * 				  To avoid exception during integer parsing
- *				  the exception is caught and LCID is set to zero.
- */
+
 public class MSBibEntry {
 	protected String sourceType = "Misc";
 	protected String bibTexEntry = null;
@@ -261,7 +241,7 @@ public class MSBibEntry {
 	}
 
 	protected void populateFromBibtex(BibtexEntry bibtex) {
-		// date = getDate(bibtex);	
+		
 		sourceType = getMSBibSourceType(bibtex);
 
 		if (bibtex.getField("bibtexkey") != null)
@@ -410,22 +390,22 @@ public class MSBibEntry {
 		if(FORMATXML)
 		{
 			title = format(title);
-			// shortTitle = format(shortTitle);
-			// publisher = format(publisher);
-			// conferenceName = format(conferenceName);
-			// department = format(department);
-			// institution = format(institution);
-			// internetSiteTitle = format(internetSiteTitle);
-			// publicationTitle = format(publicationTitle);
-			// albumTitle = format(albumTitle);
-			// theater = format(theater);
-			// distributor = format(distributor);
-			// broadcastTitle = format(broadcastTitle);
-			// broadcaster = format(broadcaster);
-			// station = format(station);
-			// court = format(court);
-			// reporter = format(reporter);
-			// bibTex_Series = format(bibTex_Series);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			bibTex_Abstract = format(bibTex_Abstract);
 		}
 	}
@@ -440,20 +420,20 @@ public class MSBibEntry {
 		return result;
 	}
 	
-	// http://www.microsoft.com/globaldev/reference/lcid-all.mspx
+	
 	protected int getLCID(String language)
 	{
 		int iLCID = 0;
-		// TODO: add lanaguage to LCID mapping
+		
 		
 		return iLCID;
 	}
 
-	// http://www.microsoft.com/globaldev/reference/lcid-all.mspx
+	
 	protected String getLanguage(int LCID)
 	{
 		String language = "english";
-		// TODO: add lanaguage to LCID mapping
+		
 		
 		return language;
 	}
@@ -513,9 +493,9 @@ public class MSBibEntry {
 		
 		if (authors.indexOf(" and ") == -1)
 		{
-//			if(FORMATXML)
-//				result.add(new PersonName(chars.format(authors)));
-//			else
+
+
+
 				result.add(new PersonName(authors));
 		}
         else
@@ -523,16 +503,16 @@ public class MSBibEntry {
             String[] names = authors.split(" and ");
             for (int i=0; i<names.length; i++)
             {
-//            	if(FORMATXML)
-//            		result.add(new PersonName(chars.format(names[i])));
-//            	else
+
+
+
             		result.add(new PersonName(names[i]));
             }
         }
 		return result;
 	}
 	
-	/* construct a MSBib date object */
+	
 	protected String getDate(BibtexEntry bibtex) {
 		String result = "";
 		if (bibtex.getField("year") != null)
@@ -593,7 +573,7 @@ public class MSBibEntry {
 		try {
 			DocumentBuilder d = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			
-		//	result = getDOMrepresentation(d);
+		
 		}
 		catch (Exception e) 
 		{
@@ -602,39 +582,39 @@ public class MSBibEntry {
 		return result;
 	}
 	
-//	private String healXML(String value)
-//	{
-//		String healedValue = value;
-//
-////		if(value.contains("A net energy gain"))
-////			System.out.println(value);
-////		restore converted html-char
-//		Pattern p = Pattern.compile("&#([0-9A-Fa-f]{2,4});");
-//		// Pattern p = Pattern.compile("&#(\\d{1,4});");
-//		Matcher m = p.matcher(healedValue);
-//		while (m.find())
-//		{
-//			int n = Integer.parseInt(m.group(1),16);
-//			char ch = Character.forDigit(n,10);
-//			System.out.println(m.group(1));
-//			System.out.println(""+n);
-//			System.out.println(""+ch);			
-//			healedValue = healedValue.replaceAll("\\&#"+m.group(1)+";",""+ch);
-//		}
-//		
-//		return healedValue;
-//	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public void addField(Document d,Element parent, String name, String value) {
 		if(value == null)
 			return;
 		Element elem = d.createElement(bcol+name);
- 		// elem.appendChild(d.createTextNode(healXML(value)));
-//		Text txt = d.createTextNode(value);
-//		if(!txt.getTextContent().equals(value))
-//			System.out.println("Values dont match!");
-//			// throw new Exception("Values dont match!");
-//		elem.appendChild(txt);
+ 		
+
+
+
+
+
 		elem.appendChild(d.createTextNode(stripNonValidXMLCharacters(value)));		
 		parent.appendChild(elem);
 	}
@@ -661,15 +641,15 @@ public class MSBibEntry {
 		if(address == null)
 			return;
 
-		// US address parser
-		// See documentation here http://regexlib.com/REDetails.aspx?regexp_id=472
-		// Pattern p = Pattern.compile("^(?n:(((?<address1>(\\d{1,5}(\\ 1\\/[234])?(\\x20[A-Z]([a-z])+)+ )|(P\\.O\\.\\ Box\\ \\d{1,5}))\\s{1,2}(?i:(?<address2>(((APT|B LDG|DEPT|FL|HNGR|LOT|PIER|RM|S(LIP|PC|T(E|OP))|TRLR|UNIT)\\x20\\w{1,5})|(BSMT|FRNT|LBBY|LOWR|OFC|PH|REAR|SIDE|UPPR)\\.?)\\s{1,2})?))?)(?<city>[A-Z]([a-z])+(\\.?)(\\x20[A-Z]([a-z])+){0,2})([,\\x20]+?)(?<state>A[LKSZRAP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADL N]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD] |T[NX]|UT|V[AIT]|W[AIVY])([,\\x20]+?)(?<zipcode>(?!0{5})\\d{5}(-\\d {4})?)((([,\\x20]+?)(?<country>[A-Z]([a-z])+(\\.?)(\\x20[A-Z]([a-z])+){0,2}))?))$");
-		// the pattern above is for C#, may not work with java. Never tested though.
 		
-		// reduced subset, supports only "CITY , STATE, COUNTRY"
-		// \b(\w+)\s?[,]?\s?(\w+)\s?[,]?\s?(\w+)\b
-		// WORD SPACE , SPACE WORD SPACE , SPACE WORD
-		// tested using http://www.javaregex.com/test.html
+		
+		
+		
+		
+		
+		
+		
+		
 		Pattern p = Pattern.compile("\\b(\\w+)\\s*[,]?\\s*(\\w+)\\s*[,]?\\s*(\\w+)\\b");
 		Matcher m = p.matcher(address);
 		if (m.matches() && m.groupCount()>3)
@@ -684,10 +664,10 @@ public class MSBibEntry {
 		if(date == null)
 			return;
 
-		// Allows 20.3-2007|||20/3-  2007 etc. 
-		// (\d{1,2})\s?[.,-/]\s?(\d{1,2})\s?[.,-/]\s?(\d{2,4})
-		// 1-2 DIGITS SPACE SEPERATOR SPACE 1-2 DIGITS SPACE SEPERATOR SPACE 2-4 DIGITS
-		// tested using http://www.javaregex.com/test.html
+		
+		
+		
+		
 		Pattern p = Pattern.compile("(\\d{1,2})\\s*[.,-/]\\s*(\\d{1,2})\\s*[.,-/]\\s*(\\d{2,4})");
 		Matcher m = p.matcher(date);
 		if (m.matches() && m.groupCount()>3)
@@ -797,11 +777,11 @@ public class MSBibEntry {
 	   		e.printStackTrace();
 	   		throw new Error(e);
 		}
-	   	// return null;
+	   	
 	   }
 	
 	protected void parseSingleStandardNumber(String type,String bibtype, String standardNum, HashMap hm) {
-		// teste using http://www.javaregex.com/test.html
+		
 		Pattern p = Pattern.compile(":"+type+":(.[^:]+)");
 		Matcher m = p.matcher(standardNum);
 		if (m.matches())
@@ -832,49 +812,49 @@ public class MSBibEntry {
 		hm.put(type,allAuthors);
 	}
 
-//	public String mapMSBibToBibtexTypeString(String msbib) {		
-//		String bibtex = "other";
-//		if(msbib.equals("Book"))
-//			bibtex = "book";
-//		else if(msbib.equals("BookSection"))
-//			bibtex = "inbook";
-//		else if(msbib.equals("JournalArticle"))
-//			bibtex = "article";
-//		else if(msbib.equals("ArticleInAPeriodical"))
-//			bibtex = "article";
-//		else if(msbib.equals("ConferenceProceedings"))
-//			bibtex = "conference";
-//		else if(msbib.equals("Report"))
-//			bibtex = "techreport";
-//		else if(msbib.equals("InternetSite"))
-//			bibtex = "other";
-//		else if(msbib.equals("DocumentFromInternetSite"))
-//			bibtex = "other";
-//		else if(msbib.equals("DocumentFromInternetSite"))
-//			bibtex = "other";
-//		else if(msbib.equals("ElectronicSource"))
-//			bibtex = "other";
-//		else if(msbib.equals("Art"))
-//			bibtex = "other";
-//		else if(msbib.equals("SoundRecording"))
-//			bibtex = "other";
-//		else if(msbib.equals("Performance"))
-//			bibtex = "other";
-//		else if(msbib.equals("Film"))
-//			bibtex = "other";
-//		else if(msbib.equals("Interview"))
-//			bibtex = "other";
-//		else if(msbib.equals("Patent"))
-//			bibtex = "other";
-//		else if(msbib.equals("Case"))
-//			bibtex = "other";
-//		else if(msbib.equals("Misc"))
-//			bibtex = "misc";
-//		else
-//			bibtex = "misc";
-//
-//		return bibtex;
-//	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	public BibtexEntryType mapMSBibToBibtexType(String msbib)
 	{
@@ -921,11 +901,11 @@ public class MSBibEntry {
 		return bibtex;
 	}
 	public BibtexEntry getBibtexRepresentation() {		
-//		BibtexEntry entry = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, 
-//				Globals.getEntryType(mapMSBibToBibtexTypeString(sourceType)));
 
-//		BibtexEntry entry = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, 
-//				mapMSBibToBibtexType(sourceType));
+
+
+
+
 
 		BibtexEntry entry = null;
 		if(tag == null)
@@ -933,56 +913,56 @@ public class MSBibEntry {
 					mapMSBibToBibtexType(sourceType));
 		else
 			entry = new BibtexEntry(tag, 
-					mapMSBibToBibtexType(sourceType)); // id assumes an existing database so don't
+					mapMSBibToBibtexType(sourceType)); 
 		
 
-		// Todo: add check for BibTexEntry types
-//		BibtexEntry entry = new BibtexEntry();
-//		if(sourceType.equals("Book"))
-//			entry.setType(BibtexEntryType.BOOK);
-//		else if(sourceType.equals("BookSection"))
-//			entry.setType(BibtexEntryType.INBOOK);
-//		else if(sourceType.equals("JournalArticle"))
-//			entry.setType(BibtexEntryType.ARTICLE);
-//		else if(sourceType.equals("ArticleInAPeriodical"))
-//			entry.setType(BibtexEntryType.ARTICLE);
-//		else if(sourceType.equals("ConferenceProceedings"))
-//			entry.setType(BibtexEntryType.CONFERENCE);
-//		else if(sourceType.equals("Report"))
-//			entry.setType(BibtexEntryType.TECHREPORT);
-//		else if(sourceType.equals("InternetSite"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("DocumentFromInternetSite"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("DocumentFromInternetSite"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("ElectronicSource"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Art"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("SoundRecording"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Performance"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Film"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Interview"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Patent"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Case"))
-//			entry.setType(BibtexEntryType.OTHER);
-//		else if(sourceType.equals("Misc"))
-//			entry.setType(BibtexEntryType.MISC);
-//		else
-//			entry.setType(BibtexEntryType.MISC);
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 		HashMap hm = new HashMap();
 		
 		if(tag != null)
 			hm.put("bibtexkey",tag);
-//		if(GUID != null)
-//			hm.put("GUID",GUID);
+
+
 		if(LCID >= 0)
 			hm.put("language",getLanguage(LCID));
 		if(title != null)
@@ -1044,30 +1024,30 @@ public class MSBibEntry {
 			hm.put("school",department);
 		if(institution !=null )
 			hm.put("institution",institution);
-//		if(thesisType !=null )
-//			hm.put("type",thesisType);
-//		if(internetSiteTitle !=null )
-//			hm.put("title",internetSiteTitle);
+
+
+
+
 		if(dateAccessed !=null )
 			hm.put(MSBIB+"accessed",dateAccessed);
 		if(url !=null )
 			hm.put("url",url);
 		if(productionCompany !=null )
 			hm.put(MSBIB+"productioncompany",productionCompany);
-//		if(publicationTitle !=null )
-//			hm.put("title",publicationTitle);
+
+
 		if(medium !=null )
 			hm.put(MSBIB+"medium",medium);
-//		if(albumTitle !=null )
-//			hm.put("title",albumTitle);
+
+
 		if(recordingNumber !=null )
 			hm.put(MSBIB+"recordingnumber",recordingNumber);
 		if(theater !=null )
 			hm.put(MSBIB+"theater",theater);
 		if(distributor !=null )
 			hm.put(MSBIB+"distributor",distributor);
-//		if(broadcastTitle !=null )
-//			hm.put("title",broadcastTitle);
+
+
 		if(broadcaster !=null )
 			hm.put(MSBIB+"broadcaster",broadcaster);
 		if(station !=null )
@@ -1110,26 +1090,14 @@ public class MSBibEntry {
 		return entry;
 	}
 
-	/**
-	 * This method ensures that the output String has only
-     * valid XML unicode characters as specified by the
-     * XML 1.0 standard. For reference, please see
-     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty
-     * String if the input is null or empty.
-     * 
-     * URL: http://cse-mjmcl.cse.bris.ac.uk/blog/2007/02/14/1171465494443.html
-     *
-     * @param in The String whose non-valid characters we want to remove.
-     * @return The in String, stripped of non-valid characters.
-     */
+	
     public String stripNonValidXMLCharacters(String in) {
-        StringBuffer out = new StringBuffer(); // Used to hold the output.
-        char current; // Used to reference the current character.
+        StringBuffer out = new StringBuffer(); 
+        char current; 
 
-        if (in == null || ("".equals(in))) return ""; // vacancy test.
+        if (in == null || ("".equals(in))) return ""; 
         for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
+            current = in.charAt(i); 
             if ((current == 0x9) ||
                 (current == 0xA) ||
                 (current == 0xD) ||
@@ -1141,9 +1109,7 @@ public class MSBibEntry {
         return out.toString();
     }
 
-	/*
-	 * render as XML
-	 */
+	
 	public String toString() {
 		StringWriter sresult = new StringWriter();
 	   	try {

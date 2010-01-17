@@ -17,11 +17,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * This action goes through all selected entries in the BasePanel, and attempts to autoset the
- * given external file (pdf, ps, ...) based on the same algorithm used for the "Auto" button in
- * EntryEditor.
- */
+
 public class AutoSetExternalFileForEntries extends AbstractWorker {
 
     private String fieldName;
@@ -48,7 +44,7 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
     	Collection<BibtexEntry> col = panel.database().getEntries();
         sel = col.toArray(new BibtexEntry[col.size()]);
 
-        // Ask about rules for the operation:
+        
         if (optDiag == null)
             optDiag = new OptionsDialog(panel.frame(), fieldName);
         Util.placeDialog(optDiag, panel.frame());
@@ -71,7 +67,7 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
         }
         panel.frame().setProgressBarValue(0);
         panel.frame().setProgressBarVisible(true);
-        int weightAutoSet = 10; // autoSet takes 10 (?) times longer than checkExisting
+        int weightAutoSet = 10; 
         int progressBarMax = (autoSet ? weightAutoSet * sel.length : 0)
                 + (checkExisting ? sel.length : 0);
         panel.frame().setProgressBarMaximum(progressBarMax);
@@ -85,49 +81,49 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
         ExternalFilePanel extPan = new ExternalFilePanel(fieldName, panel.metaData(), null, null, off);
         FieldTextField editor = new FieldTextField(fieldName, "", false);
 
-        // Find the default directory for this field type:
+        
         String dir = panel.metaData().getFileDirectory(fieldName);
 
-        // First we try to autoset fields
+        
         if (autoSet) {
             for (int i = 0; i < sel.length; i++) {
                 progress += weightAutoSet;
                 panel.frame().setProgressBarValue(progress);
 
                 final String old = sel[i].getField(fieldName);
-                // Check if a extension is already set, and if so, if we are allowed to overwrite it:
+                
                 if ((old != null) && !old.equals("") && !overWriteAllowed)
                     continue;
                 extPan.setEntry(sel[i], panel.getDatabase());
                 editor.setText((old != null) ? (String) old : "");
                 Thread t = extPan.autoSetFile(fieldName, editor);
-                // Wait for the autoset process to finish:
+                
                 if (t != null)
                     try {
                         t.join();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                // If something was found, entriesChanged it:
+                
                 if (!editor.getText().equals("") && !editor.getText().equals(old)) {
-                    // Store an undo edit:
-                    //System.out.println("Setting: "+sel[i].getCiteKey()+" "+editor.getText());
+                    
+                    
                     ce.addEdit(new UndoableFieldChange(sel[i], fieldName, old, editor.getText()));
                     sel[i].setField(fieldName, editor.getText());
                     entriesChanged++;
                 }
             }
         }
-        //System.out.println("Done setting");
-        // The following loop checks all external links that are already set.
+        
+        
         if (checkExisting) {
             mainLoop:
             for (int i = 0; i < sel.length; i++) {
                 panel.frame().setProgressBarValue(progress++);
                 final String old = sel[i].getField(fieldName);
-                // Check if a extension is set:
+                
                 if ((old != null) && !old.equals("")) {
-                    // Get an absolute path representation:
+                    
                     File file = Util.expandFilename(old, new String[]{dir, "."});
 
                     if ((file == null) || !file.exists()) {
@@ -141,7 +137,7 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
                                         JOptionPane.QUESTION_MESSAGE, null, brokenLinkOptions, brokenLinkOptions[0]);
                         switch (answer) {
                             case 1:
-                                // Assign new file.
+                                
                                 AttachFileDialog afd = new AttachFileDialog(panel.frame(),
                                         panel.metaData(), sel[i], fieldName);
                                 Util.placeDialog(afd, panel.frame());
@@ -153,13 +149,13 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
                                 }
                                 break;
                             case 2:
-                                // Clear field
+                                
                                 ce.addEdit(new UndoableFieldChange(sel[i], fieldName, old, null));
                                 sel[i].setField(fieldName, null);
                                 entriesChanged++;
                                 break;
                             case 3:
-                                // Cancel
+                                
                                 break mainLoop;
                         }
                         brokenLinks++;
@@ -171,7 +167,7 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
         }
 
         if (entriesChanged > 0) {
-            // Add the undo edit:
+            
             ce.end();
             panel.undoManager.addEdit(ce);
         }
@@ -236,11 +232,11 @@ public class AutoSetExternalFileForEntries extends AbstractWorker {
             FormLayout layout = new FormLayout("fill:pref", "");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             description = new JLabel("<HTML>" +
-                    Globals.lang(//"This function helps you keep your external %0 links up-to-date." +
+                    Globals.lang(
                             "Attempt to autoset %0 links for your entries. Autoset works if "
                                     + "a %0 file in your %0 directory or a subdirectory<BR>is named identically to an entry's BibTeX key, plus extension.", fn)
                     + "</HTML>");
-            //            name.setVerticalAlignment(JLabel.TOP);
+            
             builder.appendSeparator(Globals.lang("Autoset"));
             builder.append(description);
             builder.nextLine();

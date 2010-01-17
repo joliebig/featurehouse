@@ -17,9 +17,7 @@ import java.awt.event.FocusEvent;
 import java.awt.*;
 import java.io.File;
 
-/**
- * This class produces a dialog box for editing an external file type.
- */
+
 public class ExternalFileTypeEntryEditor {
 
     JFrame fParent = null;
@@ -101,7 +99,7 @@ public class ExternalFileTypeEntryEditor {
             diag.setLocationRelativeTo(dParent);
         else
             diag.setLocationRelativeTo(fParent);
-        //Util.placeDialog(diag, parent);
+        
 
         setValues(entry);
     }
@@ -146,14 +144,14 @@ public class ExternalFileTypeEntryEditor {
         public void actionPerformed(ActionEvent e) {
             File initial = new File(comp.getText().trim());
             if (comp.getText().trim().length() == 0) {
-                // Nothing in the field. Go to the last file dir used:
+                
                 initial = new File(Globals.prefs.get("fileWorkingDirectory"));
             }
-            String chosen = Globals.getNewFile(/*parent*/null, initial, Globals.NONE,
+            String chosen = Globals.getNewFile(null, initial, Globals.NONE,
                 JFileChooser.OPEN_DIALOG, false);
             if (chosen != null) {
                 File newFile = new File(chosen);
-                // Store the directory for next time:
+                
                 Globals.prefs.put("fileWorkingDirectory", newFile.getParent());
                 comp.setText(newFile.getPath());
                 comp.requestFocus();

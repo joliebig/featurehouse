@@ -11,9 +11,7 @@ import java.util.Vector;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * 
- */
+
 public class MetaDataChange extends Change {
 
     static final int
@@ -57,17 +55,7 @@ public class MetaDataChange extends Change {
             MetaDataChangeUnit unit = iterator.next();
             sb.append("<br>&nbsp;&nbsp;");
             sb.append(unit.key);
-            /*switch (unit.type) {
-                case ADD:
-                    sb.append("<p>Added: "+unit.key);
-                    break;
-                case REMOVE:
-                    sb.append("<p>Removed: "+unit.key);
-                    break;
-                case MODIFY:
-                    sb.append("<p>Modified: "+unit.key);
-                    break;
-            }*/
+            
         }
         sb.append("</html>");
         tp.setText(sb.toString());

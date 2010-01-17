@@ -3,11 +3,7 @@ package net.sf.jabref.export.layout.format;
 import net.sf.jabref.Globals;
 import net.sf.jabref.export.layout.LayoutFormatter;
 
-/**
- * This formatter escapes characters so they are suitable for HTML.
- * 
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:03:44 $)
- */
+
 public class HTMLChars implements LayoutFormatter {
 
 	public String format(String field) {
@@ -27,7 +23,7 @@ public class HTMLChars implements LayoutFormatter {
 				escaped = false;
 			} else if (c == '\\') {
 				if (incommand){
-					/* Close Command */
+					
 					String command = currentCommand.toString();
 					Object result = Globals.HTMLCHARS.get(command);
 					if (result != null) {
@@ -40,27 +36,27 @@ public class HTMLChars implements LayoutFormatter {
 				incommand = true;
 				currentCommand = new StringBuffer();
 			} else if (!incommand && (c == '{' || c == '}')) {
-				// Swallow the brace.
+				
 			} else if (Character.isLetter((char) c)
 				|| (Globals.SPECIAL_COMMAND_CHARS.indexOf("" + (char) c) >= 0)) {
 				escaped = false;
 				if (!incommand)
 					sb.append((char) c);
-					// Else we are in a command, and should not keep the letter.
+					
 				else {
 					currentCommand.append((char) c);
 
 					testCharCom: if ((currentCommand.length() == 1)
 						&& (Globals.SPECIAL_COMMAND_CHARS.indexOf(currentCommand.toString()) >= 0)) {
-						// This indicates that we are in a command of the type
-						// \^o or \~{n}
+						
+						
 						if (i >= field.length() - 1)
 							break testCharCom;
 
 						String command = currentCommand.toString();
 						i++;
 						c = field.charAt(i);
-						// System.out.println("next: "+(char)c);
+						
 						String combody;
 						if (c == '{') {
 							IntAndString part = getPart(field, i, false);
@@ -68,7 +64,7 @@ public class HTMLChars implements LayoutFormatter {
 							combody = part.s;
 						} else {
 							combody = field.substring(i, i + 1);
-							// System.out.println("... "+combody);
+							
 						}
 						Object result = Globals.HTMLCHARS.get(command + combody);
 
@@ -78,14 +74,11 @@ public class HTMLChars implements LayoutFormatter {
 						incommand = false;
 						escaped = false;
 					} else { 
-						//	Are we already at the end of the string?
+						
 						if (i + 1 == field.length()){
 							String command = currentCommand.toString();
 							Object result = Globals.HTMLCHARS.get(command);
-							/* If found, then use translated version. If not,
-							 * then keep
-							 * the text of the parameter intact.
-							 */
+							
 							if (result != null) {
 								sb.append((String) result);
 							} else {
@@ -101,14 +94,14 @@ public class HTMLChars implements LayoutFormatter {
 				if (!incommand) {
 					sb.append((char) c);
 				} else if (Character.isWhitespace(c) || c == '{') {
-					// First test if we are already at the end of the string.
-					// if (i >= field.length()-1)
-					// break testContent;
+					
+					
+					
 
 					String command = currentCommand.toString();
-					// Then test if we are dealing with a italics or bold
-					// command.
-					// If so, handle.
+					
+					
+					
 					if (command.equals("emph") || command.equals("textit")) {
 						IntAndString part = getPart(field, i, true);
 
@@ -123,13 +116,13 @@ public class HTMLChars implements LayoutFormatter {
 						i += part.i;
 						argument = part.s;
 						if (argument != null) {
-							// handle common case of general latex command
+							
 							Object result = Globals.HTMLCHARS.get(command + argument);
-							// System.out.print("command: "+command+", arg: "+argument);
-							// System.out.print(", result: ");
-							// If found, then use translated version. If not, then keep
-							// the
-							// text of the parameter intact.
+							
+							
+							
+							
+							
 							if (result != null) {
 								sb.append((String) result);
 							} else {
@@ -148,15 +141,7 @@ public class HTMLChars implements LayoutFormatter {
 				} else if (c == '}') {
 					argument = "";
 				} else {
-					/*
-					 * TODO: this point is reached, apparently, if a command is
-					 * terminated in a strange way, such as with "$\omega$".
-					 * Also, the command "\&" causes us to get here. The former
-					 * issue is maybe a little difficult to address, since it
-					 * involves the LaTeX math mode. We don't have a complete
-					 * LaTeX parser, so maybe it's better to ignore these
-					 * commands?
-					 */
+					
 				}
 				
 				incommand = false;
@@ -173,18 +158,18 @@ public class HTMLChars implements LayoutFormatter {
 		
 		StringBuffer part = new StringBuffer();
 		
-		// advance to first char and skip wihitespace
+		
 		i++;
 		while (i < text.length() && Character.isWhitespace(text.charAt(i))){
 			i++;
 		}
 		
-		// then grab whathever is the first token (counting braces)
+		
 		while (i < text.length()){
 			c = text.charAt(i);
 			if (!terminateOnEndBraceOnly && count == 0 && Character.isWhitespace(c)) {
-				i--; // end argument and leave whitespace for further
-					 // processing
+				i--; 
+					 
 				break;
 			}
 			if (c == '}' && --count < 0)

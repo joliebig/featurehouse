@@ -18,15 +18,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * This class produces a dialog box for editing a single file link from a Bibtex entry.
- *
- * The information to be edited includes the file description, the link itself and the
- * file type. The dialog also includes convenience buttons for quick linking.
- *
- * For use when downloading files, this class also offers a progress bar and a "Downloading..."
- * label that can be hidden when the download is complete.
- */
+
 public class FileListEntryEditor {
 
     JDialog diag;
@@ -82,9 +74,9 @@ public class FileListEntryEditor {
 
         ok.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // If necessary, ask the external confirm object whether we are ready to close.
+                
                 if (externalConfirm != null) {
-                    // Construct an updated FileListEntry:
+                    
                     FileListEntry testEntry = new FileListEntry("", "", null);
                     storeSettings(testEntry);
                     if (!externalConfirm.confirmClose(testEntry))
@@ -106,7 +98,7 @@ public class FileListEntryEditor {
             public void focusLost(FocusEvent e) {
                 if ((types.getSelectedIndex() == -1) &&
                         (link.getText().trim().length() > 0)) {
-                    // Try to guess the file type:
+                    
                     String theLink = link.getText().trim();
                     int index = theLink.indexOf('.');
                     if ((index >= 0) && (index < theLink.length()-1)) {
@@ -185,17 +177,17 @@ public class FileListEntryEditor {
         public void actionPerformed(ActionEvent e) {
             File initial = new File(comp.getText().trim());
             if (comp.getText().trim().length() == 0) {
-                // Nothing in the field. Go to the last file dir used:
+                
                 initial = new File(Globals.prefs.get("fileWorkingDirectory"));
             }
             String chosen = Globals.getNewFile(parent, initial, Globals.NONE,
                 JFileChooser.OPEN_DIALOG, false);
             if (chosen != null) {
                 File newFile = new File(chosen);
-                // Store the directory for next time:
+                
                 Globals.prefs.put("fileWorkingDirectory", newFile.getParent());
 
-                // If the file is below the file directory, make the path relative:
+                
                 ArrayList<File> dirs = new ArrayList<File>();
                 dirs.add(new File(metaData.getFileDirectory(GUIGlobals.FILE_FIELD)));
                 if (dirs.size() > 0) {

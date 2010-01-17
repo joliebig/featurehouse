@@ -13,10 +13,10 @@ public class FieldNameLabel extends JLabel {
   public FieldNameLabel(String name) {
     super(name, JLabel.LEFT);
       setVerticalAlignment(NORTH);
-    //setFont(GUIGlobals.fieldNameFont);
+    
     setForeground(GUIGlobals.validFieldColor);
       setBorder(BorderFactory.createMatteBorder(1,0,0,0, Color.GRAY));
-    //setBorder(BorderFactory.createEtchedBorder());
+    
   }
 
   public void paintComponent(Graphics g) {

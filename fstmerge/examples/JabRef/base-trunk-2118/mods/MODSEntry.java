@@ -10,18 +10,13 @@ import javax.xml.transform.stream.*;
 import org.w3c.dom.*;
 import java.util.*;
 import java.io.*;
-/**
- * @author Michael Wrighton
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 public class MODSEntry {
-	protected String entryType = "mods"; // could also be relatedItem
+	protected String entryType = "mods"; 
 	protected String id;
 	protected List authors = null;
 	protected List editors = null;
-	// should really be handled with an enum
+	
 	protected String issuance = "monographic";
 	protected PageNumbers pages = null;
 	
@@ -30,7 +25,7 @@ public class MODSEntry {
 	protected String place = null;
 	
 	protected String title = null;
-	// should really be handled with an enum
+	
 	protected String type = "text";
 	
 	protected String number;
@@ -141,7 +136,7 @@ public class MODSEntry {
 		return result;
 	}
 	
-	/* construct a MODS date object */
+	
 	protected String getDate(BibtexEntry bibtex) {
 		String result = "";
 		if (bibtex.getField("year") != null)
@@ -151,7 +146,7 @@ public class MODSEntry {
 		
 		return result;
 	}
-	// must be from http://www.loc.gov/marc/sourcecode/genre/genrelist.html
+	
 	protected String getMODSgenre(BibtexEntry bibtex) {
 		String bibtexType = bibtex.getType().getName();
 		String result;
@@ -159,7 +154,7 @@ public class MODSEntry {
 			result = "theses";
 		else
 			result = "conference publication";
-		// etc...
+		
 		return bibtexType;		
 	}
 	
@@ -168,7 +163,7 @@ public class MODSEntry {
 		try {
 			DocumentBuilder d = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 			
-		//	result = getDOMrepresentation(d);
+		
 		}
 		catch (Exception e) 
 		{
@@ -183,8 +178,8 @@ public class MODSEntry {
 	   	try {
 	   		Element mods = d.createElement(entryType);
 	   		mods.setAttribute("version", "3.0");
-	   		// mods.setAttribute("xmlns:xlink:", "http://www.w3.org/1999/xlink");
-	   		// title
+	   		
+	   		
 	   		if(title != null) {
 	   			Element titleInfo = d.createElement("titleInfo");
 	   			Element mainTitle = d.createElement("title");
@@ -218,7 +213,7 @@ public class MODSEntry {
 	   				mods.appendChild(modsName);
 	   			}
 	   		}
-	   		//publisher
+	   		
 	   		Element originInfo = d.createElement("originInfo");
 	   		mods.appendChild(originInfo);
 	   		if (this.publisher != null) {
@@ -262,7 +257,7 @@ public class MODSEntry {
 	   			mods.appendChild(pages.getDOMrepresentation(d));
 	   		}
 	   		
-	   		/* now generate extension fields for unhandled data */
+	   		
 	   		for(Iterator iter = extensionFields.entrySet().iterator(); iter.hasNext(); ) {
 	   			Element extension = d.createElement("extension");
 	   			Map.Entry theEntry = (Map.Entry) iter.next();
@@ -283,29 +278,17 @@ public class MODSEntry {
 	   		e.printStackTrace();
 	   		throw new Error(e);
 		}
-	   	// return result;
+	   	
 	   }
 	
-	/**
-	 * This method ensures that the output String has only
-     * valid XML unicode characters as specified by the
-     * XML 1.0 standard. For reference, please see
-     * <a href="http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char">the
-     * standard</a>. This method will return an empty
-     * String if the input is null or empty.
-     * 
-     * URL: http://cse-mjmcl.cse.bris.ac.uk/blog/2007/02/14/1171465494443.html
-     *
-     * @param in The String whose non-valid characters we want to remove.
-     * @return The in String, stripped of non-valid characters.
-     */
+	
     public String stripNonValidXMLCharacters(String in) {
-        StringBuffer out = new StringBuffer(); // Used to hold the output.
-        char current; // Used to reference the current character.
+        StringBuffer out = new StringBuffer(); 
+        char current; 
 
-        if (in == null || ("".equals(in))) return ""; // vacancy test.
+        if (in == null || ("".equals(in))) return ""; 
         for (int i = 0; i < in.length(); i++) {
-            current = in.charAt(i); // NOTE: No IndexOutOfBoundsException caught here; it should not happen.
+            current = in.charAt(i); 
             if ((current == 0x9) ||
                 (current == 0xA) ||
                 (current == 0xD) ||
@@ -317,9 +300,7 @@ public class MODSEntry {
         return out.toString();
     }
 
-	/*
-	 * render as XML
-	 */
+	
 	public String toString() {
 		StringWriter sresult = new StringWriter();
 	   	try {

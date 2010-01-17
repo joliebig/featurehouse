@@ -20,15 +20,15 @@ public class EntryDeleteChange extends Change {
     this.memEntry = memEntry;
     this.tmpEntry = tmpEntry;
 
-    // Compare the deleted entry in memory with the one in the tmpfile. The
-    // entry could have been removed in memory.
+    
+    
     matchWithTmp = DuplicateCheck.compareEntriesStrictly(memEntry, tmpEntry);
 
-    // Check if it has been modified locally, since last tempfile was saved.
+    
     isModifiedLocally = !(matchWithTmp > 1);
 
-    //Util.pr("Modified entry: "+memEntry.getCiteKey()+"\n Modified locally: "+isModifiedLocally
-    //        +" Modifications agree: "+modificationsAgree);
+    
+    
 
     pp = new PreviewPanel(null, memEntry, null, new MetaData(), Globals.prefs.get("preview0"));
     sp = new JScrollPane(pp);

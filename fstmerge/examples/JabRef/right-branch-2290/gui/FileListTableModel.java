@@ -8,10 +8,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-/**
- * Data structure to contain a list of file links, parseable from a coded string.
- * Doubles as a table model for the file list editor.
-*/
+
 public class FileListTableModel extends AbstractTableModel {
 
     private final ArrayList list = new ArrayList();
@@ -59,12 +56,7 @@ public class FileListTableModel extends AbstractTableModel {
 
     }
 
-    /**
-     * Add an entry to the table model, and fire a change event. The change event
-     * is fired on the event dispatch thread.
-     * @param index The row index to insert the entry at.
-     * @param entry The entry to insert.
-     */
+    
     public void addEntry(final int index, final FileListEntry entry) {
         synchronized (list) {
             list.add(index, entry);
@@ -83,10 +75,7 @@ public class FileListTableModel extends AbstractTableModel {
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
     }
 
-    /**
-     * Set up the table contents based on the flat string representation of the file list
-     * @param value The string representation
-     */
+    
     public void setContent(String value) {
         if (value == null)
             value = "";
@@ -138,11 +127,7 @@ public class FileListTableModel extends AbstractTableModel {
         else return "";
     }
 
-    /**
-     * Transform the file list shown in the table into a flat string representable
-     * as a BibTeX field:
-     * @return String representation.
-     */
+    
     public String getStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         for (Iterator iterator = list.iterator(); iterator.hasNext();) {
@@ -154,11 +139,7 @@ public class FileListTableModel extends AbstractTableModel {
         return sb.toString();
     }
 
-    /**
-     * Transform the file list shown in the table into a HTML string representation
-     * suitable for displaying the contents in a tooltip.
-     * @return Tooltip representation.
-     */
+    
     public String getToolTipHTMLRepresentation() {
         StringBuilder sb = new StringBuilder("<html>");
         for (Iterator iterator = list.iterator(); iterator.hasNext();) {

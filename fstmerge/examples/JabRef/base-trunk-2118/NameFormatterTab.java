@@ -80,10 +80,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 		}
 	}
 
-	/**
-	 * Tab to create custom Name Formatters
-	 * 
-	 */
+	
 	public NameFormatterTab(HelpDialog helpDialog) {
 		setLayout(new BorderLayout());
 
@@ -108,7 +105,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 				case 1:
 					return tr.format;
 				}
-				return null; // Unreachable.
+				return null; 
 			}
 
 			public String getColumnName(int col) {
@@ -129,7 +126,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 			public void setValueAt(Object value, int row, int col) {
 				tableChanged = true;
 
-				// Make sure the vector is long enough.
+				
 				while (row >= tableRows.size())
 					tableRows.add(new TableRow());
 
@@ -244,7 +241,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 		public void actionPerformed(ActionEvent e) {
 			int[] rows = table.getSelectedRows();
 			if (rows.length == 0) {
-				// No rows selected, so we just add one at the end.
+				
 				rowCount++;
 				table.revalidate();
 				table.repaint();
@@ -263,11 +260,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 		}
 	}
 
-	/**
-	 * Store changes to table preferences. This method is called when the user
-	 * clicks Ok.
-	 * 
-	 */
+	
 	public void storeSettings() {
 
 		if (table.isEditing()) {
@@ -275,10 +268,10 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 			table.getCellEditor(row, col).stopCellEditing();
 		}
 
-		// Now we need to make sense of the contents the user has made to the
-		// table setup table.
+		
+		
 		if (tableChanged) {
-			// First we remove all rows with empty names.
+			
 			int i = 0;
 			while (i < tableRows.size()) {
 				if (((TableRow) tableRows.elementAt(i)).name.equals(""))
@@ -286,7 +279,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 				else
 					i++;
 			}
-			// Then we make arrays
+			
 			String[] names = new String[tableRows.size()], formats = new String[tableRows.size()];
 
 			for (i = 0; i < tableRows.size(); i++) {
@@ -295,7 +288,7 @@ public class NameFormatterTab extends JPanel implements PrefsTab {
 				formats[i] = tr.format;
 			}
 
-			// Finally, we store the new preferences.
+			
 			Globals.prefs.putStringArray(NAME_FORMATER_KEY, names);
 			Globals.prefs.putStringArray(NAME_FORMATTER_VALUE, formats);
 		}

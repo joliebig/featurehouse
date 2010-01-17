@@ -17,9 +17,9 @@ public class IncrementalSearcher {
 
     public boolean search(String pattern, BibtexEntry bibtexEntry) {
 	    hitInField = null;
-	    //if (!prefs.getBoolean("caseSensitiveSearch"))
-	    //    flags = Pattern.CASE_INSENSITIVE;
-	    //Pattern pattern = Pattern.compile(searchString, flags);
+	    
+	    
+	    
 	
 	    Object[] fields = bibtexEntry.getAllFields();
 	    return searchFields(fields, bibtexEntry, pattern);
@@ -32,9 +32,7 @@ public class IncrementalSearcher {
 	    if (fields != null) {
 		for(int i = 0 ; i < fields.length ; i++){
 		    try {
-			/*Globals.logger("Searching field '"+fields[i].toString()
-				       +"' for '"
-				       +pattern.toString()+"'.");*/
+			
 			if (bibtexEntry.getField(fields[i].toString()) != null) {
 			    if (prefs.getBoolean("caseSensitiveSearch")) {
 				if (bibtexEntry.getField(fields[i].toString())

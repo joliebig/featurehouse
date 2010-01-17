@@ -28,18 +28,18 @@ public class TextAnalyzer {
 
       String[] split = null;
 
-      // Look for the year:
+      
       String year = null;
       String yearRx = "(\\s|\\()\\d\\d\\d\\d(\\.|,|\\))";
       String[] cand = getMatches(text, yearRx);
       if (cand.length == 1) {
-        // Only one four-digit number, so we guess that is the year.
+        
         year = clean(cand[0]);
         int pos = text.indexOf(year);
         usedParts.add(new Substring("year", pos, pos+year.length()));
         Util.pr("Guessing 'year': '"+year+"'");
       } else if (cand.length > 1) {
-        // More than one four-digit numbers, so we look for one giving a reasonable year:
+        
 
         int good = -1, yearFound = -1;
         find: for (int i=0; i<cand.length; i++) {
@@ -51,10 +51,10 @@ public class TextAnalyzer {
               good = i;
               yearFound = number;
             } else {
-              // More than one found. Be a bit more specific.
+              
               if ((yearFound < Globals.FUTURE_YEAR) && (number < Globals.FUTURE_YEAR)) {
                 good = -1;
-                break find; // Give up, both seem good enough.
+                break find; 
               }
               else if ((yearFound >= Globals.FUTURE_YEAR) && (number < Globals.FUTURE_YEAR)) {
                 good = i;
@@ -71,7 +71,7 @@ public class TextAnalyzer {
         }
       }
 
-      // Look for Pages:
+      
       String pages = null;
       String pagesRx = "\\s(\\d{1,4})( ??)-( ??)(\\d{1,4})(\\.|,|\\s)";
       cand = getMatches(text, pagesRx);
@@ -84,7 +84,7 @@ public class TextAnalyzer {
         int found = -1;
         checkScope: for (int i=0; i<cand.length; i++) {
           split = clean(cand[i].replaceAll("\\s", "")).split("-");
-               //   Util.pr("Pg: "+pages);
+               
           int first = Integer.parseInt(split[0]),
               second = Integer.parseInt(split[1]);
           if (second-first > 3) {
@@ -100,20 +100,20 @@ public class TextAnalyzer {
         }
       }
 
-      //String journalRx = "(\\.|\\n)\\s??([a-zA-Z\\. ]{8,30}+)((vol\\.|Vol\\.|Volume|volume))??(.??)(\\d{1,3})(\\.|,|\\s)";
+      
       String journal = null,
           volume = null;
       String journalRx = "(,|\\.|\\n)\\s??([a-zA-Z\\. ]{8,30}+)((.){0,2})((vol\\.|Vol\\.|Volume|volume))??\\s??(\\d{1,3})(\\.|,|\\s|:)";
       cand = getMatches(text, journalRx);
       if (cand.length > 0) {
-        //Util.pr("guessing 'journal': '" + cand[0] + "'");
+        
         cand[0] = cand[0].trim();
         int pos = cand[0].lastIndexOf(' ');
         if (pos > 0) {
           volume = clean(cand[0].substring(pos+1));
           Util.pr("Guessing 'volume': '" + volume + "'");
           journal = clean(cand[0].substring(0, pos));
-          //Util.pr("guessing 'journal': '" + journal + "'");
+          
           pos = journal.lastIndexOf(' ');
           if (pos > 0) {
             String last = journal.substring(pos+1).toLowerCase();
@@ -124,13 +124,13 @@ public class TextAnalyzer {
           usedParts.add(new Substring("journal", pos, pos+journal.length()));
           Util.pr("Guessing 'journal': '" + journal + "'");
         }
-        //Util.pr("Journal? '"+cand[0]+"'");
+        
       } else {
-        // No journal found. Maybe the year precedes the volume? Try another regexp:
+        
         journalRx = "(,|\\.|\\n)\\s??([a-zA-Z\\. ]{8,30}+)((.){0,2})\\s??(\\d{1,3})(\\.|,|\\s|:)";
       }
 
-      // Then try to find title and authors.
+      
       Substring ss;
       Vector<String> free = new Vector<String>();
       int piv = 0;
@@ -163,7 +163,7 @@ public class TextAnalyzer {
         String[] curr = text.split(regexp, i+2);
         out[i] = text.substring(piv+curr[i].length(), text.length()-curr[i+1].length());
         piv += curr[i].length()+out[i].length();
-        //Util.pr("--"+out[i]+"\n-> "+piv);
+        
       }
       return out;
     }
@@ -188,7 +188,7 @@ public class TextAnalyzer {
         else
           found = true;
       }
-      //Util.pr(s+"\n"+left+" "+right);
+      
       return s.substring(left, Math.min(right+1, s.length()));
     }
 

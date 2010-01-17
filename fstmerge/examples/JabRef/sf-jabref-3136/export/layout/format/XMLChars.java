@@ -1,24 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
-//  Filename: $RCSfile: XMLChars.java,v $
-//  Purpose:  Atom representation.
-//  Language: Java
-//  Compiler: JDK 1.4
-//  Authors:  Joerg K. Wegner, Morten O. Alver
-//  Version:  $Revision: 1.1 $
-//            $Date: 2010-01-15 13:09:48 $
-//            $Author: apel $
-//
-//  Copyright (c) Dept. Computer Architecture, University of Tuebingen, Germany
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation version 2 of the License.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 package net.sf.jabref.export.layout.format;
 
@@ -28,12 +28,7 @@ import java.util.regex.Pattern;
 import net.sf.jabref.Globals;
 import net.sf.jabref.export.layout.LayoutFormatter;
 
-/**
- * Changes {\^o} or {\^{o}} to ?
- * 
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class XMLChars implements LayoutFormatter {
 	Pattern pattern = Pattern.compile(".*\\{\\\\.*[a-zA-Z]\\}.*");
 
@@ -60,10 +55,10 @@ public class XMLChars implements LayoutFormatter {
 		
 		String fieldText = toFormat.replaceAll("\\}", "").replaceAll("\\{", "");
 
-		// now some copy-paste problems most often occuring in abstracts when
-		// copied from PDF
-		// AND: this is accepted in the abstract of bibtex files, so are forced
-		// to catch those cases
+		
+		
+		
+		
 
 		if (forceReplace == null){
 			 forceReplace = new boolean[126];
@@ -81,7 +76,7 @@ public class XMLChars implements LayoutFormatter {
 		for (int i = 0; i < fieldText.length(); i++) {
 			int code = (fieldText.charAt(i));
 		
-			// TODO: Check whether > 125 is correct here or whether it should rather be >=  
+			
 			if (code > 125 || forceReplace[code]) {
 				buffer.append("&#" + code + ";");
 			} else {
@@ -90,7 +85,7 @@ public class XMLChars implements LayoutFormatter {
 		}
 		fieldText = buffer.toString();
 
-		// use common abbreviations for <, > instead of code
+		
 		for (Map.Entry<String, String> entry : Globals.ASCII2XML_CHARS.entrySet()){
 			String s = entry.getKey();
 			String repl = entry.getValue();

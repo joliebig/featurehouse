@@ -1,9 +1,4 @@
-/*
- * Created on Jun 29, 2004
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 package net.sf.jabref.imports;
 
 
@@ -23,12 +18,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * @author mspiegel
- * 
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 public class CiteSeerUndoHandler extends DefaultHandler {
 
     NamedCompound citeseerNamedCompound = null;
@@ -49,10 +39,7 @@ public class CiteSeerUndoHandler extends DefaultHandler {
 
     int citeseerCitationCount = 0;
     
-    /*
-     * Woe unto those who call this function from anywhere but
-     * makeOverwriteChoice(). You will seriously f*&k things up.
-     */
+    
     private boolean overwriteDialog(String oldValue, String newValue,
             String fieldName) {
         boolean retval = false;
@@ -75,9 +62,9 @@ public class CiteSeerUndoHandler extends DefaultHandler {
 
                 if (dialog.isVisible() && (e.getSource() == optionPane)
                         && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
-                    //If you were going to check something
-                    //before closing the window, you'd do
-                    //it here.
+                    
+                    
+                    
                     dialog.setVisible(false);
                 }
             }
@@ -149,12 +136,7 @@ public class CiteSeerUndoHandler extends DefaultHandler {
         }
     }
 
-    /**
-     * @param oldValue
-     * @param newValue
-     * @param fieldName
-     * @return overwrite
-     */
+    
     private boolean makeOverwriteChoice(String oldValue, String newValue,
             String fieldName) {
         boolean overwrite;
@@ -216,9 +198,7 @@ public class CiteSeerUndoHandler extends DefaultHandler {
         bibEntry.setField("citeseercitationcount", newCount);
     }
 
-    /**
-     * @param string
-     */
+    
     private void addAuthor(String newAuthor) {
         if (newAuthors == null) {
             newAuthors = newAuthor;

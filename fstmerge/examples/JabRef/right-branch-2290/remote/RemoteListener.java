@@ -14,13 +14,7 @@ import java.util.Vector;
 import java.util.List;
 import java.util.ArrayList;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Aug 14, 2005
- * Time: 8:11:58 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class RemoteListener extends Thread implements ImportInspectionDialog.CallBack {
 
     private JabRef jabref;
@@ -53,8 +47,8 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
                     active = false;
                     return;
                 }
-                //byte[] address = socket.getInetAddress().getAddress();
-                //System.out.println("Connection: "+address[0]+" "+address[1]+" "+address[2]+" "+address[3]);
+                
+                
 
                 OutputStream out = newSocket.getOutputStream();
                 InputStream in = newSocket.getInputStream();
@@ -79,10 +73,10 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
                         if (!pr.toOpenTab()) {
                             jabref.jrf.addTab(pr.getDatabase(), pr.getFile(), pr.getMetaData(), pr.getEncoding(), (i == 0));
                         } else {
-                            // Add the entries to the open tab.
+                            
                             BasePanel panel = jabref.jrf.basePanel();
                             if (panel == null) {
-                                // There is no open tab to add to, so we create a new tab:
+                                
                                 jabref.jrf.addTab(pr.getDatabase(), pr.getFile(), pr.getMetaData(), pr.getEncoding(), (i == 0));
                             } else {
                                 List entries = new ArrayList(pr.getDatabase().getEntries());
@@ -95,7 +89,7 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
                     newSocket.close();
 
                 } catch (SocketTimeoutException ex) {
-                    //System.out.println("timeout");
+                    
                     in.close();
                     out.close();
                     newSocket.close();
@@ -105,7 +99,7 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
 
             } catch (SocketException ex) {
                 active = false;
-                //ex.printStackTrace();
+                
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -127,11 +121,7 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
 
     }
 
-    /**
-     * Attempt to send command line arguments to already running JabRef instance.
-     * @param args Command line arguments.
-     * @return true if successful, false otherwise.
-     */
+    
     public static boolean sendToActiveJabRefInstance(String[] args) {
         try {
             InetAddress local = InetAddress.getByName("localhost");
@@ -175,21 +165,21 @@ public class RemoteListener extends Thread implements ImportInspectionDialog.Cal
         }
     }
 
-    // This method is called by the dialog when the user has selected the
-// wanted entries, and clicked Ok. The callback object can update status
-// line etc.
+    
+
+
     public void done(int entriesImported) {
         jabref.jrf.output(Globals.lang("Imported entries"));
     }
 
-    // This method is called by the dialog when the user has cancelled the import.
+    
     public void cancelled() {
 
     }
 
-    // This method is called by the dialog when the user has cancelled or
-// signalled a stop. It is expected that any long-running fetch operations
-// will stop after this method is called.
+    
+
+
     public void stopFetching() {
 
     }

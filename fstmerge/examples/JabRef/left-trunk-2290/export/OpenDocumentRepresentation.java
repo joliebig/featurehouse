@@ -1,9 +1,4 @@
-/*
- * Created on Oct 23, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 package net.sf.jabref.export;
 
 import java.util.ArrayList;
@@ -26,28 +21,22 @@ import org.w3c.dom.Text;
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.SortedList;
 
-/**
- * @author Morten O. Alver.
- * Based on net.sf.jabref.MODSDatabase by Michael Wrighton
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 public class OpenDocumentRepresentation {
     protected Collection<BibtexEntry> entries;
 
     @SuppressWarnings("unchecked")
 	public OpenDocumentRepresentation(BibtexDatabase bibtex, Set<String> keySet) {
-        // Make a list of comparators for sorting the entries:
+        
         List<FieldComparator> comparators = new ArrayList<FieldComparator>();
         comparators.add(new FieldComparator("author"));
         comparators.add(new FieldComparator("year"));
         comparators.add(new FieldComparator(BibtexFields.KEY_FIELD));
-        // Use glazed lists to get a sorted view of the entries:
+        
         BasicEventList entryList = new BasicEventList();
 
-        // Set up a list of all entries, if keySet==null, or the entries whose
-        // ids are in keySet, otherwise:
+        
+        
         if (keySet == null)
             entryList.addAll(bibtex.getEntries());
         else {
@@ -63,7 +52,7 @@ public class OpenDocumentRepresentation {
             DocumentBuilder dbuild = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             result = dbuild.newDocument();
             Element collection = result.createElement("office:document-content");
-            //collection.setAttribute("xmlns", "http://openoffice.org/2000/office");
+            
             collection.setAttribute("xmlns:office", "urn:oasis:names:tc:opendocument:xmlns:office:1.0");
             collection.setAttribute("xmlns:style", "urn:oasis:names:tc:opendocument:xmlns:style:1.0");
             collection.setAttribute("xmlns:text", "urn:oasis:names:tc:opendocument:xmlns:text:1.0");
@@ -142,11 +131,11 @@ public class OpenDocumentRepresentation {
                 addTableCell(result, row, new GetOpenOfficeType().format(e.getType().getName()));
                 addTableCell(result, row, getField(e, "address"));
                 addTableCell(result, row, getField(e, "annote"));
-                addTableCell(result, row, getField(e, "author"));//new AuthorLastFirst().format(getField(e, "author")));
+                addTableCell(result, row, getField(e, "author"));
                 addTableCell(result, row, getField(e, "booktitle"));
                 addTableCell(result, row, getField(e, "chapter"));
                 addTableCell(result, row, getField(e, "edition"));
-                addTableCell(result, row, getField(e, "editor"));//new AuthorLastFirst().format(getField(e, "editor")));
+                addTableCell(result, row, getField(e, "editor"));
                 addTableCell(result, row, getField(e, "howpublished"));
                 addTableCell(result, row, getField(e, "institution"));
                 addTableCell(result, row, getField(e, "journal"));
@@ -194,7 +183,7 @@ public class OpenDocumentRepresentation {
                 text = doc.createElement("text:p");
     Text textNode = doc.createTextNode(content);
     text.appendChild(textNode);
-        //text.setTextContent(content);
+        
         cell.appendChild(text);
         parent.appendChild(cell);
     }

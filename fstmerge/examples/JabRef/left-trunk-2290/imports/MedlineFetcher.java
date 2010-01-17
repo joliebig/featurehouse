@@ -22,21 +22,12 @@ import javax.xml.parsers.SAXParserFactory;
 import net.sf.jabref.*;
 import net.sf.jabref.gui.ImportInspectionDialog;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- * @author not attributable
- * @version 1.0
- */
+
 
 public class MedlineFetcher extends SidePaneComponent implements Runnable,
         ImportInspectionDialog.CallBack {
 
-    /**@class SearchResult
-     *        nested class.
-     */
+    
     public class SearchResult {
         public int count;
         public int retmax;
@@ -70,7 +61,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
     GridBagConstraints con = new GridBagConstraints();
     MedlineFetcher ths = this;
     AuthorDialog authorDialog;
-    JFrame jFrame; // invisible dialog holder
+    JFrame jFrame; 
     JButton go = new JButton(Globals.lang("Fetch")),
         helpBut = new JButton(GUIGlobals.getImage("helpSmall"));
     HelpAction help;
@@ -82,12 +73,12 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         helpBut.addActionListener(help);
         helpBut.setMargin(new Insets(0,0,0,0));
         tf.setPreferredSize(new Dimension(1,tf.getPreferredSize().height));
-        //add(hd, BorderLayout.NORTH);
-        //ok.setToolTipText(Globals.lang("Fetch Medline"));
+        
+        
         JPanel main = new JPanel();
             main.setLayout(gbl);
         con.fill = GridBagConstraints.BOTH;
-        //con.insets = new Insets(0, 0, 2,  0);
+        
         con.gridwidth = GridBagConstraints.REMAINDER;
         con.weightx = 1;
         con.weighty = 1;
@@ -103,7 +94,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         main.add(helpBut);
         ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    (new Thread(ths)).start(); // Run fetch in thread.
+                    (new Thread(ths)).start(); 
                 }
             };
         main.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
@@ -124,55 +115,28 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
     }
 
     public void fetchById() {
-        //if(idList==null || idList.trim().equals(""))//if user pressed cancel
-        //  return;
+        
+        
         Pattern p = Pattern.compile("\\d+[,\\d+]*");
-        //System.out.println(""+p+"\t"+idList);
+        
         Matcher m = p.matcher( idList );
         if ( m.matches() ) {
             panel.frame().output(Globals.lang("Fetching Medline by ID..."));
 
             ArrayList<BibtexEntry> bibs = fetchMedline(idList);
             if ((bibs != null) && (bibs.size() > 0)) {
-                //if (panel.prefs().getBoolean("useOwner")) {
-                //    Util.setDefaultOwner(bibs, panel.prefs().get("defaultOwner"));
-                //}
+                
+                
+                
                 tf.setText("");
-                /*NamedCompound ce = new NamedCompound("fetch Medline");
-                Iterator i = bibs.iterator();
-                while (i.hasNext()) {
-                    try {
-                        BibtexEntry be = (BibtexEntry) i.next();
-                        String id = Util.createId(be.getType(), panel.database());
-                        be.setId(id);
-                        entries.add(be);
-                        //panel.database().insertEntry(be);
-                        //ce.addEdit(new UndoableInsertEntry(panel.database(), be, panel));
-                    }
-                    catch (KeyCollisionException ex) {
-                    }
-                    }*/
-                //ce.end();
+                
+                
 
         panel.frame().addImportedEntries(panel, bibs, null, false, this);
 
-        /*
-                int importedEntries = panel.frame().addBibEntries(bibs, null, false);
-        if (importedEntries == 0) {
-            return; // Nothing to refresh!
-        }
-        panel.markBaseChanged();
-                panel.refreshTable();
-        if (bibs.size() > 0) {
-            BibtexEntry[] entries = (BibtexEntry[])bibs.toArray(new BibtexEntry[0]);
-            panel.selectEntries(entries, 0);
-            if (entries.length == 1)
-                panel.showEntry(entries[0]);
-            //else
-            //    panel.updateViewToSelected();
-        }*/
+        
 
-                //panel.undoManager.addEdit(ce);
+                
             } else
                 panel.output(Globals.lang("No Medline entries found."));
         } else {
@@ -182,9 +146,9 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
 
 
 
-//==================================================
-//
-//==================================================
+
+
+
   public static ArrayList<BibtexEntry> fetchMedline(String id)
   {
     ArrayList<BibtexEntry> bibItems=null;
@@ -196,35 +160,23 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
       HttpURLConnection data = (HttpURLConnection)url.openConnection();
 
 
-       /* Reader un = new InputStreamReader(data.getInputStream());
-        int c;
-        while ((c=un.read()) != -1) {
-          System.out.print((char)c);
-        }*/
+       
 
 
-        // Obtain a factory object for creating SAX parsers
+        
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-        // Configure the factory object to specify attributes of the parsers it creates
+        
         parserFactory.setValidating(true);
         parserFactory.setNamespaceAware(true);
 
-        // Now create a SAXParser object
-        SAXParser parser = parserFactory.newSAXParser();   //May throw exceptions
+        
+        SAXParser parser = parserFactory.newSAXParser();   
         MedlineHandler handler = new MedlineHandler();
-        // Start the parser. It reads the file and calls methods of the handler.
+        
 
         parser.parse( data.getInputStream(), handler);
-        /*FileOutputStream out = new FileOutputStream(new File("/home/alver/ut.txt"));
-        System.out.println("#####");
-        InputStream is = data.getInputStream();
-        int c;
-        while ((c = is.read()) != -1) {
-            out.write((char)c);
-        }
-        System.out.println("#####");
-        out.close();*/
-        // When you're done, report the results stored by your handler object
+        
+        
         bibItems = handler.getItems();
 
     }
@@ -238,8 +190,8 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
 
         idList = tf.getText().replace(';', ',');
 
-        //if(idList==null || idList.trim().equals(""))//if user pressed cancel
-        //    return;
+        
+        
         Pattern p1 = Pattern.compile("\\d+[,\\d+]*"),
             p2 = Pattern.compile(".+[,.+]*");
 
@@ -249,16 +201,16 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
              panel.frame().output(Globals.lang("Fetching Medline by id ..."));
              idList = tf.getText().replace(';', ',');
              fetchById();
-             //System.out.println("Fetch by id");
+             
          }
          else if ( m2.matches() ) {
             panel.frame().output(Globals.lang("Fetching Medline by term ..."));
 
-            // my stuff
-            //---------------------------
-            String searchTerm = setupTerm(idList); // fix the syntax
-            SearchResult result = getIds(searchTerm ,0,1); // get the ids from entrez
-            // prompt the user to number articles to retrieve
+            
+            
+            String searchTerm = setupTerm(idList); 
+            SearchResult result = getIds(searchTerm ,0,1); 
+            
             if (result.count == 0) {
                 JOptionPane.showMessageDialog(panel.frame(), Globals.lang("No references found"));
                 return;
@@ -271,7 +223,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
                 JOptionPane.showInputDialog(question,
                                             Integer.toString(result.count));
 
-            // for strCount ...
+            
             if((strCount == null) || strCount.equals(""))
                 return;
             int count;
@@ -285,9 +237,9 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         ImportInspectionDialog diag = new ImportInspectionDialog(panel.frame(), panel,
                 BibtexFields.DEFAULT_INSPECTION_FIELDS, Globals.lang("Fetch Medline"), false);
         Util.placeDialog(diag, panel.frame());
-         diag.setDefaultSelected(false); // Make sure new entries are not selected by default.
+         diag.setDefaultSelected(false); 
 
-             // diag.setProgress(0, count);
+             
         diag.setVisible(true);
         keepOn = true;
          diag.addCallBack(new ImportInspectionDialog.CallBack() {
@@ -305,20 +257,17 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
 
 
              public void stopFetching() {
-                // Make sure the fetch loop exits at next iteration.
+                
                 keepOn = false;
              }
          });
             for (int jj = 0; jj < count; jj+=PACING) {
             if (!keepOn)
                 break;
-                    // get the ids from entrez
+                    
                     result = getIds(searchTerm,jj,PACING);
 
-            /*String[] test = getTitles((String[])result.idList.toArray(new String[0]));
-            for (int pelle=0; pelle<test.length; pelle++) {
-                System.out.println(": "+test[pelle]);
-            } */
+            
 
             final ArrayList<BibtexEntry> bibs = fetchMedline(result.ids);
             if (!keepOn)
@@ -344,7 +293,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         return in;
     }
 
-    // this gets the initial list of ids
+    
     public SearchResult getIds(String term, int start,int pacing){
         String baseUrl="http://eutils.ncbi.nlm.nih.gov/entrez/eutils";
         String medlineUrl = baseUrl
@@ -362,10 +311,10 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         Matcher retStartMatcher;
         boolean doCount = true;
         SearchResult result = new SearchResult();
-        //System.out.println(medlineUrl+term);
+        
         try{
             URL ncbi = new URL(medlineUrl+term);
-            // get the ids
+            
             BufferedReader in =
                 new BufferedReader
                 (new InputStreamReader
@@ -373,7 +322,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
             String inLine;
             while ((inLine=in.readLine())!=null){
 
-                // get the count
+                
                 idMatcher=idPattern.matcher(inLine);
                 if (idMatcher.find()){
                     result.addID(idMatcher.group(1));
@@ -394,11 +343,11 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
             }
 
         }
-        catch (MalformedURLException e) {     // new URL() failed
+        catch (MalformedURLException e) {     
             System.out.println("bad url");
             e.printStackTrace();
         }
-        catch (IOException e) {               // openConnection() failed
+        catch (IOException e) {               
             System.out.println("connection failed");
             e.printStackTrace();
 
@@ -416,7 +365,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         return titles;
     }
 
-        // get the xml for an entry
+        
     public String getOneCitation(String id){
         String baseUrl="http://eutils.ncbi.nlm.nih.gov/entrez/eutils";
         String retrieveUrl = baseUrl+"/efetch.fcgi?db=pubmed&retmode=xml&rettype=citation&id=";
@@ -434,11 +383,11 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
             }
 
         }
-        catch (MalformedURLException e) {     // new URL() failed
+        catch (MalformedURLException e) {     
             System.out.println("bad url");
             e.printStackTrace();
         }
-        catch (IOException e) {               // openConnection() failed
+        catch (IOException e) {               
             System.out.println("connection failed");
             e.printStackTrace();
 
@@ -446,7 +395,7 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         return sb.toString();
     }
 
-        // parse out the titles from the xml
+        
     public String getVitalData(String sb){
         StringBuffer result=new StringBuffer();
         Pattern articleTitle=Pattern.compile("<ArticleTitle>(.+)</ArticleTitle>");
@@ -455,15 +404,15 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
         if (matcher.find())
         result.append("Title: ").append(matcher.group(1));
 
-        //matcher=authorName.matcher(sb);
-        //while (matcher.find())
-        //   result.append("\tAuthor: "+matcher.group(1));
+        
+        
+        
         return result.toString();
     }
 
-    // This method is called by the dialog when the user has selected the
-    // wanted entries, and clicked Ok. The callback object can update status
-    // line etc.
+    
+    
+    
     public void done(int entriesImported) {
         panel.output(Globals.lang("Medline entries fetched")+": "+entriesImported);
     }
@@ -473,11 +422,11 @@ public class MedlineFetcher extends SidePaneComponent implements Runnable,
     }
 
 
-    // This method is called by the dialog when the user has cancelled or
-    // signalled a stop. It is expected that any long-running fetch operations
-    // will stop after this method is called.
+    
+    
+    
     public void stopFetching() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        
     }
 
 }

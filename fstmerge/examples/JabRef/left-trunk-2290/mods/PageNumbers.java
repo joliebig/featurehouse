@@ -1,10 +1,4 @@
-/*
- * Created on Oct 29, 2004
- * Updated on May 03, 2007
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 package net.sf.jabref.mods;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,11 +6,7 @@ import java.util.regex.Pattern;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-/**
- * @author Michael Wrighton
- * @author S M Mahbub Murshed
- *
- */
+
 public class PageNumbers {
 	String freeform = null;
 	int start, end;

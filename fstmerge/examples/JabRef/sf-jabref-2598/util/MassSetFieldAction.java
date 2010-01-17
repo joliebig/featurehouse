@@ -17,14 +17,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * An Action for launching mass field.
- *
- * Functionality:
- * * Defaults to selected entries, or all entries if none are selected.
- * * Input field name
- * * Either set field, or clear field.
- */
+
 public class MassSetFieldAction extends MnemonicAwareAction {
     private JabRefFrame frame;
     private JDialog diag;
@@ -53,9 +46,9 @@ public class MassSetFieldAction extends MnemonicAwareAction {
         set = new JRadioButton(Globals.lang("Set fields"));
         set.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                // Entering a text is only relevant if we are setting, not clearing:
+                
                 text.setEnabled(set.isSelected());
-                // Overwrite protection makes no sense if we are clearing the field:
+                
                 overwrite.setEnabled(set.isSelected());
             }
         });
@@ -113,7 +106,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             };
         cancel.addActionListener(cancelAction);
 
-        // Key bindings:
+        
         ActionMap am = builder.getPanel().getActionMap();
         InputMap im = builder.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -126,7 +119,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             selected.setSelected(true);
         else
             all.setSelected(true);
-        // Make sure one of the following ones is selected:
+        
         if (!set.isSelected() && !clear.isSelected())
             set.setSelected(true);
     }
@@ -136,7 +129,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
         if (bp == null)
             return;
         BibtexEntry[] entries = bp.getSelectedEntries();
-        // Lazy creation of the dialog:
+        
         if (diag == null)
             createDialog();
         cancelled = true;
@@ -147,7 +140,7 @@ public class MassSetFieldAction extends MnemonicAwareAction {
             return;
 
         Collection<BibtexEntry> entryList;
-        // If all entries should be treated, change the entries array:
+        
         if (all.isSelected())
             entryList = bp.database().getEntries();
         else

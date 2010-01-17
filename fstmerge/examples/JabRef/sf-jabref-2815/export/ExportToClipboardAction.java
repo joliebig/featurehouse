@@ -15,13 +15,7 @@ import javax.swing.ListSelectionModel;
 
 import net.sf.jabref.*;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Dec 12, 2006
- * Time: 6:22:25 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class ExportToClipboardAction extends AbstractWorker {
     String message = null;
     private JabRefFrame frame;
@@ -67,31 +61,18 @@ public class ExportToClipboardAction extends AbstractWorker {
 
         IExportFormat format = formats[list.getSelectedIndex()];
 
-        // Set the global variable for this database's file directory before exporting,
-        // so formatters can resolve linked files correctly.
-        // (This is an ugly hack!)
+        
+        
+        
         Globals.prefs.fileDirForDatabase = frame.basePanel().metaData()
                 .getFileDirectory(GUIGlobals.FILE_FIELD);
         
-        /*final boolean custom = (list.getSelectedIndex() >= Globals.STANDARD_EXPORT_COUNT);
-        String dir = null;
-        if (custom) {
-            int index = list.getSelectedIndex() - Globals.STANDARD_EXPORT_COUNT;
-            dir = (String) (Globals.prefs.customExports.getElementAt(index)[1]);
-            File f = new File(dir);
-            lfName = f.getName();
-            lfName = lfName.substring(0, lfName.indexOf("."));
-            // Remove file name - we want the directory only.
-            dir = f.getParent() + System.getProperty("file.separator");
-        }
-        final String format = lfName,
-                directory = dir;
-        */
+        
         File tmp = null;
         Reader reader = null;
         try {
-            // To simplify the exporter API we simply do a normal export to a temporary
-            // file, and read the contents afterwards:
+            
+            
             tmp = File.createTempFile("jabrefCb", ".tmp");
             tmp.deleteOnExit();
             BibtexEntry[] bes = panel.getSelectedEntries();
@@ -99,10 +80,10 @@ public class ExportToClipboardAction extends AbstractWorker {
             for (BibtexEntry be : bes)
                 entries.add(be.getId());
             
-            // Write to file:
+            
             format.performExport(database, panel.metaData(),
                     tmp.getPath(), panel.getEncoding(), entries);
-            // Read the file and put the contents on the clipboard:
+            
             StringBuffer sb = new StringBuffer();
             reader = new InputStreamReader(new FileInputStream(tmp), panel.getEncoding());
             int s;
@@ -113,18 +94,18 @@ public class ExportToClipboardAction extends AbstractWorker {
                 public void lostOwnership(Clipboard clipboard, Transferable content) {
                 }
             };
-            //StringSelection ss = new StringSelection(sw.toString());
+            
             RtfSelection rs = new RtfSelection(sb.toString());
             Toolkit.getDefaultToolkit().getSystemClipboard()
                     .setContents(rs, owner);
             message = Globals.lang("Entries exported to clipboard") + ": " + bes.length;
 
         } catch (Exception e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();  
             message = Globals.lang("Error exporting to clipboard");
             return;
         } finally {
-            // Clean up:
+            
             if (tmp != null)
                 tmp.delete();
             if (reader != null)

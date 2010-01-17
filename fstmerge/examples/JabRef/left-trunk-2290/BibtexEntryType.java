@@ -1,32 +1,4 @@
-/*
-Copyright (C) 2003 David Weitzman, Morten O. Alver
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-Note:
-Modified for use in JabRef.
-
-*/
 package net.sf.jabref;
 
 import java.util.Iterator;
@@ -619,10 +591,7 @@ public abstract class BibtexEntryType implements Comparable<BibtexEntryType>
             }
         };
 
-    /**
-     * This type is provided as an emergency choice if the user makes
-     * customization changes that remove the type of an entry.
-     */
+    
     public static final BibtexEntryType TYPELESS =
         new BibtexEntryType()
         {
@@ -698,7 +667,7 @@ public abstract class BibtexEntryType implements Comparable<BibtexEntryType>
     public static TreeMap<String, BibtexEntryType> ALL_TYPES = new TreeMap<String, BibtexEntryType>();
     public static TreeMap<String, BibtexEntryType> STANDARD_TYPES = new TreeMap<String, BibtexEntryType>();
     static {
-	// Put the standard entry types into the type map.
+	
 	ALL_TYPES.put("article", ARTICLE);
 	ALL_TYPES.put("inbook", INBOOK);
 	ALL_TYPES.put("book", BOOK);
@@ -715,59 +684,45 @@ public abstract class BibtexEntryType implements Comparable<BibtexEntryType>
         ALL_TYPES.put("misc", MISC);
         ALL_TYPES.put("other", OTHER);
 
-	// We need a record of the standard types, in case the user wants
-	// to remove a customized version. Therefore we clone the map.
+	
+	
 	STANDARD_TYPES = new TreeMap<String, BibtexEntryType>(ALL_TYPES);
     }
 
-    /**
-     * This method returns the BibtexEntryType for the name of a type,
-     * or null if it does not exist.
-     */
+    
     public static BibtexEntryType getType(String name) {
-	//Util.pr("'"+name+"'");
+	
 	Object o = ALL_TYPES.get(name.toLowerCase());
 	if (o == null)
 	    return null;
 	else return (BibtexEntryType)o;
     }
 
-    /**
-     * This method returns the standard BibtexEntryType for the
-     * name of a type, or null if it does not exist.
-     */
+    
     public static BibtexEntryType getStandardType(String name) {
-	//Util.pr("'"+name+"'");
+	
 	Object o = STANDARD_TYPES.get(name.toLowerCase());
 	if (o == null)
 	    return null;
 	else return (BibtexEntryType)o;
     }
 
-    /**
-     * Removes a customized entry type from the type map. If this type
-     * overrode a standard type, we reinstate the standard one.
-     *
-     * @param name The customized entry type to remove.
-     */
+    
     public static void removeType(String name) {
-	//BibtexEntryType type = getType(name);
+	
 	String nm = name.toLowerCase();
-        //System.out.println(ALL_TYPES.size());
+        
 	ALL_TYPES.remove(nm);
-        //System.out.println(ALL_TYPES.size());
+        
 	if (STANDARD_TYPES.get(nm) != null) {
-	    // In this case the user has removed a customized version
-	    // of a standard type. We reinstate the standard type.
+	    
+	    
 	    ALL_TYPES.put(nm, STANDARD_TYPES.get(nm));
 	}
 
     }
 
-    /**
-     * Load all custom entry types from preferences. This method is
-     * called from JabRef when the program starts.
-     */
+    
     public static void loadCustomEntryTypes(JabRefPreferences prefs) {
 	int number = 0;
 	CustomEntryType type;
@@ -777,26 +732,22 @@ public abstract class BibtexEntryType implements Comparable<BibtexEntryType>
 	}
     }
 
-    /**
-     * Iterate through all entry types, and store those that are
-     * custom defined to preferences. This method is called from
-     * JabRefFrame when the program closes.
-     */
+    
     public static void saveCustomEntryTypes(JabRefPreferences prefs) {
 	Iterator<String> i=ALL_TYPES.keySet().iterator();
 	int number = 0;
-	//Vector customTypes = new Vector(10, 10);
+	
 	while (i.hasNext()) {
 	    Object o=ALL_TYPES.get(i.next());
 	    if (o instanceof CustomEntryType) {
-		// Store this entry type.
+		
 		prefs.storeCustomEntryType((CustomEntryType)o, number);
 		number++;
 	    }
 	}
-	// Then, if there are more 'old' custom types defined, remove these
-	// from preferences. This is necessary if the number of custom types
-	// has decreased.
+	
+	
+	
 	prefs.purgeCustomEntryTypes(number);
     }
 

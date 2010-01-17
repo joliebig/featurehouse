@@ -9,10 +9,7 @@ import javax.swing.event.ChangeEvent;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Preferences tab for file options. These options were moved out from GeneralTab to
- * resolve the space issue.
- */
+
 public class FileTab extends JPanel implements PrefsTab {
 
     JabRefPreferences _prefs;
@@ -64,8 +61,8 @@ public class FileTab extends JPanel implements PrefsTab {
         nonWrappableFields = new JTextField(25);
         doNotResolveStringsFor = new JTextField(30);
         autoDoubleBraces = new JCheckBox(
-                //+ Globals.lang("Store fields with double braces, and remove extra braces when loading.<BR>"
-                //+ "Double braces signal that BibTeX should preserve character case.") + "</HTML>");
+                
+                
                 Globals.lang("Remove double braces around BibTeX fields when loading."));
 
         autoSave.addChangeListener(new ChangeListener() {
@@ -148,7 +145,7 @@ public class FileTab extends JPanel implements PrefsTab {
         else
             exportTableOrder.setSelected(true);
 
-        //preserveFormatting.setSelected(_prefs.getBoolean("preserveFieldFormatting"));
+        
         autoDoubleBraces.setSelected(_prefs.getBoolean("autoDoubleBraces"));
         resolveStringsAll.setSelected(_prefs.getBoolean("resolveStringsAllFields"));
         resolveStringsStandard.setSelected(!resolveStringsAll.isSelected());
@@ -185,11 +182,11 @@ public class FileTab extends JPanel implements PrefsTab {
             _prefs.put("nonWrappableFields", nonWrappableFields.getText());
             updateSpecialFields = true;
         }
-        // If either of the two last entries were changed, run the update for special field handling:
+        
         if (updateSpecialFields)
                 _prefs.updateSpecialFieldHandling();
 
-        // See if we should start or stop the auto save manager:
+        
         if (!origAutoSaveSetting && autoSave.isSelected()) {
             Globals.startAutoSaveManager(_frame);
         }

@@ -9,13 +9,7 @@ import net.sf.jabref.*;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Jan 14, 2006
- * Time: 4:55:23 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class PushToEmacs implements PushToApplication {
 
     private JPanel settings = null;
@@ -68,18 +62,18 @@ public class PushToEmacs implements PushToApplication {
         couldNotRunClient=false;
         try {
             String[] com = Globals.ON_WIN ?
-                // Windows gnuclient escaping:
-                // java string: "(insert \\\"\\\\cite{Blah2001}\\\")";
-                // so cmd receives: (insert \"\\cite{Blah2001}\")
-                // so emacs receives: (insert "\cite{Blah2001}")
+                
+                
+                
+                
                 new String[] {"gnuclient", "-qe",
                 "(insert \\\"\\\\" + Globals.prefs.get("citeCommandEmacs").replaceAll("\\\\", "\\\\\\\\") +
                         "{" + keys + "}\\\")"}
             :
-                // Linux gnuclient escaping:
-                // java string: "(insert \"\\\\cite{Blah2001}\")"
-                // so sh receives: (insert "\\cite{Blah2001}")
-                // so emacs receives: (insert "\cite{Blah2001}")
+                
+                
+                
+                
                 new String[] {"gnuclient", "-batch", "-eval",
                 "(insert \"" + Globals.prefs.get("citeCommandEmacs").replaceAll("\\\\", "\\\\\\\\") +
                        "{" + keys + "}\")"};
@@ -97,7 +91,7 @@ public class PushToEmacs implements PushToApplication {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Error stream has been closed. See if there were any errors:
+                    
                     if (sb.toString().trim().length() > 0) {
 			System.out.println(sb.toString());
                         couldNotConnect = true;

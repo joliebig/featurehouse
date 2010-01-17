@@ -1,28 +1,4 @@
-/*
- Copyright (C) 2005 Andreas Rudert, based on CustomExportList by ??
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-*/
 package net.sf.jabref.imports;
 
 import java.io.File;
@@ -34,19 +10,10 @@ import java.util.TreeSet;
 import net.sf.jabref.Globals;
 import net.sf.jabref.JabRefPreferences;
 
-/**
- * Collection of user defined custom import formats. 
- * 
- * <p>The collection can be stored and retrieved from Preferences. It is sorted by the default
- * order of {@link ImportFormat}.</p>
- */
+
 public class CustomImportList extends TreeSet<CustomImportList.Importer> {
 
-  /**
-   * Object with data for a custom importer.
-   * 
-   * <p>Is also responsible for instantiating the class loader.</p>
-   */
+  
   public class Importer implements Comparable<Importer> {
     
     private String name;
@@ -148,7 +115,7 @@ public class CustomImportList extends TreeSet<CustomImportList.Importer> {
         super.add(new Importer(s));
       } catch (Exception e) {
         System.err.println("Warning! Could not load " + s[0] + " from preferences. Will ignore.");
-        // Globals.prefs.remove("customImportFormat"+i);
+        
       }
       i++;
     }
@@ -158,15 +125,7 @@ public class CustomImportList extends TreeSet<CustomImportList.Importer> {
     super.add(customImporter);
   }
   
-  /**
-   * Adds an importer.
-   * 
-   * <p>If an old one equal to the new one was contained, the old
-   * one is replaced.</p>
-   * 
-   * @param customImporter new (version of an) importer
-   * @return  if the importer was contained
-   */
+  
   public boolean replaceImporter(Importer customImporter) {
     boolean wasContained = this.remove(customImporter);
     this.addImporter(customImporter);

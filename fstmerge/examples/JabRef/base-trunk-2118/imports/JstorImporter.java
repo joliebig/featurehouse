@@ -10,40 +10,25 @@ import net.sf.jabref.BibtexEntryType;
 import net.sf.jabref.Util;
 import net.sf.jabref.AuthorList;
 
-/**
- * Imports a Biblioscape Tag File. The format is described on
- * http://www.biblioscape.com/manual_bsp/Biblioscape_Tag_File.htm Several
- * Biblioscape field types are ignored. Others are only included in the BibTeX
- * field "comment".
- */
+
 public class JstorImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
     return "JStor (tab delimited)";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "jstor";
     }
     
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream in) throws IOException {
     return true;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List importEntries(InputStream stream) throws IOException {
     ArrayList bibitems = new ArrayList();
     String s = "";
@@ -71,8 +56,8 @@ public class JstorImporter extends ImportFormat {
                 datefield[0] = datefield[0].substring(0, datefield[0].length()-1);
             ImportFormatReader.setIfNecessary(be, "month", datefield[0]);
         }
-        //for (int i=0; i<fields.length; i++)
-        //  Util.pr(i+": "+fields[i]);
+        
+        
         ImportFormatReader.setIfNecessary(be, "pages", fields[13].replaceAll("-", "--"));
         ImportFormatReader.setIfNecessary(be, "url", fields[14]);
         ImportFormatReader.setIfNecessary(be, "issn", fields[15]);

@@ -10,10 +10,7 @@ import java.io.File;
 import java.util.*;
 import net.sf.jabref.BasePanel;
 
-/**
- * Runnable task that prompts the user for what to do about files loaded at startup,
- * where an autosave file was found. The task should be run on the EDT after startup.
- */
+
 public class AutosaveStartupPrompter implements Runnable {
     private JabRefFrame frame;
     private List<File> files;
@@ -98,10 +95,7 @@ public class AutosaveStartupPrompter implements Runnable {
             }
         }
         
-        /*for (int i = 0; i < loaded.size(); i++) {
-            ParserResult pr = loaded.get(i);
-            
-        }*/
+        
 
 
     }

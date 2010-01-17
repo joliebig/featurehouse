@@ -1,8 +1,4 @@
-/*  
- * StrictDuplicateSearch.java
- *
- * Created on November 4, 2004, 11:59 PM
- */
+
 
 package net.sf.jabref;
 
@@ -12,15 +8,12 @@ import net.sf.jabref.undo.UndoableRemoveEntry;
 import java.util.HashSet;
 import java.util.Iterator;
 
-/**
- *
- * @author  alver
- */
+
 public class StrictDuplicateSearch extends Thread {
     
     BasePanel panel;
     
-    /** Creates a new instance of StrictDuplicateSearch */
+    
     public StrictDuplicateSearch(BasePanel bp) {
         this.panel = bp;
         
@@ -40,10 +33,10 @@ public class StrictDuplicateSearch extends Thread {
         
         for (int i = 0; i<bes.length-1; i++) {
             for (int j = i + 1; j<bes.length; j++) {
-                // We only check the entries if none of the two are already marked for removal.
+                
                 if (!toRemove.contains(bes[i]) && !toRemove.contains(bes[j]) && 
                     Util.compareEntriesStrictly(bes[i], bes[j]) > 1) {
-                    // These two entries are exactly the same, so we can remove one.                    
+                    
                     if (!toRemove.contains(bes[i]) && !toRemove.contains(bes[j])) {
                         toRemove.add(bes[j]);
                     }
@@ -56,7 +49,7 @@ public class StrictDuplicateSearch extends Thread {
             return;
         }
                
-        // Finished searching. Now, remove all entries scheduled for removal:
+        
         int answer = JOptionPane.showConfirmDialog(panel.frame(), Globals.lang("Duplicates found")+": "+
             toRemove.size()+". "+Globals.lang("Remove all?"), Globals.lang("Remove duplicates"),
             JOptionPane.OK_CANCEL_OPTION);

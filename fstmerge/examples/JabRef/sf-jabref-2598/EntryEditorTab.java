@@ -1,27 +1,4 @@
-/*
- * Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
- *
- * All programs in this directory and subdirectories are published under the GNU
- * General Public License as described below.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- *
- * Further information about the GNU GPL is available at:
- * http://www.gnu.org/copyleft/gpl.ja.html
- *
- */
+
 package net.sf.jabref;
 
 import java.awt.*;
@@ -44,13 +21,7 @@ import net.sf.jabref.gui.FileListEditor;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * A single tab displayed in the EntryEditor holding several FieldEditors.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:11:16 $)
- * 
- */
+
 public class EntryEditorTab {
 
 	private JPanel panel = new JPanel();
@@ -74,10 +45,7 @@ public class EntryEditorTab {
 
 		setupPanel(frame, panel, addKeyField, name);
 
-		/*
-		 * The following line makes sure focus cycles inside tab instead of
-		 * being lost to other parts of the frame:
-		 */
+		
 		panel.setFocusCycleRoot(true);
 	}
 
@@ -111,7 +79,7 @@ public class EntryEditorTab {
     	
     	  	
         panel.setName(title);
-        //String rowSpec = "left:pref, 4dlu, fill:pref:grow, 4dlu, fill:pref";
+        
         String colSpec = "fill:pref, 1dlu, fill:pref:grow, 1dlu, fill:pref";
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < fields.length; i++) {
@@ -127,7 +95,7 @@ public class EntryEditorTab {
                 (new FormLayout(colSpec, rowSpec), panel);
 
         for (int i = 0; i < fields.length; i++) {
-            // Create the text area:
+            
             int editorType = BibtexFields.getEditorType(fields[i]);
 
             final FieldEditor ta;
@@ -139,17 +107,17 @@ public class EntryEditorTab {
             JComponent ex = parent.getExtra(fields[i], ta);
             setupJTextComponent(ta.getTextComponent());
 
-            // Add autocompleter listener, if required for this field:
+            
             AutoCompleter autoComp = bPanel.getAutoCompleter(fields[i]);
             if (autoComp != null) {
                 ta.getTextComponent().addKeyListener(new AutoCompleteListener(autoComp));
             }
 
-            // Store the editor for later reference:
+            
             editors.put(fields[i], ta);
             if (i == 0)
                 activeField = ta;
-            //System.out.println(fields[i]+": "+BibtexFields.getFieldWeight(fields[i]));
+            
             ta.getPane().setPreferredSize(new Dimension(100,
                     (int)(50.0*BibtexFields.getFieldWeight(fields[i]))));
             builder.append(ta.getLabel());
@@ -165,17 +133,14 @@ public class EntryEditorTab {
             builder.nextLine();
         }
 
-        // Add the edit field for Bibtex-key.
+        
 		if (addKeyField) {
 			final FieldTextField tf = new FieldTextField(BibtexFields.KEY_FIELD, parent
 				.getEntry().getField(BibtexFields.KEY_FIELD), true);
 			setupJTextComponent(tf);
 
 			editors.put("bibtexkey", tf);
-			/*
-			 * If the key field is the only field, we should have only one
-			 * editor, and this one should be set as active initially:
-			 */
+			
 			if (editors.size() == 1)
 				activeField = tf;
             builder.nextLine();
@@ -203,8 +168,8 @@ public class EntryEditorTab {
 	}
 
 	public void markIfModified(FieldEditor f) {
-		// Only mark as changed if not already is and the field was indeed
-		// modified
+		
+		
 		if (!updating && !parent.panel.isBaseChanged() && isFieldModified(f)) {
 			markBaseChanged();
 		}
@@ -214,13 +179,7 @@ public class EntryEditorTab {
 		parent.panel.markBaseChanged();
 	}
 
-	/**
-	 * Only sets the activeField variable but does not focus it.
-	 * 
-	 * Call activate afterwards.
-	 * 
-	 * @param c
-	 */
+	
 	public void setActive(FieldEditor c) {
 		activeField = c;
 	}
@@ -235,17 +194,12 @@ public class EntryEditorTab {
 
 	public void activate() {
 		if (activeField != null){
-			/**
-			 * Corrected to fix [ 1594169 ] Entry editor: navigation between panels
-			 */
+			
 			new FocusRequester(activeField.getTextComponent());
 		}
 	}
 
-	/**
-	 * Reset all fields from the data in the BibtexEntry.
-	 * 
-	 */
+	
 	public void updateAll() {
 		setEntry(getEntry());
 	}
@@ -299,11 +253,7 @@ public class EntryEditorTab {
 		return panel;
 	}
 
-	/**
-	 * Set up key bindings and focus listener for the FieldEditor.
-	 * 
-	 * @param component
-	 */
+	
 	public void setupJTextComponent(final JComponent component) {
 
 		component.addFocusListener(fieldListener);
@@ -350,12 +300,7 @@ public class EntryEditorTab {
 
     }
 
-	/*
-	 * Focus listener that fires the storeFieldAction when a FieldTextArea loses
-	 * focus.
-	 * 
-	 * TODO: It would be nice to test this thoroughly.
-	 */
+	
 	FocusListener fieldListener = new FocusListener() {
 	
 		JTextComponent c;
@@ -374,10 +319,7 @@ public class EntryEditorTab {
 				if (e.getSource() instanceof JTextComponent) {
 
 					c = (JTextComponent) e.getSource();
-					/**
-					 * [ 1553552 ] Not properly detecting changes to flag as
-					 * changed
-					 */
+					
 					d = new DocumentListener() {
 
 						void fire(DocumentEvent e) {

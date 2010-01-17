@@ -1,44 +1,39 @@
-///////////////////////////////////////////////////////////////////////////////
-//  Filename: $RCSfile: CreateDocBookEditors.java,v $
-//  Purpose:  Atom representation.
-//  Language: Java
-//  Compiler: JDK 1.4
-//  Authors:  Joerg K. Wegner
-//  Version:  $Revision: 1.1 $
-//            $Date: 2010-01-17 00:03:48 $
-//            $Author: apel $
-//
-//  Copyright (c) Dept. Computer Architecture, University of Tuebingen, Germany
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation version 2 of the License.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 package net.sf.jabref.export.layout.format;
 
 
 
-/**
- * Create DocBook editors formatter.
- *
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class CreateDocBookEditors extends CreateDocBookAuthors
 {
-    //~ Methods ////////////////////////////////////////////////////////////////
+    
 
     public String format(String fieldText)
     {
-        //		<editor><firstname>L.</firstname><surname>Xue</surname></editor>
+        
 
         StringBuffer sb = new StringBuffer(100);
-        //fieldText = (new ConvertSpecialCharactersForXML()).format(fieldText);
+        
 
         if (fieldText.indexOf(" and ") == -1)
         {
@@ -65,6 +60,6 @@ public class CreateDocBookEditors extends CreateDocBookAuthors
     }
 
 }
-///////////////////////////////////////////////////////////////////////////////
-//  END OF FILE.
-///////////////////////////////////////////////////////////////////////////////
+
+
+

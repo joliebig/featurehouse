@@ -73,13 +73,13 @@ public class ContentSelectorDialog2 extends JDialog {
         doInit();
     }
     
-    /** Called from constructors */
+    
     private void doInit() {
-        //help = new JButton(Globals.lang("Help"));
-        //help.addActionListener(new HelpAction(frame.helpDiag, GUIGlobals.contentSelectorHelp, "Help"));
-        //help = new HelpAction(frame.helpDiag, GUIGlobals.contentSelectorHelp, "Help");
+        
+        
+        
         initLayout();
-        //  wordSelector.addItem(WORD_EMPTY_TEXT);
+        
     
         setupFieldSelector();
         setupWordSelector();
@@ -114,7 +114,7 @@ public class ContentSelectorDialog2 extends JDialog {
                 String old = (String)wordList.getSelectedValue(),
             	newVal = wordEditField.getText();
                 if (newVal.equals("") || newVal.equals(old))
-                    return; // Empty string or no change.
+                    return; 
                 int newIndex = findPos(wordListModel, newVal);
                 if (index >= 0) {
                     wordListModel.remove(index);
@@ -174,7 +174,7 @@ public class ContentSelectorDialog2 extends JDialog {
 		    fieldNameField.setText("");
 		    fieldNameField.setEnabled(false);
 		    if (!FIELD_FIRST_LINE.equals(s) && !"".equals(s)) {
-			// Add new field.
+			
 			int pos = findPos(fieldListModel, s);
 			fieldListModel.remove(0);
 			fieldListModel.add(Math.max(0, pos-1), s);
@@ -182,7 +182,7 @@ public class ContentSelectorDialog2 extends JDialog {
 			currentField = s;
 			setupWordSelector();
 			newWordAction();
-			//new FocusRequester(wordEditField);
+			
 		    }
 		}
 	    });
@@ -217,7 +217,7 @@ public class ContentSelectorDialog2 extends JDialog {
 
 	apply.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-            // Store if an entry is currently being edited:
+            
             if (!wordEditField.getText().equals("")) {
                 wordEditFieldListener.actionPerformed(null);
             }
@@ -243,26 +243,26 @@ public class ContentSelectorDialog2 extends JDialog {
 
 
     private void applyChanges() {
-	boolean changedFieldSet = false; // Watch if we need to rebuild entry editors
+	boolean changedFieldSet = false; 
 
-	// First remove the mappings for fields that have been deleted.
-	// If these were re-added, they will be added below, so it doesn't
-	// cause any harm to remove them here.
+	
+	
+	
 	for (Iterator<String> i=removedFields.iterator(); i.hasNext();) {
 	    String fieldName = i.next();
 	    metaData.remove(Globals.SELECTOR_META_PREFIX+fieldName);
 	    changedFieldSet = true;
 	}
 
-	// Cycle through all fields that we have created listmodels for:
+	
 	loop: for (Iterator<String> i=wordListModels.keySet().iterator(); i.hasNext();) {
-	    // For each field name, store the values:
+	    
 	    String fieldName = i.next();
 	    if ((fieldName == null) || FIELD_FIRST_LINE.equals(fieldName))
 		continue loop;
 	    DefaultListModel lm = wordListModels.get(fieldName);
 	    int start = 0;
-	    // Avoid storing the <new word> marker if it is there:
+	    
 	    if (lm.size() > 0)
 		while ((start<lm.size()) && ((String)lm.get(start)).equals(WORD_FIRSTLINE_TEXT))
 		    start++;
@@ -283,10 +283,10 @@ public class ContentSelectorDialog2 extends JDialog {
 		metaData.putData(Globals.SELECTOR_META_PREFIX+fieldName, data);
 	}
 
-	// System.out.println("TODO: remove metadata for removed selector field.");
+	
 	panel.markNonUndoableBaseChanged();
 
-	// Update all selectors in the current BasePanel.
+	
 	if (!changedFieldSet)
 	    panel.updateAllContentSelectors();
 	else {
@@ -296,10 +296,7 @@ public class ContentSelectorDialog2 extends JDialog {
         
     }
 
-    /**
-     * Set the contents of the field selector list.
-     *
-     */
+    
     private void setupFieldSelector() {
 		fieldListModel.clear();
 		for (String s : metaData){
@@ -311,7 +308,7 @@ public class ContentSelectorDialog2 extends JDialog {
 
     private void setupWordSelector() {
 
-		// Have we already created a listmodel for this field?
+		
 		Object o = wordListModels.get(currentField);
 		if (o != null) {
 			wordListModel = (DefaultListModel) o;
@@ -321,10 +318,10 @@ public class ContentSelectorDialog2 extends JDialog {
 			wordList.setModel(wordListModel);
 			wordListModels.put(currentField, wordListModel);
 			wordListModel.clear();
-			// wordListModel.addElement(WORD_FIRSTLINE_TEXT);
+			
 			Vector<String> items = metaData
 				.getData(Globals.SELECTOR_META_PREFIX + currentField);
-			if ((items != null)) { // && (items.size() > 0)) {
+			if ((items != null)) { 
 				wordSet = new TreeSet<String>(items);
 				for (String s : wordSet){
 					int index = findPos(wordListModel, s);
@@ -337,7 +334,7 @@ public class ContentSelectorDialog2 extends JDialog {
     private int findPos(DefaultListModel lm, String item) {
 	for (int i=0; i<lm.size(); i++) {
 	    String s = (String)lm.get(i);
-	    if (item.compareToIgnoreCase(s) < 0) { // item precedes s
+	    if (item.compareToIgnoreCase(s) < 0) { 
 		return i;
 	    }
 	}
@@ -373,7 +370,7 @@ public class ContentSelectorDialog2 extends JDialog {
 	wordPan.add(wPane);
 	con.gridwidth = 1;
 	con.gridx = 2;
-	//con.weightx = 0.7;
+	
 	con.gridheight = 2;
 	gbl.setConstraints(fieldNamePan, con);
 	fieldPan.add(fieldNamePan);
@@ -392,7 +389,7 @@ public class ContentSelectorDialog2 extends JDialog {
 	gbl.setConstraints(newWord, con);
 	wordPan.add(newWord);
 	con.gridx = 1;
-	//con.anchor = GridBagConstraints.EAST;
+	
 	gbl.setConstraints(removeField, con);
 	fieldPan.add(removeField);
 	gbl.setConstraints(removeWord, con);
@@ -405,7 +402,7 @@ public class ContentSelectorDialog2 extends JDialog {
 	gbl.setConstraints(wordEditField, con);
 	wordEditPan.add(wordEditField);
 
-	// Add buttons:
+	
         ButtonBarBuilder bsb = new ButtonBarBuilder(buttonPan);
         bsb.addGlue();
         bsb.addGridded(ok);
@@ -415,7 +412,7 @@ public class ContentSelectorDialog2 extends JDialog {
         bsb.addGridded(help);
         bsb.addGlue();
 
-    // Add panels to dialog:
+    
 	con.fill = GridBagConstraints.BOTH;
 	getContentPane().setLayout(gbl);
 	con.weightx = 1;

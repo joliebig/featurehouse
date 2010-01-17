@@ -13,9 +13,7 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.Util;
 import net.sf.jabref.AuthorList;
 
-/**
- * Imports an Ovid file.
- */
+
 public class OvidImporter extends ImportFormat {
 
     public static Pattern ovid_src_pat = Pattern
@@ -33,36 +31,26 @@ public class OvidImporter extends ImportFormat {
     public static Pattern book_pat = Pattern.compile(
                 "\\(([0-9][0-9][0-9][0-9])\\)\\. [A-Za-z, ]+([0-9]+) pp\\. ([\\w, ]+): ([\\w, ]+)");
 
-    //   public static Pattern ovid_pat_inspec= Pattern.compile("Source ([
-    // \\w&\\-]+)");
+    
+    
 
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
     return "Ovid";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "ovid";
     }
     
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream in) throws IOException {
     return true;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
     ArrayList<BibtexEntry> bibitems = new ArrayList<BibtexEntry>();
     StringBuffer sb = new StringBuffer();
@@ -86,16 +74,16 @@ public class OvidImporter extends ImportFormat {
             String fieldName = fields[j].substring(0, linebreak).trim();
             String content = fields[j].substring(linebreak).trim();
 
-            // Check if this is the author field (due to a minor special treatment for this field):
+            
             boolean isAuthor = fieldName.indexOf("Author") == 0
                 && fieldName.indexOf("Author Keywords") == -1
                 && fieldName.indexOf("Author e-mail") == -1;
 
-            // Remove unnecessary dots at the end of lines, unless this is the author field,
-            // in which case a dot at the end could be significant:
+            
+            
             if (!isAuthor && content.endsWith("."))
                     content = content.substring(0, content.length()-1);
-            //fields[j] = fields[j].trim();
+            
             if (isAuthor) {
 
                 h.put("author", content);
@@ -110,10 +98,10 @@ public class OvidImporter extends ImportFormat {
 
         else if (fieldName.indexOf("Chapter Title") == 0) h.put("chaptertitle", content);
 
-        // The "Source" field is a complete mess - it can have several different formats,
-        // but since it can contain journal name, book title, year, month, volume etc. we
-        // must try to parse it. We use different regular expressions to check different
-        // possible formattings.
+        
+        
+        
+        
         else if (fieldName.indexOf("Source") == 0){
                 Matcher matcher;
             if ((matcher = ovid_src_pat.matcher(content)).find()) {
@@ -122,7 +110,7 @@ public class OvidImporter extends ImportFormat {
             h.put("issue", matcher.group(3));
             h.put("pages", matcher.group(4));
             h.put("year", matcher.group(5));
-            } else if ((matcher = ovid_src_pat_no_issue.matcher(content)).find()) {// may be missing the issue
+            } else if ((matcher = ovid_src_pat_no_issue.matcher(content)).find()) {
                 h.put("journal", matcher.group(1));
                 h.put("volume", matcher.group(2));
                 h.put("pages", matcher.group(3));
@@ -150,7 +138,7 @@ public class OvidImporter extends ImportFormat {
                 h.put("publisher", matcher.group(4));
 
             }
-            // Add double hyphens to page ranges:
+            
             if (h.get("pages") != null) {
                 h.put("pages", h.get("pages").replaceAll("-", "--"));
             }
@@ -168,15 +156,15 @@ public class OvidImporter extends ImportFormat {
         }
         }
 
-        // Now we need to check if a book entry has given editors in the author field;
-        // if so, rearrange:
+        
+        
         String auth = h.get("author");
         if ((auth != null) && (auth.indexOf(" [Ed]") >= 0)) {
             h.remove("author");
             h.put("editor", auth.replaceAll(" \\[Ed\\]", ""));
         }
 
-        // Rearrange names properly:
+        
         auth = h.get("author");
         if (auth != null)
             h.put("author", fixNames(auth));
@@ -186,14 +174,14 @@ public class OvidImporter extends ImportFormat {
 
 
 
-        // Set the entrytype properly:
+        
         String entryType = h.containsKey("entrytype") ? h.get("entrytype") : "other";
         h.remove("entrytype");
         if (entryType.equals("book")) {
             if (h.containsKey("chaptertitle")) {
-                // This means we have an "incollection" entry.
+                
                 entryType = "incollection";
-                // Move the "chaptertitle" to just "title":
+                
                 h.put("title", h.remove("chaptertitle"));
             }
         }
@@ -207,14 +195,10 @@ public class OvidImporter extends ImportFormat {
     return bibitems;
     }
 
-    /**
-     * Convert a string of author names into a BibTeX-compatible format.
-     * @param content The name string.
-     * @return The formatted names.
-     */
+    
     private String fixNames(String content) {
         String names;
-        if (content.indexOf(";") > 0){ //LN FN; [LN FN;]*
+        if (content.indexOf(";") > 0){ 
             names = content.replaceAll("[^\\.A-Za-z,;\\- ]", "").replaceAll(";", " and");
         } else if (content.indexOf("  ") > 0) {
             String[] sNames = content.split("  ");

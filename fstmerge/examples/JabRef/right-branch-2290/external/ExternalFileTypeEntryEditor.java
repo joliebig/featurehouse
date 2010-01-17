@@ -19,9 +19,7 @@ import java.awt.event.FocusEvent;
 import java.awt.*;
 import java.io.File;
 
-/**
- * This class produces a dialog box for editing an external file type.
- */
+
 public class ExternalFileTypeEntryEditor {
 
     JFrame fParent = null;
@@ -85,13 +83,13 @@ public class ExternalFileTypeEntryEditor {
             application.setPreferredSize(new Dimension(300, application.getPreferredSize().height));
             BorderLayout bl = new BorderLayout();
             bl.setHgap(4);
-            //b2.append(other);
-            //b2.append(application);
+            
+            
             p2.setLayout(bl);
             p2.add(other, BorderLayout.WEST);
             p2.add(application, BorderLayout.CENTER);
             builder.append(p2);
-            //builder.append(b2.getPanel());
+            
             builder.append(browseBut);
         } else {
             builder.append(application);
@@ -127,7 +125,7 @@ public class ExternalFileTypeEntryEditor {
                     selectedIcon = ic.getSelectedIconKey();
                     icon.setIcon(GUIGlobals.getImage(selectedIcon));
                 }
-                //JOptionPane.showMessageDialog(null, "Sorry, the icon can unfortunately not be changed in this version of JabRef");
+                
             }
         });
 
@@ -169,7 +167,7 @@ public class ExternalFileTypeEntryEditor {
             diag.setLocationRelativeTo(dParent);
         else
             diag.setLocationRelativeTo(fParent);
-        //Util.placeDialog(diag, parent);
+        
 
         setValues(entry);
     }
@@ -205,8 +203,8 @@ public class ExternalFileTypeEntryEditor {
         if (!Globals.ON_WIN) {
             entry.setOpenWith(application.getText().trim());
         } else {
-            // On Windows, store application as empty if the "Default" option is selected,
-            // or if the application name is empty:
+            
+            
             if (useDefault.isSelected() || (application.getText().trim().length() == 0))
                 entry.setOpenWith("");
             else
@@ -230,14 +228,14 @@ public class ExternalFileTypeEntryEditor {
         public void actionPerformed(ActionEvent e) {
             File initial = new File(comp.getText().trim());
             if (comp.getText().trim().length() == 0) {
-                // Nothing in the field. Go to the last file dir used:
+                
                 initial = new File(Globals.prefs.get("fileWorkingDirectory"));
             }
-            String chosen = Globals.getNewFile(/*parent*/null, initial, Globals.NONE,
+            String chosen = Globals.getNewFile(null, initial, Globals.NONE,
                 JFileChooser.OPEN_DIALOG, false);
             if (chosen != null) {
                 File newFile = new File(chosen);
-                // Store the directory for next time:
+                
                 Globals.prefs.put("fileWorkingDirectory", newFile.getParent());
                 comp.setText(newFile.getPath());
                 comp.requestFocus();

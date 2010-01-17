@@ -13,9 +13,7 @@ import java.util.Set;
 import java.io.IOException;
 import java.io.File;
 
-/**
- * ExportFormat for exporting in MODS XML format.
- */
+
 class ModsExportFormat extends ExportFormat {
     public ModsExportFormat() {
         super(Globals.lang("MODS"), "mods", null, null, ".xml");
@@ -27,7 +25,7 @@ class ModsExportFormat extends ExportFormat {
         VerifyingWriter ps = ss.getWriter();
         MODSDatabase md = new MODSDatabase(database, keySet);
 
-        // PS: DOES NOT SUPPORT EXPORTING ONLY A SET OF ENTRIES
+        
 
         try {
             DOMSource source = new DOMSource(md.getDOMrepresentation());

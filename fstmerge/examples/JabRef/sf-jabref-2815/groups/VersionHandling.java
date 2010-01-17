@@ -1,24 +1,4 @@
-/*
- All programs in this directory and subdirectories are published under the 
- GNU General Public License as described below.
 
- This program is free software; you can redistribute it and/or modify it 
- under the terms of the GNU General Public License as published by the Free 
- Software Foundation; either version 2 of the License, or (at your option) 
- any later version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT 
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
- more details.
-
- You should have received a copy of the GNU General Public License along 
- with this program; if not, write to the Free Software Foundation, Inc., 59 
- Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
- */
 
 package net.sf.jabref.groups;
 
@@ -28,21 +8,11 @@ import net.sf.jabref.BibtexDatabase;
 import net.sf.jabref.Globals;
 import net.sf.jabref.Util;
 
-/**
- * Handles versioning of groups, e.g. automatic conversion from previous to
- * current versions, or import of flat groups (JabRef <= 1.6) to tree.
- * 
- * @author jzieren (10.04.2005)
- */
+
 public class VersionHandling {
     public static final int CURRENT_VERSION = 3;
 
-    /**
-     * Imports old (flat) groups data and converts it to a 2-level tree with an
-     * AllEntriesGroup at the root.
-     * 
-     * @return the root of the generated tree.
-     */
+    
     public static GroupTreeNode importFlatGroups(Vector<String> groups)
             throws IllegalArgumentException {
         GroupTreeNode root = new GroupTreeNode(new AllEntriesGroup());
@@ -75,16 +45,9 @@ public class VersionHandling {
         }
     }
 
-    /** Imports groups version 0 and 1. */
+    
     private static class Version0_1 {
-        /**
-         * Parses the textual representation obtained from
-         * GroupTreeNode.toString() and recreates that node and all of its
-         * children from it.
-         * 
-         * @throws Exception
-         *             When a group could not be recreated
-         */
+        
         private static GroupTreeNode fromString(String s, BibtexDatabase db,
                 int version) throws Exception {
             GroupTreeNode root = null;
@@ -95,10 +58,10 @@ public class VersionHandling {
                 if (s.startsWith("(")) {
                     String subtree = getSubtree(s);
                     newNode = fromString(subtree, db, version);
-                    // continue after this subtree by removing it
-                    // and the leading/trailing braces, and
-                    // the comma (that makes 3) that always trails it
-                    // unless it's at the end of s anyway.
+                    
+                    
+                    
+                    
                     i = 3 + subtree.length();
                     s = i >= s.length() ? "" : s.substring(i);
                 } else {
@@ -111,7 +74,7 @@ public class VersionHandling {
                     newNode = new GroupTreeNode(AbstractGroup.fromString(Util
                             .unquote(g, '\\'), db, version));
                 }
-                if (root == null) // first node will be root
+                if (root == null) 
                     root = newNode;
                 else
                     root.add(newNode);
@@ -119,12 +82,7 @@ public class VersionHandling {
             return root;
         }
 
-        /**
-         * Returns the substring delimited by a pair of matching braces, with
-         * the first brace at index 0. Quoted characters are skipped.
-         * 
-         * @return the matching substring, or "" if not found.
-         */
+        
         private static String getSubtree(String s) {
             int i = 1;
             int level = 1;
@@ -147,22 +105,12 @@ public class VersionHandling {
             return "";
         }
 
-        /**
-         * Returns the index of the first occurence of c, skipping quoted
-         * special characters (escape character: '\\').
-         * 
-         * @param s
-         *            The String to search in.
-         * @param c
-         *            The character to search
-         * @return The index of the first unescaped occurence of c in s, or -1
-         *         if not found.
-         */
+        
         private static int indexOfUnquoted(String s, char c) {
             int i = 0;
             while (i < s.length()) {
                 if (s.charAt(i) == '\\') {
-                    ++i; // skip quoted special
+                    ++i; 
                 } else {
                     if (s.charAt(i) == c)
                         return i;
@@ -187,17 +135,17 @@ public class VersionHandling {
                 s = data.elementAt(i).toString();
                 spaceIndex = s.indexOf(' ');
                 if (spaceIndex <= 0)
-                    throw new Exception("bad format"); // JZTODO lyrics
+                    throw new Exception("bad format"); 
                 level = Integer.parseInt(s.substring(0, spaceIndex));
                 group = AbstractGroup.fromString(s.substring(spaceIndex + 1),
                         db, version);
                 newNode = new GroupTreeNode(group);
                 if (cursor == null) {
-                    // create new root
+                    
                     cursor = newNode;
                     root = cursor;
                 } else {
-                    // insert at desired location
+                    
                     while (level <= cursor.getLevel())
                         cursor = (GroupTreeNode) cursor.getParent();
                     cursor.add(newNode);

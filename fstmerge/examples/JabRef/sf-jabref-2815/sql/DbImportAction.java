@@ -14,13 +14,7 @@ import net.sf.jabref.MetaData;
 import net.sf.jabref.MnemonicAwareAction;
 import net.sf.jabref.Util;
 
-/**
- * Created by IntelliJ IDEA.
-* User: alver
-* Date: Mar 27, 2008
-* Time: 6:09:08 PM
-* To change this template use File | Settings | File Templates.
-*/
+
 public class DbImportAction extends AbstractWorker {
 
     BibtexDatabase database = null;
@@ -53,31 +47,31 @@ public class DbImportAction extends AbstractWorker {
         }
     }
 
-    // run first, in EDT:
+    
     public void init() {
 
         dbs = new DBStrings();
         dbs.initialize();
         DBConnectDialog dbd = new DBConnectDialog(frame, dbs);
         dbs = dbd.getDBStrings();
-                //panel.metaData().getDBStrings();
+                
 
-        // get DBStrings from user if necessary
+        
         if (!dbs.isConfigValid()) {
 
-            // init DB strings if necessary
+            
             if (! dbs.isInitialized()) {
                 dbs.initialize();
             }
 
-            // show connection dialog
+            
             dbd = new DBConnectDialog(frame, dbs);
             Util.placeDialog(dbd, frame);
             dbd.setVisible(true);
 
             connectToDB = dbd.getConnectToDB();
 
-            // store database strings
+            
             if (connectToDB) {
                 dbs = dbd.getDBStrings();
                 dbd.dispose();
@@ -91,7 +85,7 @@ public class DbImportAction extends AbstractWorker {
 
     }
 
-    // run second, on a different thread:
+    
     public void run() {
 
         if (connectToDB) {
@@ -115,7 +109,7 @@ public class DbImportAction extends AbstractWorker {
 
     }
 
-    // run third, on EDT:
+    
     public void update() {
 
         if (database != null) {
@@ -125,29 +119,7 @@ public class DbImportAction extends AbstractWorker {
             pan.metaData().setDBStrings(dbs);
             return;
         }
-        /*String url = SQLutil.createJDBCurl(metaData.getDBStrings());
-
-        // if no error, report success
-        if (errorMessage == null) {
-            if (connectToDB) {
-                frame.output(Globals.lang("%0 export successful", url));
-            }
-        }
-
-        // show an error dialog if an error occurred
-        else {
-
-            String preamble = "Could not export to SQL database for the following reason:";
-            frame.output(Globals.lang(preamble)
-                    + "  " + errorMessage);
-
-            JOptionPane.showMessageDialog(frame, Globals.lang(preamble)
-                + "\n" + errorMessage, Globals.lang("Export to SQL database"),
-                JOptionPane.ERROR_MESSAGE);
-
-            errorMessage = null;
-
-        } */
+        
     }
 
 }

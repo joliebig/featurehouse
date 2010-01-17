@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 
 package net.sf.jabref;
 
@@ -63,19 +38,19 @@ public class JabRefPreferences {
     private static final LabelPattern KEY_PATTERN = new DefaultLabelPatterns();
     private static LabelPattern keyPattern;
 
-    // Object containing custom export formats:
+    
     public CustomExportList customExports;
 
-    /** Set with all custom {@link net.sf.jabref.imports.ImportFormat}s */
+    
     public CustomImportList customImports;
 
-    // Object containing info about customized entry editor tabs.
+    
     private EntryEditorTabList tabList = null;
 
-    // Map containing all registered external file types:
+    
     private TreeSet externalFileTypes = new TreeSet();
 
-    // The only instance of this class:
+    
     private static JabRefPreferences singleton = null;
 
     public static JabRefPreferences getInstance() {
@@ -84,11 +59,11 @@ public class JabRefPreferences {
 		return singleton;
 	}
 
-    // The constructor is made private to enforce this as a singleton class:
+    
     private JabRefPreferences() {
 
         prefs = Preferences.userNodeForPackage(JabRef.class);
-        //Util.pr(prefs.toString());
+        
         
         if (Globals.osName.equals(Globals.MAC)) {
 			defaults.put("pdfviewer", "/Applications/Preview.app");
@@ -190,27 +165,27 @@ public class JabRefPreferences {
         defaults.put("groupsVisibleRows", new Integer(8));
         defaults.put("defaultOwner", System.getProperty("user.name"));
         defaults.put("preserveFieldFormatting", Boolean.FALSE);
-    // The general fields stuff is made obsolete by the CUSTOM_TAB_... entries.
+    
         defaults.put("generalFields", "crossref;keywords;file;doi;url;urldate;citeseerurl;"+
                      "pdf;comment;owner");
 
         defaults.put("useCustomIconTheme", Boolean.FALSE);
         defaults.put("customIconThemeFile", "/home/alver/div/crystaltheme_16/Icons.properties");
 
-    // Entry editor tab 0:
+    
     defaults.put(CUSTOM_TAB_NAME+"_def0", Globals.lang("General"));
         defaults.put(CUSTOM_TAB_FIELDS+"_def0", "crossref;keywords;doi;url;citeseerurl;"+
                      "pdf;comment;owner;timestamp");
 
-    // Entry editor tab 1:
+    
         defaults.put(CUSTOM_TAB_FIELDS+"_def1", "abstract");
     defaults.put(CUSTOM_TAB_NAME+"_def1", Globals.lang("Abstract"));
 
-  // Entry editor tab 2: Review Field - used for research comments, etc.
+  
         defaults.put(CUSTOM_TAB_FIELDS+"_def2", "review");
     defaults.put(CUSTOM_TAB_NAME+"_def2", Globals.lang("Review"));
 
-        //defaults.put("recentFiles", "/home/alver/Documents/bibk_dok/hovedbase.bib");
+        
         defaults.put("historySize", new Integer(8));
         defaults.put("fontFamily", "Times");
         defaults.put("fontStyle", new Integer(java.awt.Font.PLAIN));
@@ -219,7 +194,7 @@ public class JabRefPreferences {
         defaults.put("menuFontFamily", "Times");
         defaults.put("menuFontStyle", new Integer(java.awt.Font.PLAIN));
         defaults.put("menuFontSize", new Integer(11));
-        // Main table color settings:
+        
         defaults.put("tableBackground", "255:255:255");
         defaults.put("tableReqFieldBackground", "230:235:255");
         defaults.put("tableOptFieldBackground", "230:255:230");
@@ -258,7 +233,7 @@ public class JabRefPreferences {
                      +"\\begin{title} \\format[HTMLChars]{\\title} \\end{title}<BR>__NEWLINE__"
                      +"\\begin{chapter} \\format[HTMLChars]{\\chapter}<BR>\\end{chapter}__NEWLINE__"
                      +"\\begin{journal} <em>\\format[HTMLChars]{\\journal}, </em>\\end{journal}__NEWLINE__"
-                     // Include the booktitle field for @inproceedings, @proceedings, etc.
+                     
                      +"\\begin{booktitle} <em>\\format[HTMLChars]{\\booktitle}, </em>\\end{booktitle}__NEWLINE__"
                      +"\\begin{school} <em>\\format[HTMLChars]{\\school}, </em>\\end{school}__NEWLINE__"
                      +"\\begin{institution} <em>\\format[HTMLChars]{\\institution}, </em>\\end{institution}__NEWLINE__"
@@ -275,7 +250,7 @@ public class JabRefPreferences {
                      +"\\begin{title} \\format[HTMLChars]{\\title} \\end{title}<BR>__NEWLINE__"
                      +"\\begin{chapter} \\format[HTMLChars]{\\chapter}<BR>\\end{chapter}__NEWLINE__"
                      +"\\begin{journal} <em>\\format[HTMLChars]{\\journal}, </em>\\end{journal}__NEWLINE__"
-                     // Include the booktitle field for @inproceedings, @proceedings, etc.
+                     
                      +"\\begin{booktitle} <em>\\format[HTMLChars]{\\booktitle}, </em>\\end{booktitle}__NEWLINE__"
                      +"\\begin{school} <em>\\format[HTMLChars]{\\school}, </em>\\end{school}__NEWLINE__"
                      +"\\begin{institution} <em>\\format[HTMLChars]{\\institution}, </em>\\end{institution}__NEWLINE__"
@@ -288,7 +263,7 @@ public class JabRefPreferences {
         defaults.put("autoDoubleBraces", Boolean.FALSE);
         defaults.put("doNotResolveStringsFor", "url");
         defaults.put("resolveStringsAllFields", Boolean.FALSE);
-        defaults.put("putBracesAroundCapitals","");//"title;journal;booktitle;review;abstract");
+        defaults.put("putBracesAroundCapitals","");
         defaults.put("nonWrappableFields", "pdf;ps;url;doi");
         defaults.put("useImportInspectionDialog", Boolean.TRUE);
         defaults.put("useImportInspectionDialogForSingle", Boolean.FALSE);
@@ -296,7 +271,7 @@ public class JabRefPreferences {
         defaults.put("warnAboutDuplicatesInInspection", Boolean.TRUE);
         defaults.put("useTimeStamp", Boolean.TRUE);
         defaults.put("timeStampFormat", "yyyy.MM.dd");
-//        defaults.put("timeStampField", "timestamp");
+
         defaults.put("timeStampField", BibtexFields.TIMESTAMP);
         defaults.put("generateKeysBeforeSaving", Boolean.FALSE);
 
@@ -318,22 +293,22 @@ public class JabRefPreferences {
 
         defaults.put("showFileLinksUpgradeWarning", Boolean.TRUE);
 
-        //defaults.put("lastAutodetectedImport", "");
-
-        //defaults.put("autoRemoveExactDuplicates", Boolean.FALSE);
-        //defaults.put("confirmAutoRemoveExactDuplicates", Boolean.TRUE);
         
-        //defaults.put("tempDir", System.getProperty("java.io.tmpdir"));
-        //Util.pr(System.getProperty("java.io.tempdir"));
 
-        //defaults.put("keyPattern", new LabelPattern(KEY_PATTERN));
+        
+        
+        
+        
+        
+
+        
 
         restoreKeyBindings();
 
         customExports = new CustomExportList(this, new ExportComparator());
         customImports = new CustomImportList(this);
 
-        //defaults.put("oooWarning", Boolean.TRUE);
+        
         updateSpecialFieldHandling();
         WRAPPED_USERNAME = "["+get("defaultOwner")+"]";
 
@@ -369,11 +344,7 @@ public class JabRefPreferences {
 
     }
 
-    /**
-     * Check whether a key is set (differently from null).
-     * @param key The key to check.
-     * @return true if the key is set, false otherwise.
-     */
+    
     public boolean hasKey(String key) {
         return prefs.get(key, null) != null;
     }
@@ -426,11 +397,7 @@ public class JabRefPreferences {
         prefs.remove(key);
     }
 
-    /**
-     * Puts a string array into the Preferences, by linking its elements
-     * with ';' into a single string. Escape characters make the process
-     * transparent even if strings contain ';'.
-     */
+    
     public void putStringArray(String key, String[] value) {
         if (value == null) {
             remove(key);
@@ -450,9 +417,7 @@ public class JabRefPreferences {
         }
     }
 
-    /**
-     * Returns a String[] containing the chosen columns.
-     */
+    
     public String[] getStringArray(String key) {
         String names = get(key);
         if (names == null)
@@ -473,11 +438,7 @@ public class JabRefPreferences {
         return res;
     }
 
-    /**
-     * Looks up a color definition in preferences, and returns the Color object.
-     * @param key The key for this setting.
-     * @return The color corresponding to the setting.
-     */
+    
     public Color getColor(String key) {
         String value = get(key);
         int[] rgb = getRgb(value);
@@ -490,11 +451,7 @@ public class JabRefPreferences {
         return new Color(rgb[0], rgb[1], rgb[2]);
     }
 
-    /**
-     * Stores a color in preferences.
-     * @param key The key for this setting.
-     * @param color The Color to store.
-     */
+    
     public void putColor(String key, Color color) {
         StringBuffer sb = new StringBuffer();
         sb.append(String.valueOf(color.getRed()));
@@ -505,11 +462,7 @@ public class JabRefPreferences {
         put(key, sb.toString());
     }
 
-    /**
-     * Looks up a color definition in preferences, and returns an array containing the RGB values.
-     * @param value The key for this setting.
-     * @return The RGB values corresponding to this color setting.
-     */
+    
     public int[] getRgb(String value) {
         String[] elements = value.split(":");
         int[] values = new int[3];
@@ -519,27 +472,24 @@ public class JabRefPreferences {
         return values;
     }
 
-    /**
-     * Returns the KeyStroke for this binding, as defined by the
-     * defaults, or in the Preferences.
-     */
+    
     public KeyStroke getKey(String bindName) {
 
         String s = (String)keyBinds.get(bindName);
-        // If the current key bindings don't contain the one asked for,
-        // we fall back on the default. This should only happen when a
-        // user has his own set in Preferences, and has upgraded to a
-        // new version where new bindings have been introduced.
+        
+        
+        
+        
         if (s == null) {
             s = (String)defKeyBinds.get(bindName);
-            // So, if this happens, we add the default value to the current
-            // hashmap, so this doesn't happen again, and so this binding
-            // will appear in the KeyBindingsDialog.
+            
+            
+            
             keyBinds.put(bindName, s);
         }
         if (s == null) {
           Globals.logger("Could not get key binding for \"" + bindName + "\"");
-          //throw new RuntimeException("");
+          
         }
 
         if (Globals.ON_MAC)
@@ -548,11 +498,7 @@ public class JabRefPreferences {
           return KeyStroke.getKeyStroke(s);
     }
 
-    /**
-     * Returns the KeyStroke for this binding, as defined by the
-     * defaults, or in the Preferences, but adapted for Mac users,
-     * with the Command key preferred instead of Control.
-     */
+    
     private KeyStroke getKeyForMac(KeyStroke ks) {
       if (ks == null) return null;
       int keyCode = ks.getKeyCode();
@@ -567,16 +513,12 @@ public class JabRefPreferences {
       }
     }
 
-    /**
-     * Returns the HashMap containing all key bindings.
-     */
+    
     public HashMap getKeyBindings() {
         return keyBinds;
     }
 
-    /**
-     * Returns the HashMap containing default key bindings.
-     */
+    
     public HashMap getDefaultKeys() {
         return defKeyBinds;
     }
@@ -589,13 +531,10 @@ public class JabRefPreferences {
     }
     }
 
-    /**
-     * Stores new key bindings into Preferences, provided they
-     * actually differ from the old ones.
-     */
+    
     public void setNewKeyBindings(HashMap newBindings) {
         if (!newBindings.equals(keyBinds)) {
-            // This confirms that the bindings have actually changed.
+            
             String[] bindNames = new String[newBindings.size()],
                 bindings = new String[newBindings.size()];
             int index = 0;
@@ -627,10 +566,10 @@ public class JabRefPreferences {
                 Globals.logger("BackingStoreException in JabRefPreferences.getKeyPattern");
             }
 
-            ///
-            //keyPattern.addLabelPattern("article", "[author][year]");
-            //putKeyPattern(keyPattern);
-            ///
+            
+            
+            
+            
 
             return keyPattern;
         }
@@ -641,11 +580,11 @@ public class JabRefPreferences {
             if (parent == null)
                 return;
 
-            // Store overridden definitions to Preferences.
+            
             Preferences pre = Preferences.userNodeForPackage
                 (net.sf.jabref.labelPattern.LabelPattern.class);
             try {
-                pre.clear(); // We remove all old entries.
+                pre.clear(); 
             } catch (BackingStoreException ex) {
                 Globals.logger("BackingStoreException in JabRefPreferences.putKeyPattern");
             }
@@ -659,17 +598,17 @@ public class JabRefPreferences {
         }
 
     private void restoreKeyBindings() {
-        // Define default keybindings.
+        
         defineDefaultKeyBindings();
 
-        // First read the bindings, and their names.
+        
         String[] bindNames = getStringArray("bindNames"),
             bindings = getStringArray("bindings");
 
-        // Then set up the key bindings HashMap.
+        
         if ((bindNames == null) || (bindings == null)
             || (bindNames.length != bindings.length)) {
-            // Nothing defined in Preferences, or something is wrong.
+            
             setDefaultKeyBindings();
             return;
         }
@@ -722,10 +661,10 @@ public class JabRefPreferences {
         defKeyBinds.put("Forward, help dialog", "RIGHT");
         defKeyBinds.put("Preamble editor, store changes", "alt S");
         defKeyBinds.put("Clear search", "ESCAPE");
-        defKeyBinds.put("Entry editor, next panel", "ctrl TAB");//"ctrl PLUS");//"shift Right");
-        defKeyBinds.put("Entry editor, previous panel", "ctrl shift TAB");//"ctrl MINUS");
-        defKeyBinds.put("Entry editor, next panel 2", "ctrl PLUS");//"ctrl PLUS");//"shift Right");
-        defKeyBinds.put("Entry editor, previous panel 2", "ctrl MINUS");//"ctrl MINUS");
+        defKeyBinds.put("Entry editor, next panel", "ctrl TAB");
+        defKeyBinds.put("Entry editor, previous panel", "ctrl shift TAB");
+        defKeyBinds.put("Entry editor, next panel 2", "ctrl PLUS");
+        defKeyBinds.put("Entry editor, previous panel 2", "ctrl MINUS");
         defKeyBinds.put("Entry editor, next entry", "ctrl shift DOWN");
         defKeyBinds.put("Entry editor, previous entry", "ctrl shift UP");
         defKeyBinds.put("Entry editor, store field", "alt S");
@@ -760,7 +699,7 @@ public class JabRefPreferences {
         defKeyBinds.put("Fetch ArXiv.org", "shift F8");
         defKeyBinds.put("Write XMP", "ctrl F4");
 
-        //defKeyBinds.put("Select value", "ctrl B");
+        
     }
 
     private String getNextUnit(Reader data) throws IOException {
@@ -805,10 +744,7 @@ public class JabRefPreferences {
         return sb.toString();
     }
 
-    /**
-     * Stores all information about the entry type in preferences, with
-     * the tag given by number.
-     */
+    
     public void storeCustomEntryType(CustomEntryType tp, int number) {
         String nr = ""+number;
         put(CUSTOM_TYPE_NAME+nr, tp.getName());
@@ -817,10 +753,7 @@ public class JabRefPreferences {
 
     }
 
-    /**
-     * Retrieves all information about the entry type in preferences,
-     * with the tag given by number.
-     */
+    
     public CustomEntryType getCustomEntryType(int number) {
         String nr = ""+number;
         String
@@ -836,10 +769,7 @@ public class JabRefPreferences {
 
     }
 
-    /**
-     * Set up the list of external file types, either from default values, or from values
-     * recorded in Preferences.
-     */
+    
     public void updateExternalFileTypes() {
         if (prefs.get("externalFileTypes", null) == null) {
             externalFileTypes.clear();
@@ -875,26 +805,18 @@ public class JabRefPreferences {
                 (new ExternalFileType[externalFileTypes.size()]);
     }
 
-    /**
-     * Look up the external file type registered with this name, if any.
-     * @param name The file type name.
-     * @return The ExternalFileType registered, or null if none.
-     */
+    
     public ExternalFileType getExternalFileTypeByName(String name) {
         for (Iterator iterator = externalFileTypes.iterator(); iterator.hasNext();) {
             ExternalFileType type = (ExternalFileType) iterator.next();
             if (type.getName().equals(name))
                 return type;
         }
-        // Return an instance that signifies an unknown file type:
+        
         return new UnknownExternalFileType(name);
     }
 
-    /**
-     * Look up the external file type registered for this extension, if any.
-     * @param extension The file extension.
-     * @return The ExternalFileType registered, or null if none.
-     */
+    
     public ExternalFileType getExternalFileTypeByExt(String extension) {
         for (Iterator iterator = externalFileTypes.iterator(); iterator.hasNext();) {
             ExternalFileType type = (ExternalFileType) iterator.next();
@@ -905,11 +827,7 @@ public class JabRefPreferences {
     }
 
 
-    /**
-     * Reset the List of external file types after user customization.
-     * @param types The new List of external file types. This is the complete list, not
-     *  just new entries.
-     */
+    
     public void setExternalFileTypes(List<ExternalFileType> types) {
         externalFileTypes.clear();
         for (Iterator<ExternalFileType> iterator = types.iterator(); iterator.hasNext();) {
@@ -922,34 +840,22 @@ public class JabRefPreferences {
             array[i] = type.getStringArrayRepresentation();
             i++;
         }
-        //System.out.println("Encoded: '"+Util.encodeStringArray(array)+"'");
+        
         put("externalFileTypes", Util.encodeStringArray(array));
     }
 
     
 
-    /**
-     * Removes all information about custom entry types with tags of
-     * @param number or higher.
-     */
+    
     public void purgeCustomEntryTypes(int number) {
     purgeSeries(CUSTOM_TYPE_NAME, number);
     purgeSeries(CUSTOM_TYPE_REQ, number);
     purgeSeries(CUSTOM_TYPE_OPT, number);
 
-        /*while (get(CUSTOM_TYPE_NAME+number) != null) {
-            remove(CUSTOM_TYPE_NAME+number);
-            remove(CUSTOM_TYPE_REQ+number);
-            remove(CUSTOM_TYPE_OPT+number);
-            number++;
-            }*/
+        
     }
 
-    /**
-     * Removes all entries keyed by prefix+number, where number
-     * is equal to or higher than the given number.
-     * @param number or higher.
-     */
+    
     public void purgeSeries(String prefix, int number) {
         while (get(prefix+number) != null) {
             remove(prefix+number);
@@ -967,11 +873,7 @@ public class JabRefPreferences {
     tabList = new EntryEditorTabList();
     }
 
-    /**
-     * Exports Preferences to an XML file.
-     *
-     * @param filename String File to export to
-     */
+    
     public void exportPreferences(String filename) throws IOException {
       File f = new File(filename);
       OutputStream os = new FileOutputStream(f);
@@ -982,11 +884,7 @@ public class JabRefPreferences {
       }
     }
 
-      /**
-       * Imports Preferences from an XML file.
-       *
-       * @param filename String File to import from
-       */
+      
       public void importPreferences(String filename) throws IOException {
         File f = new File(filename);
         InputStream is = new FileInputStream(f);
@@ -997,11 +895,7 @@ public class JabRefPreferences {
         }
       }
 
-    /**
-     * Determines whether the given field should be written without any sort of wrapping.
-     * @param fieldName The field name.
-     * @return true if the field should not be wrapped.
-     */
+    
     public boolean isNonWrappableField(String fieldName) {
         return nonWrappableFields.contains(fieldName);
     }

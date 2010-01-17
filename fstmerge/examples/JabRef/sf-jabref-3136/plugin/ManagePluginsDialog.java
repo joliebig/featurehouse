@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package net.sf.jabref.plugin;
 
@@ -30,10 +27,7 @@ import net.sf.jabref.net.URLDownload;
 import net.sf.jabref.gui.FileDialogs;
 import net.sf.jabref.plugin.PluginInstaller.NameAndVersion;
 
-/**
- *
- * @author alver
- */
+
 public class ManagePluginsDialog {
 
     private JabRefFrame frame;
@@ -61,9 +55,9 @@ public class ManagePluginsDialog {
         lab.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         pan.add(lab, BorderLayout.NORTH);
 
-        // Table for user dir plugins:
+        
         table = new JTable();
-        // Table for other plugiuns
+        
         tableOther = new JTable();
         tableOther.setRowSelectionAllowed(false);
         tableOther.setColumnSelectionAllowed(false);
@@ -122,7 +116,7 @@ public class ManagePluginsDialog {
             }
         });
         
-        // Key bindings:
+        
         ActionMap am = b.getPanel().getActionMap();
         InputMap im = b.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -161,7 +155,7 @@ public class ManagePluginsDialog {
     
     private void buildList() {
         plugins = new SortedList<NameAndVersion>(PluginInstaller.findInstalledPlugins());
-        // Move those plugins that are not installed in the user plugin dir to another list:
+        
         EventList<NameAndVersion> outsideUserDir = new BasicEventList<NameAndVersion>();
         for (Iterator<NameAndVersion> i = plugins.iterator(); i.hasNext();) {
             NameAndVersion nav = i.next();

@@ -28,9 +28,7 @@ public class IncrementalSearcher {
 	    	
 	    	for (String field : fields){
 		    try {
-			/*Globals.logger("Searching field '"+fields[i].toString()
-				       +"' for '"
-				       +pattern.toString()+"'.");*/
+			
 			if (bibtexEntry.getField(field.toString()) != null) {
 			    if (prefs.getBoolean("caseSensitiveSearch")) {
 				if (bibtexEntry.getField(field.toString())

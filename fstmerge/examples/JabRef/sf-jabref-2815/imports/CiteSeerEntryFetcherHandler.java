@@ -1,9 +1,4 @@
-/*
- * Created on Jun 29, 2004
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 package net.sf.jabref.imports;
 
 import net.sf.jabref.BibtexEntry;
@@ -12,9 +7,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * SAXHandler used with CiteSeerEntryFetcher.
- */
+
 public class CiteSeerEntryFetcherHandler extends DefaultHandler {
 
     BibtexEntry entry = null;

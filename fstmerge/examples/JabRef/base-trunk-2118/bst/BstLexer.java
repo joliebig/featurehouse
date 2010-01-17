@@ -1,6 +1,6 @@
 package net.sf.jabref.bst;
 
-// $ANTLR 3.0b5 Bst.g 2006-11-23 23:20:24
+
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -46,7 +46,7 @@ public class BstLexer extends Lexer {
     }
     public String getGrammarFileName() { return "Bst.g"; }
 
-    // $ANTLR start T25
+    
     public void mT25() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -55,8 +55,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:3:7: ( '{' )
-            // Bst.g:3:7: '{'
+            
+            
             {
             match('{'); 
 
@@ -73,9 +73,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T25
+    
 
-    // $ANTLR start T26
+    
     public void mT26() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -84,8 +84,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:4:7: ( '}' )
-            // Bst.g:4:7: '}'
+            
+            
             {
             match('}'); 
 
@@ -102,9 +102,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T26
+    
 
-    // $ANTLR start T27
+    
     public void mT27() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -113,8 +113,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:5:7: ( '<' )
-            // Bst.g:5:7: '<'
+            
+            
             {
             match('<'); 
 
@@ -131,9 +131,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T27
+    
 
-    // $ANTLR start T28
+    
     public void mT28() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -142,8 +142,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:6:7: ( '>' )
-            // Bst.g:6:7: '>'
+            
+            
             {
             match('>'); 
 
@@ -160,9 +160,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T28
+    
 
-    // $ANTLR start T29
+    
     public void mT29() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -171,8 +171,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:7:7: ( '=' )
-            // Bst.g:7:7: '='
+            
+            
             {
             match('='); 
 
@@ -189,9 +189,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T29
+    
 
-    // $ANTLR start T30
+    
     public void mT30() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -200,8 +200,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:8:7: ( '+' )
-            // Bst.g:8:7: '+'
+            
+            
             {
             match('+'); 
 
@@ -218,9 +218,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T30
+    
 
-    // $ANTLR start T31
+    
     public void mT31() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -229,8 +229,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:9:7: ( '-' )
-            // Bst.g:9:7: '-'
+            
+            
             {
             match('-'); 
 
@@ -247,9 +247,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T31
+    
 
-    // $ANTLR start T32
+    
     public void mT32() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -258,8 +258,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:10:7: ( ':=' )
-            // Bst.g:10:7: ':='
+            
+            
             {
             match(":="); 
 
@@ -277,9 +277,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T32
+    
 
-    // $ANTLR start T33
+    
     public void mT33() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -288,8 +288,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:11:7: ( '*' )
-            // Bst.g:11:7: '*'
+            
+            
             {
             match('*'); 
 
@@ -306,9 +306,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end T33
+    
 
-    // $ANTLR start STRINGS
+    
     public void mSTRINGS() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -317,8 +317,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:53:11: ( 'STRINGS' )
-            // Bst.g:53:11: 'STRINGS'
+            
+            
             {
             match("STRINGS"); 
 
@@ -336,9 +336,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end STRINGS
+    
 
-    // $ANTLR start INTEGERS
+    
     public void mINTEGERS() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -347,8 +347,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:54:12: ( 'INTEGERS' )
-            // Bst.g:54:12: 'INTEGERS'
+            
+            
             {
             match("INTEGERS"); 
 
@@ -366,9 +366,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end INTEGERS
+    
 
-    // $ANTLR start FUNCTION
+    
     public void mFUNCTION() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -377,8 +377,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:55:12: ( 'FUNCTION' )
-            // Bst.g:55:12: 'FUNCTION'
+            
+            
             {
             match("FUNCTION"); 
 
@@ -396,9 +396,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end FUNCTION
+    
 
-    // $ANTLR start EXECUTE
+    
     public void mEXECUTE() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -407,8 +407,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:56:11: ( 'EXECUTE' )
-            // Bst.g:56:11: 'EXECUTE'
+            
+            
             {
             match("EXECUTE"); 
 
@@ -426,9 +426,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end EXECUTE
+    
 
-    // $ANTLR start SORT
+    
     public void mSORT() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -437,8 +437,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:57:8: ( 'SORT' )
-            // Bst.g:57:8: 'SORT'
+            
+            
             {
             match("SORT"); 
 
@@ -456,9 +456,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end SORT
+    
 
-    // $ANTLR start ITERATE
+    
     public void mITERATE() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -467,8 +467,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:58:11: ( 'ITERATE' )
-            // Bst.g:58:11: 'ITERATE'
+            
+            
             {
             match("ITERATE"); 
 
@@ -486,9 +486,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end ITERATE
+    
 
-    // $ANTLR start REVERSE
+    
     public void mREVERSE() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -497,8 +497,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:59:11: ( 'REVERSE' )
-            // Bst.g:59:11: 'REVERSE'
+            
+            
             {
             match("REVERSE"); 
 
@@ -516,9 +516,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end REVERSE
+    
 
-    // $ANTLR start ENTRY
+    
     public void mENTRY() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -527,8 +527,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:60:9: ( 'ENTRY' )
-            // Bst.g:60:9: 'ENTRY'
+            
+            
             {
             match("ENTRY"); 
 
@@ -546,9 +546,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end ENTRY
+    
 
-    // $ANTLR start READ
+    
     public void mREAD() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -557,8 +557,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:61:8: ( 'READ' )
-            // Bst.g:61:8: 'READ'
+            
+            
             {
             match("READ"); 
 
@@ -576,9 +576,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end READ
+    
 
-    // $ANTLR start MACRO
+    
     public void mMACRO() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -587,8 +587,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:62:9: ( 'MACRO' )
-            // Bst.g:62:9: 'MACRO'
+            
+            
             {
             match("MACRO"); 
 
@@ -606,9 +606,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end MACRO
+    
 
-    // $ANTLR start QUOTED
+    
     public void mQUOTED() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -617,8 +617,8 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:65:4: ( '\\'' IDENTIFIER )
-            // Bst.g:65:4: '\\'' IDENTIFIER
+            
+            
             {
             match('\''); 
             mIDENTIFIER(); 
@@ -636,9 +636,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end QUOTED
+    
 
-    // $ANTLR start IDENTIFIER
+    
     public void mIDENTIFIER() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -647,11 +647,11 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:68:4: ( LETTER ( LETTER | NUMERAL )* )
-            // Bst.g:68:4: LETTER ( LETTER | NUMERAL )*
+            
+            
             {
             mLETTER(); 
-            // Bst.g:68:11: ( LETTER | NUMERAL )*
+            
             loop1:
             do {
                 int alt1=3;
@@ -666,14 +666,14 @@ public class BstLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // Bst.g:68:12: LETTER
+            	    
             	    {
             	    mLETTER(); 
 
             	    }
             	    break;
             	case 2 :
-            	    // Bst.g:68:19: NUMERAL
+            	    
             	    {
             	    mNUMERAL(); 
 
@@ -699,14 +699,14 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end IDENTIFIER
+    
 
-    // $ANTLR start LETTER
+    
     public void mLETTER() throws RecognitionException {
         try {
             ruleNestingLevel++;
-            // Bst.g:71:4: ( ('a'..'z'|'A'..'Z'|'.'|'$'))
-            // Bst.g:71:4: ('a'..'z'|'A'..'Z'|'.'|'$')
+            
+            
             {
             if ( input.LA(1)=='$'||input.LA(1)=='.'||(input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -726,9 +726,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end LETTER
+    
 
-    // $ANTLR start STRING
+    
     public void mSTRING() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -737,11 +737,11 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:74:4: ( '\"' (~ '\"' )* '\"' )
-            // Bst.g:74:4: '\"' (~ '\"' )* '\"'
+            
+            
             {
             match('\"'); 
-            // Bst.g:74:8: (~ '\"' )*
+            
             loop2:
             do {
                 int alt2=2;
@@ -753,7 +753,7 @@ public class BstLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // Bst.g:74:9: ~ '\"'
+            	    
             	    {
             	    if ( (input.LA(1)>='\u' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\u') ) {
             	        input.consume();
@@ -789,9 +789,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end STRING
+    
 
-    // $ANTLR start INTEGER
+    
     public void mINTEGER() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -800,11 +800,11 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:77:4: ( '#' ( ('+'|'-'))? ( NUMERAL )+ )
-            // Bst.g:77:4: '#' ( ('+'|'-'))? ( NUMERAL )+
+            
+            
             {
             match('#'); 
-            // Bst.g:77:8: ( ('+'|'-'))?
+            
             int alt3=2;
             int LA3_0 = input.LA(1);
             if ( (LA3_0=='+'||LA3_0=='-') ) {
@@ -812,7 +812,7 @@ public class BstLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // Bst.g:77:9: ('+'|'-')
+                    
                     {
                     if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                         input.consume();
@@ -830,7 +830,7 @@ public class BstLexer extends Lexer {
 
             }
 
-            // Bst.g:77:19: ( NUMERAL )+
+            
             int cnt4=0;
             loop4:
             do {
@@ -843,7 +843,7 @@ public class BstLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // Bst.g:77:19: NUMERAL
+            	    
             	    {
             	    mNUMERAL(); 
 
@@ -873,17 +873,17 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end INTEGER
+    
 
-    // $ANTLR start NUMERAL
+    
     public void mNUMERAL() throws RecognitionException {
         try {
             ruleNestingLevel++;
-            // Bst.g:80:4: ( ( '0' .. '9' ) )
-            // Bst.g:80:4: ( '0' .. '9' )
+            
+            
             {
-            // Bst.g:80:4: ( '0' .. '9' )
-            // Bst.g:80:5: '0' .. '9'
+            
+            
             {
             matchRange('0','9'); 
 
@@ -897,9 +897,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end NUMERAL
+    
 
-    // $ANTLR start WS
+    
     public void mWS() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -908,10 +908,10 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:82:9: ( ( (' '|'\\t'|'\\r'|'\\n'))+ )
-            // Bst.g:82:9: ( (' '|'\\t'|'\\r'|'\\n'))+
+            
+            
             {
-            // Bst.g:82:9: ( (' '|'\\t'|'\\r'|'\\n'))+
+            
             int cnt5=0;
             loop5:
             do {
@@ -924,7 +924,7 @@ public class BstLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // Bst.g:82:13: (' '|'\\t'|'\\r'|'\\n')
+            	    
             	    {
             	    if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
             	        input.consume();
@@ -964,9 +964,9 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end WS
+    
 
-    // $ANTLR start LINE_COMMENT
+    
     public void mLINE_COMMENT() throws RecognitionException {
         try {
             ruleNestingLevel++;
@@ -975,11 +975,11 @@ public class BstLexer extends Lexer {
             int _line = getLine();
             int _charPosition = getCharPositionInLine();
             int _channel = Token.DEFAULT_CHANNEL;
-            // Bst.g:90:7: ( '%' (~ ('\\n'|'\\r'))* ( '\\r' )? '\\n' )
-            // Bst.g:90:7: '%' (~ ('\\n'|'\\r'))* ( '\\r' )? '\\n'
+            
+            
             {
             match('%'); 
-            // Bst.g:90:11: (~ ('\\n'|'\\r'))*
+            
             loop6:
             do {
                 int alt6=2;
@@ -991,7 +991,7 @@ public class BstLexer extends Lexer {
 
                 switch (alt6) {
             	case 1 :
-            	    // Bst.g:90:11: ~ ('\\n'|'\\r')
+            	    
             	    {
             	    if ( (input.LA(1)>='\u' && input.LA(1)<='\t')||(input.LA(1)>='\u' && input.LA(1)<='\f')||(input.LA(1)>='\u' && input.LA(1)<='\u') ) {
             	        input.consume();
@@ -1012,7 +1012,7 @@ public class BstLexer extends Lexer {
                 }
             } while (true);
 
-            // Bst.g:90:25: ( '\\r' )?
+            
             int alt7=2;
             int LA7_0 = input.LA(1);
             if ( (LA7_0=='\r') ) {
@@ -1020,7 +1020,7 @@ public class BstLexer extends Lexer {
             }
             switch (alt7) {
                 case 1 :
-                    // Bst.g:90:25: '\\r'
+                    
                     {
                     match('\r'); 
 
@@ -1045,10 +1045,10 @@ public class BstLexer extends Lexer {
             ruleNestingLevel--;
         }
     }
-    // $ANTLR end LINE_COMMENT
+    
 
     public void mTokens() throws RecognitionException {
-        // Bst.g:1:10: ( T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | STRINGS | INTEGERS | FUNCTION | EXECUTE | SORT | ITERATE | REVERSE | ENTRY | READ | MACRO | QUOTED | IDENTIFIER | STRING | INTEGER | WS | LINE_COMMENT )
+        
         int alt8=25;
         switch ( input.LA(1) ) {
         case '{':
@@ -1474,175 +1474,175 @@ public class BstLexer extends Lexer {
 
         switch (alt8) {
             case 1 :
-                // Bst.g:1:10: T25
+                
                 {
                 mT25(); 
 
                 }
                 break;
             case 2 :
-                // Bst.g:1:14: T26
+                
                 {
                 mT26(); 
 
                 }
                 break;
             case 3 :
-                // Bst.g:1:18: T27
+                
                 {
                 mT27(); 
 
                 }
                 break;
             case 4 :
-                // Bst.g:1:22: T28
+                
                 {
                 mT28(); 
 
                 }
                 break;
             case 5 :
-                // Bst.g:1:26: T29
+                
                 {
                 mT29(); 
 
                 }
                 break;
             case 6 :
-                // Bst.g:1:30: T30
+                
                 {
                 mT30(); 
 
                 }
                 break;
             case 7 :
-                // Bst.g:1:34: T31
+                
                 {
                 mT31(); 
 
                 }
                 break;
             case 8 :
-                // Bst.g:1:38: T32
+                
                 {
                 mT32(); 
 
                 }
                 break;
             case 9 :
-                // Bst.g:1:42: T33
+                
                 {
                 mT33(); 
 
                 }
                 break;
             case 10 :
-                // Bst.g:1:46: STRINGS
+                
                 {
                 mSTRINGS(); 
 
                 }
                 break;
             case 11 :
-                // Bst.g:1:54: INTEGERS
+                
                 {
                 mINTEGERS(); 
 
                 }
                 break;
             case 12 :
-                // Bst.g:1:63: FUNCTION
+                
                 {
                 mFUNCTION(); 
 
                 }
                 break;
             case 13 :
-                // Bst.g:1:72: EXECUTE
+                
                 {
                 mEXECUTE(); 
 
                 }
                 break;
             case 14 :
-                // Bst.g:1:80: SORT
+                
                 {
                 mSORT(); 
 
                 }
                 break;
             case 15 :
-                // Bst.g:1:85: ITERATE
+                
                 {
                 mITERATE(); 
 
                 }
                 break;
             case 16 :
-                // Bst.g:1:93: REVERSE
+                
                 {
                 mREVERSE(); 
 
                 }
                 break;
             case 17 :
-                // Bst.g:1:101: ENTRY
+                
                 {
                 mENTRY(); 
 
                 }
                 break;
             case 18 :
-                // Bst.g:1:107: READ
+                
                 {
                 mREAD(); 
 
                 }
                 break;
             case 19 :
-                // Bst.g:1:112: MACRO
+                
                 {
                 mMACRO(); 
 
                 }
                 break;
             case 20 :
-                // Bst.g:1:118: QUOTED
+                
                 {
                 mQUOTED(); 
 
                 }
                 break;
             case 21 :
-                // Bst.g:1:125: IDENTIFIER
+                
                 {
                 mIDENTIFIER(); 
 
                 }
                 break;
             case 22 :
-                // Bst.g:1:136: STRING
+                
                 {
                 mSTRING(); 
 
                 }
                 break;
             case 23 :
-                // Bst.g:1:143: INTEGER
+                
                 {
                 mINTEGER(); 
 
                 }
                 break;
             case 24 :
-                // Bst.g:1:151: WS
+                
                 {
                 mWS(); 
 
                 }
                 break;
             case 25 :
-                // Bst.g:1:154: LINE_COMMENT
+                
                 {
                 mLINE_COMMENT(); 
 

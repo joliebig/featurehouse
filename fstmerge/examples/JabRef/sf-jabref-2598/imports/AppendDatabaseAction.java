@@ -17,13 +17,7 @@ import net.sf.jabref.undo.NamedCompound;
 import net.sf.jabref.undo.UndoableInsertEntry;
 import net.sf.jabref.undo.UndoableInsertString;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: May 18, 2006
- * Time: 9:49:02 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class AppendDatabaseAction extends BaseAction {
     private JabRefFrame frame;
     private BasePanel panel;
@@ -43,22 +37,22 @@ public class AppendDatabaseAction extends BaseAction {
         if (md.isOkPressed()) {
             String[] chosen = Globals.getMultipleFiles(frame, new File(Globals.prefs.get("workingDirectory")),
                     null, false);
-          //String chosenFile = Globals.getNewFile(frame, new File(Globals.prefs.get("workingDirectory")),
-          //                                       null, JFileChooser.OPEN_DIALOG, false);
+          
+          
           if(chosen == null)
             return;
           for (int i=0; i<chosen.length; i++)
             filesToOpen.add(new File(chosen[i]));
 
-            // Run the actual open in a thread to prevent the program
-            // locking until the file is loaded.
+            
+            
             (new Thread() {
                 public void run() {
                     openIt(md.importEntries(), md.importStrings(),
                             md.importGroups(), md.importSelectorWords());
                 }
             }).start();
-            //frame.getFileHistory().newFile(panel.fileToOpen.getPath());
+            
         }
 
       }
@@ -71,7 +65,7 @@ public class AppendDatabaseAction extends BaseAction {
             File file = i.next();
             try {
                 Globals.prefs.put("workingDirectory", file.getPath());
-                // Should this be done _after_ we know it was successfully opened?
+                
                 String encoding = Globals.prefs.get("defaultEncoding");
                 ParserResult pr = OpenDatabaseAction.loadDatabase(file, encoding);
                 mergeFromBibtex(frame, panel, pr, importEntries, importStrings,
@@ -100,7 +94,7 @@ public class AppendDatabaseAction extends BaseAction {
           NamedCompound ce = new NamedCompound(Globals.lang("Append database"));
           MetaData meta = new MetaData(pr.getMetaData(), pr.getDatabase());
 
-          if (importEntries) { // Add entries
+          if (importEntries) { 
               boolean overwriteOwner = Globals.prefs.getBoolean("overwriteOwner");
               boolean overwriteTimeStamp = Globals.prefs.getBoolean("overwriteTimeStamp");
 
@@ -129,23 +123,23 @@ public class AppendDatabaseAction extends BaseAction {
               GroupTreeNode newGroups = meta.getGroups();
               if (newGroups != null) {
 
-                  // ensure that there is always only one AllEntriesGroup
+                  
                   if (newGroups.getGroup() instanceof AllEntriesGroup) {
-                      // create a dummy group
+                      
                       ExplicitGroup group = new ExplicitGroup("Imported",
-                              AbstractGroup.INDEPENDENT); // JZTODO lyrics
+                              AbstractGroup.INDEPENDENT); 
                       newGroups.setGroup(group);
                       for (int i = 0; i < appendedEntries.size(); ++i)
                           group.addEntry(appendedEntries.get(i));
                   }
 
-                  // groupsSelector is always created, even when no groups
-                  // have been defined. therefore, no check for null is
-                  // required here
+                  
+                  
+                  
                   frame.groupSelector.addGroups(newGroups, ce);
-                  // for explicit groups, the entries copied to the mother fromDatabase have to
-                  // be "reassigned", i.e. the old reference is removed and the reference
-                  // to the new fromDatabase is added.
+                  
+                  
+                  
                   GroupTreeNode node;
                   ExplicitGroup group;
                   BibtexEntry entry;

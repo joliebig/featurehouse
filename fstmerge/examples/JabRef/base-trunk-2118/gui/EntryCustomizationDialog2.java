@@ -1,8 +1,4 @@
-/*
- * EntryCustomizationDialog2.java
- *
- * Created on February 10, 2005, 9:57 PM
- */
+
 
 package net.sf.jabref.gui;
 
@@ -24,14 +20,7 @@ import javax.swing.event.ListDataListener;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * NOTAT:
- *    * S?rg for at ting oppdateres riktig ved tillegg av ny type. (velge, unng? at det blir feil innhold i listene).
- *    *
- *
- *
- * @author alver
- */
+
 public class EntryCustomizationDialog2 extends JDialog implements ListSelectionListener, ActionListener {
 
     protected JabRefFrame frame;
@@ -46,7 +35,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
             optLists = new HashMap();
     protected Set defaulted = new HashSet(), changed = new HashSet();
 
-    /** Creates a new instance of EntryCustomizationDialog2 */
+    
     public EntryCustomizationDialog2(JabRefFrame frame) {
         super(frame, Globals.lang("Customize entry types"), false);
 
@@ -74,7 +63,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
         typeComp.addDefaultActionListener(new DefaultListener());
         typeComp.setListSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-        //typeComp.setEnabled(false);
+        
         reqComp = new FieldSetComponent(Globals.lang("Required fields"), new ArrayList(), preset, true, true);
         reqComp.setEnabled(false);
         reqComp.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -86,7 +75,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
         optComp.addListDataListener(dataListener);
         right.add(reqComp);
         right.add(optComp);
-        //right.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), Globals.lang("Fields")));
+        
         right.setBorder(BorderFactory.createEtchedBorder());
         ok = new JButton("OK");
         cancel = new JButton(Globals.lang("Cancel"));
@@ -103,10 +92,10 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
         bb.addGlue();
                 
 
-        //con.fill = GridBagConstraints.BOTH;
-        //con.weightx = 0.3;
-        //con.weighty = 1;
-        //gbl.setConstraints(typeComp, con);
+        
+        
+        
+        
         main.add(typeComp, BorderLayout.WEST);
         main.add(right, BorderLayout.CENTER);
         main.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -122,8 +111,8 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
 
 
         if (lastSelected != null) {
-            // The entry type lastSelected is now unselected, so we store the current settings
-            // for that type in our two maps.
+            
+            
             reqLists.put(lastSelected, reqComp.getFields());
             optLists.put(lastSelected, optComp.getFields());
         }
@@ -152,7 +141,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
                 optComp.setFields(opt);
                 optComp.setEnabled(true);
             } else {
-                // New entry, veintle
+                
                 reqComp.setFields(new ArrayList());
                 reqComp.setEnabled(true);
                 optComp.setFields(new ArrayList());
@@ -170,7 +159,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
 
     protected void applyChanges() {
         valueChanged(new ListSelectionEvent(new JList(), 0, 0, false));
-        // Iterate over our map of required fields, and list those types if necessary:
+        
 
         List types = typeComp.getFields();
         boolean globalChangesMade = false;
@@ -186,13 +175,13 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
             String[] optStr = new String[optFields.size()];
             optFields.toArray(optStr);
 
-            // If this type is already existing, check if any changes have
-            // been made
+            
+            
             boolean changesMade = true;
 
             if (defaulted.contains(typeName)) {
-                // This type should be reverted to its default setup.
-                //System.out.println("Defaulting: "+typeName);
+                
+                
                 String nm = Util.nCase(typeName);
                 BibtexEntryType.removeType(nm);
 
@@ -210,7 +199,7 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
             }
 
             if (changesMade) {
-                //System.out.println("Updating: "+typeName);
+                
                 CustomEntryType typ = new CustomEntryType(Util.nCase(typeName), reqStr, optStr);
                 BibtexEntryType.ALL_TYPES.put(typeName.toLowerCase(), typ);
                 updateTypesForEntries(typ.getName());
@@ -223,12 +212,12 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
         for (Iterator i=BibtexEntryType.ALL_TYPES.keySet().iterator(); i.hasNext();) {
             Object o = i.next();
             if (!types.contains(o)) {
-                //System.out.println("Deleted entry type (TODO): "+o);
+                
                 toRemove.add(o);
             }
         }
 
-        // Remove those that should be removed:
+        
         if (toRemove.size() > 0) {
             for (Iterator i=toRemove.iterator(); i.hasNext();)
                 typeDeletion((String)i.next());
@@ -258,25 +247,25 @@ public class EntryCustomizationDialog2 extends JDialog implements ListSelectionL
             reqLists.remove(name);
             optLists.remove(name);
         }
-        //messageLabel.setText("'"+type.getName()+"' "+
-        //        Globals.lang("is a standard type."));
+        
+        
 
     }
 
 
 protected boolean equalArrays(String[] one, String[] two) {
     if ((one == null) && (two == null))
-        return true; // Both null.
+        return true; 
     if ((one == null) || (two == null))
-        return false; // One of them null, the other not.
+        return false; 
     if (one.length != two.length)
-        return false; // Different length.
-    // If we get here, we know that both are non-null, and that they have the same length.
+        return false; 
+    
     for (int i=0; i<one.length; i++) {
         if (!one[i].equals(two[i]))
             return false;
     }
-    // If we get here, all entries have matched.
+    
     return true;
 }
 
@@ -289,21 +278,16 @@ public void actionPerformed(ActionEvent e) {
     } else if (e.getSource() == apply) {
         applyChanges();
     } else if (e.getSource() == typeComp) {
-        //System.out.println("add: "+e.getActionCommand());
+        
         typeComp.selectField(e.getActionCommand());
     }
 }
 
-/**
- * Cycle through all databases, and make sure everything is updated with
- * the new type customization. This includes making sure all entries have
- * a valid type, that no obsolete entry editors are around, and that
- * the right-click menus' change type menu is up-to-date.
- */
+
 private void updateTypesForEntries(String typeName) {
     if (frame.getTabbedPane().getTabCount() == 0)
         return;
-    //messageLabel.setText(Globals.lang("Updating entries..."));
+    
     BibtexDatabase base;
     Iterator iter;
     for (int i=0; i<frame.getTabbedPane().getTabCount(); i++) {
@@ -312,17 +296,14 @@ private void updateTypesForEntries(String typeName) {
 
         bp.entryEditors.remove(typeName);
 
-        //bp.rcm.populateTypeMenu(); // Update type menu for change type.
+        
         base = bp.database();
         iter = base.getKeySet().iterator();
         while (iter.hasNext()) {
             anyChanges = anyChanges |
                     !(base.getEntryById((String)iter.next())).updateType();
         }
-            /*if (anyChanges) {
-                bp.refreshTable();
-                bp.markBaseChanged();
-            }*/
+            
     }
 
 }
@@ -330,18 +311,18 @@ private void updateTypesForEntries(String typeName) {
 private void updateTables() {
     if (frame.getTabbedPane().getTabCount() == 0)
         return;
-    //messageLabel.setText(Globals.lang("Updating entries..."));
+    
     BibtexDatabase base;
     Iterator iter;
     for (int i=0; i<frame.getTabbedPane().getTabCount(); i++) {
         BasePanel bp = (BasePanel)frame.getTabbedPane().getComponentAt(i);
-        //bp.markBaseChanged();
+        
     }
 
 }
 
-// DEFAULT button pressed. Remember that this entry should be reset to default,
-// unless changes are made later.
+
+
 class DefaultListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (lastSelected == null)

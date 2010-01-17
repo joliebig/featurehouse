@@ -1,36 +1,11 @@
-/*
- Copyright (C) 2004 R. Nagel
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
 
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
 
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
 
- */
 
-// A wizard dialog for generating a new sub database from existing TeX aux file
-//
-// created by : r.nagel 23.08.2004
-//
-// modified : 18.04.2006 r.nagel
-//            insert a "short info" section
+
 
 
 package net.sf.jabref.wizard.auximport.gui ;
@@ -66,7 +41,7 @@ public class FromAuxDialog
   private JList notFoundList ;
   private JTextArea statusInfos ;
 
-  // all open databases from JabRefFrame
+  
   private JTabbedPane parentTabbedPane ;
 
   private boolean okPressed = false ;
@@ -110,7 +85,7 @@ public class FromAuxDialog
 
     initStatusPanel() ;
 
-    // insert the buttons
+    
     ButtonBarBuilder bb = new ButtonBarBuilder();
     JPanel buttonPanel = bb.getPanel();
     buttonPanel.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -126,7 +101,7 @@ public class FromAuxDialog
     getContentPane().add( panel1 ) ;
 
     JPanel desc = getDescriptionPanel() ;
-    // some help is available
+    
     if (desc != null)
     {
       panel1.add( desc, BorderLayout.NORTH ) ;
@@ -139,13 +114,13 @@ public class FromAuxDialog
 
       panel1.add( centerPane, BorderLayout.CENTER ) ;
     }
-    else  // generate a view without the "short info" area
+    else  
     {
       panel1.add( buttons, BorderLayout.NORTH ) ;
       panel1.add( buttonPanel, BorderLayout.SOUTH ) ;
       panel1.add( statusPanel, BorderLayout.CENTER ) ;
     }
-    // Key bindings:
+    
     ActionMap am = statusPanel.getActionMap() ;
     InputMap im = statusPanel.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ) ;
     im.put( parent.prefs().getKey( "Close dialog" ), "close" ) ;
@@ -161,14 +136,14 @@ public class FromAuxDialog
 
   private void initOptionsPanel( JabRefFrame parent )
   {
-    // collect the names of all open databases
+    
     int len = parentTabbedPane.getTabCount() ;
     for ( int t = 0 ; t < len ; t++ )
     {
       dbChooser.addItem( ( String ) parentTabbedPane.getTitleAt( t ) ) ;
     }
 
-    // panel view
+    
     GridBagLayout gbl = new GridBagLayout() ;
     GridBagConstraints con = new GridBagConstraints() ;
     con.weightx = 0 ;
@@ -181,7 +156,7 @@ public class FromAuxDialog
     buttons.setBorder( border ) ;
     buttons.setLayout( gbl ) ;
 
-    // Database
+    
     JLabel lab1 = new JLabel( Globals.lang( "Reference database" ) + ":" ) ;
     lab1.setHorizontalAlignment( SwingConstants.LEFT ) ;
     gbl.setConstraints( lab1, con ) ;
@@ -190,7 +165,7 @@ public class FromAuxDialog
     gbl.setConstraints( dbChooser, con ) ;
     buttons.add( dbChooser ) ;
 
-    // AUX
+    
     con.gridwidth = 1 ;
     con.weightx = 0 ;
     con.insets = new Insets( 5, 10, 15, 10 ) ;
@@ -262,9 +237,9 @@ public class FromAuxDialog
 
   }
 
-// ---------------------------------------------------------------------------
 
-  // returns a "short info" panel, if something is available
+
+  
   private JPanel getDescriptionPanel()
   {
     JPanel back = null ;
@@ -285,11 +260,11 @@ public class FromAuxDialog
         infoText.setBackground( GUIGlobals.infoField ) ;
         infoText.setBorder( new EtchedBorder( EtchedBorder.LOWERED ) ) ;
 
-        // content
+        
         back = new JPanel() ;
         back.setLayout( new BorderLayout());
 
-        if (infoText != null) // only if some help available
+        if (infoText != null) 
         {
           back.add( infoText, BorderLayout.PAGE_START ) ;
         }
@@ -304,7 +279,7 @@ public class FromAuxDialog
     return back ;
   }
 
-// ---------------------------------------------------------------------------
+
 
   void ok_actionPerformed( ActionEvent e )
   {
@@ -357,7 +332,7 @@ public class FromAuxDialog
       }
     }
 
-    // the generated database contains no entries -> no active ok-button
+    
     if ( auxParser.getGeneratedDatabase().getEntryCount() < 1 )
     {
       statusInfos.append( "\n" + Globals.lang( "empty database" ) ) ;
@@ -377,11 +352,9 @@ public class FromAuxDialog
     return auxParser.getGeneratedDatabase() ;
   }
 
-// ---------------------------------------------------------------------------
 
-  /**
-   * Action used to produce a "Browse" button for one of the text fields.
-   */
+
+  
   class BrowseAction
       extends AbstractAction
   {
@@ -412,7 +385,7 @@ public class FromAuxDialog
 
 }
 
-// ----------- helper class -------------------
+
 class FromAuxDialog_ok_actionAdapter
     implements java.awt.event.ActionListener
 {

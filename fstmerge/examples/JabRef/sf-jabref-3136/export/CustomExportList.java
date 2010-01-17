@@ -10,13 +10,7 @@ import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.BasicEventList;
 
-/**
- * This class handles user defined custom export formats. They are initially
- * read from Preferences, and kept alphabetically (sorted by name). Formats can
- * be added or removed. When modified, the sort() method must be called to make
- * sure the formats stay properly sorted. When the method store() is called,
- * export formats are written to Preferences.
- */
+
 
 public class CustomExportList {
 
@@ -93,7 +87,7 @@ public class CustomExportList {
 			purge(0);
 		else {
 			for (int i = 0; i < list.size(); i++) {
-				// System.out.println(i+"..");
+				
 				Globals.prefs.putStringArray("customExportFormat" + i,
 					list.get(i));
 			}

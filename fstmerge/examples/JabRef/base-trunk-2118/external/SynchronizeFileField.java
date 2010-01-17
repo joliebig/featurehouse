@@ -19,11 +19,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * This action goes through all selected entries in the BasePanel, and attempts to autoset the
- * given external file (pdf, ps, ...) based on the same algorithm used for the "Auto" button in
- * EntryEditor.
- */
+
 public class SynchronizeFileField extends AbstractWorker {
 
     private String fieldName = GUIGlobals.FILE_FIELD;
@@ -48,7 +44,7 @@ public class SynchronizeFileField extends AbstractWorker {
         sel = new BibtexEntry[col.size()];
         sel = (BibtexEntry[]) col.toArray(sel);
 
-        // Ask about rules for the operation:
+        
         if (optDiag == null)
             optDiag = new SynchronizeFileField.OptionsDialog(panel.frame(), fieldName);
         Util.placeDialog(optDiag, panel.frame());
@@ -71,7 +67,7 @@ public class SynchronizeFileField extends AbstractWorker {
         }
         panel.frame().setProgressBarValue(0);
         panel.frame().setProgressBarVisible(true);
-        int weightAutoSet = 10; // autoSet takes 10 (?) times longer than checkExisting
+        int weightAutoSet = 10; 
         int progressBarMax = (autoSet ? weightAutoSet * sel.length : 0)
                 + (checkExisting ? sel.length : 0);
         panel.frame().setProgressBarMaximum(progressBarMax);
@@ -80,67 +76,49 @@ public class SynchronizeFileField extends AbstractWorker {
         brokenLinks = 0;
         final NamedCompound ce = new NamedCompound(Globals.lang("Autoset %0 field", fieldName));
 
-        //final OpenFileFilter off = Util.getFileFilterForField(fieldName);
+        
 
-        //ExternalFilePanel extPan = new ExternalFilePanel(fieldName, panel.metaData(), null, null, off);
-        //FieldTextField editor = new FieldTextField(fieldName, "", false);
+        
+        
 
-        // Find the default directory for this field type:
+        
         String dir = panel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
         Set<BibtexEntry> changedEntries = new HashSet<BibtexEntry>();
 
-        // First we try to autoset fields
+        
         if (autoSet) {
             Collection<BibtexEntry> entries = new ArrayList<BibtexEntry>();
             for (int i = 0; i < sel.length; i++) {
                 entries.add(sel[i]);
             }
-            // Start the autosetting process:
+            
 
             Thread t = FileListEditor.autoSetLinks(entries, ce, changedEntries);
-            // Wait for the autosetting to finish:
+            
             try {
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            /*
-                progress += weightAutoSet;
-                panel.frame().setProgressBarValue(progress);
-
-                Object old = sel[i].getField(fieldName);
-                FileListTableModel tableModel = new FileListTableModel();
-                if (old != null)
-                    tableModel.setContent((String)old);
-                Thread t = FileListEditor.autoSetLinks(sel[i], tableModel, null, null);
-
-                if (!tableModel.getStringRepresentation().equals(old)) {
-                    String toSet = tableModel.getStringRepresentation();
-                    if (toSet.length() == 0)
-                        toSet = null;
-                    ce.addEdit(new UndoableFieldChange(sel[i], fieldName, old, toSet));
-                    sel[i].setField(fieldName, toSet);
-                    entriesChanged++;
-                }
-            }    */
+            
 
         }
         progress += sel.length*weightAutoSet;
         panel.frame().setProgressBarValue(progress);
-        //System.out.println("Done setting");
-        // The following loop checks all external links that are already set.
+        
+        
         if (checkExisting) {
             mainLoop:
             for (int i = 0; i < sel.length; i++) {
                 panel.frame().setProgressBarValue(progress++);
                 final Object old = sel[i].getField(fieldName);
-                // Check if a extension is set:
+                
                 if ((old != null) && !old.equals("")) {
                     FileListTableModel tableModel = new FileListTableModel();
                     tableModel.setContent((String)old);
                     for (int j=0; j<tableModel.getRowCount(); j++) {
                         FileListEntry flEntry = tableModel.getEntry(j);
-                        // Get an absolute path representation:
+                        
                         File file = Util.expandFilename(flEntry.getLink(), new String[]{dir, "."});
                         if ((file == null) || !file.exists()) {
                             int answer = JOptionPane.showOptionDialog(panel.frame(),
@@ -151,18 +129,18 @@ public class SynchronizeFileField extends AbstractWorker {
                                 JOptionPane.QUESTION_MESSAGE, null, brokenLinkOptions, brokenLinkOptions[0]);
                             switch (answer) {
                                 case 1:
-                                    // Assign new file.
+                                    
                                     FileListEntryEditor flEditor = new FileListEntryEditor
                                             (panel.frame(), flEntry, false, panel.metaData());
                                     flEditor.setVisible(true);
                                     break;
                                 case 2:
-                                    // Clear field
+                                    
                                     tableModel.removeEntry(j);
-                                    j--; // Step back in the iteration, because we removed an entry.
+                                    j--; 
                                     break;
                                 case 3:
-                                    // Cancel
+                                    
                                     break mainLoop;
                             }
                             brokenLinks++;
@@ -170,7 +148,7 @@ public class SynchronizeFileField extends AbstractWorker {
 
                     }
                     if (!tableModel.getStringRepresentation().equals(old)) {
-                        // The table has been modified. Store the change:
+                        
                         String toSet = tableModel.getStringRepresentation();
                         if (toSet.length() == 0)
                             toSet = null;
@@ -178,7 +156,7 @@ public class SynchronizeFileField extends AbstractWorker {
                                 toSet));
                         sel[i].setField(fieldName, toSet);
                         changedEntries.add(sel[i]);
-                        //System.out.println("Changed to: "+tableModel.getStringRepresentation());
+                        
                     }
 
 
@@ -187,10 +165,10 @@ public class SynchronizeFileField extends AbstractWorker {
         }
 
         entriesChangedCount = changedEntries.size();
-	//for (BibtexEntry entr : changedEntries)
-	//    System.out.println(entr.getCiteKey());
+	
+	
         if (entriesChangedCount > 0) {
-            // Add the undo edit:
+            
             ce.end();
             panel.undoManager.addEdit(ce);
             
@@ -255,11 +233,11 @@ public class SynchronizeFileField extends AbstractWorker {
             FormLayout layout = new FormLayout("fill:pref", "");
             DefaultFormBuilder builder = new DefaultFormBuilder(layout);
             description = new JLabel("<HTML>" +
-                    Globals.lang(//"This function helps you keep your external %0 links up-to-date." +
+                    Globals.lang(
                             "Attempt to autoset %0 links for your entries. Autoset works if "
                                     + "a %0 file in your %0 directory or a subdirectory<BR>is named identically to an entry's BibTeX key, plus extension.", fn)
                     + "</HTML>");
-            //            name.setVerticalAlignment(JLabel.TOP);
+            
             builder.appendSeparator(Globals.lang("Autoset"));
             builder.append(description);
             builder.nextLine();

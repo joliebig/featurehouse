@@ -1,11 +1,4 @@
-/*
- * SQLutil.java
- *
- * Created on October 4, 2007, 5:28 PM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+
 
 package net.sf.jabref.sql;
 
@@ -32,10 +25,7 @@ import net.sf.jabref.export.FileActions;
 import net.sf.jabref.groups.ExplicitGroup;
 import net.sf.jabref.groups.GroupTreeNode;
 
-/**
- *
- * @author pattonlk
- */
+
 public class SQLutil {
 
     public enum DBTYPE {
@@ -45,13 +35,7 @@ public class SQLutil {
     private static ArrayList<String> fields = null;
     private static String fieldstr = null;
 
-    /**
-     * returns the DBTYPE associated with a DBStrings ServerType
-     *
-     * @param dbstrings
-     *          The DBStrings to query
-     * @return The DBTYPE associated withthe dbstrings ServerType
-     */
+    
     public static DBTYPE getDBType (DBStrings dbstrings) {
 
         DBTYPE dbtype = null;
@@ -67,13 +51,7 @@ public class SQLutil {
         return dbtype;
     }
 
-    /**
-     * This routine returns the JDBC url corresponding to the DBStrings input.
-     *
-     * @param dbstrings
-     *          The DBStrings to use to make the connection
-     * @return The JDBC url corresponding to the input DBStrings
-     */
+    
     public static String createJDBCurl (DBStrings dbs) {
 
         String url = "";
@@ -110,12 +88,7 @@ public class SQLutil {
             
     }
 
-    /**
-     * This routine accepts the location of a MySQL database specified as a url as 
-     * well as the username and password for the MySQL user with appropriate access
-     * to this database.  The routine returns a valid Connection object if the MySQL 
-     * database is successfully opened. It returns a null object otherwise.
-     */
+    
     public static Connection connectToDB (DBStrings dbstrings)
         throws Exception {
 
@@ -131,14 +104,7 @@ public class SQLutil {
     }    
    
 
-    /**
-     * Utility method for processing DML with proper output
-     *
-     * @param out
-     *          The output (PrintStream or Connection) object to which the DML should be sent
-     * @param dml
-     *          The DML statements to be processed
-     */
+    
     private static void processDML ( Object out, String dml) 
                             throws SQLException {
 
@@ -155,21 +121,14 @@ public class SQLutil {
     }
 
 
-    /**
-     * Utility method for executing DML
-     *
-     * @param conn
-     *          The DML Connection object that will execute the SQL
-     * @param sql
-     *          The DML statements to be executed
-     */
+    
     public static void execDML(Connection conn, String dml) throws SQLException {
-        // System.out.println(dml); // remove
+        
         Statement stmnt = conn.createStatement();
         stmnt.execute(dml);
         SQLWarning warn = stmnt.getWarnings();
         if (warn!=null) {
-            //TODO handle SQL warnings
+            
             System.out.println(warn.toString());
             System.out.println("("+dml+")");
         }
@@ -185,10 +144,7 @@ public class SQLutil {
     }
 
 
-    /**
-     * loop through entry types to get required, optional, general and utility 
-     * fields for this type.
-     */
+    
     public static void refreshFields() {
 
         if (fields==null) {
@@ -204,7 +160,7 @@ public class SQLutil {
             fields = uniqueInsert(fields, val.getUtilityFields());
         }
 
-        // create comma separated list of field names
+        
         fieldstr = "";
         for (int i = 0; i < fields.size(); i++) {
             if (i > 0)
@@ -215,16 +171,7 @@ public class SQLutil {
     }
 
 
-    /**
-     * Inserts the elements of a String array into an ArrayList making sure not
-     * to duplicate entries in the ArrayList
-     * 
-     * @param list
-     *            The ArrayList containing unique entries
-     * @param array
-     *            The String array to be inserted into the ArrayList
-     * @return The updated ArrayList with new unique entries
-     */
+    
     private static ArrayList<String> uniqueInsert(ArrayList<String> list, 
             String[] array) {
 
@@ -238,25 +185,12 @@ public class SQLutil {
     }
 
 
-    /**
-     * Accepts the BibtexDatabase and MetaData, generates the DML required to
-     * create and populate SQL database tables, and writes this DML to the 
-     * specified output file.
-     *
-     * @param database
-     *          The BibtexDatabase to export
-     * @param metaData
-     *          The MetaData object containing the groups information
-     * @param keySet
-     *          The set of IDs of the entries to export.
-     * @param file
-     *          The name of the file to which the DML should be written
-     */
+    
     public static void exportDatabase(final BibtexDatabase database,
         final MetaData metaData, Set<String> keySet, String file, DBTYPE dbtype ) 
         throws Exception {
 
-        // open output file
+        
         File outfile = new File(file);
         if (outfile.exists())
             outfile.delete();
@@ -271,20 +205,7 @@ public class SQLutil {
     }
 
 
-    /**
-     * Accepts the BibtexDatabase and MetaData, generates the DML required to
-     * create and populate SQL database tables, and writes this DML to the 
-     * specified SQL database.
-     *
-     * @param database
-     *          The BibtexDatabase to export
-     * @param metaData
-     *          The MetaData object containing the groups information
-     * @param keySet
-     *          The set of IDs of the entries to export.
-     * @param dbStrings
-     *          The necessary database connection information
-     */
+    
     public static void exportDatabase(final BibtexDatabase database,
         final MetaData metaData, Set<String> keySet, DBStrings dbStrings)
         throws Exception {
@@ -297,7 +218,7 @@ public class SQLutil {
 
             conn = SQLutil.connectToDB(dbStrings);
 
-            // conn.setAutoCommit(false);
+            
 
             exportDatabase_worker(dbtype, database, metaData, keySet, conn);
 
@@ -321,20 +242,7 @@ public class SQLutil {
     }
 
 
-   /**
-     * Worker method for the exportDatabase methods.
-     *
-     * @param dbtype
-     *          The DBTYPE of the database
-     * @param database
-     *          The BibtexDatabase to export
-     * @param metaData
-     *          The MetaData object containing the groups information
-     * @param keySet
-     *            The set of IDs of the entries to export.
-     * @param out
-     *          The output (PrintStream or Connection) object to which the DML should be written.
-     */
+   
     private static void exportDatabase_worker (DBTYPE dbtype, 
             final BibtexDatabase database, final MetaData metaData, 
             Set<String> keySet, Object out) throws Exception{
@@ -342,81 +250,74 @@ public class SQLutil {
         List<BibtexEntry> entries = FileActions.getSortedEntries(database,
             keySet, false);
 
-        // create MySQL tables 
+        
         dmlCreateTables(dbtype,out);
 
-        // populate entry_type table
+        
         dmlPopTab_ET(out);
 
-        // populate entries table
+        
         dmlPopTab_FD(entries,out);
 
 		GroupTreeNode gtn = metaData.getGroups();
 
-		// populate groups table
+		
         dmlPopTab_GP(gtn,out);
         
-		// populate entry_group table
+		
         dmlPopTab_EG(gtn,out);
     }
 
     
-    /**
-     * Writes the table creation DML to the specififed file.
-     * 
-     * @param dbtype
-     *          Indicates the type of database to be written to 
-     * @param fout
-     *          The output (PrintStream or Connection) object to which the DML should be written
-     */
+    
     private static void dmlCreateTables(DBTYPE dbtype, Object out)
                                 throws SQLException{
 
-        // make sure fields are initialized
+        
         if (fields==null) {
             refreshFields();
         }
 
-        // build the DML tables specification
+        
         String dml1 = "", dml2 = "";
         switch (dbtype) {
             case MYSQL:
 
-                // drop tables
+                
                 processDML(out,"DROP TABLE IF EXISTS entry_types;");
                 processDML(out,"DROP TABLE IF EXISTS entries;");
                 processDML(out,"DROP TABLE IF EXISTS groups;");
                 processDML(out,"DROP TABLE IF EXISTS entry_group;");
 
-                // generate DML that specifies DB columns corresponding to fields
+                
                 dml1 = SQLutil.fieldsAsCols(fields, " VARCHAR(3) DEFAULT NULL");
                 dml2 = SQLutil.fieldsAsCols(fields, " TEXT DEFAULT NULL");
 
-                // create tables
+                
                 dmlTable_mysql(dml1, dml2, out);
 
                 break;
 
             case DERBY:
 
-                // drop tables
+                
                 if (out instanceof Connection) {
 
                     Connection conn = (Connection) out;
                     boolean commitNow = conn.getAutoCommit();
                     conn.setAutoCommit(true);
 
-                    //TODO: determine which tables are present, and drop them
+                    
 
                     conn.setAutoCommit(commitNow);
 
                 }
 
-                // generate DML that specifies DB columns corresponding to fields
+                
                 dml1 = SQLutil.fieldsAsCols(fields, " VARCHAR(3) DEFAULT NULL");
                 dml2 = SQLutil.fieldsAsCols(fields, " LONG VARCHAR DEFAULT NULL");
 
-                // create tables
+                
                 dmlTable_derby(dml1, dml2, out);
 
                 break;
@@ -430,16 +331,7 @@ public class SQLutil {
     }
 
 
-    /**
-     * Generates DML specifying table columns and their datatypes. The output of
-     * this routine should be used within a CREATE TABLE statement.
-     * 
-     * @param fields
-     *            Contains unique field names
-     * @param datatype
-     *            Specifies the SQL data type that the fields should take on.
-     * @return The DML code to be included in a CREATE TABLE statement.
-     */
+    
     private static String fieldsAsCols(ArrayList<String> fields, String datatype) {
         String str = "";
         ListIterator<String> li = fields.listIterator();
@@ -451,18 +343,7 @@ public class SQLutil {
         return str;
     }
 
-    /**
-     * Generates DML code necessary to create all tables in a MySQL database, 
-     * and writes it to appropriate output.
-     *
-     * @param dml1
-     *            Column specifications for fields in entry_type table.
-     * @param dml2
-     *            Column specifications for fields in entries table.
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     * @return DML to create all MySQL tables.
-     */
+    
     private static void dmlTable_mysql(String dml1, String dml2, Object out)
             throws SQLException {
 
@@ -505,18 +386,7 @@ public class SQLutil {
 
     }
 
-    /**
-     * Generates DML code necessary to create all tables in a Derby database, 
-     * and writes it to appropriate output.
-     *
-     * @param dml1
-     *            Column specifications for fields in entry_type table.
-     * @param dml2
-     *            Column specifications for fields in entries table.
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     * @return DML to create all Derby tables.
-     */
+    
     private static void dmlTable_derby(String dml1, String dml2, Object out)
             throws SQLException {
 
@@ -560,13 +430,7 @@ public class SQLutil {
 
     }
 
-     /**
-     * Generates the DML required to populate the entry_types table with jabref
-     * data.
-     * 
-     * @param out
-     *          The output (PrintSream or Connection) object to which the DML should be written.
-     */
+     
     private static void dmlPopTab_ET( Object out) throws SQLException{
 
         String dml = "";
@@ -576,11 +440,11 @@ public class SQLutil {
         for (int i = 0; i < fields.size(); i++)
             fieldID.add(null);
 
-        // loop through entry types
+        
         for (BibtexEntryType val : BibtexEntryType.ALL_TYPES.values()) {
 
-            // set ID for each field corresponding to its relationship to the
-            // entry type
+            
+            
             for (int i = 0; i < fieldID.size(); i++) {
                 fieldID.set(i, "");
             }
@@ -591,7 +455,7 @@ public class SQLutil {
             fieldID = setFieldID(fields, fieldID, val.getGeneralFields(), "gen");
             fieldID = setFieldID(fields, fieldID, val.getUtilityFields(), "uti");
 
-            // build DML insert statement
+            
             dml = insert + "\"" + val.getName().toLowerCase() + "\"";
             for (int i = 0; i < fieldID.size(); i++) {
                 dml = dml + ", ";
@@ -603,7 +467,7 @@ public class SQLutil {
             }
             dml = dml + ");";
 
-            // handle DML according to output type
+            
             processDML(out, dml);
 
         }
@@ -613,21 +477,7 @@ public class SQLutil {
     }
 
 
-     /**
-     * A utility function for facilitating the assignment of a code to each
-     * field name that represents the relationship of that field to a specific
-     * entry type.
-     * 
-     * @param fields
-     *            A list of all fields.
-     * @param fieldID
-     *            A list for holding the codes.
-     * @param fieldstr
-     *            A String array containing the fields to be coded.
-     * @param ID
-     *            The code that should be assigned to the specified fields.
-     * @return The updated code list.
-     */
+     
     private static ArrayList<String> setFieldID(ArrayList<String> fields,
         ArrayList<String> fieldID, String[] fieldstr, String ID) {
         if (fieldstr != null) {
@@ -639,15 +489,7 @@ public class SQLutil {
     }
 
 
-     /**
-     * Generates the DML required to populate the entries table with jabref
-     * data and writes it to the output PrintStream.
-     * 
-     * @param entries
-     *          The BibtexEntries to export     
-     * @param out
-     *          The output (PrintStream or Connection) object to which the DML should be written.
-     */
+     
     private static void dmlPopTab_FD(List<BibtexEntry> entries, Object out) 
                             throws SQLException {
 
@@ -657,10 +499,10 @@ public class SQLutil {
             + fieldstr
             + ") VALUES (";
 
-        // loop throught the entries that are to be exported
+        
         for (BibtexEntry entry : entries) {
 
-            // build DML insert statement
+            
             dml = insert 
 			      + "\"" + entry.getId() + "\""
 			      + ", (SELECT entry_types_id FROM entry_types WHERE label=\""
@@ -678,7 +520,7 @@ public class SQLutil {
             }
             dml = dml + ");";
 
-            // handle DML according to output type
+            
             processDML(out, dml);
 
         }
@@ -687,42 +529,23 @@ public class SQLutil {
 
     }
 
-     /**
-     * Generates the DML required to populate the groups table with jabref
-     * data, and writes this DML to the output file.
-     * 
-     * @param cursor
-     *            The current GroupTreeNode in the GroupsTree
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     */
+     
 	private static int dmlPopTab_GP (GroupTreeNode cursor, Object out) 
                         throws Exception {
         int cnt = dmlPopTab_GP_worker(cursor, 1, 1, out);
         return cnt;
     }
 
-    /**
-     * Recursive worker method for the dmlPopTab_GP methods.
-     *
-     * @param cursor
-     *            The current GroupTreeNode in the GroupsTree
-     * @param parentID
-     *            The integer ID associated with the cursors's parent node
-     * @param ID
-     *            The integer value to associate with the cursor
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     */
+    
 	private static int dmlPopTab_GP_worker (GroupTreeNode cursor, int parentID,
             int ID, Object out) throws SQLException{
 
-        // handle DML according to output type
+        
         processDML(out, "INSERT INTO groups (groups_id, label, parent_id) " 
 				      + "VALUES (" + ID + ", \"" + cursor.getGroup().getName() 
 				      + "\", " + parentID + ");");
 
-		// recurse on child nodes (depth-first traversal)
+		
 	    int myID = ID;
 	    for (Enumeration<GroupTreeNode> e = cursor.children(); e.hasMoreElements();) 
 			ID = dmlPopTab_GP_worker(e.nextElement(),myID,++ID,out);
@@ -730,15 +553,7 @@ public class SQLutil {
 	}
 
 
-    /**
-     * Generates the DML required to populate the entry_group table with jabref
-     * data, and writes the DML to the PrintStream.
-     * 
-     * @param cursor
-     *            The current GroupTreeNode in the GroupsTree
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     */
+    
 	private static int dmlPopTab_EG(GroupTreeNode cursor, Object fout) 
                         throws SQLException{
 
@@ -746,31 +561,20 @@ public class SQLutil {
             return cnt;
     }
 
-    /**
-     * Recursive worker method for the dmlPopTab_EG methods.
-     * 
-     * @param cursor
-     *            The current GroupTreeNode in the GroupsTree
-     * @param parentID
-     *            The integer ID associated with the cursors's parent node
-     * @param ID
-     *            The integer value to associate with the cursor
-     * @param out
-     *            The output (PrintStream or Connection) object to which the DML should be written.
-     */
+    
 
 	private static int dmlPopTab_EG_worker(GroupTreeNode cursor, int parentID, int ID, 
 			Object out) throws SQLException{
 
-		// if this group contains entries...
+		
 		if ( cursor.getGroup() instanceof ExplicitGroup) {
 
-			// build INSERT statement for each entry belonging to this group
+			
 			ExplicitGroup grp = (ExplicitGroup)cursor.getGroup();
 			
 			for (BibtexEntry be : grp.getEntries()){
 
-                // handle DML according to output type
+                
                 processDML(out, "INSERT INTO entry_group (entries_id, groups_id) " 
 						   + "VALUES (" 
 						   + "(SELECT entries_id FROM entries WHERE jabref_eid="
@@ -782,7 +586,7 @@ public class SQLutil {
 			}
 		}
 
-		// recurse on child nodes (depth-first traversal)
+		
 	    int myID = ID;
 	    for (Enumeration<GroupTreeNode> e = cursor.children(); e.hasMoreElements();) 
 			ID = dmlPopTab_EG_worker(e.nextElement(),myID,++ID,out);
@@ -790,14 +594,7 @@ public class SQLutil {
 	    return ID;
 	}
 
-    /**
-     * Processes a SQLException, and returns a more user-friendly message
-     * 
-     * @param ex
-     *            The SQLException raised
-     * @param dbtype
-     *            DBTYPE specifying the type of database that raised the exception
-     */
+    
 
     public static String getExceptionMessage (Exception ex, DBTYPE dbtype) {
         
@@ -819,38 +616,33 @@ public class SQLutil {
 
     }
 
-    /**
-     * Handles work for getExceptionMessage when dbtype is MYSQL
-     * 
-     * @param ex
-     *            The SQLException raised
-     */
+    
     public static String getExceptionMessage_MySQL (Exception ex) {
       
         String msg = null;
 
-        // handle case where exception is SQL related
+        
         if (ex instanceof SQLException) {
 
             SQLException sqlex = (SQLException) ex;
 
-            // desc  : Unkown DB
-            // code  : 1049
-            // state : 42000
-            // msg   : Unkown database 'database_name'
-            // type  : SQLException
-            // tested with MySQL
+            
+            
+            
+            
+            
+            
 
             if (sqlex.getSQLState().equals("42000")) {
                 msg = Globals.lang(sqlex.getMessage());
             }
 
 
-            // desc  : command denied
-            // code  : 1142
-            // state : 42000
-            // msg   : * command denied to user 'username'@'hostname' for table 'table_name'
-            // tested with MySQL
+            
+            
+            
+            
+            
 
             if (sqlex.getSQLState().equals("42000")) {
                 msg = Globals.lang("User does not have sufficient privileges.\n");
@@ -858,30 +650,30 @@ public class SQLutil {
             }
 
 
-            // desc  : Invalid username and/or password
-            // code  : 1045
-            // state : 28000
-            // msg   : Access denied for user 'username'@'hostname' (using password: ...) 
-            // type  : SQLException
-            // tested with MySQL
+            
+            
+            
+            
+            
+            
 
             if (sqlex.getSQLState().equals("28000")) {
                 msg = Globals.lang(sqlex.getMessage());
             }
 
 
-            // desc  : Cannot connect to SQL server
-            // code  : 0
-            // state : 08S01
-            // msg   : Communications link failure due to underlying exception
-            // type  : java.net.UnknownHostException
-            // tested with MySQL
+            
+            
+            
+            
+            
+            
 
             if (sqlex.getSQLState().equals("08S01")) {
                 msg = Globals.lang("Cannot connect to SQL server at the specified host.");
             } 
 
-            // for debugging...
+            
             if (false) {
                 System.out.println("-------------------------------------");
                 System.out.println(sqlex.getErrorCode());
@@ -892,7 +684,7 @@ public class SQLutil {
 
         } 
         
-        // handle case where exception is non-SQL related
+        
         if (msg == null) {
 
             if (ex.getMessage()==null) {

@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 
 package net.sf.jabref;
 
@@ -58,21 +33,19 @@ import com.jgoodies.looks.Options;
 import com.jgoodies.looks.HeaderStyle;
 
 
-/**
- * The main window of the application.
- */
+
 public class JabRefFrame extends JFrame {
 
-   // CO: Code Smells...
+   
     JabRefFrame ths = this;
     UIFSplitPane contentPane = new UIFSplitPane();
 
-    JabRefPreferences prefs = Globals.prefs; //new JabRefPreferences();
+    JabRefPreferences prefs = Globals.prefs; 
     PrefsDialog3 prefsDialog = null;
     
     private int lastTabbedPanelSelectionIndex = -1 ;
 
-    // The sidepane manager takes care of populating the sidepane.
+    
     public SidePaneManager sidePaneManager;
 
     JTabbedPane tabbedPane = new JTabbedPane();
@@ -101,23 +74,23 @@ public class JabRefFrame extends JFrame {
         + ":", SwingConstants.LEFT);
     JProgressBar progressBar = new JProgressBar();
 
-    // SearchManager searchManager = new SearchManager(ths, prefs);
+    
 
     private FileHistory fileHistory = new FileHistory(prefs, this);
 
     LabelMaker labelMaker;
 
-    // The help window.
+    
     public HelpDialog helpDiag = new HelpDialog(this);
 
-    // Here we instantiate menu/toolbar actions. Actions regarding
-    // the currently open database are defined as a GeneralAction
-    // with a unique command string. This causes the appropriate
-    // BasePanel's runCommand() method to be called with that command.
-    // Note: GeneralAction's constructor automatically gets translations
-    // for the name and message strings.
+    
+    
+    
+    
+    
+    
 
-  // References to the toggle buttons in the toolbar:
+  
   public JToggleButton groupToggle, searchToggle, previewToggle, highlightAny,
       highlightAll;
 
@@ -164,14 +137,10 @@ public class JabRefFrame extends JFrame {
                                prefs.getKey("Undo")),
       redo = new GeneralAction("redo", "Redo", Globals.lang("Redo"),
                                prefs.getKey("Redo")),
-      /*cut = new GeneralAction("cut", "Cut", Globals.lang("Cut"),
-         GUIGlobals.cutIconFile,
-         prefs.getKey("Cut")),*/
+      
       delete = new GeneralAction("delete", "Delete", Globals.lang("Delete"),
                                  prefs.getKey("Delete")),
-      /*copy = new GeneralAction("copy", "Copy", Globals.lang("Copy"),
-                               GUIGlobals.copyIconFile,
-                               prefs.getKey("Copy")),*/
+      
       copy = new EditAction("copy", GUIGlobals.getIconUrl("copy")),
       paste = new EditAction("paste", GUIGlobals.getIconUrl("paste")),
       cut = new EditAction("cut", GUIGlobals.getIconUrl("cut")),
@@ -196,19 +165,18 @@ public class JabRefFrame extends JFrame {
       importCiteSeer = new ImportCiteSeerAction(),
       fetchMedline = new FetchMedlineAction(),
       citeSeerPanelAction = new CiteSeerPanelAction(),
-      //fetchAuthorMedline = new FetchAuthorMedlineAction(),
+      
       copyKey = new GeneralAction("copyKey", "Copy BibTeX key"),
-      //"Put a BibTeX reference to the selected entries on the clipboard",
+      
       copyCiteKey = new GeneralAction("copyCiteKey", "Copy \\cite{BibTeX key}",
-                                      //"Put a BibTeX reference to the selected entries on the clipboard",
+                                      
                                       prefs.getKey("Copy \\cite{BibTeX key}")),
       mergeDatabaseAction = new GeneralAction("mergeDatabase",
                                               "Append database",
                                               Globals.lang("Append contents from a BibTeX database into the currently viewed database"),
                                               GUIGlobals.getIconUrl("open")),
-      //prefs.getKey("Open")),
-      /*remove = new GeneralAction("remove", "Remove", "Remove selected entries",
-        GUIGlobals.removeIconFile),*/
+      
+      
       selectAll = new GeneralAction("selectAll", "Select all",
                                     prefs.getKey("Select all")),
       replaceAll = new GeneralAction("replaceAll", "Replace string",
@@ -257,7 +225,7 @@ public class JabRefFrame extends JFrame {
                                   Globals.lang("Open URL or DOI"),
                                   prefs.getKey("Open URL or DOI")),
       dupliCheck = new GeneralAction("dupliCheck", "Find duplicates"),
-      //strictDupliCheck = new GeneralAction("strictDupliCheck", "Find and remove exact duplicates"),
+      
       plainTextImport = new GeneralAction("plainTextImport",
                                           "New entry from plain text",
                                           prefs.getKey("New from plain text")),
@@ -290,9 +258,7 @@ public class JabRefFrame extends JFrame {
     test = new GeneralAction("test", "Test");
 
     PushToApplicationButton pushExternalButton;
-  /*setupSelector = new GeneralAction("setupSelector", "", "",
-          GUIGlobals.pasteIconFile,
-          prefs.getKey(")),*/
+  
 
 
     MedlineFetcher medlineFetcher;
@@ -305,18 +271,18 @@ public class JabRefFrame extends JFrame {
     SearchManager2 searchManager;
     public GroupSelector groupSelector;
 
-  // The menus for importing/appending other formats
+  
   JMenu importMenu = subMenu("Import into current database"),
       importNewMenu = subMenu("Import into new database"),
       exportMenu = subMenu("Export"),
       customExportMenu = subMenu("Custom export"),
       newDatabaseMenu = subMenu("New database" );
 
-  // Other submenus
+  
   JMenu checkAndFix = subMenu("Scan database...");
 
 
-  // The action for adding a new entry of unspecified type.
+  
   NewEntryAction newEntryAction = new NewEntryAction(prefs.getKey("New entry"));
   NewEntryAction[] newSpecificEntryAction = new NewEntryAction[]
   {
@@ -348,7 +314,7 @@ public class JabRefFrame extends JFrame {
         macOSXRegistration();
         MyGlassPane glassPane = new MyGlassPane();
         setGlassPane(glassPane);
-        // glassPane.setVisible(true);
+        
 
         setTitle(GUIGlobals.frameTitle);
         setIconImage(GUIGlobals.getImage("jabrefIcon").getImage());
@@ -374,11 +340,7 @@ public class JabRefFrame extends JFrame {
         tabbedPane.setBorder(null);
         tabbedPane.setForeground(GUIGlobals.inActiveTabbed);
 
-        /*
-         * The following state listener makes sure focus is registered with the
-         * correct database when the user switches tabs. Without this,
-         * cut/paste/copy operations would some times occur in the wrong tab.
-         */
+        
         tabbedPane.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 markActiveBasePanel();
@@ -423,7 +385,7 @@ public class JabRefFrame extends JFrame {
         sidePaneManager.register("groups", groupSelector);
         sidePaneManager.register("search", searchManager);
 
-        // Show the search panel if it was visible at last shutdown:
+        
         if (Globals.prefs.getBoolean("searchPanelVisible"))
             sidePaneManager.show("search");
     }
@@ -443,8 +405,8 @@ AboutAction aboutAction = new AboutAction();
   }
 
 
-  // General info dialog.  The OSXAdapter calls this method when "About OSXAdapter"
-  // is selected from the application menu.
+  
+  
   public void about() {
     JDialog about = new JDialog(ths, Globals.lang("About JabRef"),
                                 true);
@@ -454,9 +416,9 @@ AboutAction aboutAction = new AboutAction();
          JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
     jp.setEditable(false);
     try {
-      jp.setPage(GUIGlobals.class.getResource("/help/About.html"));//GUIGlobals.aboutPage);
-      // We need a hyperlink listener to be able to switch to the license
-      // terms and back.
+      jp.setPage(GUIGlobals.class.getResource("/help/About.html"));
+      
+      
       jp.addHyperlinkListener(new javax.swing.event.HyperlinkListener() {
         public void hyperlinkUpdate(javax.swing.event.HyperlinkEvent e) {
           if (e.getEventType()
@@ -481,10 +443,10 @@ AboutAction aboutAction = new AboutAction();
 
   }
 
-  // General preferences dialog.  The OSXAdapter calls this method when "Preferences..."
-  // is selected from the application menu.
+  
+  
   public void preferences() {
-    //PrefsDialog.showPrefsDialog(ths, prefs);
+    
       AbstractWorker worker = new AbstractWorker() {
               public void run() {
                   output(Globals.lang("Opening preferences..."));
@@ -509,11 +471,11 @@ public JabRefPreferences prefs() {
   return prefs;
 }
 
-  // General info dialog.  The OSXAdapter calls this method when "Quit OSXAdapter"
-  // is selected from the application menu, Cmd-Q is pressed, or "Quit" is selected from the Dock.
+  
+  
   public void quit() {
-    // Ask here if the user really wants to close, if the base
-    // has not been saved since last save.
+    
+    
     boolean close = true;
     Vector filenames = new Vector();
     if (tabbedPane.getTabCount() > 0) {
@@ -529,23 +491,23 @@ public JabRefPreferences prefs() {
 
           if ( (answer == JOptionPane.CANCEL_OPTION) ||
               (answer == JOptionPane.CLOSED_OPTION)) {
-            close = false; // The user has cancelled.
+            close = false; 
               return;
           }
           if (answer == JOptionPane.YES_OPTION) {
-            // The user wants to save.
+            
             try {
-              //basePanel().runCommand("save");
+              
                 SaveDatabaseAction saveAction = new SaveDatabaseAction(basePanel());
                 saveAction.runCommand();
                 if (saveAction.isCancelled() || !saveAction.isSuccess())
-                    // The action was either cancelled or unsuccessful.
-                    // Break!
+                    
+                    
                     close = false;
             }
             catch (Throwable ex) {
-              // Something prevented the file
-              // from being saved. Break!!!
+              
+              
               close = false;
               break;
             }
@@ -564,14 +526,14 @@ public JabRefPreferences prefs() {
       prefs.putInt("sizeX", ths.getSize().width);
       prefs.putInt("sizeY", ths.getSize().height);
       prefs.putBoolean("searchPanelVisible", sidePaneManager.isComponentVisible("search"));
-      // Store divider location for side pane:
+      
       int width = contentPane.getDividerLocation();
       if (width > 0) 
           prefs.putInt("sidePaneWidth", width);
       if (prefs.getBoolean("openLastEdited")) {
-        // Here we store the names of allcurrent filea. If
-        // there is no current file, we remove any
-        // previously stored file name.
+        
+        
+        
         if (filenames.size() == 0) {
           prefs.remove("lastEdited");
         }
@@ -591,13 +553,13 @@ public JabRefPreferences prefs() {
       prefs.customImports.store();
       BibtexEntryType.saveCustomEntryTypes(prefs);
 
-      // Let the search interface store changes to prefs.
-      // But which one? Let's use the one that is visible.
+      
+      
       if (basePanel() != null) {
         ((SearchManager2)searchManager).updatePrefs();
 
       }
-      System.exit(0); // End program.
+      System.exit(0); 
     }
   }
 
@@ -617,8 +579,8 @@ public JabRefPreferences prefs() {
               this};
           registerMethod.invoke(osxAdapter, args);
         }
-        // This is slightly gross.  to reflectively access methods with boolean args,
-        // use "boolean.class", then pass a Boolean object in as the arg, which apparently
+        
+        
 
         defArgs[0] = boolean.class;
         Method prefsEnableMethod = osxAdapter.getDeclaredMethod("enablePrefs",
@@ -630,14 +592,14 @@ public JabRefPreferences prefs() {
         }
       }
       catch (NoClassDefFoundError e) {
-        // This will be thrown first if the OSXAdapter is loaded on a system without the EAWT
-        // because OSXAdapter extends ApplicationAdapter in its def
+        
+        
         System.err.println("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" +
                            e + ")");
       }
       catch (ClassNotFoundException e) {
-        // This shouldn't be reached; if there's a problem with the OSXAdapter we should get the
-        // above NoClassDefFoundError first.
+        
+        
         System.err.println("This version of Mac OS X does not support the Apple EAWT.  Application Menu handling has been disabled (" +
                            e + ")");
       }
@@ -661,35 +623,25 @@ public JabRefPreferences prefs() {
     getContentPane().setLayout(gbl);
       contentPane.setDividerSize(2);
       contentPane.setBorder(null);
-    //getContentPane().setBackground(GUIGlobals.lightGray);
+    
     con.fill = GridBagConstraints.HORIZONTAL;
     con.anchor = GridBagConstraints.WEST;
     con.weightx = 1;
     con.weighty = 0;
     con.gridwidth = GridBagConstraints.REMAINDER;
 
-    //gbl.setConstraints(mb, con);
-    //getContentPane().add(mb);
+    
+    
     setJMenuBar(mb);
     con.anchor = GridBagConstraints.NORTH;
-    //con.gridwidth = 1;//GridBagConstraints.REMAINDER;;
+    
     gbl.setConstraints(tlb, con);
     getContentPane().add(tlb);
 
     Component lim = Box.createGlue();
     gbl.setConstraints(lim, con);
-    //getContentPane().add(lim);
-    /*
-      JPanel empt = new JPanel();
-      empt.setBackground(GUIGlobals.lightGray);
-      gbl.setConstraints(empt, con);
-           getContentPane().add(empt);
-
-      con.insets = new Insets(1,0,1,1);
-      con.anchor = GridBagConstraints.EAST;
-      con.weightx = 0;
-      gbl.setConstraints(searchManager, con);
-      getContentPane().add(searchManager);*/
+    
+    
     con.gridwidth = GridBagConstraints.REMAINDER;
     con.weightx = 1;
     con.weighty = 0;
@@ -699,8 +651,8 @@ public JabRefPreferences prefs() {
     lim = Box.createGlue();
     gbl.setConstraints(lim, con);
     getContentPane().add(lim);
-    //tabbedPane.setVisible(false);
-    //tabbedPane.setForeground(GUIGlobals.lightGray);
+    
+    
     con.weighty = 1;
     gbl.setConstraints(contentPane, con);
     getContentPane().add(contentPane);
@@ -733,7 +685,7 @@ public JabRefPreferences prefs() {
     getContentPane().add(status);
 
 
-      // Drag and drop for tabbedPane:
+      
       TransferHandler xfer = new EntryTableTransferHandler(null, this, null);
       tabbedPane.setTransferHandler(xfer);
       tlb.setTransferHandler(xfer);
@@ -742,7 +694,7 @@ public JabRefPreferences prefs() {
   }
 
   private void initLabelMaker() {
-    // initialize the labelMaker
+    
     labelMaker = new LabelMaker();
     labelMaker.addRule(new ArticleLabelRule(),
                        BibtexEntryType.ARTICLE);
@@ -754,10 +706,7 @@ public JabRefPreferences prefs() {
                        BibtexEntryType.INPROCEEDINGS);
   }
 
-  /**
-   * Returns the indexed BasePanel.
-   * @param i Index of base
-   */
+  
   public BasePanel baseAt(int i) {
     return (BasePanel) tabbedPane.getComponentAt(i);
   }
@@ -766,16 +715,12 @@ public JabRefPreferences prefs() {
       tabbedPane.setSelectedIndex(i);
   }
 
-  /**
-   * Returns the currently viewed BasePanel.
-   */
+  
   public BasePanel basePanel() {
     return (BasePanel) tabbedPane.getSelectedComponent();
   }
 
-  /**
-   * handle the color of active and inactive JTabbedPane tabs
-   */
+  
   private void markActiveBasePanel()
   {
     int now = tabbedPane.getSelectedIndex() ;
@@ -863,16 +808,7 @@ public JabRefPreferences prefs() {
           putValue(ACCELERATOR_KEY, key);
       }
 
-  /*    public GeneralAction(String command, String text, String description,
-                           URL imageUrl, KeyStroke key) {
-      this.command = command;
-        ImageIcon icon = GUIGlobals.getImage(command);
-        if (icon != null)
-            putValue(SMALL_ICON, icon);
-      putValue(NAME, text);
-      putValue(SHORT_DESCRIPTION, Globals.lang(description));
-        putValue(ACCELERATOR_KEY, key);
-    }*/
+  
 
     public void actionPerformed(ActionEvent e) {
       if (tabbedPane.getTabCount() > 0) {
@@ -891,40 +827,16 @@ public JabRefPreferences prefs() {
     }
   }
 
-  /** This got removed when we introduced SearchManager2.
-       class IncrementalSearchAction extends AbstractAction {
-    public IncrementalSearchAction() {
-   super("Incremental search", new ImageIcon(GUIGlobals.searchIconFile));
-   putValue(SHORT_DESCRIPTION, Globals.lang("Start incremental search"));
-   putValue(ACCELERATOR_KEY, prefs.getKey("Incremental search"));
-    }
-    public void actionPerformed(ActionEvent e) {
-   if (tabbedPane.getTabCount() > 0)
-     searchManager.startIncrementalSearch();
-    }
-       }
-
-       class SearchAction extends AbstractAction {
-    public SearchAction() {
-   super("Search", new ImageIcon(GUIGlobals.searchIconFile));
-   putValue(SHORT_DESCRIPTION, Globals.lang("Start search"));
-   putValue(ACCELERATOR_KEY, prefs.getKey("Search"));
-    }
-    public void actionPerformed(ActionEvent e) {
-   if (tabbedPane.getTabCount() > 0)
-     searchManager.startSearch();
-    }
-       }
-   */
+  
 
   class NewEntryAction
       extends MnemonicAwareAction {
 
-    String type = null; // The type of item to create.
-    KeyStroke keyStroke = null; // Used for the specific instances.
+    String type = null; 
+    KeyStroke keyStroke = null; 
 
     public NewEntryAction(KeyStroke key) {
-      // This action leads to a dialog asking for entry type.
+      
       super(GUIGlobals.getImage("add"));
       putValue(NAME, "New entry");
       putValue(ACCELERATOR_KEY, key);
@@ -932,13 +844,13 @@ public JabRefPreferences prefs() {
     }
 
     public NewEntryAction(String type_) {
-      // This action leads to the creation of a specific entry.
+      
       putValue(NAME, Util.nCase(type_));
       type = type_;
     }
 
     public NewEntryAction(String type_, KeyStroke key) {
-        // This action leads to the creation of a specific entry.
+        
         putValue(NAME, Util.nCase(type_));
         putValue(ACCELERATOR_KEY, key);
         type = type_;
@@ -968,33 +880,16 @@ public JabRefPreferences prefs() {
     }
   }
 
-  /*
-       private void setupDatabaseLayout() {
-    // This method is called whenever this frame has been provided
-    // with a database, and completes the layout.
+  
 
-
-    if (file != null)
-   setTitle(GUIGlobals.baseTitle+file.getName());
-    else
-    setTitle(GUIGlobals.untitledTitle);
-
-    //DragNDropManager dndm = new DragNDropManager(this);
-
-    //setNonEmptyState();
-    Util.pr("JabRefFrame: Must set non-empty state.");
-    }*/
-
-  /**
-   * Refresh import menus.
-   */
+  
   public void setUpImportMenus() {
     setUpImportMenu(importMenu, false);
     setUpImportMenu(importNewMenu, true);
   }
 
   private void fillMenu() {
-      //mb.putClientProperty(Options.HEADER_STYLE_KEY, HeaderStyle.BOTH);
+      
       mb.setBorder(null);
       JMenu file = subMenu("File"),
               sessions = subMenu("Sessions"),
@@ -1013,15 +908,15 @@ public JabRefPreferences prefs() {
       newDatabaseMenu.add(newSubDatabaseAction);
 
       file.add(newDatabaseAction);
-      file.add(open); //opendatabaseaction
+      file.add(open); 
       file.add(mergeDatabaseAction);
       file.add(save);
       file.add(saveAs);
       file.add(saveAll);
       file.add(saveSelectedAs);
       file.addSeparator();
-      //file.add(importMenu);
-      //file.add(importNewMenu);
+      
+      
       file.add(importNew);
       file.add(importCurrent);
       file.add(exportAll);
@@ -1035,13 +930,13 @@ public JabRefPreferences prefs() {
       sessions.add(saveSessionAction);
       file.add(sessions);
       file.add(fileHistory);
-      //file.addSeparator();
+      
 
       file.addSeparator();
       file.add(close);
       file.add(quit);
       mb.add(file);
-      //edit.add(test);
+      
       edit.add(undo);
       edit.add(redo);
       edit.addSeparator();
@@ -1049,11 +944,11 @@ public JabRefPreferences prefs() {
       edit.add(cut);
       edit.add(copy);
       edit.add(paste);
-      //edit.add(remove);
+      
       edit.add(delete);
       edit.add(copyKey);
       edit.add(copyCiteKey);
-      //edit.add(exportToClipboard);
+      
       edit.addSeparator();
       edit.add(mark);
       edit.add(unmark);
@@ -1092,10 +987,10 @@ public JabRefPreferences prefs() {
       tools.add(new MassSetFieldAction(this));
       tools.add(makeKeyAction);
 
-      // [kiar] I think we should group these festures
+      
       tools.add(checkAndFix);
       checkAndFix.add(dupliCheck);
-      //checkAndFix.add(strictDupliCheck);
+      
       checkAndFix.add(autoSetFile);
       checkAndFix.add(autoSetPdf);
       checkAndFix.add(autoSetPs);
@@ -1109,11 +1004,11 @@ public JabRefPreferences prefs() {
       tools.add(pushExternalButton.getMenuAction());
       tools.add(writeXmpAction);
 
-      //tools.add(emacsPushAction);
-      //tools.add(lyxPushAction);
-      //tools.add(winEdtPushAction);
-      //tools.add(latexEditorPushAction);
-      //tools.add(fetchAuthorMedline);
+      
+      
+      
+      
+      
       tools.addSeparator();
       tools.add(openFile);
       tools.add(openPdf);
@@ -1126,7 +1021,7 @@ public JabRefPreferences prefs() {
       tools.add(abbreviateMedline);
       tools.add(unabbreviate);
 
-      // TODO: Temporary for 2.2 release: we should perhaps find a better solution:
+      
       tools.addSeparator();
       tools.add(new ExpandEndnoteFilters(ths));
       
@@ -1152,35 +1047,15 @@ public JabRefPreferences prefs() {
       options.add(customFileTypesAction);
       options.add(manageJournals);
 
-      /*options.add(new AbstractAction("Font") {
-      public void actionPerformed(ActionEvent e) {
-          // JDialog dl = new EntryCustomizationDialog(ths);
-          Font f=new FontSelectorDialog
-        (ths, GUIGlobals.CURRENTFONT).getSelectedFont();
-       if(f==null)
-        return;
-       else
-        GUIGlobals.CURRENTFONT=f;
-       // updatefont
-       prefs.put("fontFamily", GUIGlobals.CURRENTFONT.getFamily());
-       prefs.putInt("fontStyle", GUIGlobals.CURRENTFONT.getStyle());
-       prefs.putInt("fontSize", GUIGlobals.CURRENTFONT.getSize());
-       if (tabbedPane.getTabCount() > 0) {
-        for (int i=0; i<tabbedPane.getTabCount(); i++) {
-         baseAt(i).entryTable.updateFont();
-         baseAt(i).refreshTable();
-        }
-       }
-      }
-      });*/
+      
 
-      //options.add(selectKeys);
+      
       mb.add(options);
 
       helpMenu.add(help);
       helpMenu.add(contents);
       helpMenu.addSeparator();
-//old about    helpMenu.add(about);
+
       helpMenu.add(about);
       mb.add(helpMenu);
       helpMenu.addSeparator();
@@ -1206,9 +1081,9 @@ public JabRefPreferences prefs() {
     tlb.setBorder(null);
     tlb.setRollover(true);
 
-    //tlb.setBorderPainted(true);
-    //tlb.setBackground(GUIGlobals.lightGray);
-    //tlb.setForeground(GUIGlobals.lightGray);
+    
+    
+    
     tlb.setFloatable(false);
     tlb.addAction(newDatabaseAction);
     tlb.addAction(open);
@@ -1268,27 +1143,27 @@ public JabRefPreferences prefs() {
 
     tlb.addSeparator();
 
-      // Removing the separate push-to buttons, replacing them by the
-      // multipurpose button:
-      //tlb.addAction(emacsPushAction);
-      //tlb.addAction(lyxPushAction);
-      //tlb.addAction(winEdtPushAction);
+      
+      
+      
+      
+      
       tlb.add(pushExternalButton.getComponent());
 
       tlb.addAction(openFile);
-    //tlb.addAction(openPdf);
-    //tlb.addAction(openUrl);
+    
+    
 
 
-    //tlb.addSeparator();
-    //tlb.addAction(showPrefs);
+    
+    
     tlb.add(Box.createHorizontalGlue());
-    //tlb.add(new JabRefLabel(GUIGlobals.frameTitle+" "+GUIGlobals.version));
+    
 
     tlb.addAction(closeDatabaseAction);
-    //Insets margin = new Insets(0, 0, 0, 0);
-    //for (int i=0; i<tlb.getComponentCount(); i++)
-    //  ((JButton)tlb.getComponentAtIndex(i)).setMargin(margin);
+    
+    
+    
 
   }
 
@@ -1314,7 +1189,7 @@ public JabRefPreferences prefs() {
   }
 
   private JMenuItem mItem(AbstractAction a, KeyStroke ks) {
-    // Set up a menu item with action and accelerator key.
+    
     JMenuItem mi = new JMenuItem();
     mi.setAction(a);
     if (ks != null) {
@@ -1323,30 +1198,10 @@ public JabRefPreferences prefs() {
     return mi;
   }
 
-  //private void setupMainPanel() {
+  
 
 
-  /*public Completer getAutoCompleter(String field) {
-    return (Completer)autoCompleters.get(field);
-    }
-
-
-       public void assignAutoCompleters() {
-    // Set up which fields should have autocompletion. This should
-    // probably be made customizable. Existing Completer objects are
-    // forgotten. The completers must be updated towards the database.
-    byte[] fields = prefs.getByteArray("autoCompFields");
-    autoCompleters = new Hashtable();
-    for (int i=0; i<fields.length; i++) {
-   autoCompleters.put(GUIGlobals.ALL_FIELDS[fields[i]], new Completer());
-    }
-
-       }
-
-       public void updateAutoCompleters() {
-    if (database != null)
-   database.setCompleters(autoCompleters);
-   }*/
+  
 
  public void output(final String s) {
 
@@ -1375,7 +1230,7 @@ public JabRefPreferences prefs() {
             selectAll, copyKey, copyCiteKey, editPreamble, editStrings, toggleGroups, toggleSearch,
             makeKeyAction, normalSearch,
             incrementalSearch, replaceAll, importMenu, exportMenu, fetchMedline, fetchCiteSeer,
-                openPdf, openUrl, togglePreview, dupliCheck, /*strictDupliCheck,*/ highlightAll,
+                openPdf, openUrl, togglePreview, dupliCheck,  highlightAll,
             highlightAny, citeSeerPanelAction, newEntryAction, plainTextImport,
             closeDatabaseAction, switchPreview, integrityCheckAction, autoSetPdf, autoSetPs,
             toggleHighlightAny, toggleHighlightAll, databaseProperties, abbreviateIso,
@@ -1411,11 +1266,7 @@ public JabRefPreferences prefs() {
 
     protected int previousTabCount = -1;
     
-    /**
-     * Enable or Disable all actions based on the number of open tabs.
-     * 
-     * The action that are affected are set in initActions.
-     */
+    
     protected void updateEnabledState() {
         int tabCount = tabbedPane.getTabCount();
         if (tabCount != previousTabCount){
@@ -1425,22 +1276,18 @@ public JabRefPreferences prefs() {
         }
     }
 
-  /**
-   * This method causes all open BasePanels to set up their tables
-   * anew. When called from PrefsDialog2, this updates to the new
-   * settings.
-   */
+  
   public void setupAllTables() {
-    // This action can be invoked without an open database, so
-    // we have to check if we have one before trying to invoke
-    // methods to execute changes in the preferences.
+    
+    
+    
 
-    // We want to notify all tabs about the changes to
-    // avoid problems when changing the column set.
+    
+    
     for (int i = 0; i < tabbedPane.getTabCount(); i++) {
       BasePanel bf = baseAt(i);
 
-      // Update tables:
+      
       if (bf.database != null) {
         bf.setupMainPanel();
 
@@ -1476,7 +1323,7 @@ public JabRefPreferences prefs() {
           ( (HashMap) prefs.getKeyBindings().clone(),
            prefs.getDefaultKeys());
       d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      d.pack(); //setSize(300,500);
+      d.pack(); 
       Util.placeDialog(d, ths);
       d.setVisible(true);
       if (d.getAction()) {
@@ -1492,17 +1339,15 @@ public JabRefPreferences prefs() {
     }
   }
 
-  /**
-   * The action concerned with closing the window.
-   */
+  
   class CloseAction
       extends MnemonicAwareAction {
     public CloseAction() {
       putValue(NAME, "Quit");
       putValue(SHORT_DESCRIPTION, Globals.lang("Quit JabRef"));
       putValue(ACCELERATOR_KEY, prefs.getKey("Quit JabRef"));
-      //putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Q,
-      //    Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+      
+      
 
     }
 
@@ -1511,7 +1356,7 @@ public JabRefPreferences prefs() {
     }
   }
 
-  // The action for closing the current database and leaving the window open.
+  
     CloseDatabaseAction closeDatabaseAction = new CloseDatabaseAction();
 
     class CloseDatabaseAction extends MnemonicAwareAction {
@@ -1523,11 +1368,11 @@ public JabRefPreferences prefs() {
         }
 
         public void actionPerformed(ActionEvent e) {
-            // Ask here if the user really wants to close, if the base
-            // has not been saved since last save.
+            
+            
             boolean close = true;
-            if (basePanel() == null) { // when it is initially empty
-                return; // nbatada nov 7
+            if (basePanel() == null) { 
+                return; 
             }
 
             if (basePanel().baseChanged) {
@@ -1535,20 +1380,20 @@ public JabRefPreferences prefs() {
                     .lang("Database has changed. Do you want to save " + "before closing?"),
                     Globals.lang("Save before closing"), JOptionPane.YES_NO_CANCEL_OPTION);
                 if ((answer == JOptionPane.CANCEL_OPTION) || (answer == JOptionPane.CLOSED_OPTION)) {
-                    close = false; // The user has cancelled.
+                    close = false; 
                 }
                 if (answer == JOptionPane.YES_OPTION) {
-                    // The user wants to save.
+                    
                     try {
                         SaveDatabaseAction saveAction = new SaveDatabaseAction(basePanel());
                         saveAction.runCommand();
                         if (saveAction.isCancelled() || !saveAction.isSuccess())
-                            // The action either not cancelled or unsuccessful.
-                            // Break! 
+                            
+                            
                             close = false;
                     } catch (Throwable ex) {
-                        // Something prevented the file
-                        // from being saved. Break!!!
+                        
+                        
                         close = false;
                     }
 
@@ -1561,26 +1406,26 @@ public JabRefPreferences prefs() {
                 if (tabbedPane.getTabCount() > 0) {
                     markActiveBasePanel();
                 }
-                updateEnabledState(); // Man, this is what I call a bug that this is not called.
+                updateEnabledState(); 
                 output(Globals.lang("Closed database") + ".");
-                System.gc(); // Test
+                System.gc(); 
             }
         }
     }
 
 
-  // The action concerned with opening a new database.
+  
   class NewDatabaseAction
       extends MnemonicAwareAction {
     public NewDatabaseAction() {
         super(GUIGlobals.getImage("new"));
         putValue(NAME, "New database");
         putValue(SHORT_DESCRIPTION, Globals.lang("New BibTeX database"));
-        //putValue(MNEMONIC_KEY, GUIGlobals.newKeyCode);
+        
     }
 
     public void actionPerformed(ActionEvent e) {
-        // Create a new, empty, database.
+        
         BibtexDatabase database = new BibtexDatabase();
         addTab(database, null, null, Globals.prefs.get("defaultEncoding"), true);
         output(Globals.lang("New database created."));
@@ -1594,7 +1439,7 @@ class ImportCiteSeerAction
         super(GUIGlobals.getImage("citeseer"));
         putValue(NAME, "Import Fields from CiteSeer");
         putValue(SHORT_DESCRIPTION, Globals.lang("Import Fields from CiteSeer Database"));
-        putValue(ACCELERATOR_KEY, prefs.getKey("Import Fields from CiteSeer")); // Key defined in MenuTitles!
+        putValue(ACCELERATOR_KEY, prefs.getKey("Import Fields from CiteSeer")); 
         }
 
         public void actionPerformed(ActionEvent e) {
@@ -1606,7 +1451,7 @@ class ImportCiteSeerAction
 
                                 BasePanel currentBp;
                                 BibtexEntry toShow;
-                                //String id;
+                                
                                 int[] clickedOn = null;
 
                                 class UpdateComponent implements Runnable {
@@ -1620,16 +1465,16 @@ class ImportCiteSeerAction
                                             citeSeerFetcher.endImportCiteSeerProgress();
                                             if (changesMade)
                                                     currentBp.markBaseChanged();
-                                                //for(int i=0; i < clickedOn.length; i++)
-                                                //        currentBp.entryTable.addRowSelectionInterval(i,i);
-                                                //currentBp.showEntry(toShow);
+                                                
+                                                
+                                                
                                                 output(Globals.lang("Completed Import Fields from CiteSeer."));
                                         }
                                 }
 
                             public void run() {
                                 currentBp = (BasePanel) tabbedPane.getSelectedComponent();
-                                        // We demand that at least one row is selected.
+                                        
 
                                         int rowCount = currentBp.mainTable.getSelectedRowCount();
                                         if (rowCount >= 1) {
@@ -1689,10 +1534,7 @@ class FetchCiteSeerAction
 
                                         Runnable updateComponent = new Runnable() {
 
-                                                /* TODO: This should probably be selectable on/off
-                                                 * in the preferences window, but for now all
-                                                 * Citation fetcher operations will sort by citation count.
-                                                 */
+                                                
                                                 private void setSortingByCitationCount() {
                                                         newBp.sortingByCiteSeerResults = true;
                                                 }
@@ -1739,7 +1581,7 @@ class FetchCiteSeerAction
 
 
 
-    // The action concerned with generate a new (sub-)database from latex aux file.
+    
     class NewSubDatabaseAction extends MnemonicAwareAction
     {
       public NewSubDatabaseAction()
@@ -1747,12 +1589,12 @@ class FetchCiteSeerAction
         super(GUIGlobals.getImage("new"));
         putValue(NAME, "New subdatabase based on AUX file" );
         putValue( SHORT_DESCRIPTION, Globals.lang( "New BibTeX subdatabase" ) ) ;
-            //putValue(MNEMONIC_KEY, GUIGlobals.newKeyCode);
+            
       }
 
       public void actionPerformed( ActionEvent e )
       {
-        // Create a new, empty, database.
+        
 
         FromAuxDialog dialog = new FromAuxDialog(ths, "", true, ths.tabbedPane) ;
 
@@ -1762,9 +1604,9 @@ class FetchCiteSeerAction
         if (dialog.okPressed())
         {
           BasePanel bp = new BasePanel( ths,
-                                        dialog.getGenerateDB(),   // database
-                                        null,                     // file
-                                        null, Globals.prefs.get("defaultEncoding"));                     // meta data
+                                        dialog.getGenerateDB(),   
+                                        null,                     
+                                        null, Globals.prefs.get("defaultEncoding"));                     
           tabbedPane.add( Globals.lang( GUIGlobals.untitledTitle ), bp ) ;
           tabbedPane.setSelectedComponent( bp ) ;
           output( Globals.lang( "New database created." ) ) ;
@@ -1773,15 +1615,15 @@ class FetchCiteSeerAction
     }
 
 
-    // The action should test the database and report errors/warnings
+    
     class IntegrityCheckAction extends AbstractAction
     {
       public IntegrityCheckAction()
       {
         super(Globals.menuTitle("Integrity check"),
                GUIGlobals.getImage("integrityCheck")) ;
-               //putValue( SHORT_DESCRIPTION, "integrity" ) ;  //Globals.lang( "integrity" ) ) ;
-            //putValue(MNEMONIC_KEY, GUIGlobals.newKeyCode);
+               
+            
       }
 
       public void actionPerformed( ActionEvent e )
@@ -1838,7 +1680,7 @@ class FetchCiteSeerAction
         }
     }
 
-  // The action for opening the preferences dialog.
+  
   AbstractAction showPrefs = new ShowPrefsAction();
 
   class ShowPrefsAction
@@ -1854,20 +1696,11 @@ class FetchCiteSeerAction
     }
   }
 
-  /**
-   * This method does the job of adding imported entries into the active database, or into a new one.
-   * It shows the ImportInspectionDialog if preferences indicate it should be used. Otherwise it imports
-   * directly.
-   * @param panel The BasePanel to add to.
-   * @param entries The entries to add.
-   * @param filename Name of the file where the import came from.
-   * @param openInNew Should the entries be imported into a new database?
-   * @param callBack The callback for the ImportInspectionDialog to use.
-   */
+  
   public void addImportedEntries(final BasePanel panel, final List entries, String filename, boolean openInNew,
                                  ImportInspectionDialog.CallBack callBack) {
-      // Use the import inspection dialog if it is enabled in preferences, and (there are more than
-      // one entry or the inspection dialog is also enabled for single entries):
+      
+      
       if (Globals.prefs.getBoolean("useImportInspectionDialog") &&
               (Globals.prefs.getBoolean("useImportInspectionDialogForSingle") || (entries.size() > 1))) {
                 ImportInspectionDialog diag = new ImportInspectionDialog(ths, panel,
@@ -1893,19 +1726,12 @@ class FetchCiteSeerAction
        }
   }
 
-    /**
-     * Adds the entries to the database, possibly checking for duplicates first.
-     * @param filename If non-null, a message is printed to the status line describing
-     * how many entries were imported, and from which file. If null, the message will not
-     * be printed.
-     * @param intoNew Determines if the entries will be put in a new database or in the current
-     * one.
-     */
+    
   public int addBibEntries(java.util.List bibentries, String filename,
                            boolean intoNew) {
           if (bibentries == null || bibentries.size() == 0) {
 
-      // No entries found. We need a message for this.
+      
       JOptionPane.showMessageDialog(ths, Globals.lang("No entries found. Please make sure you are "
                                                       +"using the correct import filter."), Globals.lang("Import failed"),
                                     JOptionPane.ERROR_MESSAGE);
@@ -1914,12 +1740,12 @@ class FetchCiteSeerAction
 
       int addedEntries = 0;
 
-    // Set owner and timestamp fields:
+    
     Util.setAutomaticFields(bibentries, Globals.prefs.getBoolean("overwriteOwner"),
             Globals.prefs.getBoolean("overwriteTimeStamp"));
 
     if (intoNew || (tabbedPane.getTabCount() == 0)) {
-      // Import into new database.
+      
       BibtexDatabase database = new BibtexDatabase();
       Iterator it = bibentries.iterator();
       while (it.hasNext()) {
@@ -1930,19 +1756,15 @@ class FetchCiteSeerAction
           database.insertEntry(entry);
         }
         catch (KeyCollisionException ex) {
-          //ignore
+          
           System.err.println("KeyCollisionException [ addBibEntries(...) ]");
         }
       }
       HashMap meta = new HashMap();
-      // Metadata are only put in bibtex files, so we will not find it
-      // in imported files. Instead we pass an empty HashMap.
+      
+      
       BasePanel bp = new BasePanel(ths, database, null, meta, Globals.prefs.get("defaultEncoding"));
-      /*
-            if (prefs.getBoolean("autoComplete")) {
-            db.setCompleters(autoCompleters);
-            }
-       */
+      
       addedEntries = database.getEntryCount();
       tabbedPane.add(GUIGlobals.untitledTitle, bp);
       bp.markBaseChanged();
@@ -1954,7 +1776,7 @@ class FetchCiteSeerAction
                  Globals.lang("entries into new database") + ".");
     }
     else {
-      // Import into current database.
+      
       boolean checkForDuplicates = true;
       BasePanel basePanel = basePanel();
       BibtexDatabase database = basePanel.database;
@@ -1965,7 +1787,7 @@ class FetchCiteSeerAction
       mainLoop: while (it.hasNext()) {
         BibtexEntry entry = (BibtexEntry) it.next();
         boolean dupli = false;
-        // Check for duplicates among the current entries:
+        
         if (checkForDuplicates) {
             loop: for (Iterator i2=database.getKeySet().iterator();
                        i2.hasNext();) {
@@ -2000,7 +1822,7 @@ class FetchCiteSeerAction
                 addedEntries++;
             }
             catch (KeyCollisionException ex) {
-                //ignore
+                
                 System.err.println("KeyCollisionException [ addBibEntries(...) ]");
             }
         }
@@ -2025,25 +1847,22 @@ class FetchCiteSeerAction
       final boolean intoNew = intoNew_;
       importMenu.removeAll();
 
-      // Add a menu item for autodetecting import format:
+      
       importMenu.add(new ImportMenuItem(ths, intoNew));
 
-      // Add custom importers
+      
       importMenu.addSeparator();
 
       SortedSet customImporters = Globals.importFormatReader.getCustomImportFormats();
       JMenu submenu = new JMenu(Globals.lang("Custom importers"));
       submenu.setMnemonic(KeyEvent.VK_S);
-      /*if (customImporters.size() == 0) {
-        submenu.setEnabled(false);
-        submenu.setToolTipText(Globals.lang("No custom imports registered yet."));
-      } else {*/
-        // Put in all formatters registered in ImportFormatReader:
+      
+        
         for (Iterator i=customImporters.iterator(); i.hasNext();) {
             ImportFormat imFo = (ImportFormat)i.next();
             submenu.add(new ImportMenuItem(ths, intoNew, imFo));
         }
-      //}
+      
       if (customImporters.size() > 0)
           submenu.addSeparator();
       submenu.add(customImpAction);
@@ -2051,7 +1870,7 @@ class FetchCiteSeerAction
       importMenu.add(submenu);
       importMenu.addSeparator();
 
-      // Put in all formatters registered in ImportFormatReader:
+      
       for (Iterator i=Globals.importFormatReader.getBuiltInInputFormats().iterator(); i.hasNext();) {
           ImportFormat imFo = (ImportFormat)i.next();
           importMenu.add(new ImportMenuItem(ths, intoNew, imFo));
@@ -2064,10 +1883,7 @@ class FetchCiteSeerAction
     }
 
 
-    /**
-     * Set the preview active state for all BasePanel instances.
-     * @param enabled
-     */
+    
     public void setPreviewActive(boolean enabled) {
         for (int i=0; i<tabbedPane.getTabCount(); i++) {
             baseAt(i).setPreviewActive(enabled);
@@ -2082,30 +1898,20 @@ class FetchCiteSeerAction
        }
    }
 
-    /**
-     * This method shows a wait cursor and blocks all input to the JFrame's contents.
-     */
+    
     public void block() {
         getGlassPane().setVisible(true);
-        //getGlassPane().setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+        
     }
 
-    /**
-     * This method reverts the cursor to normal, and stops blocking input to the JFrame's contents.
-     * There are no adverse effects of calling this method redundantly.
-     */
+    
     public void unblock() {
         getGlassPane().setVisible(false);
-        //  getGlassPane().setCursor(Cursor.WAIT_CURSOR);
+        
     }
 
 
-    /** Set the visibility of the progress bar in the right end of the
-      * status line at the bottom of the frame.
-      *
-      * If not called on the event dispatch thread, this method uses
-      * SwingUtilities.invokeLater() to do the actual operation on the EDT.
-      */
+    
     public void setProgressBarVisible(final boolean visible) {
     if (SwingUtilities.isEventDispatchThread())
         progressBar.setVisible(visible);
@@ -2117,12 +1923,7 @@ class FetchCiteSeerAction
     }
 
 
-    /**
-     * Sets the current value of the progress bar.
-      *
-      * If not called on the event dispatch thread, this method uses
-      * SwingUtilities.invokeLater() to do the actual operation on the EDT.
-     */
+    
     public void setProgressBarValue(final int value) {
     if (SwingUtilities.isEventDispatchThread())
         progressBar.setValue(value);
@@ -2134,14 +1935,7 @@ class FetchCiteSeerAction
 
     }
 
-    /**
-     * Sets the maximum value of the progress bar. Always call this method
-     * before using the progress bar, to set a maximum value appropriate to
-     * the task at hand.
-      *
-      * If not called on the event dispatch thread, this method uses
-      * SwingUtilities.invokeLater() to do the actual operation on the EDT.
-     */
+    
     public void setProgressBarMaximum(final int value) {
     if (SwingUtilities.isEventDispatchThread())
         progressBar.setMaximum(value);
@@ -2163,9 +1957,9 @@ class SaveSessionAction
     }
 
     public void actionPerformed(ActionEvent e) {
-      // Here we store the names of allcurrent filea. If
-      // there is no current file, we remove any
-      // previously stored file name.
+      
+      
+      
       Vector filenames = new Vector();
       if (tabbedPane.getTabCount() > 0) {
         for (int i = 0; i < tabbedPane.getTabCount(); i++) {
@@ -2178,7 +1972,7 @@ class SaveSessionAction
                  Globals.lang("Save database"),
                  JOptionPane.YES_NO_OPTION);
             if (answer == JOptionPane.YES_OPTION) {
-              // The user wants to save.
+              
               try {
                 basePanel().runCommand("save");
               }
@@ -2240,8 +2034,8 @@ class SaveSessionAction
             if (!currentFiles.contains(names[i])) {
               File file = new File(names[i]);
               if (file.exists()) {
-                //Util.pr("Opening last edited file:"
-                //+fileToOpen.getName());
+                
+                
                 open.openIt(file, i == 0);
               }
             }
@@ -2261,7 +2055,7 @@ class SaveSessionAction
     public ChangeTabAction(boolean next) {
       putValue(NAME, next ? "Next tab" : "Previous tab");
       this.next = next;
-      //Util.pr(""+prefs.getKey("Next tab"));
+      
       putValue(ACCELERATOR_KEY,
                (next ? prefs.getKey("Next tab") : prefs.getKey("Previous tab")));
     }
@@ -2279,11 +2073,7 @@ class SaveSessionAction
     }
   }
 
-  /**
-   * Class for handling general actions; cut, copy and paste. The focused component is
-   * kept track of by Globals.focusListener, and we call the action stored under the
-   * relevant name in its action map.
-   */
+  
   class EditAction
       extends MnemonicAwareAction {
     private String command;
@@ -2294,19 +2084,19 @@ class SaveSessionAction
       putValue(NAME, nName);
       putValue(ACCELERATOR_KEY, prefs.getKey(nName));
       putValue(SHORT_DESCRIPTION, Globals.lang(nName));
-      //putValue(ACCELERATOR_KEY,
-      //         (next?prefs.getKey("Next tab"):prefs.getKey("Previous tab")));
+      
+      
     }
 
     public void actionPerformed(ActionEvent e) {
 
-      //Util.pr(Globals.focusListener.getFocused().toString());
+      
       JComponent source = Globals.focusListener.getFocused();
       try {
         source.getActionMap().get(command).actionPerformed
             (new ActionEvent(source, 0, command));
       } catch (NullPointerException ex) {
-        // No component is focused, so we do nothing.
+        
       }
     }
   }
@@ -2372,33 +2162,18 @@ class SaveSessionAction
         }
     }
 
-    /*private class ForegroundLabel extends JLabel {
-         public ForegroundLabel(String s) {
-             super(s);
-             setFont(new Font("plain", Font.BOLD, 70));
-             setHorizontalAlignment(JLabel.CENTER);
-         }
-
-        public void paint(Graphics g) {
-            Graphics2D g2 = (Graphics2D)g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            super.paint(g2);    //To change body of overridden methods use File | Settings | File Templates.
-        }
-    }       */
+    
 
   private class MyGlassPane extends JPanel {
-    //ForegroundLabel infoLabel = new ForegroundLabel("Showing search");
+    
     public MyGlassPane() {
       addKeyListener(new KeyAdapter() { });
       addMouseListener(new MouseAdapter() { });
-      /*  infoLabel.setForeground(new Color(255, 100, 100, 124));
-
-        setLayout(new BorderLayout());
-        add(infoLabel, BorderLayout.CENTER);*/
+      
       super.setCursor(
         Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
     }
-      // Override isOpaque() to prevent the glasspane from hiding the window contents:
+      
       public boolean isOpaque() { return false; }
   }
 }

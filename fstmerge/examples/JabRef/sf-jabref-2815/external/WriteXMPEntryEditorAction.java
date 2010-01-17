@@ -11,9 +11,7 @@ import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
 
-/**
- * Write XMP action for EntryEditor toolbar.
- */
+
 public class WriteXMPEntryEditorAction extends AbstractAction {
     private BasePanel panel;
     private EntryEditor editor;
@@ -34,17 +32,17 @@ public class WriteXMPEntryEditorAction extends AbstractAction {
         panel.frame().setProgressBarVisible(true);
         BibtexEntry entry = editor.getEntry();
 
-        // Make a list of all PDFs linked from this entry:
+        
         List<File> files = new ArrayList<File>();
 
-        // First check the (legacy) "pdf" field:
+        
         String pdf = entry.getField("pdf");
         String dir = panel.metaData().getFileDirectory("pdf");
         File f = Util.expandFilename(pdf, new String[]{dir, "."});
         if (f != null)
             files.add(f);
 
-        // Then check the "file" field:
+        
         dir = panel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
         String field = entry.getField(GUIGlobals.FILE_FIELD);
         if (field != null) {
@@ -60,14 +58,14 @@ public class WriteXMPEntryEditorAction extends AbstractAction {
             }
         }
 
-        // We want to offload the actual work to a background thread, so we have a worker
-        // thread:
+        
+        
         AbstractWorker worker = new WriteXMPWorker(files, entry);
-        // Using Spin, we get a thread that gets synchronously offloaded to a new thread,
-        // blocking the execution of this method:
+        
+        
         worker.getWorker().run();
-        // After the worker thread finishes, we are unblocked and ready to print the
-        // status message:
+        
+        
         panel.output(message);
         panel.frame().setProgressBarVisible(false);
         setEnabled(true);

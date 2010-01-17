@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref.groups;
 
 import java.awt.BorderLayout;
@@ -44,10 +19,7 @@ import net.sf.jabref.JabRefFrame;
 import net.sf.jabref.Util;
 import net.sf.jabref.undo.NamedCompound;
 
-/**
- * Dialog for creating or modifying groups. Operates directly on the Vector
- * containing group information.
- */
+
 class AutoGroupDialog extends JDialog implements CaretListener {
     JTextField remove = new JTextField(60), field = new JTextField(60),
             deliminator = new JTextField(60);
@@ -55,7 +27,7 @@ class AutoGroupDialog extends JDialog implements CaretListener {
             nr = new JLabel(Globals.lang("Characters to ignore") + ":");
     JCheckBox nd = new JCheckBox(Globals.lang(
     		"Use the following delimiter character(s)")
-            + ":"); // JZTODO lyrics
+            + ":"); 
     JButton ok = new JButton(Globals.lang("Ok")), cancel = new JButton(Globals
             .lang("Cancel"));
     JPanel main = new JPanel(), opt = new JPanel();
@@ -68,11 +40,7 @@ class AutoGroupDialog extends JDialog implements CaretListener {
     GridBagLayout gbl = new GridBagLayout();
     GridBagConstraints con = new GridBagConstraints();
 
-    /**
-     * @param groupsRoot
-     *            The original set of groups, which is required as undo
-     *            information when all groups are cleared.
-     */
+    
     public AutoGroupDialog(JabRefFrame jabrefFrame, BasePanel basePanel,
             GroupSelector groupSelector, GroupTreeNode groupsRoot,
             String defaultField, String defaultRemove, String defaultDeliminator) {
@@ -118,7 +86,7 @@ class AutoGroupDialog extends JDialog implements CaretListener {
                 undo.setRevalidate(true);
                 ce.addEdit(undo);
 
-                panel.markBaseChanged(); // a change always occurs
+                panel.markBaseChanged(); 
                 gs.revalidateGroups();
                 frame.output(Globals.lang("Created groups."));
                 ce.end();
@@ -135,17 +103,17 @@ class AutoGroupDialog extends JDialog implements CaretListener {
         };
         cancel.addActionListener(cancelAction);
         ok.addActionListener(okListener);
-        // Key bindings:
+        
         ActionMap am = main.getActionMap();
         InputMap im = main.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(frame.prefs().getKey("Close dialog"), "close");
         am.put("close", cancelAction);
-        // Layout starts here.
+        
         main.setLayout(gbl);
         opt.setLayout(gbl);
         main.setBorder(BorderFactory.createTitledBorder(BorderFactory
                 .createEtchedBorder(), Globals.lang("Group properties")));
-        // Main panel:
+        
         con.weightx = 0;
         con.gridwidth = 1;
         con.insets = new Insets(3, 5, 3, 5);
@@ -174,7 +142,7 @@ class AutoGroupDialog extends JDialog implements CaretListener {
         con.gridy = 2;
         gbl.setConstraints(deliminator, con);
         main.add(deliminator);
-        // Option buttons:
+        
         con.gridx = GridBagConstraints.RELATIVE;
         con.gridy = GridBagConstraints.RELATIVE;
         con.weightx = 1;
@@ -189,7 +157,7 @@ class AutoGroupDialog extends JDialog implements CaretListener {
         opt.add(cancel);
         getContentPane().add(main, BorderLayout.CENTER);
         getContentPane().add(opt, BorderLayout.SOUTH);
-        // pack();
+        
         updateComponents();
         setSize(400, 200);
         Util.placeDialog(this, frame);

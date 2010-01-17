@@ -1,24 +1,4 @@
-/*
- All programs in this directory and subdirectories are published under the 
- GNU General Public License as described below.
 
- This program is free software; you can redistribute it and/or modify it 
- under the terms of the GNU General Public License as published by the Free 
- Software Foundation; either version 2 of the License, or (at your option) 
- any later version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT 
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
- more details.
-
- You should have received a copy of the GNU General Public License along 
- with this program; if not, write to the Free Software Foundation, Inc., 59 
- Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
- */
 
 package net.sf.jabref.groups;
 
@@ -29,10 +9,7 @@ import javax.swing.undo.AbstractUndoableEdit;
 import net.sf.jabref.*;
 import net.sf.jabref.util.QuotedStringTokenizer;
 
-/**
- * @author jzieren
- * 
- */
+
 public class ExplicitGroup extends AbstractGroup implements SearchRule {
     public static final String ID = "ExplicitGroup:";
 
@@ -74,7 +51,7 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
         }
     }
 
-    /** Called only when created fromString */
+    
     protected void addEntries(QuotedStringTokenizer tok, BibtexDatabase db) {
         BibtexEntry[] entries;
         while (tok.hasMoreTokens()) {
@@ -99,7 +76,7 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
 
     public AbstractUndoableEdit add(BibtexEntry[] entries) {
         if (entries.length == 0)
-            return null; // nothing to do
+            return null; 
 
         HashSet<BibtexEntry> entriesBeforeEdit = new HashSet<BibtexEntry>(m_entries);
         for (int i = 0; i < entries.length; ++i)
@@ -114,7 +91,7 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
 
     public AbstractUndoableEdit remove(BibtexEntry[] entries) {
         if (entries.length == 0)
-            return null; // nothing to do
+            return null; 
 
         HashSet<BibtexEntry> entriesBeforeEdit = new HashSet<BibtexEntry>(m_entries);
         for (int i = 0; i < entries.length; ++i)
@@ -149,13 +126,13 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
         if (!(o instanceof ExplicitGroup))
             return false;
         ExplicitGroup other = (ExplicitGroup) o;
-        // compare entries assigned to both groups
+        
         if (m_entries.size() != other.m_entries.size())
-            return false; // add/remove
+            return false; 
         HashSet<String> keys = new HashSet<String>();
         BibtexEntry entry;
         String key;
-        // compare bibtex keys for all entries that have one
+        
         for (Iterator<BibtexEntry> it = m_entries.iterator(); it.hasNext(); ) {
             entry = it.next();
             key = entry.getCiteKey();
@@ -175,21 +152,16 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
                 && other.getHierarchicalContext() == getHierarchicalContext();
     }
 
-    /**
-     * Returns a String representation of this group and its entries. Entries
-     * are referenced by their Bibtexkey. Entries that do not have a Bibtexkey
-     * are not included in the representation and will thus not be available
-     * upon recreation.
-     */
+    
     public String toString() {
         StringBuffer sb = new StringBuffer();
         sb.append(ID).append(Util.quote(m_name, SEPARATOR, QUOTE_CHAR)).append(SEPARATOR).append(m_context).append(SEPARATOR);
         String s;
-        // write entries in well-defined order for CVS compatibility
+        
         Set<String> sortedKeys = new TreeSet<String>();
         for (Iterator<BibtexEntry> it = m_entries.iterator(); it.hasNext();) {
             s = it.next().getCiteKey();
-            if (s != null && !s.equals("")) // entries without a key are lost
+            if (s != null && !s.equals("")) 
                 sortedKeys.add(s);
         }
         for (Iterator<String> it = sortedKeys.iterator(); it.hasNext();) {
@@ -198,7 +170,7 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
         return sb.toString();
     }
 
-    /** Remove all assignments, resulting in an empty group. */
+    
     public void clearAssignments() {
         m_entries.clear();
     }
@@ -238,25 +210,13 @@ public class ExplicitGroup extends AbstractGroup implements SearchRule {
         return sb.toString();
     }
     
-    /**
-     * Update the group to handle the situation where the group
-     * is applied to a different BibtexDatabase than it was created for.
-     * This group type contains a Set of BibtexEntry objects, and these will not
-     * be the same objects as in the new database. We must reset the entire Set with
-     * matching entries from the new database.
-     *
-     * @param db The database to refresh for.
-     */
+    
         public void refreshForNewDatabase(BibtexDatabase db) {
             Set<BibtexEntry> newSet = new HashSet<BibtexEntry>();
             for (Iterator<BibtexEntry> i=m_entries.iterator(); i.hasNext();) {
                 BibtexEntry entry = i.next();
                 BibtexEntry sameEntry = db.getEntryByKey(entry.getCiteKey());
-                /*if (sameEntry == null) {
-                    System.out.println("Error: could not find entry '"+entry.getCiteKey()+"'");
-                } else {
-                    System.out.println("'"+entry.getCiteKey()+"' ok");
-                }*/
+                
                 newSet.add(sameEntry);
             }
             m_entries.clear();

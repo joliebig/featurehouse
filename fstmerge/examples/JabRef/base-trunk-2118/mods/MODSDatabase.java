@@ -1,25 +1,15 @@
-/*
- * Created on Oct 23, 2004
- *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 package net.sf.jabref.mods;
 import net.sf.jabref.*;
 import java.util.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-/**
- * @author Michael Wrighton
- *
- * TODO To change the template for this generated type comment go to
- * Window - Preferences - Java - Code Style - Code Templates
- */
+
 public class MODSDatabase {
 	protected Set entries;
 	
 	public MODSDatabase() {
-		// maybe make this sorted later...
+		
 		entries = new HashSet();
 	}
 	

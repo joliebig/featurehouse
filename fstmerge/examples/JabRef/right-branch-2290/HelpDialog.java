@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref;
 
 import java.awt.BorderLayout;
@@ -38,14 +13,7 @@ import javax.swing.JToolBar;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 
-/**
- * 
- * This is a non-modal help Dialog. The contents of the help is specified by
- * calling showPage().
- * 
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:36 $)
- * 
- */
+
 public class HelpDialog extends JDialog implements HyperlinkListener {
 
 	private JabRefFrame frame;
@@ -58,7 +26,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener {
 
 	private ContentsAction contents = new ContentsAction();
 
-	// Initializes, but does not show the help dialog.
+	
 	public HelpDialog(JabRefFrame bf) {
 		super(bf, Globals.lang("JabRef help"), false);
 		frame = bf;
@@ -73,7 +41,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener {
 		tlb.add(contents);
 		tlb.setFloatable(false);
 
-		// Make ESC close dialog, and set shortkeys for back and forward.
+		
 		InputMap im = tlb.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap am = tlb.getActionMap();
 		im.put(bf.prefs.getKey("Close dialog"), "close");
@@ -83,7 +51,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener {
 		im.put(bf.prefs.getKey("Forward, help dialog"), "right");
 		am.put("right", forward);
 
-		// Set shortkeys for back and forward specifically for the EditorPane.
+		
 		im = content.getInputMap(JComponent.WHEN_FOCUSED);
 		am = content.getActionMap();
 		im.put(bf.prefs.getKey("Back, help dialog"), "left");
@@ -122,7 +90,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener {
 	class CloseAction extends AbstractAction {
 		public CloseAction() {
 			super(Globals.lang("Close"));
-			// , new ImageIcon(GUIGlobals.closeIconFile));
+			
 			putValue(SHORT_DESCRIPTION, Globals.lang("Close the help window"));
 		}
 
@@ -134,7 +102,7 @@ public class HelpDialog extends JDialog implements HyperlinkListener {
 	class BackAction extends AbstractAction {
 		public BackAction() {
 			super("Back", GUIGlobals.getImage("left"));
-			// putValue(SHORT_DESCRIPTION, "Show the previous page");
+			
 		}
 
 		public void actionPerformed(ActionEvent e) {

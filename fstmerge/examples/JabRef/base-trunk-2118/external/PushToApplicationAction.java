@@ -8,9 +8,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.Iterator;
 
-/**
- * An Action class representing the process of invoking a PushToApplication operation.
- */
+
 public class PushToApplicationAction extends AbstractAction implements Runnable {
     private PushToApplication operation;
     private JabRefFrame frame;
@@ -30,11 +28,11 @@ public class PushToApplicationAction extends AbstractAction implements Runnable 
     public void actionPerformed(ActionEvent e) {
         panel = frame.basePanel();
 
-        // Check if a BasePanel exists:
+        
         if (panel == null)
             return;
 
-        // Check if any entries are selected:
+        
         entries = panel.getSelectedEntries();
         if (entries.length == 0) {
             JOptionPane.showMessageDialog(frame, Globals.lang("This operation requires one or more entries to be selected."),
@@ -42,7 +40,7 @@ public class PushToApplicationAction extends AbstractAction implements Runnable 
             return;
         }
 
-        // If required, check that all entries have BibTeX keys defined:
+        
         if (operation.requiresBibtexKeys())
             for (int i=0; i<entries.length; i++) {
                 if ((entries[i].getCiteKey() == null) || (entries[i].getCiteKey().trim().length() == 0)) {
@@ -52,17 +50,17 @@ public class PushToApplicationAction extends AbstractAction implements Runnable 
                 }
         }
 
-        // All set, call the operation in a new thread:
+        
         Thread t = new Thread(this);
         t.start();
 
     }
 
     public void run() {
-        // Do the operation:
+        
         operation.pushEntries(entries, getKeyString(entries));
 
-        // Call the operationCompleted() method on the event dispatch thread:
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 operation.operationCompleted(panel);
@@ -72,12 +70,12 @@ public class PushToApplicationAction extends AbstractAction implements Runnable 
 
     protected String getKeyString(BibtexEntry[] entries) {
         StringBuffer result = new StringBuffer();
-        String citeKey = "";//, message = "";
+        String citeKey = "";
         boolean first = true;
         for (int i=0; i<entries.length; i++) {
             BibtexEntry bes = entries[i];
             citeKey = (String) bes.getField(BibtexFields.KEY_FIELD);
-            // if the key is empty we give a warning and ignore this entry
+            
             if (citeKey == null || citeKey.equals(""))
                 continue;
             if (first) {

@@ -17,7 +17,7 @@ import net.sf.jabref.PrefsTab;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-// JZTODO lyrics
+
 public class GroupsPrefsTab extends JPanel implements PrefsTab {
 	private final JCheckBox showIcons = new JCheckBox(Globals.lang("Show icons for groups"));
 	private final JCheckBox showDynamic = new JCheckBox(
@@ -41,11 +41,11 @@ public class GroupsPrefsTab extends JPanel implements PrefsTab {
 				keywordSeparator.selectAll();
 			}
 			public void focusLost(FocusEvent e) {
-				// deselection is automatic
+				
 			}
 		});
 		
-		FormLayout layout = new FormLayout("9dlu, pref", //500px",
+		FormLayout layout = new FormLayout("9dlu, pref", 
 				"p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, p, 3dlu, " +
 				"p, 3dlu, p");
 		DefaultFormBuilder builder = new DefaultFormBuilder(layout);
@@ -76,7 +76,7 @@ public class GroupsPrefsTab extends JPanel implements PrefsTab {
 		builder.nextLine();
 		builder.nextLine();
 		builder.nextColumn();
-			// build subcomponent
+			
 			FormLayout layout2 = new FormLayout("left:pref, 2dlu, left:pref", 
 					"p, 3dlu, p");
 			DefaultFormBuilder builder2 = new DefaultFormBuilder(layout2);

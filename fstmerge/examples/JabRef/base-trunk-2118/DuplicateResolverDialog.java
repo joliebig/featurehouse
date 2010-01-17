@@ -14,10 +14,10 @@ import net.sf.jabref.export.*;
 import java.awt.*;
 
 
-// created by : ?
-//
-// modified : r.nagel 2.09.2004
-//            - insert close button
+
+
+
+
 
 public class DuplicateResolverDialog extends JDialog {
 
@@ -27,7 +27,7 @@ public class DuplicateResolverDialog extends JDialog {
         KEEP_UPPER = 1,
         KEEP_LOWER = 2,
         AUTOREMOVE_EXACT = 3,
-        BREAK      = 5,  // close
+        BREAK      = 5,  
         IMPORT_AND_DELETE_OLD = 1,
         IMPORT_AND_KEEP_OLD = 0,
         DO_NOT_IMPORT = 2,
@@ -97,12 +97,12 @@ public class DuplicateResolverDialog extends JDialog {
     ta1.setEditable(false);
     ta2.setEditable(false);
 
-    //ta1.setPreferredSize(dim);
-    //ta2.setPreferredSize(dim);
+    
+    
 
     setSourceView(one, two);
 
-    //getContentPane().setLayout();
+    
     main.setLayout(gbl);
     source.setLayout(gbl);
     con.insets = new Insets(10,10,0,10);
@@ -242,14 +242,14 @@ public boolean isBlocking() {
   public static int resolveDuplicate(JFrame frame, BibtexEntry one, BibtexEntry two) {
     DuplicateResolverDialog drd = new DuplicateResolverDialog(frame, one, two,
                                                               DUPLICATE_SEARCH);
-    drd.setVisible(true); // drd.show(); -> deprecated since 1.5
+    drd.setVisible(true); 
     return drd.getSelected();
   }
 
   public static int resolveDuplicate(JDialog frame, BibtexEntry one, BibtexEntry two) {
     DuplicateResolverDialog drd = new DuplicateResolverDialog(frame, one, two,
                                                               DUPLICATE_SEARCH);
-    drd.setVisible(true); // drd.show(); -> deprecated since 1.5
+    drd.setVisible(true); 
     return drd.getSelected();
   }
 
@@ -257,7 +257,7 @@ public boolean isBlocking() {
                                            BibtexEntry imported) {
     DuplicateResolverDialog drd = new DuplicateResolverDialog(frame, existing, imported,
                                                               IMPORT_CHECK);
-    drd.setVisible(true); // drd.show(); -> deprecated since 1.5
+    drd.setVisible(true); 
     return drd.getSelected();
   }
 

@@ -29,7 +29,7 @@ public class StringNameChange extends Change {
   public void makeChange(BasePanel panel, BibtexDatabase secondary, NamedCompound undoEdit) {
 
     if (panel.database().hasStringLabel(disk)) {
-      // The name to change to is already in the database, so we can't comply.
+      
       Globals.logger("Cannot rename string '"+mem+"' to '"+disk+"' because the name "
                      +"is already in use.");
     }
@@ -39,7 +39,7 @@ public class StringNameChange extends Change {
       undoEdit.addEdit(new UndoableStringChange(panel, string, true, mem,
                                                 disk));
     } else {
-      // The string was removed or renamed locally. We guess that it was removed.
+      
 	String newId = Util.createNeutralId();
 	BibtexString bs = new BibtexString(newId, disk, content);
       try {
@@ -50,7 +50,7 @@ public class StringNameChange extends Change {
       }
     }
 
-      // Update tmp database:
+      
       if (tmpString != null) {
           tmpString.setName(disk);
       }

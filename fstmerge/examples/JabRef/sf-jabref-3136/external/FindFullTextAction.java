@@ -8,9 +8,7 @@ import net.sf.jabref.gui.FileListTableModel;
 import javax.swing.*;
 import java.io.IOException;
 
-/**
- * Try to download fulltext PDF for selected entry(ies) by following URL or DOI link.
-*/
+
 public class FindFullTextAction extends AbstractWorker {
     private BasePanel basePanel;
     private BibtexEntry entry = null;
@@ -31,14 +29,14 @@ public class FindFullTextAction extends AbstractWorker {
     }
 
     public void update() {
-        //pdfURL = new URL("http://geog-www.sbs.ohio-state.edu/faculty/bmark/abbott_etal_ppp03.pdf");
+        
         if (result.url != null) {
-            //System.out.println("PDF URL: "+result.url);
+            
             String bibtexKey = entry.getCiteKey();
             String fileDir = basePanel.metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
             if (fileDir == null) {
-                // TODO: error message if file dir not defined
-                //JOptionPane.showMessageDialog(frame, Globals.lang);
+                
+                
                 return;
             }
             DownloadExternalFile def = new DownloadExternalFile(basePanel.frame(), basePanel.metaData(),

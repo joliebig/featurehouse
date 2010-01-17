@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 package net.sf.jabref.export;
 
 import java.awt.BorderLayout;
@@ -42,9 +17,7 @@ import net.sf.jabref.Util;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * Dialog for creating or modifying custom exports.
- */
+
 class CustomExportDialog extends JDialog {
 
     JTextField
@@ -86,20 +59,20 @@ class CustomExportDialog extends JDialog {
     ActionListener okListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
 
-            // Check that there are no empty strings.
+            
             if ((layoutFile.getText().equals("")) ||
             (name.getText().equals("")) ||
             (extension.getText().equals("")) ||
                         (!layoutFile.getText().endsWith(".layout"))) {
-            //JOptionPane.showMessageDialog
-            //    (parent, Globals.lang("You must provide a name, a search "
-            //			  +"string and a field name for this group."),
-            //			  Globals.lang("Create group"),
-            //     JOptionPane.ERROR_MESSAGE);
+            
+            
+            
+            
+            
             return;
             }
 
-            // Handling of : and ; must also be done.
+            
 
             ok_pressed = true;
             dispose();
@@ -126,27 +99,27 @@ class CustomExportDialog extends JDialog {
             if (chosenStr == null) return;
             File chosen = new File(chosenStr);
 
-            // Update working directory for layout files.
+            
             Globals.prefs.put("exportWorkingDirectory", chosen.getParent());
 
             layoutFile.setText(chosen.getPath());
           }
         });
 
-        // Key bindings:
+        
         ActionMap am = main.getActionMap();
         InputMap im = main.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(parent.prefs().getKey("Close dialog"), "close");
     am.put("close", cancelAction);
 
 
-    // Layout starts here.
+    
     main.setLayout(gbl);
     main.setBorder(BorderFactory.createTitledBorder
                (BorderFactory.createEtchedBorder(),
             Globals.lang("Export properties")));
 
-    // Main panel:
+    
     con.weightx = 0;
     con.gridwidth = 1;
     con.insets = new Insets(3, 5, 3, 5);
@@ -196,7 +169,7 @@ class CustomExportDialog extends JDialog {
     getContentPane().add(main, BorderLayout.CENTER);
     getContentPane().add(buttons, BorderLayout.SOUTH);
 
-    //pack();
+    
     setSize(600, 170);
 
         Util.placeDialog(this, parent);

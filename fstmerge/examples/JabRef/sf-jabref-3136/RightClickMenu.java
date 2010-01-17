@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 package net.sf.jabref;
 
 import java.awt.Font;
@@ -43,7 +18,7 @@ public class RightClickMenu extends JPopupMenu
     MetaData metaData;
     JMenu groupAddMenu = new JMenu(Globals.lang("Add to group")),
         groupRemoveMenu = new JMenu(Globals.lang("Remove from group")),
-        groupMoveMenu = new JMenu(Globals.lang("Assign exclusively to group")), // JZTODO lyrics
+        groupMoveMenu = new JMenu(Globals.lang("Assign exclusively to group")), 
         typeMenu = new JMenu(Globals.lang("Change entry type"));
     JCheckBoxMenuItem
         floatMarked = new JCheckBoxMenuItem(Globals.lang("Float marked entries"),
@@ -53,10 +28,10 @@ public class RightClickMenu extends JPopupMenu
         panel = panel_;
         metaData = metaData_;
 
-        // Are multiple entries selected?
+        
         boolean multiple = (panel.mainTable.getSelectedRowCount() > 1);
 
-        // If only one entry is selected, get a reference to it for adapting the menu.
+        
         BibtexEntry be = null;
         if (panel.mainTable.getSelectedRowCount() == 1)
           be = panel.mainTable.getSelected().get(0);
@@ -87,13 +62,11 @@ public class RightClickMenu extends JPopupMenu
 
         add(new AbstractAction(Globals.lang("Delete"), GUIGlobals.getImage("delete")) {
                 public void actionPerformed(ActionEvent e) {
-                    /*SwingUtilities.invokeLater(new Runnable () {
-                        public void run() {*/
+                    
                             try {
                                 panel.runCommand("delete");
                             } catch (Throwable ex) {}
-                        /*}
-                    }); */
+                        
 
                 }
             });
@@ -196,20 +169,17 @@ public class RightClickMenu extends JPopupMenu
                     } catch (Throwable ex) {}
                 }
             });
-        addSeparator(); // for "add/move/remove to/from group" entries (appended here)
+        addSeparator(); 
 
         floatMarked.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Globals.prefs.putBoolean("floatMarkedEntries", floatMarked.isSelected());
-                panel.mainTable.refreshSorting(); // Bad remote access
+                panel.mainTable.refreshSorting(); 
             }
         });
     }
 
-    /**
-     * Remove all types from the menu. Then cycle through all available
-     * types, and add them.
-     */
+    
     public void populateTypeMenu() {
         typeMenu.removeAll();
         for (String key : BibtexEntryType.ALL_TYPES.keySet()){
@@ -218,9 +188,7 @@ public class RightClickMenu extends JPopupMenu
         }
     }
 
-    /**
-     * Set the dynamic contents of "Add to group ..." submenu.
-     */
+    
     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
       BibtexEntry[] bes = panel.getSelectedEntries();
       panel.storeCurrentEdit();
@@ -257,9 +225,7 @@ public class RightClickMenu extends JPopupMenu
         add(floatMarked);
     }
 
-    /**
-     * @param move For add: if true, remove from previous groups
-     */
+    
     public void insertNodes(JMenu menu, GroupTreeNode node, BibtexEntry[] selection,
                     boolean add, boolean move) {
         final AbstractAction action = getAction(node,selection,add,move);
@@ -281,8 +247,8 @@ public class RightClickMenu extends JPopupMenu
         } else {
             submenu = new JMenu("["+node.getGroup().getName()+"]");
             setGroupFontAndIcon(submenu, node.getGroup());
-            // setEnabled(true) is done above/below if at least one menu
-            // entry (item or submenu) is enabled
+            
+            
             submenu.setEnabled(action.isEnabled());
             JMenuItem menuItem = new JMenuItem(action);
             setGroupFontAndIcon(menuItem, node.getGroup());
@@ -296,7 +262,7 @@ public class RightClickMenu extends JPopupMenu
         }
     }
 
-    /** Sets the font and icon to be used, depending on the group */
+    
     private void setGroupFontAndIcon(JMenuItem menuItem, AbstractGroup group) {
         if (Globals.prefs.getBoolean("groupShowDynamic")) {
                 menuItem.setFont(menuItem.getFont().deriveFont(group.isDynamic() ?
@@ -317,9 +283,7 @@ public class RightClickMenu extends JPopupMenu
             }
     }
 
-    /**
-     * @param move For add: if true, remove from all previous groups
-     */
+    
     private AbstractAction getAction(GroupTreeNode node, BibtexEntry[] selection,
                     boolean add, boolean move) {
         AbstractAction action = add ? (AbstractAction) new AddToGroupAction(node, move,
@@ -341,7 +305,7 @@ public class RightClickMenu extends JPopupMenu
     }
 
     public void popupMenuCanceled(PopupMenuEvent e) {
-        // nothing to do
+        
     }
 
     class ChangeTypeAction extends AbstractAction {

@@ -1,6 +1,6 @@
 package net.sf.jabref.bst;
 
-// $ANTLR 3.0b5 Bst.g 2006-11-23 23:20:24
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +59,8 @@ public class BstParser extends Parser {
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start program
-    // Bst.g:14:1: program : ( commands )+ -> ^( COMMANDS ( commands )+ ) ;
+    
+    
     public program_return program() throws RecognitionException {   
         program_return retval = new program_return();
         retval.start = input.LT(1);
@@ -72,10 +72,10 @@ public class BstParser extends Parser {
         List list_commands=new ArrayList();
 
         try {
-            // Bst.g:14:11: ( ( commands )+ -> ^( COMMANDS ( commands )+ ) )
-            // Bst.g:14:11: ( commands )+
+            
+            
             {
-            // Bst.g:14:11: ( commands )+
+            
             int cnt1=0;
             loop1:
             do {
@@ -88,7 +88,7 @@ public class BstParser extends Parser {
 
                 switch (alt1) {
             	case 1 :
-            	    // Bst.g:14:11: commands
+            	    
             	    {
             	    pushFollow(FOLLOW_commands_in_program45);
             	    commands1=commands();
@@ -109,19 +109,19 @@ public class BstParser extends Parser {
             } while (true);
 
 
-            // AST REWRITE
+            
             
 			int i_0 = 0;
             retval.tree = root_0;
             root_0 = (Object)adaptor.nil();
-            // 14:21: -> ^( COMMANDS ( commands )+ )
+            
             {
-                // Bst.g:14:24: ^( COMMANDS ( commands )+ )
+                
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(COMMANDS, "COMMANDS"), root_1);
 
-                // Bst.g:14:35: ( commands )+
+                
                 {
                 int n_1 = list_commands == null ? 0 : list_commands.size();
                  
@@ -157,15 +157,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end program
+    
 
     public static class commands_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start commands
-    // Bst.g:16:1: commands : ( STRINGS^^ idList | INTEGERS^^ idList | FUNCTION^^ id stack | MACRO^^ id '{'! STRING '}'! | READ^^ | EXECUTE^^ '{'! function '}'! | ITERATE^^ '{'! function '}'! | REVERSE^^ '{'! function '}'! | ENTRY^^ idList0 idList0 idList0 | SORT^^ );
+    
+    
     @SuppressWarnings("unused")
     public commands_return commands() throws RecognitionException {   
         commands_return retval = new commands_return();
@@ -236,7 +236,7 @@ public class BstParser extends Parser {
         Object SORT31_tree=null;
 
         try {
-            // Bst.g:17:4: ( STRINGS^^ idList | INTEGERS^^ idList | FUNCTION^^ id stack | MACRO^^ id '{'! STRING '}'! | READ^^ | EXECUTE^^ '{'! function '}'! | ITERATE^^ '{'! function '}'! | REVERSE^^ '{'! function '}'! | ENTRY^^ idList0 idList0 idList0 | SORT^^ )
+            
             int alt2=10;
             switch ( input.LA(1) ) {
             case STRINGS:
@@ -278,7 +278,7 @@ public class BstParser extends Parser {
 
             switch (alt2) {
                 case 1 :
-                    // Bst.g:17:4: STRINGS^^ idList
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -296,7 +296,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Bst.g:18:4: INTEGERS^^ idList
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -314,7 +314,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // Bst.g:19:4: FUNCTION^^ id stack
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -337,7 +337,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // Bst.g:20:4: MACRO^^ id '{'! STRING '}'!
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -364,7 +364,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // Bst.g:21:4: READ^^
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -377,7 +377,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // Bst.g:22:4: EXECUTE^^ '{'! function '}'!
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -399,7 +399,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // Bst.g:23:4: ITERATE^^ '{'! function '}'!
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -421,7 +421,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // Bst.g:24:4: REVERSE^^ '{'! function '}'!
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -443,7 +443,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 9 :
-                    // Bst.g:25:4: ENTRY^^ idList0 idList0 idList0
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -471,7 +471,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 10 :
-                    // Bst.g:26:4: SORT^^
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -499,15 +499,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end commands
+    
 
     public static class identifier_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start identifier
-    // Bst.g:28:1: identifier : IDENTIFIER ;
+    
+    
     public identifier_return identifier() throws RecognitionException {   
         identifier_return retval = new identifier_return();
         retval.start = input.LT(1);
@@ -519,8 +519,8 @@ public class BstParser extends Parser {
         Object IDENTIFIER32_tree=null;
 
         try {
-            // Bst.g:29:4: ( IDENTIFIER )
-            // Bst.g:29:4: IDENTIFIER
+            
+            
             {
             root_0 = (Object)adaptor.nil();
 
@@ -546,15 +546,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end identifier
+    
 
     public static class id_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start id
-    // Bst.g:31:1: id : '{'! identifier '}'! ;
+    
+    
     public id_return id() throws RecognitionException {   
         id_return retval = new id_return();
         retval.start = input.LT(1);
@@ -570,8 +570,8 @@ public class BstParser extends Parser {
         Object char_literal35_tree=null;
 
         try {
-            // Bst.g:32:4: ( '{'! identifier '}'! )
-            // Bst.g:32:4: '{'! identifier '}'!
+            
+            
             {
             root_0 = (Object)adaptor.nil();
 
@@ -601,15 +601,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end id
+    
 
     public static class idList_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start idList
-    // Bst.g:34:1: idList : '{' ( identifier )+ '}' -> ^( IDLIST ( identifier )+ ) ;
+    
+    
     
 	public idList_return idList() throws RecognitionException {   
         idList_return retval = new idList_return();
@@ -628,14 +628,14 @@ public class BstParser extends Parser {
         Object char_literal38_tree=null;
 
         try {
-            // Bst.g:35:4: ( '{' ( identifier )+ '}' -> ^( IDLIST ( identifier )+ ) )
-            // Bst.g:35:4: '{' ( identifier )+ '}'
+            
+            
             {
             char_literal36=(Token)input.LT(1);
             match(input,25,FOLLOW_25_in_idList205); 
             list_25.add(char_literal36);
 
-            // Bst.g:35:8: ( identifier )+
+            
             int cnt3=0;
             loop3:
             do {
@@ -648,7 +648,7 @@ public class BstParser extends Parser {
 
                 switch (alt3) {
             	case 1 :
-            	    // Bst.g:35:8: identifier
+            	    
             	    {
             	    pushFollow(FOLLOW_identifier_in_idList207);
             	    identifier37=identifier();
@@ -673,18 +673,18 @@ public class BstParser extends Parser {
             list_26.add(char_literal38);
 
 
-            // AST REWRITE
+            
             int i_0 = 0;
             retval.tree = root_0;
             root_0 = (Object)adaptor.nil();
-            // 35:24: -> ^( IDLIST ( identifier )+ )
+            
             {
-                // Bst.g:35:27: ^( IDLIST ( identifier )+ )
+                
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(IDLIST, "IDLIST"), root_1);
 
-                // Bst.g:35:36: ( identifier )+
+                
                 {
                 int n_1 = list_identifier == null ? 0 : list_identifier.size();
                  
@@ -720,15 +720,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end idList
+    
 
     public static class idList0_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start idList0
-    // Bst.g:37:1: idList0 : '{' ( identifier )* '}' -> ^( IDLIST ( identifier )* ) ;
+    
+    
     public idList0_return idList0() throws RecognitionException {   
         idList0_return retval = new idList0_return();
         retval.start = input.LT(1);
@@ -746,14 +746,14 @@ public class BstParser extends Parser {
         Object char_literal41_tree=null;
 
         try {
-            // Bst.g:38:4: ( '{' ( identifier )* '}' -> ^( IDLIST ( identifier )* ) )
-            // Bst.g:38:4: '{' ( identifier )* '}'
+            
+            
             {
             char_literal39=(Token)input.LT(1);
             match(input,25,FOLLOW_25_in_idList0230); 
             list_25.add(char_literal39);
 
-            // Bst.g:38:8: ( identifier )*
+            
             loop4:
             do {
                 int alt4=2;
@@ -765,7 +765,7 @@ public class BstParser extends Parser {
 
                 switch (alt4) {
             	case 1 :
-            	    // Bst.g:38:8: identifier
+            	    
             	    {
             	    pushFollow(FOLLOW_identifier_in_idList0232);
             	    identifier40=identifier();
@@ -786,18 +786,18 @@ public class BstParser extends Parser {
             list_26.add(char_literal41);
 
 
-            // AST REWRITE
+            
             int i_0 = 0;
             retval.tree = root_0;
             root_0 = (Object)adaptor.nil();
-            // 38:24: -> ^( IDLIST ( identifier )* )
+            
             {
-                // Bst.g:38:27: ^( IDLIST ( identifier )* )
+                
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(IDLIST, "IDLIST"), root_1);
 
-                // Bst.g:38:36: ( identifier )*
+                
                 {
                 int n_1 = list_identifier == null ? 0 : list_identifier.size();
                  
@@ -832,15 +832,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end idList0
+    
 
     public static class function_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start function
-    // Bst.g:40:1: function : ( '<' | '>' | '=' | '+' | '-' | ':=' | '*' | identifier );
+    
+    
     public function_return function() throws RecognitionException {   
         function_return retval = new function_return();
         retval.start = input.LT(1);
@@ -866,7 +866,7 @@ public class BstParser extends Parser {
         Object char_literal48_tree=null;
 
         try {
-            // Bst.g:41:4: ( '<' | '>' | '=' | '+' | '-' | ':=' | '*' | identifier )
+            
             int alt5=8;
             switch ( input.LA(1) ) {
             case 27:
@@ -902,7 +902,7 @@ public class BstParser extends Parser {
 
             switch (alt5) {
                 case 1 :
-                    // Bst.g:41:4: '<'
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -915,7 +915,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Bst.g:41:10: '>'
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -928,7 +928,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // Bst.g:41:16: '='
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -941,7 +941,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // Bst.g:41:22: '+'
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -954,7 +954,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // Bst.g:41:28: '-'
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -967,7 +967,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 6 :
-                    // Bst.g:41:34: ':='
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -980,7 +980,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 7 :
-                    // Bst.g:41:41: '*'
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -993,7 +993,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 8 :
-                    // Bst.g:41:47: identifier
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1021,15 +1021,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end function
+    
 
     public static class stack_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start stack
-    // Bst.g:43:1: stack : '{' ( stackitem )+ '}' -> ^( STACK ( stackitem )+ ) ;
+    
+    
     public stack_return stack() throws RecognitionException {   
         stack_return retval = new stack_return();
         retval.start = input.LT(1);
@@ -1047,14 +1047,14 @@ public class BstParser extends Parser {
         Object char_literal52_tree=null;
 
         try {
-            // Bst.g:44:4: ( '{' ( stackitem )+ '}' -> ^( STACK ( stackitem )+ ) )
-            // Bst.g:44:4: '{' ( stackitem )+ '}'
+            
+            
             {
             char_literal50=(Token)input.LT(1);
             match(input,25,FOLLOW_25_in_stack293); 
             list_25.add(char_literal50);
 
-            // Bst.g:44:8: ( stackitem )+
+            
             int cnt6=0;
             loop6:
             do {
@@ -1067,7 +1067,7 @@ public class BstParser extends Parser {
 
                 switch (alt6) {
             	case 1 :
-            	    // Bst.g:44:8: stackitem
+            	    
             	    {
             	    pushFollow(FOLLOW_stackitem_in_stack295);
             	    stackitem51=stackitem();
@@ -1092,18 +1092,18 @@ public class BstParser extends Parser {
             list_26.add(char_literal52);
 
 
-            // AST REWRITE
+            
             int i_0 = 0;
             retval.tree = root_0;
             root_0 = (Object)adaptor.nil();
-            // 44:23: -> ^( STACK ( stackitem )+ )
+            
             {
-                // Bst.g:44:26: ^( STACK ( stackitem )+ )
+                
                 {
                 Object root_1 = (Object)adaptor.nil();
                 root_1 = (Object)adaptor.becomeRoot(adaptor.create(STACK, "STACK"), root_1);
 
-                // Bst.g:44:34: ( stackitem )+
+                
                 {
                 int n_1 = list_stackitem == null ? 0 : list_stackitem.size();
                  
@@ -1139,15 +1139,15 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end stack
+    
 
     public static class stackitem_return extends ParserRuleReturnScope {
         Object tree;
         public Object getTree() { return tree; }
     };
 
-    // $ANTLR start stackitem
-    // Bst.g:46:1: stackitem : ( function | STRING | INTEGER | QUOTED | stack );
+    
+    
     public stackitem_return stackitem() throws RecognitionException {   
         stackitem_return retval = new stackitem_return();
         retval.start = input.LT(1);
@@ -1167,7 +1167,7 @@ public class BstParser extends Parser {
         Object QUOTED56_tree=null;
 
         try {
-            // Bst.g:47:4: ( function | STRING | INTEGER | QUOTED | stack )
+            
             int alt7=5;
             switch ( input.LA(1) ) {
             case IDENTIFIER:
@@ -1201,7 +1201,7 @@ public class BstParser extends Parser {
 
             switch (alt7) {
                 case 1 :
-                    // Bst.g:47:4: function
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1214,7 +1214,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // Bst.g:48:4: STRING
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1227,7 +1227,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // Bst.g:49:4: INTEGER
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1240,7 +1240,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 4 :
-                    // Bst.g:50:4: QUOTED
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1253,7 +1253,7 @@ public class BstParser extends Parser {
                     }
                     break;
                 case 5 :
-                    // Bst.g:51:4: stack
+                    
                     {
                     root_0 = (Object)adaptor.nil();
 
@@ -1281,7 +1281,7 @@ public class BstParser extends Parser {
        }
         return retval;
     }
-    // $ANTLR end stackitem
+    
 
 
  

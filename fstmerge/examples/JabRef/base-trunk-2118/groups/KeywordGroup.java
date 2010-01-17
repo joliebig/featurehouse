@@ -1,24 +1,4 @@
-/*
- All programs in this directory and subdirectories are published under the 
- GNU General Public License as described below.
 
- This program is free software; you can redistribute it and/or modify it 
- under the terms of the GNU General Public License as published by the Free 
- Software Foundation; either version 2 of the License, or (at your option) 
- any later version.
-
- This program is distributed in the hope that it will be useful, but WITHOUT 
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for 
- more details.
-
- You should have received a copy of the GNU General Public License along 
- with this program; if not, write to the Free Software Foundation, Inc., 59 
- Temple Place, Suite 330, Boston, MA 02111-1307 USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
- */
 
 package net.sf.jabref.groups;
 
@@ -31,9 +11,7 @@ import net.sf.jabref.*;
 import net.sf.jabref.undo.*;
 import net.sf.jabref.util.QuotedStringTokenizer;
 
-/**
- * @author jzieren
- */
+
 public class KeywordGroup extends AbstractGroup implements SearchRule {
 	public static final String ID = "KeywordGroup:";
 	private final String m_searchField;
@@ -42,9 +20,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 	private final boolean m_regExp;
 	private Pattern m_pattern = null;
 
-	/**
-	 * Creates a KeywordGroup with the specified properties.
-	 */
+	
 	public KeywordGroup(String name, String searchField,
 			String searchExpression, boolean caseSensitive, boolean regExp,
 			int context) throws IllegalArgumentException,
@@ -64,13 +40,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 				: Pattern.compile(m_searchExpression, Pattern.CASE_INSENSITIVE);
 	}
 
-	/**
-	 * Parses s and recreates the KeywordGroup from it.
-	 * 
-	 * @param s
-	 *            The String representation obtained from
-	 *            KeywordGroup.toString()
-	 */
+	
 	public static AbstractGroup fromString(String s, BibtexDatabase db,
 			int version) throws Exception {
 		if (!s.startsWith(ID))
@@ -86,7 +56,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 			String name = tok.nextToken();
 			String field = tok.nextToken();
 			String expression = tok.nextToken();
-			// assume caseSensitive=false and regExp=true for old groups
+			
 			return new KeywordGroup(Util.unquote(name, QUOTE_CHAR), Util
 					.unquote(field, QUOTE_CHAR), Util.unquote(expression,
 					QUOTE_CHAR), false, true, AbstractGroup.INDEPENDENT);
@@ -119,17 +89,12 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 		}
 	}
 
-	/**
-	 * @see net.sf.jabref.groups.AbstractGroup#getSearchRule()
-	 */
+	
 	public SearchRule getSearchRule() {
 		return this;
 	}
 
-	/**
-	 * Returns a String representation of this object that can be used to
-	 * reconstruct it.
-	 */
+	
 	public String toString() {
 		return ID + Util.quote(m_name, SEPARATOR, QUOTE_CHAR) + SEPARATOR
 				+ m_context + SEPARATOR
@@ -164,7 +129,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 							+ m_searchExpression;
 					entries[i].setField(m_searchField, newContent);
 
-					// Store undo information.
+					
 					ce.addEdit(new UndoableFieldChange(entries[i],
 							m_searchField, oldContent, newContent));
 					modified = true;
@@ -192,7 +157,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 					String oldContent = (String) entries[i]
 							.getField(m_searchField);
 					removeMatches(entries[i]);
-					// Store undo information.
+					
 					ce.addEdit(new UndoableFieldChange(entries[i],
 							m_searchField, oldContent, entries[i]
 									.getField(m_searchField)));
@@ -220,12 +185,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
                 && getHierarchicalContext() == other.getHierarchicalContext();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.jabref.groups.AbstractGroup#contains(java.util.Map,
-	 *      net.sf.jabref.BibtexEntry)
-	 */
+	
 	public boolean contains(Map searchOptions, BibtexEntry entry) {
 		return contains(entry);
 	}
@@ -242,14 +202,11 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 		return content.indexOf(m_searchExpression.toLowerCase()) >= 0;
 	}
 
-	/**
-	 * Removes matches of searchString in the entry's field. This is only
-	 * possible if the search expression is not a regExp.
-	 */
+	
 	private void removeMatches(BibtexEntry entry) {
 		String content = (String) entry.getField(m_searchField);
 		if (content == null)
-			return; // nothing to modify
+			return; 
 		StringBuffer sbOrig = new StringBuffer(content);
 		StringBuffer sbLower = new StringBuffer(content.toLowerCase());
 		StringBuffer haystack = m_caseSensitive ? sbOrig : sbLower;
@@ -260,7 +217,7 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 		while ((i = haystack.indexOf(needle)) >= 0) {
 			sbOrig.replace(i, i + needle.length(), "");
 			sbLower.replace(i, i + needle.length(), "");
-			// reduce spaces at i to 1
+			
 			j = i;
 			k = i;
 			while (j - 1 >= 0 && separator.indexOf(haystack.charAt(j - 1)) >= 0)
@@ -284,8 +241,8 @@ public class KeywordGroup extends AbstractGroup implements SearchRule {
 			return new KeywordGroup(m_name, m_searchField, m_searchExpression,
 					m_caseSensitive, m_regExp, m_context);
 		} catch (Throwable t) {
-			// this should never happen, because the constructor obviously
-			// succeeded in creating _this_ instance!
+			
+			
 			System.err.println("Internal error: Exception " + t
 					+ " in KeywordGroup.deepCopy(). "
 					+ "Please report this on www.sf.net/projects/jabref");

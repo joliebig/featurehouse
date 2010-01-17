@@ -10,7 +10,7 @@ public class FocusRequester implements Runnable {
        if (comp == null)
                Thread.dumpStack();
 
-        //System.out.println("FocusRequester: "+comp.toString());
+        
 	this.comp = comp;
 	try {
 	    SwingUtilities.invokeLater(this);

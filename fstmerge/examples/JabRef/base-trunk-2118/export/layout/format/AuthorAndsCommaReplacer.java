@@ -2,17 +2,10 @@ package net.sf.jabref.export.layout.format;
 
 import net.sf.jabref.export.layout.LayoutFormatter;
 
-/**
- * Replaces and's for & (in case of two authors) and , (in case
- * of more than two authors).
- *
- * @author Carlos Silla
- */
+
 public class AuthorAndsCommaReplacer implements LayoutFormatter {
 
-    /* (non-Javadoc)
-	 * @see net.sf.jabref.export.layout.LayoutFormatter#format(java.lang.String)
-	 */
+    
 	public String format(String fieldText) {
 
 		String[] authors = fieldText.split(" and ");
@@ -20,7 +13,7 @@ public class AuthorAndsCommaReplacer implements LayoutFormatter {
 
 		switch(authors.length) {
 			case 1:
-				//Does nothing;
+				
 				s = authors[0];
 			break;
 			case 2:

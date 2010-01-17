@@ -25,7 +25,7 @@ public class RemoveLatexCommands implements LayoutFormatter {
         currentCommand = new StringBuffer();
       }
       else if (!incommand && (c=='{' || c=='}')) {
-        // Swallow the brace.
+        
       }
 
       else if (Character.isLetter((char)c) ||
@@ -33,33 +33,13 @@ public class RemoveLatexCommands implements LayoutFormatter {
          escaped = false;
          if (!incommand)
            sb.append((char)c);
-           // Else we are in a command, and should not keep the letter.
+           
          else {
            currentCommand.append( (char) c);
            if ((currentCommand.length() == 1)
                && (Globals.SPECIAL_COMMAND_CHARS.indexOf(currentCommand.toString()) >= 0)) {
-             // This indicates that we are in a command of the type \^o or \~{n}
- /*            if (i >= field.length()-1)
-               break testCharCom;
-
-             String command = currentCommand.toString();
-             i++;
-             c = field.charAt(i);
-             //System.out.println("next: "+(char)c);
-             String combody;
-             if (c == '{') {
-               IntAndString part = getPart(field, i);
-               i += part.i;
-               combody = part.s;
-             }
-             else {
-               combody = field.substring(i,i+1);
-               //System.out.println("... "+combody);
-             }
-             Object result = Globals.HTMLCHARS.get(command+combody);
-             if (result != null)
-               sb.append((String)result);
- */
+             
+ 
              incommand = false;
              escaped = false;
 
@@ -72,12 +52,12 @@ public class RemoveLatexCommands implements LayoutFormatter {
         escaped = false;
         if (!incommand)
           sb.append((char)c);
-          // Else we are in a command, and should not keep the letter.
+          
         else
           currentCommand.append((char)c);
       }
       else {
-        //if (!incommand || ((c!='{') && !Character.isWhitespace(c)))
+        
         if (!incommand || (!Character.isWhitespace(c) && (c != '{')))
           sb.append((char)c);
         else {

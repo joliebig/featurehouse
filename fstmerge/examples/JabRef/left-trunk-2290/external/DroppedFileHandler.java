@@ -18,18 +18,7 @@ import net.sf.jabref.util.XMPUtil;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * This class holds the functionality of autolinking to a file that's dropped
- * onto an entry.
- * 
- * Options for handling the files are:
- * 
- * 1) Link to the file in its current position (disabled if the file is remote)
- * 
- * 2) Copy the file to ??? directory, rename after bibtex key, and extension
- * 
- * 3) Move the file to ??? directory, rename after bibtex key, and extension
- */
+
 public class DroppedFileHandler {
     private JabRefFrame frame;
 
@@ -64,22 +53,7 @@ public class DroppedFileHandler {
         builder.append(renameCheckBox);
     }
 
-    /**
-     * Offer copy/move/linking options for a dragged external file. Perform the
-     * chosen operation, if any.
-     * 
-     * @param fileName
-     *            The name of the dragged file.
-     * @param fileType
-     *            The FileType associated with the file.
-     * @param localFile
-     *            Indicate whether this is a local file, or a remote file copied
-     *            to a local temporary file.
-     * @param mainTable
-     *            The MainTable the file was dragged to.
-     * @param dropRow
-     *            The row where the file was dropped.
-     */
+    
     public void handleDroppedfile(String fileName, ExternalFileType fileType, boolean localFile,
         MainTable mainTable, int dropRow) {
 
@@ -92,7 +66,7 @@ public class DroppedFileHandler {
 
         BibtexEntry entry = mainTable.getEntryAt(dropRow);
 
-        // Show dialog
+        
         boolean newEntry = false;
         boolean rename = entry.getCiteKey() != null && entry.getCiteKey().length() > 0;
         String citeKeyOrReason = (rename ? entry.getCiteKey() : Globals.lang("Entry has no citekey"));
@@ -102,10 +76,7 @@ public class DroppedFileHandler {
         if (reply != JOptionPane.OK_OPTION)
             return;
 
-        /*
-         * Ok, we're ready to go. See first if we need to do a file copy before
-         * linking:
-         */
+        
         boolean success = true;
         String destFilename;
 
@@ -156,23 +127,15 @@ public class DroppedFileHandler {
             JOptionPane.QUESTION_MESSAGE);
 
         if (reply == JOptionPane.CANCEL_OPTION) {
-            return true; // The user canceled thus that we are done.
+            return true; 
         }
         if (reply == JOptionPane.NO_OPTION) {
             return false;
         }
 
-        // reply == JOptionPane.YES_OPTION)
+        
 
-        /*
-         * TODO Extract Import functionality from ImportMenuItem then we could
-         * do:
-         * 
-         * ImportMenuItem importer = new ImportMenuItem(frame, (mainTable ==
-         * null), new PdfXmpImporter());
-         * 
-         * importer.automatedImport(new String[] { fileName });
-         */
+        
 
         boolean isSingle = xmpEntriesInFile.size() == 1;
         BibtexEntry single = (isSingle ? xmpEntriesInFile.get(0) : null);
@@ -272,19 +235,7 @@ public class DroppedFileHandler {
         }
     }
     
-    /**
-     * Make a extension to the file.
-     * 
-     * @param entry
-     *            The entry to extension from.
-     * @param fileType
-     *            The FileType associated with the file.
-     * @param filename
-     *            The path to the file.
-     * @param edits
-     *            An NamedCompound action this action is to be added to. If none
-     *            is given, the edit is added to the panel's undoManager.
-     */
+    
     private void doLink(BibtexEntry entry, ExternalFileType fileType, String filename,
         NamedCompound edits) {
 
@@ -299,27 +250,14 @@ public class DroppedFileHandler {
         }
     }
 
-    /**
-     * Move the given file to the base directory for its file type, and rename
-     * it to the given filename.
-     * 
-     * @param fileName
-     *            The name of the source file.
-     * @param fileType
-     *            The FileType associated with the file.
-     * @param destFilename
-     *            The destination filename.
-     * @param edits
-     *            TODO we should be able to undo this action
-     * @return true if the operation succeeded.
-     */
+    
     private boolean doRename(String fileName, ExternalFileType fileType, String destFilename,
         NamedCompound edits) {
         String dir = panel.metaData().getFileDirectory(fileType.getFieldName());
         if ((dir == null) || !(new File(dir)).exists()) {
-            // OOps, we don't know which directory to put it in, or the given
-            // dir doesn't exist....
-            // This should not happen!!
+            
+            
+            
             return false;
         }
         destFilename = new File(destFilename).getName();
@@ -330,27 +268,14 @@ public class DroppedFileHandler {
         return true;
     }
 
-    /**
-     * Copy the given file to the base directory for its file type, and give it
-     * the given name.
-     * 
-     * @param fileName
-     *            The name of the source file.
-     * @param fileType
-     *            The FileType associated with the file.
-     * @param toFile
-     *            The destination filename. An existing path-component will be removed.
-     * @param edits
-     *            TODO we should be able to undo this!
-     * @return
-     */
+    
     private boolean doCopy(String fileName, ExternalFileType fileType, String toFile,
         NamedCompound edits) {
 
         String dir = panel.metaData().getFileDirectory(fileType.getFieldName());
         if ((dir == null) || !(new File(dir)).exists()) {
-            // OOps, we don't know which directory to put it in, or the given
-            // dir doesn't exist....
+            
+            
             System.out.println("dir: " + dir + "\t ext: " + fileType.getExtension());
             return false;
         }
@@ -359,7 +284,7 @@ public class DroppedFileHandler {
         File destFile = new File(new StringBuffer(dir).append(System.getProperty("file.separator"))
             .append(toFile).toString());
         if (destFile.equals(new File(fileName))){
-            // File is already in the correct position. Don't override!
+            
             return true;
         }
         

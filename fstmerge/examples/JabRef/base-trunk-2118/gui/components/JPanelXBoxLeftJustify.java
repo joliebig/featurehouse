@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 public class JPanelXBoxLeftJustify extends JPanelXBox {
 	public JPanelXBoxLeftJustify() {
 		super();
-		add(new JPanel()); // padding
+		add(new JPanel()); 
 	}
 	public JPanelXBoxLeftJustify(Component c) {
 		this();

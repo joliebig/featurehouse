@@ -21,13 +21,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Customized UI component for pushing to external applications. Has a selection popup
- * menu to change the selected external application.
- * This class implements the ActionListener interface. When actionPerformed() is
- * invoked, the currently selected PushToApplication is activated. The actionPerformed()
- * method can be called with a null argument.
- */
+
 public class PushToApplicationButton implements ActionListener {
 
     public static List<PushToApplication> applications;
@@ -46,9 +40,7 @@ public class PushToApplicationButton implements ActionListener {
     private JMenuItem settings = new JMenuItem(Globals.lang("Settings"));
     private boolean settingsOkPressed = false;
 
-    /**
-     * Set up the current available choices:
-     */
+    
     static {
 
         applications = new ArrayList<PushToApplication>();
@@ -65,8 +57,8 @@ public class PushToApplicationButton implements ActionListener {
         applications.add(new PushToLatexEditor());
         applications.add(new PushToVim());
 
-        // Finally, sort the entries:
-        //Collections.sort(applications, new PushToApplicationComparator());
+        
+        
     }
 
 
@@ -120,9 +112,7 @@ public class PushToApplicationButton implements ActionListener {
         });
     }
 
-    /**
-     * Create a selection menu for the available "Push" options.
-     */
+    
     private void buildPopupMenu() {
         popup = new JPopupMenu();
         int j=0;
@@ -135,10 +125,7 @@ public class PushToApplicationButton implements ActionListener {
         }
     }
 
-    /**
-     * Update the PushButton to default to the given application.
-     * @param i The List index of the application to default to.
-     */
+    
     private void setSelected(int i) {
         this.selected = i;
         PushToApplication toApp = pushActions.get(i);
@@ -149,10 +136,7 @@ public class PushToApplicationButton implements ActionListener {
         mAction.setTitle(toApp.getApplicationName());
     }
 
-    /**
-     * Get the toolbar component for the push button.
-     * @return The component.
-     */
+    
     public Component getComponent() {
         return comp;
     }
@@ -164,7 +148,7 @@ public class PushToApplicationButton implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         PushToApplication toApp = pushActions.get(selected);
 
-        // Lazy initialization of the push action:
+        
         PushToApplicationAction action = actions.get(toApp);
         if (action == null) {
             action = new PushToApplicationAction(frame, toApp);
@@ -197,7 +181,7 @@ public class PushToApplicationButton implements ActionListener {
                 diag.dispose();
             }
         });
-        // Key bindings:
+        
         ActionMap am = bb.getPanel().getActionMap();
         InputMap im = bb.getPanel().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         im.put(Globals.prefs.getKey("Close dialog"), "close");
@@ -209,10 +193,10 @@ public class PushToApplicationButton implements ActionListener {
         settingsOkPressed = false;
         diag.pack();
         diag.setLocationRelativeTo(frame);
-        // Show the dialog:
+        
         diag.setVisible(true);
-        // If the user pressed Ok, ask the PushToApplication implementation
-        // to store its settings:
+        
+        
         if (settingsOkPressed) {
             toApp.storeSettings();
         }
@@ -225,12 +209,12 @@ public class PushToApplicationButton implements ActionListener {
         }
 
         public void actionPerformed(ActionEvent e) {
-            // Change the selection:
+            
             setSelected(index);
-            // Invoke the selected operation (is that expected behaviour?):
-            //PushToApplicationButton.this.actionPerformed(null);
-            // It makes sense to transfer focus to the push button after the
-            // menu closes:
+            
+            
+            
+            
             pushButton.requestFocus();
         }
     }
@@ -239,7 +223,7 @@ public class PushToApplicationButton implements ActionListener {
     class MenuButtonActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
-            // Lazy initialization of the popup menu:
+            
             if (popup == null)
                 buildPopupMenu();
             popup.show(comp, 0, menuButton.getHeight());
@@ -279,8 +263,8 @@ public class PushToApplicationButton implements ActionListener {
         }
 
         private void processPopupTrigger(MouseEvent e) {
-            // We only want to show the popup if a settings panel exists for the selected
-            // item:
+            
+            
             PushToApplication toApp = pushActions.get(selected);
             if (toApp.getSettingsPanel() != null)
                 optPopup.show(pushButton, e.getX(), e.getY());
@@ -288,9 +272,7 @@ public class PushToApplicationButton implements ActionListener {
         }
     }
 
-    /**
-     * Comparator for sorting the selection according to name.
-     */
+    
     static class PushToApplicationComparator implements Comparator<PushToApplication> {
 
         public int compare(PushToApplication one, PushToApplication two) {

@@ -14,35 +14,23 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.AuthorList;
 import net.sf.jabref.BibtexFields;
 
-/**
- * Imports a Biblioscape Tag File. The format is described on
- * http://www.biblioscape.com/manual_bsp/Biblioscape_Tag_File.htm Several
- * Biblioscape field types are ignored. Others are only included in the BibTeX
- * field "comment".
- */
+
 public class RisImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
     return "RIS";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "ris";
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream stream) throws IOException {
 
-    // Our strategy is to look for the "AU  - *" line.
+    
     BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
     Pattern pat1 = Pattern.compile("AU  - .*"),
         pat2 = Pattern.compile("A1  - .*"),
@@ -56,10 +44,7 @@ public class RisImporter extends ImportFormat {
     return false;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
     ArrayList<BibtexEntry> bibitems = new ArrayList<BibtexEntry>();
     StringBuffer sb = new StringBuffer();
@@ -105,22 +90,22 @@ public class RisImporter extends ImportFormat {
                         else if (val.equals("UNPB")) type = "unpublished";
                         else if (val.equals("RPRT")) type = "techreport";
                         else if (val.equals("CONF")) type = "inproceedings";
-                        else if (val.equals("CHAP")) type = "incollection";//"inbook";
+                        else if (val.equals("CHAP")) type = "incollection";
 
             else type = "other";
-            }else if (lab.equals("T1") || lab.equals("TI")) hm.put("title", val);//Title
-            // =
-            // val;
+            }else if (lab.equals("T1") || lab.equals("TI")) hm.put("title", val);
+            
+            
             else if (lab.equals("T2") || lab.equals("T3") || lab.equals("BT")) {
                 hm.put("booktitle", val);
             }
             else if (lab.equals("AU") || lab.equals("A1")) {
-                if (author.equals("")) // don't add " and " for the first author
+                if (author.equals("")) 
                     author = val;
                 else author += " and " + val;
             }
 	        else if (lab.equals("A2")){
-                if (editor.equals("")) // don't add " and " for the first editor
+                if (editor.equals("")) 
                     editor = val;
                 else editor += " and " + val;
             }
@@ -155,11 +140,11 @@ public class RisImporter extends ImportFormat {
                             try {
                                 int month = Integer.parseInt(parts[1]);
                                 if ((month > 0) && (month <= 12)) {
-                                    //System.out.println(Globals.MONTHS[month-1]);
+                                    
                                     hm.put("month", "#"+Globals.MONTHS[month-1]+"#");
                                 }
                             } catch (NumberFormatException ex) {
-                                // The month part is unparseable, so we ignore it.
+                                
                             }
                         }
                     }
@@ -176,12 +161,12 @@ public class RisImporter extends ImportFormat {
                     comment = comment+"\n";
                 comment = comment+val;
             }
-            // Added ID import 2005.12.01, Morten Alver:
+            
             else if (lab.equals("ID"))
                 hm.put("refid", val);
         }
         }
-        // fix authors
+        
         if (author.length() > 0) {
             author = AuthorList.fixAuthor_lastNameFirst(author);
             hm.put("author", author);
@@ -196,9 +181,9 @@ public class RisImporter extends ImportFormat {
 
         hm.put("pages", startPage + "--" + endPage);
         BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals
-                        .getEntryType(type)); // id assumes an existing database so don't
+                        .getEntryType(type)); 
 
-        // Remove empty fields:
+        
         ArrayList<Object> toRemove = new ArrayList<Object>();
         for (Iterator<String> it = hm.keySet().iterator(); it.hasNext();) {
             Object key = it.next();
@@ -210,7 +195,7 @@ public class RisImporter extends ImportFormat {
             hm.remove(iterator.next());
 
         }
-        // create one here
+        
         b.setField(hm);
 
         bibitems.add(b);

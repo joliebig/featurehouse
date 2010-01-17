@@ -13,13 +13,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Oct 31, 2005
- * Time: 10:46:03 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class DatabasePropertiesDialog extends JDialog {
 
     MetaData metaData;
@@ -28,7 +22,7 @@ public class DatabasePropertiesDialog extends JDialog {
     JButton ok, cancel;
     JTextField fileDir = new JTextField(40),
             pdfDir = new JTextField(40), psDir = new JTextField(40);
-    String oldFileVal="", oldPdfVal="", oldPsVal=""; // Remember old values to see if they are changed.
+    String oldFileVal="", oldPdfVal="", oldPsVal=""; 
     JCheckBox protect = new JCheckBox(Globals.lang("Refuse to save the database before external changes have been reviewed."));
     boolean oldProtectVal = false;
 
@@ -130,7 +124,7 @@ public class DatabasePropertiesDialog extends JDialog {
         if (fileD == null)
             fileDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (fileD.size() >= 1)
                 fileDir.setText((fileD.get(0)).trim());
         }
@@ -139,7 +133,7 @@ public class DatabasePropertiesDialog extends JDialog {
         if (pdfD == null)
             pdfDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (pdfD.size() >= 1)
                 pdfDir.setText((pdfD.get(0)).trim());
         }
@@ -148,7 +142,7 @@ public class DatabasePropertiesDialog extends JDialog {
         if (psD == null)
             psDir.setText("");
         else {
-            // Better be a little careful about how many entries the Vector has:
+            
             if (psD.size() >= 1)
                 psDir.setText((psD.get(0)).trim());
         }
@@ -161,7 +155,7 @@ public class DatabasePropertiesDialog extends JDialog {
                 protect.setSelected(Boolean.parseBoolean(prot.get(0)));
         }
 
-        // Store original values to see if they get changed:
+        
         oldFileVal = fileDir.getText();
         oldPdfVal = pdfDir.getText();
         oldPsVal = psDir.getText();
@@ -209,13 +203,13 @@ public class DatabasePropertiesDialog extends JDialog {
             metaData.remove(Globals.PROTECTED_FLAG_META);
 
 
-        // See if any of the values have been modified:
+        
         boolean changed = !newEncoding.equals(oldEncoding)
             || !oldPdfVal.equals(pdfDir.getText())
             || !oldPsVal.equals(psDir.getText())
             || (oldProtectVal != protect.isSelected());
-        // ... if so, mark base changed. Prevent the Undo button from removing
-        // change marking:
+        
+        
         if (changed)
             panel.markNonUndoableBaseChanged();
     }

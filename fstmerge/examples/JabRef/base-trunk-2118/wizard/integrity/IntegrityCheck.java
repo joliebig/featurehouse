@@ -1,39 +1,14 @@
-/*
-Copyright (C) 2004 R. Nagel
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
 
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
 
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
 
-*/
 
-// created by : r.nagel 27.10.2004
-//
-// function : check all bibtex items and report errors, inconsistencies,
-//            warnings, hints and ....
-//
-//     todo : find equal authors: e.g.: D. Knuth = Donald Knuth = Donald E. Knuth
-//            and try to give all items an identically look
-//
-// modified :
+
+
+
+
 
 
 
@@ -74,7 +49,7 @@ public class IntegrityCheck
     messages.clear();
     checkSingleEntry(entry) ;
     return (Vector) messages.clone() ;
-//    return messages ;
+
   }
 
   public void checkSingleEntry(BibtexEntry entry)
@@ -99,15 +74,11 @@ public class IntegrityCheck
       yearCheck( data.toString(), "year", entry) ;
   }
 
- /** fills the class Vector (of IntegrityMessage Objects) which did inform about
-  *  failures, hints....
-  *  The Authors or Editors field could be invalid -> try to detect it!
-  *  Knuth, Donald E. and Kurt Cobain and A. Einstein = N,NNaNNaNN
-  */
+ 
   private void authorNameCheck(String names, String fieldName, BibtexEntry entry)
   {
-    // try to extract the structure of author tag
-    // N = name, ","= seperator, "a" = and
+    
+    
     StringBuffer structure = new StringBuffer() ;
     int len = names.length() ;
     int mode = -1 ;
@@ -117,7 +88,7 @@ public class IntegrityCheck
       switch (ch)
       {
         case ',' :
-          if (mode == 5) // "and"
+          if (mode == 5) 
             structure.append('a') ;
           else
             structure.append('N') ;
@@ -127,12 +98,12 @@ public class IntegrityCheck
           break ;
 
         case ' ' :
-          if (mode == 5) // "and"
+          if (mode == 5) 
             structure.append('a') ;
           else
             if (mode != 0)
               structure.append('N') ;
-          mode = -1 ; // blank processed
+          mode = -1 ; 
           break ;
        case 'a' :
          if (mode == -1)
@@ -150,47 +121,47 @@ public class IntegrityCheck
          mode = 1 ;
       }
     }
-    if (mode == 5) // "and"
+    if (mode == 5) 
       structure.append('a') ;
     else
       if (mode != 0)
         structure.append('N') ;
 
-    // Check
+    
     len = structure.length() ;
     if (len > 0)
     {
       boolean failed = false ;
       char z1 = structure.charAt(0) ;
 
-      if (structure.charAt(0) != 'N')  // must start by name
+      if (structure.charAt(0) != 'N')  
       {
         messages.add( new IntegrityMessage( IntegrityMessage.NAME_START_WARNING,
                                             entry, fieldName, null))  ;
-//        back.add("beginning of " +fieldName +" field");
+
         failed = true ;
       }
 
-      if (structure.charAt( structure.length() -1) != 'N')  // end without seperator
+      if (structure.charAt( structure.length() -1) != 'N')  
       {
         messages.add( new IntegrityMessage( IntegrityMessage.NAME_END_WARNING,
                                             entry, fieldName, null))  ;
-//        back.add("bad end (" +fieldName +" field)");
+
         failed = true ;
       }
       if (structure.indexOf("NN,NN") > -1)
       {
         messages.add( new IntegrityMessage( IntegrityMessage.NAME_SEMANTIC_WARNING,
                                             entry, fieldName, null))  ;
-//        back.add("something could be wrong in " +fieldName +" field") ;
+
         failed = true ;
       }
 
-//      if (failed)
-//        System.out.println(authors +" #" +structure.toString() +"#") ;
+
+
     }
-//    messages.add( new IntegrityMessage( IntegrityMessage.NAME_END_WARNING,
-//                                        entry, fieldName, null))  ;
+
+
 
   }
 
@@ -201,36 +172,36 @@ public class IntegrityCheck
     int len = title.length() ;
     int mode = 0 ;
     int upLowCounter = 0 ;
-//    boolean lastWasSpace = false ;
+
     for (int t = 0 ; t < len ; t++)
     {
       char ch = title.charAt( t ) ;
       switch (ch)
       {
-        case '}' : // end of Sequence
+        case '}' : 
           if (mode == 0)
           {
-            // closing brace '}' without an opening
+            
             messages.add( new IntegrityMessage( IntegrityMessage.UNEXPECTED_CLOSING_BRACE_FAILURE,
                                             entry, fieldName, null))  ;
           }
-          else  // mode == 1
+          else  
           {
             mode-- ;
-//            lastWasSpace = true ;
+
           }
           break ;
 
-        case '{' :  // open {
+        case '{' :  
           mode++ ;
           break ;
 
         case ' ' :
-//          lastWasSpace = true ;
+
           break ;
 
         default :
-          if (mode == 0) // out of {}
+          if (mode == 0) 
           {
             if ( Character.isUpperCase(ch) && (t > 1))
             {
@@ -242,21 +213,12 @@ public class IntegrityCheck
     if (upLowCounter > 0)
     {
 
-        /*
-        Morten Alver (2006.10.10):
-
-        Disabling this warning because we have a feature for automatically adding
-        braces when saving, which makes this warning misleading. It could be modified
-        to suggest to use this feature if not enabled, and not give a warning if the
-        feature is enabled.
-
-        messages.add( new IntegrityMessage( IntegrityMessage.UPPER_AND_LOWER_HINT,
-                                        entry, fieldName, null))  ;*/
+        
 
     }
   }
 
-  /** Checks, if the number String contains a four digit year */
+  
   private void yearCheck(String number, String fieldName, BibtexEntry entry)
   {
     int len = number.length() ;

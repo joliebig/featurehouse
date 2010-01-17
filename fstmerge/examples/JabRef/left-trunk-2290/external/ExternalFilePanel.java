@@ -19,18 +19,7 @@ import net.sf.jabref.*;
 import net.sf.jabref.net.URLDownload;
 import net.sf.jabref.util.XMPUtil;
 
-/**
- * Initial Version:
- * 
- * @author alver
- * @version Date: May 7, 2005 Time: 7:17:42 PM
- * 
- * Current Version:
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:25 $)
- * 
- */
+
 public class ExternalFilePanel extends JPanel {
 
 	private static final long serialVersionUID = 3653290879640642718L;
@@ -76,7 +65,7 @@ public class ExternalFilePanel extends JPanel {
 		browseBut.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				browseFile(fieldName, editor);
-				// editor.setText(chosenValue);
+				
 				entryEditor.storeFieldAction.actionPerformed(new ActionEvent(editor, 0, ""));
 			}
 		});
@@ -103,16 +92,13 @@ public class ExternalFilePanel extends JPanel {
 		add(auto);
 		add(xmp);
 
-		// Add drag and drop support to the field
+		
 		if (editor != null)
 			((JComponent) editor).setDropTarget(new DropTarget((Component) editor,
 				DnDConstants.ACTION_NONE, new UrlDragDrop(entryEditor, frame, editor)));
 	}
 
-	/**
-	 * Change which entry this panel is operating on. This is used only when
-	 * this panel is not attached to an entry editor.
-	 */
+	
 	public void setEntry(BibtexEntry entry, BibtexDatabase database) {
 		this.entry = entry;
 		this.database = database;
@@ -143,7 +129,7 @@ public class ExternalFilePanel extends JPanel {
 
 				output(Globals.lang("Looking for pdf..."));
 				
-				// Find the default directory for this field type, if any:
+				
 				String dir = metaData.getFileDirectory(fieldName);
 				File file = null;
 				if (dir != null) {
@@ -211,15 +197,15 @@ public class ExternalFilePanel extends JPanel {
 			String position = newFile.getParent();
 
 			if ((directory != null) && position.startsWith(directory)) {
-				// Construct path relative to pdf base dir
+				
 				String relPath = position.substring(directory.length(), position.length())
 					+ File.separator + newFile.getName();
 
-				// Remove leading path separator
+				
 				if (relPath.startsWith(File.separator)) {
 					relPath = relPath.substring(File.separator.length(), relPath.length());
 
-					// Set relative path as field value
+					
 				}
 
 				retVal = relPath;
@@ -240,10 +226,7 @@ public class ExternalFilePanel extends JPanel {
 		if (res == null || res.trim().length() == 0)
 			return;
 
-		/*
-		 * If this panel belongs in an entry editor, note which entry is
-		 * currently shown:
-		 */
+		
 		final BibtexEntry targetEntry;
 		if (entryEditor != null)
 			targetEntry = entryEditor.getEntry();
@@ -267,12 +250,7 @@ public class ExternalFilePanel extends JPanel {
 						plannedName += suffix;
 				}
 
-				/*
-				 * [ 1548875 ] download pdf produces unsupported filename
-				 * 
-				 * http://sourceforge.net/tracker/index.php?func=detail&aid=1548875&group_id=92314&atid=600306
-				 * 
-				 */
+				
 				if (Globals.ON_WIN) {
 					plannedName = plannedName.replaceAll(
 						"\\?|\\*|\\<|\\>|\\||\\\"|\\:|\\.$|\\[|\\]", "");
@@ -293,7 +271,7 @@ public class ExternalFilePanel extends JPanel {
 					output(Globals.lang("Downloading..."));
 					String plannedName = getPlannedFileName(res);
 
-					// Find the default directory for this field type:
+					
 					String directory = metaData.getFileDirectory(fieldName);
 
 					if (!new File(directory).exists()) {
@@ -322,25 +300,18 @@ public class ExternalFilePanel extends JPanel {
 
 					String textToSet = file.getPath();
 					if (textToSet.startsWith(directory)) {
-						// Construct path relative to pdf base dir
+						
 						textToSet = textToSet.substring(directory.length(), textToSet.length());
 
-						// Remove leading path separator
+						
 						if (textToSet.startsWith(File.separator)) {
 							textToSet = textToSet.substring(File.separator.length());
 						}
 					}
 
-					/*
-					 * Check if we should update the editor text field, or
-					 * update the target entry directly:
-					 */
+					
                     if (entryEditor == null || entryEditor.getEntry() != targetEntry) {
-						/*
-						 * Editor has probably changed to show a different
-						 * entry. So we must update the target entry directly
-						 * and not set the text of the editor.
-						 */
+						
 						targetEntry.setField(fieldName, textToSet);
                         if (fieldEditor != null) {
                             fieldEditor.setText(textToSet);
@@ -348,16 +319,7 @@ public class ExternalFilePanel extends JPanel {
                         }
                         updateEditor = false;
 					} else {
-						/*
-						 * Need to set the fieldEditor first before running
-						 * updateField-Action, because otherwise we might get a
-						 * race condition.
-						 * 
-						 * (Hopefully a) Fix for: [ 1545601 ] downloading pdf
-						 * corrupts pdf field text
-						 * 
-						 * http://sourceforge.net/tracker/index.php?func=detail&aid=1545601&group_id=92314&atid=600306
-						 */
+						
 						fieldEditor.setText(textToSet);
 						fieldEditor.setEnabled(true);
 						updateEditor = false;
@@ -372,8 +334,8 @@ public class ExternalFilePanel extends JPanel {
 					JOptionPane.showMessageDialog(parent, Globals.lang("Invalid URL"), Globals
 						.lang("Download file"), JOptionPane.ERROR_MESSAGE);
 				} finally {
-					// If stuff goes wrong along the road, put back original
-					// value
+					
+					
 					if (updateEditor) {
 						fieldEditor.setText(originalText);
 						fieldEditor.setEnabled(true);
@@ -383,18 +345,7 @@ public class ExternalFilePanel extends JPanel {
 		}).start();
 	}
 
-	/**
-	 * Starts a thread that searches the external file directory for the given
-	 * field name, including subdirectories, and looks for files named after the
-	 * current entry's bibtex key. Returns a reference to the thread for callers
-	 * that may want to wait for the thread to finish (using join()).
-	 * 
-	 * @param fieldName
-	 *            The field to set.
-	 * @param editor
-	 *            An EntryEditor instance where to set the value found.
-	 * @return A reference to the Thread that performs the operation.
-	 */
+	
 	public Thread autoSetFile(final String fieldName, final FieldEditor editor) {
 		Object o = getKey();
 		if ((o == null) || (Globals.prefs.get(fieldName + "Directory") == null)) {
@@ -407,31 +358,20 @@ public class ExternalFilePanel extends JPanel {
 			+ fieldName + "'...");
 		Thread t = (new Thread() {
 			public void run() {
-				/*
-				 * Find the following directories to look in for:
-				 * 
-				 * default directory for this field type.
-				 * 
-				 * directory of bibtex-file. // NOT POSSIBLE at the moment.
-				 * 
-				 * JabRef-directory.
-				 */
+				
 				LinkedList<String> list = new LinkedList<String>();
 				list.add(metaData.getFileDirectory(fieldName));
 
-				/*
-				 * File fileOfDb = frame.basePanel().file(); if (fileOfDb !=
-				 * null){ list.add(fileOfDb.getParentFile().getPath()); }
-				 */
+				
 				list.add(".");
 
 				String found = Util.findPdf(getEntry(), fieldName, (String[]) list
-					.toArray(new String[list.size()]));// , off);
+					.toArray(new String[list.size()]));
                                         
                                 
-				// To activate findFile:
-				// String found = Util.findFile(getEntry(), null, dir,
-				// ".*[bibtexkey].*");
+				
+				
+				
 
 				if (found != null) {
 					editor.setText(found);

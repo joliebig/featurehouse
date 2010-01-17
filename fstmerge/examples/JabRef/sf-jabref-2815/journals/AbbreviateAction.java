@@ -6,13 +6,7 @@ import net.sf.jabref.BasePanel;
 import net.sf.jabref.AbstractWorker;
 import net.sf.jabref.undo.NamedCompound;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Sep 17, 2005
- * Time: 12:48:23 AM
- * To browseOld this template use File | Settings | File Templates.
- */
+
 public class AbbreviateAction extends AbstractWorker {
     BasePanel panel;
     String message = "";
@@ -25,12 +19,12 @@ public class AbbreviateAction extends AbstractWorker {
 
 
     public void init() {
-        //  new FieldWeightDialog(frame).setVisible(true);
+        
         panel.output("Abbreviating...");
     }
 
     public void run() {
-        //net.sf.jabref.journals.JournalList.downloadJournalList(frame);
+        
 
 
         BibtexEntry[] entries = panel.getSelectedEntries();

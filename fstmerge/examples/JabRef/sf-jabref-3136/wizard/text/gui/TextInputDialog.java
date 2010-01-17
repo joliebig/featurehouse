@@ -1,52 +1,27 @@
-/*
- Copyright (C) 2004 R. Nagel
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
 
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
 
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
 
- */
 
-// created by : r.nagel 14.09.2004
-//
-// function : import from plain text => simple mark/copy/paste into bibtex entry
-//
-// todo     : - change colors and fonts
-//            - delete selected text
-//            - make textarea editable
-//            - create several bibtex entries in dialog
-//            - if the dialog works with an existing entry (right click menu item)
-//              the cancel option doesn't work well
-//
-// modified :
-//            28.07.2005
-//            - fix: insert button doesnt work
-//            - append a author with "and"
-//            04.11.2004
-//            - experimental: text-input-area with underlying infotext
-//            02.11.2004
-//            - integrity check, which reports errors and warnings for the fields
-//            22.10.2004
-//            - little help box
-//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 package net.sf.jabref.wizard.text.gui ;
 
@@ -93,11 +68,11 @@ public class TextInputDialog
   private BibtexEntry entry ;
 
   public JPopupMenu inputMenu = new JPopupMenu() ;
-  private StyledDocument doc ; // content from inputPane
+  private StyledDocument doc ; 
   private JTextPane textPane ;
   private JTextArea preview ;
 
-  private boolean inputChanged ; // input changed, fired by insert buttons
+  private boolean inputChanged ; 
 
   private TagToMarkedTextStore marked ;
 
@@ -111,7 +86,7 @@ public class TextInputDialog
     super( frame, title, modal ) ;
 
     warnPanel = new IntegrityMessagePanel(panel);
-    inputChanged = true ;  // for a first validCheck
+    inputChanged = true ;  
 
 
     _frame = frame ;
@@ -134,7 +109,7 @@ public class TextInputDialog
 
   private void jbInit( JabRefFrame parent ) {
     this.setModal( true ) ;
-    //this.setResizable( false ) ;
+    
     getContentPane().setLayout(new BorderLayout());
     String typeStr = Globals.lang( "for" ) ;
     if ( entry != null )
@@ -169,12 +144,12 @@ public class TextInputDialog
     tabbed.add( sourcePanel, Globals.lang( "BibTeX_source" ) ) ;
     tabbed.add( warnPanel, Globals.lang( "Messages_and_Hints" ) ) ;
 
-    // Panel Layout
+    
     panel1.setLayout( new BorderLayout() ) ;
     panel1.add( tabbed, BorderLayout.CENTER ) ;
     panel1.add( buttons, BorderLayout.SOUTH ) ;
 
-    // Key bindings:
+    
     ActionMap am = buttons.getActionMap() ;
     InputMap im = buttons.getInputMap( JComponent.WHEN_IN_FOCUSED_WINDOW ) ;
     im.put( parent.prefs().getKey( "Close dialog" ), "close" ) ;
@@ -187,14 +162,14 @@ public class TextInputDialog
     } ) ;
   }
 
-// ---------------------------------------------------------------------------
-  // Panel with text import functionality
+
+  
   private void initRawPanel()
   {
 
     rawPanel.setLayout( new BorderLayout() ) ;
 
-        // Textarea
+        
         textPane = new JTextPane() ;
 
         textPane.setEditable( false ) ;
@@ -215,19 +190,19 @@ public class TextInputDialog
         testPanel.setPreferredSize( new Dimension( 450, 255) );
         testPanel.setMaximumSize( new Dimension(450, Integer.MAX_VALUE) );
 
-    // copy/paste Menu
+    
     PasteAction pasteAction = new PasteAction() ;
     JMenuItem pasteMI = new JMenuItem( pasteAction ) ;
     inputMenu.add( new MenuHeaderAction() ) ;
     inputMenu.addSeparator() ;
     inputMenu.add( pasteMI ) ;
 
-    //Add listener to components that can bring up popup menus.
+    
     MouseListener popupListener = new PopupListener( inputMenu ) ;
     textPane.addMouseListener( popupListener );
     testPanel.addMouseListener( popupListener );
 
-    // Toolbar
+    
     JToolBar toolBar = new JToolBar() ;
     toolBar.add( new ClearAction() ) ;
     toolBar.setBorderPainted( false ) ;
@@ -241,10 +216,10 @@ public class TextInputDialog
     leftPanel.add( testPanel, BorderLayout.CENTER ) ;
 
 
-    // ----------------------------------------------------------------
+    
     JPanel inputPanel = new JPanel() ;
 
-    // Panel Layout
+    
     GridBagLayout gbl = new GridBagLayout() ;
     GridBagConstraints con = new GridBagConstraints() ;
     con.weightx = 0 ;
@@ -253,13 +228,13 @@ public class TextInputDialog
 
     inputPanel.setLayout( gbl ) ;
 
-    // Border
+    
     TitledBorder titledBorder1 = new TitledBorder(
         BorderFactory.createLineBorder(
             new Color( 153, 153, 153 ), 2 ),
         Globals.lang( "Input" ) ) ;
     inputPanel.setBorder( titledBorder1 ) ;
-    //inputPanel.setPreferredSize( new Dimension( 200, 255 ) ) ;
+    
     inputPanel.setMinimumSize( new Dimension( 10, 10 ) ) ;
 
     fieldList = new JList( getAllFields() ) ;
@@ -272,14 +247,14 @@ public class TextInputDialog
     JScrollPane fieldScroller = new JScrollPane( fieldList ) ;
     fieldScroller.setVerticalScrollBarPolicy(
         JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED ) ;
-    //fieldScroller.setPreferredSize( new Dimension( 180, 190 ) ) ;
-    //fieldScroller.setMinimumSize( new Dimension( 180, 190 ) ) ;
+    
+    
 
-    // insert buttons
+    
     insertButton.setText( Globals.lang( "Insert" ) ) ;
     insertButton.addActionListener( this ) ;
 
-    // Radio buttons
+    
     appRadio = new JRadioButton( Globals.lang( "Append" ) ) ;
     appRadio.setToolTipText( Globals.lang( "append_the_selected_text_to_bibtex_key") ) ;
     appRadio.setMnemonic( KeyEvent.VK_A ) ;
@@ -290,7 +265,7 @@ public class TextInputDialog
     overRadio.setMnemonic( KeyEvent.VK_O ) ;
     overRadio.setSelected( false ) ;
 
-    //Group the radio buttons.
+    
     ButtonGroup group = new ButtonGroup() ;
     group.add( appRadio ) ;
     group.add( overRadio ) ;
@@ -299,7 +274,7 @@ public class TextInputDialog
     radioPanel.add( appRadio ) ;
     radioPanel.add( overRadio ) ;
 
-    // insert sub components
+    
     JLabel label1 = new JLabel( Globals.lang( "Available fields" ) ) ;
     con.gridwidth = GridBagConstraints.REMAINDER ;
     gbl.setConstraints( label1, con ) ;
@@ -322,18 +297,18 @@ public class TextInputDialog
     gbl.setConstraints( insertButton, con ) ;
     inputPanel.add( insertButton ) ;
 
-    // ----------------------------------------------------------------------
+    
     rawPanel.add( leftPanel, BorderLayout.CENTER ) ;
     rawPanel.add( inputPanel, BorderLayout.EAST ) ;
 
-    // ----------------------------------------------------------------------
-    // add a short info, if available
-    // load the info text from a help-file, the "normal" translation is
-    // to long and unpractical for the properties file (single line)
-    // => try to load the help file text, if it fails, show a short text
+    
+    
+    
+    
+    
 
-    //infoText.setText(Globals.lang("This_is_a_simple_copy_and_paste_dialog._First_load_or_paste_some_"
-    //        +"text_into_the_text_input_area._After_that,_you_can_mark_text_and_assign_it_to_a_bibtex_field."));
+    
+    
 
     JEditorPane infoText =  new JEditorPane() ;
 
@@ -346,16 +321,16 @@ public class TextInputDialog
     {
       try
       {
-         // get the info text from help file
+         
         infoText.setPage( infoURL ) ;
-        //infoText.setContentType("text/html");
+        
 
-        loaded = true ; // text successfully loaded
+        loaded = true ; 
       }
       catch (Exception e) {}
     }
 
-    if (!loaded) // only if no help available
+    if (!loaded) 
     {
       infoText.setText(
          Globals.lang("This_is_a_simple_copy_and_paste_dialog_for_import_some_fields_from_normal_text.") ) ;
@@ -370,9 +345,9 @@ public class TextInputDialog
     rawPanel.add( infoText, BorderLayout.SOUTH ) ;
   }
 
-// ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
+
+
 
   private void initButtonPanel()
   {
@@ -391,12 +366,12 @@ public class TextInputDialog
 
   }
 
-// ---------------------------------------------------------------------------
 
-  // Panel with bibtex source code
+
+  
   private void initSourcePanel()
   {
-//    preview =  new PreviewPanel(entry) ;
+
     preview = new JTextArea() ;
     preview.setEditable( false ) ;
 
@@ -410,11 +385,11 @@ public class TextInputDialog
     sourcePanel.add( paneScrollPane, BorderLayout.CENTER ) ;
   }
 
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
+
+
   protected void addStylesToDocument( StyledDocument doc )
   {
-    //Initialize some styles.
+    
     Style def = StyleContext.getDefaultStyleContext().
         getStyle( StyleContext.DEFAULT_STYLE ) ;
 
@@ -441,7 +416,7 @@ public class TextInputDialog
     StyleConstants.setFontSize( s, 16 ) ;
   }
 
-// ---------------------------------------------------------------------------
+
   private void insertTextForTag()
   {
     String type = ( String ) fieldList.getSelectedValue() ;
@@ -454,61 +429,61 @@ public class TextInputDialog
         int selStart = textPane.getSelectionStart() ;
         int selEnd = textPane.getSelectionEnd() ;
 
-        // unselect text
+        
         textPane.setSelectionEnd( selStart ) ;
 
-        // mark the selected text as "used"
+        
         doc.setCharacterAttributes( selStart, selEnd - selStart,
                                     doc.getStyle( "marked" ), true ) ;
 
-        // override an existing entry
+        
         if ( overRadio.isSelected() )
         {
           entry.setField( type, txt ) ;
-          // erase old text selection
-          marked.setStyleForTag( type, "regular", doc ) ; // delete all previous styles
-          marked.insertPosition( type, selStart, selEnd ) ; // insert new selection style
+          
+          marked.setStyleForTag( type, "regular", doc ) ; 
+          marked.insertPosition( type, selStart, selEnd ) ; 
         }
-        else // append text
+        else 
         {
-          // memorize the selection for text highlighting
+          
           marked.appendPosition( type, selStart, selEnd ) ;
 
-          // get old text from bibtex tag
+          
           String old = entry.getField( type ) ;
 
-          // merge old and selected text
+          
           if ( old != null )
           {
-            // insert a new author with an additional "and"
+            
             if (type.hashCode() == "author".hashCode())
             {
               entry.setField(type, old +" and " +txt);
             }
             else entry.setField( type, old + txt ) ;
           }
-          else // "null"+"txt" Strings forbidden
+          else 
           {
             entry.setField( type, txt ) ;
           }
         }
-        // make the new data in bibtex source code visible
+        
         updateSourceView() ;
       }
     }
   }
 
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
+
+
   public boolean okPressed()
   {
     return okPressed ;
   }
 
-// ---------------------------------------------------------------------------
 
-//  ActionListener
-//  handling of buttons-click actions
+
+
+
   public void actionPerformed( ActionEvent e )
   {
     Object source = e.getSource() ;
@@ -528,8 +503,8 @@ public class TextInputDialog
     }
   }
 
-// ---------------------------------------------------------------------------
-  // update the bibtex source view and available List
+
+  
   private final void updateSourceView()
   {
     StringWriter sw = new StringWriter( 200 ) ;
@@ -545,13 +520,13 @@ public class TextInputDialog
     fieldList.clearSelection() ;
   }
 
-// ---------------------------------------------------------------------------
+
   private final String[] getAllFields()
   {
     int len = 0 ;
     String dummy[][] = new String[3][] ;
 
-    // fill
+    
     if ( entry != null )
     {
       dummy[0] = entry.getRequiredFields() ;
@@ -559,7 +534,7 @@ public class TextInputDialog
       dummy[2] = entry.getOptionalFields() ;
     }
 
-    // get size of new result array
+    
     for ( int t = 0 ; t < 3 ; t++ )
     {
       if ( dummy[t] != null )
@@ -571,7 +546,7 @@ public class TextInputDialog
     String back[] = new String[len] ;
     int count = 0 ;
 
-    // put
+    
     for ( int t = 0 ; t < 3 ; t++ )
     {
       if ( dummy[t] != null )
@@ -583,7 +558,7 @@ public class TextInputDialog
     return back ;
   }
 
-// ---------------------------------------------------------------------------
+
   class PasteAction
       extends BasicAction
   {
@@ -614,7 +589,7 @@ public class TextInputDialog
     }
   }
 
-// ---------------------------------------------------------------------------
+
   class LoadAction
       extends BasicAction
   {
@@ -648,7 +623,7 @@ public class TextInputDialog
     }
   }
 
-// ---------------------------------------------------------------------------
+
   class ClearAction
       extends BasicAction
   {
@@ -663,7 +638,7 @@ public class TextInputDialog
     }
   }
 
-// ---------------------------------------------------------------------------
+
   class MenuHeaderAction
       extends BasicAction
   {
@@ -677,7 +652,7 @@ public class TextInputDialog
     {}
   }
 
-// ---------------------------------------------------------------------------
+
 
   class FieldListSelectionHandler
       implements ListSelectionListener
@@ -694,9 +669,9 @@ public class TextInputDialog
 
         boolean isAdjusting = e.getValueIsAdjusting() ;
 
-        if ( !isAdjusting ) // if selection is finished
+        if ( !isAdjusting ) 
         {
-//            System.out.println( "Event for index" + index ) ;
+
           if ( lastIndex > -1 )
           {
             String tag1 = fieldList.getModel().getElementAt( lastIndex ).
@@ -713,10 +688,10 @@ public class TextInputDialog
     }
   }
 
-// ---------------------------------------------------------------------------
 
-  // simple JList Renderer
-  // based on : Advanced JList Programming at developers.sun.com
+
+  
+  
   class SimpleCellRenderer
       extends DefaultListCellRenderer
   {
@@ -731,26 +706,20 @@ public class TextInputDialog
       usedFont = baseFont.deriveFont( Font.ITALIC ) ;
     }
 
-    /* This is the only method defined by ListCellRenderer.  We just
-     * reconfigure the Jlabel each time we're called.
-     */
+    
     public Component getListCellRendererComponent(
         JList list,
-        Object value, // value to display
-        int index, // cell index
-        boolean iss, // is the cell selected
-        boolean chf ) // the list and the cell have the focus
+        Object value, 
+        int index, 
+        boolean iss, 
+        boolean chf ) 
     {
-      /* The DefaultListCellRenderer class will take care of
-       * the JLabels text property, it's foreground and background
-       * colors, and so on.
-       */
+      
       super.getListCellRendererComponent( list, value, index, iss, chf ) ;
 
-      /* We additionally set the JLabels icon property here.
-       */
+      
       String s = value.toString() ;
-//        setIcon((s.length > 10) ? longIcon : shortIcon);
+
       if ( entry.getField( s ) != null )
       {
         this.setForeground( Color.gray ) ;
@@ -767,7 +736,7 @@ public class TextInputDialog
     }
   }
 
-//---------------------------------------------------------------
+
 
   class FieldListMouseListener
       extends MouseAdapter
@@ -782,7 +751,7 @@ public class TextInputDialog
   }
 }
 
-//---------------------------------------------------------------
+
 class PopupListener
     extends MouseAdapter
 {
@@ -807,15 +776,15 @@ class PopupListener
   {
     if ( e.isPopupTrigger() )
     {
-//      System.out.println("show "
-//                         + e.getComponent() +"  x =" + e.getX() +"y =" + e.getY() ) ;
-//      popMenu.setVisible(true);
+
+
+
       popMenu.show( e.getComponent(), e.getX(), e.getY() ) ;
     }
   }
 }
 
-//---------------------------------------------------------------
+
 
 abstract class BasicAction
     extends AbstractAction
@@ -846,8 +815,8 @@ abstract class BasicAction
 
   public abstract void actionPerformed( ActionEvent e ) ;
 }
-//---------------------------------------------------------------
 
 
-//---------------------------------------------------------------
+
+
 

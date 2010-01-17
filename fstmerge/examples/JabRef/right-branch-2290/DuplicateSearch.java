@@ -1,35 +1,10 @@
-/*
-Copyright (C) 2003 Nizar N. Batada, Morten O. Alver
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
 
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
 
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
 
-*/
 
-// created by : ?
-//
-// modified : r.nagel 2.09.2004
-//            - new SearcherThread.setFinish() method
-//            - replace thread.sleep in run() by wait() and notify() mechanism
 
 package net.sf.jabref;
 
@@ -72,20 +47,7 @@ public void run() {
   int current = 0;
   DuplicateResolverDialog drd = null;
 
-/*
-  loop: while (!st.finished() || (current < duplicates.size()))
-  {
-    if ( current >= duplicates.size() )
-    {
-      // No more duplicates to resolve, but search is still in progress. Sleep a little.
-       try
-       {
-         sleep(10);
-       } catch (InterruptedException ex) {}
-       continue loop;
-    }
-  }
-*/
+
 
    final ArrayList toRemove = new ArrayList();
   while (!st.finished() || (current < duplicates.size()))
@@ -93,8 +55,8 @@ public void run() {
 
     if (current >= duplicates.size() )
     {
-      // wait until the search thread puts something into duplicates vector
-      // or finish its work
+      
+      
       synchronized(duplicates)
       {
          try
@@ -103,14 +65,14 @@ public void run() {
          }
          catch (Exception e) {}
       }
-    } else  // duplicates found
+    } else  
     {
 
 
         BibtexEntry[] be = (BibtexEntry[]) duplicates.get(current);
         current++;
         if (!toRemove.contains(be[0]) && !toRemove.contains(be[1])) {
-            // Check if they are exact duplicates:
+            
             boolean askAboutExact = false;
             if (Util.compareEntriesStrictly(be[0], be[1]) > 1) {
                 if (autoRemoveExactDuplicates) {
@@ -133,13 +95,13 @@ public void run() {
                     || (answer == DuplicateResolverDialog.AUTOREMOVE_EXACT)) {
                 toRemove.add(be[1]);
                 if (answer == DuplicateResolverDialog.AUTOREMOVE_EXACT)
-                    autoRemoveExactDuplicates = true; // Remember choice
+                    autoRemoveExactDuplicates = true; 
             } else if (answer == DuplicateResolverDialog.KEEP_LOWER) {
                 toRemove.add(be[0]);
             } else if (answer == DuplicateResolverDialog.BREAK) {
-                st.setFinished(); // thread killing
+                st.setFinished(); 
                 current = Integer.MAX_VALUE;
-                duplicateCounter--; // correct counter
+                duplicateCounter--; 
             }
         }
     }
@@ -150,7 +112,7 @@ public void run() {
     final int dupliC = duplicateCounter;
     SwingUtilities.invokeLater(new Runnable() {
         public void run() {
-            // Now, do the actual removal:
+            
             if (toRemove.size() > 0) {
                 for (Iterator iterator = toRemove.iterator(); iterator.hasNext();) {
                     BibtexEntry entry = (BibtexEntry) iterator.next();
@@ -186,20 +148,20 @@ class SearcherThread extends Thread {
         boolean eq = Util.isDuplicate(bes[i], bes[j],
                                       Globals.duplicateThreshold);
 
-        // If (suspected) duplicates, add them to the duplicates vector.
+        
         if (eq)
         {
           synchronized (duplicates)
           {
             duplicates.add( new BibtexEntry[] {bes[i], bes[j]} ) ;
-            duplicates.notifyAll(); // send wake up all
+            duplicates.notifyAll(); 
           }
         }
       }
     }
     finished = true;
 
-    // if no duplicates found, the graphical thread will never wake up
+    
     synchronized(duplicates)
     {
       duplicates.notifyAll();
@@ -210,8 +172,8 @@ class SearcherThread extends Thread {
     return finished;
   }
 
-  // Thread cancel option
-  // no synchronized used because no "realy" critical situations expected
+  
+  
   public void setFinished()
   {
     finished = true ;

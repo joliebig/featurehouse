@@ -6,10 +6,7 @@ import java.util.Hashtable;
 
 import ca.odell.glazedlists.matchers.Matcher;
 
-/**
- * Matcher for filtering or sorting the table according to whether entries
- * are tagged as search matches.
- */
+
 public class SearchMatcher implements Matcher {
 
         public static SearchMatcher INSTANCE = new SearchMatcher();

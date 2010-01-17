@@ -8,17 +8,7 @@ import java.io.ByteArrayOutputStream;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-/**
- * This class redirects the System.err stream so it goes both the way it normally
- * goes, and into a ByteArrayOutputStream. We can use this stream to display any
- * error messages and stack traces to the user. Such an error console can be
- * useful in getting complete bug reports, especially from Windows users,
- * without asking users to run JabRef in a command window to catch the error info.
- *
- * User: alver
- * Date: Mar 1, 2006
- * Time: 11:13:03 PM
- */
+
 public class ErrorConsole {
 
     ByteArrayOutputStream errByteStream = new ByteArrayOutputStream();
@@ -90,7 +80,7 @@ public class ErrorConsole {
         return new ErrorConsoleAction(parent);
     }
 
-    // All writes to this print stream are copied to two print streams
+    
     public class TeeStream extends PrintStream {
         PrintStream out;
         public TeeStream(PrintStream out1, PrintStream out2) {

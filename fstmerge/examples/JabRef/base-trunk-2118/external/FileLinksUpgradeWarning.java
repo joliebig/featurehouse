@@ -14,56 +14,38 @@ import java.util.Iterator;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * This class defines the warning that can be offered when opening a pre-2.3
- * JabRef file into a later version. This warning mentions the new external file
- * link system in this version of JabRef, and offers to:
- *
- * * upgrade old-style PDF/PS links into the "file" field
- * * modify General fields to show "file" instead of "pdf" / "ps"
- * * modify table column settings to show "file" instead of "pdf" / "ps"
- */
+
 public class FileLinksUpgradeWarning implements PostOpenAction {
 
     private static final String[] FIELDS_TO_LOOK_FOR = new String[] {"pdf", "ps"};
 
-    /**
-     * This method should be performed if the major/minor versions recorded in the ParserResult
-     * are less than or equal to 2.2.
-     * @param pr
-     * @return true if the file was written by a jabref version <=2.2
-     */
+    
     public boolean isActionNecessary(ParserResult pr) {
-        // First check if this warning is disabled:
+        
         if (!Globals.prefs.getBoolean("showFileLinksUpgradeWarning"))
             return false;
         if (pr.getJabrefMajorVersion() < 0)
-            return false; // non-JabRef file
+            return false; 
         if (pr.getJabrefMajorVersion() < 2)
-            return true; // old
+            return true; 
         if (pr.getJabrefMajorVersion() > 2)
-            return false; // wow, did we ever reach version 3?
+            return false; 
         return (pr.getJabrefMinorVersion() <= 2);
     }
 
-    /**
-     * This method presents a dialog box explaining and offering to make the
-     * changes. If the user confirms, the changes are performed.
-     * @param panel
-     * @param pr
-     */
+    
     public void performAction(BasePanel panel, ParserResult pr) {
-        // Find out which actions should be offered:
-        // Only offer to change Preferences if file column is not already visible:
+        
+        
         boolean offerChangeSettings = !Globals.prefs.getBoolean("fileColumn");
-        // Only offer to upgrade links if the pdf/ps fields are used:
+        
         boolean offerChangeDatabase = linksFound(pr.getDatabase(), FIELDS_TO_LOOK_FOR);
-        // If the "file" directory is not set, offer to migrate pdf/ps dir:
+        
         boolean offerSetFileDir = !Globals.prefs.hasKey(GUIGlobals.FILE_FIELD+"Directory")
                 && (Globals.prefs.hasKey("pdfDirectory") || Globals.prefs.hasKey("psDirectory"));
 
         if (!offerChangeDatabase && !offerChangeSettings && !offerSetFileDir)
-                    return; // Nothing to do, just return.
+                    return; 
                 
         JCheckBox changeSettings = new JCheckBox(Globals.lang("Change table column and General fields settings to use the new feature"),
                 offerChangeSettings);
@@ -122,14 +104,7 @@ public class FileLinksUpgradeWarning implements PostOpenAction {
                     setFileDir.isSelected() ? fileDir.getText() : null);
     }
 
-    /**
-     * Check the database to find out whether any of a set of fields are used
-     * for any of the entries.
-     * @param database The bib database.
-     * @param fields The set of fields to look for.
-     * @return true if at least one of the given fields is set in at least one entry,
-     *  false otherwise.
-     */
+    
     public boolean linksFound(BibtexDatabase database, String[] fields) {
         for (Iterator iterator = database.getEntries().iterator(); iterator.hasNext();) {
             BibtexEntry entry = (BibtexEntry)iterator.next();
@@ -141,17 +116,12 @@ public class FileLinksUpgradeWarning implements PostOpenAction {
         return false;
     }
 
-    /**
-     * This method performs the actual changes.
-     * @param panel
-     * @param pr
-     * @param fileDir The path to the file directory to set, or null if it should not be set.
-     */
+    
     public void makeChanges(BasePanel panel, ParserResult pr, boolean upgradePrefs,
                             boolean upgradeDatabase, String fileDir) {
 
         if (upgradeDatabase) {
-            // Update file links links in the database:
+            
             NamedCompound ce = Util.upgradePdfPsToFile(pr.getDatabase(), FIELDS_TO_LOOK_FOR);
             panel.undoManager.addEdit(ce);
             panel.markBaseChanged();
@@ -162,20 +132,18 @@ public class FileLinksUpgradeWarning implements PostOpenAction {
         }
 
         if (upgradePrefs) {
-            // Exchange table columns:
+            
             Globals.prefs.putBoolean("pdfColumn", Boolean.FALSE);
             Globals.prefs.putBoolean("fileColumn", Boolean.TRUE);
 
-            // Modify General fields:
+            
             String genF = Globals.prefs.get(Globals.prefs.CUSTOM_TAB_FIELDS+"_def0");
             if (!Pattern.compile("\\b"+GUIGlobals.FILE_FIELD+"\\b").matcher(genF)
                 .matches()) {
 
                 StringBuilder sb = new StringBuilder(GUIGlobals.FILE_FIELD).append(';').
                     append(genF);
-                /*int index = sb.indexOf(":");
-                if (index > 0)
-                    sb.insert(index+1, GUIGlobals.FILE_FIELD+";");*/
+                
 
                 Globals.prefs.put(Globals.prefs.CUSTOM_TAB_FIELDS+"_def0", sb.toString());
                 System.out.println(sb.toString());
@@ -183,15 +151,7 @@ public class FileLinksUpgradeWarning implements PostOpenAction {
                 panel.frame().removeCachedEntryEditors();
             }
 
-            /*Pattern p1 = Pattern.compile("\\bpdf\\b");
-            Pattern p2 = Pattern.compile("\\bps\\b");
-            boolean mp1 = p1.matcher(genF).matches();
-            boolean mp2 = p2.matcher(genF).matches();
-            // Unfinished...
-            if (mp1 && mp2) {
-                genF = genF.replaceAll("\\bpdf\\b", GUIGlobals.FILE_FIELD);
-                genF = genF.replaceAll("\\bps\\b", "");
-            }*/
+            
 
             panel.frame().setupAllTables();
         }

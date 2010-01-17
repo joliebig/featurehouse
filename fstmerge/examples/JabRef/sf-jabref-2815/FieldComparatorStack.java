@@ -3,11 +3,7 @@ package net.sf.jabref;
 import java.util.Comparator;
 import java.util.List;
 
-/**
- * This class represents a list of comparators. The first Comparator takes precedence,
- * and each time a Comparator returns 0, the next one is attempted. If all comparators
- * return 0 the final result will be 0.
- */
+
 public class FieldComparatorStack<T> implements Comparator<T> {
 
     List<? extends Comparator<? super T>> comparators;

@@ -1,29 +1,4 @@
-/*
- Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
-
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
-
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
-
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
-
- */
 package net.sf.jabref;
 
 import java.awt.Dialog;
@@ -46,16 +21,7 @@ import javax.swing.JComponent;
 import com.jgoodies.forms.layout.Sizes;
 import com.jgoodies.looks.Options;
 
-/**
- * A combo-box and a manage button that will add selected strings to an
- * associated entry editor.
- * 
- * Used to manage keywords and authors for instance.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:21 $)
- * 
- */
+
 public class FieldContentSelector extends JComponent {
 
 	JComboBox comboBox;
@@ -72,31 +38,7 @@ public class FieldContentSelector extends JComponent {
 
 	String delimiter;
 
-	/**
-	 * 
-	 * Create a new FieldContentSelector.
-	 * 
-	 * @param frame
-	 *            The one JabRef-Frame.
-	 * @param panel
-	 *            The basepanel the entry-editor is on.
-	 * @param owner
-	 *            The window/frame/dialog which should be the owner of the
-	 *            content selector dialog.
-	 * @param editor
-	 *            The entry editor which will be appended by the text selected
-	 *            by the user from the combobox.
-	 * @param metaData
-	 *            The metadata that contains the list of items to display in the
-	 *            combobox under the key Globals.SELECTOR_META_PREFIX +
-	 *            editor.getFieldName().
-	 * @param action
-	 *            The action that will be performed to after an item from the
-	 *            combobox has been appended to the text in the entryeditor.
-	 * @param horizontalLayout
-	 *            Whether to put a 2 pixel horizontal strut between combobox and
-	 *            button.
-	 */
+	
 	public FieldContentSelector(JabRefFrame jabRefFrame, final BasePanel panel,
 		Window ownerFrameOrDialog, final FieldEditor editor, final MetaData metaData,
 		final AbstractAction action, boolean horizontalLayout, String delimiter) {
@@ -122,11 +64,11 @@ public class FieldContentSelector extends JComponent {
 
 		setLayout(gbl);
 
-		// comboBox.setEditable(true);
+		
 
 		comboBox.setMaximumRowCount(35);
 
-		// Set the width of the popup independent of the size of th box itself:
+		
 		comboBox.putClientProperty(Options.COMBO_POPUP_PROTOTYPE_DISPLAY_VALUE_KEY,
 			"The longest text in the combo popup menu. And even longer.");
 
@@ -139,16 +81,12 @@ public class FieldContentSelector extends JComponent {
 
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*
-				 * These conditions signify arrow key navigation in the dropdown
-				 * list, so we should not react to it. I'm not sure if this is
-				 * well defined enough to be guaranteed to work everywhere.
-				 */
+				
 				if (e.getActionCommand().equals("comboBoxChanged") && (e.getModifiers() == 0))
 					return;
 
-				// The first element is only for show.
-				// CO: Why?
+				
+				
 				if (comboBox.getSelectedIndex() == 0)
 					return;
 
@@ -156,14 +94,14 @@ public class FieldContentSelector extends JComponent {
 				if (chosen == null || chosen.equals(""))
 					return;
 
-				// The following is not possible at the moment since the
-				// combobox cannot be edited!
+				
+				
 
-				// User edited in a new word. Add it.
-				// if (comboBox.getSelectedIndex() == -1)
-				// addWord(chosen);
+				
+				
+				
 
-				// TODO: could improve checking as not do add the same item twice
+				
 				if (!editor.getText().equals(""))
 					editor.append(FieldContentSelector.this.delimiter);
 
@@ -171,11 +109,11 @@ public class FieldContentSelector extends JComponent {
 
 				comboBox.setSelectedIndex(0);
 
-				// Fire event that we changed the editor
+				
 				if (action != null)
 					action.actionPerformed(new ActionEvent(editor, 0, ""));
 
-				// Transfer focus to the editor.
+				
 				editor.requestFocus();
 			}
 		});
@@ -191,18 +129,18 @@ public class FieldContentSelector extends JComponent {
 
 		manage.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// I don't get the difference here:
+				
 				ContentSelectorDialog2 csd = owner instanceof Frame ? new ContentSelectorDialog2(
 					(Frame) owner, frame, panel, true, metaData, editor.getFieldName())
 					: new ContentSelectorDialog2((Dialog) owner, frame, panel, true, metaData,
 						editor.getFieldName());
 				Util.placeDialog(csd, frame);
 
-				// Calling setVisible(true) will open the modal dialog and block
-				// for the dialog to close.
+				
+				
 				csd.setVisible(true);
 
-				// So we need to rebuild the ComboBox afterwards
+				
 				rebuildComboBox();
 			}
 		});
@@ -211,7 +149,7 @@ public class FieldContentSelector extends JComponent {
 	void rebuildComboBox() {
 		comboBox.removeAllItems();
 
-		// TODO: CO - What for?
+		
 		comboBox.addItem("");
 		Vector items = metaData.getData(Globals.SELECTOR_META_PREFIX + editor.getFieldName());
 		if (items != null) {
@@ -221,34 +159,34 @@ public class FieldContentSelector extends JComponent {
 		}
 	}
 
-	// Not used since the comboBox is not editable
+	
 
-	//	/**
-	//	 * Adds a word to the selector (to the JList and to the MetaData), unless it
-	//	 * is already there
-	//	 * 
-	//	 * @param newWord
-	//	 *            String Word to add
-	//	 */
-	//	public void addWord(String newWord) {
-	//
-	//		Vector items = metaData.getData(Globals.SELECTOR_META_PREFIX + editor.getFieldName());
-	//		boolean exists = false;
-	//		int pos = -1;
-	//		for (int i = 0; i < items.size(); i++) {
-	//			String s = (String) items.elementAt(i);
-	//			if (s.equals(newWord)) {
-	//				exists = true;
-	//				break;
-	//			}
-	//			if (s.toLowerCase().compareTo(newWord.toLowerCase()) < 0)
-	//				pos = i + 1;
-	//		}
-	//		if (!exists) {
-	//			items.add(Math.max(0, pos), newWord);
-	//			// TODO CO: Why is this non-undoable?
-	//			panel.markNonUndoableBaseChanged();
-	//			panel.updateAllContentSelectors();
-	//		}
-	//	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

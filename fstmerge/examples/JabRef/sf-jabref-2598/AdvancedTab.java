@@ -49,7 +49,7 @@ public class AdvancedTab extends JPanel implements PrefsTab {
         });
 
     FormLayout layout = new FormLayout
-        ("1dlu, 8dlu, left:pref, 4dlu, fill:3dlu",//, 4dlu, fill:pref",// 4dlu, left:pref, 4dlu",
+        ("1dlu, 8dlu, left:pref, 4dlu, fill:3dlu",
          "");
     DefaultFormBuilder builder = new DefaultFormBuilder(layout);
     JPanel pan = new JPanel();
@@ -91,13 +91,13 @@ public class AdvancedTab extends JPanel implements PrefsTab {
     p.add(remoteHelp.getIconButton());
     builder.append(p);
 
-    //if (Globals.ON_MAC) {
+    
     builder.nextLine();
     builder.appendSeparator(Globals.lang("Native file dialog"));
     builder.nextLine();
     builder.append(new JPanel());
     builder.append(useNativeFileDialogOnMac);
-    //}
+    
 
     pan = builder.getPanel();
     pan.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -126,9 +126,7 @@ public class AdvancedTab extends JPanel implements PrefsTab {
             int port = Integer.parseInt(remoteServerPort.getText());
             if (port != oldPort) {
                 _prefs.putInt("remoteServerPort", port);
-                /*JOptionPane.showMessageDialog(null, Globals.lang("You have changed the menu and label font size. "
-                        + "You must restart JabRef for this to come into effect."), Globals.lang("Changed font settings"),
-                        JOptionPane.WARNING_MESSAGE);*/
+                
             }
 
         } catch (NumberFormatException ex) {
@@ -136,7 +134,7 @@ public class AdvancedTab extends JPanel implements PrefsTab {
         }
         _prefs.putBoolean("useRemoteServer", useRemoteServer.isSelected());
         if (useRemoteServer.isSelected() && (JabRef.remoteListener == null)) {
-            // Start the listener now.
+            
 
             JabRef.remoteListener = RemoteListener.openRemoteListener(JabRef.singleton);
             if (JabRef.remoteListener != null) {
@@ -159,7 +157,7 @@ public class AdvancedTab extends JPanel implements PrefsTab {
 	   
         try {
             Integer.parseInt(remoteServerPort.getText());
-            return true; // Ok, the number was legal.
+            return true; 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog
                     (null, Globals.lang("You must enter an integer value in the text field for") + " '" +

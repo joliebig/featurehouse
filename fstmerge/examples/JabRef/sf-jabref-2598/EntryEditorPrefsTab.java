@@ -35,7 +35,7 @@ public class EntryEditorPrefsTab extends JPanel implements PrefsTab {
         Insets marg = new Insets(0,12,3,0);
         editSource.setMargin(marg);
         defSource.setMargin(marg);
-        // We need a listener on showSource to enable and disable the source panel-related choices:
+        
         showSource.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 defSource.setEnabled(showSource.isSelected());
@@ -43,8 +43,8 @@ public class EntryEditorPrefsTab extends JPanel implements PrefsTab {
             }
         }
         );
-        // We need a listener on autoComplete to enable and disable the
-        // autoCompFields text field:
+        
+        
         autoComplete.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent event) {
                 autoCompFields.setEnabled(autoComplete.isSelected());
@@ -53,7 +53,7 @@ public class EntryEditorPrefsTab extends JPanel implements PrefsTab {
         );
 
         FormLayout layout = new FormLayout
-                ("8dlu, left:pref, 8dlu, fill:150dlu, 4dlu, fill:pref", // 4dlu, left:pref, 4dlu",
+                ("8dlu, left:pref, 8dlu, fill:150dlu, 4dlu, fill:pref", 
                         "pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, pref, 6dlu, "
                                     +"pref, 6dlu, pref, 6dlu, pref, 6dlu, pref");
         DefaultFormBuilder builder = new DefaultFormBuilder(layout);
@@ -85,10 +85,10 @@ public class EntryEditorPrefsTab extends JPanel implements PrefsTab {
         disableOnMultiple.setSelected(_prefs.getBoolean("disableOnMultipleSelection"));
         autoComplete.setSelected(_prefs.getBoolean("autoComplete"));
         autoCompFields.setText(_prefs.get("autoCompleteFields"));
-        // Two choices only make sense when the source panel is visible:
+        
         defSource.setEnabled(showSource.isSelected());
         editSource.setEnabled(showSource.isSelected());
-        // Autocomplete fields is only enabled when autocompletion is:
+        
         autoCompFields.setEnabled(autoComplete.isSelected());
         
     }
@@ -98,15 +98,15 @@ public class EntryEditorPrefsTab extends JPanel implements PrefsTab {
         _prefs.putBoolean("defaultShowSource", defSource.isSelected());
         _prefs.putBoolean("enableSourceEditing", editSource.isSelected());
         _prefs.putBoolean("disableOnMultipleSelection", disableOnMultiple.isSelected());
-        // We want to know if the following settings have been modified:
+        
         boolean oldAutoComplete = _prefs.getBoolean("autoComplete");
         boolean oldShowSource = _prefs.getBoolean("showSource");
         String oldAutoCompFields = _prefs.get("autoCompleteFields");
         _prefs.putBoolean("autoComplete", autoComplete.isSelected());
         _prefs.put("autoCompleteFields", autoCompFields.getText());
         _prefs.putBoolean("showSource", showSource.isSelected());
-        // We need to remove all entry editors from cache if the source panel setting
-        // or the autocompletion settings have been changed:
+        
+        
         if ((oldShowSource != showSource.isSelected()) || (oldAutoComplete != autoComplete.isSelected())
                 || (!oldAutoCompFields.equals(autoCompFields.getText()))) {
             for (int j=0; j<_frame.getTabbedPane().getTabCount(); j++) {

@@ -1,41 +1,12 @@
-/*
- animated about dialog
 
-Copyright (C) 2005 Raik Nagel <kiar@users.sourceforge.net>
-All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-* Neither the name of the author nor the names of its contributors may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
-OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
 
-// created by : r.nagel 05.05.2005
-//
-// function : a animated line for about dialog
-//
-// todo     :
-//
-// modified :
+
+
+
+
 
 package net.sf.jabref.about ;
 
@@ -43,7 +14,7 @@ import java.util.*;
 import java.awt.*;
 import javax.swing.UIManager;
 
-// a single About Line
+
 public class AboutTextLine
 {
   private String text ;
@@ -51,7 +22,7 @@ public class AboutTextLine
   private double pos[] ;
   private double speed ;
   private double accel ;
-  private int tag ;  // additional user information
+  private int tag ;  
   private Font font ;
   private Color color ;
 
@@ -83,20 +54,20 @@ public class AboutTextLine
     font = UIManager.getFont("Label.font") ;
   }
 
-// ------------------------------------------------------------------------
+
 
   public void performTimeStep(double time)
   {
     accel = accel * time ;
     speed += accel ;
 
-    double move = speed * time ;  //
+    double move = speed * time ;  
 
     pos[0] += (move * direction[0]) ;
     pos[1] += (move * direction[1]) ;
   }
 
-// ------------------------------------------------------------------------
+
 
   public String toString()
   {
@@ -104,7 +75,7 @@ public class AboutTextLine
                  + "<" +direction[0] +", " +direction[1] +">" ) ;
   }
 
-// ------------------------------------------------------------------------
+
 
   public int getPosX()
   {
@@ -127,7 +98,7 @@ public class AboutTextLine
     this.pos[1] = posY ;
   }
 
- // ------------------------------------------------------------------------
+ 
 
   public String getText()
   {
@@ -139,7 +110,7 @@ public class AboutTextLine
     this.text = pText;
   }
 
-// ------------------------------------------------------------------------
+
 
   public double[] getDirection()
   {
@@ -152,7 +123,7 @@ public class AboutTextLine
     this.direction[1] = dirY ;
   }
 
-// ------------------------------------------------------------------------
+
 
   public double getSpeed()
   {
@@ -164,7 +135,7 @@ public class AboutTextLine
     this.speed = pSpeed;
   }
 
-// ------------------------------------------------------------------------
+
 
   public double getAccel()
   {
@@ -176,7 +147,7 @@ public class AboutTextLine
     this.accel = pAccel;
   }
 
-// ------------------------------------------------------------------------
+
 
   public int getTag()
   {
@@ -188,7 +159,7 @@ public class AboutTextLine
     this.tag = pTag;
   }
 
-// ------------------------------------------------------------------------
+
 
   public Font getFont()
   {
@@ -199,7 +170,7 @@ public class AboutTextLine
     this.font = pFont;
   }
 
-// ------------------------------------------------------------------------
+
 
   public Color getColor()
   {
@@ -210,7 +181,7 @@ public class AboutTextLine
     this.color = pColor;
   }
 
-// ------------------------------------------------------------------------
+
 
   public boolean getVisible()
   {
@@ -220,7 +191,7 @@ public class AboutTextLine
   {
     this.visible = pVisible;
   }
-// ------------------------------------------------------------------------
-// ------------------------------------------------------------------------
+
+
 
 }

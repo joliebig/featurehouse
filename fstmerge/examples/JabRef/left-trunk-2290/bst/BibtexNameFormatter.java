@@ -3,22 +3,7 @@ package net.sf.jabref.bst;
 import net.sf.jabref.AuthorList;
 import net.sf.jabref.AuthorList.Author;
 
-/**
- * From Bibtex:
- * 
- * "The |built_in| function {\.{format.name\$}} pops the
- * top three literals (they are a string, an integer, and a string
- * literal, in that order). The last string literal represents a
- * name list (each name corresponding to a person), the integer
- * literal specifies which name to pick from this list, and the
- * first string literal specifies how to format this name, as
- * described in the \BibTeX\ documentation. Finally, this function
- * pushes the formatted name. If any of the types is incorrect, it
- * complains and pushes the null string."
- * 
- * Sounds easy - is a nightmare... X-(
- * 
- */
+
 public class BibtexNameFormatter {
 
 	public static String formatName(String authorsNameList, int whichName, String formatString, Warn warn){
@@ -31,13 +16,7 @@ public class BibtexNameFormatter {
 		return formatName(al.getAuthor(whichName-1), formatString, warn);
 	}
 	
-	/**
-	 * 
-	 * @param author
-	 * @param format
-	 * @param warn may-be-null
-	 * @return
-	 */
+	
 	public static String formatName(Author author, String format, Warn warn) {
 		
 		StringBuffer sb = new StringBuffer();
@@ -75,7 +54,7 @@ public class BibtexNameFormatter {
 					}
 					i++;
 				}
-				i--; // unskip last brace (for last i++ at the end)
+				i--; 
 				String control = level1Chars.toString().toLowerCase();
 				
 				if (control.length() == 0)
@@ -112,7 +91,7 @@ public class BibtexNameFormatter {
 					}
 				}
 				
-				// Now we know what to do
+				
 				
 				if (braceLevel == 0 && wholeChar.charAt(wholeChar.length() - 1) == '}'){
 					wholeChar.deleteCharAt(wholeChar.length() - 1);
@@ -154,18 +133,18 @@ public class BibtexNameFormatter {
 								token = abbToken.toString();
 							} 
 							
-							// Output token
+							
 							sb.append(token);
 							
 							if (k < tokens.length - 1){
-								// Output Intertoken String
+								
 								if (interToken == null){
 									if (abbreviateThatIsSingleLetter){
 										sb.append(".");
 									}
-									// No clue what this means (What the hell are tokens anyway???
-								    // if (lex_class[name_sep_char[cur_token]] = sep_char) then
-								    //    append_ex_buf_char_and_check (name_sep_char[cur_token])
+									
+								    
+								    
 								    if (k == tokens.length - 2 || numberOfChars(sb.substring(groupStart, sb.length()), 3) < 3){
 								    	sb.append("~");
 								    } else {
@@ -202,7 +181,7 @@ public class BibtexNameFormatter {
 				if (warn != null)
 					warn.warn("Unmatched brace in format string: " + format);
 			} else {
-				sb.append(c[i]); // verbatim
+				sb.append(c[i]); 
 			}
 			i++;
 		}
@@ -212,21 +191,12 @@ public class BibtexNameFormatter {
 		return sb.toString();
 	}
 	
-	/**
-	 * Including the matching brace.
-	 * 
-	 * @param sb
-	 * @param c
-	 * @param pos
-	 * @return
-	 * 
-	 * assert c[pos] == '{'
-	 */
+	
 	public static int consumeToMatchingBrace(StringBuffer sb, char[] c, int pos){
 		
 		int braceLevel = 0;
 
-		// assert c[pos] == '{';
+		
 		
 		for (int i = pos; i < c.length; i++){
 			if (c[i] == '}'){
@@ -243,12 +213,7 @@ public class BibtexNameFormatter {
 		return c.length;
 	}
 	
-	/**
-	 * Takes care of special characters too
-	 * 
-	 * @param s
-	 * @return
-	 */
+	
 	public static String getFirstCharOfString(String s){
 		char[] c = s.toCharArray();
 		for (int i = 0; i < c.length; i++){

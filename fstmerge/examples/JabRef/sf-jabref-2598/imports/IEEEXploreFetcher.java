@@ -47,7 +47,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
     private boolean fetchRis = true;
     private static final int MAX_RIS_FETCH = 25;
 
-    //Pattern hitsPattern = Pattern.compile("Your search matched <strong>(\\d+)</strong>");
+    
     Pattern hitsPattern = Pattern.compile(".*Your search matched <strong>(\\d+)</strong>.*");
     Pattern maxHitsPattern = Pattern.compile(".*A maximum of <strong>(\\d+)</strong>.*");
     Pattern paperEntryPattern = Pattern.compile(".*<strong>(.+)</strong><br>"
@@ -85,23 +85,23 @@ public class IEEEXploreFetcher implements EntryFetcher {
         this.status = status;
         this.terms = query;
         piv = 0;
-        // frame.block();
+        
         shouldContinue = true;
         parsed = 0;
         unparseable = 0;
         String address = makeUrl(0);
         try {
             URL url = new URL(address);
-            // Fetch the search page and put the contents in a String:
-            //String page = getResultsFromFile(new File("/home/alver/div/temp.txt"));
-            //URLDownload ud = new URLDownload(new JPanel(), url, new File("/home/alver/div/temp.txt"));
-            //ud.download();
+            
+            
+            
+            
 
-            //dialog.setVisible(true);
+            
             String page = getResults(url);
-            //hits = getNumberOfHits(page, "Your search matched", hitsPattern);
+            
 
-            // frame.unblock();
+            
             if (page.indexOf("You have entered an invalid search") >= 0) {
                 status.showMessage(Globals.lang("You have entered an invalid search '%0'.",
                         terms),
@@ -118,7 +118,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
             hits = getNumberOfHits(page, "Your search matched", hitsPattern);
 
             int maxHits = getNumberOfHits(page, "A maximum of", maxHitsPattern);
-            //String page = getResultsFromFile(new File("/home/alver/div/temp50.txt"));
+            
 
             if (hits > maxHits)
                 hits = maxHits;
@@ -180,9 +180,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         return "Search IEEEXplore";
     }
 
-    /**
-     * This method is called by the dialog when the user has cancelled the import.
-     */
+    
     public void stopFetching() {
         shouldContinue = false;
     }
@@ -245,7 +243,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         List<BibtexEntry> items = new RisImporter().importEntries(inp);
         inp.close();
         if (items.size() > 0) {
-            //return items.get(0);
+            
             BibtexEntry entry = items.get(0);
             if (isStandard == true) {
                 entry.setType(BibtexEntryType.getType("standard"));
@@ -281,11 +279,11 @@ public class IEEEXploreFetcher implements EntryFetcher {
             return null;
         if (entry.getType().getName() == "Standard")
             return entry;
-        // clean up month
+        
         String month = entry.getField("month");
-        // hash or map TODO
+        
         entry.setField("month", month);
-        // clean up publication field
+        
         
         BibtexEntryType type = entry.getType();
         String sourceField;
@@ -301,10 +299,10 @@ public class IEEEXploreFetcher implements EntryFetcher {
             return null;
         }
         
-        //System.out.println(fullName);
+        
         
         if (type.getName() == "Article") {
-            String[] parts = fullName.split("[\\[\\]]"); //[see also...], [legacy...]
+            String[] parts = fullName.split("[\\[\\]]"); 
             fullName = parts[0];
             if (parts.length == 3) {
                 fullName += parts[2];
@@ -313,7 +311,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
             fullName = fullName.replace("Conference Proceedings", "Proceedings").replace("Proceedings of", "Proceedings").replace("  ", ". ").replace("Proceedings.", "Proceedings");
         }
         
-        //System.out.println(fullName);
+        
         
         Matcher m1 = publicationPattern.matcher(fullName);
         if (m1.find()) {
@@ -329,7 +327,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
                     prefix = parts[0];
                     abbrv = parts[1];
                 }
-        //        System.out.println(prefix);
+        
             }
             if (prefix.matches(abbrvPattern) == false) {
                 fullName = prefix + " " + postfix + " " + abbrv;
@@ -337,16 +335,16 @@ public class IEEEXploreFetcher implements EntryFetcher {
             } else {
                 fullName = postfix + " " + prefix;
             }
-//            if (m1.group(3).trim() == "")
-    //            fullName = m1.group(2).trim() + " " + m1.group(1).trim();
-        //    else {
-            //    System.out.println(m1.group(3));
-                //fullName = m1.group(3).trim() + " " + m1.group(1).trim() + " " + m1.group(2).trim();
-            //}
+
+    
+        
+            
+                
+            
         }
-        //System.out.println(fullName);
+        
         if (type.getName() == "Article") {
-            fullName = fullName.replace("- ", "-"); //IEE Proceedings-
+            fullName = fullName.replace("- ", "-"); 
             Matcher m2 = acceptedPatterns.matcher(fullName);
             if (m2.find()) {
                 fullName = m2.group(1);
@@ -374,7 +372,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
                             postfix = parts[0];
                             abbrv = parts[1];
                         }
-                        //System.out.println(postfix);
+                        
                     }
                     fullName = prefix.trim() + " " + postfix.trim() + " " + abbrv;
                     
@@ -384,14 +382,14 @@ public class IEEEXploreFetcher implements EntryFetcher {
                 
             }
             
-            //System.out.println(fullName);
+            
             
             fullName = fullName.trim();
             
             fullName = fullName.replaceAll("^[tT]he ", "").replaceAll("^\\d{4} ", "").replaceAll("[,.]$", "");
             String year = entry.getField("year");
             fullName = fullName.replaceAll(", " + year + "\\.?", "");
-            //System.out.println(fullName);
+            
             
             if (fullName.contains("Abstract") == false && fullName.contains("Summaries") == false && fullName.contains("Conference Record") == false)
                 fullName = "Proc. " + fullName;
@@ -415,33 +413,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         if (index >= 0) {
             piv = index+1;
             String text = allText.substring(index, endIndex);
-            /*
-            // Fetching abstracts takes time, and causes a lot
-            // of requests, so this should be optional or disabled:
-            if (fetchingAbstracts) {
-                Matcher number =
-                    ieeeArticleNumberPattern.matcher(text);
-                if (number.find()) {
-                    try {
-                        entry = parseEntryRis(number.group(1));
-                    } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }
-                }
-            }
-            if (entry != null) { // fetch successful
-                // we just need to add DOI, it is not included in RIS.
-                int pgInd = text.indexOf("Digital Object Identifier ");
-                if (pgInd >= 0) {
-                    int fieldEnd = text.indexOf("<br>", pgInd);
-                    if (fieldEnd >= 0) {
-                        entry.setField("doi",
-                            text.substring(pgInd+26, fieldEnd).trim());
-                    }
-                }
-                return entry;
-            }
-            */
+            
             BibtexEntryType type = BibtexEntryType.getType("article");
             String sourceField = null;
             if (text.indexOf("JNL") >= 0) {
@@ -462,11 +434,11 @@ public class IEEEXploreFetcher implements EntryFetcher {
                     try {
                         entry = parseEntryRis(number.group(1), fetchingAbstracts, type.getName() == "Standard");
                     } catch (IOException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                        e.printStackTrace();  
                     }
                 }
-                if (entry != null) { // fetch successful
-                    // we just need to add DOI, it is not included in RIS.
+                if (entry != null) { 
+                    
                     int pgInd = text.indexOf("Digital Object Identifier ");
                     if (pgInd >= 0) {
                         int fieldEnd = text.indexOf("<br>", pgInd);
@@ -481,12 +453,8 @@ public class IEEEXploreFetcher implements EntryFetcher {
 
             index = 0;
             entry = new BibtexEntry(Util.createNeutralId(), type);
-            //System.out.println(text);
-            /*Matcher m1 = entryPattern1.matcher(text);
-            Matcher m2 = entryPattern2.matcher(text);
-            Matcher m3 = entryPattern3.matcher(text);
-            Matcher m4 = entryPattern4.matcher(text);
-            */
+            
+            
             if (type.getName() == "Standard") {
                 Matcher mstd = stdEntryPattern.matcher(text);
                 if (mstd.find()) {
@@ -501,18 +469,18 @@ public class IEEEXploreFetcher implements EntryFetcher {
             String tmp;
             String rest = "";
             if (m.find()) {
-                // Title:
+                
                 entry.setField("title", convertHTMLChars(m.group(1)));
-                // Author:
+                
                 tmp = convertHTMLChars(m.group(2));
                 if (tmp.charAt(tmp.length()-1) == ';')
                     tmp= tmp.substring(0, tmp.length()-1);
                 entry.setField("author", tmp.replaceAll("; ", " and "));
-                // Publication:
+                
                 tmp = m.group(3);
                 String fullName = convertHTMLChars(tmp);
                 entry.setField(sourceField, fullName);
-                // Volume, Issue, Part, Month, Year, Pages
+                
                 String misc = m.group(4);
                 for (int i = 5; i < 8; i++) {
                     tmp = m.group(i);
@@ -521,32 +489,32 @@ public class IEEEXploreFetcher implements EntryFetcher {
                     else
                         break;
                 }
-                //System.out.println(misc);
+                
                 Matcher ms1 = volumePattern.matcher(misc);
                 if (ms1.find()) {
-                    // Volume:
+                    
                     entry.setField("volume", convertHTMLChars(ms1.group(1)));
                     misc = ms1.group(2);
                 }
                 
                 Matcher ms2 = numberPattern.matcher(misc);
                 if (ms2.find()) {
-                    // Number:
+                    
                     entry.setField("number", convertHTMLChars(ms2.group(1)));
                     misc = ms2.group(2);
                 }
-                //System.out.println(misc);
+                
                 Matcher ms3 = partPattern.matcher(misc);
                 if (ms3.find()) {
                     entry.setField("part", ms3.group(1));
                     misc = ms3.group(2);
                 }
-                //System.out.println(misc);
+                
                 Matcher ms4 = datePattern.matcher(misc);
                 if (ms4.find()) {
-                    // Month:
+                    
                     entry.setField("month", convertHTMLChars(ms4.group(1)).replaceAll("-", "--"));
-                    // Year
+                    
                     entry.setField("year", ms4.group(2));
                 } else {
                       Matcher ms5 = datePattern.matcher(fullName);
@@ -562,7 +530,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
             }
             int pgInd = text.indexOf("Page(s):");
             if (pgInd >= 0) {
-                // Try to set pages:
+                
                 rest = text.substring(pgInd+8);
                 pgInd = rest.indexOf("<br>");
                 if (pgInd >= 0) {
@@ -575,7 +543,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
                         tmp = tmp.substring(0,pgInd);
                     entry.setField("pages", tmp.replaceAll("\\s+", "").replaceAll("-","--"));
                 }
-                // Try to set doi:
+                
                 pgInd = rest.indexOf("Digital Object Identifier ", pgInd);
                 if (pgInd >= 0) {
                     int fieldEnd = rest.indexOf("<br>", pgInd);
@@ -591,21 +559,14 @@ public class IEEEXploreFetcher implements EntryFetcher {
         return null;
     }
 
-    /**
-     * This method must convert HTML style char sequences to normal characters.
-     * @param text The text to handle.
-     * @return The converted text.
-     */
+    
     private String convertHTMLChars(String text) {
 
         return htmlConverter.format(text);
     }
 
 
-    /**
-     * Find out how many hits were found.
-     * @param page
-     */
+    
     private int getNumberOfHits(String page, String marker, Pattern pattern) throws IOException {
         int ind = page.indexOf(marker);
         if (ind < 0)
@@ -624,12 +585,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         throw new IOException(Globals.lang("Could not parse number of hits"));
     }
 
-    /**
-     * Download the URL and return contents as a String.
-     * @param source
-     * @return
-     * @throws IOException
-     */
+    
     public String getResults(URL source) throws IOException {
         
         InputStream in = source.openStream();
@@ -644,12 +600,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         return sb.toString();
     }
 
-    /**
-     * Read results from a file instead of an URL. Just for faster debugging.
-     * @param f
-     * @return
-     * @throws IOException
-     */
+    
     public String getResultsFromFile(File f) throws IOException {
         InputStream in = new BufferedInputStream(new FileInputStream(f));
         StringBuffer sb = new StringBuffer();
@@ -663,12 +614,7 @@ public class IEEEXploreFetcher implements EntryFetcher {
         return sb.toString();
     }
 
-    /**
-     * Download and parse the web page containing an entry's Abstract:
-     * @param link
-     * @return
-     * @throws IOException
-     */
+    
     public String fetchAbstract(String link) throws IOException {
         URL url = new URL(link);
         String page = getResults(url);

@@ -1,24 +1,24 @@
-///////////////////////////////////////////////////////////////////////////////
-//  Filename: $RCSfile: CreateDocBookAuthors.java,v $
-//  Purpose:  Atom representation.
-//  Language: Java
-//  Compiler: JDK 1.4
-//  Authors:  Joerg K. Wegner
-//  Version:  $Revision: 1.1 $
-//            $Date: 2010-01-17 00:03:48 $
-//            $Author: apel $
-//
-//  Copyright (c) Dept. Computer Architecture, University of Tuebingen, Germany
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation version 2 of the License.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 package net.sf.jabref.export.layout.format;
 
 import wsi.ra.tool.WSITools;
@@ -29,22 +29,17 @@ import net.sf.jabref.export.layout.LayoutFormatter;
 import net.sf.jabref.AuthorList;
 
 
-/**
- * Create DocBook authors formatter.
- *
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class CreateDocBookAuthors implements LayoutFormatter
 {
-    //~ Methods ////////////////////////////////////////////////////////////////
+    
 
     public String format(String fieldText)
     {
-        //		<author><firstname>L.</firstname><surname>Xue</surname></author>
-        //     <author><firstname>F.</firstname><othername role="mi">L.</othername><surname>Stahura</surname></author>
-        //     <author><firstname>J.</firstname><othername role="mi">W.</othername><surname>Godden</surname></author>
-        //     <author><firstname>J.</firstname><surname>Bajorath</surname></author>
+        
+        
+        
+        
 
         StringBuffer sb = new StringBuffer(100);
 
@@ -74,13 +69,10 @@ public class CreateDocBookAuthors implements LayoutFormatter
         return fieldText;
     }
 
-    /**
-     * @param sb
-     * @param fieldText
-     */
+    
     protected void singleAuthor(StringBuffer sb, String author)
     {
-        // TODO: replace special characters
+        
         Vector<String> v = new Vector<String>();
         String authorMod = AuthorList.fixAuthor_firstNameFirst(author);
 
@@ -125,6 +117,6 @@ public class CreateDocBookAuthors implements LayoutFormatter
         }
     }
 }
-///////////////////////////////////////////////////////////////////////////////
-//  END OF FILE.
-///////////////////////////////////////////////////////////////////////////////
+
+
+

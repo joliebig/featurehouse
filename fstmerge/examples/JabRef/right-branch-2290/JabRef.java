@@ -1,27 +1,4 @@
-/*
- * Copyright (C) 2003 Morten O. Alver, Nizar N. Batada
- * 
- * All programs in this directory and subdirectories are published under the GNU
- * General Public License as described below.
- *
- * This program is free software; you can redistribute it and/or modify it under
- * the terms of the GNU General Public License as published by the Free Software
- * Foundation; either version 2 of the License, or (at your option) any later
- * version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
- * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
- * details.
- *
- * You should have received a copy of the GNU General Public License along with
- * this program; if not, write to the Free Software Foundation, Inc., 59 Temple
- * Place, Suite 330, Boston, MA 02111-1307 USA
- *
- * Further information about the GNU GPL is available at:
- * http://www.gnu.org/copyleft/gpl.ja.html
- *
- */
+
 package net.sf.jabref;
 
 import net.sf.jabref.export.*;
@@ -52,9 +29,9 @@ import com.jgoodies.looks.FontSets;
 import com.jgoodies.looks.FontPolicy;
 import com.jgoodies.looks.FontPolicies;
 
-//import javax.swing.UIManager;
-//import javax.swing.UIDefaults;
-//import javax.swing.UnsupportedLookAndFeelException;
+
+
+
 public class JabRef {
     public static JabRef ths;
     public static RemoteListener remoteListener = null;
@@ -66,13 +43,7 @@ public class JabRef {
 
     StringOption importFile, exportFile, exportPrefs, importPrefs, auxImExport, importToOpenBase;
     BooleanOption helpO, disableGui, blank, loadSess, showVersion, disableSplash;
-    /*
-    * class StringArrayOption extends ArrayOption { public public void
-    * modify(String value) { } public void modify(String[] value) { } public
-    * Object[] getObjectArray() { return null; } public String getTypeName() {
-    * return "Strings"; } public String getStringValue() { return ""; } public
-    * Object getObject() { return null; } }
-    */
+    
     public static void main(String[] args) {
         new JabRef(args);
     }
@@ -81,7 +52,7 @@ public class JabRef {
 
         ths = this;
 
-        // The following two lines signal that the system proxy settings should be used:
+        
         System.setProperty("java.net.useSystemProxies", "true");
         System.getProperties().put( "proxySet", "true" );
 
@@ -91,11 +62,11 @@ public class JabRef {
                 
         Globals.importFormatReader.resetImportFormats();
         BibtexEntryType.loadCustomEntryTypes(prefs);
-        // Build the list of available export formats:
+        
         ExportFormats.initAllExports();
 
-        // Read list(s) of journal names and abbreviations:
-        //Globals.turnOnFileLogging();
+        
+        
 
         Globals.initializeJournalNames();
 
@@ -105,21 +76,18 @@ public class JabRef {
                 remoteListener.start();
             }
 
-        // Unless we are alone, try to contact already running JabRef:
+        
 	    if (remoteListener == null) {
 		    if (RemoteListener.sendToActiveJabRefInstance(args)) {
-                // We have successfully sent our command line options through the socket to
-                // another JabRef instance. So we assume it's all taken care of, and quit.
+                
+                
                 System.out.println(Globals.lang("Arguments passed on to running JabRef instance. Shutting down."));
                 System.exit(0);
             }
         }
 	}
 
-      /**
-       * See if the user has a personal journal list set up. If so, add these
-       * journal names and abbreviations to the list:
-       */
+      
       String personalJournalList = prefs.get("personalJournalList");
       if (personalJournalList != null) {
           try {
@@ -130,16 +98,16 @@ public class JabRef {
       }
 
         
-        //System.setProperty("sun.awt.noerasebackground", "true");
         
-        //System.out.println(java.awt.Toolkit.getDefaultToolkit().getDesktopProperty("awt.dynamicLayoutSupported"));
-        // Make sure of a proper cleanup when quitting (e.g. deleting temporary
-        // files).
+        
+        
+        
+        
         System.runFinalizersOnExit(true);
 
         Vector loaded = processArguments(args, true);
         openWindow(loaded);
-        //System.out.println("1");
+        
     }
 
     private void setupOptions() {
@@ -157,10 +125,10 @@ public class JabRef {
         auxImExport = new StringOption("");
         importToOpenBase = new StringOption("");
 
-        options = new Options("JabRef "); // Create an options repository.
+        options = new Options("JabRef "); 
         options.setVersion(GUIGlobals.version);
 
-        importFile.setDescription("imopoepuoeu"); //Globals.lang);
+        importFile.setDescription("imopoepuoeu"); 
         options.register("version", 'v',
                 Globals.lang("Display version"), showVersion);
         options.register("nogui", 'n',
@@ -197,7 +165,7 @@ public class JabRef {
 
 
 
-        //Util.pr(": Options processed");
+        
 
         if (initialStartup && showVersion.isInvoked()) {
             options.displayVersion();
@@ -218,10 +186,10 @@ public class JabRef {
             System.exit(0);
         }
 
-        // First we quickly scan the command line parameters for any that signal
-        // that the GUI
-        // should not be opened. This is used to decide whether we should show the
-        // splash screen or not.
+        
+        
+        
+        
         if (initialStartup && !disableGui.isInvoked() && !disableSplash.isInvoked()) {
             try {
 
@@ -234,27 +202,27 @@ public class JabRef {
             }
         }
 
-        //Util.pr("JabRef "+GUIGlobals.version);
-        // Vector to put imported/loaded database(s) in.
+        
+        
         Vector loaded = new Vector();
         Vector toImport = new Vector();
         if (!blank.isInvoked() && (leftOver.length > 0))  {
             for (int i = 0; i < leftOver.length; i++) {
-                // Leftover arguments that have a "bib" extension are interpreted as
-                // bib files to open. Other files, and files that could not be opened
-                // as bib, we try to import instead.
+                
+                
+                
                 boolean bibExtension = leftOver[i].toLowerCase().endsWith("bib");
                 ParserResult pr = null;
                 if (bibExtension)
                     pr = openBibFile(leftOver[i]);
 
                 if ((pr == null) || (pr == ParserResult.INVALID_FORMAT)) {
-                    // We will try to import this file. Normally we
-                    // will import it into a new tab, but if this import has
-                    // been initiated by another instance through the remote
-                    // listener, we will instead import it into the current database.
-                    // This will enable easy integration with web browers that can
-                    // open a reference file in JabRef.
+                    
+                    
+                    
+                    
+                    
+                    
                     if (initialStartup) {
                         toImport.add(leftOver[i]);
                     } else {
@@ -269,7 +237,7 @@ public class JabRef {
             }
         }
 
-        //Util.pr(": Checked blank");
+        
 
         if (!blank.isInvoked() && importFile.isInvoked()) {
             toImport.add(importFile.getStringValue());
@@ -290,7 +258,7 @@ public class JabRef {
                     loaded.add(pr);
 
                 } else {
-                    // * means "guess the format":
+                    
                     System.out.println(Globals.lang("Importing in unknown format")
                             + ": " + data[0]);
 
@@ -318,7 +286,7 @@ public class JabRef {
                             BibtexDatabase base = ImportFormatReader.createDatabase(entries);
                             ParserResult pr = new ParserResult(base, null, new HashMap());
 
-                            //pr.setFile(new File(data[0]));
+                            
                             loaded.add(pr);
                         }
                     }
@@ -343,8 +311,8 @@ public class JabRef {
                 String[] data = exportFile.getStringValue().split(",");
 
                 if (data.length == 1) {
-                    // This signals that the latest import should be stored in BibTeX
-                    // format to the given file.
+                    
+                    
                     if (loaded.size() > 0) {
                         ParserResult pr =
                             (ParserResult) loaded.elementAt(loaded.size() - 1);
@@ -354,7 +322,7 @@ public class JabRef {
                             SaveSession session = FileActions.saveDatabase(pr.getDatabase(),
                                 new MetaData(pr.getMetaData(),pr.getDatabase()), new File(data[0]), Globals.prefs,
                                 false, false, Globals.prefs.get("defaultEncoding"));
-                            // Show just a warning message if encoding didn't work for all characters:
+                            
                             if (!session.getWriter().couldEncodeAll())
                                 System.err.println(Globals.lang("Warning")+": "+
                                     Globals.lang("The chosen encoding '%0' could not encode the following characters: ",
@@ -368,13 +336,13 @@ public class JabRef {
                         System.err.println(Globals.lang(
                                 "The output option depends on a valid import option."));
                 } else if (data.length == 2) {
-                    // This signals that the latest import should be stored in the given
-                    // format to the given file.
+                    
+                    
                     ParserResult pr = (ParserResult) loaded.elementAt(loaded.size() - 1);
                     System.out.println(Globals.lang("Exporting") + ": " + data[0]);
                     ExportFormat format = ExportFormats.getExportFormat(data[1]);
                     if (format != null) {
-                        // We have an ExportFormat instance:
+                        
                         try {
                             format.performExport(pr.getDatabase(), data[0], pr.getEncoding(), null);
                         } catch (Exception ex) {
@@ -392,7 +360,7 @@ public class JabRef {
                         "The output option depends on a valid import option."));
         }
 
-        //Util.pr(": Finished export");
+        
 
         if (exportPrefs.isInvoked()) {
             try {
@@ -416,7 +384,7 @@ public class JabRef {
         if (!blank.isInvoked() && auxImExport.isInvoked()) {
             boolean usageMsg = false;
 
-            if (loaded.size() > 0) // bibtex file loaded
+            if (loaded.size() > 0) 
              {
                 String[] data = auxImExport.getStringValue().split(",");
 
@@ -427,7 +395,7 @@ public class JabRef {
 
                     boolean notSavedMsg = false;
 
-                    // write an output, if something could be resolved
+                    
                     if (newBase != null) {
                         if (newBase.getEntryCount() > 0) {
                             String subName = Util.getCorrectFileName(data[1], "bib");
@@ -435,10 +403,10 @@ public class JabRef {
                             try {
                                 System.out.println(Globals.lang("Saving") + ": "
                                     + subName);
-                                SaveSession session = FileActions.saveDatabase(newBase, new MetaData(), // no Metadata
+                                SaveSession session = FileActions.saveDatabase(newBase, new MetaData(), 
                                     new File(subName), Globals.prefs, false, false,
                                     Globals.prefs.get("defaultEncoding"));
-                                // Show just a warning message if encoding didn't work for all characters:
+                                
                                 if (!session.getWriter().couldEncodeAll())
                                     System.err.println(Globals.lang("Warning")+": "+
                                         Globals.lang("The chosen encoding '%0' could not encode the following characters: ",
@@ -498,33 +466,33 @@ public class JabRef {
             }
         }
         
-        // not reached
+        
         return null;
     }
 
     public void openWindow(Vector loaded) {
         if (!graphicFailure && !disableGui.isInvoked()) {
-            // Call the method performCompatibilityUpdate(), which does any
-            // necessary changes for users with a preference set from an older
-            // Jabref version.
+            
+            
+            
             Util.performCompatibilityUpdate();
 
 
-            // Set up custom or default icon theme:
+            
             GUIGlobals.setUpIconTheme();
 
-            // TODO: remove temporary registering of external file types?
+            
             Globals.prefs.updateExternalFileTypes();
 
-           // This property is set to make the Mac OSX Java VM move the menu bar to
-            // the top
-            // of the screen, where Mac users expect it to be.
+           
+            
+            
             System.setProperty("apple.laf.useScreenMenuBar", "true");
 
-            // Set antialiasing on everywhere. This only works in JRE >= 1.5.
-            // Or... it doesn't work, period.
-            //System.setProperty("swing.aatext", "true");
-            // If we are not on Mac, deal with font sizes and LookAndFeels:
+            
+            
+            
+            
             if (!Globals.ON_MAC) {
                 int fontSizes = Globals.prefs.getInt("menuFontSize");
                 boolean overrideDefaultFonts = Globals.prefs.getBoolean("overrideDefaultFonts");
@@ -563,16 +531,16 @@ public class JabRef {
                 if (objLnf != null)
                     lnf = (LookAndFeel) objLnf;
 
-                // Set font sizes if we are using a JGoodies look and feel.
+                
                 if ((lnf != null) && (lnf instanceof Plastic3DLookAndFeel)) {
 
-                    //UIManager.put("jgoodies.popupDropShadowEnabled", Boolean.TRUE);
+                    
                     MetalLookAndFeel.setCurrentTheme(new
                      com.jgoodies.looks.plastic.theme.SkyBluer());
 
-                    // Set a "model" icon size, so menu items are evenly spaced even though
-                    // only some items have icons. We load an arbitrary icon and look at
-                    // its size to determine what size to use:
+                    
+                    
+                    
                     int defaultIconSize = GUIGlobals.getImage("open").getIconWidth();
                     com.jgoodies.looks.Options.setDefaultIconSize
                             (new Dimension(defaultIconSize, defaultIconSize));
@@ -580,36 +548,36 @@ public class JabRef {
 
                     if (overrideDefaultFonts) {
                         FontSet fontSet = FontSets.createDefaultFontSet(
-                            new Font("Tahoma", Font.PLAIN, fontSizes),    // control font
-                            new Font("Tahoma", Font.PLAIN, fontSizes),    // menu font
-                            new Font("Tahoma", Font.BOLD, fontSizes)     // title font
+                            new Font("Tahoma", Font.PLAIN, fontSizes),    
+                            new Font("Tahoma", Font.PLAIN, fontSizes),    
+                            new Font("Tahoma", Font.BOLD, fontSizes)     
                             );
                         FontPolicy fixedPolicy = FontPolicies.createFixedPolicy(fontSet);
                         Plastic3DLookAndFeel.setFontPolicy(fixedPolicy);
                     }
 
-                    //Plastic3DLookAndFeel plLnf = (Plastic3DLookAndFeel) lnf;
+                    
                 }
                 else if ((lnf != null) && (lnf instanceof WindowsLookAndFeel)) {
 
-                    // Set a "model" icon size, so menu items are evenly spaced even though
-                    // only some items have icons. We load an arbitrary icon and look at
-                    // its size to determine what size to use:
+                    
+                    
+                    
                     int defaultIconSize = GUIGlobals.getImage("open").getIconWidth();
                     com.jgoodies.looks.Options.setDefaultIconSize
                         (new Dimension(defaultIconSize, defaultIconSize));
 
                     if (overrideDefaultFonts) {
                         FontSet fontSet = FontSets.createDefaultFontSet(
-                            new Font("Tahoma", Font.PLAIN, fontSizes),    // control font
-                            new Font("Tahoma", Font.PLAIN, fontSizes),    // menu font
-                            new Font("Tahoma", Font.BOLD, fontSizes)     // title font
+                            new Font("Tahoma", Font.PLAIN, fontSizes),    
+                            new Font("Tahoma", Font.PLAIN, fontSizes),    
+                            new Font("Tahoma", Font.BOLD, fontSizes)     
                             );
                         FontPolicy fixedPolicy = FontPolicies.createFixedPolicy(fontSet);
                         WindowsLookAndFeel.setFontPolicy(fixedPolicy);
                     }
 
-                    //WindowsLookAndFeel plLnf = (WindowsLookAndFeel) lnf;
+                    
                 }
 
                 if (lnf != null) {
@@ -622,7 +590,7 @@ public class JabRef {
                         }
 
                         if (!Globals.ON_WIN && !Globals.ON_MAC) {
-                            // For Linux, add Enter as button click key:
+                            
                             UIDefaults def = UIManager.getDefaults();
                             InputMap im = (InputMap)def.get("Button.focusInputMap");
                             im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0, false), "pressed");
@@ -632,7 +600,7 @@ public class JabRef {
                         ex.printStackTrace();
                         System.err.println("Trying to set system default Look&Feel...");
 
-                        // if desired lnf could not be set, try system default
+                        
                         try {
                             UIManager.setLookAndFeel(UIManager
                                 .getSystemLookAndFeelClassName());
@@ -641,19 +609,19 @@ public class JabRef {
                         }
                     }
 
-                    //LookAndFeel lnf = new com.sun.java.swing.plaf.gtk.GTKLookAndFeel();
-                    //Look1AndFeel lnf = new
-                    // com.incors.plaf.kunststoff.KunststoffLookAndFeel();
-                    //com.incors.plaf.kunststoff.KunststoffLookAndFeel.setCurrentTheme(new
-                    // com.incors.plaf.kunststoff.themes.KunststoffDesktopTheme());
+                    
+                    
+                    
+                    
+                    
                 }
 
             }
 
 
-            // If the option is enabled, open the last edited databases, if any.
+            
             if (!blank.isInvoked() && Globals.prefs.getBoolean("openLastEdited") && (Globals.prefs.get("lastEdited") != null)) {
-                // How to handle errors in the databases to open?
+                
                 String[] names = Globals.prefs.getStringArray("lastEdited");
 lastEdLoop: 
                 for (int i = 0; i < names.length; i++) {
@@ -687,10 +655,10 @@ lastEdLoop:
                 new Font(Globals.prefs.get("fontFamily"), Globals.prefs.getInt("fontStyle"),
                     Globals.prefs.getInt("fontSize"));
 
-            //Util.pr(": Initializing frame");
+            
             jrf = new JabRefFrame();
 
-            // Add all loaded databases to the frame:
+            
 	    boolean first = true;
             if (loaded.size() > 0) {
                 for (Iterator i=loaded.iterator(); i.hasNext();) {
@@ -705,19 +673,17 @@ lastEdLoop:
                 jrf.loadSessionAction.actionPerformed(new java.awt.event.ActionEvent(
                         jrf, 0, ""));
 
-            if (splashScreen != null) {// do this only if splashscreen was actually created
+            if (splashScreen != null) {
                 splashScreen.dispose();
                 splashScreen = null;
             }
 
-            /*JOptionPane.showMessageDialog(null, Globals.lang("Please note that this "
-                +"is an early beta version. Do not use it without backing up your files!"),
-                    Globals.lang("Beta version"), JOptionPane.WARNING_MESSAGE);*/
+            
 
-            //Util.pr(": Showing frame");
+            
             jrf.setVisible(true);
 
-            // TEST TEST TEST TEST TEST TEST
+            
             startOOPlugin(jrf);
 
             for (int i = 0; i < loaded.size(); i++) {
@@ -736,18 +702,18 @@ lastEdLoop:
                 }
             }
 
-            // After adding the databases, go through each and see if
-            // any post open actions need to be done. For instance, checking
-            // if we found new entry types that can be imported, or checking
-            // if the database contents should be modified due to new features
-            // in this version of JabRef:
+            
+            
+            
+            
+            
             for (int i = 0; i < loaded.size(); i++) {
                 ParserResult pr = (ParserResult) loaded.elementAt(i);
                 BasePanel panel = jrf.baseAt(i);
                 OpenDatabaseAction.performPostOpenActions(panel, pr, true);
             }
 
-            //Util.pr(": Finished adding panels");
+            
 
             if (loaded.size() > 0) {
                 jrf.tabbedPane.setSelectedIndex(0);
@@ -757,17 +723,7 @@ lastEdLoop:
             System.exit(0);
     }
 
-    /**
-     * Morten Alver (sept. 06): I'm adding this to run the functionality for
-     * OpenOffice integration. I'm not sure yet how to handle deployment issues,
-     * because the OO stuff requires several OO jars on the classpath, which we
-     * shouldn't distribute because OO installations already have them.
-     *
-     * To avoid introducing dependencies on these jars for the time being,
-     * I'm keeping OO "plugin" files separate, only invoking them through reflection.
-     *
-     * @param jrf The JabRefFrame.
-     */
+    
     private void startOOPlugin(JabRefFrame jrf) {
 
 
@@ -778,9 +734,9 @@ lastEdLoop:
             Object i = c.newInstance();
             Object r = m.invoke(i, new Object[] {jrf});
         } catch (Exception e) {
-            // Do nothing.
-            //System.out.println("OO plugin not found.");
-            //e.printStackTrace();
+            
+            
+            
         }
         
     }
@@ -803,8 +759,8 @@ lastEdLoop:
             }
             return pr;
         } catch (Throwable ex) {
-            //System.err.println(Globals.lang("Error opening file")+" '"+ name+"':
-            // "+ex.getMessage());
+            
+            
             System.err.println(Globals.lang("Error opening file") + ": "
                 + ex.getMessage());
         }
@@ -823,10 +779,10 @@ lastEdLoop:
                 BibtexDatabase base = ImportFormatReader.createDatabase(entries);
                 ParserResult pr = new ParserResult(base, null, new HashMap());
                 pr.setToOpenTab(true);
-                //loaded.add(pr);
+                
                 return pr;
             } else {
-                // * means "guess the format":
+                
                 System.out.println(Globals.lang("Importing in unknown format")
                     + ": " + data[0]);
 
@@ -838,7 +794,7 @@ lastEdLoop:
                 if (formatName.equals(ImportFormatReader.BIBTEX_FORMAT)) {
                     ParserResult pr = (ParserResult)o[1];
                     pr.setToOpenTab(true);
-                    //loaded.add(pr);
+                    
                     return pr;
                 }
                 else {
@@ -854,9 +810,9 @@ lastEdLoop:
                         BibtexDatabase base = ImportFormatReader.createDatabase(entries);
                         ParserResult pr = new ParserResult(base, null, new HashMap());
 
-                        //pr.setFile(new File(data[0]));
+                        
                         pr.setToOpenTab(true);
-                        //loaded.add(pr);
+                        
                         return pr;
                     }
                 }

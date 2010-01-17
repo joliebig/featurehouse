@@ -17,27 +17,15 @@ import net.sf.jabref.export.layout.Layout;
 import net.sf.jabref.export.layout.LayoutHelper;
 import net.sf.jabref.util.DocumentPrinter;
 
-/**
- * Displays an BibtexEntry using the given layout format.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2007-08-01 20:23:38 +0200 (Mi, 01 Aug
- *          2007) $)
- * 
- */
+
 public class PreviewPanel extends JPanel implements VetoableChangeListener {
 
-	/**
-	 * The bibtex entry currently shown
-	 */
+	
 	BibtexEntry entry;
 
 	MetaData metaData;
 
-	/**
-	 * If a database is set, the preview will attempt to resolve strings in the
-	 * previewed entry using that database.
-	 */
+	
 	BibtexDatabase database;
 
 	Layout layout;
@@ -50,21 +38,7 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 
 	BasePanel panel;
 
-	/**
-	 * 
-	 * @param database
-	 *            (may be null) Optionally used to resolve strings.
-	 * @param entry
-	 *            (may be null) If given this entry is shown otherwise you have
-	 *            to call setEntry to make something visible.
-	 * @param panel
-	 *            (may be null) If not given no toolbar is shown on the right
-	 *            hand side.
-	 * @param metaData
-	 *            (must be given) Used for resolving pdf directories for links.
-	 * @param layoutFile
-	 *            (must be given) Used for layout
-	 */
+	
 	public PreviewPanel(BibtexDatabase database, BibtexEntry entry,
 		BasePanel panel, MetaData metaData, String layoutFile) {
 		this(panel, metaData, layoutFile);
@@ -72,16 +46,7 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 		setEntry(entry);
 	}
 
-	/**
-	 * 
-	 * @param panel
-	 *            (may be null) If not given no toolbar is shown on the right
-	 *            hand side.
-	 * @param metaData
-	 *            (must be given) Used for resolving pdf directories for links.
-	 * @param layoutFile
-	 *            (must be given) Used for layout
-	 */
+	
 	public PreviewPanel(BasePanel panel, MetaData metaData, String layoutFile) {
 		super(new BorderLayout(), true);
 
@@ -90,16 +55,13 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 		this.layoutFile = layoutFile;
 		this.previewPane = createPreviewPane();
 
-		// Set up scroll pane for preview pane
+		
 		scrollPane = new JScrollPane(previewPane,
 			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 			JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBorder(null);
 		
-		/*
-		 * If we have been given a panel and the preference option
-		 * previewPrintButton is set, show the tool bar
-		 */
+		
 		if (panel != null
 			&& JabRefPreferences.getInstance().getBoolean("previewPrintButton")) {
 			add(createToolBar(), BorderLayout.LINE_START);
@@ -121,14 +83,14 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 			if (printerService == null)
 				printerService = new DocumentPrinter();
 
-			// Background this, as it takes a while.
+			
 			new Thread() {
 				public void run() {
 					try {
 						printerService.print(entry.getCiteKey(), previewPane);
 					} catch (PrinterException e) {
 
-						// Inform the user... we don't know what to do.
+						
 						JOptionPane.showMessageDialog(PreviewPanel.this,
 							Globals.lang("Could not print preview") + ".\n"
 								+ e.getMessage(), Globals
@@ -183,8 +145,8 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 
 		tlb.setMargin(new Insets(0, 0, 0, 2));
 
-		// The toolbar carries all the key bindings that are valid for the whole
-		// window.
+		
+		
 		ActionMap am = tlb.getActionMap();
 		InputMap im = tlb.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
 
@@ -196,7 +158,7 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 
 		tlb.setFloatable(false);
 
-		// Add actions (and thus buttons)
+		
 		tlb.add(closeAction);
 
 		tlb.addSeparator();
@@ -289,7 +251,7 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 		previewPane.invalidate();
 		previewPane.revalidate();
 
-		// Scroll to top:
+		
 		final JScrollBar bar = scrollPane.getVerticalScrollBar();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -302,15 +264,11 @@ public class PreviewPanel extends JPanel implements VetoableChangeListener {
 		return (entry != null);
 	}
 
-	/**
-	 * The PreviewPanel has registered itself as an event listener with the
-	 * currently displayed BibtexEntry. If the entry changes, an event is
-	 * received here, and we can update the preview immediately.
-	 */
+	
 	public void vetoableChange(PropertyChangeEvent evt)
 		throws PropertyVetoException {
-		// TODO updating here is not really necessary isn't it?
-		// Only if we are visible.
+		
+		
 		update();
 	}
 }

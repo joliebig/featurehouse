@@ -1,7 +1,4 @@
-/*
- * Created on Oct 23, 2004
- *
- */
+
 package net.sf.jabref.mods;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -17,15 +14,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-/**
- * @author Michael Wrighton
- *
- */
+
 public class MODSDatabase {
 	protected Set<MODSEntry> entries;
 	
 	public MODSDatabase() {
-		// maybe make this sorted later...
+		
 		entries = new HashSet<MODSEntry>();
 	}
 	

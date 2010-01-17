@@ -5,14 +5,7 @@ import java.util.regex.Pattern;
 
 import net.sf.jabref.export.layout.LayoutFormatter;
 
-/**
- * Will interpret two consecutive newlines as the start of a new paragraph and thus
- * wrap the paragraph in HTML-p-tags.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-15 13:12:15 $)
- * 
- */
+
 public class HTMLParagraphs implements LayoutFormatter {
 
 	static Pattern beforeNewLines;

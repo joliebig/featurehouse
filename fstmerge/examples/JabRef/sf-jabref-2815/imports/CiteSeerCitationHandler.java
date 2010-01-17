@@ -8,19 +8,14 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * @author mspiegel
- *
- */
+
 public class CiteSeerCitationHandler extends DefaultHandler {
 
 	protected boolean correctDirection;
 	protected boolean getCitation;
 	protected Map<String, Boolean> citationList;
 
-	/**
-	 * @param identifierVector
-	 */
+	
 	public CiteSeerCitationHandler(Map<String, Boolean> citationHashTable) {
 		citationList = citationHashTable;		
 	}

@@ -12,15 +12,7 @@ import net.sf.jabref.*;
 import net.sf.jabref.gui.ImportInspectionDialog;
 import net.sf.jabref.undo.NamedCompound;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- *
- * @author not attributable
- * @version 1.0
- */
+
 
 public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionListener {
 
@@ -32,7 +24,7 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
     GridBagConstraints con = new GridBagConstraints();
     CiteSeerFetcher citeSeerFetcher;
     AuthorDialog authorDialog;
-    JFrame jFrame; // invisible dialog holder
+    JFrame jFrame; 
     JButton go = new JButton(Globals.lang("Fetch")),
     helpBut = new JButton(GUIGlobals.getImage("helpSmall"));
     HelpAction help;
@@ -47,8 +39,8 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
         helpBut.addActionListener(help);
         helpBut.setMargin(new Insets(0, 0, 0, 0));
         tf.setPreferredSize(new Dimension(1,tf.getPreferredSize().height));
-        //add(hd, BorderLayout.NORTH);
-        //ok.setToolTipText(Globals.lang("Fetch Medline"));
+        
+        
         JPanel main = new JPanel();
         main.setLayout(gbl);
         con.fill = GridBagConstraints.BOTH;
@@ -56,11 +48,11 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
         con.gridwidth = GridBagConstraints.REMAINDER;
         con.weightx = 1;
         con.weighty = 0;
-        //gbl.setConstraints(header, con);
-        //add(header);
+        
+        
         con.weighty = 1;
         con.insets = new Insets(0, 0, 0, 0);
-        //    pan.setLayout(gbl);
+        
         con.fill = GridBagConstraints.BOTH;
         gbl.setConstraints(tf, con);
         main.add(tf);
@@ -87,9 +79,9 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
 
                 class Update implements ImportInspectionDialog.CallBack {
 
-                    // This method is called by the dialog when the user has selected the
-                    // wanted entries, and clicked Ok. The callback object can update status
-                    // line etc.
+                    
+                    
+                    
                     public void done(int entriesImported) {
                         if (entriesImported > 0)
                             panel.output(Globals.lang("Completed import from CiteSeer."));
@@ -104,30 +96,13 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
                     public void stopFetching() {
                     }
 
-                    /*public void run() {
-                        citeSeerFetcher.endImportCiteSeerProgress();
-                        if (addedEntries != null)
-                            panel.markBaseChanged();
-                        panel.refreshTable();
-// Select the entries that were added:
-                        if (addedEntries.size() > 0) {
-                            BibtexEntry[] toSelect = new BibtexEntry[addedEntries.size()];
-                            toSelect = (BibtexEntry[]) addedEntries.toArray(toSelect);
-
-                            panel.selectEntries(toSelect, 0);
-                            if (toSelect.length == 1)
-                                panel.showEntry(toSelect[0]);
-//else
-//    panel.updateViewToSelected();
-                        }
-                        panel.output(Globals.lang("Completed Import Fields from CiteSeer."));
-                    } */
+                    
 
                 }
 
                 public void run() {
 
-                    // Open the inspection dialog... we will fill it as the entries come in:
+                    
                     ImportInspectionDialog diag = null;
                     if (Globals.prefs.getBoolean("useImportInspectionDialog")) {
                         diag = new ImportInspectionDialog(panel.frame(), panel,
@@ -137,8 +112,8 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
                         diag.setVisible(true);
                         diag.setProgress(0, 1);
                     }
-                    // Use a dummy UndoEdit to avoid storing the information on
-                    // every field change, since we are importing new entries:
+                    
+                    
                     NamedCompound 
                             dummyCompound = new NamedCompound(Globals.lang("Ok"));
                     BooleanAssign overwriteAll = new BooleanAssign(true),
@@ -151,27 +126,27 @@ public class CiteSeerFetcherPanel extends SidePaneComponent implements ActionLis
                     citeSeerFetcher.activateImportFetcher();
 
                     for (int i = 0; i < entries.length; i++) {
-                        // Create the entry:
+                        
                         entries[i] = new BibtexEntry(Util.createNeutralId(), BibtexEntryType.getType("article"));
-                        // Set its citeseerurl field:
+                        
                         entries[i].setField("citeseerurl", ids[i].trim());
-                        // Try to import based on the id:
+                        
                         citeSeerFetcher.importCiteSeerEntry
                                 (entries[i], dummyCompound, overwriteAll, overwriteNone,
                                         newValue, rejectedEntries);
 
-                        // What we do with the entry depends on whether we are using the inspection window:
+                        
                         if (diag != null) {
                             diag.addEntry(entries[i]);
                             diag.setProgress(i+1, entries.length);
                         } else {
-                            // Do nothing. We will add the entries afterwards (?)
+                            
                         }
                     }
                     citeSeerFetcher.deactivateImportFetcher();
 
                     if (diag != null) {
-                        // Signal that we are done. The ImportInspectionDialog will add the entries for us.
+                        
                         diag.entryListComplete();
                     } else {
                         panel.frame().addBibEntries(Arrays.asList(entries), null, false);

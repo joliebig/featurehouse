@@ -12,39 +12,21 @@ import net.sf.jabref.BibtexEntry;
 import net.sf.jabref.BibtexEntryType;
 import net.sf.jabref.BibtexFields;
 
-/**
- * Importer for COPAC format.
- * 
- * Documentation can be found online at:
- * 
- * http://copac.ac.uk/faq/#format
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:31 $)
- * 
- */
+
 public class CopacImporter extends ImportFormat {
-	/**
-	 * Return the name of this import format.
-	 */
+	
 	public String getFormatName() {
 		return "Copac";
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-	 */
+	
 	public String getCLIId() {
 		return "cpc";
 	}
 
 	static final Pattern copacPattern = Pattern.compile("^\\s*TI- ");
 
-	/**
-	 * Check whether the source is in the correct format for this importer.
-	 */
+	
 	public boolean isRecognizedFormat(InputStream stream) throws IOException {
 
 		BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
@@ -59,10 +41,7 @@ public class CopacImporter extends ImportFormat {
 		return false;
 	}
 
-	/**
-	 * Parse the entries in the source, and return a List of BibtexEntry
-	 * objects.
-	 */
+	
 	public List<BibtexEntry> importEntries(InputStream stream) throws IOException {
 		if (stream == null)
 			throw new IOException("No stream given.");
@@ -71,7 +50,7 @@ public class CopacImporter extends ImportFormat {
 
 		List<String> entries = new LinkedList<String>();
 
-		{ // Preprocess entries
+		{ 
 			String str;
 			StringBuffer sb = new StringBuffer();
 
@@ -86,7 +65,7 @@ public class CopacImporter extends ImportFormat {
 					sb.append(" ").append(str.trim());
 				} else {
 
-					// begining of a new item
+					
 					if (str.substring(0, 4).equals("TI- ")) {
 						if (sb.length() > 0) {
 							entries.add(sb.toString());
@@ -105,8 +84,8 @@ public class CopacImporter extends ImportFormat {
 		Iterator<String> it = entries.iterator();
 		while (it.hasNext()) {
 
-			// Copac does not contain enough information on the type of the
-			// document. A book is assumed.
+			
+			
 			BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID,
 				BibtexEntryType.BOOK);
 

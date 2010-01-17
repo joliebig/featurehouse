@@ -10,11 +10,7 @@ import java.util.Iterator;
 
 import net.sf.jabref.Globals;
 
-/**
- * Writer that extends OutputStreamWriter, but also checks if the chosen encoding supports all
- * text that is written. Currently only a boolean value is stored to remember whether everything
- * has gone well or not.
- */
+
 public class VerifyingWriter extends OutputStreamWriter {
 
     CharsetEncoder encoder;

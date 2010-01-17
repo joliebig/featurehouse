@@ -1,38 +1,9 @@
-/*
- animated about dialog
 
-Copyright (C) 2005 Raik Nagel <kiar@users.sourceforge.net>
-All rights reserved.
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice,
-  this list of conditions and the following disclaimer.
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
-* Neither the name of the author nor the names of its contributors may be
-  used to endorse or promote products derived from this software without
-  specific prior written permission.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
-PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
-OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
-EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
-PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
-OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
-OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
-ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-*/
-// created by : r.nagel 05.05.2005
-//
-// todo     :
-//
-// modified :
+
+
 
 
 package net.sf.jabref.about ;
@@ -55,7 +26,7 @@ import javax.swing.border.BevelBorder;
 import net.sf.jabref.GUIGlobals;
 import net.sf.jabref.Globals;
 
-// AboutPanel class
+
 public class AboutPanel extends JComponent
 {
   private Vector<TextBlock> textBlocks ;
@@ -65,14 +36,14 @@ public class AboutPanel extends JComponent
   private ImageIcon image;
 
 
-  // animated text positions
-  public int TOP = 300 ; // offset from top - hide
-  public int BOTTOM = 0 ; // show
+  
+  public int TOP = 300 ; 
+  public int BOTTOM = 0 ; 
 
   public int HEIGHT = 500 ;
   public int WIDTH = 500 ;
 
-  private int borders[] ;  // Border-Coordinates of paintarea (xLeft, xRight, yTop, yBottom)
+  private int borders[] ;  
   private int paintWidth ;
 
   private Font font1 ;
@@ -131,23 +102,23 @@ public class AboutPanel extends JComponent
 
     thread = new AnimationThread();
   }
-// ----------------------------------------------------------------------------
+
 
   public void addAnimationListener(AnimationListener listener)
   {
     aniListener = listener ;
   }
 
-// ----------------------------------------------------------------------------
 
-  // returns
+
+  
   private int getMiddleX(String text, Font font)
   {
     FontMetrics fm = getFontMetrics(font);
     return ( paintWidth/2 - ((fm.stringWidth(text) + 10) / 2)) ;
   }
 
-// ----------------------------------------------------------------------------
+
 
   private Font loadFont(String fontName)
   {
@@ -162,7 +133,7 @@ public class AboutPanel extends JComponent
     return back ;
   }
 
-// ----------------------------------------------------------------------------
+
 
   private final void loadAboutText()
   {
@@ -180,11 +151,11 @@ public class AboutPanel extends JComponent
                                                  "credits.txt" ) ;
       }
       InputStreamReader reader = new InputStreamReader( stream ) ;
-//          getClass().getResourceAsStream(GUIGlobals.getLocaleHelpPath() + "credits.txt" ) ) ;
-//          getClass().getResourceAsStream( "/help/credits.txt" ) ) ;
+
+
       BufferedReader input = new BufferedReader(reader, 1000) ;
 
-//      System.out.println("encoding :" +reader.getEncoding() ) ;
+
 
       while ( input.ready() )
       {
@@ -196,9 +167,9 @@ public class AboutPanel extends JComponent
 
           if (line.length() > 0)
           {
-            if (line.charAt(0) == '#')  // new Block....
+            if (line.charAt(0) == '#')  
             {
-              if (block != null)  //insert previous block
+              if (block != null)  
               {
                 textBlocks.add(block) ;
                 index+=2 ;
@@ -215,7 +186,7 @@ public class AboutPanel extends JComponent
               block.setVisible(true);
 
             }
-            else  // Blocklines
+            else  
             {
               aLine = new AboutTextLine( line.trim() ) ;
               aLine.setPos( getMiddleX( line, font3 ),
@@ -224,7 +195,7 @@ public class AboutPanel extends JComponent
               aLine.setDirection( 0.0, -1.0 ) ;
               aLine.setFont( font3 ) ;
 
-//              System.out.println( "line " +aLine.getText() +"<" +(borders[3] + ( index * fm.getHeight() * 1.5 )) +">" ) ;
+
 
               block.add( aLine ) ;
               index++ ;
@@ -244,17 +215,17 @@ public class AboutPanel extends JComponent
       block.add( aLine ) ;
     }
 
-    textBlocks.add(block);  // insert last block
+    textBlocks.add(block);  
   }
 
-// ----------------------------------------------------------------------------
+
 
   public void paintComponent( Graphics g )
   {
     if (thread.mode == 0)
     {
       thread.start();
-//      thread.setEnabled(true);
+
     }
     else
     if (thread.mode == 1)
@@ -266,11 +237,7 @@ public class AboutPanel extends JComponent
       int x1 = ( getWidth() - fm.stringWidth( versionStr ) ) / 2 ;
       int y1 = getHeight() - fm.getHeight() - 4 ;
       int y2 = getHeight() - 5 ;
-/*
-      int x1 = ( getWidth() - fm.stringWidth( versionStr ) ) / 2 ;
-      int y1 = 4 ;
-      int y2 = fm.getHeight() +4 ;
-*/
+
       g.setFont( font1 ) ;
 
       g.setColor( Color.black ) ;
@@ -283,9 +250,9 @@ public class AboutPanel extends JComponent
 
 
       for ( TextBlock block : textBlocks){
-        if (block.isVisible()) // only if Block is marked as visible
+        if (block.isVisible()) 
         {
-          // print Heading
+          
           AboutTextLine head = block.getHeading() ;
           drawLine(head, g) ;
 
@@ -304,7 +271,7 @@ public class AboutPanel extends JComponent
       }
     }
   }
-// ----------------------------------------------------------------------------
+
 
   private void drawLine(AboutTextLine line, Graphics g)
   {
@@ -321,8 +288,8 @@ public class AboutPanel extends JComponent
       }
     }
   }
-// ----------------------------------------------------------------------------
-// ----------------------------------------------------------------------------
+
+
 
   public Dimension getPreferredSize()
   {
@@ -341,8 +308,8 @@ public class AboutPanel extends JComponent
     if (aniListener != null) aniListener.animationReady();
   }
 
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
+
+
 
   class AnimationThread extends Thread
   {
@@ -390,7 +357,7 @@ public class AboutPanel extends JComponent
           {
           }
         }
-        if (mode == 1)  // Textanimation
+        if (mode == 1)  
         {
           int counter = 0 ;
 
@@ -410,7 +377,7 @@ public class AboutPanel extends JComponent
           }
           repaint(borders[0]-10, borders[2]-10, borders[1]+10, borders[3]+10) ;
         }
-        else if (mode == 2)  // Picture animation
+        else if (mode == 2)  
         {
           if (sleepTime < 2)
             sleepTime = 5 ;
@@ -430,7 +397,7 @@ public class AboutPanel extends JComponent
 
       line.performTimeStep( 1.0 ) ;
 
-      if ( line.getTag() == 2 )  // Heading
+      if ( line.getTag() == 2 )  
       {
         int zone = (int) (HEIGHT / 3.5) ;
         if ( line.getPosY() > zone )
@@ -445,7 +412,7 @@ public class AboutPanel extends JComponent
         }
         back++ ;
       }
-      else if ( line.getTag() == 4) // Heading Blender
+      else if ( line.getTag() == 4) 
       {
         if (zone2Counter < 1)
         {
@@ -459,7 +426,7 @@ public class AboutPanel extends JComponent
           line.setTag(5);
         }
       }
-      else if ( line.getTag() == 10 )  // scrolling text
+      else if ( line.getTag() == 10 )  
       {
         if ( line.getPosY() < ( HEIGHT / 3 ) )
         {
@@ -470,7 +437,7 @@ public class AboutPanel extends JComponent
         }
         back = 1 ;
       }
-      else if (line.getTag() == 11) // text line out
+      else if (line.getTag() == 11) 
       {
          if ((line.getPosX() < -100) || (line.getPosX() > WIDTH+100))
          {

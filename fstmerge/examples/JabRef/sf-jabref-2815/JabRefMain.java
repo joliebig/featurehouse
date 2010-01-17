@@ -12,18 +12,7 @@ import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
-/**
- * This is a class compiled under Java 1.4.2 that will start the real JabRef and
- * print some warnings if no Java 1.5 and higher and no JRE from Sun
- * Microsystems is found.
- * 
- * Caution: We cannot use any other class from JabRef here (for instance no
- * calls to Globals.lang() are possible), since then it could not be run using
- * Java 1.4.
- * 
- * @author oezbek
- * 
- */
+
 public class JabRefMain {
    
     public static String exceptionToString(Throwable t){
@@ -32,10 +21,7 @@ public class JabRefMain {
         return stackTraceWriter.toString();
     }
     
-    /**
-     * @param args
-     *            We will pass these arguments to JabRef later.
-     */
+    
     public static void main(String[] args) {
 
         String javaVersion = System.getProperty("java.version", null);
@@ -61,8 +47,8 @@ public class JabRefMain {
         }
 
         try {
-            // We need to load this class dynamically, or otherwise the Java 
-            // runtime would crash while loading JabRefMain itself.
+            
+            
             Method method = Class.forName("net.sf.jabref.JabRef").getMethod(
                 "main", new Class[] { args.getClass() });
             method.invoke(null, new Object[] { args });

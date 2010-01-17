@@ -9,13 +9,7 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.awt.event.ActionEvent;
 
-/**
- * Created by IntelliJ IDEA.
-* User: alver
-* Date: Mar 27, 2008
-* Time: 6:05:13 PM
-* To change this template use File | Settings | File Templates.
-*/
+
 public class DbConnectAction extends BaseAction {
     private BasePanel panel;
 
@@ -38,17 +32,17 @@ public class DbConnectAction extends BaseAction {
 
         DBStrings dbs = panel.metaData().getDBStrings();
 
-        // init DB strings if necessary
+        
         if (! dbs.isInitialized()) {
             dbs.initialize();
         }
 
-        // show connection dialog
+        
         DBConnectDialog dbd = new DBConnectDialog(panel.frame(), dbs);
         Util.placeDialog(dbd, panel);
         dbd.setVisible(true);
 
-        // connnect to database to test DBStrings
+        
         if (dbd.getConnectToDB()) {
 
             dbs = dbd.getDBStrings();

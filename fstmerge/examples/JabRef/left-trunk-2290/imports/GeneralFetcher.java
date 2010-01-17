@@ -9,15 +9,7 @@ import javax.swing.*;
 import net.sf.jabref.*;
 import net.sf.jabref.gui.ImportInspectionDialog;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- *
- * @author not attributable
- * @version 1.0
- */
+
 
 public class GeneralFetcher extends SidePaneComponent implements ActionListener {
 
@@ -59,7 +51,7 @@ public class GeneralFetcher extends SidePaneComponent implements ActionListener 
         gbl.setConstraints(tf, con);
         main.add(tf);
         
-        // Go Button
+        
         con.weighty = 0;
         if (fetcher.getHelpPage() != null){
         	con.gridwidth = 1;
@@ -69,7 +61,7 @@ public class GeneralFetcher extends SidePaneComponent implements ActionListener 
         gbl.setConstraints(go, con);
         main.add(go);
         
-        // Help Button
+        
 		if (fetcher.getHelpPage() != null) {
 			con.gridwidth = GridBagConstraints.REMAINDER;
 			gbl.setConstraints(helpBut, con);

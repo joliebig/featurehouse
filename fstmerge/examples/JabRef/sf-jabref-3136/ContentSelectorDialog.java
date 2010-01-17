@@ -22,7 +22,7 @@ public class ContentSelectorDialog extends JDialog {
     JButton remove = new JButton();
     JComboBox fieldSelector = new JComboBox();
     GridBagLayout gridBagLayout2 = new GridBagLayout();
-    //HelpAction help;
+    
     JButton help;
     JPanel jPanel4 = new JPanel();
     GridBagLayout gridBagLayout3 = new GridBagLayout();
@@ -55,7 +55,7 @@ public class ContentSelectorDialog extends JDialog {
 	this.frame = frame;
 	help = new JButton(Globals.lang("Help"));
 	help.addActionListener(new HelpAction(frame.helpDiag, GUIGlobals.contentSelectorHelp, "Help"));
-	//help = new HelpAction(frame.helpDiag, GUIGlobals.contentSelectorHelp, "Help");
+	
 	try {
 	    jbInit();
 	    wordSelector.addItem(WORD_EMPTY_TEXT);
@@ -76,18 +76,15 @@ public class ContentSelectorDialog extends JDialog {
 	    ex.printStackTrace();
 	}
 
-	// The next two lines remove the part of the interface allowing
-	// the user to control which fields have a selector. I think this
-	// makes the dialog more intuitive. When the user opens this dialog
-	// from the Tools menu, the full interface will be available.
+	
+	
+	
+	
 	panel1.remove(jPanel1);
 	pack();
     }
 
-    /**
-     * Set the contents of the field selector combobox.
-     *
-     */
+    
     private void setupFieldSelector() {
 	fieldSelector.removeAllItems();
 	fieldSelector.addItem(FIELD_FIRST_LINE);
@@ -116,7 +113,7 @@ public class ContentSelectorDialog extends JDialog {
 		wordSelector.addItem(WORD_FIRSTLINE_TEXT);
 		Vector<String> items = metaData.getData(Globals.SELECTOR_META_PREFIX
 			+ currentField);
-		if ((items != null)) { // && (items.size() > 0)) {
+		if ((items != null)) { 
 			wordSet = new TreeSet<String>(items);
 			for (String word : wordSet)
 				wordSelector.addItem(word);
@@ -131,12 +128,12 @@ public class ContentSelectorDialog extends JDialog {
 	if (!wordSet.contains(word)) {
 	    Util.pr(Globals.SELECTOR_META_PREFIX+currentField);
 	    wordSet.add(word);
-	    // Create a new Vector for this word list, and update the MetaData.
+	    
 	    metaData.putData(Globals.SELECTOR_META_PREFIX+currentField,
 			     new Vector<String>(wordSet));
 	    fillWordSelector();
 	    frame.basePanel().markNonUndoableBaseChanged();
-	    //wordTf.selectAll();
+	    
 	    wordTf.setText("");
 	    wordTf.requestFocus();
 	}
@@ -157,12 +154,12 @@ public class ContentSelectorDialog extends JDialog {
 	String word = wordTf.getText().trim();
 	if (wordSet.contains(word)) {
 	    wordSet.remove(word);
-	    // Create a new Vector for this word list, and update the MetaData.
+	    
 	    metaData.putData(Globals.SELECTOR_META_PREFIX+currentField,
 			     new Vector<String>(wordSet));
 	    fillWordSelector();
 	    frame.basePanel().markNonUndoableBaseChanged();
-	    //wordTf.selectAll();
+	    
 	    wordTf.setText("");
 	    wordTf.requestFocus();
 	}
@@ -170,7 +167,7 @@ public class ContentSelectorDialog extends JDialog {
 
     void fieldSelector_actionPerformed(ActionEvent e) {
 	if (fieldSelector.getSelectedIndex() > 0) {
-	    //fieldTf.setText((String)fieldSelector.getSelectedItem());
+	    
 	    currentField = (String)fieldSelector.getSelectedItem();
 	    updateWordPanel();
 	}
@@ -179,9 +176,9 @@ public class ContentSelectorDialog extends JDialog {
     private void jbInit() {
 	titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white,new Color(142, 142, 142)),Globals.lang("Selector enabled fields"));
 	titledBorder2 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white,new Color(142, 142, 142)),Globals.lang("Item list for field"));
-	//jPanel1.setBackground(GUIGlobals.lightGray);
-	//jPanel2.setBackground(GUIGlobals.lightGray);
-	//panel1.setBackground(GUIGlobals.lightGray);
+	
+	
+	
 	panel1.setLayout(gridBagLayout1);
 	Close.setText(Globals.lang("Close"));
 	Close.addActionListener(new ContentSelectorDialog_Close_actionAdapter(this));
@@ -204,11 +201,11 @@ public class ContentSelectorDialog extends JDialog {
 	fieldSelector.addActionListener(new ContentSelectorDialog_fieldSelector_actionAdapter(this));
 	getContentPane().add(panel1);
 	this.getContentPane().add(jPanel2, BorderLayout.SOUTH);
-	//JToolBar tlb = new JToolBar();
-	//tlb.setLayout(new GridLayout(1,1));
-	//tlb.setPreferredSize(new Dimension(28, 28));
-	//tlb.setFloatable(false);
-	//tlb.add(help);
+	
+	
+	
+	
+	
 	jPanel2.add(help, null);
 	jPanel2.add(Close, null);
 

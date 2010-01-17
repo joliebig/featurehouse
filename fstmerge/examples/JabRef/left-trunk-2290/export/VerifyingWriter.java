@@ -8,11 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.util.TreeSet;
 
-/**
- * Writer that extends OutputStreamWriter, but also checks if the chosen
- * encoding supports all text that is written. Currently only a boolean value is
- * stored to remember whether everything has gone well or not.
- */
+
 public class VerifyingWriter extends OutputStreamWriter {
 
 	CharsetEncoder encoder;

@@ -18,9 +18,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * This class produces a dialog box for editing an external file type.
- */
+
 public class ExternalFileTypeEntryEditor {
 
     JFrame fParent = null;
@@ -126,7 +124,7 @@ public class ExternalFileTypeEntryEditor {
                     selectedIcon = ic.getSelectedIconKey();
                     icon.setIcon(GUIGlobals.getImage(selectedIcon));
                 }
-                //JOptionPane.showMessageDialog(null, "Sorry, the icon can unfortunately not be changed in this version of JabRef");
+                
             }
         });
 
@@ -168,7 +166,7 @@ public class ExternalFileTypeEntryEditor {
             diag.setLocationRelativeTo(dParent);
         else
             diag.setLocationRelativeTo(fParent);
-        //Util.placeDialog(diag, parent);
+        
 
         setValues(entry);
     }
@@ -206,8 +204,8 @@ public class ExternalFileTypeEntryEditor {
         if (!Globals.ON_WIN) {
             entry.setOpenWith(application.getText().trim());
         } else {
-            // On Windows, store application as empty if the "Default" option is selected,
-            // or if the application name is empty:
+            
+            
             if (useDefault.isSelected() || (application.getText().trim().length() == 0))
                 entry.setOpenWith("");
             else
@@ -229,14 +227,14 @@ public class ExternalFileTypeEntryEditor {
         public void actionPerformed(ActionEvent e) {
             File initial = new File(comp.getText().trim());
             if (comp.getText().trim().length() == 0) {
-                // Nothing in the field. Go to the last file dir used:
+                
                 initial = new File(Globals.prefs.get("fileWorkingDirectory"));
             }
-            String chosen = FileDialogs.getNewFile(/*parent*/null, initial, Globals.NONE,
+            String chosen = FileDialogs.getNewFile(null, initial, Globals.NONE,
                 JFileChooser.OPEN_DIALOG, false);
             if (chosen != null) {
                 File newFile = new File(chosen);
-                // Store the directory for next time:
+                
                 Globals.prefs.put("fileWorkingDirectory", newFile.getParent());
                 comp.setText(newFile.getPath());
                 comp.requestFocus();

@@ -8,9 +8,7 @@ import net.sf.jabref.*;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.layout.FormLayout;
 
-/**
- * Class for pushing entries into LatexEditor.
- */
+
 public class PushToLatexEditor implements PushToApplication {
 
     private boolean couldNotCall=false;

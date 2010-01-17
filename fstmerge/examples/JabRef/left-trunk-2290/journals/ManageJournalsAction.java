@@ -8,13 +8,7 @@ import net.sf.jabref.Globals;
 import net.sf.jabref.JabRefFrame;
 import net.sf.jabref.Util;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Sep 22, 2005
- * Time: 10:45:02 PM
- * To browseOld this template use File | Settings | File Templates.
- */
+
 public class ManageJournalsAction extends AbstractAction {
 
     JabRefFrame frame;

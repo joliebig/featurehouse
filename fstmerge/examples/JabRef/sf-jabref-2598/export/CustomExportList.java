@@ -7,13 +7,7 @@ import java.util.TreeMap;
 import net.sf.jabref.Globals;
 import net.sf.jabref.JabRefPreferences;
 
-/**
- * This class handles user defined custom export formats. They are initially
- * read from Preferences, and kept alphabetically (sorted by name). Formats can
- * be added or removed. When modified, the sort() method must be called to make
- * sure the formats stay properly sorted. When the method store() is called,
- * export formats are written to Preferences.
- */
+
 
 public class CustomExportList extends TreeSet<String[]> {
 
@@ -83,7 +77,7 @@ public class CustomExportList extends TreeSet<String[]> {
 			purge(0);
 		else {
 			for (int i = 0; i < array.length; i++) {
-				// System.out.println(i+"..");
+				
 				Globals.prefs.putStringArray("customExportFormat" + i,
 					(String[]) (array[i]));
 			}

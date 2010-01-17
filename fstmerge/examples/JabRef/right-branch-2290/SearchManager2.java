@@ -1,29 +1,4 @@
-/*
-Copyright (C) 2003 JabRef team
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
-
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
-
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
-
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
-
-*/
 package net.sf.jabref;
 
 import java.util.Hashtable;
@@ -51,15 +26,15 @@ class SearchManager2 extends SidePaneComponent
 
     IncrementalSearcher incSearcher;
 
-    //private JabRefFrame frame;
+    
     private JTextField searchField = new JTextField("", 12);
-    private JLabel lab = //new JLabel(Globals.lang("Search")+":");
+    private JLabel lab = 
     new JLabel(GUIGlobals.getImage("search"));
     private JPopupMenu settings = new JPopupMenu();
     private JButton openset = new JButton(Globals.lang("Settings"));
     private JButton escape = new JButton(Globals.lang("Clear"));
     private JButton help = new JButton(GUIGlobals.getImage("help"));
-    /** This button's text will be set later. */
+    
     private JButton search = new JButton();
     private JCheckBoxMenuItem searchReq, searchOpt, searchGen,
     searchAll, caseSensitive, regExpSearch;
@@ -69,9 +44,9 @@ class SearchManager2 extends SidePaneComponent
     private ButtonGroup types = new ButtonGroup();
     private boolean incSearch = false, startedFloatSearch=false, startedFilterSearch=false;
 
-    private int incSearchPos = -1; // To keep track of where we are in
-                   // an incremental search. -1 means
-                   // that the search is inactive.
+    private int incSearchPos = -1; 
+                   
+                   
 
 
     public SearchManager2(JabRefFrame frame, SidePaneManager manager) {
@@ -82,7 +57,7 @@ class SearchManager2 extends SidePaneComponent
 
 
 
-    //setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.magenta));
+    
 
         searchReq = new JCheckBoxMenuItem
         (Globals.lang("Search required fields"),
@@ -113,14 +88,14 @@ class SearchManager2 extends SidePaneComponent
         floatSearch.setToolTipText(Globals.lang("Gray out non-matching entries"));
         hideSearch.setToolTipText(Globals.lang("Hide non-matching entries"));
 
-    // Add an item listener that makes sure we only listen for key events
-    // when incremental search is turned on.
+    
+    
     increment.addItemListener(this);
         floatSearch.addItemListener(this);
         hideSearch.addItemListener(this);
 
-        // Add the global focus listener, so a menu item can see if this field was focused when
-        // an action was called.
+        
+        
         searchField.addFocusListener(Globals.focusListener);
 
 
@@ -142,19 +117,19 @@ class SearchManager2 extends SidePaneComponent
                       Globals.prefs.getBoolean("caseSensitiveSearch"));
 settings.add(select);
 
-    // 2005.03.29, trying to remove field category searches, to simplify
-        // search usability.
-    //settings.addSeparator();
-    //settings.add(searchReq);
-    //settings.add(searchOpt);
-    //settings.add(searchGen);
-    //settings.addSeparator();
-    //settings.add(searchAll);
-    // ---------------------------------------------------------------
+    
+        
+    
+    
+    
+    
+    
+    
+    
     settings.addSeparator();
         settings.add(caseSensitive);
     settings.add(regExpSearch);
-    //settings.addSeparator();
+    
 
 
     searchField.addActionListener(this);
@@ -167,25 +142,25 @@ settings.add(select);
           }
         public void focusLost(FocusEvent e) {
             incSearch = false;
-            incSearchPos = -1; // Reset incremental
-                       // search. This makes the
-                       // incremental search reset
-                       // once the user moves focus to
-                       // somewhere else.
+            incSearchPos = -1; 
+                       
+                       
+                       
+                       
                     if (increment.isSelected()) {
-                      //searchField.setText("");
-                      //System.out.println("focuslistener");
+                      
+                      
                     }
         }
         });
     escape.addActionListener(this);
-    escape.setEnabled(false); // enabled after searching
+    escape.setEnabled(false); 
 
     openset.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent e) {
                   if (settings.isVisible()) {
-                    //System.out.println("oee");
-                    //settings.setVisible(false);
+                    
+                    
                   }
                   else {
                     JButton src = (JButton) e.getSource();
@@ -195,7 +170,7 @@ settings.add(select);
         });
 
             Insets margin = new Insets(0, 2, 0, 2);
-            //search.setMargin(margin);
+            
             escape.setMargin(margin);
             openset.setMargin(margin);
             int butSize = help.getIcon().getIconHeight() + 5;
@@ -210,17 +185,17 @@ settings.add(select);
 
     JPanel main = new JPanel();
     main.setLayout(gbl);
-    //SidePaneHeader header = new SidePaneHeader("Search", GUIGlobals.searchIconFile, this);
+    
     con.gridwidth = GridBagConstraints.REMAINDER;
     con.fill = GridBagConstraints.BOTH;
         con.weightx = 1;
-    //con.insets = new Insets(0, 0, 2,  0);
-    //gbl.setConstraints(header, con);
-    //add(header);
-        //con.insets = new Insets(0, 0, 0,  0);
+    
+    
+    
+        
         gbl.setConstraints(searchField,con);
         main.add(searchField) ;
-        //con.gridwidth = 1;
+        
         gbl.setConstraints(search,con);
         main.add(search) ;
         con.gridwidth = GridBagConstraints.REMAINDER;
@@ -263,15 +238,14 @@ settings.add(select);
     searchField.getActionMap().put("escape", new AbstractAction() {
         public void actionPerformed(ActionEvent e) {
             hideAway();
-            //SearchManager2.this.actionPerformed(new ActionEvent(escape, 0, ""));
+            
         }
         });
     setSearchButtonSizes();
     updateSearchButtonText();
     }
 
-    /** force the search button to be large enough for
-     * the longer of the two texts */
+    
     private void setSearchButtonSizes() {
         search.setText(Globals.lang("Search Specified Field(s)"));
         Dimension size1 = search.getPreferredSize();
@@ -299,21 +273,18 @@ settings.add(select);
     public void startIncrementalSearch() {
     increment.setSelected(true);
     searchField.setText("");
-        //System.out.println("startIncrementalSearch");
+        
     searchField.requestFocus();
     }
 
-    /**
-     * Clears and focuses the search field if it is not
-     * focused. Otherwise, cycles to the next search type.
-     */
+    
     public void startSearch() {
     if (increment.isSelected() && incSearch) {
         repeatIncremental();
         return;
     }
     if (!searchField.hasFocus()) {
-        //searchField.setText("");
+        
             searchField.selectAll();
         searchField.requestFocus();
     } else {
@@ -341,20 +312,20 @@ settings.add(select);
                     clearSearch();
                 }
             };
-            // do this after the button action is over
+            
             SwingUtilities.invokeLater(t);
         }
     }
     else if (((e.getSource() == searchField) || (e.getSource() == search))
          && !increment.isSelected()
          && (panel != null)) {
-        updatePrefs(); // Make sure the user's choices are recorded.
+        updatePrefs(); 
             if (searchField.getText().equals("")) {
-              // An empty search field should cause the search to be cleared.
+              
               panel.stopShowingSearchResults();
               return;
             }
-        // Setup search parameters common to both normal and float.
+        
         Hashtable searchOptions = new Hashtable();
         searchOptions.put("option",searchField.getText()) ;
         SearchRuleSet searchRules = new SearchRuleSet() ;
@@ -363,22 +334,13 @@ settings.add(select);
         rule1 = new BasicSearch(Globals.prefs.getBoolean("caseSensitiveSearch"),
                 Globals.prefs.getBoolean("regExpSearch"));
 
-        /*
-        if (Globals.prefs.getBoolean("regExpSearch"))
-            rule1 = new RegExpRule(
-                    Globals.prefs.getBoolean("caseSensitiveSearch"));
-        else {
-            rule1 = new SimpleSearchRule(
-                    Globals.prefs.getBoolean("caseSensitiveSearch"));
-
-        }
-        */
+        
         try {
-            // this searches specified fields if specified,
-            // and all fields otherwise
+            
+            
             rule1 = new SearchExpression(Globals.prefs,searchOptions);
         } catch (Exception ex) {
-            // we'll do a search in all fields
+            
         }
 
         searchRules.addRule(rule1) ;
@@ -412,9 +374,9 @@ settings.add(select);
             panel.output(Globals.lang("Searched database. Number of hits")
                     + ": " + hits);
 
-            // Show the result in the chosen way:
+            
             if (hideSearch.isSelected()) {
-                // Filtering search - removes non-hits from the table:
+                
                 if (startedFloatSearch) {
                     panel.mainTable.stopShowingFloatSearch();
                     startedFloatSearch = false;
@@ -423,7 +385,7 @@ settings.add(select);
                 panel.setSearchMatcher(SearchMatcher.INSTANCE);
 
             } else {
-                // Float search - floats hits to the top of the table:
+                
                 if (startedFilterSearch) {
                     panel.stopShowingSearchResults();
                     startedFilterSearch = false;
@@ -433,7 +395,7 @@ settings.add(select);
 
             }
 
-            // Afterwards, select all text in the search field.
+            
             searchField.select(0, searchField.getText().length());
 
         }
@@ -447,7 +409,7 @@ settings.add(select);
             startedFilterSearch = false;
             panel.stopShowingSearchResults();
         }
-        // disable "Cancel" button to signal this to the user
+        
         escape.setEnabled(false);
     }
     public void itemStateChanged(ItemEvent e) {
@@ -460,14 +422,12 @@ settings.add(select);
         searchField.addKeyListener(this);
         else
         searchField.removeKeyListener(this);
-    } else /*if (e.getSource() == normal)*/ {
+    } else  {
         updateSearchButtonText();
 
-        // If this search type is disabled, remove reordering from
-        // all databases.
-        /*if ((panel != null) && increment.isSelected()) {
-            clearSearch();
-        } */
+        
+        
+        
     }
     }
 
@@ -477,13 +437,7 @@ settings.add(select);
         goIncremental();
     }
 
-    /**
-     * Used for incremental search. Only activated when incremental
-     * is selected.
-     *
-     * The variable incSearchPos keeps track of which entry was last
-     * checked.
-     */
+    
     public void keyTyped(KeyEvent e) {
     if (e.isControlDown()) {
         return;
@@ -553,8 +507,7 @@ settings.add(select);
         }
     }
 
-    /** Updates the text on the search button to reflect
-      * the type of search that will happen on click. */
+    
     private void updateSearchButtonText() {
         search.setText(!increment.isSelected()
                 && SearchExpressionParser.checkSyntax(
@@ -565,21 +518,13 @@ settings.add(select);
                 : Globals.lang("Search All Fields"));
     }
 
-    /**
-     * This method is required by the ErrorMessageDisplay interface, and lets this class
-     * serve as a callback for regular expression exceptions happening in DatabaseSearch.
-     * @param errorMessage
-     */
+    
     public void reportError(String errorMessage) {
         JOptionPane.showMessageDialog(panel, errorMessage, Globals.lang("Search error"),
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    /**
-     * This method is required by the ErrorMessageDisplay interface, and lets this class
-     * serve as a callback for regular expression exceptions happening in DatabaseSearch.
-     * @param errorMessage
-     */
+    
     public void reportError(String errorMessage, Exception exception) {
         reportError(errorMessage);
     }

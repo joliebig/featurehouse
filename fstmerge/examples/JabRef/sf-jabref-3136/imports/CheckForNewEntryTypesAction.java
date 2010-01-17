@@ -9,14 +9,11 @@ import net.sf.jabref.BasePanel;
 import net.sf.jabref.BibtexEntryType;
 import net.sf.jabref.Globals;
 
-/**
- * This action checks whether any new custom entry types were loaded from this
- * bib file. If so, an offer to remember these entry types is given.
- */
+
 public class CheckForNewEntryTypesAction implements PostOpenAction {
 
     public boolean isActionNecessary(ParserResult pr) {
-        // See if any custom entry types were imported, but disregard those we already know:
+        
         for (Iterator<String> i = pr.getEntryTypes().keySet().iterator(); i.hasNext();) {
             String typeName = (i.next()).toLowerCase();
             if (BibtexEntryType.ALL_TYPES.get(typeName) != null)
@@ -42,7 +39,7 @@ public class CheckForNewEntryTypesAction implements PostOpenAction {
                 JOptionPane.QUESTION_MESSAGE);
         
         if (answer == JOptionPane.YES_OPTION) {
-            // Import
+            
             for (BibtexEntryType typ : pr.getEntryTypes().values()){
                 BibtexEntryType.ALL_TYPES.put(typ.getName().toLowerCase(), typ);
             }

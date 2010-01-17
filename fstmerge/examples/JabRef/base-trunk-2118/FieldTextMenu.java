@@ -1,36 +1,11 @@
-/*
- Copyright (C) 2004 R. Nagel
 
- All programs in this directory and
- subdirectories are published under the GNU General Public License as
- described below.
 
- This program is free software; you can redistribute it and/or modify
- it under the terms of the GNU General Public License as published by
- the Free Software Foundation; either version 2 of the License, or (at
- your option) any later version.
 
- This program is distributed in the hope that it will be useful, but
- WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- General Public License for more details.
 
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
- USA
 
- Further information about the GNU GPL is available at:
- http://www.gnu.org/copyleft/gpl.ja.html
 
- */
 
-// created by : r.nagel 19.10.2004
-//
-// function : a popupmenu for bibtex fieldtext editors
-//
-//
-// modified :
+
 
 
 package net.sf.jabref ;
@@ -54,7 +29,7 @@ public class FieldTextMenu implements MouseListener
   {
     myFieldName = fieldComponent ;
 
-    // copy/paste Menu
+    
     inputMenu.add( pasteAct ) ;
     inputMenu.add( copyAct ) ;
     inputMenu.addSeparator();
@@ -93,7 +68,7 @@ public class FieldTextMenu implements MouseListener
       {
           myFieldName.requestFocus();
 
-        // enable/disable copy to clipboard if selected text available
+        
         String txt = myFieldName.getSelectedText() ;
         boolean cStat = false ;
         if (txt != null)
@@ -107,7 +82,7 @@ public class FieldTextMenu implements MouseListener
   }
 
 
-// ---------------------------------------------------------------------------
+
   abstract class BasicAction extends AbstractAction
   {
     public BasicAction(String text, String description, URL icon)
@@ -136,20 +111,10 @@ public class FieldTextMenu implements MouseListener
 
     public abstract void actionPerformed(ActionEvent e) ;
   }
-//---------------------------------------------------------------
-  /*class MenuHeaderAction extends BasicAction
-  {
-    public MenuHeaderAction(String comment)
-    {
-      super("Edit -" +comment);
-      this.setEnabled(false);
-    }
 
-    public void actionPerformed(ActionEvent e) { }
-  }
-    */
+  
 
-// ---------------------------------------------------------------------------
+
   class PasteAction extends BasicAction
   {
     public PasteAction()
@@ -164,8 +129,8 @@ public class FieldTextMenu implements MouseListener
 
       try
       {
-//        String data = ( String ) systemClip.getContents( null ).getTransferData(
-//            DataFlavor.stringFlavor ) ;
+
+
         String data = ClipBoardManager.clipBoard.getClipboardContents() ;
         if (data != null)
           if (data.length() > 0)
@@ -175,7 +140,7 @@ public class FieldTextMenu implements MouseListener
       catch (Exception ex) {}
     }
   }
-// ---------------------------------------------------------------------------
+
   class CopyAction extends BasicAction
   {
     public CopyAction()
@@ -187,8 +152,8 @@ public class FieldTextMenu implements MouseListener
     {
       try
       {
-//        String data = ( String ) systemClip.getContents( null ).getTransferData(
-//            DataFlavor.stringFlavor ) ;
+
+
         if (myFieldName != null)
         {
           String data = myFieldName.getSelectedText() ;
@@ -209,9 +174,9 @@ public class FieldTextMenu implements MouseListener
         if (myFieldName.getText().equals("")){
             return;
         }
-        //myFieldName.selectAll();
+        
         String input = myFieldName.getText();
-        //myFieldName.setText(input.replaceAll(","," and"));
+        
         myFieldName.setText(generalFixAuthor(input));
     }
   }
@@ -222,12 +187,11 @@ public class FieldTextMenu implements MouseListener
         for (int i = 0; i < authors.length; i++){
             authors[i].trim();
         }
-        /* determine whether the last author name includes a comma
-         * 0 is intentional (consider -1 as alternative) */
+        
         author = authors[authors.length-1];
         boolean lnfn = (author.indexOf(",") > 0);
         StringBuffer sb = new StringBuffer();
-        /*not tested!*/
+        
         if(lnfn){
             String[] parts;
             for (int i = 0; i < authors.length; i++){
@@ -261,8 +225,8 @@ public class FieldTextMenu implements MouseListener
                     if (j < iAuthors.length -1 || i < authors.length -1){
                         sb.append(" and ");
                     }
-                } /* end of j-loop (authors split by ,) */
-            } /* end of i-loop (authors split by and)*/
+                } 
+            } 
         }
         return sb.toString();
     }

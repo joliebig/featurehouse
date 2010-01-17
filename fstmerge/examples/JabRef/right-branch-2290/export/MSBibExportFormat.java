@@ -12,21 +12,9 @@ import javax.xml.transform.OutputKeys;
 import java.util.Set;
 import java.io.IOException;
 import java.io.File;
-/*
- * @author S M Mahbub Murshed 
-* @email udvranto@yahoo.com
-*
-* @version 1.0.0
-* @see http://mahbub.wordpress.com/2007/03/24/details-of-microsoft-office-2007-bibliographic-format-compared-to-bibtex/
-* @see http://mahbub.wordpress.com/2007/03/22/deciphering-microsoft-office-2007-bibliography-format/
-* 
-* Date: May 03, 2007
-* 
-*/
 
-/**
- * ExportFormat for exporting in MSBIB XML format.
- */
+
+
 class MSBibExportFormat extends ExportFormat {
     public MSBibExportFormat() {
         super(Globals.lang("MS Office 2007"), "MSBib", null, null, ".xml");
@@ -34,13 +22,13 @@ class MSBibExportFormat extends ExportFormat {
     }
 
     public void performExport(final BibtexDatabase database, final String file, final String encoding, Set keySet) throws IOException {
-    	// forcing to use UTF8 output format for some problems with
-    	// xml export in other encodings
+    	
+    	
         SaveSession ss = getSaveSession("UTF8", new File(file));
         VerifyingWriter ps = ss.getWriter();
         MSBibDatabase md = new MSBibDatabase(database, keySet);
 
-        // PS: DOES NOT SUPPORT EXPORTING ONLY A SET OF ENTRIES
+        
 
         try {
             DOMSource source = new DOMSource(md.getDOMrepresentation());

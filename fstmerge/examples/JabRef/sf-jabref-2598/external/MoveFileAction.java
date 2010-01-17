@@ -9,9 +9,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Action for moving or renaming a file that is linked to from an entry in JabRef.
- */
+
 public class MoveFileAction extends AbstractAction {
     private JabRefFrame frame;
     private EntryEditor eEditor;
@@ -31,19 +29,19 @@ public class MoveFileAction extends AbstractAction {
         if (selected == -1)
             return;
         FileListEntry flEntry = editor.getTableModel().getEntry(selected);
-        // Check if the current file exists:
+        
         String ln = flEntry.getLink();
         boolean httpLink = ln.toLowerCase().startsWith("http");
         if (httpLink) {
-            // TODO: notify that this operation cannot be done on remote links
+            
 
         }
 
-        // Get an absolute path representation:
+        
         String dir = frame.basePanel().metaData().getFileDirectory(GUIGlobals.FILE_FIELD);
         File file = Util.expandFilename(ln, new String[]{dir});
         if ((file != null) && file.exists()) {
-            // Ok, we found the file. Now get a new name:
+            
             String extension = null;
             if (flEntry.getType() != null)
                 extension = "." + flEntry.getType().getExtension();
@@ -59,7 +57,7 @@ public class MoveFileAction extends AbstractAction {
                             Globals.lang("Rename to '%0'",suggName),
                             Globals.prefs.getBoolean("renameOnMoveFileToFileDir"));
                     int answer;
-                    // Only ask about renaming file if the file doesn't have the proper name already:
+                    
                     if (!suggName.equals(file.getName()))
                         answer = JOptionPane.showConfirmDialog(frame, cbm, Globals.lang("Move/Rename file"),
                                 JOptionPane.YES_NO_OPTION);
@@ -73,11 +71,11 @@ public class MoveFileAction extends AbstractAction {
                     if (!dir.endsWith(File.separator))
                         sb.append(File.separator);
                     if (cbm.isSelected()) {
-                        // Rename:
+                        
                         sb.append(suggName);
                     }
                     else {
-                        // Do not rename:
+                        
                         sb.append(file.getName());
                     }
                     chosenFile = sb.toString();
@@ -86,10 +84,10 @@ public class MoveFileAction extends AbstractAction {
                     chosenFile = Globals.getNewFile(frame, file, extension, JFileChooser.SAVE_DIALOG, false);
                 }
                 if (chosenFile == null) {
-                    return; // cancelled
+                    return; 
                 }
                 newFile = new File(chosenFile);
-                // Check if the file already exists:
+                
                 if (newFile.exists() && (JOptionPane.showConfirmDialog
                         (frame, "'" + newFile.getName() + "' " + Globals.lang("exists. Overwrite file?"),
                                 Globals.lang("Move/Rename file"), JOptionPane.OK_CANCEL_OPTION)
@@ -108,7 +106,7 @@ public class MoveFileAction extends AbstractAction {
                         success = Util.copyFile(file, newFile, true);
                     }
                     if (success) {
-                        // Relativise path, if possible.
+                        
                         if (newFile.getPath().startsWith(dir)) {
                             if ((newFile.getPath().length() > dir.length()) &&
                                     (newFile.getPath().charAt(dir.length()) == File.separatorChar))
@@ -142,7 +140,7 @@ public class MoveFileAction extends AbstractAction {
         }
         else {
 
-            // File doesn't exist, so we can't move it.
+            
             JOptionPane.showMessageDialog(frame, Globals.lang("Could not find file '%0'.", flEntry.getLink()),
                     Globals.lang("File not found"), JOptionPane.ERROR_MESSAGE);
             

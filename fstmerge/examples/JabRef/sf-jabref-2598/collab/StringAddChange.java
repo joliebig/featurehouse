@@ -38,7 +38,7 @@ public class StringAddChange extends Change {
   public void makeChange(BasePanel panel, NamedCompound undoEdit) {
 
     if (panel.database().hasStringLabel(string.getName())) {
-      // The name to change to is already in the database, so we can't comply.
+      
       Globals.logger("Cannot add string '"+string.getName()+"' because the name "
                      +"is already in use.");
     }

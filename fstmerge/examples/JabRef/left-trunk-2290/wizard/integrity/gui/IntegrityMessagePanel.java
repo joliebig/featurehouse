@@ -1,37 +1,12 @@
-/*
-Copyright (C) 2004 R. Nagel
 
-All programs in this directory and
-subdirectories are published under the GNU General Public License as
-described below.
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or (at
-your option) any later version.
 
-This program is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-USA
 
-Further information about the GNU GPL is available at:
-http://www.gnu.org/copyleft/gpl.ja.html
 
-*/
 
-// created by : r.nagel 09.12.2004
-//
-// function : shows the IntegrityMessages produced by IntegrityCheck
-//
-//     todo : several entries not supported
-//
-// modified :
+
+
 
 package net.sf.jabref.wizard.integrity.gui ;
 
@@ -71,9 +46,9 @@ public class IntegrityMessagePanel
   public IntegrityMessagePanel(BasePanel basePanel)
   {
     this.basePanel = basePanel;
-    validChecker = new IntegrityCheck() ; // errors, warnings, hints
+    validChecker = new IntegrityCheck() ; 
 
-  // JList --------------------------------------------------------------
+  
     warningData = new HintListModel() ;
     warnings = new JList( warningData ) ;
     warnings.setCellRenderer( new IntegrityListRenderer() );
@@ -85,9 +60,9 @@ public class IntegrityMessagePanel
     paneScrollPane.setPreferredSize( new Dimension( 540, 255 ) ) ;
     paneScrollPane.setMinimumSize( new Dimension( 10, 10 ) ) ;
 
-  // Fix Panel ---------------------------------------------------------
+  
     JPanel fixPanel = new JPanel() ;
-//    BoxLayout box = new BoxLayout(fixPanel, BoxLayout.LINE_AXIS) ;
+
 
     JLabel label1 = new JLabel(Globals.lang("Field_content")) ;
 
@@ -104,13 +79,13 @@ public class IntegrityMessagePanel
     fixPanel.add(applyButton) ;
     fixPanel.add(fixButton) ;
 
-  // Main Panel --------------------------------------------------------
+  
     this.setLayout( new BorderLayout() );
     this.add( paneScrollPane, BorderLayout.CENTER ) ;
     this.add( fixPanel, BorderLayout.SOUTH) ;
   }
 
-  // ------------------------------------------------------------------------
+  
 
   public void updateView( BibtexEntry entry )
   {
@@ -127,8 +102,8 @@ public class IntegrityMessagePanel
   }
 
 
-  // ------------------------------------------------------------------------
-  //This method is required by ListSelectionListener.
+  
+  
   public void valueChanged( ListSelectionEvent e )
   {
     if ( e.getValueIsAdjusting() )
@@ -144,9 +119,9 @@ public class IntegrityMessagePanel
         {
           str = (String) entry.getField(msg.getFieldName()) ;
           basePanel.highlightEntry(entry);
-  // make the "invalid" field visible  ....
-  //          EntryEditor editor = basePanel.getCurrentEditor() ;
-  //          editor.
+  
+  
+  
         }
       }
       content.setText(str);
@@ -154,8 +129,8 @@ public class IntegrityMessagePanel
     }
   }
 
-// --------------------------------------------------------------------------
-// This methods are required by KeyListener
+
+
   public void keyPressed( KeyEvent e )
   {
   }
@@ -186,7 +161,7 @@ public class IntegrityMessagePanel
 
         if (entry != null)
         {
-//          System.out.println("update") ;
+
             String oldContent = entry.getField(msg.getFieldName());
             UndoableFieldChange edit = new UndoableFieldChange(entry, msg.getFieldName(), oldContent,
                         content.getText());
@@ -194,7 +169,7 @@ public class IntegrityMessagePanel
             basePanel.undoManager.addEdit(edit);
             basePanel.markBaseChanged();
             msg.setFixed(true);
-//          updateView(entry) ;
+
           warningData.valueUpdated(warnings.getSelectedIndex()) ;
         }
       }
@@ -202,8 +177,8 @@ public class IntegrityMessagePanel
       applyButton.setEnabled(false);
     }
   }
-  // ---------------------------------------------------------------------------
-  // ---------------------------------------------------------------------------
+  
+  
   class IntegrityListRenderer extends DefaultListCellRenderer
   {
     final ImageIcon warnIcon = GUIGlobals.getImage("integrityWarn");
@@ -213,10 +188,10 @@ public class IntegrityMessagePanel
 
     public Component getListCellRendererComponent(
         JList list,
-        Object value, // value to display
-        int index, // cell index
-        boolean iss, // is the cell selected
-        boolean chf ) // the list and the cell have the focus
+        Object value, 
+        int index, 
+        boolean iss, 
+        boolean chf ) 
     {
       super.getListCellRendererComponent( list, value, index, iss, chf ) ;
 

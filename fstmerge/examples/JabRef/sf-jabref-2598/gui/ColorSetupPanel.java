@@ -12,13 +12,7 @@ import java.util.Iterator;
 
 import net.sf.jabref.Globals;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: Oct 10, 2005
- * Time: 4:29:35 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class ColorSetupPanel extends JPanel {
 
     private final static int ICON_WIDTH=30, ICON_HEIGHT=20;
@@ -85,10 +79,7 @@ public class ColorSetupPanel extends JPanel {
         }
     }
 
-    /**
-     * A button to display the chosen color, and hold key information about a color setting.
-     * Includes a method to produce a Default button for this setting.
-     */
+    
     class ColorButton extends JButton implements Icon {
         private Color color = Color.white;
         private String key, name;

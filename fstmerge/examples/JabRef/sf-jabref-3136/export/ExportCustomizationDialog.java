@@ -16,14 +16,7 @@ import com.jgoodies.forms.builder.ButtonBarBuilder;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.swing.EventTableModel;
 
-/**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: </p>
- * @author not attributable
- * @version 1.0
- */
+
 
 public class ExportCustomizationDialog extends JDialog {
 
@@ -46,7 +39,7 @@ public class ExportCustomizationDialog extends JDialog {
     addExport.addActionListener(new ActionListener() {
      public void actionPerformed(ActionEvent e) {
        CustomExportDialog ecd = new CustomExportDialog(frame);
-       ecd.setVisible(true); // ecd.show(); -> deprecated since 1.5
+       ecd.setVisible(true); 
        if (ecd.okPressed()) {
          String[] newFormat = new String[] {ecd.name(), ecd.layoutFile(), ecd.extension() };
          Globals.prefs.customExports.addFormat(newFormat);
@@ -61,7 +54,7 @@ public class ExportCustomizationDialog extends JDialog {
         if (row == -1) return;
         String[] old = Globals.prefs.customExports.getSortedList().get(row);
        CustomExportDialog ecd = new CustomExportDialog(frame, old[0], old[1], old[2]);
-       ecd.setVisible(true); // ecd.show(); -> deprecated since 1.5
+       ecd.setVisible(true); 
        if (ecd.okPressed()) {
          old[0] = ecd.name();
          old[1] = ecd.layoutFile();
@@ -111,15 +104,15 @@ public class ExportCustomizationDialog extends JDialog {
     if (table.getRowCount() > 0)
       table.setRowSelectionInterval(0, 0);
 
-    // Key bindings:
+    
     ActionMap am = main.getActionMap();
     InputMap im = main.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
     im.put(frame.prefs().getKey("Close dialog"), "close");
     am.put("close", closeAction);
-    //am = table.getActionMap();
-    //im = table.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-    //im.put(frame.prefs().getKey("Close dialog"), "close");
-    //am.put("close", closeAction);
+    
+    
+    
+    
     main.setLayout(new BorderLayout());
     main.add(sp, BorderLayout.CENTER);
     ButtonBarBuilder bb = new ButtonBarBuilder(buttons);

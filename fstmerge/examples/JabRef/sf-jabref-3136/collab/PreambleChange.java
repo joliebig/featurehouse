@@ -33,7 +33,7 @@ public class PreambleChange extends Change {
     if ((mem != null) && !mem.equals(""))
         text.append("<H3>").append(Globals.lang("Current value")).append(":</H3>" + "<CODE>").append(mem).append("</CODE>");
 
-      //tp.setContentType("text/html");
+      
       tp.setText(text.toString());
   }
 

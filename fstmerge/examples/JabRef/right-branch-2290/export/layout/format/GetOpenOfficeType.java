@@ -1,40 +1,34 @@
-///////////////////////////////////////////////////////////////////////////////
-//  Filename: $RCSfile: GetOpenOfficeType.java,v $
-//  Purpose:  Atom representation.
-//  Language: Java
-//  Compiler: JDK 1.4
-//  Authors:  Joerg K. Wegner
-//  Version:  $Revision: 1.1 $
-//            $Date: 2010-01-17 00:01:56 $
-//            $Author: apel $
-//
-//  Copyright (c) Dept. Computer Architecture, University of Tuebingen, Germany
-//
-//  This program is free software; you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation version 2 of the License.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-///////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 package net.sf.jabref.export.layout.format;
 
 import net.sf.jabref.export.layout.LayoutFormatter;
 
 
-/**
- * Change type of record to match the one used by OpenOffice formatter.
- * 
- * Based on the RemoveBrackets.java class (Revision 1.2) by mortenalver
- * @author $author$
- * @version $Revision: 1.1 $
- */
+
 public class GetOpenOfficeType implements LayoutFormatter
 {
-    //~ Methods ////////////////////////////////////////////////////////////////
+    
 
     public String format(String fieldText)
     {
@@ -53,10 +47,10 @@ public class GetOpenOfficeType implements LayoutFormatter
 		if (fieldEntry.equalsIgnoreCase("Proceedings")) return "3";
 		if (fieldEntry.equalsIgnoreCase("Techreport")) return "13";
 		if (fieldEntry.equalsIgnoreCase("Unpublished")) return "14";
-	// Default, Miscelaneous
+	
 		return "10";
     }
 }
-///////////////////////////////////////////////////////////////////////////////
-//  END OF FILE.
-///////////////////////////////////////////////////////////////////////////////
+
+
+

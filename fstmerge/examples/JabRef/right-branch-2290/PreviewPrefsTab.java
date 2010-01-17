@@ -44,7 +44,7 @@ public class PreviewPrefsTab extends JPanel implements PrefsTab {
 		con.weighty = 0;
 		con.insets = new Insets(2, 2, 2, 2);
 		gbl.setConstraints(lab, con);
-		// p1.add(lab);
+		
 		con.weighty = 1;
 		gbl.setConstraints(sp1, con);
 		p1.add(sp1);
@@ -64,7 +64,7 @@ public class PreviewPrefsTab extends JPanel implements PrefsTab {
 		p1.add(pan);
 		lab = new JLabel(Globals.lang("Preview") + " 2");
 		gbl.setConstraints(lab, con);
-		// p2.add(lab);
+		
 		con.weighty = 1;
 		con.fill = GridBagConstraints.BOTH;
 		gbl.setConstraints(sp2, con);
@@ -83,7 +83,7 @@ public class PreviewPrefsTab extends JPanel implements PrefsTab {
 		gbl.setConstraints(pan, con);
 		p2.add(pan);
 
-		{ // Help Button
+		{ 
 			HelpAction helpAction = new HelpAction(Globals.helpDiag, GUIGlobals.previewHelp,
 				Globals.lang("Help on Preview Settings"), GUIGlobals.getIconUrl("helpSmall"));
 			JButton help = helpAction.getIconButton();

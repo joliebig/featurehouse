@@ -1,8 +1,4 @@
-/*
- * Created on Oct 25, 2004
- * Updated on May 03, 2007
- *
- */
+
 package net.sf.jabref.mods;
 
 import java.util.Vector;
@@ -11,11 +7,7 @@ import wsi.ra.tool.WSITools;
 
 import net.sf.jabref.AuthorList;
 
-/**
- * @author Michael Wrighton, S M Mahbub Murshed
- *
- * S M Mahbub Murshed : added few functions for convenience. May 15, 2007
- */
+
 public class PersonName {
     protected String givenName = null;
     protected String surname = null;
@@ -35,7 +27,7 @@ public class PersonName {
     }
 
     protected void parseName(String author) {
-            // TODO: replace special characters
+            
             Vector<String> v = new Vector<String>();
             String authorMod = AuthorList.fixAuthor_firstNameFirst(author);
 

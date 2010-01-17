@@ -67,8 +67,8 @@ public class ChangeDisplayDialog extends JDialog implements TreeSelectionListene
     ok.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
 
-        // Perform all accepted changes:
-        // Store all edits in an Undoable object:
+        
+        
         NamedCompound ce = new NamedCompound(Globals.lang("Merged external changes"));
         Enumeration enumer = root.children();
         for (; enumer.hasMoreElements();) {
@@ -96,11 +96,7 @@ public class ChangeDisplayDialog extends JDialog implements TreeSelectionListene
     infoPanel.repaint();
   }
 
-  /**
-   * valueChanged
-   *
-   * @param e TreeSelectionEvent
-   */
+  
   public void valueChanged(TreeSelectionEvent e) {
     Object o = tree.getLastSelectedPathComponent();
     if (o instanceof Change) {

@@ -4,9 +4,7 @@ import net.sf.jabref.BibtexEntry;
 
 import java.util.Comparator;
 
-/**
- * Comparator that handles icon columns.
- */
+
 public class IconComparator implements Comparator<BibtexEntry> {
 
     private String[] fields;

@@ -53,10 +53,10 @@ public class StringChange extends Change {
     if (string != null) {
       string.setContent(disk);
       undoEdit.addEdit(new UndoableStringChange(panel, string, false, mem, disk));
-        // Update tmp databse:
+        
 
     } else {
-      // The string was removed or renamed locally. We guess that it was removed.
+      
 	String newId = Util.createNeutralId();
 	BibtexString bs = new BibtexString(newId, label, disk);
 	try {
@@ -67,7 +67,7 @@ public class StringChange extends Change {
 	}
     }
 
-      // Update tmp database:
+      
       if (tmpString != null) {
           tmpString.setContent(disk);
       }

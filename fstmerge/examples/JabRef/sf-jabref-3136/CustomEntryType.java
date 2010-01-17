@@ -3,10 +3,7 @@ package net.sf.jabref;
 import java.io.IOException;
 import java.io.Writer;
 
-/**
- * This class is used to represent customized entry types.
- *
- */
+
 public class CustomEntryType extends BibtexEntryType {
 
     private String name;
@@ -41,7 +38,7 @@ public class CustomEntryType extends BibtexEntryType {
 	return req;
     }
 
-    //    public boolean isTemporary
+    
 
     public String describeRequiredFields() {
 	StringBuffer sb = new StringBuffer();
@@ -92,9 +89,9 @@ public class CustomEntryType extends BibtexEntryType {
 
     public static CustomEntryType parseEntryType(String comment) { 
 	try {
-	    //if ((comment.length() < 9+GUIGlobals.ENTRYTYPE_FLAG.length())
-	    //	|| comment
-	    //System.out.println(">"+comment+"<");
+	    
+	    
+	    
 	    String rest;
 	    rest = comment.substring(GUIGlobals.ENTRYTYPE_FLAG.length());
 	    int nPos = rest.indexOf(':');
@@ -105,10 +102,10 @@ public class CustomEntryType extends BibtexEntryType {
 	    if (rPos < 4)
 		throw new IndexOutOfBoundsException();
 	    String reqFields = rest.substring(4, rPos);
-	    //System.out.println(name+"\nr '"+reqFields+"'");
+	    
 	    int oPos = rest.indexOf(']', rPos+1);
 	    String optFields = rest.substring(rPos+6, oPos);
-	    //System.out.println("o '"+optFields+"'");
+	    
 	    return new CustomEntryType(name, reqFields, optFields);
 	} catch (IndexOutOfBoundsException ex) {
 	    Globals.logger("Ill-formed entrytype comment in BibTeX file.");

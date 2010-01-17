@@ -14,9 +14,7 @@ import java.awt.*;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * Dialog box for choosing an icon for an external file type.
- */
+
 public class IconSelection extends JDialog {
 
     JList icons;
@@ -42,11 +40,7 @@ public class IconSelection extends JDialog {
         super.setVisible(visible);
     }
 
-    /**
-     * After dialog has closed, this method reports whether a selection was made
-     * or it was cancelled.
-     * @return true if a selection was made.
-     */
+    
     public boolean isOkPressed() {
         return okPressed;
     }

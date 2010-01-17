@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 public class JPanelYBoxPreferredSize extends JPanelYBox {
 	public JPanelYBoxPreferredSize() {
-		// nothing special
+		
 	}
 	public JPanelYBoxPreferredSize(Component c) {
 		add(c);

@@ -38,12 +38,7 @@ public class FileHistory extends JMenu implements ActionListener {
             setEnabled(false);
     }
 
-    /**
-     * Adds the file name to the top of the menu. If it already is in
-     * the menu, it is merely moved to the top.
-     *
-     * @param filename a <code>String</code> value
-     */
+    
     public void newFile(String filename) {
         int i = 0;
         while (i < history.size()) {
@@ -76,7 +71,7 @@ public class FileHistory extends JMenu implements ActionListener {
         item.setMnemonic((int) mnemonic);
         item.addActionListener(this);
         add(item);
-        //history.addFirst(item);
+        
     }
 
     private void removeItem(String filename) {
@@ -104,7 +99,7 @@ public class FileHistory extends JMenu implements ActionListener {
         String name = ((JMenuItem) e.getSource()).getText();
         int pos = name.indexOf(" ");
         name = name.substring(pos + 1);
-        //Util.pr("'"+name+"'");
+        
         final File fileToOpen = new File(name);
 
         if (!fileToOpen.exists()) {

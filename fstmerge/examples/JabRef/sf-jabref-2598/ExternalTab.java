@@ -81,13 +81,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 		builder.appendSeparator(Globals.lang("External file links"));
 		JPanel pan = new JPanel();
 		builder.append(pan);
-		/**
-		 * Fix for [ 1749613 ] About translation
-		 * 
-		 * https://sourceforge.net/tracker/index.php?func=detail&aid=1749613&group_id=92314&atid=600306
-		 * 
-		 * Cannot really use %0 to refer to the file type, since this ruins translation.
-		 */
+		
 		JLabel lab = new JLabel(Globals.lang("Main file directory") + ":");
 		builder.append(lab);
 		builder.append(fileDir);
@@ -118,34 +112,14 @@ public class ExternalTab extends JPanel implements PrefsTab {
         builder.nextLine();
         builder.append(new JPanel());
         builder.append(matchExactKeyOnly, 3);
-        //builder.append(useRegExpComboBox);
-		//builder.append(regExpTextField);
-		/*HelpAction helpAction = new HelpAction(helpDialog, GUIGlobals.regularExpressionSearchHelp,
-			Globals.lang("Help on Regular Expression Search"), GUIGlobals.getIconUrl("helpSmall"));
-		builder.append(helpAction.getIconButton());*/
+        
+		
+		
 		builder.nextLine();
 
 		builder.appendSeparator(Globals.lang("External programs"));
 
-		/*builder.nextLine();
-		lab = new JLabel(Globals.lang("Path to PDF viewer") + ":");
-		builder.append(pan);
-		builder.append(lab);
-		builder.append(pdf);
-		browse = new BrowseAction(_frame, pdf, false);
-		if (Globals.ON_WIN)
-			browse.setEnabled(false);
-		builder.append(new JButton(browse));
-		builder.nextLine();
-		lab = new JLabel(Globals.lang("Path to PS viewer") + ":");
-		builder.append(pan);
-		builder.append(lab);
-		builder.append(ps);
-		browse = new BrowseAction(_frame, ps, false);
-		if (Globals.ON_WIN)
-			browse.setEnabled(false);
-		builder.append(new JButton(browse));
-		*/
+		
 		builder.nextLine();
 		lab = new JLabel(Globals.lang("Path to HTML viewer") + ":");
 		builder.append(pan);
@@ -195,7 +169,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 
 		builder.append(Globals.lang("Cite command (for Emacs/WinEdt)") + ":");
 		builder.append(citeCommand);
-		// builder.appendSeparator();
+		
 
         builder.nextLine();
         builder.append(pan);
@@ -248,7 +222,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 			_prefs.put(JabRefPreferences.REG_EXP_SEARCH_EXPRESSION_KEY, regExpTextField.getText());
 		}
 
-		// We should maybe do some checking on the validity of the contents?
+		
 		_prefs.put("pdfDirectory", pdfDir.getText());
 		_prefs.put("psDirectory", psDir.getText());
         _prefs.put(GUIGlobals.FILE_FIELD+"Directory", fileDir.getText());

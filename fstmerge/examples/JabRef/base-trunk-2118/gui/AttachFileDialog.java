@@ -12,13 +12,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.builder.DefaultFormBuilder;
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * Created by IntelliJ IDEA.
- * User: alver
- * Date: May 18, 2005
- * Time: 9:59:52 PM
- * To change this template use File | Settings | File Templates.
- */
+
 public class AttachFileDialog extends JDialog {
 
     AttachFileDialog ths = this;
@@ -32,7 +26,7 @@ public class AttachFileDialog extends JDialog {
         cancel = new JButton(Globals.lang("Cancel"));
     BibtexEntry entry;
     MetaData metaData;
-    private boolean cancelled = true; // Default to true, so a pure close operation implies Cancel.
+    private boolean cancelled = true; 
 
     public AttachFileDialog(Frame parent, MetaData metaData, BibtexEntry entry, String fieldName) {
         super(parent, true);
@@ -109,7 +103,7 @@ public class AttachFileDialog extends JDialog {
 
         FormLayout layout = new FormLayout("fill:160dlu, 4dlu, fill:pref","");
 	    DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-        //builder.append(Util.nCase(fieldName));//(editor.getLabel());
+        
         builder.appendSeparator(Util.nCase(fieldName));
         builder.append(editor.getTextComponent());
         builder.append(browse);

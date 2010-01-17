@@ -23,7 +23,7 @@ public class StringRemoveChange extends Change {
         this.tmpString = tmpString;
         name = Globals.lang("Removed string")+": '"+string.getName()+"'";
     this.string = string;
-    this.inMem = inMem; // Holds the version in memory. Check if it has been modified...?
+    this.inMem = inMem; 
 
     StringBuffer sb = new StringBuffer();
     sb.append("<HTML><H2>");
@@ -48,7 +48,7 @@ public class StringRemoveChange extends Change {
       Globals.logger("Error: could not add string '"+string.getName()+"': "+ex.getMessage());
     }
 
-      // Update tmp database:
+      
       secondary.removeString(tmpString.getId());
   }
 

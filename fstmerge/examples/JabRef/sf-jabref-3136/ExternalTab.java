@@ -70,13 +70,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 		builder.appendSeparator(Globals.lang("External file links"));
 		JPanel pan = new JPanel();
 		builder.append(pan);
-		/**
-		 * Fix for [ 1749613 ] About translation
-		 * 
-		 * https://sourceforge.net/tracker/index.php?func=detail&aid=1749613&group_id=92314&atid=600306
-		 * 
-		 * Cannot really use %0 to refer to the file type, since this ruins translation.
-		 */
+		
 		JLabel lab = new JLabel(Globals.lang("Main file directory") + ":");
 		builder.append(lab);
 		builder.append(fileDir);
@@ -144,7 +138,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
         addSettingsButton(new PushToVim(), builder);
         addSettingsButton(new PushToLatexEditor(), builder);
 
-        //builder.nextLine();
+        
         builder.append(pan);
         builder.append(editFileTypes);
         
@@ -204,7 +198,7 @@ public class ExternalTab extends JPanel implements PrefsTab {
 			_prefs.put(JabRefPreferences.REG_EXP_SEARCH_EXPRESSION_KEY, regExpTextField.getText());
 		}
 
-		// We should maybe do some checking on the validity of the contents?
+		
 		_prefs.put("pdfDirectory", pdfDir.getText());
 		_prefs.put("psDirectory", psDir.getText());
         _prefs.put(GUIGlobals.FILE_FIELD+"Directory", fileDir.getText());

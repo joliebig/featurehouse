@@ -1,9 +1,4 @@
-/*
- * Created on Jun 13, 2004
- *
- * To change the template for this generated file go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 package net.sf.jabref.imports;
 
 import java.awt.BorderLayout;
@@ -46,12 +41,7 @@ import net.sf.jabref.undo.NamedCompound;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * @author mspiegel
- *
- * To change the template for this generated type comment go to
- * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
- */
+
 public class CiteSeerFetcher extends SidePaneComponent {
 
     final static String CITESEER_HOST = "citeseer.ist.psu.edu";
@@ -91,14 +81,14 @@ public class CiteSeerFetcher extends SidePaneComponent {
 		progressBar2.setStringPainted(true);
                 JPanel main = new JPanel();
 		main.setLayout(gbl);
-		//SidePaneHeader header = new SidePaneHeader
-		//	("CiteSeer Transfer", GUIGlobals.wwwCiteSeerIcon, this);
+		
+		
 		con.gridwidth = GridBagConstraints.REMAINDER;			
 		con.fill = GridBagConstraints.BOTH;
 		con.weightx = 1;
 		con.insets = new Insets(0, 0, 2,  0);
-		//gbl.setConstraints(header, con);
-		//add(header);
+		
+		
 		con.insets = new Insets(0, 0, 0,  0);
 		con.fill = GridBagConstraints.HORIZONTAL;		
 		gbl.setConstraints(progressBar, con);
@@ -122,19 +112,9 @@ public class CiteSeerFetcher extends SidePaneComponent {
 		}
 	}
 
-	/***********************************/
-	/* Begin Inner Class Declarations */
-	/* The inner classes are used to modify components, when not in the
-	 * event-dispatching thread.  These are used to follow the "single-threaded
-	 * rule", as defined here: http://java.sun.com/products/jfc/tsc/articles/threads/threads1.html
-	 *
-	 *
-	 * I'm pretty sure the Dialog box invokers should remain as inner classes,
-	 * but I can't decide whether or not to break the one-thread rule for the
-	 * progress bar classes.  Because the search contains a locking-mechanism,
-	 * activateFetcher() and deactivateFetcher(), there should only be at-most-one
-	 * thread accessing the progress bar at any time.
-	 */
+	
+	
+	
 
 	class ShowEmptyFetchSetDialog implements Runnable {
 	
@@ -174,9 +154,7 @@ public class CiteSeerFetcher extends SidePaneComponent {
 	        rejectedEntries = entries;
 	    }
 	    
-        /* (non-Javadoc)
-         * @see java.lang.Runnable#run()
-         */
+        
         public void run() {
             if (rejectedEntries.size() == 1) {
                 
@@ -337,10 +315,10 @@ public class CiteSeerFetcher extends SidePaneComponent {
 		}
 	}
 	
-	/* End Inner Class Declarations */
+	
 
 
-	/***********************************/
+	
 
 	synchronized public boolean activateCitationFetcher() {
 		if (citationFetcherActive == true) {
@@ -381,10 +359,7 @@ public class CiteSeerFetcher extends SidePaneComponent {
 	}
 
 
-	/**
-	 * @param newDatabase
-	 * @param targetDatabase
-	 */
+	
 	public int populate(BibtexDatabase newDatabase, BibtexDatabase targetDatabase) {
 		int errorCode = 0;
 		Iterator<String> targetIterator = targetDatabase.getKeySet().iterator();
@@ -563,13 +538,7 @@ public class CiteSeerFetcher extends SidePaneComponent {
 	
 	
 	
-	/**
-	 * @param be
-	 * @param overwriteNone
-	 * @param overwriteAll
-	 * @param rejectedEntries
-	 *
-	 */
+	
 	public boolean importCiteSeerEntry(BibtexEntry be, NamedCompound citeseerNC, BooleanAssign overwriteAll, 
 			BooleanAssign overwriteNone, BooleanAssign newValue, Hashtable<Integer, BibtexEntry> rejectedEntries) {
 	    boolean abortOperation = false;

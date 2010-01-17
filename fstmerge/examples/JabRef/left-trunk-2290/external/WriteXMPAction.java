@@ -14,15 +14,7 @@ import net.sf.jabref.util.XMPUtil;
 
 import com.jgoodies.forms.builder.ButtonBarBuilder;
 
-/**
- * 
- * This action goes through all selected entries in the BasePanel, and attempts
- * to write the XMP data to the external pdf.
- * 
- * @author $Author: apel $
- * @version $Revision: 1.1 $ ($Date: 2010-01-17 00:02:26 $)
- * 
- */
+
 public class WriteXMPAction extends AbstractWorker {
 
 	BasePanel panel;
@@ -43,7 +35,7 @@ public class WriteXMPAction extends AbstractWorker {
 
 	public void init() {
 
-		// Get entries and check if it makes sense to perform this operation
+		
 		entries = panel.getSelectedEntries();
 
 		if (entries.length == 0) {
@@ -197,7 +189,7 @@ public class WriteXMPAction extends AbstractWorker {
 
 			
 
-			// progressArea.setPreferredSize(new Dimension(300, 300));
+			
 
 			ButtonBarBuilder bb = new ButtonBarBuilder();
 			bb.addGlue();

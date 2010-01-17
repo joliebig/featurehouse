@@ -30,7 +30,7 @@ public class RtfSelection implements Transferable {
     }
 
     public java.awt.datatransfer.DataFlavor[] getTransferDataFlavors() {
-        //System.out.println("..");
+        
         return supportedFlavors;
     }
 
@@ -38,10 +38,10 @@ public class RtfSelection implements Transferable {
             throws UnsupportedFlavorException, IOException {
 
         if (flavor.equals(DataFlavor.stringFlavor)) {
-            //System.out.println("Delivering string data.");
+            
             return content;
         } else if (flavor.equals(rtfFlavor)) {
-            //System.out.println("Delivering rtf data.");
+            
             byte[] byteArray = content.getBytes();
             return new ByteArrayInputStream(byteArray);
         }

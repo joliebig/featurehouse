@@ -13,43 +13,33 @@ import net.sf.jabref.AuthorList;
 import java.util.regex.Pattern;
 import net.sf.jabref.BibtexFields;
 
-/**
- * Imports a SilverPlatter exported file. This is a poor format to parse,
- * so it currently doesn't handle everything correctly.
- */
+
 public class SilverPlatterImporter extends ImportFormat {
 
-    /**
-     * Return the name of this import format.
-     */
+    
     public String getFormatName() {
         return "SilverPlatter";
     }
 
-    /*
-     *  (non-Javadoc)
-     * @see net.sf.jabref.imports.ImportFormat#getCLIId()
-     */
+    
     public String getCLIId() {
       return "silverplatter";
     }
 
-    /**
-     * Check whether the source is in the correct format for this importer.
-     */
+    
     public boolean isRecognizedFormat(InputStream stream) throws IOException {
         BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
 
-        // This format is very similar to Inspec, so we have a two-fold strategy:
-        // If we see the flag signalling that it is an inspec file, return false.
-        // This flag should appear above the first entry and prevent us from
-        // accepting the Inspec format. Then we look for the title entry.
+        
+        
+        
+        
         Pattern pat1 = Pattern.compile("Record.*INSPEC.*");
         String str;
         while ((str = in.readLine()) != null){
 
             if (pat1.matcher(str).find())
-                return false; // This is an inspec file, so return false.
+                return false; 
 
             if ((str.length()>=5) && (str.substring(0, 5).equals("TI:  ")))
                 return true;
@@ -57,10 +47,7 @@ public class SilverPlatterImporter extends ImportFormat {
         return false;
     }
 
-    /**
-     * Parse the entries in the source, and return a List of BibtexEntry
-     * objects.
-     */
+    
     public List importEntries(InputStream stream) throws IOException {
         ArrayList bibitems = new ArrayList();
         BufferedReader in = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(stream));
@@ -78,17 +65,17 @@ public class SilverPlatterImporter extends ImportFormat {
         HashMap h = new HashMap();
         entryLoop: for (int i = 0; i < entries.length; i++){
             if (entries[i].trim().length() < 6) continue entryLoop;
-            //System.out.println("'"+entries[i]+"'");
+            
             h.clear();
             String[] fields = entries[i].split("__NEWFIELD__");
             fieldLoop: for (int j = 0; j < fields.length; j++){
                 if (fields[j].length() < 6) continue fieldLoop;
-                //System.out.println(">"+fields[j]+"<");
+                
                 String s = fields[j];
                 String f3 = s.substring(0, 2);
                 String frest = s.substring(5);
                 if (f3.equals("TI")) h.put("title", frest);
-                //else if(f3.equals("PY")) h.put("year", frest);
+                
                 else if (f3.equals("AU")){
                     if (frest.trim().endsWith("(ed)")){
                         String ed = frest.trim();
@@ -133,8 +120,8 @@ public class SilverPlatterImporter extends ImportFormat {
                                 Integer.parseInt(yr);
                                 h.put("year", yr);
                             } catch (NumberFormatException ex) {
-                                // Let's assume that this wasn't a number, since it
-                                // couldn't be parsed as an integer.
+                                
+                                
                             }
 
                         }
@@ -150,8 +137,8 @@ public class SilverPlatterImporter extends ImportFormat {
                     else if (frest.toLowerCase().indexOf("journal") >= 0) Type = "article";
                     else if (frest.equals("Contribution") || frest.equals("Chapter")){
                         Type = "incollection";
-                        // This entry type contains page numbers and booktitle in the
-                        // title field.
+                        
+                        
                         isChapter = true;
                     }
 
@@ -174,8 +161,8 @@ public class SilverPlatterImporter extends ImportFormat {
             }
 
             BibtexEntry b = new BibtexEntry(BibtexFields.DEFAULT_BIBTEXENTRY_ID, Globals
-                                            .getEntryType(Type)); // id assumes an existing database so don't
-            // create one here
+                                            .getEntryType(Type)); 
+            
             b.setField(h);
 
             bibitems.add(b);

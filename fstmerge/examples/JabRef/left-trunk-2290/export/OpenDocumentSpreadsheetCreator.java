@@ -1,8 +1,4 @@
-/*
- * OpenOfficeDocumentCreator.java
- *
- * Created on February 16, 2005, 8:04 PM
- */
+
 
 package net.sf.jabref.export;
 
@@ -21,14 +17,10 @@ import javax.xml.transform.stream.StreamResult;
 import net.sf.jabref.BibtexDatabase;
 import net.sf.jabref.Globals;
 
-/**
- * @author alver
- */
+
 public class OpenDocumentSpreadsheetCreator extends ExportFormat {
 
-    /**
-     * Creates a new instance of OpenOfficeDocumentCreator
-     */
+    
     public OpenDocumentSpreadsheetCreator() {
         super(Globals.lang("OpenDocument Spreadsheet"), "ods", null, null, ".ods");
     }
@@ -48,13 +40,13 @@ public class OpenDocumentSpreadsheetCreator extends ExportFormat {
             }
             out.closeEntry();
 
-            // Add manifest (required for OOo 2.0) and "meta.xml": These are in the
-            // resource/ods directory, and are copied verbatim into the zip file.
+            
+            
             addResourceFile("meta.xml", "/resource/ods/meta.xml", out);
-            //addResourceFile("mimetype", "/resource/openoffice/mimetype", out);
+            
             addResourceFile("META-INF/manifest.xml", "/resource/ods/manifest.xml", out);
 
-            //zipEntry = new ZipEntry()
+            
 
         } finally {
             out.close();
@@ -63,15 +55,15 @@ public class OpenDocumentSpreadsheetCreator extends ExportFormat {
 
     public static void exportOpenDocumentSpreadsheet(File file, BibtexDatabase database, Set<String> keySet) throws Exception {
 
-        // First store the xml formatted content to a temporary file.
+        
         File tmpFile = File.createTempFile("opendocument", null);
         exportOpenDocumentSpreadsheetXML(tmpFile, database, keySet);
 
-        // Then add the content to the zip file:
+        
         BufferedInputStream in = new BufferedInputStream(new FileInputStream(tmpFile));
         storeOpenDocumentSpreadsheetFile(file, in);
 
-        // Delete the temporary file:
+        
         tmpFile.delete();
     }
 
@@ -82,7 +74,7 @@ public class OpenDocumentSpreadsheetCreator extends ExportFormat {
             Writer ps = new OutputStreamWriter(new FileOutputStream(tmpFile), "UTF8");
             try {
 
-                //            Writer ps = new FileWriter(tmpFile);
+                
                 DOMSource source = new DOMSource(od.getDOMrepresentation());
                 StreamResult result = new StreamResult(ps);
                 Transformer trans = TransformerFactory.newInstance().newTransformer();
