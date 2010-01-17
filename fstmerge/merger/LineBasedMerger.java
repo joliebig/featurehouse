@@ -2,11 +2,14 @@ package merger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.StreamTokenizer;
+
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class LineBasedMerger implements MergerInterface {
@@ -27,12 +30,14 @@ public class LineBasedMerger implements MergerInterface {
 			e.printStackTrace();
 		}
 
-		System.err.println("|" + tokens[0] + "|");
-		System.err.println("|" + tokens[1] + "|");
-		System.err.println("|" + tokens[2] + "|");
+		//System.err.println("|" + tokens[0] + "|");
+		//System.err.println("|" + tokens[1] + "|");
+		//System.err.println("|" + tokens[2] + "|");
 
 
-		if(!(node.getType().equals("MethodDecl") || node.getType().contains("-Content"))) {
+		if(!(node.getType().equals("MethodDecl") || 
+			node.getType().equals("ConstructorDecl") || 
+			node.getType().contains("-Content"))) {
 			if(tokens[0].length() == 0 && tokens[1].length() == 0 && tokens[2].length() == 0) {
 				node.setBody("");
 			} else if(tokens[0].equals(tokens[2])) {
@@ -42,9 +47,9 @@ public class LineBasedMerger implements MergerInterface {
 			} else if(tokens[2].equals(tokens[1]) && tokens[0].length() > 0) {
 				node.setBody(tokens[1]);
 			} else if(tokens[0].equals(tokens[1]) && tokens[2].length() == 0) {
-				node.setBody(tokens[1]);
+				node.setBody("");
 			} else if(tokens[2].equals(tokens[1]) && tokens[0].length() == 0) {
-				node.setBody(tokens[1]);
+				node.setBody("");
 			}
 			return;
 		}
@@ -59,15 +64,31 @@ public class LineBasedMerger implements MergerInterface {
 			File fileVar2 = File.createTempFile("fstmerge_var2_", "", tmpDir);
 			
 	    	BufferedWriter writerVar1 = new BufferedWriter(new FileWriter(fileVar1));
-	    	writerVar1.write(tokens[0]);
+	        if(node.getType().contains("-Content"))
+	        	writerVar1.write(tokens[0]);
+	        else 
+	        	writerVar1.write(tokens[0] + "\n");
 	        writerVar1.close();
+	        
 	        BufferedWriter writerBase = new BufferedWriter(new FileWriter(fileBase));
-	        writerBase.write(tokens[1]);
+	        if(node.getType().contains("-Content"))
+	        	writerBase.write(tokens[1]);
+	        else 
+	        	writerBase.write(tokens[1] + "\n");
 	        writerBase.close();
+
 	        BufferedWriter writerVar2 = new BufferedWriter(new FileWriter(fileVar2));
-	        writerVar2.write(tokens[2]);
+	        if(node.getType().contains("-Content"))
+	        	writerVar2.write(tokens[2]);
+	        else 
+	        	writerVar2.write(tokens[2] + "\n");
 	        writerVar2.close();
 
+	        //if(node.getType().contains("-Content")) {
+	        //	removeComments(fileVar1);
+	        //	removeComments(fileBase);
+	        //	removeComments(fileVar2);
+	        //}
 	        
 	        String mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
 			Runtime run = Runtime.getRuntime();
@@ -98,4 +119,34 @@ public class LineBasedMerger implements MergerInterface {
 	    	//e.printStackTrace();
 	    //}
 	}
+/*	
+	private void removeComments(File file) throws IOException {
+		
+		String tmpFileName = "FSTMerge__cpp";
+		
+		
+		File workDir = new File("c:/Programme/cygwin/bin");
+		String[] cmdArray = new String[5];
+		cmdArray[0] = "c:/Programme/cygwin/bin/bash";
+		cmdArray[1] = "--login";
+		cmdArray[2] = "-i";
+		cmdArray[3] = "-c";
+		cmdArray[4] = "cpp -P " + "\"" + file.getPath() + "\"" + " -o " + tmpFileName;
+		System.err.println(cmdArray[4]);
+		Process pr = Runtime.getRuntime().exec(cmdArray, null, workDir);
+		
+		File tmpFile = new File(tmpFileName);
+		
+		FileReader in = new FileReader(tmpFile);
+	    FileWriter out = new FileWriter(file);
+	    int c;
+
+	    while ((c = in.read()) != -1)
+	      out.write(c);
+
+	    in.close();
+	    out.close();
+		
+	}
+	*/
 }

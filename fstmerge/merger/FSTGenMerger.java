@@ -3,8 +3,6 @@ package merger;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
