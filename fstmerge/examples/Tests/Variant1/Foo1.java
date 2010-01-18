@@ -6,7 +6,6 @@ class Foo {
 			entry = database.resolveForStrings(entry, false);
 
 		
-		
 		for (String field : entry.getAllFields()){
 
 			if (field.equals("editor")) {
