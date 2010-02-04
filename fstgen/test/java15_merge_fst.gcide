@@ -477,7 +477,7 @@ ClassOrInterfaceBodyDeclaration:
   	LOOK_AHEAD("Modifiers() \"enum\"")
   	Modifiers EnumDeclaration :: InnerEnumDecl
 |
-  	@FSTTerminal(name="{<IDENTIFIER>}",compose="ConstructorConcatenation")
+  	@FSTTerminal(name="{ConstructorDeclaration}",compose="ConstructorConcatenation")
     LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
 	Modifiers ConstructorDeclaration :: ConstructorDecl
 |

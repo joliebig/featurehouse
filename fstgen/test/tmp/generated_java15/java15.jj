@@ -479,7 +479,7 @@ FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null
  |
 	LOOKAHEAD(Modifiers() "enum") n=Modifiers(inTerminal){ replaceName(n);} "enum" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=ImplementsList(inTerminal){ replaceName(n);}] "{" n=EnumConstant(inTerminal){ replaceName(n);} ("," n=EnumConstant(inTerminal){ replaceName(n);})* [n=EnumBodyInternal(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("InnerEnumDecl","{Id}","{Id}");}
  |
-	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") n=Modifiers(true){ replaceName(n);} n=ConstructorDeclaration(true){ replaceName(n);} {return productionEndTerminal("ConstructorDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","ConstructorConcatenation",first,token);}
+	LOOKAHEAD( Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") n=Modifiers(true){ replaceName(n);} n=ConstructorDeclaration(true){ replaceName("ConstructorDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ConstructorDecl","{ConstructorDeclaration}","{ConstructorDeclaration}","ConstructorConcatenation",first,token);}
  |
 	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding",first,token);}
  |
@@ -1139,7 +1139,9 @@ FSTInfo BlockStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=Statement(true){ replaceName(n);} {return productionEndTerminal("BlockStatement2","-","-","Replacement",first,token);}
  |
-	n=ClassOrInterfaceDeclaration(true){ replaceName(n);} {return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
+	n=Annotation(true){ replaceName(n);} {return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
+ |
+	n=ClassOrInterfaceDeclaration(true){ replaceName(n);} {return productionEndTerminal("BlockStatement4","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1221,9 +1223,17 @@ FSTInfo ForStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ForStatementInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(Type() <IDENTIFIER> ":") n=Type(true){ replaceName(n);} <IDENTIFIER> ":" n=Expression(true){ replaceName(n);} {return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
+	LOOKAHEAD(Type() <IDENTIFIER> ":") [n=FINAL_T(true){ replaceName(n);}] n=Type(true){ replaceName(n);} <IDENTIFIER> ":" n=Expression(true){ replaceName(n);} {return productionEndTerminal("ForStatementInternal1","-","-","Replacement",first,token);}
  |
-	[n=ForInit(true){ replaceName(n);}] ";" [n=Expression(true){ replaceName(n);}] ";" [n=ForUpdate(true){ replaceName(n);}] {return productionEndTerminal("ForStatementInternal2","-","-","Replacement",first,token);}
+	LOOKAHEAD(FINAL_T() Type() <IDENTIFIER> ":") n=FINAL_T(true){ replaceName(n);} n=Type(true){ replaceName(n);} <IDENTIFIER> ":" n=Expression(true){ replaceName(n);} {return productionEndTerminal("ForStatementInternal2","-","-","Replacement",first,token);}
+ |
+	[n=ForInit(true){ replaceName(n);}] ";" [n=Expression(true){ replaceName(n);}] ";" [n=ForUpdate(true){ replaceName(n);}] {return productionEndTerminal("ForStatementInternal3","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo FINAL_T(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"final"  {return productionEndTerminal("FINAL_T","-","-","Replacement",first,token);}
 
  )  }
 
