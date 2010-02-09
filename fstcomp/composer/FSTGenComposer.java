@@ -19,6 +19,7 @@ import composer.rules.JavaMethodOverriding;
 import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
 import composer.rules.StringConcatenation;
+import counter.Counter;
 
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -49,14 +50,16 @@ public class FSTGenComposer extends FSTGenProcessor {
 
 			featureVisitor.setWorkingDir(outputDir);
 			featureVisitor.setExpressionName(cmd.equationFileName);
-
+			
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
 
-//				for (FSTNonTerminal feature : features) {
-//					System.out.println(feature.toString());
-//				}
+				//for (FSTNonTerminal feature : features) {
+					//System.out.println(feature.toString());
+				//	Counter counter = new Counter();
+				//	counter.collect(feature);
+				//}
 
 
 				
