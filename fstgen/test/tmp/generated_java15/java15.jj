@@ -491,7 +491,7 @@ FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null
 
 FSTInfo FieldDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Type(true){ replaceName("Type", n);}{ replaceName(n);} n=VariableDeclarator(true){ replaceName("VariableDeclarator", n);}{ replaceName(n);} ("," n=VariableDeclarator(true){ replaceName("VariableDeclarator", n);}{ replaceName(n);})* ";" {return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","Replacement",first,token);}
+	n=Type(true){ replaceName(n);} n=VariableDeclarator(true){ replaceName("VariableDeclarator", n);}{ replaceName(n);} ("," n=VariableDeclarator(true){ replaceName("VariableDeclarator", n);}{ replaceName(n);})* ";" {return productionEndTerminal("FieldDeclaration","-","{VariableDeclarator}","Replacement",first,token);}
 
  )  }
 
@@ -567,7 +567,7 @@ FSTInfo FormalParameter(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ConstructorDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=TypeParameters(true){ replaceName(n);}] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} n=FormalParameters(true){ replaceName("FormalParameters", n);}{ replaceName(n);} ["throws" n=NameList(true){ replaceName(n);}] "{" [LOOKAHEAD(ExplicitConstructorInvocation()) n=ExplicitConstructorInvocation(true){ replaceName(n);}] (n=BlockStatement(true){ replaceName(n);})* "}" {return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","Replacement",first,token);}
+	[n=TypeParameters(true){ replaceName(n);}] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} n=FormalParameters(true){ replaceName("FormalParameters", n);}{ replaceName(n);} ["throws" n=NameList(true){ replaceName(n);}] "{" [LOOKAHEAD(ExplicitConstructorInvocation()) n=ExplicitConstructorInvocation(true){ replaceName(n);}] (n=BlockStatement(true){ replaceName(n);})* "}" {return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}({FormalParameters})","Replacement",first,token);}
 
  )  }
 

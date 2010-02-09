@@ -933,11 +933,10 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = Type(true);
-                      replaceName("Type", n);
-                                                replaceName(n);
+                      replaceName(n);
     n = VariableDeclarator(true);
-                                                                                             replaceName("VariableDeclarator", n);
-                                                                                                                                     replaceName(n);
+                                                                   replaceName("VariableDeclarator", n);
+                                                                                                           replaceName(n);
     label_16:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -950,11 +949,11 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       }
       jj_consume_token(COMMA);
       n = VariableDeclarator(true);
-                                                                                                                                                                                       replaceName("VariableDeclarator", n);
-                                                                                                                                                                                                                               replaceName(n);
+                                                                                                                                                             replaceName("VariableDeclarator", n);
+                                                                                                                                                                                                     replaceName(n);
     }
     jj_consume_token(SEMICOLON);
-                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","Replacement",first,token);}
+                                                                                                                                                                                                                             {if (true) return productionEndTerminal("FieldDeclaration","-","{VariableDeclarator}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1369,7 +1368,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                                                                                                                                                                                                                                                                                                                                                                        replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","Replacement",first,token);}
+                                                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}({FormalParameters})","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5289,12 +5288,6 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     return false;
   }
 
-  final private boolean jj_3R_344() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_343()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_75() {
     Token xsp;
     xsp = jj_scanpos;
@@ -5425,6 +5418,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
     if (jj_3R_56()) return true;
     if (jj_scan_token(ENUM)) return true;
     if (jj_3R_58()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_344() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_343()) return true;
     return false;
   }
 
