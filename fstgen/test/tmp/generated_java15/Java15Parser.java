@@ -4345,7 +4345,8 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
       jj_consume_token(AT);
       jj_consume_token(INTERFACE);
       n = Id(inTerminal);
-                                                                                                                           replaceName(n);
+                                                                                                                           replaceName("Id", n);
+                                                                                                                                                   replaceName(n);
       jj_consume_token(LBRACE);
       label_52:
       while (true) {
@@ -4382,10 +4383,10 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           break label_52;
         }
         n = AnnotationTypeMemberDeclaration(inTerminal);
-                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                        replaceName(n);
       }
       jj_consume_token(RBRACE);
-                                                                                                                                                                                                                        {if (true) return productionEndNonTerminal("AnnotationInnerAnnotation","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("AnnotationInnerAnnotation","{Id}","{Id}");}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ABSTRACT:
@@ -4407,11 +4408,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         n = ClassOrInterface(inTerminal);
                                                                                                replaceName(n);
         n = Id(inTerminal);
-                                                                                                                                  replaceName(n);
+                                                                                                                                  replaceName("Id", n);
+                                                                                                                                                          replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LT:
           n = TypeParameters(inTerminal);
-                                                                                                                                                                                  replaceName(n);
+                                                                                                                                                                                                          replaceName(n);
           break;
         default:
           jj_la1[140] = jj_gen;
@@ -4420,7 +4422,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case EXTENDS:
           n = ExtendsList(inTerminal);
-                                                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                                                        replaceName(n);
           break;
         default:
           jj_la1[141] = jj_gen;
@@ -4429,7 +4431,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IMPLEMENTS:
           n = ImplementsList(inTerminal);
-                                                                                                                                                                                                                                                                                 replaceName(n);
+                                                                                                                                                                                                                                                                                                         replaceName(n);
           break;
         default:
           jj_la1[142] = jj_gen;
@@ -4474,10 +4476,10 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
             break label_53;
           }
           n = ClassOrInterfaceBodyDeclaration(inTerminal);
-                                                                                                                                                                                                                                                                                                                                                       replaceName(n);
+                                                                                                                                                                                                                                                                                                                                                                               replaceName(n);
         }
         jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("AnnotationInnerClass","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("AnnotationInnerClass","{Id}","{Id}");}
         break;
       default:
         jj_la1[147] = jj_gen;
@@ -4486,11 +4488,12 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
                                               replaceName(n);
           jj_consume_token(ENUM);
           n = Id(inTerminal);
-                                                                                        replaceName(n);
+                                                                                        replaceName("Id", n);
+                                                                                                                replaceName(n);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case IMPLEMENTS:
             n = ImplementsList(inTerminal);
-                                                                                                                                        replaceName(n);
+                                                                                                                                                                replaceName(n);
             break;
           default:
             jj_la1[144] = jj_gen;
@@ -4498,7 +4501,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
           }
           jj_consume_token(LBRACE);
           n = EnumConstant(inTerminal);
-                                                                                                                                                                                          replaceName(n);
+                                                                                                                                                                                                                  replaceName(n);
           label_54:
           while (true) {
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4511,19 +4514,19 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
             }
             jj_consume_token(COMMA);
             n = EnumConstant(inTerminal);
-                                                                                                                                                                                                                                            replaceName(n);
+                                                                                                                                                                                                                                                                    replaceName(n);
           }
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case SEMICOLON:
             n = EnumBodyInternal(inTerminal);
-                                                                                                                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                                                                                                                        replaceName(n);
             break;
           default:
             jj_la1[146] = jj_gen;
             ;
           }
           jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("AnnotationInnerEnum","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("AnnotationInnerEnum","{Id}","{Id}");}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case ABSTRACT:
@@ -4552,7 +4555,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
             n = FieldDeclaration(true);
                                                                                    replaceName("FieldDeclaration", n);
                                                                                                                          replaceName(n);
-                                                                                                                                           {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
+                                                                                                                                           {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding",first,token);}
             break;
           case SEMICOLON:
             jj_consume_token(SEMICOLON);

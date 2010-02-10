@@ -933,11 +933,10 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = Type(true);
-                      replaceName("Type", n);
-                                                replaceName(n);
+                      replaceName(n);
     n = VariableDeclarator(true);
-                                                                                             replaceName("VariableDeclarator", n);
-                                                                                                                                     replaceName(n);
+                                                                   replaceName("VariableDeclarator", n);
+                                                                                                           replaceName(n);
     label_16:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -950,11 +949,11 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
       }
       jj_consume_token(COMMA);
       n = VariableDeclarator(true);
-                                                                                                                                                                                       replaceName("VariableDeclarator", n);
-                                                                                                                                                                                                                               replaceName(n);
+                                                                                                                                                             replaceName("VariableDeclarator", n);
+                                                                                                                                                                                                     replaceName(n);
     }
     jj_consume_token(SEMICOLON);
-                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FieldDeclaration","-","{Type}-{VariableDeclarator}^,","Replacement",first,token);}
+                                                                                                                                                                                                                             {if (true) return productionEndTerminal("FieldDeclaration","-","{VariableDeclarator}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1369,7 +1368,7 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
                                                                                                                                                                                                                                                                                                                                                                                        replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}-{FormalParameters}","Replacement",first,token);}
+                                                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndTerminal("ConstructorDeclaration","-","{<IDENTIFIER>}({FormalParameters})","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4346,7 +4345,8 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
       jj_consume_token(AT);
       jj_consume_token(INTERFACE);
       n = Id(inTerminal);
-                                                                                                                           replaceName(n);
+                                                                                                                           replaceName("Id", n);
+                                                                                                                                                   replaceName(n);
       jj_consume_token(LBRACE);
       label_52:
       while (true) {
@@ -4383,10 +4383,10 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
           break label_52;
         }
         n = AnnotationTypeMemberDeclaration(inTerminal);
-                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                        replaceName(n);
       }
       jj_consume_token(RBRACE);
-                                                                                                                                                                                                                        {if (true) return productionEndNonTerminal("AnnotationInnerAnnotation","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("AnnotationInnerAnnotation","{Id}","{Id}");}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ABSTRACT:
@@ -4408,11 +4408,12 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
         n = ClassOrInterface(inTerminal);
                                                                                                replaceName(n);
         n = Id(inTerminal);
-                                                                                                                                  replaceName(n);
+                                                                                                                                  replaceName("Id", n);
+                                                                                                                                                          replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LT:
           n = TypeParameters(inTerminal);
-                                                                                                                                                                                  replaceName(n);
+                                                                                                                                                                                                          replaceName(n);
           break;
         default:
           jj_la1[140] = jj_gen;
@@ -4421,7 +4422,7 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case EXTENDS:
           n = ExtendsList(inTerminal);
-                                                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                                                        replaceName(n);
           break;
         default:
           jj_la1[141] = jj_gen;
@@ -4430,7 +4431,7 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IMPLEMENTS:
           n = ImplementsList(inTerminal);
-                                                                                                                                                                                                                                                                                 replaceName(n);
+                                                                                                                                                                                                                                                                                                         replaceName(n);
           break;
         default:
           jj_la1[142] = jj_gen;
@@ -4475,10 +4476,10 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
             break label_53;
           }
           n = ClassOrInterfaceBodyDeclaration(inTerminal);
-                                                                                                                                                                                                                                                                                                                                                       replaceName(n);
+                                                                                                                                                                                                                                                                                                                                                                               replaceName(n);
         }
         jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("AnnotationInnerClass","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("AnnotationInnerClass","{Id}","{Id}");}
         break;
       default:
         jj_la1[147] = jj_gen;
@@ -4487,11 +4488,12 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
                                               replaceName(n);
           jj_consume_token(ENUM);
           n = Id(inTerminal);
-                                                                                        replaceName(n);
+                                                                                        replaceName("Id", n);
+                                                                                                                replaceName(n);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case IMPLEMENTS:
             n = ImplementsList(inTerminal);
-                                                                                                                                        replaceName(n);
+                                                                                                                                                                replaceName(n);
             break;
           default:
             jj_la1[144] = jj_gen;
@@ -4499,7 +4501,7 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
           }
           jj_consume_token(LBRACE);
           n = EnumConstant(inTerminal);
-                                                                                                                                                                                          replaceName(n);
+                                                                                                                                                                                                                  replaceName(n);
           label_54:
           while (true) {
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4512,19 +4514,19 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
             }
             jj_consume_token(COMMA);
             n = EnumConstant(inTerminal);
-                                                                                                                                                                                                                                            replaceName(n);
+                                                                                                                                                                                                                                                                    replaceName(n);
           }
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case SEMICOLON:
             n = EnumBodyInternal(inTerminal);
-                                                                                                                                                                                                                                                                                                replaceName(n);
+                                                                                                                                                                                                                                                                                                                        replaceName(n);
             break;
           default:
             jj_la1[146] = jj_gen;
             ;
           }
           jj_consume_token(RBRACE);
-                                                                                                                                                                                                                                                                                                                       {if (true) return productionEndNonTerminal("AnnotationInnerEnum","{<IDENTIFIER>}","{<IDENTIFIER>}");}
+                                                                                                                                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("AnnotationInnerEnum","{Id}","{Id}");}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case ABSTRACT:
@@ -4553,7 +4555,7 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
             n = FieldDeclaration(true);
                                                                                    replaceName("FieldDeclaration", n);
                                                                                                                          replaceName(n);
-                                                                                                                                           {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","Replacement",first,token);}
+                                                                                                                                           {if (true) return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding",first,token);}
             break;
           case SEMICOLON:
             jj_consume_token(SEMICOLON);
@@ -5289,12 +5291,6 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
     return false;
   }
 
-  final private boolean jj_3R_344() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_343()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_75() {
     Token xsp;
     xsp = jj_scanpos;
@@ -5425,6 +5421,12 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
     if (jj_3R_56()) return true;
     if (jj_scan_token(ENUM)) return true;
     if (jj_3R_58()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_344() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_343()) return true;
     return false;
   }
 

@@ -983,11 +983,17 @@ EmptyStatement:
   ";"<NONE>
 ;
 
-StatementExpression:/*
+StatementExpression
+:/*
  * The last expansion of this production accepts more than the legal
  * Java expansions for StatementExpression.  This expansion does not
  * use PostfixExpression for performance reasons.
- */  PreIncrementExpression  | PreDecrementExpression  | PrimaryExpression [ StatementExpressionAssignment ];
+ */
+
+  PreIncrementExpression
+  | PreDecrementExpression
+  | PrimaryExpression [ StatementExpressionAssignment ]
+;
 
 StatementExpressionAssignment: 
 	"++"<NONE> |
@@ -1163,19 +1169,19 @@ AnnotationTypeMemberDeclaration:
    	LOOK_AHEAD("Modifiers() Type() <IDENTIFIER> \"(\"")
 	Modifiers   Type <IDENTIFIER> "(" ")" [ DefaultValue ] ";" ::AnnotationMethodDecl
 |
-	@FSTNonTerminal(name="{<IDENTIFIER>}")
+	@FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
  	Modifiers   AnnotationTypeDeclaration :: AnnotationInnerAnnotation
 |
-	@FSTNonTerminal(name="{<IDENTIFIER>}")
+	@FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD(1) 
   	Modifiers  ClassOrInterfaceDeclaration :: AnnotationInnerClass
 |
-	@FSTNonTerminal(name="{<IDENTIFIER>}")
+	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD(2)
  	Modifiers   EnumDeclaration	::AnnotationInnerEnum
 |
-	@FSTTerminal(name="{FieldDeclaration}")
+	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
   	LOOK_AHEAD(1)
  	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
  |
