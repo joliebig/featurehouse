@@ -91,7 +91,13 @@ public class Counter {
     	    return name;
     	} else {
     		if(node.getType().equals("ClassDeclaration") || node.getType().equals("InnerClassDecl")) {
-    			name = node.getName() + "." + name;
+    			if(name.contains(".")) {
+    				name = node.getName() + "::" + name;
+    			} else {
+    				name = node.getName() + "." + name;
+    			}
+    		} else if(node.getType().equals("Folder")) {
+    			name = node.getName() + "::" + name;
     		}
     		
     	    return getQualifiedName(name, node.getParent());
