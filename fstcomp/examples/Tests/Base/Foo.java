@@ -1,5 +1,7 @@
-public class Foo {
-	String[] outgoing(Msg[] n) {
-		int x = 0;
-	}
+public class Graph 
+{
+    public void run( Vertex s )
+    {
+     	System.out.println("Base");
+    }
 }

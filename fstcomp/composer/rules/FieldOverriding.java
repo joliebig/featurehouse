@@ -35,6 +35,12 @@ public class FieldOverriding {
 	
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
+		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
+			return;
+		
+		//System.err.println("terminalA: " + terminalA.getBody());
+		//System.err.println("terminalB: " + terminalB.getBody());
+		
 		StringTokenizer stA;
 		if((terminalA.getBody().indexOf(",") > 0 && terminalA.getBody().indexOf("=") > 0 && terminalA.getBody().indexOf(",") < terminalA.getBody().indexOf("=")) || (terminalA.getBody().indexOf(",") > 0 && terminalA.getBody().indexOf("=") < 0)) {
 			 stA = new StringTokenizer(terminalA.getBody(), ",");
@@ -73,7 +79,7 @@ public class FieldOverriding {
 
 			if (!modifierArrayA[modifierArrayA.length - 2]
 					.equals(modifierArrayB[modifierArrayB.length - 2])) {
-				System.err.println("Warning: return types of the two methods `"
+				System.err.println("Warning: return types of the two fields `"
 						+ modifierArrayA[modifierArrayA.length - 1]
 						+ "' are not compatible: "
 						+ modifierArrayA[modifierArrayA.length - 2] + " != "
@@ -89,6 +95,8 @@ public class FieldOverriding {
 			boolean isProtected = false;
 			boolean isPrivate = false;
 			boolean isAbstract = false;
+			boolean isFinal = false;
+			boolean isStatic = false;
 
 			for (int i = 0; i < modifierArrayRes.length; i++) {
 				String modifier = modifierArrayRes[i].trim();
@@ -112,18 +120,24 @@ public class FieldOverriding {
 						&& !modifier.equals("private")) {
 					if (modifier.equals("abstract")) {
 						isAbstract = true;
-						removedDuplicates = removedDuplicates.replaceAll(
-								"final", "");
+						removedDuplicates = removedDuplicates.replaceAll("final", "");
 						removedDuplicates += modifier + " ";
-					} else if (modifier.equals("final") && !isAbstract) {
+					} else if (modifier.equals("final") && !isAbstract && !isFinal) {
+						isFinal = true;
+						removedDuplicates += modifier + " ";
+					} else if (modifier.equals("static") && !isStatic) {
+						isStatic = true;
 						removedDuplicates += modifier + " ";
 					} else if (!modifier.equals("abstract")
-							&& !modifier.equals("final")) {
+							&& !modifier.equals("final")
+							&& !modifier.equals("static")) {
 						removedDuplicates += modifier + " ";
 					}
 				}
 			}
 
+			//System.err.println("RM: " + removedDuplicates);
+			
 			String oldBodyA;
 			if((terminalA.getBody().indexOf(",") > 0 && terminalA.getBody().indexOf("=") > 0 && terminalA.getBody().indexOf(",") < terminalA.getBody().indexOf("=")) || (terminalA.getBody().indexOf(",") > 0 && terminalA.getBody().indexOf("=") < 0)) {
 				 oldBodyA = terminalA.getBody().substring(terminalA.getBody().indexOf(","));
@@ -145,6 +159,8 @@ public class FieldOverriding {
 			}
 			
 			terminalB.setBody(removedDuplicates + " " + oldBodyB);
+			
+			//System.err.println("terminalC: " + terminalB.getBody());
 		}
 	}
 

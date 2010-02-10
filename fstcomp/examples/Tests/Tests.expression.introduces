@@ -1,0 +1,6 @@
+Introduces Base Foo ClassDeclaration
+Introduces Base Foo.X ClassDeclaration
+Introduces Base Foo.X.Y ClassDeclaration
+Introduces Base Foo.T InnerEnumDecl
+Introduces Ext Foo ClassDeclaration
+Introduces Ext Foo.outgoing MethodDecl

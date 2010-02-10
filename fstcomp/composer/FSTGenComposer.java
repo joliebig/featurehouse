@@ -56,16 +56,18 @@ public class FSTGenComposer extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				if(builder instanceof JavaBuilder) {
+				/*if(builder instanceof JavaBuilder) {
 					Counter counter = new Counter();
 					for (FSTNonTerminal feature : features) {
 						counter.collect(feature);
 					}
 					if(features.size() > 0)
 						counter.writeFile(new File(cmd.equationFileName + ".introduces"));
-				}
+				}*/
 				
-
+				/*for (FSTNonTerminal feature : features) {
+					System.out.println(feature);
+				}*/
 				
 				FSTNode composition = compose(features);
 //				modify(composition);

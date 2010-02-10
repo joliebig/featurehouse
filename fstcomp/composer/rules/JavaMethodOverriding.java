@@ -96,6 +96,8 @@ public class JavaMethodOverriding {
 
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
+		//System.err.println(terminalA.getName() + " --- " + terminalB.getName());
+		
 		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
 			return;
 		
