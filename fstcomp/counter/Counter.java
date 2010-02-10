@@ -1,5 +1,9 @@
 package counter;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -15,10 +19,12 @@ public class Counter {
 			name = n; type = t; feature = f;
 		}
 		public String toString() {
-			return "(" + name + " : " + type + ", " + feature + ")";
+			return "Introduces " + feature + " " + name + " " + type;
 		}
 	}
+	
 	LinkedList<Entry> data = new LinkedList<Entry>();
+	
 	public void collect(FSTNode node) {
 	
 		if(node.getType().equals("ClassDeclaration") ||
@@ -37,8 +43,9 @@ public class Counter {
 			}
 			
 			if(node.getType().equals("MethodDecl") || node.getType().equals("ConstructorDecl")) {
-				name = node.getName().replace("{FormalParametersInternal}", "");
-				StringTokenizer st = new StringTokenizer(name, "-");
+				//name = node.getName().replace("{FormalParametersInternal}", "");
+				name = name.substring(0, name.indexOf("("));
+				/*StringTokenizer st = new StringTokenizer(name, "-");
 				boolean even = true;
 				name = st.nextToken();
 				while(st.hasMoreTokens()) {
@@ -49,22 +56,53 @@ public class Counter {
 						st.nextToken();
 						even = true;
 					}
-				}
+				}*/
 			} 
+			
+			name = getQualifiedName(name, node.getParent()); 
 			
 			Entry entry = new Entry(name, type, feature);
 			data.add(entry);
-			System.err.println(entry);
+			//System.err.println(entry);
 			
 		}
 		if(node instanceof FSTNonTerminal)
 		for(FSTNode child : ((FSTNonTerminal)node).getChildren())
 			collect(child);
     }
-    private static String getFeatureName(FSTNode node) {
+	
+	public void writeFile(File file) {
+		try {
+			//System.err.println(file.getAbsolutePath());
+			file.createNewFile();
+			BufferedWriter textFileWriter = new BufferedWriter(new FileWriter(file));
+			for(Entry entry : data)
+				textFileWriter.write(entry.toString() + "\n");
+			textFileWriter.flush();
+			textFileWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+    private static String getQualifiedName(String name, FSTNode node) {
+    	if (node.getType().equals("Feature")) {
+    	    return name;
+    	} else {
+    		if(node.getType().equals("ClassDeclaration") || node.getType().equals("InnerClassDecl")) {
+    			name = node.getName() + "." + name;
+    		}
+    		
+    	    return getQualifiedName(name, node.getParent());
+        }
+		
+	}
+	private static String getFeatureName(FSTNode node) {
     	if (node.getType().equals("Feature"))
     	    return node.getName();
     	else
     	    return getFeatureName(node.getParent());
-        }
+    }
+	
 }

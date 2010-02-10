@@ -1,4 +1,4 @@
-// $Header: /home/apel/cvs/fstcomp/examples/GraphJava/BasicGraph/Graph/Attic/Edge.java,v 1.2 2010-02-09 19:40:34 apel Exp $
+// $Header: /home/apel/cvs/fstcomp/examples/GraphJava/BasicGraph/Graph/Attic/Edge.java,v 1.3 2010-02-10 11:58:17 apel Exp $
 /**
  * Please complete these missing tags
  * @author
@@ -11,7 +11,8 @@ package Graph;
 
 class Edge
 {
-    Node a,c;
+	
+    Node a;
     Node b;
     /**
      * Please complete the missing tags for Edge

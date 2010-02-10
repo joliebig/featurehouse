@@ -1,5 +1,6 @@
 package composer;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,7 @@ import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
+import builder.java.JavaBuilder;
 
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
@@ -54,13 +56,15 @@ public class FSTGenComposer extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-
-				//for (FSTNonTerminal feature : features) {
-					//System.out.println(feature.toString());
-				//	Counter counter = new Counter();
-				//	counter.collect(feature);
-				//}
-
+				if(builder instanceof JavaBuilder) {
+					Counter counter = new Counter();
+					for (FSTNonTerminal feature : features) {
+						counter.collect(feature);
+					}
+					if(features.size() > 0)
+						counter.writeFile(new File(cmd.equationFileName + ".introduces"));
+				}
+				
 
 				
 				FSTNode composition = compose(features);
