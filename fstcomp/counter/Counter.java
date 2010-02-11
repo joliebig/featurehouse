@@ -44,7 +44,7 @@ public class Counter {
 			
 			if(node.getType().equals("MethodDecl") || node.getType().equals("ConstructorDecl")) {
 				//name = node.getName().replace("{FormalParametersInternal}", "");
-				name = name.substring(0, name.indexOf("("));
+				name = name.substring(0, name.indexOf("(")) + "()";
 				/*StringTokenizer st = new StringTokenizer(name, "-");
 				boolean even = true;
 				name = st.nextToken();
