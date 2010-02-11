@@ -62,7 +62,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 						counter.collect(feature);
 					}
 					if(features.size() > 0)
-						counter.writeFile(new File(cmd.equationFileName + ".introduces"));
+						counter.writeFile(new File(cmd.equationFileName + ".rsf"));
 				}*/
 				
 				/*for (FSTNonTerminal feature : features) {
