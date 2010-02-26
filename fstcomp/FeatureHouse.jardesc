@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="C:/Dokumente und Einstellungen/Sven Apel/Desktop/FeatureHouse-0.3.jar"/>
-    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.2.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <jar path="C:/Dokumente und Einstellungen/Sven Apel/Desktop/FeatureHouse-2010-.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse-0.4.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <manifest generateManifest="true" mainClassHandleIdentifier="=fstcomp/&lt;composer{FSTGenComposer.java[FSTGenComposer" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
@@ -10,13 +10,15 @@
             <packagesToUnSeal/>
         </sealing>
     </manifest>
-    <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="true">
+    <selectedElements exportClassFiles="false" exportJavaFiles="false" exportOutputFolder="true">
         <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
         <folder path="/CIDE2_ast/META-INF"/>
         <javaElement handleIdentifier="=fstgen/test"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.javam"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.phaskell"/>
+        <file path="/fstmerge/.classpath"/>
         <file path="/CIDE_generateAST/GenASTNode.java"/>
         <file path="/CIDE2_ast/php.jj"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification"/>
@@ -33,6 +35,7 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
+        <file path="/fstmerge/.project"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content"/>
@@ -42,6 +45,7 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.javam"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.C"/>
         <file path="/CIDE2_ast/FormsPlSql.jj"/>
         <javaElement handleIdentifier="=CIDE2_ast/src"/>
@@ -51,8 +55,8 @@
         <javaElement handleIdentifier="=CIDE_generateAST/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder"/>
         <javaElement handleIdentifier="=fstgen/src"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.alloy"/>
     </selectedElements>
-    <fatjar builder="org.eclipse.jdt.ui.plain_jar_builder" launchConfig=""/>
 </jardesc>
