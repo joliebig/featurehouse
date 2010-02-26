@@ -385,6 +385,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Modifier2") && expectedType.equals("Modifier")) return true;
 		if (type.equals("RelationalOp2") && expectedType.equals("RelationalOp")) return true;
 		if (type.equals("ForInit1") && expectedType.equals("ForInit")) return true;
+		if (type.equals("PrimarySuffix7") && expectedType.equals("PrimarySuffix")) return true;
 		if (type.equals("CastExpression2") && expectedType.equals("CastExpression")) return true;
 		if (type.equals("TryStatementEnd2") && expectedType.equals("TryStatementEnd")) return true;
 		if (type.equals("Annotation3") && expectedType.equals("Annotation")) return true;
@@ -426,6 +427,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AdditiveOp1") && expectedType.equals("AdditiveOp")) return true;
 		if (type.equals("CastLookahead2") && expectedType.equals("CastLookahead")) return true;
 		if (type.equals("Type2") && expectedType.equals("Type")) return true;
+		if (type.equals("EnumConstant1") && expectedType.equals("EnumConstant")) return true;
 		if (type.equals("EqualityOp1") && expectedType.equals("EqualityOp")) return true;
 		if (type.equals("AdditiveOp2") && expectedType.equals("AdditiveOp")) return true;
 		if (type.equals("PrimarySuffix5") && expectedType.equals("PrimarySuffix")) return true;
@@ -459,6 +461,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("UnaryExpression4") && expectedType.equals("UnaryExpression")) return true;
 		if (type.equals("MultiplicativeOp2") && expectedType.equals("MultiplicativeOp")) return true;
 		if (type.equals("CastLAOp2") && expectedType.equals("CastLAOp")) return true;
+		if (type.equals("EnumConstant2") && expectedType.equals("EnumConstant")) return true;
 		if (type.equals("AssignmentOperator11") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("AssignmentOperator6") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("BlockStatement3") && expectedType.equals("BlockStatement")) return true;
@@ -501,6 +504,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Statement6") && expectedType.equals("Statement")) return true;
 		if (type.equals("PrimarySuffix1") && expectedType.equals("PrimarySuffix")) return true;
 		if (type.equals("Literal5") && expectedType.equals("Literal")) return true;
+		if (type.equals("MemberValue4") && expectedType.equals("MemberValue")) return true;
 		if (type.equals("AssignmentOperator4") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("PrimaryPrefix6") && expectedType.equals("PrimaryPrefix")) return true;
 		if (type.equals("StatementExpression3") && expectedType.equals("StatementExpression")) return true;

@@ -443,7 +443,9 @@ FSTInfo EnumBodyInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo EnumConstant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> [n=Arguments(true){ replaceName(n);}] [n=ClassOrInterfaceBody(true){ replaceName(n);}] {return productionEndTerminal("EnumConstant","-","-","Replacement",first,token);}
+	<IDENTIFIER> [n=Arguments(true){ replaceName(n);}] [n=ClassOrInterfaceBody(true){ replaceName(n);}] {return productionEndTerminal("EnumConstant1","-","-","Replacement",first,token);}
+ |
+	 {return productionEndTerminal("EnumConstant2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -561,7 +563,7 @@ FSTInfo FormalParametersInternal(boolean inTerminal) : { Token first=null,t;FSTI
 
 FSTInfo FormalParameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["final" ] n=Type(true){ replaceName("Type", n);}{ replaceName(n);} ["..." ] n=VariableDeclaratorId(true){ replaceName(n);} {return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
+	[LOOKAHEAD(Annotation()) n=Annotation(true){ replaceName(n);}] ["final" ] n=Type(true){ replaceName("Type", n);}{ replaceName(n);} ["..." ] n=VariableDeclaratorId(true){ replaceName(n);} {return productionEndTerminal("FormalParameter","-","{Type}","Replacement",first,token);}
 
  )  }
 
@@ -1001,15 +1003,17 @@ FSTInfo PrimarySuffix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "." "this"  {return productionEndTerminal("PrimarySuffix1","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(2) "." n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix2","-","-","Replacement",first,token);}
+	LOOKAHEAD(2) "." "super"  {return productionEndTerminal("PrimarySuffix2","-","-","Replacement",first,token);}
  |
-	LOOKAHEAD(3) n=MemberSelector(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix3","-","-","Replacement",first,token);}
+	LOOKAHEAD(2) "." n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix3","-","-","Replacement",first,token);}
  |
-	"[" n=Expression(true){ replaceName(n);} "]" {return productionEndTerminal("PrimarySuffix4","-","-","Replacement",first,token);}
+	LOOKAHEAD(3) n=MemberSelector(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix4","-","-","Replacement",first,token);}
  |
-	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix5","-","-","Replacement",first,token);}
+	"[" n=Expression(true){ replaceName(n);} "]" {return productionEndTerminal("PrimarySuffix5","-","-","Replacement",first,token);}
  |
-	n=Arguments(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix6","-","-","Replacement",first,token);}
+	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix6","-","-","Replacement",first,token);}
+ |
+	n=Arguments(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix7","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1354,6 +1358,8 @@ FSTInfo MemberValue(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	n=MemberValueArrayInitializer(true){ replaceName(n);} {return productionEndTerminal("MemberValue2","-","-","Replacement",first,token);}
  |
 	n=ConditionalExpression(true){ replaceName(n);} {return productionEndTerminal("MemberValue3","-","-","Replacement",first,token);}
+ |
+	 {return productionEndTerminal("MemberValue4","-","-","Replacement",first,token);}
 
  )  }
 

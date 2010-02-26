@@ -13,12 +13,31 @@ public @interface Test {
         class X{}
     }
 }
-
+@TestExecutionListeners({})
  class Testb implements X, Y, Z {
 	int a;
 	int b,c[][];
+	
+	   public static enum StyleEnum
+	   {
+	      DOCK_TAB_STYLE(false),
+	      INTERNAL_FRAME_STYLE(true),;
+
+	      private boolean _supportsLayers;
+
+	      StyleEnum(boolean supportsLayers)
+	      {
+	         _supportsLayers = supportsLayers;
+	      }
+	   }
+	
+	private void listFieldsValueChanged(
+			@SuppressWarnings("unused")
+	        javax.swing.event.ListSelectionEvent evt)
+		{}
+	
 	void b(){
-		b();
+		Testbb.super.b();
 	}
 	void b(int a, Object b){
 		b();

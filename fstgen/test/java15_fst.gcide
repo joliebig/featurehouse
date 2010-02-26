@@ -445,6 +445,8 @@ EnumBodyInternal: ";" ( ClassOrInterfaceBodyDeclaration )* ;
 
 EnumConstant:
   <IDENTIFIER> [ Arguments ] [ ClassOrInterfaceBody ]
+    |
+  <NONE>
 ;
 
 TypeParameters:
@@ -550,7 +552,7 @@ FormalParametersInternal:
 
 @FSTExportName("{Type}")
 FormalParameter:
-  [ "final" <NONE>] Type [ "..."<NONE> ] VariableDeclaratorId
+  [ LOOK_AHEAD("Annotation()") Annotation ] [ "final" <NONE>] Type [ "..."<NONE> ] VariableDeclaratorId
 ;
 
 @FSTInline @FSTExportName("{<IDENTIFIER>}({FormalParameters})")
@@ -843,6 +845,9 @@ PrimaryPrefix:
 PrimarySuffix:
   LOOK_AHEAD(2)
   "." "this"<NONE>
+|
+  LOOK_AHEAD(2)
+  "." "super"<NONE>
 |
   LOOK_AHEAD(2)
   "." AllocationExpression
@@ -1148,6 +1153,8 @@ MemberValue:
    MemberValueArrayInitializer
  |
    ConditionalExpression
+ |
+	<NONE>
 ;
 
 MemberValueArrayInitializer:
