@@ -89,9 +89,12 @@ public class LineBasedMerger implements MergerInterface {
 	        //	removeComments(fileBase);
 	        //	removeComments(fileVar2);
 	        //}
-	        
-	        //String mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
-	        String mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
+
+	        String mergeCmd = ""; 
+	        if(System.getProperty("os.name").contains("Windows"))
+	        	mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
+	        else
+	        	mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
 	        Runtime run = Runtime.getRuntime();
 			Process pr = run.exec(mergeCmd);
 			//pr.waitFor();
