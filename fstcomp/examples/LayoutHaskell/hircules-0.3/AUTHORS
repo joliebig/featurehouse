@@ -1,7 +1,0 @@
-Jens Petersen <petersen@haskell.org>
-* modified (heavily) Main and IRC modules
-* added GUI module and other files
-* made autotools files for packaging
-
-Andrew J. Bromage <ajb@spamcop.net>
-* wrote the original Main and IRC modules in lambdabot.
