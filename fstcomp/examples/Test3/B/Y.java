@@ -1,0 +1,3 @@
+class Y {
+	void bar() {}
+}
