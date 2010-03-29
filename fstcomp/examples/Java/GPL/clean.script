@@ -1,7 +1,0 @@
-ls *.equation | sed -es/.equation// > junk
-ls *.equations | sed -es/.equations// >> junk
-for i in `cat junk` ;
-do rm -r -f $i
-done
-rm junk _* *~ */*~
-rm */thumbs.db
