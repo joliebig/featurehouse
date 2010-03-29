@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>CS 392F HW1 &mdash; Adrian Quark</title>
+<meta name="author" content="Adrian Quark">
+</head>
+<body>
+<h1>CS 392F HW1 &mdash; Adrian Quark</h1>
+<h2>Overview</h2>
+<p>To compile and run a program based on the equation file <tt>Basic.equation</tt>, run: <tt>./run Basic.equation</tt></p>
+<p>To create new equation files, run: <tt>guidsl model.m</tt></p>
+
+<h2>Features</h2>
+<p><tt>model.m</tt> defines the feature model.</p>
+<p>This implementation is very fine-grained, involving 11 features for a total
+of 3*2<sup>8</sup> possible programs.</p>
+<dl>
+<dt>Print</dt><dd>Print menu item and button.</dd>
+<dt>FormatRaw</dt><dd>Formatting options for raw text (line wrapping and font). Requires TextRaw.</dd>
+<dt>FormatStyled</dt><dd>Formatting options for styled text (regular/bold/italic). Requires TextStyled. This is more a proof of concept than a complete implementation of rich text formatting.</dd>
+<dt>Find</dt><dd>Find and Find Again options.</dd>
+<dt>Clipboard</dt><dd>Cut, Copy, Paste, and Select All.</dd>
+<dt>Undo</dt><dd>Undo and Redo.</dd>
+<dt>File</dt><dd>File New, Open, Save, and Save As.</dd>
+<dt>MenuBar</dt><dd>Menu bar.</dd>
+<dt>ToolBar</dt><dd>Tool bar. This simply enables the toolbar which is actually
+populated by the other features.  As a future project it would be interesting
+to allow features to register "actions" in some higher-level abstract way so
+that tool bars and menu bars could be generated more flexibly.</dd>
+<dt>TextRaw</dt><dd>Raw text editing area. Conflicts with TextStyled.</dd>
+<dt>TextStyled</dt><dd>Styled text editing area. Conflicts with TextRaw.</dd>
+<dt>Base</dt><dd>Base. Requires TextRaw or TextStyled.</dd>
+</dl>
+<p>I began experimenting with creating an "SWT" feature, but found it too
+tedious to create all the necessary interfaces to make the existing features
+toolkit-neutral.</p>
+
+<h2>Equation Files</h2>
+<dl>
+<dt>Minimal.equation</dt><dd>A minimal scratch pad without even the capability to save.</dd>
+<dt>Basic.equation</dt><dd>A basic editor with save, undo, clipboard, find, print.</dd>
+<dt>FullRaw.equation</dt><dd>A fully-featured editor for plain text.</dd>
+<dt>FullStyled.equation</dt><dd>A fully-featured editor for styled text.</dd>
+</dl>
+</body>
+</html>

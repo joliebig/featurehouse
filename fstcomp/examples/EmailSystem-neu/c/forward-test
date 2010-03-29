@@ -1,9 +1,0 @@
-# grabs the interaction where decryption isn't applied to an encrypted message before forwarding, e.g. wrong order of processing.
-call(forward(msg))
-implies isReadable(msg)
-
-and
-
-# forwarded messages should finally be sent
-call(forward(msg))
-implies later call(mail(msg))

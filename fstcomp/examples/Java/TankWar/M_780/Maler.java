@@ -1,0 +1,9 @@
+
+public class Maler {
+	
+	protected void gamesize(){
+		GAME_WIDTH=780;
+		GAME_HEIGHT=780;
+	}
+
+}

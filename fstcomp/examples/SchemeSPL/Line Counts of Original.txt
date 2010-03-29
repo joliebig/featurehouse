@@ -1,6 +1,0 @@
-Source lines  1269
-Comment lines 103
-Blank lines   291
-mixed lines   32
-
-Total         1695

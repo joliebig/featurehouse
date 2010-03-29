@@ -1,7 +1,0 @@
-IN ch5-eceval-support.scm:
-  define-primitive-procedures geändert:
-    Aufgeteilt in Gruppen (arithmetic, comparison...)
-    Weiter: hinzufügen eigene Operation, (inc) ?
-
-
-

@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.1">
+  <compounddef id="classX" kind="class" prot="public">
+    <compoundname>X</compoundname>
+      <sectiondef kind="package-func">
+      <memberdef kind="function" id="classX_1af5679d5dabcceb9f03f97e4a6d533baf" prot="package" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void X.foo</definition>
+        <argsstring>()</argsstring>
+        <name>foo</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/cygdrive/c/Dokumente und Einstellungen/Sven Apel/Eigene Dateien/Uni/fstcomp/examples/Test4/Test4/X.java" line="3" bodyfile="/cygdrive/c/Dokumente und Einstellungen/Sven Apel/Eigene Dateien/Uni/fstcomp/examples/Test4/Test4/X.java" bodystart="3" bodyend="3"/>
+        <references refid="classY_1a3c3515e5bdbaba53ec748e987aad60d7" compoundref="Y_8java" startline="3" endline="3">Y::bar</references>
+      </memberdef>
+      </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/cygdrive/c/Dokumente und Einstellungen/Sven Apel/Eigene Dateien/Uni/fstcomp/examples/Test4/Test4/X.java" line="1" bodyfile="/cygdrive/c/Dokumente und Einstellungen/Sven Apel/Eigene Dateien/Uni/fstcomp/examples/Test4/Test4/X.java" bodystart="1" bodyend="6"/>
+    <listofallmembers>
+      <member refid="classX_1af5679d5dabcceb9f03f97e4a6d533baf" prot="package" virt="non-virtual"><scope>X</scope><name>foo</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

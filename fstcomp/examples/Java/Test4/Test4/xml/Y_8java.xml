@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.6.1">
+  <compounddef id="Y_8java" kind="file">
+    <compoundname>Y.java</compoundname>
+    <innerclass refid="classY" prot="public">Y</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/cygdrive/c/Dokumente und Einstellungen/Sven Apel/Eigene Dateien/Uni/fstcomp/examples/Test4/Test4/Y.java"/>
+  </compounddef>
+</doxygen>

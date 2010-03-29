@@ -1,5 +1,0 @@
-foldersTree = gFld("<b>graphlib</b>", "", "")
-     insDoc(foldersTree, gLnk("Main Page", "", "main.html"))
-aux1 = insFld(foldersTree, gFld("File List", "", "files.html"))
-       insDoc(aux1, gLnk("graph_hash.h", "", "graph__hash_8h.html"))
-     insDoc(foldersTree, gLnk("Globals", "", "globals.html"))
