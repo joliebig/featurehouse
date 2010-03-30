@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.awt.Color;
 import java.awt.Font;

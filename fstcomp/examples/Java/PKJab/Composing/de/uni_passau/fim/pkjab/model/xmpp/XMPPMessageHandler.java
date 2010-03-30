@@ -1,6 +1,6 @@
+package de.uni_passau.fim.pkjab.model.xmpp;
 
-
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.util.ChatState;
 
 class XMPPMessageHandler {
 

@@ -1,8 +1,9 @@
+package de.uni_passau.fim.pkjab.model;
 
 import org.xml.sax.SAXException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.util.Stack;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.util.Stack;
 
 public class UnknownXMLException extends SAXException {
 

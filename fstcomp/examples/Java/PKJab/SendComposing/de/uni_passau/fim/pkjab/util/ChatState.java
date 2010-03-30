@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.util;
 
 class ChatState {
 	

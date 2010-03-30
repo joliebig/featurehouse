@@ -1,4 +1,4 @@
-
+package de.uni_passau.fim.pkjab.model.tags;
 
 public class XMLTag extends AbstractXMLTag {
 	

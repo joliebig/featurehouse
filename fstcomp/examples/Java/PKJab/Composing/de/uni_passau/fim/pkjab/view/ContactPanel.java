@@ -1,6 +1,7 @@
+package de.uni_passau.fim.pkjab.view;
 
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactComposingEvent;
+import de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.util.listener.ContactComposingEvent;
 
 class ContactPanel {
 

@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -26,12 +27,12 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Connection;
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
-import pkjab.de.uni_passau.fim.pkjab.util.Observer;
-import pkjab.de.uni_passau.fim.pkjab.util.UserState;
+import de.uni_passau.fim.pkjab.model.Connection;
+import de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.Observer;
+import de.uni_passau.fim.pkjab.util.UserState;
 
 public class PKjab extends JFrame implements Observer {
 	

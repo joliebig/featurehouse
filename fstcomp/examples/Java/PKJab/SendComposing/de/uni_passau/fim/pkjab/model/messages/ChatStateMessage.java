@@ -1,6 +1,6 @@
+package de.uni_passau.fim.pkjab.model.messages;
 
-
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.util.ChatState;
 
 public class ChatStateMessage extends Message {
 

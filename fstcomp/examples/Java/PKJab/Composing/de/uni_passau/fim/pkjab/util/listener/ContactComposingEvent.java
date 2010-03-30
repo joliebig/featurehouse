@@ -1,8 +1,9 @@
+package de.uni_passau.fim.pkjab.util.listener;
 
 import java.util.EventObject;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.util.ChatState;
 
 public class ContactComposingEvent extends EventObject {
 	

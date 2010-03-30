@@ -1,7 +1,7 @@
+package de.uni_passau.fim.pkjab.model;
 
-
-import pkjab.de.uni_passau.fim.pkjab.model.messages.ChatStateMessage;
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.model.messages.ChatStateMessage;
+import de.uni_passau.fim.pkjab.util.ChatState;
 
 class Contact {
 
@@ -24,11 +24,11 @@ class Contact {
 	
  public TextMessage sendMessage(String text) {
 		myChatState = ChatState.ACTIVE;
-		return super.sendMessage(text);
+		return original(text);
 	}
 	
  public void setChatState(ChatState chatState) {
 		supportsChatStates = true;
-		super.setChatState(chatState);
+		original(chatState);
 	}
 }

@@ -1,10 +1,10 @@
-
+package de.uni_passau.fim.pkjab.model;
 
 import java.io.IOException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.Iq;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.XMLTag;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.Iq;
+import de.uni_passau.fim.pkjab.model.tags.XMLTag;
 
 class ConnectionCallback {
 		
@@ -18,7 +18,7 @@ class ConnectionCallback {
 				+ " " + System.getProperty("os.arch"), iq.id, iq.from, iq.to);
 
 		} else {
-			super.handleQuery(iq);
+			original(iq);
 		}
 	}
 }

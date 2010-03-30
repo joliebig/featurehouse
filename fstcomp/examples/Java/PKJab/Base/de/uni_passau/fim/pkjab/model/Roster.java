@@ -1,10 +1,11 @@
+package de.uni_passau.fim.pkjab.model;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.Jid;
 
 public class Roster {
 	

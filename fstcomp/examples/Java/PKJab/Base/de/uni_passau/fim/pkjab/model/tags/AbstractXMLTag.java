@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.model.tags;
 
 public abstract class AbstractXMLTag implements Comparable {
 

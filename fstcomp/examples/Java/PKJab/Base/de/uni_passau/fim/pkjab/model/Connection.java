@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.model;
 
 import java.io.IOException;
 import java.util.Iterator;
@@ -14,16 +15,16 @@ import javax.security.sasl.SaslClient;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.SAXException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.Iq;
-import pkjab.de.uni_passau.fim.pkjab.model.xmpp.XMPPAuthHandler;
-import pkjab.de.uni_passau.fim.pkjab.model.xmpp.XMPPWriter;
-import pkjab.de.uni_passau.fim.pkjab.util.ConnectionState;
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
-import pkjab.de.uni_passau.fim.pkjab.util.Observable;
-import pkjab.de.uni_passau.fim.pkjab.util.Observer;
-import pkjab.de.uni_passau.fim.pkjab.util.UserState;
+import de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.Iq;
+import de.uni_passau.fim.pkjab.model.xmpp.XMPPAuthHandler;
+import de.uni_passau.fim.pkjab.model.xmpp.XMPPWriter;
+import de.uni_passau.fim.pkjab.util.ConnectionState;
+import de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.Observable;
+import de.uni_passau.fim.pkjab.util.Observer;
+import de.uni_passau.fim.pkjab.util.UserState;
 
 public class Connection extends Observable {
 

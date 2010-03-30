@@ -1,10 +1,11 @@
+package de.uni_passau.fim.pkjab.util;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.model.messages.Message;
 
 /**
  * This class represents an observable object, or "data" in the model-view 

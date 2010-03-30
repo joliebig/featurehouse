@@ -1,8 +1,9 @@
+package de.uni_passau.fim.pkjab.model;
 
 class ConnectionCallback {
 	
 	public synchronized void secondInitWasSuccessful(Set features) throws IOException {
-		super.secondInitWasSuccessful(features);
+		original(features);
 		if (connection.state != ConnectionState.DISCONNECTING) {
 			connection.getOutput().getRoster();
 		}
@@ -13,7 +14,7 @@ class ConnectionCallback {
 				&& iq.getChild().getName().equals("query") && iq.getChild().uri.equals("jabber:iq:roster")) {
 			System.out.println("handleQuery: Got Roster: " + connection.getRoster());
 		} else {
-			super.handleQuery(iq);
+			original(iq);
 		}
 	}
 }

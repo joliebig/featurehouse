@@ -1,5 +1,6 @@
+package de.uni_passau.fim.pkjab.util;
 
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.model.messages.Message;
 
 /**
  * A class has to implement this interface if it wants to be informed of changes in observable objects.

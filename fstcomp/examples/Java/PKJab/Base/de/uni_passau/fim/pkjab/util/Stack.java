@@ -1,8 +1,9 @@
+package de.uni_passau.fim.pkjab.util;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
 
 public class Stack {
 

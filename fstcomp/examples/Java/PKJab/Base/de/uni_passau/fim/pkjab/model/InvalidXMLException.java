@@ -1,7 +1,8 @@
+package de.uni_passau.fim.pkjab.model;
 
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.XMLTag;
-import pkjab.de.uni_passau.fim.pkjab.util.Stack;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.XMLTag;
+import de.uni_passau.fim.pkjab.util.Stack;
 
 public class InvalidXMLException extends UnknownXMLException {
 

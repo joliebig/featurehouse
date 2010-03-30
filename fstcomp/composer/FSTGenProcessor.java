@@ -49,6 +49,7 @@ public class FSTGenProcessor {
 		registerArtifactBuilder(new TextBuilder(".properties"));
 		registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		registerArtifactBuilder(new BinaryBuilder(".gif"));
+		registerArtifactBuilder(new BinaryBuilder(".png"));
 		registerPrintVisitor(new AlloyPrintVisitor());
 		registerPrintVisitor(new JavaPrintVisitor());
 		registerPrintVisitor(new CSharpPrintVisitor());
@@ -59,6 +60,7 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new TextPrintVisitor(".properties"));
 		registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		registerPrintVisitor(new BinaryPrintVisitor(".gif"));
+		registerPrintVisitor(new BinaryPrintVisitor(".png"));
 
 		errorFiles = new DuplicateFreeLinkedList<File>();
 	}

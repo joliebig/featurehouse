@@ -1,16 +1,17 @@
+package de.uni_passau.fim.pkjab.model.xmpp;
 
 import java.io.IOException;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
-import pkjab.de.uni_passau.fim.pkjab.model.Roster;
-import pkjab.de.uni_passau.fim.pkjab.model.messages.TextMessage;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.XMLTag;
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
-import pkjab.de.uni_passau.fim.pkjab.util.Stack;
+import de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.model.Roster;
+import de.uni_passau.fim.pkjab.model.messages.TextMessage;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.XMLTag;
+import de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.Stack;
 
 class XMPPMessageHandler extends XMPPReaderIgnore {
 

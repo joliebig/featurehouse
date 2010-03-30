@@ -1,9 +1,10 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.model.Contact;
 
 class MessageFrame {
     

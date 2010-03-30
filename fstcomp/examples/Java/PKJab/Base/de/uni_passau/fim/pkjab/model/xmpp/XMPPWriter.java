@@ -1,12 +1,13 @@
+package de.uni_passau.fim.pkjab.model.xmpp;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
-import pkjab.de.uni_passau.fim.pkjab.util.Base64;
-import pkjab.de.uni_passau.fim.pkjab.util.UserState;
+import de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.util.Base64;
+import de.uni_passau.fim.pkjab.util.UserState;
 
 public class XMPPWriter {
 

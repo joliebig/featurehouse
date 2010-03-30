@@ -1,7 +1,7 @@
+package de.uni_passau.fim.pkjab.model;
 
-
-import pkjab.de.uni_passau.fim.pkjab.util.ChatState;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactComposingEvent;
+import de.uni_passau.fim.pkjab.util.ChatState;
+import de.uni_passau.fim.pkjab.util.listener.ContactComposingEvent;
 
 class Contact {
 
@@ -18,7 +18,7 @@ class Contact {
 	}
 	
  public void fireStateChanged() {
-		super.fireStateChanged();
+		original();
 		if ((chatState != null) && (getState() == UserState.OFFLINE) && (chatState != ChatState.GONE)) {
 			setChatState(ChatState.GONE);
 		}

@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -9,11 +10,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactListener;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactStateEvent;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.MessageReceivedEvent;
+import de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.listener.ContactListener;
+import de.uni_passau.fim.pkjab.util.listener.ContactStateEvent;
+import de.uni_passau.fim.pkjab.util.listener.MessageReceivedEvent;
 
 public class ContactPanel extends JButton implements ContactListener {
 

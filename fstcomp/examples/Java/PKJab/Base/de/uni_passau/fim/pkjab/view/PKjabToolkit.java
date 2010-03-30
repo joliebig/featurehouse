@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.awt.Color;
 import java.net.URL;
@@ -9,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 
-import pkjab.de.uni_passau.fim.pkjab.util.UserState;
+import de.uni_passau.fim.pkjab.util.UserState;
 
 final class PKjabToolkit {
 

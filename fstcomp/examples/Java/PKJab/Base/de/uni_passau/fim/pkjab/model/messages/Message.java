@@ -1,5 +1,6 @@
+package de.uni_passau.fim.pkjab.model.messages;
 
-import pkjab.de.uni_passau.fim.pkjab.util.Jid;
+import de.uni_passau.fim.pkjab.util.Jid;
 
 public abstract class Message {
 

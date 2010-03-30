@@ -1,8 +1,8 @@
-
+package de.uni_passau.fim.pkjab.model;
 
 import java.io.IOException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Connection;
+import de.uni_passau.fim.pkjab.model.Connection;
 
 import javax.security.auth.callback.Callback;
 import javax.security.auth.callback.CallbackHandler;

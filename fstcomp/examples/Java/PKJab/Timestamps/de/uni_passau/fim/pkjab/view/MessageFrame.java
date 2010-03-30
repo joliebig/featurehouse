@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.view;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -8,7 +9,7 @@ class MessageFrame {
 
  protected String messageToText(boolean incoming, Message message) {
 		return dateFormat.format(new Date(message.getTime()))
-			+ " " + super.messageToText(incoming, message);
+			+ " " + original(incoming, message);
 	}
 
 }

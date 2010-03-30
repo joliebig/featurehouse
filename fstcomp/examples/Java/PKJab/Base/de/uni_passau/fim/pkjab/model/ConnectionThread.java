@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.model;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -8,10 +9,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import pkjab.de.uni_passau.fim.pkjab.model.xmpp.XMPPReader;
-import pkjab.de.uni_passau.fim.pkjab.model.xmpp.XMPPReaderLogin;
-import pkjab.de.uni_passau.fim.pkjab.model.xmpp.XMPPWriter;
-import pkjab.de.uni_passau.fim.pkjab.util.ConnectionState;
+import de.uni_passau.fim.pkjab.model.xmpp.XMPPReader;
+import de.uni_passau.fim.pkjab.model.xmpp.XMPPReaderLogin;
+import de.uni_passau.fim.pkjab.model.xmpp.XMPPWriter;
+import de.uni_passau.fim.pkjab.util.ConnectionState;
 
 class ConnectionThread extends Thread {
 

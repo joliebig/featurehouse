@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.model.xmpp;
 
 import java.io.IOException;
 
@@ -6,13 +7,13 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.InvalidXMLException;
-import pkjab.de.uni_passau.fim.pkjab.model.RestartStreamException;
-import pkjab.de.uni_passau.fim.pkjab.model.UnknownXMLException;
-import pkjab.de.uni_passau.fim.pkjab.model.ConnectionCallback;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.XMLTag;
-import pkjab.de.uni_passau.fim.pkjab.util.Stack;
+import de.uni_passau.fim.pkjab.model.InvalidXMLException;
+import de.uni_passau.fim.pkjab.model.RestartStreamException;
+import de.uni_passau.fim.pkjab.model.UnknownXMLException;
+import de.uni_passau.fim.pkjab.model.ConnectionCallback;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.XMLTag;
+import de.uni_passau.fim.pkjab.util.Stack;
 
 abstract class XMPPReaderAdapter implements ContentHandler {
 

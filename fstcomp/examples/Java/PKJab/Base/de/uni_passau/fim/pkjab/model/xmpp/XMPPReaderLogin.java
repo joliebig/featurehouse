@@ -1,3 +1,4 @@
+package de.uni_passau.fim.pkjab.model.xmpp;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -7,12 +8,12 @@ import java.util.TreeSet;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import pkjab.de.uni_passau.fim.pkjab.model.RestartStreamException;
-import pkjab.de.uni_passau.fim.pkjab.model.ConnectionCallback;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
-import pkjab.de.uni_passau.fim.pkjab.model.tags.XMLTag;
-import pkjab.de.uni_passau.fim.pkjab.util.Base64;
-import pkjab.de.uni_passau.fim.pkjab.util.Stack;
+import de.uni_passau.fim.pkjab.model.RestartStreamException;
+import de.uni_passau.fim.pkjab.model.ConnectionCallback;
+import de.uni_passau.fim.pkjab.model.tags.AbstractXMLTag;
+import de.uni_passau.fim.pkjab.model.tags.XMLTag;
+import de.uni_passau.fim.pkjab.util.Base64;
+import de.uni_passau.fim.pkjab.util.Stack;
 
 public class XMPPReaderLogin extends XMPPReaderTopLevel {
 	

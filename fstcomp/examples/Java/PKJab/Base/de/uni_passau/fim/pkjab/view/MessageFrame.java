@@ -1,3 +1,5 @@
+package de.uni_passau.fim.pkjab.view;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -19,11 +21,11 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 
-import pkjab.de.uni_passau.fim.pkjab.model.Contact;
-import pkjab.de.uni_passau.fim.pkjab.model.messages.Message;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactListener;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.ContactStateEvent;
-import pkjab.de.uni_passau.fim.pkjab.util.listener.MessageReceivedEvent;
+import de.uni_passau.fim.pkjab.model.Contact;
+import de.uni_passau.fim.pkjab.model.messages.Message;
+import de.uni_passau.fim.pkjab.util.listener.ContactListener;
+import de.uni_passau.fim.pkjab.util.listener.ContactStateEvent;
+import de.uni_passau.fim.pkjab.util.listener.MessageReceivedEvent;
 
 
 public class MessageFrame extends JFrame implements ContactListener {

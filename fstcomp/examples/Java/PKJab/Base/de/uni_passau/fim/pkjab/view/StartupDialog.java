@@ -1,4 +1,4 @@
-
+package de.uni_passau.fim.pkjab.view;
 
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
