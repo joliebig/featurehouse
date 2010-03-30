@@ -1,1 +1,1 @@
-cd guidsl && java -cp ".:../jakarta.jar:../jdom.jar:../sat4j.jar" Main ../../GPL/model.m && cd ..
+cd GUIDSLComp && java -cp ".:../jakarta.jar:../jdom.jar:../sat4j.jar" Main ../../GPL/GPL.model && cd ..
