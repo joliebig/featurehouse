@@ -3,9 +3,7 @@ PARSER_BEGIN(FJParser)
 PARSER_END(FJParser)
 
 String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
-} { { int i = 0; original(); i++; } (
-	original()
-	| "refines" "class" n=Name(inTerminal){ replaceName("Name",n);} "{" (LOOKAHEAD(2) VarDeclaration(inTerminal))* ClassConstructorRefinement(inTerminal) (MethodDeclaration(inTerminal))* (MethodRefinement(inTerminal))* "}" <EOF> {return productionEndNonTerminal("TypeDeclaration","{Name}");}
+} { { int i = 0; original(); i++; } ( original() | "refines" "class" n=Name(inTerminal){ replaceName("Name",n);} "{" (LOOKAHEAD(2) VarDeclaration(inTerminal))* ClassConstructorRefinement(inTerminal) (MethodDeclaration(inTerminal))* (MethodRefinement(inTerminal))* "}" <EOF> {return productionEndNonTerminal("TypeDeclaration","{Name}");}
 
  )  }
 

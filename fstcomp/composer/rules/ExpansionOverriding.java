@@ -11,20 +11,16 @@ public class ExpansionOverriding {
 		
 		String pattern = "\\s*original\\s*\\(\\s*\\)\\s*";
 		
-		if(bodyA.matches(".*" + pattern + ".*")) {
-			System.err.println(bodyA);
-			System.err.println(bodyB);
+		//if(bodyA.matches(".*" + pattern + ".*")) {
 			
-			bodyB = bodyB.trim();
+		bodyB = bodyB.trim();
 			
-			if(bodyB.length() > 0 && ((bodyB.charAt(0) == '{' && bodyB.charAt(bodyB.length() - 1) == '}') || (bodyB.charAt(0) == '(' && bodyB.charAt(bodyB.length() - 1) == ')')))
-				bodyB = bodyB.substring(1, bodyB.length() - 1);
+		if(bodyB.length() > 0 && ((bodyB.charAt(0) == '{' && bodyB.charAt(bodyB.length() - 1) == '}') || (bodyB.charAt(0) == '(' && bodyB.charAt(bodyB.length() - 1) == ')')))
+			bodyB = bodyB.substring(1, bodyB.length() - 1);
 
-			String compBody = bodyA.replaceAll(pattern, bodyB);
-			terminalComp.setBody(compBody);
-			
-			System.err.println(compBody);
-			
-		}
+		String compBody = bodyA.replaceAll(pattern, bodyB);
+		terminalComp.setBody(compBody);
+
+		//}
 	}
 }

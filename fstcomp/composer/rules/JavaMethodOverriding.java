@@ -96,8 +96,6 @@ public class JavaMethodOverriding {
 
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
-		//System.err.println(terminalA.getName() + " --- " + terminalB.getName());
-		
 		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
 			return;
 		
@@ -188,8 +186,11 @@ public class JavaMethodOverriding {
 				}
 			}
 
-			terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
-			terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
+			if(terminalA.getBody().contains("("))
+				terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
+			
+			if(terminalB.getBody().contains("("))
+				terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
 			
 		}
 	}
