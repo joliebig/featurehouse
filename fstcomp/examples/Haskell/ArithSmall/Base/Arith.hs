@@ -49,13 +49,8 @@ module Arith where
   data TypedVal = TVString String
                 | TVDouble Double
                 | TVBool Bool
-                | TVFun (Result TypedVal EvalError -> Result TypedVal EvalError)	-- NoVars, Lazy Lambdas
-                | TVFun (TypedVal -> Result TypedVal EvalError)						-- NoVars, Strict Lambdas
                 | TVFun (Env (Result TypedVal EvalError) ->							-- Lazy and Dynamic Lambdas
-                           Result TypedVal EvalError -> Result TypedVal EvalError)
-                | TVFun (Result TypedVal EvalError -> Result TypedVal EvalError)	-- Lazy and Static Lambdas
-                | TVFun (Env TypedVal -> TypedVal -> Result TypedVal EvalError)		-- Strict and Dynamic Lambdas
-                | TVFun (TypedVal -> Result TypedVal EvalError);					-- Strict and Static Lambdas
+                           Result TypedVal EvalError -> Result TypedVal EvalError);
    
   instance Show TypedVal where
           { show (TVString s) = show s; 
@@ -64,46 +59,7 @@ module Arith where
             show (TVFun _) = "<<function>>"		-- Lambdas
           };
 
-  -- ---------------------------------------------------------------------------------------------------
-  -- NoVars
-  --eval :: Exp TypedVal -> Result TypedVal EvalError;
-  --eval (Const x) = Result x;
-  --eval (Binary op exp1 exp2)
-  --  = zipResult (tvBinOp op) (eval exp1) (eval exp2);
-  --eval (Unary op exp) = mapResult (tvUnOp op) (eval exp);
-  
-  -- StrictVars
-  --eval :: Env TypedVal -> Exp TypedVal -> Result TypedVal EvalError;
-  --eval _ (Const x) = Result x;
-  --eval env (Var name)
-  --  = case lookupEnv env name of
-  --        { Just x -> Result x;
-  --          Nothing -> Fail UndefVarError};
-  --eval env (Binary op exp1 exp2)
-  --  = zipResult (tvBinOp op) (eval env exp1) (eval env exp2);
-  --eval env (Unary op exp) = mapResult (tvUnOp op) (eval env exp);
-  --eval env (Let defs exp)
-  --  = case liftResult (map (eval env) exps) of
-  --        { Result vals -> eval newEnv exp
-  --            where { newEnv = addToEnvN env (zip names vals)};
-  --          Fail e -> Fail e}
-  --  where { (names, exps) = unzip defs};
-   
-  -- LazyVars
-  --eval :: Env (Result TypedVal EvalError) -> Exp TypedVal -> Result TypedVal EvalError;
-  --eval _ (Const x) = Result x;
-  --eval env (Var name) = case lookupEnv env name of
-  --        { Just x -> x;
-  --          Nothing -> Fail UndefVarError};
-  --eval env (Binary op exp1 exp2)
-  --  = zipResult (tvBinOp op) (eval env exp1) (eval env exp2);
-  --eval env (Unary op exp) = mapResult (tvUnOp op) (eval env exp);
-  --eval env (Let defs exp) = eval newEnv exp
-  --  where { (names, exps) = unzip defs;
-  --          vals = map (eval env) exps;
-  --          newEnv = addToEnvN env (zip names vals)};
-  -- ---------------------------------------------------------------------------------------------------
-  
+ 
   eval :: Env (Result TypedVal EvalError) -> Env TypedVal -> Exp TypedVal -> Result TypedVal EvalError;
   eval _ (Const x) = Result x;
   eval env (Var name)
@@ -134,23 +90,7 @@ module Arith where
   
   -- eval bei Lambdas ----------------------------------------------------------------
   
-  -- NoVars, lambdas-lazy
-  eval (Lam x exp) = Result $ TVFun (\ _ -> eval exp);
-  eval (App exp1 exp2)
-    = case (eval exp1, eval exp2) of
-          { (Result (TVFun f), arg) -> f arg;
-            (Result _, _) -> Fail ApplicationError;
-            (Fail err, _) -> Fail err};
-                
-  -- NoVars, lambdas-strict
-  eval (Lam x exp) = Result $ TVFun (\ _ -> eval exp);
-  eval (App exp1 exp2)
-    = case (eval exp1, eval exp2) of
-          { (Result (TVFun f), Result arg) -> f arg;
-            (Result (TVFun _), Fail err) -> Fail err;
-            (Result _, _) -> Fail ApplicationError;
-            (Fail err, _) -> Fail err};
-                
+              
   -- lazy-dynamic
   eval _ (Lam x exp) = Result $ TVFun f
     where { f env val
@@ -164,45 +104,6 @@ module Arith where
             (Result _, _) -> Fail ApplicationError;
             (Fail err, _) -> Fail err};
                            
-  -- lazy-static
-  eval env (Lam x exp)
-    = Result $ TVFun (\ val -> eval (addToEnv env x val) exp);
-  eval env (App exp1 exp2)
-    = case (eval env exp1, eval env exp2) of
-          { (Result (TVFun f), arg) -> f arg;
-            (Result _, _) -> Fail ApplicationError;
-           (Fail err, _) -> Fail err};
-    
-  -- strict dynamic
-  eval _ (Lam x exp) = Result $ TVFun f
-    where { f env val
-              = case eval (addToEnv env x val) exp of
-                    { Result (TVFun g) -> Result $ TVFun h
-                        where { h env2 val2 = g (addToEnv env2 x val) val2};
-                      r -> r}};
-  eval env (App exp1 exp2)
-    = case (eval env exp1, eval env exp2) of
-          { (Result (TVFun f), Result arg) -> f env arg;
-            (Result (TVFun _), Fail err) -> Fail err;
-            (Result _, _) -> Fail ApplicationError;
-            (Fail err, _) -> Fail err};
-                
-  -- strict-static
-  eval env (Lam x exp)
-    = Result $ TVFun (\ val -> eval (addToEnv env x val) exp);
-  eval env (App exp1 exp2)
-    = case (eval env exp1, eval env exp2) of
-          { (Result (TVFun f), Result arg) -> f arg;
-            (Result (TVFun _), Fail err) -> Fail err;
-            (Result _, _) -> Fail ApplicationError;
-            (Fail err, _) -> Fail err};
-  
-  -- NoVars
-  --evalExp :: Exp TypedVal -> Result TypedVal EvalError;
-  --evalExp exp = eval exp;
-  
-  evalExp :: Exp TypedVal -> Result TypedVal EvalError;
-  evalExp exp = eval emptyEnv exp;
   
   -- In allen Features vorhanden -----------------------------------------------------------
    
