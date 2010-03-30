@@ -11,7 +11,7 @@ public class ExpansionOverriding {
 		
 		String pattern = "\\s*original\\s*\\(\\s*\\)\\s*";
 		
-		//if(bodyA.matches(".*" + pattern + ".*")) {
+		//if(bodyA.trim().matches(".*" + pattern + ".*")) {
 			
 		bodyB = bodyB.trim();
 			
