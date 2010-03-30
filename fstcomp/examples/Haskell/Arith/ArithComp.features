@@ -1,5 +1,8 @@
 Base
+Bool
+BoolBinOp
 BinOp
+BoolUnOp
 UnOp
 Eval
 BinOp_Vars
@@ -11,6 +14,3 @@ Lambda_Dynamic_Lazy_Vars
 LazyVars
 Linux
 Vars
-Bool
-BoolBinOp
-BoolUnOp

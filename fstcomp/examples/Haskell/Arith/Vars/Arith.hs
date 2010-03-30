@@ -1,8 +1,14 @@
 module Arith where
 {
  -- Vars
-  data Env a = Env [(String, a)]
-             deriving Show;
+  eval _ (Const x) = Result x;
+  eval env (Var name)
+    = case lookupEnv env name of
+          { Just x -> Result x;
+            Nothing -> Fail UndefVarError};
+   
+  evalExp :: Exp TypedVal -> Result TypedVal EvalError;
+  evalExp exp = eval emptyEnv exp;   
    
   lookupEnv :: Env a -> String -> Maybe a;
   lookupEnv (Env env) name = lookup name env;
@@ -23,14 +29,7 @@ module Arith where
   -- TODO MRO: DivByZero bei BinOps ODER UnOps
   data EvalError = UndefVarError				-- Vars
                  deriving Show;
-  
-  eval _ (Const x) = Result x;
-  eval env (Var name)
-    = case lookupEnv env name of
-          { Just x -> Result x;
-            Nothing -> Fail UndefVarError};
-              
-  evalExp :: Exp TypedVal -> Result TypedVal EvalError;
-  evalExp exp = eval emptyEnv exp
-            
+
+  data Env a = Env [(String, a)]
+             deriving Show
 }
