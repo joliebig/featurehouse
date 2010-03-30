@@ -1,1 +1,0 @@
-let ff = \f -> \n -> ite (n-1) (n * f (n-1)) 1; Y = \h -> (\x -> h (x x)) (\x -> h (x x)) in let f = Y ff in f 5
