@@ -47,9 +47,11 @@ public class FSTGenProcessor {
 		registerArtifactBuilder(new JavaCCBuilder());
 		registerArtifactBuilder(new XMIBuilder());
 		registerArtifactBuilder(new TextBuilder(".properties"));
+		registerArtifactBuilder(new TextBuilder(".txt"));
 		registerArtifactBuilder(new BinaryBuilder(".jpg"));
 		registerArtifactBuilder(new BinaryBuilder(".gif"));
 		registerArtifactBuilder(new BinaryBuilder(".png"));
+		registerArtifactBuilder(new BinaryBuilder(".wav"));
 		registerPrintVisitor(new AlloyPrintVisitor());
 		registerPrintVisitor(new JavaPrintVisitor());
 		registerPrintVisitor(new CSharpPrintVisitor());
@@ -58,9 +60,11 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new HaskellPrintVisitor());
 		registerPrintVisitor(new XMIPrintVisitor());
 		registerPrintVisitor(new TextPrintVisitor(".properties"));
+		registerPrintVisitor(new TextPrintVisitor(".txt"));
 		registerPrintVisitor(new BinaryPrintVisitor(".jpg"));
 		registerPrintVisitor(new BinaryPrintVisitor(".gif"));
 		registerPrintVisitor(new BinaryPrintVisitor(".png"));
+		registerPrintVisitor(new BinaryPrintVisitor(".wav"));
 
 		errorFiles = new DuplicateFreeLinkedList<File>();
 	}
