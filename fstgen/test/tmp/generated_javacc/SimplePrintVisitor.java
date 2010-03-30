@@ -1,11 +1,13 @@
 package tmp.generated_javacc;
 
-import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.*;
+import cide.gast.*;
 
-import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import java.io.PrintStream;
+
+import cide.languages.*;
+
+import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
@@ -16,6 +18,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("javacc_input")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "javacc_options");
 				if (v!=null) {
@@ -49,18 +52,22 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			for (FSTNode v : getChildren(nonTerminal,"production")) {
 				v.accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("javacc_options")) {
+			printFeatures(nonTerminal,true);
 			printToken("options");
 			printToken("{");
 			for (FSTNode v : getChildren(nonTerminal,"option_binding")) {
 				v.accept(this);
 			}
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("RegExprProduction")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "regexpr_spec").iterator();
 			{
 				FSTNode v=getChild(nonTerminal, "regular_expr_productionPrefix");
@@ -87,9 +94,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			hintDecIndent();
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("BNFProduction")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "AccessModifier");
 				if (v!=null) {
@@ -137,9 +146,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			hintDecIndent();
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("expansion_choices")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "expansion").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -149,9 +160,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				printToken("|");
 				listElements.next().accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("expansion")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "local_lookahead");
 				if (v!=null) {
@@ -164,6 +177,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			for (FSTNode v : getChildren(nonTerminal,"expansion_unit")) {
 				v.accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);

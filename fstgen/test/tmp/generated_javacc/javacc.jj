@@ -965,13 +965,13 @@ FSTInfo javacc_input(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ParserNameS(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> {return productionEndTerminal("ParserNameS","-","-","Replacement",first,token);}
+	<IDENTIFIER> {return productionEndTerminal("ParserNameS","ParserNameS","ParserNameS","Replacement",first,token);}
 
  )  }
 
 FSTInfo ParserNameE(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> {return productionEndTerminal("ParserNameE","-","-","Replacement",first,token);}
+	<IDENTIFIER> {return productionEndTerminal("ParserNameE","ParserNameE","ParserNameE","Replacement",first,token);}
 
  )  }
 
@@ -1113,17 +1113,17 @@ FSTInfo local_lookahead(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo expansion_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(1) "LOOKAHEAD" "(" n=local_lookahead(true){ replaceName(n);} ")" {return productionEndTerminal("expansion_unit1","-","-","ExpansionOverriding",first,token);}
+	LOOKAHEAD(1) "LOOKAHEAD" "(" n=local_lookahead(true){ replaceName(n);} ")" {return productionEndTerminal("expansion_unit1","Block1","Block1","Replacement",first,token);}
  |
-	n=Block(true){ replaceName(n);} {return productionEndTerminal("expansion_unit2","-","-","ExpansionOverriding",first,token);}
+	n=Block(true){ replaceName(n);} {return productionEndTerminal("expansion_unit2","Block2","Block2","ExpansionOverriding",first,token);}
  |
-	"[" n=expansion_choices(true){ replaceName(n);} "]" {return productionEndTerminal("expansion_unit3","-","-","ExpansionOverriding",first,token);}
+	"[" n=expansion_choices(true){ replaceName(n);} "]" {return productionEndTerminal("expansion_unit3","Block3","Block3","Replacement",first,token);}
  |
-	"try" "{" n=expansion_choices(true){ replaceName(n);} "}" (n=CatchPart(true){ replaceName(n);})* ["finally" n=Block(true){ replaceName(n);}] {return productionEndTerminal("expansion_unit4","-","-","ExpansionOverriding",first,token);}
+	"try" "{" n=expansion_choices(true){ replaceName(n);} "}" (n=CatchPart(true){ replaceName(n);})* ["finally" n=Block(true){ replaceName(n);}] {return productionEndTerminal("expansion_unit4","Block4","Block4","Replacement",first,token);}
  |
-	LOOKAHEAD(<IDENTIFIER> | <STRING_LITERAL> | "<" | PrimaryExpression() "=") [LOOKAHEAD(PrimaryExpression() "=") n=PrimaryExpression(true){ replaceName(n);} "="] n=expansion_unitMain(true){ replaceName(n);} {return productionEndTerminal("expansion_unit5","-","-","ExpansionOverriding",first,token);}
+	LOOKAHEAD(<IDENTIFIER> | <STRING_LITERAL> | "<" | PrimaryExpression() "=") [LOOKAHEAD(PrimaryExpression() "=") n=PrimaryExpression(true){ replaceName(n);} "="] n=expansion_unitMain(true){ replaceName(n);} {return productionEndTerminal("expansion_unit5","Block5","Block5","Replacement",first,token);}
  |
-	"(" n=expansion_choices(true){ replaceName(n);} ")" [n=ExpModifier(true){ replaceName(n);}] {return productionEndTerminal("expansion_unit6","-","-","ExpansionOverriding",first,token);}
+	"(" n=expansion_choices(true){ replaceName(n);} ")" [n=ExpModifier(true){ replaceName(n);}] {return productionEndTerminal("expansion_unit6","Block6","Block6","ExpansionOverriding",first,token);}
 
  )  }
 
@@ -1153,11 +1153,11 @@ FSTInfo ExpModifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo regular_expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<STRING_LITERAL>{ replaceName(new FSTInfo("<STRING_LITERAL>",t.toString()));} {return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
+	t=<STRING_LITERAL>{ replaceName(new FSTInfo("<STRING_LITERAL>",t.image));} {return productionEndTerminal("regular_expression1","-","{<STRING_LITERAL>}","Replacement",first,token);}
  |
 	LOOKAHEAD(3) "<" [n=RegId(true){ replaceName("RegId", n);}{ replaceName(n);}] n=complex_regular_expression_choices(true){ replaceName(n);} ">" {return productionEndTerminal("regular_expression2","-","{RegId}","Replacement",first,token);}
  |
-	LOOKAHEAD(2) "<" t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));} ">" {return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
+	LOOKAHEAD(2) "<" t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} ">" {return productionEndTerminal("regular_expression3","-","{<IDENTIFIER>}","Replacement",first,token);}
  |
 	"<" "EOF" ">"  {return productionEndTerminal("EOFExpr","-","<EOF>","Replacement",first,token);}
 
@@ -1165,7 +1165,7 @@ FSTInfo regular_expression(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo RegId(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	["#" ] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));} ":" {return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
+	["#" ] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} ":" {return productionEndTerminal("RegId","-","{<IDENTIFIER>}","Replacement",first,token);}
 
  )  }
 

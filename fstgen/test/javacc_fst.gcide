@@ -972,7 +972,9 @@ javacc_input:
   ( production )+
   <EOF>;
   
+@FSTTerminal(name="ParserNameS")
 ParserNameS: <IDENTIFIER>;
+@FSTTerminal(name="ParserNameE")
 ParserNameE: <IDENTIFIER>;
 
 @FSTNonTerminal
@@ -1052,15 +1054,14 @@ local_lookahead :
   [ "{" Expression "}" ]
   ;
 
-@FSTTerminal(compose="ExpansionOverriding")
 expansion_unit:
-  LL(1) "LOOKAHEAD" "(" local_lookahead ")"
-	| Block
-	| "[" expansion_choices "]"
-	| "try" "{" expansion_choices "}"  ( CatchPart )* [ "finally" Block  ]
-	| LL("<IDENTIFIER> | <STRING_LITERAL> | \"<\" | PrimaryExpression() \"=\"")
+    @FSTTerminal(name="Block1") LL(1) "LOOKAHEAD" "(" local_lookahead ")"
+	| @FSTTerminal(name="Block2",compose="ExpansionOverriding") Block
+	| @FSTTerminal(name="Block3") "[" expansion_choices "]"
+	| @FSTTerminal(name="Block4") "try" "{" expansion_choices "}"  ( CatchPart )* [ "finally" Block  ]
+	| @FSTTerminal(name="Block5") LL("<IDENTIFIER> | <STRING_LITERAL> | \"<\" | PrimaryExpression() \"=\"")
   		[ LL("PrimaryExpression() \"=\"") PrimaryExpression "=" ] expansion_unitMain
-	| "(" expansion_choices ")" [ExpModifier];
+	| @FSTTerminal(name="Block6",compose="ExpansionOverriding") "(" expansion_choices ")" [ExpModifier];
 
 CatchPart: "catch" "(" Name <IDENTIFIER> ")"   Block;
 
