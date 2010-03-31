@@ -8,7 +8,7 @@ module Data.Graph.Inductive.Example
   genLNodes :: (Enum a) => a -> Int -> [LNode a];
   genLNodes q i = take i (zip [1 ..] [q ..]);
    
-  a, b, c, e, loop, ab, abb, dag3 :: Gr Char ();
+  a, b, c, e, loop, ab, dag3 :: Gr Char ();
    
   e3 :: Gr () String;
    

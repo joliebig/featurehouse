@@ -1,5 +1,5 @@
 module Data.Graph.Inductive.Example
-       (labUEdges, noEdges, b, c, abb, dag3, dag4, clr479, clr489, clr486, kin248)
+       (labUEdges, noEdges, b, c, dag3, dag4, clr479, clr489, clr486, kin248)
        where
 { import Data.Graph.Inductive;
   import Data.Graph.Inductive.Tree;
