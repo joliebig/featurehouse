@@ -40,4 +40,6 @@ module Arith where
           { show (TVString s) = show s; 
             show (TVDouble d) = show d
           }
+          
+
 }

@@ -6,8 +6,6 @@ module Arith where
              | Div
              deriving Show;
    
-  tvBinOp ::
-            BinOp -> TypedVal -> TypedVal -> Result TypedVal EvalError;
   tvBinOp (Add) (TVString s) (TVString t)
     = Result (TVString (s ++ t));
   tvBinOp (Add) (TVString s) (TVDouble y)

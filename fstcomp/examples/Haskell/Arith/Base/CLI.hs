@@ -1,10 +1,10 @@
 module CLI where
-{ import Control.Exception (catch);
+{ import Control.Exception ( catch, SomeException );
+  import System.IO;
   import Text.ParserCombinators.Parsec;
   import Text.ParserCombinators.Parsec.Expr;
   import Text.ParserCombinators.Parsec.Language;
   import qualified Text.ParserCombinators.Parsec.Token as PT;
-  
   import Arith;
   
   lexer :: PT.TokenParser ();

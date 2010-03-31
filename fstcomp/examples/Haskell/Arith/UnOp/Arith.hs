@@ -4,7 +4,6 @@ module Arith where
             | Recip
             deriving Show;
             
-  tvUnOp :: UnOp -> TypedVal -> Result TypedVal EvalError;
   tvUnOp (Neg) (TVDouble x) = Result (TVDouble (negate x));
   tvUnOp (Recip) (TVDouble 0) = Fail DivByZero;
   tvUnOp (Recip) (TVDouble x) = Result (TVDouble (recip x));

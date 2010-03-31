@@ -1,11 +1,11 @@
 module Arith where
 {
  -- Vars
-  eval _ (Const x) = Result x;
   eval env (Var name)
     = case lookupEnv env name of
           { Just x -> Result x;
             Nothing -> Fail UndefVarError};
+  eval _ (Const x) = Result x;
    
   evalExp :: Exp TypedVal -> Result TypedVal EvalError;
   evalExp exp = eval emptyEnv exp;   
