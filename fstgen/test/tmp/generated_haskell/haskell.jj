@@ -505,7 +505,7 @@ FSTInfo body(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo imports(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=importDecl(inTerminal){ replaceName(n);} (LOOKAHEAD(2) ";" n=importDecl(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("imports","-","-");}
+	n=importDecl(inTerminal){ replaceName(n);} (LOOKAHEAD(2) ";" n=importDecl(inTerminal){ replaceName(n);})* ";" {return productionEndNonTerminal("imports","-","-");}
 
  )  }
 
@@ -955,15 +955,15 @@ FSTInfo varList(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo var(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[LOOKAHEAD(ModuleNaamPrefix()) n=ModuleNaamPrefix(true){ replaceName(n);}] n=varMain(true){ replaceName(n);} {return productionEndTerminal("var","-","-","Replacement",first,token);}
+	[LOOKAHEAD(ModuleNaamPrefix()) n=ModuleNaamPrefix(true){ replaceName(n);}] n=varMain(true){ replaceName("varMain", n);}{ replaceName(n);} {return productionEndTerminal("var","{varMain}","{varMain}","Replacement",first,token);}
 
  )  }
 
 FSTInfo varMain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<VARIABLE_ID> {return productionEndTerminal("varMain1","-","-","Replacement",first,token);}
+	<VARIABLE_ID> {return productionEndTerminal("varMain1","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
  |
-	"(" n=varsym(true){ replaceName(n);} ")" {return productionEndTerminal("varMain2","-","-","Replacement",first,token);}
+	"(" n=varsym(true){ replaceName(n);} ")" {return productionEndTerminal("varMain2","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
 
  )  }
 

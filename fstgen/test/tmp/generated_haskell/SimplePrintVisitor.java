@@ -1,11 +1,13 @@
 package tmp.generated_haskell;
 
-import java.io.PrintStream;
-import java.util.Iterator;
+import java.util.*;
+import cide.gast.*;
 
-import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import java.io.PrintStream;
+
+import cide.languages.*;
+
+import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
@@ -16,6 +18,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("module")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "moduleHeader");
 				if (v!=null) {
@@ -34,9 +37,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			hintDecIndent();
 			hintNewLine();
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("body")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "imports");
 				if (v!=null) {
@@ -49,9 +54,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("imports")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "importDecl").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -62,9 +69,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				hintNewLine();
 				listElements.next().accept(this);
 			}
+			printToken(";");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("moduleHeader")) {
+			printFeatures(nonTerminal,true);
 			printToken("module");
 			{
 				FSTNode v=getChild(nonTerminal, "naam");
@@ -80,9 +90,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			printToken("where");
 			hintNewLine();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("exports")) {
+			printFeatures(nonTerminal,true);
 			printToken("(");
 			{
 				FSTNode v=getChild(nonTerminal, "exportList");
@@ -91,9 +103,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			printToken(")");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("exportList")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "export").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -102,9 +116,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				printToken(",");
 				listElements.next().accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("definitions")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "definition").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -115,9 +131,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				hintNewLine();
 				listElements.next().accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("typedecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("type");
 			{
 				FSTNode v=getChild(nonTerminal, "simpletype");
@@ -132,9 +150,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("datadecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("data");
 			{
 				FSTNode v=getChild(nonTerminal, "context");
@@ -161,9 +181,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("newtypedecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("newtype");
 			{
 				FSTNode v=getChild(nonTerminal, "context");
@@ -196,9 +218,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("classdecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("class");
 			{
 				FSTNode v=getChild(nonTerminal, "context");
@@ -221,9 +245,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("instancedecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("instance");
 			{
 				FSTNode v=getChild(nonTerminal, "context");
@@ -243,9 +269,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("defaultdecl")) {
+			printFeatures(nonTerminal,true);
 			printToken("default");
 			{
 				FSTNode v=getChild(nonTerminal, "functiontypeList");
@@ -253,9 +281,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("constrs")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "constr").iterator();
 			hintIncIndent();
 			if (listElements.hasNext()) {
@@ -267,9 +297,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				listElements.next().accept(this);
 			}
 			hintDecIndent();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("decls")) {
+			printFeatures(nonTerminal,true);
 			printToken("{");
 			hintIncIndent();
 			{
@@ -280,9 +312,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			hintDecIndent();
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("declarationList")) {
+			printFeatures(nonTerminal,true);
 			Iterator<FSTNode> listElements = getChildren(nonTerminal, "declaration").iterator();
 			if (listElements.hasNext()) {
 				listElements.next().accept(this);
@@ -292,9 +326,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				hintNewLine();
 				listElements.next().accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("whereDecls")) {
+			printFeatures(nonTerminal,true);
 			printToken("where");
 			hintIncIndent();
 			hintNewLine();
@@ -305,6 +341,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			hintDecIndent();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);

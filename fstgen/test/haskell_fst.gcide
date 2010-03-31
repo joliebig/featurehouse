@@ -503,7 +503,7 @@ module: [moduleHeader] "{" @+! body @-!"}";
 body: [imports] [";"<NONE>] [definitions];
 
 @FSTNonTerminal
-imports: &LI importDecl (LL(2) ";"@!@! &LI importDecl)*;
+imports: &LI importDecl (LL(2) ";"@!@! &LI importDecl)* ";";
 
 //body: 
 //	&LI importDecl (LL(2) ";"@!@! &LI importDecl)* [";"@!@! definitions] 
@@ -703,7 +703,11 @@ klasseTypeVar: "(" /*tyvar*/<VARIABLE_ID> (type)* ")" | /*tyvar*/<VARIABLE_ID>;
 //var and naam	
 @FSTExportName("{TOSTRING}")
 varList: &LI var ("," &LI var)*;
+
+@FSTTerminal(name="{varMain}")
 var : [LL("ModuleNaamPrefix()") ModuleNaamPrefix] varMain;
+
+@FSTTerminal(name="{TOSTRING}")
 varMain: <VARIABLE_ID>
 	| "(" varsym ")";
 	//|	"`" varOperator "`"	; does not fit H98 standard

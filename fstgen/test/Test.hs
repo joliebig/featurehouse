@@ -1,5 +1,10 @@
 module Arith where
 {
+  class (Monad m) => GraphM m gr where
+          {  
+            emptyM :: m (gr a b)
+         };
+
   data BinOp = Add
              | Sub
              | Mul
