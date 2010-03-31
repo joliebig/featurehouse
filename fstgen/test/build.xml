@@ -28,7 +28,7 @@
 		</classpath>
 	</taskdef>
 	
-	<target name="all" depends="testFJ,testJava,testJavaCC,testXML"></target>
+	<target name="all" depends="testFJ,testJava,testJavaMerge,testJak,testCSharp,testC,testHaskell,testJavaCC,testAlloy"></target>
 
 	<target name="testFJ">
 		<antcall target="testGrammar">
@@ -100,57 +100,6 @@
 			</antcall>
 		</target>
 
-	<target name="testLHaskell">
-			<antcall target="testGrammar">
-				<param name="language" value="lhaskell" />
-				<param name="parserClass" value="LHaskellParser" />
-				<param name="mainProduction" value="module" />
-				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.hs" />
-			</antcall>
-		</target>
-
-	<target name="testScheme">
-			<antcall target="testGrammar">
-				<param name="language" value="scheme" />
-				<param name="parserClass" value="SchemeParser" />
-				<param name="mainProduction" value="program" />
-				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.scm" />
-			</antcall>
-		</target>
-	
-	<target name="testScheme2">
-				<antcall target="testGrammar">
-					<param name="language" value="scheme2" />
-					<param name="parserClass" value="Scheme2Parser" />
-					<param name="mainProduction" value="program" />
-					<param name="directory" value="${fstgen_dir}/test" />
-					<param name="testFile" value="Test.scm" />
-				</antcall>
-			</target>
-	
-	<target name="testPHaskell">
-			<antcall target="testGrammar">
-				<param name="language" value="phaskell" />
-				<param name="parserClass" value="PHaskellParser" />
-				<param name="mainProduction" value="module" />
-				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.hs" />
-			</antcall>
-		</target>
-	
-	<target name="testXML">
-		<antcall target="testGrammar">
-			<param name="language" value="xml" />
-			<param name="parserClass" value="XMLParser" />
-			<param name="mainProduction" value="Document" />
-			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="test.xml" />
-			<param name="autoSpacingPrettyPrinter" value="false" />
-		</antcall>
-	</target>
-
 	<target name="testJavaCC">
 		<antcall target="testGrammar">
 			<param name="language" value="javacc" />
@@ -171,16 +120,6 @@
 		</antcall>
 	</target>
 	
-	<target name="testXMI">
-			<antcall target="testGrammar">
-				<param name="language" value="xmi" />
-				<param name="parserClass" value="XMIParser" />
-				<param name="mainProduction" value="Document" />
-				<param name="directory" value="${fstgen_dir}/test" />
-				<param name="testFile" value="Test.xmi" />
-				<param name="autoSpacingPrettyPrinter" value="false" />
-			</antcall>
-		</target>
 	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
