@@ -25,4 +25,5 @@ module Data.Graph.Inductive.Query
   import Data.Graph.Inductive.Query.BCC;
   import Data.Graph.Inductive.Query.Dominators;
   import Data.Graph.Inductive.Query.TransClos;
-  import Data.Graph.Inductive.Query.Monad}
+  import Data.Graph.Inductive.Query.Monad;
+ }
