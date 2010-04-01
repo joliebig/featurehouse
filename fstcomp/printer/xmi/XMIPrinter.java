@@ -32,7 +32,7 @@ public class XMIPrinter {
 		this.root = root;
 		this.filename = filename;
 
-		System.out.println(root.toString());
+		//System.out.println(root.toString());
 
 	}
 
