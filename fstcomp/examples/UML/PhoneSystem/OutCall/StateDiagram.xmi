@@ -1,0 +1,155 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Jan 18 11:19:49 CET 2009'>
+  <XMI.header>    <XMI.documentation>
+      <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
+      <XMI.exporterVersion>0.26.2(6) revised on $Date: 2010-04-01 11:27:15 $ </XMI.exporterVersion>
+    </XMI.documentation>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147B'
+      name = 'phone' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+      isAbstract = 'false'>
+      <UML:Namespace.ownedElement>
+        <UML:StateMachine xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147C'
+          name = 'phone' isSpecification = 'false'>
+          <UML:StateMachine.top>
+            <UML:CompositeState xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147D'
+              name = 'top' isSpecification = 'false' isConcurrent = 'false'>
+              <UML:CompositeState.subvertex>
+                <UML:SimpleState xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'
+                  name = 'standby' isSpecification = 'false'>
+                  <UML:StateVertex.outgoing>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001483'/>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001487'/>
+                  </UML:StateVertex.outgoing>
+                  <UML:StateVertex.incoming>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001480'/>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001489'/>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148D'/>
+                  </UML:StateVertex.incoming>
+                </UML:SimpleState>
+                <UML:Pseudostate xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147F'
+                  name = 'on' isSpecification = 'false' kind = 'initial'>
+                  <UML:StateVertex.outgoing>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001480'/>
+                  </UML:StateVertex.outgoing>
+                </UML:Pseudostate>
+                <UML:FinalState xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001482'
+                  name = 'off' isSpecification = 'false'>
+                  <UML:StateVertex.incoming>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001483'/>
+                  </UML:StateVertex.incoming>
+                </UML:FinalState>
+                <UML:SimpleState xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001485'
+                  name = 'dialing' isSpecification = 'false'>
+                  <UML:StateVertex.outgoing>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001489'/>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148B'/>
+                  </UML:StateVertex.outgoing>
+                  <UML:StateVertex.incoming>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001487'/>
+                  </UML:StateVertex.incoming>
+                </UML:SimpleState>
+                <UML:SimpleState xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001486'
+                  name = 'calling' isSpecification = 'false'>
+                  <UML:StateVertex.outgoing>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148D'/>
+                  </UML:StateVertex.outgoing>
+                  <UML:StateVertex.incoming>
+                    <UML:Transition xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148B'/>
+                  </UML:StateVertex.incoming>
+                </UML:SimpleState>
+              </UML:CompositeState.subvertex>
+            </UML:CompositeState>
+          </UML:StateMachine.top>
+          <UML:StateMachine.transitions>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001480'
+              name = 'turnOn' isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001481'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:Pseudostate xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147F'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001483'
+              isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001484'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:FinalState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001482'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001487'
+              name = 'dialing' isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001488'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001485'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001489'
+              name = 'busy' isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148A'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001485'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148B'
+              name = 'pickup' isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148C'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001485'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001486'/>
+              </UML:Transition.target>
+            </UML:Transition>
+            <UML:Transition xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148D'
+              name = 'hangUp' isSpecification = 'false'>
+              <UML:Transition.trigger>
+                <UML:SignalEvent xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148E'/>
+              </UML:Transition.trigger>
+              <UML:Transition.source>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001486'/>
+              </UML:Transition.source>
+              <UML:Transition.target>
+                <UML:SimpleState xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000147E'/>
+              </UML:Transition.target>
+            </UML:Transition>
+          </UML:StateMachine.transitions>
+        </UML:StateMachine>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001481'
+          name = 'turnOn' isSpecification = 'false'/>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001484'
+          name = 'turnOff' isSpecification = 'false'/>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001488'
+          name = 'dialing' isSpecification = 'false'/>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148A'
+          name = 'isBusy' isSpecification = 'false'/>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148C'
+          name = 'pickUp' isSpecification = 'false'/>
+        <UML:SignalEvent xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:000000000000148E'
+          name = 'hangUp' isSpecification = 'false'/>
+      </UML:Namespace.ownedElement>
+    </UML:Model>
+  </XMI.content>
+</XMI>
