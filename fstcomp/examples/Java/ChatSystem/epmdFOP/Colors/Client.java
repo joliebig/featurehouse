@@ -16,6 +16,6 @@ public class Client {
 	public void send(String line, Color color) {
 		TextMessage msg = new TextMessage(line);
 		msg.setColor(color);
-		original(msg);
+		send(msg);
 	}
 }

@@ -1,4 +1,4 @@
-Chat : Core [Output] [Logger] [Color] Coding* [Authorization] :: _Chat ;
+Chat : Core [Output] [Logger] [Color] [Authorization] :: _Chat ;
 
 Output : GUI
 	| CMD ;

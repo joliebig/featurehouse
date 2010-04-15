@@ -24,7 +24,7 @@ public class Client implements Runnable {
 	int servPort;
 	Socket s;
 	
-	public static void main(String args[]) throws IOException {
+	public static void main(String[] args) throws IOException {
 		Client client = new Client();
 		
 	}
