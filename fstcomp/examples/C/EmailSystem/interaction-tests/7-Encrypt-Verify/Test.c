@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "Client.h"
-#include "Email.h"
 
 int
 main (void)
