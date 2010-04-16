@@ -4,7 +4,7 @@
     <property name="build" location="bin"/>
     <property name="dist" location="dist"/>
     <property name="composed" location="${src}/composed"/>
-    <property name="lib" location="../../../lib"/>
+    <property name="lib" location="../../lib"/>
     <property name="util" location="util"/>
     <property name="expression" location="features.exp"/>
 
@@ -17,7 +17,7 @@
     </taskdef>
     
     <target name="compose" description="composition of features">
-			<java jar="../../../util/FeatureHouse.jar" fork="true">
+			<java jar="/home/apel/Desktop/FeatureHouse.jar" fork="true">
 					<arg value="--expression"/>
 					<arg value="features.exp"/>
 					<arg value="--base-directory"/>
@@ -30,7 +30,7 @@
     <target name="compile" depends="compose">
 			<mkdir dir="bin"/>
 			<copy file="Test.c" todir="src-composed"/>
-			<cc name="gcc" outfile="bin/test">
+			<cc name="gcc" outfile="bin/9-encrypt-forward">
 				<fileset dir="src-composed" includes="*.c"/>
 			</cc>
     </target>
