@@ -1,0 +1,1 @@
+find -name "*.als" -o -name "*.c" -o -name "*.h" -o -name "*.cs" -o -name "*.hs" -o -name "*.jj" -o -name "*.xmi" -o -name "*.java" -o -name "*.jak" | xargs grep -v ^$ | wc -l
