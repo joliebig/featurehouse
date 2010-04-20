@@ -1,0 +1,5 @@
+layer jrenBase;
+
+refines class kernelConstants {
+   public static String renameId = "$$";
+}

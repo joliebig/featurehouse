@@ -1,0 +1,7 @@
+layer j2jast;
+
+public refines class XlstEscape {
+    public void harvestConstructors( int stage ) {
+        super.harvestConstructors( stage-1 );
+    }
+}

@@ -1,0 +1,10 @@
+layer j2jClassx;
+
+import java.util.*;
+import java.io.*;
+
+public refines class ExtClause {
+    public String GetName() {
+        return ( ( AST_QualifiedName ) arg[0] ).GetName();
+    }
+}

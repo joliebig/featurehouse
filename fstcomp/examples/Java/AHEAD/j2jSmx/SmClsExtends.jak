@@ -1,0 +1,10 @@
+layer j2jSmx;
+
+import java.util.*;
+import java.io.*;
+
+public refines class SmClsExtends {
+    public String GetName() {
+        return ( ( AST_QualifiedName ) arg[0] ).GetName();
+    }
+}

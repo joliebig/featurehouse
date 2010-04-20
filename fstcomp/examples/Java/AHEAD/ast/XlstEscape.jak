@@ -1,0 +1,15 @@
+layer ast;
+
+import java.io.PrintWriter;
+
+//**************************************************
+// XlstEscape extension class
+//**************************************************
+    
+public refines class XlstEscape 
+    implements  EscapeMarker,  IsList {
+        
+    public void reduce2ast( AstProperties props ) {
+        reduce2astEscape( props, "AST_ArgList" );
+    }
+}

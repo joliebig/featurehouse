@@ -1,0 +1,7 @@
+layer gscope;
+
+import java.io.PrintWriter;
+
+public refines class kernelConstants {
+    int global_mangle_num = 0;
+}

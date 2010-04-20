@@ -1,0 +1,11 @@
+layer j2jClassx;
+
+import java.util.*;
+import java.io.*;
+
+public refines class ExtendsClause {
+    public String GetName() {
+        AstNode.override( tok[0], "ExtendsClause.GetName()", this );
+        return null;
+    }
+}

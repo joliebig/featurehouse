@@ -1,0 +1,13 @@
+layer sm5;
+
+import java.util.Hashtable;
+import java.util.Vector;
+import Jakarta.util.FixDosOutputStream;
+import java.io.*;
+
+public refines class SmExtendsClause {
+    public  AST_QualifiedName getQualifiedName() {
+        AstNode.override( "SmExtendsClause.getQualifiedName", this );
+        return null;
+    }
+}

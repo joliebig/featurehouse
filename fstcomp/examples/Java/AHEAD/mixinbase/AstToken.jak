@@ -1,0 +1,11 @@
+layer mixinbase;
+
+import java.util.*;
+import Jakarta.util.*;
+import java.io.*;
+
+public refines class AstToken {
+    public void setName( String name ) {
+        this.name = name;
+    }
+}

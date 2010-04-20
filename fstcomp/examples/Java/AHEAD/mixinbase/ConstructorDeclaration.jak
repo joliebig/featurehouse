@@ -1,0 +1,11 @@
+layer mixinbase;
+
+import java.util.*;
+import Jakarta.util.*;
+import java.io.*;
+
+public refines class ConstructorDeclaration {
+    public void mangleConstructor() {
+        AstNode.override( "ConstructorDeclaration.mangleConstructor", this );
+    }
+}

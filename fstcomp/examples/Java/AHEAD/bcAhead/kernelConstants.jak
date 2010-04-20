@@ -1,0 +1,8 @@
+layer bcAhead;
+
+public refines class kernelConstants {
+
+    // name of magic stub package for compiling refinements
+
+    public static String stub = "stub";
+}

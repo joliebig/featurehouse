@@ -1,0 +1,10 @@
+layer j2jSmx;
+
+import java.util.*;
+import java.io.*;
+
+public refines class SmExtends {
+    public String GetName() {
+        return ( ( ExtendsClause ) arg[0] ).GetName();
+    }
+}
