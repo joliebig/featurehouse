@@ -1,0 +1,47 @@
+         }
+         catch (Exception e) {
+            System.out.println( "Parsing Exception Thrown in "
+ 
+                                + args[0] + ": " + e.getMessage());
+            System.exit(1);
+         }
+
+
+ 
+        // Step 4: Initialize output stream to standard out
+         //         Standard initialization stuff that should be
+         //         platform independent.
+
+
+  
+         PrintWriter pw            = null;
+ 
+         AstProperties props = new AstProperties();
+          String lineSeparator      = 
+                System.getProperties().getProperty("line.separator");
+
+         if (lineSeparator.compareTo("\n") != 0)
+            pw = new PrintWriter(new FixDosOutputStream(System.out));
+         else
+            pw = new PrintWriter(System.out);
+
+         props.setProperty("output", pw);
+
+
+
+         // Step 5: transform parse tree here --- you will need to
+         //         supply your own reduction method, but here is
+         //         where you call it --  something like:
+         //         inputRoot.reduce2java( props );
+         //         or inputRoot.execute();
+
+
+  
+       if (Util.errorCount() == 0) {
+            // we had no errors, maybe some warnings
+            inputRoot.print(props);
+            System.out.println();
+            pw.flush();
+         }
+    } //end main()
+  }  // end Main class
