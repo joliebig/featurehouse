@@ -6,7 +6,7 @@ import Jakarta.util.FixDosOutputStream;
 import java.io.*;
 
 class PrintableVector extends Vector {
-    public PrintableVector() { super();
+    public PrintableVector() {
         ;
     }
 

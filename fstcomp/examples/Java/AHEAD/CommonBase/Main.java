@@ -19,7 +19,6 @@ import java.io.*;
 
 public class Main {
 
-    public static String toolname = $str( $PackName );
     public static boolean typeSort = false;
     public static boolean keySort  = false;
     public static boolean copyMode = false;
@@ -29,7 +28,7 @@ public class Main {
 
     private static void usage( String err ) {
         System.err.println( "Error: " + err );
-        System.err.print( "Usage: java " + toolname + ".Main [options]" );
+        System.err.print( "Usage: java " + "Main [options]" );
         System.err.println( " baseFile extensionFile1 extensionFile2 ..." );
         usageOftk(); // to be refined!
         System.err.println( "         -a <layerName> name of layer to generate " );

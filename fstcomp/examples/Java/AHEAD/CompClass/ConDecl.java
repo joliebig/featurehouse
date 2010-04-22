@@ -51,11 +51,27 @@ public class ConDecl {
 
             // Step 3: create the new body of the constructor
 
-            AST_Stmt body = stm{ {
-                $stm( baseCode );
-            } {
-                $stm( extCode );
-            } }stm;
+            AST_Stmt body =(AST_Stmt) AstNode.markStack(AstNode.aliasStack.size(),  (AST_Stmt) new AST_Stmt()
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (BlockC) new BlockC().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_Stmt) new AST_Stmt()
+
+.add( (AST_Stmt) AstNode.addComment( AstNode.safeCopy( baseCode),"\r\n                ")) 
+) /* AstOptNode */
+, new AstToken().setParms("\r\n            ","}", 0)) /* BlockC */
+))/* AST_StmtElem + add */
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (BlockC) new BlockC().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_Stmt) new AST_Stmt()
+
+.add( (AST_Stmt) AstNode.addComment( AstNode.safeCopy( extCode),"\r\n                ")) 
+) /* AstOptNode */
+, new AstToken().setParms("\r\n            ","}", 0)) /* BlockC */
+))/* AST_StmtElem + add */
+).patch()
+;
 
             // Step 4: replace old body with new body
 

@@ -39,9 +39,88 @@ class sdInfo implements Serializable {
         argdecl        = "";
         state_constants= "";
         otherwise_default_ast = null; // set in UmodSmDecl
-        no_trans_ast   = stm{
-        System.err.println( "Unrecognizable_state" + current_state );
-        System.exit( 1 ); }stm;
+        no_trans_ast   =(AST_Stmt) AstNode.markStack(AstNode.aliasStack.size(),  (AST_Stmt) new AST_Stmt()
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (ExprStmt) new ExprStmt().setParms( 
+ (PrimExpr) new PrimExpr().setParms( 
+ (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms("\r\n        ","System", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms(new AstToken().setParms("",".", 0),
+ (NameId) new NameId().setParms(new AstToken().setParms("","err", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms(new AstToken().setParms("",".", 0),
+ (NameId) new NameId().setParms(new AstToken().setParms("","println", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+,  (Suffixes) new Suffixes()
+
+.add( (SuffixesElem) new SuffixesElem().setParms( (MthCall) new MthCall().setParms( 
+ (Args) new Args().setParms( 
+new AstToken().setParms("","(", 0),  new AstOptNode(
+).setParms( (AST_ArgList) new AST_ArgList()
+
+.add( (AST_ArgListElem) new AST_ArgListElem().setParms( (AddExpr) new AddExpr().setParms( 
+ (StrLit) new StrLit().setParms( 
+new AstToken().setParms(" ","\"Unrecognizable_state\"", 0)) /* StrLit */
+,  (MoreAddExpr) new MoreAddExpr()
+
+.add( (MoreAddExprElem) new MoreAddExprElem().setParms( (AdEBod) new AdEBod().setParms( 
+ (Plus) new Plus().setParms( 
+new AstToken().setParms(" ","+", 0)) /* Plus */
+,  (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","current_state", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+) /* AdEBod */
+))/* MoreAddExprElem + add */
+) /* AddExpr */
+))/* AST_ArgListElem + add */
+) /* AstOptNode */
+, new AstToken().setParms(" ",")", 0)) /* Args */
+) /* MthCall */
+))/* SuffixesElem + add */
+) /* PrimExpr */
+, new AstToken().setParms("",";", 0)) /* ExprStmt */
+))/* AST_StmtElem + add */
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (ExprStmt) new ExprStmt().setParms( 
+ (PrimExpr) new PrimExpr().setParms( 
+ (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms("\r\n        ","System", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms(new AstToken().setParms("",".", 0),
+ (NameId) new NameId().setParms(new AstToken().setParms("","exit", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+,  (Suffixes) new Suffixes()
+
+.add( (SuffixesElem) new SuffixesElem().setParms( (MthCall) new MthCall().setParms( 
+ (Args) new Args().setParms( 
+new AstToken().setParms("","(", 0),  new AstOptNode(
+).setParms( (AST_ArgList) new AST_ArgList()
+
+.add( (AST_ArgListElem) new AST_ArgListElem().setParms( (IntLit) new IntLit().setParms( 
+new AstToken().setParms(" ","1", 0)) /* IntLit */
+))/* AST_ArgListElem + add */
+) /* AstOptNode */
+, new AstToken().setParms(" ",")", 0)) /* Args */
+) /* MthCall */
+))/* SuffixesElem + add */
+) /* PrimExpr */
+, new AstToken().setParms("",";", 0)) /* ExprStmt */
+))/* AST_StmtElem + add */
+).patch()
+;
         extra_methods  = "";
         next           = null;
     }

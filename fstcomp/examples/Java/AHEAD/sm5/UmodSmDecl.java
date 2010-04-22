@@ -78,19 +78,273 @@ public class UmodSmDecl {
             pl2.Detach();
             aa.Detach();
 
-            curr_state = mth{
-            protected int current_state = start;
-            final public boolean atStop() {
-                return current_state == stop;
-            }
-            protected interface disp {
-                void exit( $plst( pl ) );
-            }
-            protected disp dispatch = new disp() {
-                public void exit( $plst( pl2 ) ) {
-                    start_exit( $xlst( aa ) );
-                }
-            };}mth;
+            curr_state =(AST_FieldDecl) AstNode.markStack(AstNode.aliasStack.size(),  (AST_FieldDecl) new AST_FieldDecl()
+
+.add( (AST_FieldDeclElem) new AST_FieldDeclElem().setParms( (FldVarDec) new FldVarDec().setParms( 
+ new AstOptNode(
+).setParms( (AST_Modifiers) new AST_Modifiers()
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModProtected) new ModProtected().setParms( 
+new AstToken().setParms("\r\n            ","protected", 0)) /* ModProtected */
+))/* AST_ModifiersElem + add */
+) /* AstOptNode */
+,  (PrimType) new PrimType().setParms( 
+ (IntTyp) new IntTyp().setParms( 
+new AstToken().setParms(" ","int", 0)) /* IntTyp */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* PrimType */
+,  (AST_VarDecl) new AST_VarDecl()
+
+.add( (AST_VarDeclElem) new AST_VarDeclElem().setParms( (VarDecl) new VarDecl().setParms( 
+ (DecNameDim) new DecNameDim().setParms( 
+ (NameId) new NameId().setParms(new AstToken().setParms(" ","current_state", 0)) /* NameId */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* DecNameDim */
+,  new AstOptNode(
+).setParms( (VarAssignC) new VarAssignC().setParms( 
+new AstToken().setParms(" ","=", 0),  (VarInitExpr) new VarInitExpr().setParms( 
+ (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","start", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+) /* VarInitExpr */
+) /* VarAssignC */
+) /* AstOptNode */
+) /* VarDecl */
+))/* AST_VarDeclElem + add */
+, new AstToken().setParms("",";", 0)) /* FldVarDec */
+))/* AST_FieldDeclElem + add */
+
+.add( (AST_FieldDeclElem) new AST_FieldDeclElem().setParms( (MethodDcl) new MethodDcl().setParms( 
+ new AstOptNode(
+).setParms( (AST_Modifiers) new AST_Modifiers()
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModFinal) new ModFinal().setParms( 
+new AstToken().setParms("\r\n            ","final", 0)) /* ModFinal */
+))/* AST_ModifiersElem + add */
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModPublic) new ModPublic().setParms( 
+new AstToken().setParms(" ","public", 0)) /* ModPublic */
+))/* AST_ModifiersElem + add */
+) /* AstOptNode */
+,  (PrimType) new PrimType().setParms( 
+ (BoolTyp) new BoolTyp().setParms( 
+new AstToken().setParms(" ","boolean", 0)) /* BoolTyp */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* PrimType */
+,  (MthDector) new MthDector().setParms( 
+ (NameId) new NameId().setParms(new AstToken().setParms(" ","atStop", 0)) /* NameId */
+, new AstToken().setParms("","(", 0),  new AstOptNode(
+) /* AstOptNode */
+, new AstToken().setParms("",")", 0),  new AstOptNode(
+) /* AstOptNode */
+) /* MthDector */
+,  new AstOptNode(
+) /* AstOptNode */
+,  (MDSBlock) new MDSBlock().setParms( 
+ (BlockC) new BlockC().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_Stmt) new AST_Stmt()
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (ReturnStm) new ReturnStm().setParms( 
+new AstToken().setParms("\r\n                ","return", 0),  new AstOptNode(
+).setParms( (EqExpr) new EqExpr().setParms( 
+ (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","current_state", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+,  (MoreEqExpr) new MoreEqExpr()
+
+.add( (MoreEqExprElem) new MoreEqExprElem().setParms( (EEBodyC) new EEBodyC().setParms( 
+ (Eq) new Eq().setParms( 
+new AstToken().setParms(" ","==", 0)) /* Eq */
+,  (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","stop", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+) /* EEBodyC */
+))/* MoreEqExprElem + add */
+) /* EqExpr */
+) /* AstOptNode */
+, new AstToken().setParms("",";", 0)) /* ReturnStm */
+))/* AST_StmtElem + add */
+) /* AstOptNode */
+, new AstToken().setParms("\r\n            ","}", 0)) /* BlockC */
+) /* MDSBlock */
+) /* MethodDcl */
+))/* AST_FieldDeclElem + add */
+
+.add( (AST_FieldDeclElem) new AST_FieldDeclElem().setParms( (NInterDecl) new NInterDecl().setParms( 
+ new AstOptNode(
+).setParms( (AST_Modifiers) new AST_Modifiers()
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModProtected) new ModProtected().setParms( 
+new AstToken().setParms("\r\n            ","protected", 0)) /* ModProtected */
+))/* AST_ModifiersElem + add */
+) /* AstOptNode */
+,  (UmInterDecl) new UmInterDecl().setParms( 
+new AstToken().setParms(" ","interface", 0),  (NameId) new NameId().setParms(new AstToken().setParms(" ","disp", 0)) /* NameId */
+,  new AstOptNode(
+) /* AstOptNode */
+, new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (InterfaceMemberDeclarations) new InterfaceMemberDeclarations()
+
+.add( (InterfaceMemberDeclarationsElem) new InterfaceMemberDeclarationsElem().setParms( (MDecl) new MDecl().setParms( 
+ (MethodDcl) new MethodDcl().setParms( 
+ new AstOptNode(
+) /* AstOptNode */
+,  (PrimType) new PrimType().setParms( 
+ (VoidTyp) new VoidTyp().setParms( 
+new AstToken().setParms("\r\n                ","void", 0)) /* VoidTyp */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* PrimType */
+,  (MthDector) new MthDector().setParms( 
+ (NameId) new NameId().setParms(new AstToken().setParms(" ","exit", 0)) /* NameId */
+, new AstToken().setParms("","(", 0),  new AstOptNode(
+).setParms( (AST_ParList) new AST_ParList()
+
+.add( (AST_ParList) AstNode.addComment( AstNode.safeCopy( pl)," ")) 
+) /* AstOptNode */
+, new AstToken().setParms(" ",")", 0),  new AstOptNode(
+) /* AstOptNode */
+) /* MthDector */
+,  new AstOptNode(
+) /* AstOptNode */
+,  (MDSEmpty) new MDSEmpty().setParms( 
+new AstToken().setParms("",";", 0)) /* MDSEmpty */
+) /* MethodDcl */
+) /* MDecl */
+))/* InterfaceMemberDeclarationsElem + add */
+) /* AstOptNode */
+, new AstToken().setParms("\r\n            ","}", 0)) /* UmInterDecl */
+) /* NInterDecl */
+))/* AST_FieldDeclElem + add */
+
+.add( (AST_FieldDeclElem) new AST_FieldDeclElem().setParms( (FldVarDec) new FldVarDec().setParms( 
+ new AstOptNode(
+).setParms( (AST_Modifiers) new AST_Modifiers()
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModProtected) new ModProtected().setParms( 
+new AstToken().setParms("\r\n            ","protected", 0)) /* ModProtected */
+))/* AST_ModifiersElem + add */
+) /* AstOptNode */
+,  (QNameType) new QNameType().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","disp", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* QNameType */
+,  (AST_VarDecl) new AST_VarDecl()
+
+.add( (AST_VarDeclElem) new AST_VarDeclElem().setParms( (VarDecl) new VarDecl().setParms( 
+ (DecNameDim) new DecNameDim().setParms( 
+ (NameId) new NameId().setParms(new AstToken().setParms(" ","dispatch", 0)) /* NameId */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* DecNameDim */
+,  new AstOptNode(
+).setParms( (VarAssignC) new VarAssignC().setParms( 
+new AstToken().setParms(" ","=", 0),  (VarInitExpr) new VarInitExpr().setParms( 
+ (ObjAllocExpr) new ObjAllocExpr().setParms( 
+new AstToken().setParms(" ","new", 0),  (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms(" ","disp", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+,  (AnonClass) new AnonClass().setParms( 
+ (Args) new Args().setParms( 
+new AstToken().setParms("","(", 0),  new AstOptNode(
+) /* AstOptNode */
+, new AstToken().setParms("",")", 0)) /* Args */
+,  new AstOptNode(
+).setParms( (ClsBody) new ClsBody().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_FieldDecl) new AST_FieldDecl()
+
+.add( (AST_FieldDeclElem) new AST_FieldDeclElem().setParms( (MethodDcl) new MethodDcl().setParms( 
+ new AstOptNode(
+).setParms( (AST_Modifiers) new AST_Modifiers()
+
+.add( (AST_ModifiersElem) new AST_ModifiersElem().setParms( (ModPublic) new ModPublic().setParms( 
+new AstToken().setParms("\r\n                ","public", 0)) /* ModPublic */
+))/* AST_ModifiersElem + add */
+) /* AstOptNode */
+,  (PrimType) new PrimType().setParms( 
+ (VoidTyp) new VoidTyp().setParms( 
+new AstToken().setParms(" ","void", 0)) /* VoidTyp */
+,  new AstOptNode(
+) /* AstOptNode */
+) /* PrimType */
+,  (MthDector) new MthDector().setParms( 
+ (NameId) new NameId().setParms(new AstToken().setParms(" ","exit", 0)) /* NameId */
+, new AstToken().setParms("","(", 0),  new AstOptNode(
+).setParms( (AST_ParList) new AST_ParList()
+
+.add( (AST_ParList) AstNode.addComment( AstNode.safeCopy( pl2)," ")) 
+) /* AstOptNode */
+, new AstToken().setParms(" ",")", 0),  new AstOptNode(
+) /* AstOptNode */
+) /* MthDector */
+,  new AstOptNode(
+) /* AstOptNode */
+,  (MDSBlock) new MDSBlock().setParms( 
+ (BlockC) new BlockC().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_Stmt) new AST_Stmt()
+
+.add( (AST_StmtElem) new AST_StmtElem().setParms( (ExprStmt) new ExprStmt().setParms( 
+ (PrimExpr) new PrimExpr().setParms( 
+ (PPQualName) new PPQualName().setParms( 
+ (AST_QualifiedName) new AST_QualifiedName()
+
+.add( (AST_QualifiedNameElem) new AST_QualifiedNameElem().setParms( (NameId) new NameId().setParms(new AstToken().setParms("\r\n                    ","start_exit", 0)) /* NameId */
+))/* AST_QualifiedNameElem + add */
+) /* PPQualName */
+,  (Suffixes) new Suffixes()
+
+.add( (SuffixesElem) new SuffixesElem().setParms( (MthCall) new MthCall().setParms( 
+ (Args) new Args().setParms( 
+new AstToken().setParms("","(", 0),  new AstOptNode(
+).setParms( (AST_ArgList) new AST_ArgList()
+
+.add( (AST_ArgList) AstNode.addComment( AstNode.safeCopy( aa)," ")) 
+) /* AstOptNode */
+, new AstToken().setParms(" ",")", 0)) /* Args */
+) /* MthCall */
+))/* SuffixesElem + add */
+) /* PrimExpr */
+, new AstToken().setParms("",";", 0)) /* ExprStmt */
+))/* AST_StmtElem + add */
+) /* AstOptNode */
+, new AstToken().setParms("\r\n                ","}", 0)) /* BlockC */
+) /* MDSBlock */
+) /* MethodDcl */
+))/* AST_FieldDeclElem + add */
+) /* AstOptNode */
+, new AstToken().setParms("\r\n            ","}", 0)) /* ClsBody */
+) /* AstOptNode */
+) /* AnonClass */
+) /* ObjAllocExpr */
+) /* VarInitExpr */
+) /* VarAssignC */
+) /* AstOptNode */
+) /* VarDecl */
+))/* AST_VarDeclElem + add */
+, new AstToken().setParms("",";", 0)) /* FldVarDec */
+))/* AST_FieldDeclElem + add */
+).patch()
+;
         }
         else
             curr_state = null;
@@ -113,11 +367,28 @@ public class UmodSmDecl {
         cbody = cbody.BodySort();
         cbody.add( kernelConstants.globals().sm4vars.Sm.body_ast );
 
-        result = cls{
+        result =(AST_Class) AstNode.markStack(AstNode.aliasStack.size(),  (AST_Class) new AST_Class()
 
-        class $name( sdname ) {
-            $mth( cbody )
-        }}cls;
+.add( (AST_ClassElem) new AST_ClassElem().setParms( (ModTypeDecl) new ModTypeDecl().setParms( 
+ new AstOptNode(
+) /* AstOptNode */
+,  (UmodClassDecl) new UmodClassDecl().setParms( 
+new AstToken().setParms("\r\n\r\n        ","class", 0), ( (AST_QualifiedName) AstNode.addComment( AstNode.safeCopy( sdname)," ") ).makeQName(),  new AstOptNode(
+) /* AstOptNode */
+,  new AstOptNode(
+) /* AstOptNode */
+,  (ClsBody) new ClsBody().setParms( 
+new AstToken().setParms(" ","{", 0),  new AstOptNode(
+).setParms( (AST_FieldDecl) new AST_FieldDecl()
+
+.add( (AST_FieldDecl) AstNode.addComment( AstNode.safeCopy( cbody),"\r\n            ")) 
+) /* AstOptNode */
+, new AstToken().setParms("\r\n        ","}", 0)) /* ClsBody */
+) /* UmodClassDecl */
+) /* ModTypeDecl */
+))/* AST_ClassElem + add */
+).patch()
+;
 
         // don't forget to remember the white space in front of
         // the state machine declaration

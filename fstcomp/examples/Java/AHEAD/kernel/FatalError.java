@@ -27,10 +27,10 @@ import java.util.Vector;
 //**************************************************
     
 public class FatalError extends Exception {
-    public FatalError() { super();
+    public FatalError() {
         ;
     }
-    public FatalError( String s ) { super( s );
+    public FatalError( String s ) {
         ;
     }
 }
