@@ -1,7 +1,0 @@
-layer j2jast;
-
-public refines class ViEscape {
-    public void harvestConstructors( int stage ) {
-        super.harvestConstructors( stage-1 );
-    }
-}

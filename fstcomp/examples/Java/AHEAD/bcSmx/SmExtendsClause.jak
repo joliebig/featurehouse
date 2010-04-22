@@ -1,8 +1,0 @@
-layer bcSmx;
-
-public refines class SmExtendsClause {
-    public String GetName() {
-        AstNode.override( "SmExtendsClause.GetName()", this );
-        return null;
-    }
-}

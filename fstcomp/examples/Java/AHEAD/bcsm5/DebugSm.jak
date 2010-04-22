@@ -1,5 +1,0 @@
-layer bcsm5;
-
-// delete by overriding
-
-public class DebugSm { }

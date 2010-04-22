@@ -1,7 +1,0 @@
-layer bcSmx;
-
-public refines class SmClsExtends {
-    public String GetName() {
-        return ( ( AST_QualifiedName ) arg[0] ).GetName();
-    }
-}
