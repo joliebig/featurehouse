@@ -1,0 +1,1 @@
+To compile the AHEAD tools, two libraries have to be in the classpath: jakarta.jar (same directory) and ant.jar (has to be installed externally). For example, javac -cp jakarta.jar:/usr/share/ant/lib/ant.jar MixinComp/*.java
