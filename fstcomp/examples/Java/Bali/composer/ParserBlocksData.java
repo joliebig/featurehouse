@@ -1,4 +1,4 @@
-layer composer;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.logging.Level;
 
-public refines class ParserBlocksData {
+public class ParserBlocksData {
 
     /**
      * Formats parse code blocks by concatenating them with blank line

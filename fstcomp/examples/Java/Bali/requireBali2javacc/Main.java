@@ -1,4 +1,4 @@
-layer requireBali2javacc;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -13,14 +13,14 @@ import java.util.ListIterator;
  * @layer<requireBali2javacc>
  */
     
-public refines class Main {
+public class Main {
 
     public Object driver( String[] args ) throws Throwable {
 
         setVersion( "v2002.08.27" ) ;
 
         Collector collector =
-                ( Collector ) Super( String[] ).driver( args ) ;
+                ( Collector ) original( args ) ;
 
         List messages = new ArrayList( unDefined( collector.baliRules ) ) ;
         boolean hasErrors = ( ! messages.isEmpty() ) ;

@@ -1,4 +1,4 @@
-layer collect;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,14 +22,14 @@ import java.util.Map;
  * @layer<collect>
  */
     
-public refines class Main {
+public class Main {
 
     public Object driver( String[] args ) throws Throwable {
         Main.DEBUG.entering( "collect.Main", "driver", args ) ;
         setVersion( "v2002.09.03" ) ;
 
         BaliParse parseTree =
-                ( BaliParse ) Super( String[] ).driver( args ) ;
+                ( BaliParse ) original( args ) ;
 
         Collector collector = new Collector() ;
         collector.dispatch( parseTree ) ;

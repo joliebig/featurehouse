@@ -1,4 +1,4 @@
-layer bali;
+
 
 import Jakarta.util.Util;
 import java.io.BufferedReader;
@@ -61,7 +61,7 @@ class LogHandler extends ConsoleHandler {
      * @layer<bali>
      */
     private LogHandler( String label ) {
-            Super( String )() ;
+            super() ;
         prefix = label + ": " ;
         setLevel( Level.ALL ) ;
     }

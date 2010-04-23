@@ -1,4 +1,4 @@
-layer bali2layer ;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +32,7 @@ import java.lang.*;
  * Provides a <code>driver</code> to translate a Bali source file into a set of
  * Jak source files.
  */
-public refines class Main {
+public class Main {
         
     final public static String resourcePrefix = "resource/" ;
 

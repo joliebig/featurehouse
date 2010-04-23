@@ -1,4 +1,4 @@
-layer codegen;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,11 +21,11 @@ import java.util.TreeSet;
 // Main class below:
 //-----------------------------------------------------------------------//
 
-public refines class Main {
+public class Main {
 
-    public Object driver( String args[] ) throws Throwable {
+    public Object driver( String[] args ) throws Throwable {
         setVersion( "v2002.09.04" ) ;
-        return Super( String[] ).driver( args ) ;
+        return original( args ) ;
     }
 
 }

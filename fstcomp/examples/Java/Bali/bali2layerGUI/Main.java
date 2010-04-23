@@ -1,4 +1,4 @@
-layer grammarGui;
+
 
 import Jakarta.SwingUtils.*;
 import Jakarta.util.Find;
@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.regex.*;
 import java.lang.*;
 
-public refines class Main {
+public class Main {
     public Object driver( String[] args ) throws Throwable {
         JFrame f= new JFrame( "bali2Ref" );
         f.getContentPane().add( new Gui() );

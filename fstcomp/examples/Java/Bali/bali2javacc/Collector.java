@@ -1,4 +1,4 @@
-layer bali2javacc;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,7 +26,7 @@ import java.util.logging.Level;
 // Translator-specific Collector class:
 //-----------------------------------------------------------------------//
 
-public refines class Collector {
+public class Collector {
 
     public void setPackage( String packageName ) {
         parserBlocks.setPackage( packageName ) ;

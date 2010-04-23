@@ -1,4 +1,4 @@
-layer kernel;
+
 
 import Jakarta.util.*;
 import java.io.ByteArrayOutputStream;

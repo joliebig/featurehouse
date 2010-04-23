@@ -1,4 +1,4 @@
-layer require;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,11 +11,11 @@ import java.util.Map;
 // Main class below:
 //-----------------------------------------------------------------------//
 
-public refines class Main {
+public class Main {
 
-    public Object driver( String args[] ) throws Throwable {
+    public Object driver( String[] args ) throws Throwable {
         setVersion( "v2002.09.03" ) ;
-        return Super( String[] ).driver( args ) ;
+        return original( args ) ;
     }
 
 }

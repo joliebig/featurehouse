@@ -1,4 +1,4 @@
-layer composer;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,7 +31,7 @@ import java.util.logging.Level;
  * @layer<composer>
  */
     
-public refines class Main {
+public class Main {
 
     /**
      * Handles argument parsing, source parsing, parse-tree collections,

@@ -1,4 +1,4 @@
-layer layerArgs;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,7 +24,7 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Collects all non-terminals and rule names into {@link classNames}

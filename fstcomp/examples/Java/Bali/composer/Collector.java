@@ -1,4 +1,4 @@
-layer composer;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,7 +24,7 @@ import java.util.logging.Level;
 // Composer-specific Collector class:
 //-----------------------------------------------------------------------//
 
-public refines class Collector {
+public class Collector {
 
     public String toString() {
         return

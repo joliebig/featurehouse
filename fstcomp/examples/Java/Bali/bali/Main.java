@@ -1,4 +1,4 @@
-layer bali;
+
 
 import Jakarta.util.Util;
 import java.io.BufferedReader;
@@ -43,7 +43,7 @@ import java.util.StringTokenizer;
  * @layer<bali>
  */
     
-public refines class Main {
+public class Main {
 
     /**
      * A globally available {@link Logger} for debugging output.  See
@@ -58,7 +58,7 @@ public refines class Main {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
-    public Object driver( String args[] ) throws Throwable {
+    public Object driver( String[] args ) throws Throwable {
 
         Main.DEBUG.entering( "bali.Main", "driver", args ) ;
         setVersion( "v2002.09.03" ) ;
@@ -101,7 +101,7 @@ public refines class Main {
         return parseTree ;
     }
 
-    public static void main( String args[] ) {
+    public static void main( String[] args ) {
 
         // Initial configuration for the debugging {@link Logger}:
         //

@@ -1,4 +1,4 @@
-layer requireBali2javacc;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import java.util.ListIterator;
  * @layer<requireBali2javacc>
  */
     
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Lists those rules that appear in "require" statements, but are

@@ -1,4 +1,4 @@
-layer require;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +14,10 @@ import java.util.Map;
  * @layer<require>
  */
     
-public refines class Collector {
+public class Collector {
 
     public void visit( BaliGrammarNode node ) {
-        Super( BaliGrammarNode ).visit( node ) ;
+        original( node ) ;
         baliRules.addDefinition( node.tok[0].getTokenName() ) ;
 
         // Visit sub-trees to capture rule references:

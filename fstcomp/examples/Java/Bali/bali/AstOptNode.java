@@ -1,4 +1,4 @@
-layer bali;
+
 
 import Jakarta.util.Util;
 import java.io.BufferedReader;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public refines class AstOptNode {
+public class AstOptNode {
     public void execute() {
         if ( arg[0] != null )
             arg[0].execute() ;

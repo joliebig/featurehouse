@@ -1,4 +1,4 @@
-layer composer;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -25,7 +25,7 @@ import java.util.logging.Level;
 // (adds composer-specific {@link Object#toString()} methods)
 //-----------------------------------------------------------------------//
 
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Formats Bali rules by concatenating them with blank line separation.

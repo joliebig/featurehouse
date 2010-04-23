@@ -1,4 +1,4 @@
-layer requireComposer;
+
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -13,14 +13,14 @@ import java.util.TreeSet;
  * @layer<requireComposer>
  */
     
-public refines class Main {
+public class Main {
 
     public Object driver( String[] args ) throws Throwable {
 
         setVersion( "v2002.09.04" ) ;
 
         Collector collector =
-                ( Collector ) Super( String[] ).driver( args ) ;
+                ( Collector ) original( args ) ;
 
         List misDefined = collector.baliRules.misDefined() ;
         Collections.sort( misDefined ) ;

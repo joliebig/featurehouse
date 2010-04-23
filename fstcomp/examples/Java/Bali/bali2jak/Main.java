@@ -1,4 +1,4 @@
-layer bali2jak;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,7 +29,7 @@ import java.util.logging.Level;
  * @layer<bali2jak>
  */
     
-public refines class Main {
+public class Main {
 
     final private static String PROPERTIES = "bali2jak.properties" ;
 

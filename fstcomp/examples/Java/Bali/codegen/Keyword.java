@@ -1,4 +1,4 @@
-layer codegen;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,7 +29,7 @@ public class Keyword extends  StringEnumeration {
         RETURN = new  Keyword( "return" ) ;
 
     protected Keyword( String token ) {
-            Super( String )( token ) ;
+            super( token ) ;
         ;
     }
 

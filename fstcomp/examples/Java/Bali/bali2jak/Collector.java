@@ -1,4 +1,4 @@
-layer bali2jak;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +22,7 @@ import java.util.logging.Level;
 // Translator-specific Collector class:
 //-----------------------------------------------------------------------//
 
-public refines class Collector {
+public class Collector {
 
     public void generateNonterminals( File directory ) {
         Main.DEBUG.entering( "bali2jak.Collector","generateNonterminals" ) ;

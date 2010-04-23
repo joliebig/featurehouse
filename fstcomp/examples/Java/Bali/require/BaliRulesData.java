@@ -1,4 +1,4 @@
-layer require;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @layer<require>
  */
     
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     final public static int DEFINED = 1 ;
     final public static int REFERENCED = 2 ;
@@ -92,7 +92,7 @@ public refines class BaliRulesData {
      * @layer<require>
      */
     protected void setStartName( String name ) {
-        Super( String ).setStartName( name ) ;
+        original( name ) ;
         addReference( name ) ;
     }
 

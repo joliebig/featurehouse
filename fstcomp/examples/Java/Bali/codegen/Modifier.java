@@ -1,4 +1,4 @@
-layer codegen;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,7 +34,7 @@ public class Modifier extends  StringEnumeration {
         STATIC = new  Modifier( "static" ) ;
 
     protected Modifier( String token ) {
-            Super( String )( token ) ;
+            super( token ) ;
         ;
     }
 

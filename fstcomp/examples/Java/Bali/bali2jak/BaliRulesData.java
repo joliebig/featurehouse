@@ -1,4 +1,4 @@
-layer bali2jak;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,7 +23,7 @@ import java.util.logging.Level;
 // (adds composer-specific {@link Object#toString()} methods)
 //-----------------------------------------------------------------------//
 
-public refines class BaliRulesData  {
+public class BaliRulesData  {
 
     final public static int COMMENT_COLUMN = 32 ;
 

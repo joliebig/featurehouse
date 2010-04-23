@@ -1,4 +1,4 @@
-layer requireBali2jak;
+
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -10,7 +10,7 @@ import java.util.List;
  * @layer<requireBali2jak>
  */
     
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Inhibit generation of unwanted parse-tree classes.  Currently,

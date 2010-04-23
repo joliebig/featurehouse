@@ -1,6 +1,6 @@
-layer baseArgs;
 
-refines class Collector{
+
+class Collector{
 
     /**
      * Collects class names that are to be generated as

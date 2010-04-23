@@ -1,4 +1,4 @@
-layer bali2javacc;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,7 +27,7 @@ import java.util.logging.Level;
 // (adds composer-specific {@link Object#toString()} methods)
 //-----------------------------------------------------------------------//
 
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Generates JavaCC productions for each Bali rule:

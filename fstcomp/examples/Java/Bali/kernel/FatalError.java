@@ -1,4 +1,4 @@
-layer kernel;
+
 
 import Jakarta.util.*;
 import java.io.ByteArrayOutputStream;
@@ -27,10 +27,10 @@ import java.util.Vector;
 //**************************************************
     
 public class FatalError extends Exception {
-    public FatalError() { Super()();
+    public FatalError() { super();
         ;
     }
-    public FatalError( String s ) { Super( String )( s );
+    public FatalError( String s ) { super( s );
         ;
     }
 }

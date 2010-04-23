@@ -1,4 +1,4 @@
-layer requireComposer;
+
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import java.util.TreeSet;
  * @layer<requireComposer>
  */
     
-public refines class BaliRulesData {
+public class BaliRulesData {
 
     /**
      * Refined to set <code>REQUIRED</code> bit only if the given rule is
@@ -40,7 +40,7 @@ public refines class BaliRulesData {
 
         Set requireSet = new TreeSet( getList( REQUIRED, REQUIRED ) ) ;
         if ( requireSet.size() < 1 )
-            return Super().toString() ;
+            return original() ;
 
         StringBuffer buffer = new StringBuffer() ;
         for ( Iterator p = requireSet.iterator() ; p.hasNext() ; ) {
@@ -53,7 +53,7 @@ public refines class BaliRulesData {
                             + Main.LINE_SEPARATOR ) ;
         }
 
-        return buffer.toString() + Main.LINE_SEPARATOR + Super().toString() ;
+        return buffer.toString() + Main.LINE_SEPARATOR + original() ;
     }
 
 }

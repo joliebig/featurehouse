@@ -1,4 +1,4 @@
-layer bali2javacc;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -33,7 +33,7 @@ import java.util.logging.Level;
  * @layer<bali2javacc>
  */
     
-public refines class Main {
+public class Main {
 
     final private static String PROPERTIES = "bale2javacc.properties" ;
 

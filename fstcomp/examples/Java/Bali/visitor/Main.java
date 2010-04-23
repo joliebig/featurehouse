@@ -1,4 +1,4 @@
-layer visitor;
+
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ import java.util.Map;
  * @layer<visitor>
  */
     
-public refines class Main {
+public class Main {
 
     public Object driver( String[] args ) throws Throwable {
 
@@ -29,7 +29,7 @@ public refines class Main {
         setVersion( "v2002.09.04" ) ;
 
         BaliParse parseTree =
-                ( BaliParse ) Super( String[] ).driver( args ) ;
+                ( BaliParse ) original( args ) ;
 
         MainVisitor visitor = new MainVisitor() ;
         visitor.dispatch( parseTree ) ;

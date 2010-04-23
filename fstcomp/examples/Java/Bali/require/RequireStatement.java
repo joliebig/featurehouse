@@ -1,4 +1,4 @@
-layer require;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ import java.util.Map;
 // Provides the syntax tree nodes for the "require" statement:
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - //
 
-public refines class RequireStatement {
+public class RequireStatement {
     public void execute() {
         super.execute();
     }

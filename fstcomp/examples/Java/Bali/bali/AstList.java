@@ -1,4 +1,4 @@
-layer bali;
+
 
 import Jakarta.util.Util;
 import java.io.BufferedReader;
@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public abstract refines class AstList {
+public abstract class AstList {
 
     public void execute() {
         for ( AstNode node = arg[0]; node != null; node = node.right )

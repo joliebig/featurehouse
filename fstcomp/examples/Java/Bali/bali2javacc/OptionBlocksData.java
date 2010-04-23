@@ -1,4 +1,4 @@
-layer bali2javacc;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +22,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 
-public refines class OptionBlocksData {
+public class OptionBlocksData {
 
     /**
      * Formats options blocks by concatenating them with blank line

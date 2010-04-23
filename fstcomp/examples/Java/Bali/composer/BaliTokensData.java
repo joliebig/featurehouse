@@ -1,4 +1,4 @@
-layer composer;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.logging.Level;
 
-public refines class BaliTokensData {
+public class BaliTokensData {
 
     /**
      * Formats the Bali tokens in alphabetical order by name (key) with

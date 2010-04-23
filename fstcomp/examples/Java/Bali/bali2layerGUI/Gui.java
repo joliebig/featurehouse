@@ -1,4 +1,4 @@
-layer grammarGui;
+
 
 import Jakarta.SwingUtils.*;
 import Jakarta.util.Find;
