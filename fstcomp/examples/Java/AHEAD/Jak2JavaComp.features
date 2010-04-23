@@ -11,8 +11,8 @@ gscope
 j2jBase
 LocalIdError
 AspectTrans
-sm5
+#sm5
 j2jClassx
 j2jIntx
-j2jSmx
+#j2jSmx
 antDerive

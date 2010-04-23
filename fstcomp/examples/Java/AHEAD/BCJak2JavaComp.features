@@ -10,9 +10,9 @@ gscope
 bcAhead
 LocalIdError
 bcLayer
-sm5
-bcsm5
+#sm5
+#bcsm5
 bcClassx
 bcIntx
-bcSmx
+#bcSmx
 antDerive

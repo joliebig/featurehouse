@@ -18,6 +18,6 @@ public class AST_QualifiedName        {
               setPrefixName(newName);
           }
        }
-       original(props);
+       super.reduce2java(props);
     }
 }
