@@ -126,7 +126,7 @@ public class XMINode extends FSTNonTerminal {
 				setName(name);
 				setNodeAttribute("name", name);
 				if (type.equals("UML:Parameter") | type.equals("UML:Attribute") | type.equals("UML:Operation")) {
-					//setNodeAttribute("xmi.id",  id);	
+					//setNodeAttribute("xmi.id",  id);
 				} else if (ignoreID) {
 					
 				} else if (!id.equals("")) {
@@ -143,6 +143,10 @@ public class XMINode extends FSTNonTerminal {
 				}
 			}
 			
+			}
+			
+			if (type.equals("UML:Multiplicity") || type.equals("UML:MultiplicityRange")) {
+				setName("id");
 			}
 			
 			if (type.equals("UML:Association.connection") || type.equals("UML:ClassifierRole.multiplicity")) {
