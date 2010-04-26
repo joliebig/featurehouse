@@ -27,6 +27,10 @@ public class CmdLineInterpreter {
 
 	public static final String INPUT_OPTION_HELP = "--help";
 
+	public static final String INPUT_OPTION_COUNT = "--count";
+
+	public boolean isCount = false;
+	
 	public boolean isAheadEquationFile;
 
 	public String equationFileName;
@@ -83,6 +87,8 @@ public class CmdLineInterpreter {
 						System.out.println("Error occured option: " + INPUT_OPTION_OUTPUT_DIRECTORY);
 						errorOccured = true;
 					}
+				} else if (args[i].equals(INPUT_OPTION_COUNT)) {
+					isCount = true;
 				} else if (args[i].equals(INPUT_OPTION_FILE_OUTPUT)) {
 					fileOutput = true;
 				} else if (args[i].equals(INPUT_OPTION_SHOW_GUI)) {
@@ -113,9 +119,9 @@ public class CmdLineInterpreter {
 	
 	private static void printHelp(boolean errorOccured) {
 		if (errorOccured) {
-			System.out.println("Insufficient command line parameters!");
+			System.out.println("Incorrect command line parameters!");
 		}
-		System.out.println("Use `java -jar FeatureHouse-<VERSION>.jar " 
+		System.out.println("Use `java -jar FeatureHouse.jar " 
 				+ INPUT_OPTION_EQUATIONFILE + " <file name> ["
 				+ INPUT_OPTION_BASE_DIRECTORY + " <directory name>]'"
 );

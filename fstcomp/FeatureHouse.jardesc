@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="/home/apel/Desktop/FeatureHouse.jar"/>
+    <jar path="fstcomp/lib/FeatureHouse.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -26,9 +26,9 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.alloy"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
@@ -36,15 +36,15 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <file path="/fstmerge/.project"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.textm"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.javam"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.C"/>

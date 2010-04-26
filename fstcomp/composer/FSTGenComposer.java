@@ -56,14 +56,14 @@ public class FSTGenComposer extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				/*if(builder instanceof JavaBuilder) {
+				if(cmd.isCount && builder instanceof JavaBuilder) {
 					Counter counter = new Counter();
 					for (FSTNonTerminal feature : features) {
 						counter.collect(feature);
 					}
 					if(features.size() > 0)
 						counter.writeFile(new File(cmd.equationFileName + ".rsf"));
-				}*/
+				}
 				
 				/*for (FSTNonTerminal feature : features) {
 					System.out.println(feature);
