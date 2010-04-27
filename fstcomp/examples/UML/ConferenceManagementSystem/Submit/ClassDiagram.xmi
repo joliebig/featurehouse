@@ -1,8 +1,8 @@
 <?xml version = '1.0' encoding = 'UTF-8' ?>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jan 17 16:42:57 CET 2009'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Apr 26 19:41:02 CEST 2010'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
-      <XMI.exporterVersion>0.26.2(6) revised on $Date: 2010-04-01 11:27:16 $ </XMI.exporterVersion>
+      <XMI.exporterVersion>0.30(6) revised on $Date: 2010-04-27 07:23:27 $ </XMI.exporterVersion>
     </XMI.documentation>
     <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
   <XMI.content>
@@ -119,20 +119,12 @@
             <UML:Attribute xmi.id = '-64--88-2-2-51e0652d:11b96c8217c:-8000:000000000000085F'
               name = 'accepted' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
-              <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '-64--88-2-2--68b8e89e:11bb5a48a72:-8000:00000000000021C8'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '-64--88-2-2--68b8e89e:11bb5a48a72:-8000:00000000000021C7'
-                      lower = '1' upper = '1'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:StructuralFeature.multiplicity>
               <UML:Attribute.initialValue>
                 <UML:Expression xmi.id = '-64--88-2-2--68b8e89e:11bb5a48a72:-8000:00000000000021C2'
                   language = '' body = '&#10;'/>
               </UML:Attribute.initialValue>
               <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
+                <UML:Enumeration href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:0000000000000880'/>
               </UML:StructuralFeature.type>
             </UML:Attribute>
             <UML:Operation xmi.id = '-64--88-2-2-51e0652d:11b96c8217c:-8000:0000000000000865'
@@ -161,5 +153,53 @@
         </UML:Class>
       </UML:Namespace.ownedElement>
     </UML:Model>
+    <UML:Multiplicity xmi.id = '-64--88-2-2--68b8e89e:11bb5a48a72:-8000:00000000000021C8'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '-64--88-2-2--68b8e89e:11bb5a48a72:-8000:00000000000021C7'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BAC'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BAB'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BAE'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BAD'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB0'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BAF'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB2'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB1'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB4'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB3'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB8'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB7'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
+    <UML:Multiplicity xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB6'>
+      <UML:Multiplicity.range>
+        <UML:MultiplicityRange xmi.id = '62--7-74--40-71044b18:1283b1c9ab0:-8000:0000000000005BB5'
+          lower = '1' upper = '1'/>
+      </UML:Multiplicity.range>
+    </UML:Multiplicity>
   </XMI.content>
 </XMI>
