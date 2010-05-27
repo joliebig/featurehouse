@@ -59,7 +59,7 @@ public class FeaturePrintVisitor {
 				StringBuffer sb = new StringBuffer(getExpressionName());
 				sb.setLength(sb.lastIndexOf("."));
 				sb.delete(0, sb.lastIndexOf(File.separator) + 1);
-				featurePath = new File(getWorkingDir() + sb.toString());
+				featurePath = new File(getWorkingDir() + File.separator + sb.toString());
 				featurePath.mkdir();
 				folderPath = featurePath;
 				for(FSTNode child : nonterminal.getChildren()) {
