@@ -12,21 +12,29 @@ import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class CApproxBuilder extends ArtifactBuilder {
-	private final static String[] suffixArray = { ".c", ".h" };
+    private final static String[] suffixArray = { ".c", ".h" };
 
-	public CApproxBuilder() {
-		super(suffixArray);
-	}
+    public CApproxBuilder() {
+	super(suffixArray);
+    }
 
-	public void processNode(FSTNonTerminal parent, StringTokenizer st,
-			File inputFile) throws FileNotFoundException, ParseException {
-		FSTNonTerminal rootDocument = new FSTNonTerminal("C-File", st
-				.nextToken());
-		parent.addChild(rootDocument);
-		CApproxParser p = new CApproxParser(new OffsetCharStream(
-				new FileInputStream(inputFile)));
-		p.TranslationUnit(false);
-		rootDocument.addChild(p.getRoot());
-		// System.err.println(p.getRoot().toString());
-	}
+    public void processNode(FSTNonTerminal parent, StringTokenizer st,
+	    File inputFile) throws FileNotFoundException, ParseException {
+	/*
+	 * type depends on file-ending:
+	 * 	".*\.c" : "C-File
+	 * 	".*\.h" : "H-File
+	 */
+	String type = inputFile.getName().replaceAll("(.*)\\.(.*)", "$2")
+		.toUpperCase() + "-File";
+	
+	FSTNonTerminal rootDocument = new FSTNonTerminal(type, st
+		.nextToken());
+	parent.addChild(rootDocument);
+	CApproxParser p = new CApproxParser(new OffsetCharStream(
+		new FileInputStream(inputFile)));
+	p.TranslationUnit(false);
+	rootDocument.addChild(p.getRoot());
+	// System.err.println(p.getRoot().toString());
+    }
 }

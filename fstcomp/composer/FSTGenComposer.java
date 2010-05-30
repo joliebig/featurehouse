@@ -27,6 +27,7 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
+import de.ovgu.cide.fstgen.ast.FSTVisitor;
 
 public class FSTGenComposer extends FSTGenProcessor {
 
@@ -74,6 +75,16 @@ public class FSTGenComposer extends FSTGenProcessor {
 
 //				if(composition != null)
 //					System.err.println(composition.toString());
+				
+				
+				/* 
+				 * hook for general purpose visitors
+				 */
+				if (null != composition)
+        				for (FSTVisitor visitor: getFSTVisitors()) {
+        				    composition.accept(visitor);
+        				}
+				
 				try {
 					featureVisitor.visit((FSTNonTerminal) composition);
 				} catch (PrintVisitorException e) {

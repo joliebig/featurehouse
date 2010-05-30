@@ -9,6 +9,7 @@ import printer.FeaturePrintVisitor;
 import printer.PrintVisitorInterface;
 import printer.alloy.AlloyPrintVisitor;
 import printer.binary.BinaryPrintVisitor;
+import printer.capprox.CApproxHeaderPrintVisitor;
 import printer.capprox.CApproxPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
 import printer.haskell.HaskellPrintVisitor;
@@ -16,6 +17,7 @@ import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
 import printer.text.TextPrintVisitor;
 import printer.xmi.XMIPrintVisitor;
+import processor.capprox.CIncludeGuardGenerator;
 import builder.ArtifactBuilderInterface;
 import builder.alloy.AlloyBuilder;
 import builder.binary.BinaryBuilder;
@@ -27,6 +29,7 @@ import builder.javacc.JavaCCBuilder;
 import builder.text.TextBuilder;
 import builder.xmi.XMIBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNode;
+import de.ovgu.cide.fstgen.ast.FSTVisitor;
 
 public class FSTGenProcessor {
 
@@ -56,6 +59,7 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new JavaPrintVisitor());
 		registerPrintVisitor(new CSharpPrintVisitor());
 		registerPrintVisitor(new CApproxPrintVisitor());
+		registerPrintVisitor(new CApproxHeaderPrintVisitor());
 		registerPrintVisitor(new JavaCCPrintVisitor());
 		registerPrintVisitor(new HaskellPrintVisitor());
 		registerPrintVisitor(new XMIPrintVisitor());
@@ -67,6 +71,8 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new BinaryPrintVisitor(".wav"));
 
 		errorFiles = new DuplicateFreeLinkedList<File>();
+		
+		registerFSTVisitor(new CIncludeGuardGenerator());
 	}
 	
 	public void setFstnodes(ArrayList<FSTNode> fstnodes) {
@@ -92,6 +98,7 @@ public class FSTGenProcessor {
 	public LinkedList<ArtifactBuilderInterface> getArtifactBuilders() {
 		return fileLoader.getArtifactBuilders();
 	}
+	
 
 	public void registerPrintVisitor(PrintVisitorInterface visitor) {
 		this.featureVisitor.registerPrintVisitor(visitor);
@@ -121,5 +128,19 @@ public class FSTGenProcessor {
 			listener.parseErrorOccured(e1);
 		e1.printStackTrace();
 	}
+	
+	public void registerFSTVisitor(FSTVisitor visitor) {
+	    fstVisitors.add(visitor);
+	}
+
+	public void unregisterFSTVisitor(FSTVisitor visitor) {
+	    fstVisitors.remove(visitor);
+	}
+
+	public LinkedList<FSTVisitor> getFSTVisitors() {
+	    return fstVisitors;
+	}
+	
+	private LinkedList<FSTVisitor> fstVisitors = new LinkedList<FSTVisitor>();
 
 }
