@@ -61,7 +61,7 @@ public class CIncludeGuardGenerator extends FSTVisitor {
 		    new FSTTerminal(HEADER_GUARD_ENDIF_LINE_TYPE,
 			    HEADER_GUARD_ENDIF_LINE_NAME,
 			    HEADER_GUARD_ENDIF_LINE_CONTENT, ""));
-	    System.out.println(nonTerminal);
+	    //System.out.println(nonTerminal);
 	}
 
 	return true;
