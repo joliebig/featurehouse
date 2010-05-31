@@ -46,16 +46,16 @@ public class CIncludeGuardGenerator extends FSTVisitor {
 	    parent.getChildren()
 		    .add(
 			    0,
-			    new FSTTerminal(HEADER_GUARD_IFNDEF_LINE_TYPE,
-				    HEADER_GUARD_IFNDEF_LINE_NAME,
-				    HEADER_GUARD_IFNDEF_LINE_CONTENT + " "
+			    new FSTTerminal(HEADER_GUARD_DEFINE_LINE_TYPE,
+				    HEADER_GUARD_DEFINE_LINE_NAME,
+				    HEADER_GUARD_DEFINE_LINE_CONTENT + " "
 					    + identifier, ""));
 	    parent.getChildren()
 		    .add(
 			    0,
-			    new FSTTerminal(HEADER_GUARD_DEFINE_LINE_TYPE,
-				    HEADER_GUARD_DEFINE_LINE_NAME,
-				    HEADER_GUARD_DEFINE_LINE_CONTENT + " "
+			    new FSTTerminal(HEADER_GUARD_IFNDEF_LINE_TYPE,
+				    HEADER_GUARD_IFNDEF_LINE_NAME,
+				    HEADER_GUARD_IFNDEF_LINE_CONTENT + " "
 					    + identifier, ""));
 	    parent.getChildren().add(
 		    new FSTTerminal(HEADER_GUARD_ENDIF_LINE_TYPE,
