@@ -980,7 +980,7 @@ BlockStatement:
 |
 	Annotation
 |
-  ClassOrInterfaceDeclaration
+  Modifiers ClassOrInterfaceDeclaration
 ;
 
 LocalVariableDeclaration:

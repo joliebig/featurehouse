@@ -1145,7 +1145,7 @@ FSTInfo BlockStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=Annotation(true){ replaceName(n);} {return productionEndTerminal("BlockStatement3","-","-","Replacement",first,token);}
  |
-	n=ClassOrInterfaceDeclaration(true){ replaceName(n);} {return productionEndTerminal("BlockStatement4","-","-","Replacement",first,token);}
+	n=Modifiers(true){ replaceName(n);} n=ClassOrInterfaceDeclaration(true){ replaceName(n);} {return productionEndTerminal("BlockStatement4","-","-","Replacement",first,token);}
 
  )  }
 
