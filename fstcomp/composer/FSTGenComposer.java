@@ -80,11 +80,11 @@ public class FSTGenComposer extends FSTGenProcessor {
 				/* 
 				 * hook for general purpose visitors
 				 */
-				if (null != composition)
+				/*if (null != composition)
         				for (FSTVisitor visitor: getFSTVisitors()) {
         				    composition.accept(visitor);
         				}
-				
+				*/
 				try {
 					featureVisitor.visit((FSTNonTerminal) composition);
 				} catch (PrintVisitorException e) {
