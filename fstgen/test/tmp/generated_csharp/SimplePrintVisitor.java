@@ -1,10 +1,13 @@
 package tmp.generated_csharp;
 
+import java.util.*;
+import cide.gast.*;
+
 import java.io.PrintStream;
 
-import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import cide.languages.*;
+
+import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
@@ -15,6 +18,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("compilation_unit")) {
+			printFeatures(nonTerminal,true);
 			for (FSTNode v : getChildren(nonTerminal,"using_directive")) {
 				v.accept(this);
 			}
@@ -30,9 +34,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("compilation_unitEnd")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "namespace_member_declaration_no_attr");
 				if (v!=null) {
@@ -42,9 +48,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			for (FSTNode v : getChildren(nonTerminal,"namespace_member_declaration")) {
 				v.accept(this);
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("namespace");
 			{
 				FSTNode v=getChild(nonTerminal, "type_name");
@@ -58,9 +66,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_body")) {
+			printFeatures(nonTerminal,true);
 			printToken("{");
 			hintIncIndent();
 			hintNewLine();
@@ -74,18 +84,22 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			hintNewLine();
 			printToken("}");
 			hintNewLine();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_member_declaration_no_attr1")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "namespace_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_member_declaration_no_attr2")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "type_modifiers");
 				if (v!=null) {
@@ -98,18 +112,22 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_member_declaration1")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "namespace_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("namespace_member_declaration2")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "attributes");
 				if (v!=null) {
@@ -128,54 +146,66 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("type_declaration1")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "class_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("type_declaration2")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "struct_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("type_declaration3")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "interface_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("type_declaration4")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "enum_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("type_declaration5")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "delegate_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("class_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("class");
 			{
 				FSTNode v=getChild(nonTerminal, "identifier");
@@ -207,9 +237,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("class_body")) {
+			printFeatures(nonTerminal,true);
 			printToken("{");
 			hintIncIndent();
 			hintNewLine();
@@ -220,9 +252,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			hintNewLine();
 			printToken("}");
 			hintNewLine();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("class_member_declaration")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "attributes");
 				if (v!=null) {
@@ -241,18 +275,22 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("class_member_declarationEnd5")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "type_declaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("struct_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("struct");
 			{
 				FSTNode v=getChild(nonTerminal, "identifier");
@@ -284,9 +322,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("base_interfaces")) {
+			printFeatures(nonTerminal,true);
 			printToken(":");
 			{
 				FSTNode v=getChild(nonTerminal, "interface_type_list");
@@ -294,9 +334,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("interface_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("interface");
 			{
 				FSTNode v=getChild(nonTerminal, "identifier");
@@ -328,9 +370,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("interface_body")) {
+			printFeatures(nonTerminal,true);
 			printToken("{");
 			hintIncIndent();
 			hintNewLine();
@@ -341,9 +385,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			hintNewLine();
 			printToken("}");
 			hintNewLine();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("enum_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("enum");
 			{
 				FSTNode v=getChild(nonTerminal, "identifier");
@@ -363,9 +409,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("delegate_declaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("delegate");
 			{
 				FSTNode v=getChild(nonTerminal, "type");
@@ -401,6 +449,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printToken(")");
 			printToken(";");
 			hintNewLine();
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
@@ -519,6 +568,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("type_modifier3") && expectedType.equals("type_modifier")) return true;
 		if (type.equals("type_nameEnd1") && expectedType.equals("type_nameEnd")) return true;
 		if (type.equals("overloadable_binary_operator12") && expectedType.equals("overloadable_binary_operator")) return true;
+		if (type.equals("argument1") && expectedType.equals("argument")) return true;
 		if (type.equals("interface_member_modifier1") && expectedType.equals("interface_member_modifier")) return true;
 		if (type.equals("iteration_statement4") && expectedType.equals("iteration_statement")) return true;
 		if (type.equals("literal6") && expectedType.equals("literal")) return true;
@@ -579,11 +629,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("typeEnd3") && expectedType.equals("typeEnd")) return true;
 		if (type.equals("primary_expression_start8") && expectedType.equals("primary_expression_start")) return true;
 		if (type.equals("overloadable_unary_operator6") && expectedType.equals("overloadable_unary_operator")) return true;
-		if (type.equals("embedded_statement7") && expectedType.equals("embedded_statement")) return true;
 		if (type.equals("member_modifier2") && expectedType.equals("member_modifier")) return true;
+		if (type.equals("embedded_statement7") && expectedType.equals("embedded_statement")) return true;
 		if (type.equals("relational_operator3") && expectedType.equals("relational_operator")) return true;
 		if (type.equals("overloadable_binary_operator2") && expectedType.equals("overloadable_binary_operator")) return true;
 		if (type.equals("primary_expression_postfixInternal3") && expectedType.equals("primary_expression_postfixInternal")) return true;
+		if (type.equals("argument2") && expectedType.equals("argument")) return true;
 		if (type.equals("jump_statement1") && expectedType.equals("jump_statement")) return true;
 		if (type.equals("integral_type8") && expectedType.equals("integral_type")) return true;
 		if (type.equals("namespace_member_declaration1") && expectedType.equals("namespace_member_declaration")) return true;

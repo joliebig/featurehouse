@@ -171,7 +171,7 @@ FSTInfo compilation_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo identifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.toString()));} {return productionEndTerminal("identifier1","-","{<IDENTIFIER>}","Replacement",first,token);}
+	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} {return productionEndTerminal("identifier1","-","{<IDENTIFIER>}","Replacement",first,token);}
  |
 	"module"  {return productionEndTerminal("identifier2","-","module","Replacement",first,token);}
  |
@@ -681,7 +681,9 @@ FSTInfo argument_list(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo argument(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=argumentPrefix(true){ replaceName(n);}] n=expression(true){ replaceName(n);} {return productionEndTerminal("argument","-","-","Replacement",first,token);}
+	[n=argumentPrefix(true){ replaceName(n);}] n=expression(true){ replaceName(n);} {return productionEndTerminal("argument1","-","-","Replacement",first,token);}
+ |
+	"delegate" "(" n=formal_parameter_list(true){ replaceName(n);} ")" n=body(true){ replaceName(n);} {return productionEndTerminal("argument2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1097,31 +1099,31 @@ FSTInfo using_directiveEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo namespace_member_declaration_no_attr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=namespace_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration_no_attr1","-","-");}
+	n=namespace_declaration(inTerminal){ replaceName("namespace_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration_no_attr1","{namespace_declaration}","{namespace_declaration}");}
  |
-	[n=type_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration_no_attr2","-","-");}
+	[n=type_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration_no_attr2","{type_declaration}","{type_declaration}");}
 
  )  }
 
 FSTInfo namespace_member_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=namespace_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration1","-","-");}
+	n=namespace_declaration(inTerminal){ replaceName("namespace_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration1","{namespace_declaration}","{namespace_declaration}");}
  |
-	[n=attributes(inTerminal){ replaceName(n);}] [n=type_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","-","-");}
+	[n=attributes(inTerminal){ replaceName(n);}] [n=type_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","{type_declaration}","{type_declaration}");}
 
  )  }
 
 FSTInfo type_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=class_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("type_declaration1","-","-");}
+	n=class_declaration(inTerminal){ replaceName("class_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("type_declaration1","{class_declaration}","{class_declaration}");}
  |
-	n=struct_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("type_declaration2","-","-");}
+	n=struct_declaration(inTerminal){ replaceName("struct_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("type_declaration2","{struct_declaration}","{struct_declaration}");}
  |
-	n=interface_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("type_declaration3","-","-");}
+	n=interface_declaration(inTerminal){ replaceName("interface_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("type_declaration3","{interface_declaration}","{interface_declaration}");}
  |
-	n=enum_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("type_declaration4","-","-");}
+	n=enum_declaration(inTerminal){ replaceName("enum_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("type_declaration4","{enum_declaration}","{enum_declaration}");}
  |
-	n=delegate_declaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("type_declaration5","-","-");}
+	n=delegate_declaration(inTerminal){ replaceName("delegate_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("type_declaration5","{delegate_declaration}","{delegate_declaration}");}
 
  )  }
 

@@ -484,8 +484,9 @@ argument_list
 	:	argument ("," argument)*
 	;
 
-argument 
-	:	(argumentPrefix)?	expression
+argument:	
+		(argumentPrefix)?	expression
+		| "delegate" "(" formal_parameter_list ")"  body
 	;
 argumentPrefix:"ref" | "out";
 
@@ -760,25 +761,22 @@ using_directiveEnd
 	:	"=" type_name ";" @!
 	|	";" @!<NONE>;
 
-@FSTNonTerminal()	
 namespace_member_declaration_no_attr
-	:	namespace_declaration
-	|	(type_modifiers)? type_declaration
+	:	@FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
+	|	@FSTNonTerminal(name="{type_declaration}") (type_modifiers)? type_declaration
 	;
 
-@FSTNonTerminal()	
 namespace_member_declaration 
-	:	namespace_declaration
-	|	(attributes)? (type_modifiers)? type_declaration
+	:	@FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
+	|	@FSTNonTerminal(name="{type_declaration}") (attributes)? (type_modifiers)? type_declaration
 	;
 
-@FSTNonTerminal()
 type_declaration 	//Type declaration that assumes parent rule has already looked for attributes and modifiers
-	:	class_declaration
-	|	struct_declaration
-	|	interface_declaration
-	|	enum_declaration
-	|	delegate_declaration
+	:	@FSTNonTerminal(name="{class_declaration}") class_declaration
+	|	@FSTNonTerminal(name="{struct_declaration}") struct_declaration
+	|	@FSTNonTerminal(name="{interface_declaration}") interface_declaration
+	|	@FSTNonTerminal(name="{enum_declaration}") enum_declaration
+	|	@FSTNonTerminal(name="{delegate_declaration}") delegate_declaration
 	;
 
 type_modifiers
