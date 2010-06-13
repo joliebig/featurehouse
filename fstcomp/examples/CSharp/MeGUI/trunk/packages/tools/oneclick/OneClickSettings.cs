@@ -185,7 +185,7 @@ namespace MeGUI
             ContainerCandidates = new string[] {"MKV"};
 		}
 
-        #region GenericSettings Members
+        
 
 
         public string[] RequiredFiles
@@ -198,6 +198,6 @@ namespace MeGUI
             get { return new string[]{VideoProfileName, AudioProfileName};}
         }
 
-        #endregion
+        
     }
 }

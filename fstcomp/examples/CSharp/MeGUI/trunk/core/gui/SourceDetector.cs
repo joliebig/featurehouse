@@ -83,7 +83,7 @@ namespace MeGUI
             continueWorking = true;
         }
 
-        #region local info
+        
         bool isAnime;
         bool error = false, continueWorking = true;
         string errorMessage = "";
@@ -99,9 +99,9 @@ namespace MeGUI
 
         private string analysis;
         private List<DeinterlaceFilter> filters = new List<DeinterlaceFilter>();
-        #endregion
-        #region Processing
-        #region helper methods
+        
+        
+        
         private string findPortions(List<int[]> portions, int selectEvery, int selectLength, int numPortions,
             int sectionCount, int inputFrames, string type, out string trimLine, out int frameCount)
         {
@@ -176,8 +176,8 @@ namespace MeGUI
                 finishProcessing();
             }
         }
-        #endregion
-        #region script generation and running
+        
+        
         private void runScript(int scriptType, int frameCount, string trimLine)
         {
             int numFrames = 0;
@@ -261,8 +261,8 @@ namespace MeGUI
             t.Start();
         }
 
-        #endregion
-        #region analysis
+        
+        
         private bool checkDecimate(int[] data)
         {
             int[] dataCopy = new int[6];
@@ -390,7 +390,7 @@ namespace MeGUI
         }
         private void analyse(string logFileName, int selectEvery, int selectLength, int inputFrames)
         {
-            #region variable declaration
+            
             bool stillWorking = false;
             StreamReader instream;
             try
@@ -427,8 +427,8 @@ namespace MeGUI
             int[] portionStatus = new int[2];
 
 
-            #endregion
-            #region loop
+            
+            
             string line = instream.ReadLine();
             while (line != null)
             {
@@ -443,7 +443,7 @@ namespace MeGUI
                 data[count, 1] = (contents[1].Equals("true"));
                 count++;
 
-                #region 5-ly analysis
+                
                 if (count == 5)
                 {
                     sectionCount++;
@@ -489,7 +489,7 @@ namespace MeGUI
                         portionStatus[0] = 0;
                         portionStatus[1] = 0;
                     }
-                    #region portions
+                    
                     // Manage film and interlaced portions
                     for (int i = 0; i < 2; i++)
                     {
@@ -498,7 +498,7 @@ namespace MeGUI
                             if (inPortion[i])
                             {
                                 ((int[])portions[i][nextPortionIndex[i]])[1] = sectionCount;
-                                #region useless comments
+                                
                                 /*                                if (portionLength[i] == 1) // This should help reduce random fluctuations, by removing length 1 portions
  * I've now changed my mind about random fluctuations. I believe they are good, because they occur when TIVTC is on the verge of making
  * a wrong decision. Instead of continuing with this decision, which would then regard this section of the film as progressive, leaving combing
@@ -513,7 +513,7 @@ namespace MeGUI
                                     numPortions[i]--;
                                 }
 */
-                                #endregion
+                                
                                 nextPortionIndex[i]++;
                                 inPortion[i] = false;
                             }
@@ -548,14 +548,14 @@ namespace MeGUI
                             }
                         }
                     }
-                    #endregion
+                    
                     count = 0;
                 }
-                #endregion
+                
                 line = instream.ReadLine();
             }
-            #endregion
-            #region final counting
+            
+            
             instream.Close();
 
             int[] array = new int[] { numInt, numProg, numTC };
@@ -580,7 +580,7 @@ namespace MeGUI
                 }
             }
 
-            #region plain
+            
             if (array[1] < (double)(array[0]+array[1]+array[2]) /100.0 * settings.HybridPercent)
             {
                 if (array[2] == numProg)
@@ -604,8 +604,8 @@ namespace MeGUI
                     runScript(1, -1, "#no trimming"); //field order script
                 }
             }
-            #endregion
-            #region hybrid
+            
+            
             else
             {
                 if (array[0] == numProg) // We have a hybrid film/ntsc. This is the most common
@@ -696,13 +696,13 @@ namespace MeGUI
                     }
                 }
             }
-            #endregion
-            #endregion
+            
+            
             if (!stillWorking)
                 finishProcessing();
         }
-        #endregion
-        #region finalizing
+        
+        
         private void finishProcessing()
         {
             if (error)
@@ -730,9 +730,9 @@ namespace MeGUI
             finishedAnalysis(info, false, null);
 
         }
-        #endregion
-        #endregion
-        #region Program interface
+        
+        
+        
         public void analyse()
         {
             runScript(0, -1, "#no trimming");
@@ -741,6 +741,6 @@ namespace MeGUI
         {
             continueWorking = false;
         }
-        #endregion
+        
     }
 }

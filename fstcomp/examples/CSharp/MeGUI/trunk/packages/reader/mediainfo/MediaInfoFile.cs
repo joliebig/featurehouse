@@ -41,16 +41,16 @@ namespace MeGUI
 
     public class MediaInfoFileFactory : IMediaFileFactory
     {
-        #region IMediaFileFactory Members
+        
 
         public IMediaFile Open(string file)
         {
             return new MediaInfoFile(file);
         }
 
-        #endregion
+        
 
-        #region IMediaFileFactory Members
+        
 
 
         public int HandleLevel(string file)
@@ -58,16 +58,16 @@ namespace MeGUI
             return 5;
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "MediaInfo/DirectShowSource"; }
         }
 
-        #endregion
+        
     }
 
     public class MediaInfoFile : IMediaFile
@@ -199,7 +199,7 @@ namespace MeGUI
 
 
         private static readonly CultureInfo culture = new CultureInfo("en-us");
-        #region variables
+        
         private static Dictionary<string, VideoCodec> knownVideoDescriptions;
         private static Dictionary<string, AudioCodec> knownAudioDescriptions;
         private static Dictionary<string, ContainerType> knownContainerTypes;
@@ -214,8 +214,8 @@ namespace MeGUI
         private BitrateManagementMode[] aBitrateModes;
         private string file;
         private MediaFileInfo info;
-        #endregion
-        #region properties
+        
+        
         public MediaFileInfo Info
         {
             get { return info; }
@@ -244,7 +244,7 @@ namespace MeGUI
         {
             get { return aBitrateModes; }
         }
-        #endregion
+        
 
 
         public MediaInfoFile(string file)
@@ -298,7 +298,7 @@ namespace MeGUI
             }
         }
 
-        #region methods
+        
         private static int? easyParseInt(string value)
         {
             try
@@ -376,7 +376,7 @@ namespace MeGUI
             }
             return null;
         }
-        #endregion
+        
         static MediaInfoFile()
         {
             knownVideoDescriptions = new Dictionary<string, VideoCodec>();
@@ -416,7 +416,7 @@ namespace MeGUI
             knownContainerDescriptions = new Dictionary<string,ContainerType>();
         }
 
-        #region IMediaFile Members
+        
 
 
         public bool HasAudio
@@ -460,9 +460,9 @@ namespace MeGUI
             throw new Exception("The method or operation is not implemented.");
         }
 
-        #endregion
+        
 
-        #region IDisposable Members
+        
 
         public void Dispose()
         {
@@ -474,6 +474,6 @@ namespace MeGUI
             }
         }
 
-        #endregion
+        
     }
 }

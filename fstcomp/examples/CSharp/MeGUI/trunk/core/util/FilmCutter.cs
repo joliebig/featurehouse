@@ -38,7 +38,7 @@ namespace MeGUI.core.util
         public int startFrame;
         public int endFrame;
 
-        #region IComparable<CutSection> Members
+        
 
         public int CompareTo(CutSection other)
         {
@@ -57,7 +57,7 @@ namespace MeGUI.core.util
 
         }
 
-        #endregion
+        
     }
     public enum TransitionStyle
     {

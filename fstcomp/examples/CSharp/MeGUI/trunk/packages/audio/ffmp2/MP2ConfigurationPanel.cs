@@ -35,7 +35,7 @@ namespace MeGUI.packages.audio.ffmp2
             InitializeComponent();
             comboBox1.Items.AddRange(MP2Settings.SupportedBitrates);
         }
-        #region properties
+        
 
         protected override bool IsMultichanelSupported
         {
@@ -62,9 +62,9 @@ namespace MeGUI.packages.audio.ffmp2
                 comboBox1.SelectedItem = nas.Bitrate;
             }
         }
-        #endregion
+        
 
-        #region Editable<MP2Settings> Members
+        
 
         MP2Settings Editable<MP2Settings>.Settings
         {
@@ -78,7 +78,7 @@ namespace MeGUI.packages.audio.ffmp2
             }
         }
 
-        #endregion
+        
     }
 }
 

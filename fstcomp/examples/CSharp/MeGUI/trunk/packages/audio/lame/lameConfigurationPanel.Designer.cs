@@ -20,7 +20,7 @@ namespace MeGUI.packages.audio.lame
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -154,7 +154,7 @@ namespace MeGUI.packages.audio.lame
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label qualityLabel;
         private System.Windows.Forms.NumericUpDown quality;

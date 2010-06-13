@@ -20,8 +20,8 @@ namespace MeGUI.packages.audio.naac
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
-        #endregion
+        
     }
 }

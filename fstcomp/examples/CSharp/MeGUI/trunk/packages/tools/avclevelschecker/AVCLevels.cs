@@ -26,7 +26,7 @@ namespace MeGUI
     public class AVCLevelTool : MeGUI.core.plugins.interfaces.ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -72,16 +72,16 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlL }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "avc_level_validater"; }
         }
 
-        #endregion
+        
     }
     /// <summary>
 	/// Summary description for AVCLevels.
@@ -101,7 +101,7 @@ namespace MeGUI
 	/// </summary>
 	public class AVCLevels
     {
-        #region internal logic and calculation routines for level verification
+        
         /// <summary>
         /// Check functions to verify elements of the level
         /// </summary>
@@ -174,22 +174,22 @@ namespace MeGUI
         {
             return (int)(maxFS(hres, vres) * framerate);
         }
-        #endregion
-        #region public calculation utilities
+        
+        
         public double bytesPerFrame(int hres, int vres)
         {
             return hres * vres * 1.5;
         }
-        #endregion
-        #region constructor
+        
+        
         public AVCLevels()
 		{
 			//
 			// TODO: Add constructor logic here
 			//
         }
-        #endregion
-        #region public look-up routines
+        
+        
         public string[] getLevels()
 		{
 			return new string[] {"Level 1", "Level 1.1", "Level 1.2", "Level 1.3", "Level 2", "Level 2.1",
@@ -505,8 +505,8 @@ namespace MeGUI
 			}
 			return maxDPB * 1024;
         }
-        #endregion
-        #region verify and enforce
+        
+        
         /// <summary>
         /// Verifies a group of x264Settings against an AVC Level 
         /// </summary>
@@ -644,9 +644,9 @@ namespace MeGUI
                 return false;
             }
         }
-        #endregion
+        
     }
-    #region Return structure for AVC level Enforcement
+    
     public class AVCLevelEnforcementReturn
     {
         bool enableP4x4mv, enableVBVBufferSize, enableVBVMaxRate, altered;
@@ -691,5 +691,5 @@ namespace MeGUI
             set { panicString = value; }
         }
     }
-    #endregion
+    
 }

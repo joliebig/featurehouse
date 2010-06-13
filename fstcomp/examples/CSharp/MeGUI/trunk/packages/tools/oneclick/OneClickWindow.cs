@@ -46,7 +46,7 @@ namespace MeGUI
         List<Label> trackLabel;
         List<AudioConfigControl> audioConfigControl;
 
-        #region profiles
+        
         void ProfileChanged(object sender, EventArgs e)
         {
             if (VideoSettings.EncoderType.ID == "x264")
@@ -59,7 +59,7 @@ namespace MeGUI
             updatePossibleContainers();
         }
 
-        #region OneClick profiles
+        
         private void initOneClickHandler()
         {
             oneclickProfile.Manager = mainForm.Profiles;
@@ -84,23 +84,23 @@ namespace MeGUI
         {
             this.Settings = (OneClickSettings)oneclickProfile.SelectedProfile.BaseSettings;
         } 
-        #endregion
-        #region Video profiles
+        
+        
         private VideoCodecSettings VideoSettings
         {
             get { return (VideoCodecSettings)videoProfile.SelectedProfile.BaseSettings; }
         }
-        #endregion
-        #region Audio profiles
+        
+        
         private void initAudioHandler()
         {
             audio1.initHandler();
             audio2.initHandler();
         }
-        #endregion
-        #endregion
+        
+        
 
-        #region Variable Declaration
+        
         /// <summary>
         /// whether we ignore the restrictions on container output type set by the profile
         /// </summary>
@@ -120,9 +120,9 @@ namespace MeGUI
         /// </summary>
         private bool outputChosen = false;
 
-        #endregion
         
-        #region init
+        
+        
         public OneClickWindow(MainForm mainForm, JobUtil jobUtil, VideoEncoderProvider vProv, AudioEncoderProvider aProv)
         {
             this.mainForm = mainForm;
@@ -159,9 +159,9 @@ namespace MeGUI
 
             showAdvancedOptions_CheckedChanged(null, null);
         }
-        #endregion
+        
 
-        #region event handlers
+        
         private void showAdvancedOptions_CheckedChanged(object sender, EventArgs e)
         {
             if (showAdvancedOptions.Checked)
@@ -491,9 +491,9 @@ namespace MeGUI
 
         }
 
-        #endregion
+        
 
-        #region profile management
+        
 
         private string verifyAudioSettings()
         {
@@ -507,7 +507,7 @@ namespace MeGUI
             }
             return null;
         }
-        #endregion
+        
 
         public struct PartialAudioStream
         {
@@ -626,7 +626,7 @@ namespace MeGUI
     public class OneClickTool : MeGUI.core.plugins.interfaces.ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -645,21 +645,21 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlF1 }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "one_click"; }
         }
 
-        #endregion
+        
 
     }
     public class OneClickPostProcessor
     {
-        #region postprocessor
+        
         private static LogItem postprocess(MainForm mainForm, Job job)
         {
             if (!(job is D2VIndexJob))
@@ -672,7 +672,7 @@ namespace MeGUI
         }
         public static JobPostProcessor PostProcessor = new JobPostProcessor(postprocess, "OneClick_postprocessor");
 
-        #endregion
+        
         private MainForm mainForm;
         Dictionary<int, string> audioFiles;
         private JobUtil jobUtil;

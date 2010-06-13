@@ -20,7 +20,7 @@ namespace MeGUI.packages.tools.calculator
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -127,7 +127,7 @@ namespace MeGUI.packages.tools.calculator
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button selectButton;

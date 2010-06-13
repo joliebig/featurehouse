@@ -35,13 +35,13 @@ namespace MeGUI.packages.video.x264
 {
     public partial class x264ConfigurationPanel : MeGUI.core.details.video.VideoConfigurationPanel, Editable<x264Settings>
     {
-        #region variables
+        
         public static bool levelEnforced; // flag to prevent recursion in EnforceLevels. There's probably a better way to do this.
         private XmlDocument ContextHelp = new XmlDocument();
-        #endregion
+        
 
 
-        #region start / stop
+        
         public x264ConfigurationPanel()
             : base()
         {
@@ -52,16 +52,16 @@ namespace MeGUI.packages.video.x264
             AVCLevels al = new AVCLevels();
             this.avcLevel.Items.AddRange(al.getLevels());
         }
-        #endregion
-        #region adjustments
-        #region checkboxes
+        
+        
+        
         private void doCheckBoxAdjustments()
         {
             x264AlphaDeblock.Enabled = x264DeblockActive.Checked;
             x264BetaDeblock.Enabled = x264DeblockActive.Checked;
         }
-        #endregion
-        #region dropdowns
+        
+        
         private void doMacroBlockAdjustments()
         {
             bool enableOptions = (macroblockOptions.SelectedIndex == 2); // custom
@@ -987,8 +987,8 @@ namespace MeGUI.packages.video.x264
                     break;
             }
         }
-        #endregion
-        #region levels
+        
+        
         private void avcLevelDialog(string title, int verifyResult)
         {
             string invalidLevelHelp = "Should be an informative message here";
@@ -1053,8 +1053,8 @@ namespace MeGUI.packages.video.x264
                 this.avcLevel.SelectedIndex = 15;
             }
         }
-        #endregion
-        #region dropdowns
+        
+        
         private void setNonQPOptionsEnabled(bool enabled)
         {
             //x264MinimimQuantizer.Enabled = enabled;
@@ -1202,8 +1202,8 @@ namespace MeGUI.packages.video.x264
 
             lastEncodingMode = x264EncodingMode.SelectedIndex;
         }
-        #endregion
-        #region level -> mb
+        
+        
         /// <summary>
         /// adjust the mb selection dropdown in function of the selected profile and the activated
         /// mb options
@@ -1236,9 +1236,9 @@ namespace MeGUI.packages.video.x264
                     break;
             }
         }
-        #endregion
-        #endregion
-        #region codec-specific overload functions
+        
+        
+        
         protected override string getCommandline()
         {
             return x264Encoder.genCommandline("input", "output", null, -1, -1, Settings as x264Settings, null);
@@ -1528,8 +1528,8 @@ namespace MeGUI.packages.video.x264
                 genericUpdate();
             }
         }
-        #endregion
-        #region events
+        
+        
         private void updateEvent(object sender, EventArgs e)
         {
             genericUpdate();
@@ -1549,8 +1549,8 @@ namespace MeGUI.packages.video.x264
                 this.showCommandLine();
             }
         }
-        #endregion
-        #region ContextHelp
+        
+        
         private string SelectHelpText(string node)
         {
             StringBuilder HelpText = new StringBuilder(64);
@@ -1672,8 +1672,8 @@ namespace MeGUI.packages.video.x264
             tooltipHelp.SetToolTip(tbx264Presets, SelectHelpText("presets"));
 
         }
-        #endregion
-        #region GUI State adjustment
+        
+        
         private void x264DialogTriStateAdjustment()
         {
             bool turboOptions = this.x264SlowFirstpass.Checked &&
@@ -1681,7 +1681,7 @@ namespace MeGUI.packages.video.x264
                  this.x264EncodingMode.SelectedIndex == (int)VideoCodecSettings.Mode.twopass1);
 
             // First we do the Profile Adjustments
-            #region profile adjustments
+            
             switch (avcProfile.SelectedIndex)
             {
                 case 0: // baseline, disable cabac, b-frames and i8x8
@@ -1720,10 +1720,10 @@ namespace MeGUI.packages.video.x264
                     cabac.Enabled = true;
                     break;
             }
-            #endregion
+            
 
             // Now we do B frames adjustments
-            #region b-frames
+            
             if (this.x264NumberOfBFrames.Value == 0)
             {
                 this.x264NewAdaptiveBframes.Enabled = false;
@@ -1752,10 +1752,10 @@ namespace MeGUI.packages.video.x264
                 else
                     this.cbBPyramid.Enabled = false;
             }
-            #endregion
+            
 
             // Now we do some additional checks -- ref frames, cabac
-            #region extra checks
+            
             if (!string.IsNullOrEmpty(x264VBVBufferSize.Text))
             {
                 this.x264VBVMaxRate.Enabled = true;
@@ -1801,9 +1801,9 @@ namespace MeGUI.packages.video.x264
                 this.PsyTrellis.Enabled = false;
                 this.PsyTrellisLabel.Enabled = false;
             }
-            #endregion
+            
         }
-        #endregion
+        
 
         private void cqmComboBox1_SelectionChanged(object sender, string val)
         {

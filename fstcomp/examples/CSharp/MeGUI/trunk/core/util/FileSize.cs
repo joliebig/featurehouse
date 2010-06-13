@@ -57,7 +57,7 @@ namespace MeGUI.core.util
         public static readonly string[] UnitSuffixes = new string[] { "bytes", "KB", "MB", "GB" };
         private ulong sizeInBytes;
 
-        #region helper functions
+        
         /// <summary>
         /// Returns the stored size, divided by divisor and rounded appropriately
         /// </summary>
@@ -81,9 +81,9 @@ namespace MeGUI.core.util
             decimal result = value * ((decimal)divisor);
             sizeInBytes = (ulong)Math.Round(result);
         }
-        #endregion
         
-        #region generic Unit accessors
+        
+        
         private ulong divisor(Unit u)
         {
             ulong divisor = 1;
@@ -116,9 +116,9 @@ namespace MeGUI.core.util
         {
             setExact(divisor(u), value);
         }
-        #endregion 
+         
         
-        #region pretty formatting
+        
         public Unit BestUnit
         {
             get
@@ -145,9 +145,9 @@ namespace MeGUI.core.util
             return new FileSize((Unit)Array.IndexOf(UnitSuffixes, parts[1]), decimal.Parse(parts[0]));
             
         }
-        #endregion
         
-        #region byte, KB, MB, GB accessors (exact and rounded)
+        
+        
         /// <summary>
         /// The size in bytes
         /// </summary>
@@ -210,9 +210,9 @@ namespace MeGUI.core.util
             get { return ((decimal)sizeInBytes) / (1024M * 1024M * 1024M); }
             set { setExact(1024 * 1024 * 1024, value); }
         }
-        #endregion
+        
 
-        #region operators: + - * / < > <= >= == !=
+        
         public static FileSize operator +(FileSize a, FileSize b)
         {
             FileSize result;
@@ -284,7 +284,7 @@ namespace MeGUI.core.util
         {
             return (b <= a);
         }
-        #endregion
+        
 
         public override int GetHashCode()
         {

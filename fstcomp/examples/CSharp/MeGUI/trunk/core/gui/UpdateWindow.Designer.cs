@@ -21,7 +21,7 @@ namespace MeGUI
             
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -299,7 +299,7 @@ namespace MeGUI
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Button btnAbort;

@@ -47,7 +47,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "AMGMuxer");
         {
             this.executable = executablePath;
         }
-        #region setup/start overrides
+        
         protected override void checkJobIO()
         {
             script_filename = writeScript(job);
@@ -172,7 +172,7 @@ SET OPTION STDIDX AUTO");
             base.doExitConfig();
         }
 
-        #endregion
+        
 
         protected override bool checkExitCode
         {

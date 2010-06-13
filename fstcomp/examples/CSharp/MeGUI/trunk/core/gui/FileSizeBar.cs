@@ -133,7 +133,7 @@ namespace MeGUI.core.gui
             number.Minimum = minVal.InUnitsExact(CurrentUnit);
         }
 
-        #region event handlers
+        
         /// <summary>
         /// Triggered when the value is changed
         /// </summary>
@@ -167,7 +167,7 @@ namespace MeGUI.core.gui
         {
             triggerChangedEvent();
         }
-        #endregion
+        
 
         private void FileSizeBar_EnabledChanged(object sender, EventArgs e)
         {

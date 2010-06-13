@@ -32,7 +32,7 @@ namespace MeGUI.core.details.video
 {
     public class VideoConfigurationPanel : UserControl
     {
-        #region variables
+        
         protected bool updating = false;
         private double bytesPerFrame;
         private bool advancedToolTips;
@@ -40,10 +40,10 @@ namespace MeGUI.core.details.video
 
         private bool loaded;
         protected string input = "input", output = "output", encoderPath = "program";
-        #endregion
+        
         protected ToolTip tooltipHelp;
         private IContainer components;
-        #region start / stop
+        
         public VideoConfigurationPanel()
             : this(null, new VideoInfo())
         { }
@@ -65,8 +65,8 @@ namespace MeGUI.core.details.video
             genericUpdate();
         }
 
-        #endregion
-        #region codec specific adjustments
+        
+        
 
         /// <summary>
         /// Generates the commandline
@@ -106,8 +106,8 @@ namespace MeGUI.core.details.video
         {
             throw new Exception("A bug in the program -- ProfilableConfigurationDialog.defaultSettings() is not overridden");
         }
-        #endregion
-        #region showCommandline
+        
+        
         protected void showCommandLine()
         {
             if (!loaded)
@@ -121,14 +121,14 @@ namespace MeGUI.core.details.video
             this.commandline.Text = encoderPath + " " + getCommandline();
             updating = false;
         }
-        #endregion
-        #region GUI events
+        
+        
         protected void genericUpdate()
         {
             showCommandLine();
         }
-        #endregion
-        #region properties
+        
+        
 
         public bool AdvancedToolTips
         {
@@ -142,7 +142,7 @@ namespace MeGUI.core.details.video
             set { bytesPerFrame = value; }
         }
 
-        #endregion
+        
 
 
 

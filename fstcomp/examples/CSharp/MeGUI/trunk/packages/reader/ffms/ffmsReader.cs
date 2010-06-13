@@ -32,7 +32,7 @@ namespace MeGUI
     public class ffmsFileFactory : IMediaFileFactory
     {
 
-        #region IMediaFileFactory Members
+        
 
         public IMediaFile Open(string file)
         {
@@ -46,16 +46,16 @@ namespace MeGUI
             return -1;
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "ffms"; }
         }
 
-        #endregion
+        
     }
 
     /// <summary>
@@ -84,24 +84,24 @@ namespace MeGUI
             this.fileName = fileName.Substring(0, fileName.Length - 8);
             string strPath = Path.GetDirectoryName(MainForm.Instance.Settings.FFMSIndexPath);
             string strDLL = Path.Combine(strPath, "ffms2.dll");
-#if x86
+
             strScript = "LoadPlugin(\"" + strDLL + "\")\r\nFFVideoSource(\"" + this.fileName + "\",colorspace=\"YV12\")";
-#endif
-#if x64
+
+
             strScript = "LoadCPlugin(\"" + strDLL + "\")\r\nFFVideoSource(\"" + this.fileName + "\",colorspace=\"YV12\")";
-#endif
+
             reader = AvsFile.ParseScript(strScript);
             info = reader.Info.Clone();
         }
 
-        #region properties
+        
         public MediaFileInfo Info
         {
             get { return info; }
         }
-        #endregion
+        
 
-        #region IMediaFile Members
+        
 
         public bool CanReadVideo
         {
@@ -123,16 +123,16 @@ namespace MeGUI
             throw new Exception("The method or operation is not implemented.");
         }
 
-        #endregion
+        
 
-        #region IDisposable Members
+        
 
         public void Dispose()
         {
             reader.Dispose();
         }
 
-        #endregion
+        
     }
 }
 

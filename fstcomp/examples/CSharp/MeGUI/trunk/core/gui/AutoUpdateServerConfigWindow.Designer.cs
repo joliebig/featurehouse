@@ -20,7 +20,7 @@ namespace MeGUI.core.gui
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -192,7 +192,7 @@ namespace MeGUI.core.gui
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.ListBox serverList;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;

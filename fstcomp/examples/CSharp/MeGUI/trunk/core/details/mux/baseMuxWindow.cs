@@ -41,7 +41,7 @@ namespace MeGUI
         protected List<MuxStreamControl> subtitleTracks;
 
 
-        #region variables
+        
         protected Dar? dar;
         protected string audioFilter, videoInputFilter, subtitleFilter, chaptersFilter, outputFilter;
         protected MainForm mainForm;
@@ -60,7 +60,7 @@ namespace MeGUI
         protected TextBox videoName;
         protected Label videoNameLabel;
         private MuxProvider muxProvider;
-        #endregion
+        
         protected Panel audioPanel;
 
         protected TabControl audio;
@@ -92,7 +92,7 @@ namespace MeGUI
         protected ComboBox cbContainer;
         protected Label lbContainer;
         private IContainer components;
-        #region start/stop
+        
         public baseMuxWindow()
         {
             //
@@ -132,8 +132,8 @@ namespace MeGUI
             }
             base.Dispose(disposing);
         }
-        #endregion
-        #region config
+        
+        
         /// <summary>
         /// sets the configuration of the GUI
         /// used when a job is loaded (jobs have everything already filled out)
@@ -200,8 +200,8 @@ namespace MeGUI
             }
             return streams.ToArray();
         }
-        #endregion
-        #region Windows Form Designer generated code
+        
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -786,8 +786,8 @@ namespace MeGUI
             this.PerformLayout();
 
         }
-        #endregion
-        #region helper method
+        
+        
         protected virtual void checkIO()
         {
             if (string.IsNullOrEmpty(vInput.Filename))
@@ -819,7 +819,7 @@ namespace MeGUI
             if (!char.IsDigit(e.KeyChar) && (int)Keys.Back != (int)e.KeyChar)
                 e.Handled = true;
         }
-        #endregion
+        
         protected virtual bool isFPSRequired()
         {
             try
@@ -834,7 +834,7 @@ namespace MeGUI
             }
         }
 
-        #region button event handlers
+        
         private void vInput_FileSelected(FileBar sender, FileBarEventArgs args)
         {
             try
@@ -893,20 +893,20 @@ namespace MeGUI
                 }
             }
         }
-        #endregion
-        #region language dropdowns
-        #endregion
-        #region other events
+        
+        
+        
+        
         private void fps_SelectionChanged(object sender, string val)
         {
             checkIO();
         }
-        #endregion
+        
         protected virtual void fileUpdated() { }
         protected virtual void upDeviceTypes() { }
 
 
-        #region adding / removing tracks
+        
         private void audioAddTrack_Click(object sender, EventArgs e)
         {
             AudioAddTrack();
@@ -974,7 +974,7 @@ namespace MeGUI
             subtitles.TabPages.RemoveAt(subtitles.TabPages.Count - 1);
             subtitleTracks.RemoveAt(subtitleTracks.Count - 1);
         }
-        #endregion
+        
 
         private void audioMenu_Opening(object sender, CancelEventArgs e)
         {

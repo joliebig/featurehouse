@@ -46,7 +46,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MkvMergeMuxer");
         }
 
 
-        #region line processing
+        
         /// <summary>
         /// gets the framenumber from an mkvmerge status update line
         /// </summary>
@@ -67,7 +67,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MkvMergeMuxer");
                 return null;
             }
         }
-        #endregion
+        
 
         protected override bool checkExitCode
         {

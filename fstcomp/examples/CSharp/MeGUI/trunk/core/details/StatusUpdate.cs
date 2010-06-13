@@ -234,7 +234,7 @@ namespace MeGUI
         }
 
 
-        #region REAL variables
+        
         TimeSpan? _timeEstimate = null;
         public FileSize? _audioSize = null;
         decimal? _fps = null;
@@ -251,7 +251,7 @@ namespace MeGUI
 
         TimeSpan? _currentTime = null;
         TimeSpan? _totalTime = null;
-        #endregion
+        
 
         public void FillValues()
         {

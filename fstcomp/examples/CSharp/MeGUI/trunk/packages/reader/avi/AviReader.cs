@@ -27,7 +27,7 @@ using System.IO;
 namespace MeGUI
 {
 
-    //#region helper structures
+    //
     //[StructLayout(LayoutKind.Sequential)]
     //public struct AVISTREAMINFO 
     //{ 
@@ -86,11 +86,11 @@ namespace MeGUI
     //    public ushort bfReserved2;
     //    public uint bfOffBits;
     //}
-    //#endregion
+    //
     //[Obsolete("TODO: use AvsReader instead")]
     //public class AVIReader : VideoReader, IDisposable 
     //{
-    //    #region legacy dll imports and helper methods
+    //    
     //    [DllImport("avifil32.dll")]
     //    protected static extern void AVIFileInit();
 
@@ -140,7 +140,7 @@ namespace MeGUI
     //    {
     //        return Encoding.ASCII.GetString(BitConverter.GetBytes(fourCC));
     //    }
-    //    #endregion
+    //    
 
     //    private bool m_isDisposed = false;
 
@@ -151,7 +151,7 @@ namespace MeGUI
     //    private int m_width, m_height;
     //    private double framerate; // this was missing from the original implementation
 
-    //    #region constructor
+    //    
     //    public AVIReader(string path) 
     //    {
     //        AVISTREAMINFO streamInfo = new AVISTREAMINFO();
@@ -195,8 +195,8 @@ namespace MeGUI
     //            throw new Exception("AVIStreamGetFrameOpen failed");
     //        }
     //    }
-    //    #endregion
-    //    #region deconstruction
+    //    
+    //    
     //    ~AVIReader() 
     //    {
     //        Close();
@@ -227,8 +227,8 @@ namespace MeGUI
     //        m_isDisposed = true;
     //        GC.SuppressFinalize(this);
     //    }
-    //    #endregion
-    //    #region properties
+    //    
+    //    
     //    public string Path 
     //    {
     //        get 
@@ -275,8 +275,8 @@ namespace MeGUI
     //            return framerate;
     //        }
     //    }
-    //    #endregion
-    //    #region bitmaps
+    //    
+    //    
     //    public void AVIStreamGetFrame(int pos)
     //    {
     //        int i = AVIStreamGetFrame(m_pGetFrame, pos);
@@ -331,7 +331,7 @@ namespace MeGUI
 
     //        return bmpBytes;
     //    }
-    //    #endregion
+    //    
     //}
 
 }

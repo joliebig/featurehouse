@@ -25,7 +25,7 @@ using System.Xml.Serialization;
 
 namespace MeGUI
 {
-    #region video and audio codecs
+    
     /// <summary>
     /// Dummy interface to avoid some runtime type errors. This should be implemented by VideoCodec and AudioCodec
     /// </summary>
@@ -87,8 +87,8 @@ namespace MeGUI
         public static readonly SubtitleCodec TEXT  = new SubtitleCodec("TEXT");
         public static readonly SubtitleCodec IMAGE = new SubtitleCodec("IMAGE");
     }
-    #endregion
-    #region video and audio encoder types
+    
+    
     /// <summary>
     /// Dummy interface so runtime typing problems don't arise, and we can avoid ugly (object) casts
     /// </summary>
@@ -163,7 +163,7 @@ namespace MeGUI
         public static readonly AudioEncoderType FFMP2  = new AudioEncoderType("FFMP2", AudioCodec.MP2);
         public static readonly AudioEncoderType AFTEN  = new AudioEncoderType("AFTEN", AudioCodec.AC3);
     }
-    #endregion
+    
     
     class CodecManager
     {
@@ -216,7 +216,7 @@ namespace MeGUI
                 
         }
     }
-    #region Video Audio Subtitle Types
+    
     public class VideoType : OutputType
     {
         private VideoCodec[] supportedCodecs;
@@ -322,7 +322,7 @@ namespace MeGUI
             return null;
         }
     }
-    #endregion
+    
     public class ContainerManager
     {
         public static GenericRegisterer<VideoType> VideoTypes = new GenericRegisterer<VideoType>();

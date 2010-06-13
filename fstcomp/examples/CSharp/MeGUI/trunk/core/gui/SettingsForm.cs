@@ -33,7 +33,7 @@ namespace MeGUI
 	/// </summary>
 	public class SettingsForm : System.Windows.Forms.Form
 	{
-		#region variables
+		
         private System.Windows.Forms.Button saveButton;
 		private System.Windows.Forms.Button cancelButton;
         private MeGUISettings internalSettings = new MeGUISettings();
@@ -132,8 +132,8 @@ namespace MeGUI
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		#endregion
-		#region start / stop
+		
+		
 		public SettingsForm()
 		{
 			InitializeComponent();
@@ -156,8 +156,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -1321,8 +1321,8 @@ namespace MeGUI
             this.PerformLayout();
 
 		}
-        #endregion
-        #region button handlers
+        
+        
         private bool selectExe(string exe)
         {
             openExecutableDialog.Filter = exe + " executable|" + exe +"*.exe|Any executable|*.exe";
@@ -1413,8 +1413,8 @@ namespace MeGUI
             defaultOutputDir.Filename = "";
         }
 
-		#endregion
-		#region properties
+		
+		
 		public MeGUISettings Settings
 		{
 			get 
@@ -1521,7 +1521,7 @@ namespace MeGUI
                 btnCUVIDServer.Checked = settings.UseCUVIDserver;
 			}
 		}
-		#endregion
+		
 
         private void backupfiles_CheckedChanged(object sender, EventArgs e)
         {

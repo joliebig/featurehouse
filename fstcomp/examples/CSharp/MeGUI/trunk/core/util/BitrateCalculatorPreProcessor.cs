@@ -31,7 +31,7 @@ namespace MeGUI.core.util
 {
     public class BitrateCalculatorPreProcessor
     {
-        #region bitrate calculation preprocessing
+        
         public static JobPreProcessor CalculationProcessor = new JobPreProcessor(calculateBitrate, "CalculationProcessor");
         /// <summary>
         /// postprocesses an audio job followed by a video job
@@ -84,7 +84,7 @@ namespace MeGUI.core.util
 
             return log;
         }
-        #endregion
+        
     }
 
     public class BitrateCalculationInfo

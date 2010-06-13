@@ -38,7 +38,7 @@ namespace MeGUI
     {
         private List<AudioEncodingTab> tabs = new List<AudioEncodingTab>();
 
-        #region init
+        
         public AudioEncodingComponent()
         {
             InitializeComponent();
@@ -55,7 +55,7 @@ namespace MeGUI
                 audioEncodingTab1.AudioContainer = MainForm.Instance.Settings.MainAudioFormat;
             }    
         }
-        #endregion
+        
 
         public void AddTab()
         {

@@ -54,7 +54,7 @@ namespace MeGUI
 			jobUtil = new JobUtil(mainForm);
         }
 
-		#region finding source information
+		
 		/// <summary>
 		/// gets the dvd decrypter generated stream information file
 		/// </summary>
@@ -697,8 +697,8 @@ namespace MeGUI
             return false;
         }
 
-		#endregion
-		#region dgindex preprocessing
+		
+		
 		/// <summary>
 		/// opens a video source and fills out the track selector dropdowns
 		/// </summary>
@@ -738,8 +738,8 @@ namespace MeGUI
 			}
 			return putDummyTracks;
 		}
-		#endregion
-		#region dgindex postprocessing
+		
+		
 		/// <summary>
 		/// gets all demuxed audio files from a given dgindex project
 		/// starts with the first file and returns the desired number of files
@@ -798,8 +798,8 @@ namespace MeGUI
             return subFiles;
         }
 
-		#endregion
-		#region automated job generation
+		
+		
 		/// <summary>
 		/// ensures that video and audio don't have the same filenames which would lead to severe problems
 		/// </summary>
@@ -864,9 +864,9 @@ namespace MeGUI
             return log;
 
 		}
-        #endregion
+        
 
-        #region source checking
+        
         public string checkVideo(string avsFile)
         {
             return checkVideo(avsFile, true);
@@ -971,9 +971,9 @@ namespace MeGUI
             else
                 return mainForm.Video.CurrentSettings;
         }
-        #endregion
+        
 
-        #region new stuff
+        
         public JobChain GenerateJobSeries(VideoStream video, string muxedOutput, AudioJob[] audioStreams,
             MuxStream[] subtitles, string chapters, FileSize? desiredSize, FileSize? splitSize, ContainerType container, bool prerender, MuxStream[] muxOnlyAudio, LogItem log, string deviceType)
         {
@@ -1202,7 +1202,7 @@ namespace MeGUI
             }
             return null;
         }
-        #endregion
+        
 
         public static string createSimpleAvisynthScript(string filename)
         {
@@ -1368,7 +1368,7 @@ namespace MeGUI
             }
         }
     }
-	#region helper structs
+	
 	/// <summary>
 	/// helper structure for cropping
 	/// holds the crop values for all 4 edges of a frame
@@ -1503,5 +1503,5 @@ namespace MeGUI
             return fullString.Trim();
         }
     }
-	#endregion
+	
 }

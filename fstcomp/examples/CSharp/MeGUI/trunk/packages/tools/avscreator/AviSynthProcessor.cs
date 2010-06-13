@@ -42,9 +42,9 @@ namespace MeGUI
             return null;
         }
 
-        #region variables
+        
         protected System.Threading.ManualResetEvent mre = new System.Threading.ManualResetEvent(true); // lock used to pause encoding
-#warning AvsFile should be refactored to IMediaFile once fast frame reading is supported
+
         private AvsFile file;
         private IVideoReader reader;
         private bool aborted;
@@ -52,13 +52,13 @@ namespace MeGUI
         private Thread processorThread, statusThread;
         public StatusUpdate stup = null;
         private AviSynthJob job;
-        #endregion
-        #region start / stop
+        
+        
         public AviSynthProcessor()
         {
         }
-        #endregion
-        #region processing
+        
+        
 
         private void update()
         {
@@ -207,6 +207,6 @@ namespace MeGUI
             }
         }
         public event JobProcessingStatusUpdateCallback StatusUpdate;
-        #endregion
+        
     }
 }

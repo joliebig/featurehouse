@@ -20,7 +20,7 @@ namespace MeGUI.core.details.mux
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -186,7 +186,7 @@ namespace MeGUI.core.details.mux
 
         }
 
-        #endregion
+        
 
         protected System.Windows.Forms.TextBox subName;
         protected System.Windows.Forms.Label SubNamelabel;

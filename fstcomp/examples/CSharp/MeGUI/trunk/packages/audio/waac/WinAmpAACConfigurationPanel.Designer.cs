@@ -20,7 +20,7 @@ namespace MeGUI.packages.audio.waac
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -138,7 +138,7 @@ namespace MeGUI.packages.audio.waac
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.TrackBar vBitrate;

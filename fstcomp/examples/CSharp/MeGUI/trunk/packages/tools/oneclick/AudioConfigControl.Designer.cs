@@ -20,7 +20,7 @@ namespace MeGUI.packages.tools.oneclick
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -122,7 +122,7 @@ namespace MeGUI.packages.tools.oneclick
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.CheckBox dontEncodeAudio;
         private System.Windows.Forms.Label label3;

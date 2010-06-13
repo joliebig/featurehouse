@@ -18,7 +18,7 @@
 // 
 // ****************************************************************************
 
-#if UNUSED
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,7 +31,7 @@ namespace MeGUI.core.details
 {
     public class MeGUIInfo
     {
-        #region variable declaration
+        
         private MainForm mainForm;
         private bool restart = false;
         private Dictionary<string, CommandlineUpgradeData> filesToReplace = new Dictionary<string, CommandlineUpgradeData>();
@@ -61,13 +61,13 @@ namespace MeGUI.core.details
         private AudioStream[] audioStreams;
 
         private CodecManager codecs;
-        #endregion
-        #region start and end
+        
+        
         public void handleCommandline(CommandlineParser parser)
         {
             foreach (string file in parser.failedUpgrades)
                 System.Windows.Forms.MessageBox.Show("Failed to upgrade '" + file + "'.", "Upgrade failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-#warning turn the UpdateWindow here into an ITool
+
             if (parser.upgradeData.Count > 0)
             {
                 UpdateWindow update = new UpdateWindow(this, Settings);
@@ -107,7 +107,7 @@ namespace MeGUI.core.details
             this.loadSettings();
             this.loadJobs();
             this.dialogManager = new DialogManager(this);
-#warning refactor menus
+
             int index = menuItem1.MenuItems.Count;
             foreach (IMuxing muxer in PackageSystem.MuxerProviders.Values)
             {
@@ -198,8 +198,8 @@ namespace MeGUI.core.details
             if (!proc.Start())
                 MessageBox.Show("Couldn't run updater.", "Couldn't run updater.", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-        #endregion
-        #region properties
+        
+        
         public PackageSystem PackageSystem
         {
             get { return packageSystem; }
@@ -240,7 +240,6 @@ namespace MeGUI.core.details
         {
             get { return profileManager; }
         }
-        #endregion
+        
     }
 }
-#endif

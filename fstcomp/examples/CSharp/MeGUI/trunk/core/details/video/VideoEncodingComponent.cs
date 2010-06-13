@@ -40,7 +40,7 @@ namespace MeGUI
         private VideoPlayer player; // window that shows a preview of the video
         private MainForm mainForm = MainForm.Instance;
 
-        #region video info
+        
         private VideoInfo info;
         private void initVideoInfo()
         {
@@ -72,8 +72,8 @@ namespace MeGUI
                 fileType.Text = value;
             }
         }
-        #endregion
-        #region generic handlers: filetype, profiles and codec. Also, encoder provider
+        
+        
 
 
         public VideoCodecSettings CurrentSettings
@@ -92,8 +92,8 @@ namespace MeGUI
             if (mainForm != null)  // Fix to allow VS2008 designer to load Form1
                 videoProfile.Manager = mainForm.Profiles;
         }
-        #endregion
-        #region extra properties
+        
+        
         public string VideoInput
         {
             get { return info.VideoInput; }
@@ -113,8 +113,8 @@ namespace MeGUI
             get { return addPrerenderJob.Checked; }
             set { addPrerenderJob.Checked = value; }
         }
-        #endregion
-        #region event handlers
+        
+        
         private void videoInput_FileSelected(FileBar sender, FileBarEventArgs args)
         {
             if (!string.IsNullOrEmpty(videoInput.Filename))
@@ -210,8 +210,8 @@ namespace MeGUI
                 videoOutput.Enabled = true;
             }
         }
-        #endregion
-        #region verification
+        
+        
         /// <summary>
         /// verifies the input, output and logfile configuration
         /// based on the codec and encoding mode certain fields must be filled out
@@ -248,8 +248,8 @@ namespace MeGUI
             }
             return null;
         }
-        #endregion
-        #region helpers
+        
+        
         public MuxableType CurrentMuxableVideoType
         {
             get { return new MuxableType(CurrentVideoOutputType, CurrentSettings.Codec); }
@@ -288,8 +288,8 @@ namespace MeGUI
                 return false;
         }
 
-        #endregion
-        #region player info
+        
+        
 
         internal void ClosePlayer()
         {
@@ -387,8 +387,8 @@ namespace MeGUI
             }
             return true;
         }
-        #endregion
-        #region misc
+        
+        
         public VideoEncoderProvider VideoEncoderProvider
         {
             get { return videoEncoderProvider; }
@@ -402,7 +402,7 @@ namespace MeGUI
             editZonesButton.Enabled = false;
             info.Zones = null;
         }
-        #endregion
+        
 
         private void addAnalysisPass_Click(object sender, EventArgs e)
         {

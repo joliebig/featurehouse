@@ -48,7 +48,7 @@ namespace MeGUI
             set { mainForm = value; }
         }
 
-        #region variables
+        
         private void updateGUI()
         {
             if (UpdateGUIEvent != null)
@@ -59,8 +59,8 @@ namespace MeGUI
         private string input;
         private VideoPlayer player;
         private int introEndFrame, creditsStartFrame;
-        #endregion
-        #region handlers
+        
+        
         private void zoneMode_SelectedIndexChanged(object sender, System.EventArgs e)
         {
             if (zoneMode.SelectedIndex == 0) // quantizer
@@ -228,8 +228,8 @@ namespace MeGUI
                 }
             }
         }
-        #endregion
-        #region preview
+        
+        
         /// <summary>
         /// handler for the ZoneSet event
         /// updates zone start / end and adds the zone
@@ -293,8 +293,8 @@ namespace MeGUI
             else
                 MessageBox.Show("Please configure video input first", "No video input found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
         }
-        #endregion
-        #region properties
+        
+        
         /// <summary>
         /// Gets or sets the ending frame of the intro section
         /// </summary>
@@ -329,7 +329,7 @@ namespace MeGUI
             set { input = value; showVideoButton.Enabled = !string.IsNullOrEmpty(value); }
             get { return input; }
         }
-        #endregion
+        
 
         public void closePlayer()
         {

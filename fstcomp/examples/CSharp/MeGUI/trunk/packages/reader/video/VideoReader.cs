@@ -63,13 +63,13 @@ namespace MeGUI
 
         public abstract Bitmap ReadFrameBitmap(int position);
 
-        #region IDisposable Members
+        
 
         void IDisposable.Dispose()
         {
             Close();
         }
 
-        #endregion
+        
     }
 }

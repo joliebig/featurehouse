@@ -33,18 +33,18 @@ namespace MeGUI
 
     public abstract class CommandlineVideoEncoder : CommandlineJobProcessor<VideoJob>
     {
-        #region variables
+        
         protected int lastStatusUpdateFramePosition = 0;
         ulong numberOfFrames;
         ulong? currentFrameNumber;
         protected int hres = 0, vres = 0;
         Dar? dar;
         protected bool usesSAR = false;
-        #endregion
+        
         public CommandlineVideoEncoder() : base()
         {
         }
-        #region helper methods
+        
         protected override void checkJobIO()
         {
             base.checkJobIO();
@@ -110,7 +110,7 @@ namespace MeGUI
                 log.LogValue("Exception in compileFinalStats", e, ImageType.Warning);
             }
         }
-        #endregion
+        
 
         public override void ProcessLine(string line, StreamType stream)
         {

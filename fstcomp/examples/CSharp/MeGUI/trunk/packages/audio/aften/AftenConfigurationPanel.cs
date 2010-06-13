@@ -36,7 +36,7 @@ namespace MeGUI.packages.audio.aften
             comboBox1.Items.AddRange(AftenSettings.SupportedBitrates);
         }
 
-        #region properties
+        
         /// <summary>
         /// gets / sets the settings that are being shown in this configuration dialog
         /// </summary>
@@ -54,9 +54,9 @@ namespace MeGUI.packages.audio.aften
                 comboBox1.SelectedItem = nas.Bitrate;
             }
         }
-        #endregion
+        
 
-        #region Editable<AftenSettings> Members
+        
 
         AftenSettings Editable<AftenSettings>.Settings
         {
@@ -70,7 +70,7 @@ namespace MeGUI.packages.audio.aften
             }
         }
 
-        #endregion
+        
     }
 }
 

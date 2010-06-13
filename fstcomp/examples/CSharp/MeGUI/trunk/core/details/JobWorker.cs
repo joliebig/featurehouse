@@ -18,7 +18,7 @@
 // 
 // ****************************************************************************
 
-#if NONE
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -98,7 +98,7 @@ namespace MeGUI.core.details
         private MainForm mainForm;
         private int progress;
 
-        #region process window opening and closing
+        
         public void HideProcessWindow()
         {
             if (pw != null)
@@ -151,9 +151,9 @@ namespace MeGUI.core.details
                 mainForm.addToLog("Error when attempting to change priority: " + e.Message);
             }
         }
-        #endregion
+        
 
-        #region public interface
+        
         public int Progress
         {
             get { return progress; }
@@ -207,7 +207,7 @@ namespace MeGUI.core.details
         {
             get { return status == JobWorkerStatus.Running || status == JobWorkerStatus.Stopping; }
         }
-        #endregion
+        
 
         private Dictionary<string, Job> localJobs = new Dictionary<string, Job>();
 
@@ -216,9 +216,9 @@ namespace MeGUI.core.details
             display = new JobWorkerWindow(this);
         }
 
-        #region job run util
+        
 
-        #region delete intermediate files
+        
         public static readonly JobPostProcessor DeleteIntermediateFilesPostProcessor = new JobPostProcessor(
             new Processor(deleteIntermediateFiles), "DeleteIntermediateFiles");
 
@@ -247,7 +247,7 @@ namespace MeGUI.core.details
                 }
             }
         }
-        #endregion
+        
 
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace MeGUI.core.details
             mainForm.addToLog("No processor found!\r\n");
             return null;
         }
-        #endregion
+        
 
         internal void ShutDown(JobsOnQueue rest)
         {
@@ -310,8 +310,8 @@ namespace MeGUI.core.details
 //            mainForm.Jobs
         }
 
-        #region job starting / stopping
-        #region abort
+        
+        
         /// <summary>
         /// aborts the currently active job
         /// </summary>
@@ -337,9 +337,9 @@ namespace MeGUI.core.details
             if (display != null)
                 display.RefreshInfo();
         }
-        #endregion
+        
 
-        #region starting jobs
+        
         public void StartEncoding(/*bool showMessageBoxes*/)
         {
             JobStartInfo retval = startNextJobInQueue();
@@ -582,8 +582,8 @@ namespace MeGUI.core.details
             }
             return JobStartInfo.COULDNT_START;
         }
-        #endregion
-        #endregion
+        
+        
 
         /// <summary>
         /// marks job currently marked as processing as aborted
@@ -608,7 +608,7 @@ namespace MeGUI.core.details
             }
         }
 
-        #region pause / resume
+        
         public void Pause()
         {
             Debug.Assert(pauseStatus == PauseState.Encoding);
@@ -637,7 +637,7 @@ namespace MeGUI.core.details
                 addToLog("Error when trying to resume encoding: " + ex.Message + Environment.NewLine);
             }
         }
-        #endregion
+        
 
         /// <summary>
         /// Makes sure that the progress window is closed
@@ -670,4 +670,3 @@ namespace MeGUI.core.details
     public enum JobWorkerStatus { Idle, Running, Stopping}
     public enum JobsOnQueue { Delete, ReturnToMainQueue }
 }
-#endif

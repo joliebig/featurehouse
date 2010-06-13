@@ -53,7 +53,7 @@ namespace MeGUI
         {
             executable = Environment.GetFolderPath(Environment.SpecialFolder.System) + @"\rundll32.exe";
         }
-        #region IJobProcessor Members
+        
         protected override void checkJobIO()
         {
             base.checkJobIO();
@@ -92,7 +92,7 @@ namespace MeGUI
             get { return false; }
         }
 
-        #endregion
+        
 
         protected override bool checkExitCode
         {

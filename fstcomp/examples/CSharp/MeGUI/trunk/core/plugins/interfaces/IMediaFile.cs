@@ -132,7 +132,7 @@ namespace MeGUI
     public class SubtitleInfo2
     { }
 
-    #region old
+    
     public interface IMediaFileFactory : IIDable
     {
         /// <summary>
@@ -258,5 +258,5 @@ namespace MeGUI
         /// <returns>The frame just read</returns>
         Bitmap ReadFrameBitmap(int framenumber);
     }
-    #endregion
+    
 }

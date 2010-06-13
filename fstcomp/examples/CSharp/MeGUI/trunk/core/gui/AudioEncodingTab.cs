@@ -203,7 +203,7 @@ namespace MeGUI.core.gui
             }
         }
 
-        #region helper methods
+        
         public void openAudioFile(string fileName)
         {
             AudioInput = fileName;
@@ -239,7 +239,7 @@ namespace MeGUI.core.gui
             this.AudioOutput = "";
             this.delay.Value = 0;
         }
-        #endregion
+        
 
 
         private AudioEncoderType lastCodec = null;

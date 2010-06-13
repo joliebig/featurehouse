@@ -163,18 +163,18 @@ namespace MeGUI
                     break;
                 case PossibleSources.ffindex:
                     strDLLPath = Path.Combine(Path.GetDirectoryName(MainForm.Instance.Settings.FFMSIndexPath), "ffms2.dll");
-#if x86
+
                     if (input.ToLower().EndsWith(".ffindex"))
                         inputLine = "LoadPlugin(\"" + strDLLPath + "\")\r\nFFVideoSource(\"" + input.Substring(0, input.Length - 8) + "\",colorspace=\"YV12\")";
                     else
                         inputLine = "LoadPlugin(\"" + strDLLPath + "\")\r\nFFVideoSource(\"" + input + "\",colorspace=\"YV12\")";
-#endif
-#if x64
+
+
                     if (input.ToLower().EndsWith(".ffindex"))
                         inputLine = "LoadCPlugin(\"" + strDLLPath + "\")\r\nFFVideoSource(\"" + input.Substring(0, input.Length - 8) + "\",colorspace=\"YV12\")";
                     else
                         inputLine = "LoadCPlugin(\"" + strDLLPath + "\")\r\nFFVideoSource(\"" + input + "\",colorspace=\"YV12\")";
-#endif
+
                     break;
                 case PossibleSources.dgi:
                     if (MainForm.Instance.Settings.UseCUVIDserver == true)
@@ -335,7 +335,7 @@ namespace MeGUI
             return filters;
         }
 
-        #region deinterlacing snippets
+        
         public static int Order(FieldOrder order)
         {
             int i_order = -1;
@@ -445,8 +445,8 @@ namespace MeGUI
             }
         }
 
-        #endregion
-        #region IVTC snippets
+        
+        
         public static void AddTIVTC(string d2vFile, bool anime, bool hybrid, bool mostlyFilm, bool advancedDeinterlacing,
             FieldOrder fieldOrder, List<DeinterlaceFilter> filters)
         {
@@ -527,16 +527,16 @@ namespace MeGUI
         }
 
 
-        #endregion
-        #region decimate snippet
+        
+        
         public static void AddTDecimate(int decimateM, List<DeinterlaceFilter> filters)
         {
             filters.Add(new DeinterlaceFilter(
                 "Tritical Decimate",
                 string.Format("LoadPlugin(\"{0}\"){1}TDecimate(cycleR={2})", Path.Combine(MainForm.Instance.Settings.AvisynthPluginsPath, "TIVTC.dll"), Environment.NewLine, decimateM)));
         }
-        #endregion
-        #region analysis scripting
+        
+        
         private const string DetectionScript =
 @"{0} #original script
 {1} #trimming
@@ -582,7 +582,7 @@ SelectRangeEvery({3},{4},0)
             else
                 return null;
         }
-        #endregion
+        
 
         public static void undercrop(ref CropValues crop)
         {

@@ -32,7 +32,7 @@ namespace MeGUI.core.details.audio
     {
         private EnumProxy[] _avisynthChannelSet;
 	    
-        #region start / stop
+        
 
 	    public AudioConfigurationPanel()
 	    {
@@ -77,19 +77,19 @@ namespace MeGUI.core.details.audio
             this.cbSampleRate.SelectedIndex = 0;
         }
 	    
-		#endregion
-		#region dropdowns
+		
+		
 			
-		#endregion
-		#region checkboxes
+		
+		
 
         protected void showCommandLine()
 	    {
 	        
 	    }
 
-		#endregion
-		#region properties
+		
+		
 
 
 	    protected virtual bool IsMultichanelSupported
@@ -158,8 +158,8 @@ namespace MeGUI.core.details.audio
 			}
 		}
 
-		#endregion
-		#region buttons
+		
+		
 		/// <summary>
 		/// handles entires into textfiels, blocks entry of non digit characters
 		/// </summary>
@@ -170,12 +170,12 @@ namespace MeGUI.core.details.audio
 			if (! char.IsDigit(e.KeyChar) && (int)Keys.Back != (int)e.KeyChar)
 				e.Handled = true;
 		}
-		#endregion
-		#region commandline
+		
+		
 		private void besweetDelay_TextChanged(object sender, System.EventArgs e)
 		{
 		}
-		#endregion
+		
 
         private void applyDRC_CheckedChanged(object sender, EventArgs e)
         {

@@ -41,7 +41,7 @@ namespace MeGUI.core.details
         private DateTime start, end; // time the job was started / ended
 
 
-        #region job queue information
+        
         private string owningWorker;
 
         public string OwningWorker
@@ -93,7 +93,7 @@ namespace MeGUI.core.details
 
         [XmlIgnore]
         public List<TaggedJob> RequiredJobs = new List<TaggedJob>();
-        #endregion
+        
 
         public string EncodingSpeed = "";
         private string name;

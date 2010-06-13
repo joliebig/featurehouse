@@ -48,7 +48,7 @@ namespace MeGUI
 
     public class ProfileManager
     {
-        #region init
+        
         public ProfileManager(string path)
         {
             this.path = path;
@@ -70,7 +70,7 @@ namespace MeGUI
             SafeRegister<OneClickSettings, OneClickConfigPanel>();
             SafeRegister<AviSynthSettings, AviSynthProfileConfigPanel>();
         }
-        #endregion
+        
 
         public static readonly string ScratchPadName = "*scratchpad*";
 
@@ -80,7 +80,7 @@ namespace MeGUI
 
 
 
-        #region registration 
+        
         public bool SafeRegister<TSettings, TPanel>(params string[] groups)
             where TSettings : GenericSettings, new()
             where TPanel : Control, Editable<TSettings>, new()
@@ -103,9 +103,9 @@ namespace MeGUI
             MethodInfo m2 = m.MakeGenericMethod(TSettings, TPanel);
             return (bool)m2.Invoke(this, new object[] { name });
         }
-        #endregion
+        
 
-        #region private util
+        
         /// <summary>
         /// eliminates non allowed characters and replaced them with an underscore
         /// </summary>
@@ -144,9 +144,9 @@ namespace MeGUI
         {
             return typeof(GenericProfile<>).MakeGenericType(byName(id).SettingsType);
         }
-        #endregion
+        
 
-        #region loading and saving
+        
         private static string profilePath(string path, Profile prof)
         {
             return Path.Combine(Path.Combine(GetSaveFolder(path), prof.BaseSettings.SettingsID), fixName(prof.FQName) + ".xml");
@@ -294,9 +294,9 @@ namespace MeGUI
                     delegate(Profile p) { return p.GetType().Equals(type.GenericProfileType); });
             }
         }
-        #endregion
+        
 
-        #region selected profiles
+        
         public Profile GetSelectedProfile(string profileType)
         {
             ProfileType t = byName(profileType);
@@ -313,14 +313,14 @@ namespace MeGUI
         {
             bySettingsType(GetSettingsType(prof)).SelectedProfile = prof;
         }
-        #endregion
+        
 
         public Profile GetProfile(string type, string name)
         {
             return byName(type).ByName(name);
         }
 
-        #region profileset operations
+        
         private List<ProfileType> byProfileSet(string profileSet)
         {
             List<ProfileType> res = new List<ProfileType>();
@@ -341,16 +341,16 @@ namespace MeGUI
             return res;
         }
 
-        public IEnumerable<Named<Profile>> Profiles(string type) 
+        public IEnumerable<Named<Profile> > Profiles(string type) 
         {
             List<ProfileType> ps = byProfileSet(type);
             
             if (ps.Count == 1)
-                return Util.ConvertAll<Profile, Named<Profile>>(ps[0].Profiles, delegate (Profile pr) { return new Named<Profile>(pr.Name, pr); });
+                return Util.ConvertAll<Profile, Named<Profile> >(ps[0].Profiles, delegate (Profile pr) { return new Named<Profile>(pr.Name, pr); });
 
-            List<Named<Profile>> profiles = new List<Named<Profile>>();
+            List<Named<Profile> > profiles = new List<Named<Profile> >();
             foreach (ProfileType p in ps)
-                profiles.AddRange(Util.ConvertAll<Profile, Named<Profile>>(p.Profiles, delegate (Profile prof) { return new Named<Profile>(prof.FQName, prof); }));
+                profiles.AddRange(Util.ConvertAll<Profile, Named<Profile> >(p.Profiles, delegate (Profile prof) { return new Named<Profile>(prof.FQName, prof); }));
 
             return profiles;
         }
@@ -366,9 +366,9 @@ namespace MeGUI
             foreach (ProfileType p in byProfileSet(profileSet))
                 p.ProfilesChanged -= listener;
         }
-        #endregion
+        
 
-        #region Profile Listing
+        
         private Profile byFormattedName(string formattedName)
         {
             string type = formattedName.Substring(0, formattedName.IndexOf(':'));
@@ -397,10 +397,10 @@ namespace MeGUI
                 bySettingsType(GetSettingsType(prof)).Add(prof, asker);
             }
         }
-        #endregion
+        
 
 
-        #region misc operations
+        
         private static Type GetSettingsType(Profile p)
         {
             return p.GetType().GetGenericArguments()[0];
@@ -420,7 +420,7 @@ namespace MeGUI
         {
             return GetSelectedProfile(p).BaseSettings;
         }
-        #endregion
+        
     }
 
     abstract class ProfileType : IIDable
@@ -547,14 +547,14 @@ namespace MeGUI
             return (GenericProfile<TSettings>)ByName(name);
         }
 
-        public Tuple<IEnumerable<GenericProfile<TSettings>>, GenericProfile<TSettings>> SProfiles
+        public Tuple<IEnumerable<GenericProfile<TSettings> >, GenericProfile<TSettings> > SProfiles
         {
             get
             {
                 Tuple<IEnumerable<Profile>, Profile> p = ProfilesAndSelected;
 
-                return new Tuple<IEnumerable<GenericProfile<TSettings>>, GenericProfile<TSettings>>(
-                    Util.CastAll<Profile, GenericProfile<TSettings>>(p.a),
+                return new Tuple<IEnumerable<GenericProfile<TSettings> >, GenericProfile<TSettings> >(
+                    Util.CastAll<Profile, GenericProfile<TSettings> >(p.a),
                     (GenericProfile<TSettings>)p.b);
             }
             set

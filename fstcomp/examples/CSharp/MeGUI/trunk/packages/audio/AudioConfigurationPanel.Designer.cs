@@ -20,7 +20,7 @@ namespace MeGUI.core.details.audio
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -208,7 +208,7 @@ namespace MeGUI.core.details.audio
 
         }
 
-        #endregion
+        
 
         protected System.Windows.Forms.GroupBox encoderGroupBox;
         private System.Windows.Forms.CheckBox forceDShowDecoding;

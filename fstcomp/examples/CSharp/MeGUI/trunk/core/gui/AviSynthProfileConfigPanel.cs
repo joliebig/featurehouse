@@ -41,7 +41,7 @@ namespace MeGUI.core.gui
                 dss2.Enabled = true;
         }
 
-        #region Gettable<AviSynthSettings> Members
+        
 
         public AviSynthSettings Settings
         {
@@ -76,14 +76,14 @@ namespace MeGUI.core.gui
             }
         }
 
-        #endregion
+        
 
-        #region event handlers
+        
         private void signalAR_CheckedChanged(object sender, EventArgs e)
         {
             mod16Box.Enabled = signalAR.Checked;
         }
-        #endregion
+        
 
         private void insert_Click(object sender, EventArgs e)
         {

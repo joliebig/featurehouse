@@ -45,7 +45,7 @@ namespace MeGUI
             deviceType = "";
             bitrate = 700;
         }
-        #region properties
+        
         /// <summary>
         /// gets / sets if additional content should be added
         /// </summary>
@@ -118,6 +118,6 @@ namespace MeGUI
             get { return splitSize; }
             set { splitSize = value; }
         }
-        #endregion
+        
     }
 }

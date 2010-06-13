@@ -51,12 +51,12 @@ namespace MeGUI
     /// </summary>
     public class MuxPathComparer
     {
-        #region variables
+        
         private List<PreferencedComparer> comparisonMethods = new List<PreferencedComparer>();
         private List<CheckMuxPath> checkingMethods = new List<CheckMuxPath>();
         private bool comparisonSorted = false;
-        #endregion
-        #region start / stop
+        
+        
         public MuxPathComparer()
         {
             registerChecker(CheckForUnsupportedCodecs);
@@ -64,8 +64,8 @@ namespace MeGUI
             registerComparer(0, CompareByLength);
             registerComparer(100, CompareByAACContainer); // A higher order number means it is less important
         }
-        #endregion
-        #region registering
+        
+        
         public void registerComparer(int order, MuxPathCompare method)
         {
             PreferencedComparer p = new PreferencedComparer();
@@ -81,8 +81,8 @@ namespace MeGUI
         {
             checkingMethods.Add(checker);
         }
-        #endregion
-        #region IComparer<MuxPath> Members (generic comparing method)
+        
+        
         /// <summary>
         /// Returns the result of the comparison of the two mux paths according to all the registered muxcomparers
         /// </summary>
@@ -108,8 +108,8 @@ namespace MeGUI
                 return 0;
             }
         }
-        #endregion
-        #region generic checking method
+        
+        
         /// <summary>
         /// Checks if this mux path is invalid, according to any of the checkers registered.
         /// </summary>
@@ -128,8 +128,8 @@ namespace MeGUI
             }
         }
 
-        #endregion
-        #region finding the 'best'
+        
+        
         public MuxPath GetBestMuxPath(List<MuxPath> muxPaths)
         {
             muxPaths.RemoveAll(BadMuxPath);
@@ -139,8 +139,8 @@ namespace MeGUI
             muxPaths.Sort(Compare);
             return muxPaths[0];
         }
-        #endregion
-        #region comparison methods
+        
+        
         /// <summary>
         /// The most primitive comparison method. Says the shorter ones are better
         /// </summary>
@@ -217,13 +217,13 @@ namespace MeGUI
             }
             return false;
         }
-        #endregion
-        #region Ordering comparer
+        
+        
         static int Compare(PreferencedComparer a, PreferencedComparer b)
         {
             return a.preference - b.preference;
         }
-        #endregion
+        
     }
 
     struct PreferencedComparer

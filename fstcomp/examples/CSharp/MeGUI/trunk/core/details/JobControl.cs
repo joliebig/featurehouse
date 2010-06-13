@@ -81,7 +81,7 @@ namespace MeGUI.core.details
                 if (w.IsEncoding) w.SetStopping();
             refresh();
         }
-        #endregion
+        
 
         public JobControl()
         {
@@ -187,7 +187,7 @@ namespace MeGUI.core.details
             }));
         }                
 
-        #region properties
+        
         public MainForm MainForm
         {
             set
@@ -222,9 +222,9 @@ namespace MeGUI.core.details
                 return currentAfterEncoding;
             }
         }
-        #endregion
+        
 
-        #region Clear button
+        
         private void addClearButton()
         {
             jobQueue.AddButton("Clear", new EventHandler(deleteAllJobsButton_Click));
@@ -252,8 +252,8 @@ namespace MeGUI.core.details
                     reallyDeleteJob(j);
             }
         }
-        #endregion
-        #region deleting jobs
+        
+        
         internal void DeleteJob(TaggedJob job)
         {
             if (job.Status == JobStatus.PROCESSING)
@@ -331,7 +331,7 @@ namespace MeGUI.core.details
             foreach (TaggedJob j in job.EnabledJobs)
                 deleteAllDependantJobs(j);
         }
-        #endregion
+        
 
         public void refresh()
         {
@@ -346,7 +346,7 @@ namespace MeGUI.core.details
                     w.StartEncoding(false);
         }
 
-        #region saving loading jobs
+        
         internal List<string> toStringList(IEnumerable<TaggedJob> jobList)
         {
             List<string> strings = new List<string>();
@@ -500,8 +500,8 @@ namespace MeGUI.core.details
             return jobList;
         }
 
-        #region individual job saving and loading
-        #region loading and saving jobs
+        
+        
         /// <summary>
         /// saves a job to programdirectory\jobs\jobname.xml
         /// using the XML Serializer we get a humanly readable file
@@ -542,10 +542,10 @@ namespace MeGUI.core.details
                 }
             }
         }
-                #endregion
-        #endregion
-        #endregion
-        #region free job name
+                
+        
+        
+        
         /// <summary>
         /// looks up the first free job number
         /// </summary>
@@ -562,9 +562,9 @@ namespace MeGUI.core.details
                 jobNr++;
             }
         }
-        #endregion
         
-        #region adding jobs to queue
+        
+        
         public void addJobsWithDependencies(JobChain c)
         {
             if (c == null)
@@ -600,7 +600,7 @@ namespace MeGUI.core.details
             jobQueue.enqueueJob(job);
             mainForm.Jobs.ResourceLock.Release();
         }
-        #endregion
+        
 
         private void updateProcessingStatus()
         {

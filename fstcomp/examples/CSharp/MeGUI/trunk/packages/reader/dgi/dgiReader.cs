@@ -32,7 +32,7 @@ namespace MeGUI
     public class dgiFileFactory : IMediaFileFactory
     {
 
-        #region IMediaFileFactory Members
+        
 
         public IMediaFile Open(string file)
         {
@@ -46,16 +46,16 @@ namespace MeGUI
             return -1;
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "dgi"; }
         }
 
-        #endregion
+        
     }
 
     /// <summary>
@@ -155,14 +155,14 @@ namespace MeGUI
             }
             info.DAR = dar;
         }
-        #region properties
+        
         public MediaFileInfo Info
         {
             get { return info; }
         }
-        #endregion
+        
 
-        #region IMediaFile Members
+        
 
         public bool CanReadVideo
         {
@@ -184,16 +184,16 @@ namespace MeGUI
             throw new Exception("The method or operation is not implemented.");
         }
 
-        #endregion
+        
 
-        #region IDisposable Members
+        
 
         public void Dispose()
         {
             reader.Dispose();
         }
 
-        #endregion
+        
     }
 }
 

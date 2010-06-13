@@ -30,16 +30,16 @@ namespace MeGUI
     public class AvsFileFactory : IMediaFileFactory
     {
 
-        #region IMediaFileFactory Members
+        
 
         public IMediaFile Open(string file)
         {
             return AvsFile.OpenScriptFile(file);
         }
 
-        #endregion
+        
 
-        #region IMediaFileFactory Members
+        
 
 
         public int HandleLevel(string file)
@@ -49,16 +49,16 @@ namespace MeGUI
             return -1;
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "AviSynth"; }
         }
 
-        #endregion
+        
     }
     public sealed class AvsFile : IMediaFile
     {
@@ -67,7 +67,7 @@ namespace MeGUI
         private IAudioReader audioReader;
         private IVideoReader videoReader;
         private MediaFileInfo info;
-        #region construction
+        
         public AviSynthClip Clip
         {
             get
@@ -129,8 +129,8 @@ namespace MeGUI
             }
             GC.SuppressFinalize(this);
         }
-        #endregion
-        #region properties
+        
+        
         public MediaFileInfo Info
         {
             get { return info; }
@@ -143,7 +143,7 @@ namespace MeGUI
         {
             get { return true; }
         }
-        #endregion
+        
         public IAudioReader GetAudioReader(int track)
         {
             if (track != 0 || !info.HasAudio)
@@ -237,24 +237,24 @@ namespace MeGUI
             public long ReadAudioSamples(long nStart, int nAmount, IntPtr buf)
             {
                 clip.ReadAudio(buf, nStart, nAmount);
-#warning Need to check whether nAmount samples are guaranteed to be returned
+
                 return nAmount;
             }
 
             public byte[] ReadAudioSamples(long nStart, int nAmount)
             {
-#warning slow reading is not supported here
+
                 return null;
             }
         }
-        #region IDisposable Members
+        
 
         public void Dispose()
         {
             cleanup();
         }
 
-        #endregion
+        
     }
 }
     

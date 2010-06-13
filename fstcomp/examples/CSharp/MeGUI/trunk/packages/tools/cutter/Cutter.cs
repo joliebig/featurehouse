@@ -266,7 +266,7 @@ namespace MeGUI.packages.tools.cutter
 
     public class CutterTool : MeGUI.core.plugins.interfaces.ITool
     {
-        #region ITool Members
+        
 
         public string Name
         {
@@ -291,15 +291,15 @@ namespace MeGUI.packages.tools.cutter
             get { return new Shortcut[] { Shortcut.CtrlD }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return Name; }
         }
 
-        #endregion
+        
     }
 }

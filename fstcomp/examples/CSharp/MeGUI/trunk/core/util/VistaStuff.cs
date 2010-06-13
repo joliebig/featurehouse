@@ -64,7 +64,7 @@ namespace MeGUI.core.util
         public extern static int SetWindowTheme(IntPtr hWnd, string pszSubAppName, string pszSubIdList);
         
 
-        #region General Definitions
+        
 
         // Various important window messages
         internal const int WM_USER = 0x0400;
@@ -73,9 +73,9 @@ namespace MeGUI.core.util
         // FormatMessage constants and structs
         internal const int FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000;
 
-        #endregion
+        
 
-        #region File Operations Definitions
+        
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal struct COMDLG_FILTERSPEC
@@ -158,9 +158,9 @@ namespace MeGUI.core.util
             CDCS_VISIBLE = 0x00000002
         }
 
-        #endregion
+        
 
-        #region KnownFolder Definitions
+        
 
         internal enum FFFP_MODE
         {
@@ -220,7 +220,7 @@ namespace MeGUI.core.util
             internal uint pid;
         }
 
-        #endregion
+        
 
         public const uint ERROR_CANCELLED = 0x800704C7;
 

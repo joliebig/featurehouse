@@ -128,12 +128,12 @@ namespace MeGUI.core.gui
             }
         }
 
-        public Tuple<IEnumerable<GenericProfile<TSettings>>, GenericProfile<TSettings>> Profiles
+        public Tuple<IEnumerable<GenericProfile<TSettings> >, GenericProfile<TSettings> > Profiles
         {
             get
             {
-                return new Tuple<IEnumerable<GenericProfile<TSettings>>, GenericProfile<TSettings>>(
-                    Util.CastAll<GenericProfile<TSettings>>(videoProfile.Items),
+                return new Tuple<IEnumerable<GenericProfile<TSettings> >, GenericProfile<TSettings> >(
+                    Util.CastAll<GenericProfile<TSettings> >(videoProfile.Items),
                     SelectedProfile);
             }
 

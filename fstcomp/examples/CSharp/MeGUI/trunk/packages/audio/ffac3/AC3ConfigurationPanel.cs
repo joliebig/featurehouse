@@ -36,7 +36,7 @@ namespace MeGUI.packages.audio.ffac3
             comboBox1.Items.AddRange(AC3Settings.SupportedBitrates);
         }
 
-        #region properties
+        
         /// <summary>
         /// gets / sets the settings that are being shown in this configuration dialog
         /// </summary>
@@ -54,9 +54,9 @@ namespace MeGUI.packages.audio.ffac3
                 comboBox1.SelectedItem = nas.Bitrate;
             }
         }
-        #endregion
+        
 
-        #region Editable<AC3Settings> Members
+        
 
         AC3Settings Editable<AC3Settings>.Settings
         {
@@ -70,7 +70,7 @@ namespace MeGUI.packages.audio.ffac3
             }
         }
 
-        #endregion
+        
     }
 }
 

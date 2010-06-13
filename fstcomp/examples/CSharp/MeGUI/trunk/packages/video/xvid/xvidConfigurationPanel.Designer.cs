@@ -20,7 +20,7 @@ namespace MeGUI.packages.video.xvid
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -1498,7 +1498,7 @@ namespace MeGUI.packages.video.xvid
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.GroupBox xvidOtherGroupBox;
         private System.Windows.Forms.CheckBox xvidInterlaced;

@@ -132,7 +132,7 @@ namespace MeGUI
             FourCCs = FourCCsForMPEG4ASP;
             hvsMasking = 0;
         }
-        #region properties
+        
         /// I believe we really does'nt need to create this array @ per-instance basis
         private static readonly string[] m_fourCCs = { "XVID", "DIVX", "DX50", "MP4V" };
 
@@ -351,7 +351,7 @@ namespace MeGUI
             get { return hvsMasking; }
             set { hvsMasking = value; }
         }
-        #endregion
+        
 
         /// <summary>
         ///  Handles assessment of whether the encoding options vary between two xvidSettings instances

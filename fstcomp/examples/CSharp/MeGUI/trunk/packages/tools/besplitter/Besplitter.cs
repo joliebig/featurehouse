@@ -155,7 +155,7 @@ namespace MeGUI.packages.tools.besplitter
     public class BesplitterTool : ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -172,15 +172,15 @@ namespace MeGUI.packages.tools.besplitter
             get { return new Shortcut[] { Shortcut.CtrlK }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return Name; }
         }
 
-        #endregion
+        
     }
 }

@@ -39,7 +39,7 @@ namespace MeGUI
 	/// </summary>
 	public class AutoEncodeWindow : System.Windows.Forms.Form
 	{
-		#region variables
+		
         private List<AudioJob> audioStreams;
         private bool prerender;
         private MainForm mainForm;
@@ -65,7 +65,7 @@ namespace MeGUI
         private ToolTip defaultToolTip;
         private MuxProvider muxProvider;
         private VideoStream videoStream;
-		#endregion
+		
 
         private MeGUI.core.gui.HelpButton helpButton1;
         private MeGUI.core.gui.TargetSizeSCBox splitting;
@@ -78,7 +78,7 @@ namespace MeGUI
 
 
         private IContainer components;
-		#region start / stop
+		
 		public AutoEncodeWindow()
 		{
             InitializeComponent();
@@ -178,8 +178,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -488,8 +488,8 @@ namespace MeGUI
             this.PerformLayout();
 
 		}
-		#endregion
-		#region dropdowns
+		
+		
         /// <summary>
         /// adjusts the output extension when the container is being changed
         /// </summary>
@@ -507,8 +507,8 @@ namespace MeGUI
                 this.muxedOutput.Filename = Path.ChangeExtension(muxedOutput.Filename, (this.container.SelectedItem as ContainerType).Extension);
             }
         }
-        #endregion
-		#region additional events
+        
+		
 		/// <summary>
 		/// handles the selection of the output format
 		/// in case of avi, if an encodeable audio stream is already present,
@@ -545,8 +545,8 @@ namespace MeGUI
 				j++;
 			}
 		}
-		#endregion
-		#region helper methods
+		
+		
 		/// <summary>
 		/// sets the projected video bitrate field in the GUI
 		/// </summary>
@@ -602,7 +602,7 @@ namespace MeGUI
                 targetSize.Value = null;
 			}
 		}
-		#region audio
+		
         /// <summary>
         /// sets the projected audio size for all audio streams that use CBR mode
         /// </summary>
@@ -626,7 +626,7 @@ namespace MeGUI
                 }
             }
         }
-		#endregion
+		
 
 		/// <summary>
 		/// returns all audio streams that can be encoded or muxed
@@ -647,8 +647,8 @@ namespace MeGUI
 			}
             return list.ToArray();
 		}
-		#endregion
-		#region button events
+		
+		
 		/// <summary>
 		/// handles the go button for automated encoding
 		/// checks if we're in automated 2 pass video mode and that we're not using the snow codec
@@ -727,8 +727,8 @@ namespace MeGUI
             }
             audio = newAudio.ToArray();
         }
-		#endregion
-		#region event helper methods
+		
+		
 		private void textField_KeyPress(object sender, KeyPressEventArgs e)
 		{
 			if (! char.IsDigit(e.KeyChar) && (int)Keys.Back != (int)e.KeyChar)
@@ -773,7 +773,7 @@ namespace MeGUI
 				this.isBitrateMode = true;
 			}
 		}
-		#endregion
+		
 
         private void targetSize_SelectionChanged(object sender, string val)
         {
@@ -783,7 +783,7 @@ namespace MeGUI
     }
     public class AutoEncodeTool : ITool
     {
-        #region ITool Members
+        
 
         public string Name
         {
@@ -803,7 +803,7 @@ namespace MeGUI
                 MessageBox.Show(error, "Unsupported audio configuration", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 return;
             }
-#warning must be fixed up to be more generic
+
             if (info.Video.CurrentSettings.EncodingMode == 2 || info.Video.CurrentSettings.EncodingMode == 5)
             {
                 MessageBox.Show("First pass encoding is not supported for automated encoding as no output is generated.\nPlease choose another encoding mode", "Improper configuration",
@@ -849,15 +849,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlF6 }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "AutoEncode"; }
         }
 
-        #endregion
+        
     }
 }

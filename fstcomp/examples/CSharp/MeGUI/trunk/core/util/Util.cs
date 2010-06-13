@@ -351,7 +351,7 @@ namespace MeGUI.core.util
                 yield return c(t);
         }
 
-        #region range clamping
+        
         public static void clampedSet(NumericUpDown box, decimal value)
         {
             box.Value = clamp(value, box.Minimum, box.Maximum);
@@ -399,7 +399,7 @@ namespace MeGUI.core.util
         {
             return (uint)clampPositive((long)val);
         }
-        #endregion
+        
 
 
         public static void ChangeItemsKeepingSelectedSame<T>(ComboBox box, T[] newItems)
@@ -413,7 +413,7 @@ namespace MeGUI.core.util
             box.SelectedItem = sel;
         }
 
-        #region timecode <-> frame number conversion routines
+        
         /// <summary>
         /// convers a timecode to a framenumber
         /// </summary>
@@ -506,7 +506,7 @@ namespace MeGUI.core.util
             else // incorrect length
                 return -1;
         }
-        #endregion
+        
     }
 
     public delegate TOut Converter<TIn, TOut>(TIn iinput);

@@ -20,7 +20,7 @@ namespace MeGUI.packages.tools.besplitter
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -154,7 +154,7 @@ namespace MeGUI.packages.tools.besplitter
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

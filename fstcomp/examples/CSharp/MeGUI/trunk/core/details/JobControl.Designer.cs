@@ -20,7 +20,7 @@ namespace MeGUI.core.details
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -139,7 +139,7 @@ namespace MeGUI.core.details
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label lblAfterEncoding;
         private MeGUI.core.gui.HelpButton helpButton1;

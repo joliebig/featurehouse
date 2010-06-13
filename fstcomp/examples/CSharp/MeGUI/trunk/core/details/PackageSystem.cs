@@ -52,7 +52,7 @@ namespace MeGUI.core.details
         
         
         
-        public GenericRegisterer<IDable<ReconfigureJob>> JobConfigurers = new GenericRegisterer<IDable<ReconfigureJob>>();
+        public GenericRegisterer<IDable<ReconfigureJob> > JobConfigurers = new GenericRegisterer<IDable<ReconfigureJob> >();
 
         public GenericRegisterer<ITool> Tools
         {

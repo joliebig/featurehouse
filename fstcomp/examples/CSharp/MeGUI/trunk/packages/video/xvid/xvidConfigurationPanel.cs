@@ -33,15 +33,15 @@ namespace MeGUI.packages.video.xvid
     public partial class xvidConfigurationPanel : MeGUI.core.details.video.VideoConfigurationPanel, Editable<xvidSettings>
     {
 
-        #region start / stop
+        
         public xvidConfigurationPanel()
             : base()
         {
             InitializeComponent();
             cqmComboBox1.StandardItems = new string[] { xvidSettings.H263Matrix, xvidSettings.MPEGMatrix };
         }
-        #endregion
-        #region adjustments
+        
+        
         private void doCheckBoxAdjustments()
         {
             if ((int)xvidNbBFrames.Value > 0)
@@ -298,8 +298,8 @@ namespace MeGUI.packages.video.xvid
                 xvidUseVHQForBframes.Enabled = true;
         }
 
-        #endregion
-        #region codec-specific overload functions
+        
+        
         protected override string getCommandline()
         {
             return XviDEncoder.genCommandline("input", "output", null, Settings as xvidSettings, 1, 1, null);
@@ -473,8 +473,8 @@ namespace MeGUI.packages.video.xvid
                 HVSMasking.SelectedIndex = xs.HVSMasking;
             }
         }
-        #endregion
-        #region events
+        
+        
         private void updateEvent(object sender, EventArgs e)
         {
             genericUpdate();
@@ -492,7 +492,7 @@ namespace MeGUI.packages.video.xvid
                 this.showCommandLine();
             }
         }
-        #endregion
+        
 
         private void cqmComboBox1_SelectionChanged(object sender, string val)
         {

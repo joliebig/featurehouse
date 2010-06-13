@@ -80,7 +80,7 @@ namespace MeGUI
             FullRange, advSet, noMBTree, threadInput, noPsy, scenecut, x264Nalhrd, x264Aud, x264SlowFirstpass;
 		string quantizerMatrix, qpfile;
         x264PresetLevelModes preset;
-		#region constructor
+		
         /// <summary>
 		/// default constructor, initializes codec default values
 		/// </summary>
@@ -164,10 +164,10 @@ namespace MeGUI
             level = 15;
             x264SlowFirstpass = false;
 		}
-		#endregion
-		#region properties
+		
+		
 
-#warning Deprecated since 0.3.4.9, delete block after 0.3.6
+
         public int x264Preset
         {
             get { return 99; }
@@ -181,7 +181,7 @@ namespace MeGUI
                 preset = (x264PresetLevelModes)value;
             }
         }
-#warning Deprecated since 0.3.4.14, delete block after 0.3.6
+
         public string Turbo
         {
             get { return "migrated"; }
@@ -556,7 +556,7 @@ namespace MeGUI
             get { return level; }
             set { level = value; }
         }
-        #endregion
+        
         public override bool UsesSAR
         {
             get { return true; }

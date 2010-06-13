@@ -61,7 +61,7 @@ namespace MeGUI
         // This instance is to be used by the serializers that can't be passed a MainForm as a parameter
         public static MainForm Instance;
 
-        #region variable declaration
+        
         private List<string> filesToDeleteOnClosing = new List<string>();
         private System.Windows.Forms.TabPage inputTab;
         private System.Windows.Forms.TabControl tabControl1;
@@ -84,7 +84,7 @@ namespace MeGUI
         private MenuItem mnuFileImport;
         private MenuItem mnuFileExport;
         private MenuItem mnuToolsAdaptiveMuxer;
-        #endregion
+        
         private AudioEncodingComponent audioEncodingComponent1;
         private VideoEncodingComponent videoEncodingComponent1;
         private TabPage tabPage2;
@@ -143,7 +143,7 @@ namespace MeGUI
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        #region Windows Form Designer generated code
+        
         /// <summary>
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
@@ -759,7 +759,7 @@ namespace MeGUI
             this.ResumeLayout(false);
 
         }
-        #endregion
+        
         /// <summary>
         /// launches the megui wiki in the default browser
         /// </summary>
@@ -809,16 +809,16 @@ namespace MeGUI
             InitializeComponent();
             System.Reflection.Assembly myAssembly = this.GetType().Assembly;
             string name = this.GetType().Namespace + ".";
-#if CSC
+
 			name = "";
-#endif
+
             string[] resources = myAssembly.GetManifestResourceNames();
             this.trayIcon.Icon = new Icon(myAssembly.GetManifestResourceStream(name + "App.ico"));
             this.Icon = trayIcon.Icon;
             this.TitleText = Application.ProductName + " " + Application.ProductVersion;
-#if x64
+
             this.TitleText += " x64";
-#endif
+
             if (MainForm.Instance.Settings.AutoUpdate == true && MainForm.Instance.Settings.AutoUpdateServerSubList == 1)
                 this.TitleText += " DEVELOPMENT UPDATE SERVER";
             setGUIInfo();
@@ -826,7 +826,7 @@ namespace MeGUI
             this.videoEncodingComponent1.FileType = MainForm.Instance.Settings.MainFileFormat;
         }
 
-        #region GUI properties
+        
         public JobControl Jobs
         {
             get { return jobControl1; }
@@ -844,7 +844,7 @@ namespace MeGUI
         {
             get { return audioEncodingComponent1; }
         }
-       #endregion
+       
         /// <summary>
         /// initializes all the dropdown elements in the GUI to their default values
         /// </summary>
@@ -884,14 +884,14 @@ namespace MeGUI
             }
             base.Dispose(disposing);
         }
-        #region reset
+        
         private void resetButton_Click(object sender, System.EventArgs e)
         {
             videoEncodingComponent1.Reset();
             audioEncodingComponent1.Reset();
         }
-        #endregion
-        #region auto encoding
+        
+        
         private void autoEncodeButton_Click(object sender, System.EventArgs e)
         {
             RunTool("AutoEncode");
@@ -909,9 +909,9 @@ namespace MeGUI
                 MessageBox.Show("Required tool, '" + p + "', not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        #endregion
-        #region job management
-        #region I/O verification
+        
+        
+        
         /// <summary>
         /// Test whether a filename is suitable for writing to
         /// </summary>
@@ -960,9 +960,9 @@ namespace MeGUI
             }
             return null;
         }
-        #endregion
-        #endregion
-        #region settings
+        
+        
+        
         /// <summary>
         /// saves the global GUI settings to settings.xml
         /// </summary>
@@ -1008,11 +1008,11 @@ namespace MeGUI
             }
         }
 
-        #endregion
-        #region GUI updates
-        #region job postprocessing
-        #endregion
-        #region helper methods
+        
+        
+        
+        
+        
 
         public JobUtil JobUtil
         {
@@ -1120,8 +1120,8 @@ namespace MeGUI
                 return this.profileManager;
             }
         }
-        #endregion
-        #region menu actions
+        
+        
         private void mnuFileOpen_Click(object sender, EventArgs e)
         {
             openFileDialog.Filter = "AviSynth Scripts (*.avs)|*.avs|" +
@@ -1191,7 +1191,7 @@ namespace MeGUI
 
         private void mnuView_Popup(object sender, System.EventArgs e)
         {
-            List<Pair<string, bool>> workers = Jobs.ListProgressWindows();
+            List<Pair<string, bool> > workers = Jobs.ListProgressWindows();
             progressMenu.MenuItems.Clear();
             progressMenu.MenuItems.Add(showAllProgressWindows);
             progressMenu.MenuItems.Add(hideAllProgressWindows);
@@ -1225,7 +1225,7 @@ namespace MeGUI
         {
         }
 
-        #endregion
+        
 
 
         public MeGUISettings Settings
@@ -1237,7 +1237,7 @@ namespace MeGUI
         {
             get { return mediaFileFactory; }
         }
-        #region tray action
+        
         private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             // Activate the form.
@@ -1253,8 +1253,8 @@ namespace MeGUI
             this.Visible = true;
         }
 
-        #endregion
-        #region file opening
+        
+        
         public void openOtherVideoFile(string fileName)
         {
             AviSynthWindow asw = new AviSynthWindow(this, fileName);
@@ -1354,8 +1354,8 @@ namespace MeGUI
         {
             new ProfileImporter(this, file).ShowDialog();
         }
-        #endregion
-        #region Drag 'n' Drop
+        
+        
         private void MeGUI_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -1376,8 +1376,8 @@ namespace MeGUI
                     e.Effect = DragDropEffects.All;
             }
         }
-        #endregion
-        #region importing
+        
+        
         public void importProfiles(Stream data)
         {
             Util.ThreadSafeRun(this, delegate
@@ -1405,7 +1405,7 @@ namespace MeGUI
         {
             new ProfileExporter(this).ShowDialog();
         }
-        #endregion
+        
 
         private void mnuToolsAdaptiveMuxer_Click(object sender, EventArgs e)
         {
@@ -1448,12 +1448,12 @@ namespace MeGUI
 
         private void beginUpdateCheck()
         {
-#if x86
+
             string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade.xml");
-#endif
-#if x64
+
+
             string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade_x64.xml");
-#endif
+
             UpdateWindow update = new UpdateWindow(this, this.Settings);
             update.GetUpdateData(true);
             if (update.HasUpdatableFiles()) // If there are updated files, display the window
@@ -1544,14 +1544,14 @@ namespace MeGUI
                 Video.openVideoFile(p);
             else
             {
-#warning should use mediafactory to generate scripts here.
+
                 string newFileName = VideoUtil.createSimpleAvisynthScript(p);
                 if (newFileName != null)
                     Video.openVideoFile(newFileName);
             }
         }
-        #region MeGUIInfo
-        #region variable declaration
+        
+        
         private bool restart = false;
         private Dictionary<string, CommandlineUpgradeData> filesToReplace = new Dictionary<string, CommandlineUpgradeData>();
         private DialogManager dialogManager;
@@ -1574,8 +1574,8 @@ namespace MeGUI
         }
 
         private CodecManager codecs;
-        #endregion
-        #region start and end
+        
+        
         public void handleCommandline(CommandlineParser parser)
         {
             foreach (string file in parser.failedUpgrades)
@@ -1815,13 +1815,13 @@ namespace MeGUI
             }
 
             System.Windows.Forms.Application.EnableVisualStyles();
-#if !DEBUG
+
             if (!mySingleInstanceMutex.WaitOne(0, false))
             {
                 if (DialogResult.Yes != MessageBox.Show("Running MeGUI instance detected!\n\rThere's not really much point in running multiple copies of MeGUI, and it can cause problems.\n\rDo You still want to run yet another MeGUI instance?", "Running MeGUI instance detected", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
                     return;
             }
-#endif
+
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
             CommandlineParser parser = new CommandlineParser();
@@ -1901,8 +1901,8 @@ namespace MeGUI
                 MessageBox.Show("Couldn't run updater.", "Couldn't run updater.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        #endregion
-        #region properties
+        
+        
         public PackageSystem PackageSystem
         {
             get { return packageSystem; }
@@ -1923,8 +1923,8 @@ namespace MeGUI
         {
             get { return this.path; }
         }
-        #endregion
-#endregion
+        
+
 
         internal void ClosePlayer()
         {
@@ -1956,7 +1956,7 @@ namespace MeGUI
         {
             viewSummary.Checked = Jobs.SummaryVisible;
             
-            List<Pair<string, bool>> workers = Jobs.ListWorkers();
+            List<Pair<string, bool> > workers = Jobs.ListWorkers();
             workersMenu.MenuItems.Clear();
             workersMenu.MenuItems.Add(showAllWorkers);
             workersMenu.MenuItems.Add(hideAllWorkers);
@@ -2061,12 +2061,12 @@ namespace MeGUI
         private void MainForm_Shown(object sender, EventArgs e)
         {            
             LogItem i = Log.Info("Versions");
-#if x86
+
             i.LogValue("MeGUI Version ", Application.ProductVersion);
-#endif
-#if x64
+
+
             i.LogValue("MeGUI Version ", Application.ProductVersion + " x64");
-#endif
+
             i.LogValue("OS ", string.Format("{0}{1} ({2}.{3}.{4}.{5})", OSInfo.GetOSName(), OSInfo.GetOSServicePack(), OSInfo.OSMajorVersion, OSInfo.OSMinorVersion, OSInfo.OSRevisionVersion, OSInfo.OSBuildVersion));
             i.LogValue("Latest .Net Framework installed ", string.Format("{0}", OSInfo.DotNetVersionFormated(OSInfo.FormatDotNetVersion())));
 
@@ -2137,4 +2137,4 @@ namespace MeGUI
         public string newVersion;
     }
 }
-        #endregion
+        

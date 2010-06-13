@@ -72,7 +72,7 @@ namespace MeGUI
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		#region start / stop
+		
 		public ChapterCreator(MainForm mainForm)
 		{
 			//
@@ -104,8 +104,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -377,8 +377,8 @@ namespace MeGUI
             this.ResumeLayout(false);
             this.PerformLayout();
 		}
-		#endregion
-		#region helper methods
+		
+		
 		/// <summary>
 		/// shows an array of chapters in the GUI
 		/// </summary>
@@ -429,8 +429,8 @@ namespace MeGUI
                     chapterListView.Items[i].SubItems[0].Text = chapterListView.Items[i].SubItems[0].Text.Substring(0, 12);
             }
         }
-		#endregion
-		#region buttons
+		
+		
 		private void removeZoneButton_Click(object sender, System.EventArgs e)
 		{
             if (chapterListView.Items.Count < 1 || pgc.Chapters.Count < 1) return;
@@ -491,8 +491,8 @@ namespace MeGUI
             FreshChapterView();
             updateTimeLine();
 		}
-		#endregion
-		#region saving files
+		
+		
 		private void saveButton_Click(object sender, System.EventArgs e)
 		{
 			if (this.saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -515,7 +515,7 @@ namespace MeGUI
             if (this.closeOnQueue.Checked)
                 this.Close();
 		}
-		#endregion
+		
 
         private void btInput_Click(object sender, EventArgs e)
         {
@@ -648,7 +648,7 @@ namespace MeGUI
 				MessageBox.Show("Please configure video input first", "No video input found", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
-		#region properties
+		
 		/// <summary>
 		/// sets the video input to be used for a zone preview
 		/// </summary>
@@ -676,7 +676,7 @@ namespace MeGUI
 			get {return this.introEndFrame;}
 			set {introEndFrame = value;}
 		}
-		#endregion
+		
 		private void player_Closed(object sender, EventArgs e)
 		{
 			player = null;
@@ -743,7 +743,7 @@ namespace MeGUI
     public class ChapterCreatorTool : MeGUI.core.plugins.interfaces.ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -764,15 +764,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlH }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "chapter_creator"; }
         }
 
-        #endregion
+        
     }
 }

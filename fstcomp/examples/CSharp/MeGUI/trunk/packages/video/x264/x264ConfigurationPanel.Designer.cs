@@ -20,7 +20,7 @@ namespace MeGUI.packages.video.x264
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -2629,7 +2629,7 @@ namespace MeGUI.packages.video.x264
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.GroupBox x264CodecGeneralGroupbox;
         private System.Windows.Forms.ComboBox x264EncodingMode;

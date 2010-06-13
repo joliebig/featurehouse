@@ -45,21 +45,21 @@ namespace MeGUI.core.gui
 
     public partial class JobQueue : UserControl, IPersistComponentSettings
     {
-        #region pause/play image
-#if CSC
+        
+
         private static readonly string __Name = "";
 #else
         private static readonly string __Name = "MeGUI.";
-#endif
+
         private static readonly System.Reflection.Assembly myAssembly = typeof(JobQueue).Assembly;
         private static readonly Bitmap pauseImage = new Bitmap(myAssembly.GetManifestResourceStream(__Name + "pause.ico"));
         private static readonly Bitmap playImage = new Bitmap(myAssembly.GetManifestResourceStream(__Name + "play.ico"));
-        #endregion
+        
 
         private Dictionary<string, TaggedJob> jobs = new Dictionary<string, TaggedJob>();
         private List<ToolStripItem> singleJobHandlers = new List<ToolStripItem>();
         private List<ToolStripItem> multiJobHandlers = new List<ToolStripItem>();
-        private List<Pair<ToolStripMenuItem, MultiJobMenuGenerator>> menuGenerators = new List<Pair<ToolStripMenuItem, MultiJobMenuGenerator>>();
+        private List<Pair<ToolStripMenuItem, MultiJobMenuGenerator> > menuGenerators = new List<Pair<ToolStripMenuItem, MultiJobMenuGenerator> >();
         private StartStopMode startStopMode;
         private PauseResumeMode pauseResumeMode;
 
@@ -122,7 +122,7 @@ namespace MeGUI.core.gui
             }
         }
 
-        #region public interface: jobs
+        
         [Browsable(false)]
         internal IEnumerable<TaggedJob> JobList
         {
@@ -130,7 +130,7 @@ namespace MeGUI.core.gui
             {
                 if (InvokeRequired)
                 {
-                    return (IEnumerable<TaggedJob>)Invoke(new Getter<IEnumerable<TaggedJob>>(delegate { return JobList; }));
+                    return (IEnumerable<TaggedJob>)Invoke(new Getter<IEnumerable<TaggedJob> >(delegate { return JobList; }));
                 }
 
                 TaggedJob[] jobList = new TaggedJob[jobs.Count];
@@ -186,9 +186,9 @@ namespace MeGUI.core.gui
             jobs.Remove(job.Name);
             queueListView.Refresh();
         }
-        #endregion
+        
 
-        #region adding GUI elements
+        
         
 
         private void addItem(ToolStripMenuItem item, string parent)
@@ -278,9 +278,9 @@ namespace MeGUI.core.gui
         }
 
 
-        #endregion
+        
 
-        #region indexOf
+        
         private int indexOf(TaggedJob j)
         {
             Debug.Assert(jobs.ContainsKey(j.Name), "Looking for a job which isn't in the jobs dictionary");
@@ -296,7 +296,7 @@ namespace MeGUI.core.gui
             Debug.Assert(false, "Couldn't find job in the GUI queue");
             throw new Exception();
         }
-        #endregion
+        
 
         public JobQueue()
         {
@@ -323,7 +323,7 @@ namespace MeGUI.core.gui
             };
         }
 
-        #region job deletion
+        
         internal RequestJobDeleted RequestJobDeleted;
         public event EventHandler AbortClicked;
         public event EventHandler StartClicked;
@@ -363,9 +363,9 @@ namespace MeGUI.core.gui
             if (job == null) return;
             RequestJobDeleted(job);
         }
-        #endregion
+        
 
-        #region list movement
+        
         enum Direction { Up, Down }
         private void downButton_Click(object sender, EventArgs e)
         {
@@ -491,9 +491,9 @@ namespace MeGUI.core.gui
             downButton.Enabled = isSelectionMovable(Direction.Down);
         }
 
-        #endregion
+        
 
-        #region load/update
+        
         private void loadJobButton_Click(object sender, EventArgs e)
         {
             if (queueListView.SelectedItems.Count != 1)
@@ -511,9 +511,9 @@ namespace MeGUI.core.gui
                     job.Job = j;
             }
         }
-        #endregion
+        
 
-        #region contextmenu events
+        
         /// <summary>
         /// Returns true if all selected jobs have the requested status
         /// </summary>
@@ -660,9 +660,9 @@ namespace MeGUI.core.gui
                 item.SubItems[5].Text = (jobs[item.Text]).StatusString;
             }
         }
-        #endregion
+        
 
-        #region start / stop / abort / pause
+        
         private void abortButton_Click(object sender, EventArgs e)
         {
             AbortClicked(this, e);
@@ -704,9 +704,9 @@ namespace MeGUI.core.gui
                     break;
             }
         }
-        #endregion
+        
 
-        #region redrawing
+        
 
         public void refreshQueue()
         {
@@ -746,7 +746,7 @@ namespace MeGUI.core.gui
             queueListView.EndUpdate();
             queueListView.Refresh();
         }
-        #endregion
+        
 
         private void stopButton_Click(object sender, EventArgs e)
         {
@@ -796,7 +796,7 @@ namespace MeGUI.core.gui
             }
         }
 
-        #region IPersistComponentSettings Members
+        
         JobQueueSettings settings;
 
         public void LoadComponentSettings()
@@ -860,7 +860,7 @@ namespace MeGUI.core.gui
             }
         }
 
-        #endregion
+        
 
         private void JobQueue_Load(object sender, EventArgs e)
         {

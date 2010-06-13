@@ -93,13 +93,13 @@ namespace MeGUI
     XmlInclude(typeof(DGIIndexJob)), XmlInclude(typeof(HDStreamsExJob))]
 	public abstract class Job
 	{
-        #region important details
+        
         public string Input;
         public string Output;
         public List<string> FilesToDelete;
-        #endregion
+        
 
-        #region init
+        
         public Job():this(null, null)
 		{
         }
@@ -113,9 +113,9 @@ namespace MeGUI
 
             FilesToDelete = new List<string>();
         }
-        #endregion
+        
 
-        #region queue display details
+        
         /// <summary>
         /// Codec used
         /// </summary>
@@ -132,6 +132,6 @@ namespace MeGUI
             get;
         }
 
-        #endregion
+        
     }
 }

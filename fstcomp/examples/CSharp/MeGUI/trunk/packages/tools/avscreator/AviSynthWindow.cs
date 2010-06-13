@@ -43,7 +43,7 @@ namespace MeGUI
 	/// </summary>
 	public class AviSynthWindow : System.Windows.Forms.Form
 	{
-		#region variable declaration
+		
         string originalScript;
         bool originalInlineAvs;
         bool loaded;
@@ -150,8 +150,8 @@ namespace MeGUI
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		#endregion
-		#region construction/deconstruction
+		
+		
         public AviSynthWindow(MainForm mainForm)
         {
             this.loaded = false;
@@ -258,8 +258,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -1441,8 +1441,8 @@ namespace MeGUI
 
 		}
 
-		#endregion
-        #region buttons
+		
+        
         private void input_FileSelected(FileBar sender, FileBarEventArgs args)
         {
             openVideoSource(input.Filename);
@@ -1492,8 +1492,8 @@ namespace MeGUI
                 OpenScript(fileName);
             }
 		}
-		#endregion
-		#region script generation
+		
+		
 		private string generateScript()
 		{
             if (!this.loaded)
@@ -1561,8 +1561,8 @@ namespace MeGUI
 			string text = this.generateScript();
 			avisynthScript.Text = text;
 		}
-		#endregion
-		#region helper methods
+		
+		
         /// <summary>
         /// Opens a video source using the correct method based on the extension of the file name
         /// </summary>
@@ -1986,8 +1986,8 @@ namespace MeGUI
 				this.showScript();
 			}
 		}
-		#endregion
-		#region updown
+		
+		
 		private void horizontalResolution_ValueChanged(object sender, System.EventArgs e)
 		{
             if (eventsOn)
@@ -2013,8 +2013,8 @@ namespace MeGUI
                     player.crop(Cropping);
             }
 		}
-		#endregion
-		#region checkboxes
+		
+		
 		private void crop_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (crop.Checked)
@@ -2088,8 +2088,8 @@ namespace MeGUI
             this.showScript();
         }
 
-		#endregion
-		#region comboboxes
+		
+		
 		private void resizeFilterType_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			this.showScript();
@@ -2109,8 +2109,8 @@ namespace MeGUI
         {
             this.showScript();
         }
-		#endregion
-		#region autocrop
+		
+		
 		/// <summary>
 		/// gets the autocrop values
 		/// we start at 25% of the video, then advance by 5% and analyze 10 frames in total
@@ -2202,14 +2202,14 @@ namespace MeGUI
 			suggestResolution_CheckedChanged(null, null);
             this.showScript();
 		}
-		#endregion
-        #region fps
+		
+        
         void fpsBox_ValueChanged(object sender, EventArgs e)
         {
             this.showScript();
         }
-        #endregion
-        #region properties
+        
+        
         private AviSynthSettings Settings
 		{
 			set
@@ -2259,8 +2259,8 @@ namespace MeGUI
             }
         }
 
-        #endregion
-        #region autodeint
+        
+        
         private void analyseButton_Click(object sender, EventArgs e)
         {
             if (input.Filename.Length > 0)
@@ -2340,7 +2340,7 @@ namespace MeGUI
             }
             catch (Exception) { } // If we get any errors, just ignore -- it's only a cosmetic thing.
         }
-        #endregion
+        
 
         private void resize_CheckedChanged(object sender, EventArgs e)
         {
@@ -2515,7 +2515,7 @@ namespace MeGUI
     public class AviSynthWindowTool : MeGUI.core.plugins.interfaces.ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -2535,15 +2535,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlR }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "AvsCreator"; }
         }
 
-        #endregion
+        
     }
 }

@@ -15,7 +15,7 @@ namespace BDInfo
 {
   public abstract class LanguageCodes
   {
-    public static List<KeyValuePair<string, string>> GetTopLanguages()
+    public static List<KeyValuePair<string, string> > GetTopLanguages()
     {
       return GetLanguages().Where(l =>
         l.Key == "chi" ||
@@ -34,10 +34,10 @@ namespace BDInfo
         l.Key == "swe").ToList();
     }
 
-    public static List<KeyValuePair<string, string>> GetLanguages()
+    public static List<KeyValuePair<string, string> > GetLanguages()
     {
       //did not use dictionary in case of duplicates
-      List<KeyValuePair<string, string>> langs = new List<KeyValuePair<string, string>>();
+      List<KeyValuePair<string, string> > langs = new List<KeyValuePair<string, string> >();
       langs.Add(new KeyValuePair<string, string>("abk", "Abkhazian"));
       langs.Add(new KeyValuePair<string, string>("ace", "Achinese"));
       langs.Add(new KeyValuePair<string, string>("ach", "Acoli"));

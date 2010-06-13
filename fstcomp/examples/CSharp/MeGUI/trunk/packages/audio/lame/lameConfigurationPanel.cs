@@ -37,7 +37,7 @@ namespace MeGUI.packages.audio.lame
             this.encodingMode.Items.Add(BitrateManagementMode.VBR);
             this.encodingMode.Items.Add(BitrateManagementMode.ABR);
         }
-		#region properties
+		
         protected override bool IsMultichanelSupported
         {
             get
@@ -75,8 +75,8 @@ namespace MeGUI.packages.audio.lame
                 encodingMode_SelectedIndexChanged(null, null);	            
 	        }
 	    }
-		#endregion
-		#region buttons
+		
+		
 		/// <summary>
 		/// handles entires into textfiels, blocks entry of non digit characters
 		/// </summary>
@@ -87,8 +87,8 @@ namespace MeGUI.packages.audio.lame
 			if (! char.IsDigit(e.KeyChar) && (int)Keys.Back != (int)e.KeyChar)
 				e.Handled = true;
 		}
-		#endregion
-		#region updown controls
+		
+		
 		private void encodingMode_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (encodingMode.SelectedIndex >= 0) // else it's bogus
@@ -106,9 +106,9 @@ namespace MeGUI.packages.audio.lame
 			}
 		}
 
-		#endregion
+		
 
-        #region Editable<MP3Settings> Members
+        
 
         MP3Settings Editable<MP3Settings>.Settings
         {
@@ -122,7 +122,7 @@ namespace MeGUI.packages.audio.lame
             }
         }
 
-        #endregion
+        
     }
 }
 

@@ -34,14 +34,14 @@ namespace MeGUI
 {
     public partial class VobSubIndexWindow : Form
     {
-        #region variables
+        
         private bool dialogMode = false;
         private bool configured = false;
         private MainForm mainForm;
         private VideoUtil vUtil;
         private JobUtil jobUtil;
-        #endregion
-        #region start / stop
+        
+        
         public VobSubIndexWindow(MainForm mainForm)
         {
             InitializeComponent();
@@ -54,8 +54,8 @@ namespace MeGUI
         {
             base.OnClosing(e);
         }
-        #endregion
-        #region button handlers
+        
+        
         private void queueButton_Click(object sender, EventArgs e)
         {
             if (Drives.ableToWriteOnThisDrive(Path.GetPathRoot(output.Filename)))
@@ -78,7 +78,7 @@ namespace MeGUI
                 MessageBox.Show("MeGUI cannot write on " + Path.GetPathRoot(output.Filename) +
                                 ". Please, select another output path.", "Configuration Incomplete", MessageBoxButtons.OK);
         }
-        #endregion
+        
         private void openVideo(string fileName)
         {
             input.Filename = fileName;
@@ -159,7 +159,7 @@ namespace MeGUI
     public class VobSubTool : ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -181,15 +181,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlN }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "VobSubber"; }
         }
 
-        #endregion
+        
     }
 }

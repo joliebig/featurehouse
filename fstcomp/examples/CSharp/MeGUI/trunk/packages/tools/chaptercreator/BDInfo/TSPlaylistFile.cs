@@ -28,8 +28,8 @@ namespace BDInfo
             new Dictionary<ushort, TSStream>();
         public List<TSStreamClip> StreamClips =
             new List<TSStreamClip>();
-        public List<Dictionary<ushort, TSStream>> AngleStreams =
-            new List<Dictionary<ushort, TSStream>>();
+        public List<Dictionary<ushort, TSStream> > AngleStreams =
+            new List<Dictionary<ushort, TSStream> >();
         public int AngleCount = 0;
       /*
         public List<TSStream> SortedStreams = 
@@ -186,10 +186,10 @@ namespace BDInfo
 
             try
             {
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "Scanning {0}...", Name));
-#endif
+
                 Streams.Clear();
                 StreamClips.Clear();
 
@@ -210,10 +210,10 @@ namespace BDInfo
                         "Playlist {0} has an unknown file type {1}.",
                         FileInfo.Name, FileType));
                 }
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "\tFileType: {0}", FileType));
-#endif
+
                 int playlistIndex =
                     ((int)data[8] << 24) +
                     ((int)data[9] << 16) +
@@ -234,10 +234,10 @@ namespace BDInfo
 
                 streamFileCount =
                     (((int)playlistData[2] << 8) + (int)playlistData[3]);
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "\tStreamFileCount: {0}", streamFileCount));
-#endif
+
                 List<TSStreamClip> chapterClips = new List<TSStreamClip>();
                 int streamFileOffset = 6;
                 for (int streamFileIndex = 0; 
@@ -309,14 +309,14 @@ namespace BDInfo
                     streamClip.RelativeTimeOut = streamClip.RelativeTimeIn + streamClip.Length;
                     StreamClips.Add(streamClip);
                     chapterClips.Add(streamClip);
-#if DEBUG
+
                     Debug.WriteLine(string.Format(
                         "\t{0} {1} {2} {3}", 
                         streamClip.Name,
                         streamClip.TimeIn.TotalSeconds,
                         streamClip.TimeOut.TotalSeconds,
                         streamClip.Length.TotalSeconds));
-#endif
+
                     if ((playlistData[streamFileOffset + 12] & 0x10) > 0)
                     {
                         int angleCount = playlistData[streamFileOffset + 34];
@@ -372,10 +372,10 @@ namespace BDInfo
                             angleClip.RelativeTimeOut = streamClip.RelativeTimeOut;
                             angleClip.Length = streamClip.Length;
                             StreamClips.Add(angleClip);
-#if DEBUG
+
                             Debug.WriteLine(string.Format(
                                 "\t\t{0}", angleFileName));
-#endif
+
                         }
                     }
                     streamFileOffset += 2 +
@@ -433,22 +433,22 @@ namespace BDInfo
                             streamClip.Chapters.Add(chapterSeconds);
                             this.Chapters.Add(relativeSeconds);
                         }
-#if DEBUG
+
                         Debug.WriteLine(string.Format(
                             "\t{0} {1} {2}", 
                             chapterIndex, 
                             streamClip.Name, 
                             chapter.TotalSeconds));
-#endif
+
                     }
                     chapterOffset += 14;
                 }
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "\tLength: {0}", Length.TotalSeconds));
                 Debug.WriteLine(string.Format(
                     "\tAngleLength: {0}", AngleLength.TotalSeconds));
-#endif
+
                 //LoadStreamClips();
                 IsInitialized = true;
             }

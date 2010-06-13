@@ -59,7 +59,7 @@ namespace MeGUI
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool lpSystemInfo);
 
-        #region Private Constants
+        
         private const int VER_NT_WORKSTATION = 1;
         private const int VER_NT_DOMAIN_CONTROLLER = 2;
         private const int VER_NT_SERVER = 3;
@@ -79,9 +79,9 @@ namespace MeGUI
         private const int PRODUCT_BUSINESS = 0x00000006;
         private const int PRODUCT_BUSINESS_N = 0x00000010;
         private const int PRODUCT_STARTER = 0x0000000B;
-        #endregion
+        
 
-        #region Public Methods
+        
         /// <summary>
         /// Determines whether the specified process is running under WOW64. 
         /// </summary>
@@ -287,10 +287,10 @@ namespace MeGUI
                         }
                 }
             }
-#if x64
+
             osName += " x64";
-#endif
-#if x86
+
+
             if (x64Detection)
             {
                 if (!isWow64())
@@ -298,7 +298,7 @@ namespace MeGUI
                 else
                     osName += " x64";
             }
-#endif
+
             return osName;
         }
 
@@ -540,9 +540,9 @@ namespace MeGUI
             }
             return res;
         }
-        #endregion
+        
 
-        #region Public Properties
+        
         /// <summary>
         /// Gets the full version of the operating system running on this computer.
         /// </summary>
@@ -597,6 +597,6 @@ namespace MeGUI
                 return Environment.OSVersion.Version.Revision;
             }
         }
-        #endregion
+        
     }
 }

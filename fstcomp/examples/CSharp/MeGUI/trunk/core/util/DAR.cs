@@ -136,7 +136,7 @@ namespace MeGUI.core.util
     class DarConverter : TypeConverter
     {
 
-        #region SimpleTypeConverter<Named<Dar>> Members
+        
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -161,7 +161,7 @@ namespace MeGUI.core.util
             throw new Exception();
         }
 
-        #endregion
+        
     }
 
     public struct Sar

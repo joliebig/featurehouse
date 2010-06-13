@@ -56,7 +56,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "AviSynthAudioEncoder");
             return null;
         }
 
-        #region fields
+        
         private Process _encoderProcess;
         private string _avisynthAudioScript;
         private string _encoderExecutablePath;
@@ -83,9 +83,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "AviSynthAudioEncoder");
 
         private List<string> _tempFiles = new List<string>();
         private readonly string _uniqueId = Guid.NewGuid().ToString("N");
-        #endregion
+        
 
-        #region methods
+        
 
         private void writeTempTextFile(string filePath, string text)
         {
@@ -494,9 +494,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "AviSynthAudioEncoder");
             _encoderThread = null;
         }
 
-        #endregion
+        
 
-        #region IJobProcessor Members
+        
 
 
         public void setup(Job job, StatusUpdate su, LogItem log)
@@ -1109,6 +1109,6 @@ function x_upmixC" + id + @"(clip stereo)
         }
 
         public event JobProcessingStatusUpdateCallback StatusUpdate;
-        #endregion
+        
     }
 }

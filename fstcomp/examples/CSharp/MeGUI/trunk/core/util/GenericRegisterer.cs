@@ -41,14 +41,14 @@ namespace MeGUI
             this.Data = t;
         }
 
-        #region IIDable Members
+        
         private string id;
         string IIDable.ID
         {
             get { return id; }
         }
 
-        #endregion
+        
     }
 
     public class GenericRegisterer<TType>

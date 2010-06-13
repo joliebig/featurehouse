@@ -37,7 +37,7 @@ namespace MeGUI.packages.audio.waac
             comboBox2.Items.AddRange(EnumProxy.CreateArray(typeof(WinAmpAACSettings.AacStereoMode)));
             vBitrate_ValueChanged(null, null);
         }
-        #region properties
+        
         /// <summary>
         /// gets / sets the settings that are being shown in this configuration dialog
         /// </summary>
@@ -61,7 +61,7 @@ namespace MeGUI.packages.audio.waac
                 vBitrate.Value = Math.Max(Math.Min(nas.Bitrate, vBitrate.Maximum), vBitrate.Minimum);
             }
         }
-        #endregion
+        
 
         private void vBitrate_ValueChanged(object sender, EventArgs e)
         {
@@ -70,7 +70,7 @@ namespace MeGUI.packages.audio.waac
 
 
 
-        #region Editable<WinAmpAACSettings> Members
+        
 
         WinAmpAACSettings Editable<WinAmpAACSettings>.Settings
         {
@@ -84,7 +84,7 @@ namespace MeGUI.packages.audio.waac
             }
         }
 
-        #endregion
+        
     }
 }
 

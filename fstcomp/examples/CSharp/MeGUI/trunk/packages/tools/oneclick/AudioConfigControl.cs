@@ -35,7 +35,7 @@ namespace MeGUI.packages.tools.oneclick
     {
         MainForm mainForm = MainForm.Instance;
 
-        #region Audio profiles
+        
         private void initAudioHandler()
         {
             audioProfile.Manager = mainForm.Profiles;
@@ -45,7 +45,7 @@ namespace MeGUI.packages.tools.oneclick
         {
             raiseEvent();
         }
-        #endregion
+        
 
         private void ProfileChanged(object o, EventArgs e)
         {

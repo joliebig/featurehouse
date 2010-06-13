@@ -20,7 +20,7 @@ namespace MeGUI.core.gui
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -73,7 +73,7 @@ namespace MeGUI.core.gui
 
         }
 
-        #endregion
+        
 
         protected System.Windows.Forms.ComboBox comboBox1;
         protected System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

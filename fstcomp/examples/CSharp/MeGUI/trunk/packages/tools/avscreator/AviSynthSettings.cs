@@ -174,7 +174,7 @@ namespace MeGUI
             this.DSS2 = dss2;
 		}
 
-        #region GenericSettings Members
+        
 
 
         public string[] RequiredFiles
@@ -187,6 +187,6 @@ namespace MeGUI
             get { return new string[0]; }
         }
 
-        #endregion
+        
     }
 }

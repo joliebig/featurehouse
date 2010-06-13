@@ -52,7 +52,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MP4BoxMuxer");
             trackNumber = 0;
             lastLine = "";
         }
-        #region setup/start overrides
+        
         protected override void checkJobIO()
         {
             this.numberOfAudioTracks = job.Settings.AudioStreams.Count;
@@ -61,9 +61,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "MP4BoxMuxer");
             base.checkJobIO();
         }
 
-        #endregion
+        
 
-        #region line processing
+        
         /// <summary>
         /// looks at a line and returns its type
         /// </summary>
@@ -123,8 +123,8 @@ new JobProcessorFactory(new ProcessorFactory(init), "MP4BoxMuxer");
             }
             return isEmpty;
         }
-        #endregion
-        #region additional stuff
+        
+        
         /// <summary>
         /// compiles mp4 overhead statistics and dumps them to the log and a logfile
         /// </summary>
@@ -151,7 +151,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MP4BoxMuxer");
                 log.LogValue("An exception occurred when printing mux statistics", e, ImageType.Warning);
             }
         }
-        #endregion
+        
 
         public override void ProcessLine(string line, StreamType stream)
         {

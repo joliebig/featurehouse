@@ -20,7 +20,7 @@ namespace MeGUI.packages.audio.ffac3
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -89,7 +89,7 @@ namespace MeGUI.packages.audio.ffac3
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

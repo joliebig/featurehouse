@@ -35,7 +35,7 @@ namespace MeGUI.packages.audio.audx
             InitializeComponent();
             comboBox1.Items.AddRange(EnumProxy.CreateArray(typeof(AudXSettings.QualityMode)));
         }
-        #region properties
+        
         protected override bool IsMultichanelRequed
         {
             get
@@ -61,9 +61,9 @@ namespace MeGUI.packages.audio.audx
                 comboBox1.SelectedItem = EnumProxy.Create(nas.Quality);
             }
         }
-        #endregion
+        
 
-        #region Editable<AudXSettings> Members
+        
 
         AudXSettings Editable<AudXSettings>.Settings
         {
@@ -77,7 +77,7 @@ namespace MeGUI.packages.audio.audx
             }
         }
 
-        #endregion
+        
     }
 }
 

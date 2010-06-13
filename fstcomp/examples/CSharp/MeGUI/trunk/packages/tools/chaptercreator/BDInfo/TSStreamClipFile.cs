@@ -39,10 +39,10 @@ namespace BDInfo
 
             try
             {
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "Scanning {0}...", Name));
-#endif
+
                 Streams.Clear();
 
                 fileStream = File.OpenRead(FileInfo.FullName);
@@ -62,10 +62,10 @@ namespace BDInfo
                         "Clip info file {0} has an unknown file type {1}.",
                         FileInfo.Name, FileType));
                 }
-#if DEBUG                
+
                 Debug.WriteLine(string.Format(
                     "\tFileType: {0}", FileType));
-#endif
+
                 int clipIndex =
                     ((int)data[12] << 24) +
                     ((int)data[13] << 16) +
@@ -82,10 +82,10 @@ namespace BDInfo
                 Array.Copy(data, clipIndex + 4, clipData, 0, clipData.Length);
 
                 int streamCount = clipData[8];
-#if DEBUG
+
                 Debug.WriteLine(string.Format(
                     "\tStreamCount: {0}", streamCount));
-#endif
+
                 int streamOffset = 10;
                 for (int streamIndex = 0;
                     streamIndex < streamCount;
@@ -119,7 +119,7 @@ namespace BDInfo
                             ((TSVideoStream)stream).VideoFormat = videoFormat;
                             ((TSVideoStream)stream).AspectRatio = aspectRatio;
                             ((TSVideoStream)stream).FrameRate = frameRate;
-#if DEBUG
+
                             Debug.WriteLine(string.Format(
                                 "\t{0} {1} {2} {3} {4}",
                                 PID,
@@ -127,7 +127,7 @@ namespace BDInfo
                                 videoFormat,
                                 frameRate,
                                 aspectRatio));
-#endif
+
                         }
                         break;
 
@@ -159,7 +159,7 @@ namespace BDInfo
                             ((TSAudioStream)stream).ChannelLayout = channelLayout;
                             ((TSAudioStream)stream).SampleRate = TSAudioStream.ConvertSampleRate(sampleRate);
                             ((TSAudioStream)stream).LanguageCode = languageCode;
-#if DEBUG
+
                             Debug.WriteLine(string.Format(
                                 "\t{0} {1} {2} {3} {4}",
                                 PID,
@@ -167,7 +167,7 @@ namespace BDInfo
                                 languageCode,
                                 channelLayout,
                                 sampleRate));
-#endif
+
                         }
                         break;
 
@@ -182,13 +182,13 @@ namespace BDInfo
 
                             stream = new TSGraphicsStream();
                             stream.LanguageCode = languageCode;
-#if DEBUG
+
                             Debug.WriteLine(string.Format(
                                 "\t{0} {1} {2}",
                                 PID,
                                 streamType,
                                 languageCode));
-#endif
+
                         }
                         break;
 
@@ -199,13 +199,13 @@ namespace BDInfo
                                 languageBytes, 0, languageBytes.Length);
                             string languageCode =
                                 ASCIIEncoding.ASCII.GetString(languageBytes);
-#if DEBUG
+
                             Debug.WriteLine(string.Format(
                                 "\t{0} {1} {2}",
                                 PID,
                                 streamType,
                                 languageCode));
-#endif
+
                             stream = new TSTextStream();
                             stream.LanguageCode = languageCode;
                         }

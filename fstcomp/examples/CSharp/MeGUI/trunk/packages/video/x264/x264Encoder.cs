@@ -45,14 +45,14 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             : base()
         {
             executable = encoderPath;
-#if x86
+
             if (OSInfo.isWow64())
             {
                 string vfw4x264Path =  System.IO.Path.Combine(System.IO.Path.GetDirectoryName(encoderPath), "vfw4x264.exe");
                 if (System.IO.File.Exists(vfw4x264Path))
                     executable = vfw4x264Path;
             }
-#endif
+
         }
 
         public override string GetFrameString(string line, StreamType stream)
@@ -86,7 +86,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             StringBuilder sb = new StringBuilder();
             CultureInfo ci = new CultureInfo("en-us");
 
-            #region main tab
+            
             ///<summary>
             /// x264 Main Tab Settings
             ///</summary>
@@ -193,9 +193,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             if (!xs.CustomEncoderOptions.Contains("--threads"))
                 if (xs.NbThreads > 0)
                     sb.Append("--threads " + xs.NbThreads + " ");
-            #endregion
+            
 
-            #region frame-type tab
+            
             ///<summary>
             /// x264 Frame-Type Tab Settings
             ///</summary>
@@ -374,9 +374,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             if (!xs.CustomEncoderOptions.Contains("--slice-max-mbs "))
                 if (xs.MaxSliceSyzeMBs != 0)
                     sb.Append("--slice-max-mbs " + xs.MaxSliceSyzeMBs + " ");
-            #endregion
+            
 
-            #region rc tab
+            
             ///<summary>
             /// x264 Rate Control Tab Settings
             /// </summary>
@@ -544,9 +544,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
                 }
             }
 
-            #endregion
+            
 
-            #region analysis tab
+            
             ///<summary>
             /// x264 Analysis Tab Settings
             /// </summary>
@@ -792,9 +792,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
                 if (xs.X264Nalhrd)
                     sb.Append("--nal-hrd vbr ");
 
-            #endregion
+            
 
-            #region misc tab
+            
             ///<summary>
             /// x264 Misc Tab Settings
             /// </summary>
@@ -824,9 +824,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             if (!xs.CustomEncoderOptions.Equals("")) // add custom encoder options
                 sb.Append(xs.CustomEncoderOptions + " ");
 
-            #endregion
+            
 
-            #region zones
+            
             if (zones != null && zones.Length > 0 && xs.CreditsQuantizer >= 1.0M)
             {
                 sb.Append("--zones ");
@@ -848,9 +848,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
                 sb.Remove(sb.Length - 1, 1);
                 sb.Append(" ");
             }
-            #endregion
+            
 
-            #region input
+            
             if (!xs.CustomEncoderOptions.Contains("--sar "))
             {
                 if (d.HasValue)
@@ -859,9 +859,9 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
                     sb.Append("--sar " + s.X + ":" + s.Y + " ");
                 }
             }
-            #endregion
+            
 
-            #region output
+            
             
             //add the rest of the commandline regarding the output
             if (xs.EncodingMode == 2 || xs.EncodingMode == 5)
@@ -869,7 +869,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "x264Encoder");
             else
                 sb.Append("--output " + "\"" + output + "\" ");
             sb.Append("\"" + input + "\" ");
-            #endregion
+            
 
             return sb.ToString();
         }

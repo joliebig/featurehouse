@@ -45,7 +45,7 @@ namespace MeGUI.packages.tools.hdbdextractor
         string dummyInput = "";
         bool seamless = false;
 
-        #region Windows Form Designer generated code
+        
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.GroupBox InputGroupBox;
         private System.Windows.Forms.TextBox FolderInputTextBox;
@@ -665,7 +665,7 @@ namespace MeGUI.packages.tools.hdbdextractor
             this.PerformLayout();
 
         }
-        #endregion
+        
 
         public HdBdStreamExtractor(MainForm info)
         {
@@ -704,7 +704,7 @@ namespace MeGUI.packages.tools.hdbdextractor
             ExtractCompleted
         }
 
-        #region backgroundWorker
+        
         void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             eac3toArgs args = (eac3toArgs)e.Argument;
@@ -1023,7 +1023,7 @@ namespace MeGUI.packages.tools.hdbdextractor
                         return;
                     }
 
-                    #region Errors
+                    
                     // Source file not found
                     // Source file "x:\" not found.
                     else if (Regex.IsMatch(data, "^Source file \".*\" not found.$", RegexOptions.Compiled))
@@ -1050,7 +1050,7 @@ namespace MeGUI.packages.tools.hdbdextractor
                         WriteToLog(data);
                         return;
                     }
-                    #endregion
+                    
 
                     // Unknown line
                     else
@@ -1060,9 +1060,9 @@ namespace MeGUI.packages.tools.hdbdextractor
                 }
             }
         }
-        #endregion
+        
 
-        #region GUI
+        
         delegate void SetToolStripProgressBarValueCallback(int value);
         private void SetToolStripProgressBarValue(int value)
         {
@@ -1571,13 +1571,13 @@ namespace MeGUI.packages.tools.hdbdextractor
                 }
             }
         }
-        #endregion
+        
     }
 
     public class HdBdExtractorTool : ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -1594,15 +1594,15 @@ namespace MeGUI.packages.tools.hdbdextractor
             get { return new Shortcut[] { Shortcut.CtrlF7}; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return Name; }
         }
 
-        #endregion
+        
     }
 }

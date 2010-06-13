@@ -47,7 +47,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MencoderEncoder");
             executable = encoderPath;
         }
 
-        #region commandline generation
+        
         protected override string Commandline
         {
             get
@@ -197,7 +197,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "MencoderEncoder");
             }
             return sb.ToString();
         }
-        #endregion
+        
 
         public override string GetFrameString(string line, StreamType stream)
         {

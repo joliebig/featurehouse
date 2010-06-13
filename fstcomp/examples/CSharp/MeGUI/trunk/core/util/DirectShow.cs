@@ -25,7 +25,7 @@ using System.Text;
 namespace MeGUI
 {
 
-#region DS Core
+
     [StructLayout(LayoutKind.Sequential), ComVisible(false)]
     public class DsOptInt64
     {
@@ -173,11 +173,11 @@ namespace MeGUI
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IMediaFilter
     {
-#region "IPersist Methods"
+
         [PreserveSig]
         int GetClassID(
             [Out]									out Guid pClassID);
-        #endregion
+        
 
         [PreserveSig]
         int Stop();
@@ -205,13 +205,13 @@ namespace MeGUI
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IBaseFilter
     {
-#region "IPersist Methods"
+
         [PreserveSig]
         int GetClassID(
             [Out]									out Guid pClassID);
-        #endregion
+        
 
-#region "IMediaFilter Methods"
+
         [PreserveSig]
         int Stop();
 
@@ -229,7 +229,7 @@ namespace MeGUI
 
         [PreserveSig]
         int GetSyncSource([Out] out IReferenceClock pClock);
-        #endregion
+        
 
         [PreserveSig]
         int EnumPins(
@@ -486,7 +486,7 @@ namespace MeGUI
             [In, MarshalAs(UnmanagedType.LPStruct)]			DsOptInt64 pTimeStart,
             [In, MarshalAs(UnmanagedType.LPStruct)]			DsOptInt64 pTimeEnd);
     }
-    #endregion
+    
 
     [ComVisible(true), ComImport,
 Guid("93E5A4E0-2D50-11d2-ABFA-00A0C9C6E38D"),
@@ -546,7 +546,7 @@ Guid("56a868a9-0ad4-11ce-b03a-0020af0ba770"),
 InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IGraphBuilder
     {
-#region "IFilterGraph Methods"
+
         [PreserveSig]
         int AddFilter(
             [In] IBaseFilter pFilter,
@@ -575,7 +575,7 @@ InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
 
         [PreserveSig]
         int SetDefaultSyncSource();
-        #endregion
+        
 
         [PreserveSig]
         int Connect([In] IPin ppinOut, [In] IPin ppinIn);

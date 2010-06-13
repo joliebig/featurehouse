@@ -54,7 +54,7 @@ namespace MeGUI
         private bool isOrHasDownloadedUpgradeData = false;
         private string ServerAddress;
 
-        #region Classes
+        
 
         public abstract class iUpgradeable
         {
@@ -100,7 +100,7 @@ namespace MeGUI
                     case "x264":
                         {
                             arrPath.Add(MainForm.Instance.Settings.X264Path);
-#if x86
+
                             strPath = System.IO.Path.GetDirectoryName(MainForm.Instance.Settings.X264Path);
                             if (OSInfo.isWow64())
                             { 
@@ -108,7 +108,7 @@ namespace MeGUI
                                 arrPath.Add(System.IO.Path.Combine(strPath, "avs4x264.exe"));
                                 arrPath.Add(System.IO.Path.Combine(strPath, "x264_64.exe"));
                             }
-#endif
+
                             break;
                         }
                     case "mencoder": arrPath.Add(MainForm.Instance.Settings.MencoderPath); break;
@@ -709,7 +709,7 @@ namespace MeGUI
                 }
             }
 
-            #region IComparable<Version> Members
+            
 
             public int CompareTo(Version other)
             {
@@ -717,7 +717,7 @@ namespace MeGUI
             }
 
 
-            #endregion
+            
         }
         public class Versions : CollectionBase
         {
@@ -743,8 +743,8 @@ namespace MeGUI
                 this.InnerList.Remove(item);
             }
         }
-        #endregion
-        #region Delegates and delegate methods
+        
+        
         delegate void BeginParseUpgradeXml(XmlNode node, XmlNode groupNode, string path);
         private delegate void SetLogText();
         private delegate void SetListView(ListViewItem item);
@@ -815,8 +815,8 @@ namespace MeGUI
                 listview.Items.Clear();
             }
         }
-        #endregion
-        #region Enums
+        
+        
         public enum ErrorState
         {
             FileNotOnServer,
@@ -830,8 +830,8 @@ namespace MeGUI
             CouldNotUnzip,
             InvalidXML
         }
-        #endregion
-        #region con/de struction
+        
+        
         private void UpdateWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveSettings();
@@ -880,8 +880,8 @@ namespace MeGUI
                 VistaStuff.SetWindowTheme(listViewDetails.Handle, "explorer", null);
             }
         }
-        #endregion
-        #region load and save
+        
+        
         private void LoadSettings()
         {
             string path = Path.Combine(Application.StartupPath, "AutoUpdate.xml");
@@ -928,8 +928,8 @@ namespace MeGUI
                 return;
             }
         }
-        #endregion
-        #region getting update data
+        
+        
         public void GetUpdateData(bool wait)
         {
             if (!isOrHasDownloadedUpgradeData)
@@ -971,12 +971,12 @@ namespace MeGUI
 
             if (bUseLocalXMLFile)
             {
-#if x86
+
                 string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade.xml");
-#endif
-#if x64
+
+
                 string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade_x64.xml");
-#endif
+
                 if (File.Exists(strLocalUpdateXML))
                 {
                     AddTextToLog("Retrieving local update file...");
@@ -1015,12 +1015,12 @@ namespace MeGUI
                 try
                 {
                     AddTextToLog("Retrieving update file from server...");
-#if x86
+
                     data = serverClient.DownloadString(ServerAddress + "upgrade.xml?offCache=" + System.Guid.NewGuid().ToString("N"));
-#endif
-#if x64
+
+
                     data = serverClient.DownloadString(ServerAddress + "upgrade_x64.xml?offCache=" + System.Guid.NewGuid().ToString("N"));
-#endif
+
                     AddTextToLog("File downloaded successfully...");
                 }
                 catch
@@ -1076,12 +1076,12 @@ namespace MeGUI
             }
             else
             {
-#if x86
+
                 string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade.xml");
-#endif
-#if x64
+
+
                 string strLocalUpdateXML = Path.Combine(Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath), "upgrade_x64.xml");
-#endif
+
                 if (File.Exists(strLocalUpdateXML))
                     File.Delete(strLocalUpdateXML);
             }
@@ -1194,12 +1194,12 @@ namespace MeGUI
 
             try
             {
-#if x86
+
                 if (node.Attributes["platform"].Value.Equals("x64"))
-#endif
-#if x64
+
+
                 if (node.Attributes["platform"].Value.Equals("x86"))
-#endif
+
                     return;
             }
             catch (Exception) { }
@@ -1273,8 +1273,8 @@ namespace MeGUI
             if (!fileAlreadyAdded)
                 upgradeData.Add(file);
         }
-        #endregion
-        #region GUI
+        
+        
         private void treeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
             DisplayItems(e.Node.Name);
@@ -1385,9 +1385,9 @@ namespace MeGUI
                 updateThread.Start();
             }
         }
-        #endregion
-        #region updating
-        private void InstallFiles(SortedDictionary<uint, List<iUpgradeable>> groups)
+        
+        
+        private void InstallFiles(SortedDictionary<uint, List<iUpgradeable> > groups)
         {
             continueUpdate = true;
             int currentFile = 1; //the first file we update is file 1.
@@ -1548,7 +1548,7 @@ namespace MeGUI
         {
 
             // Sort the files to download according to their install priority
-            SortedDictionary<uint, List<iUpgradeable>> groups = new SortedDictionary<uint, List<iUpgradeable>>();
+            SortedDictionary<uint, List<iUpgradeable> > groups = new SortedDictionary<uint, List<iUpgradeable> >();
             foreach (iUpgradeable file in upgradeData)
             {
                 if (file.DownloadChecked)
@@ -1804,7 +1804,7 @@ namespace MeGUI
     public class UpdateOptions : MeGUI.core.plugins.interfaces.IOption
     {
 
-        #region IOption Members
+        
 
         public string Name
         {
@@ -1822,16 +1822,16 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlU }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "update_window"; }
         }
 
-        #endregion
+        
     }
 
     public class FileNotRegisteredYetException : MeGUIException
@@ -1844,5 +1844,5 @@ namespace MeGUI
             this.name = name;
         }
     }
-        #endregion
+        
 }

@@ -32,14 +32,14 @@ namespace MeGUI.packages.video.snow
 {
     public partial class snowConfigurationPanel : MeGUI.core.details.video.VideoConfigurationPanel, Editable<snowSettings>
     {
-        #region start / stop
+        
         public snowConfigurationPanel()
             : base()
         {
             InitializeComponent();
         }
-        #endregion
-        #region adjustments
+        
+        
 
         private void doCheckBoxAdjustments()
         {
@@ -94,8 +94,8 @@ namespace MeGUI.packages.video.snow
             }
 
         }    
-        #endregion
-        #region codec-specific overload functions
+        
+        
         protected override string getCommandline()
         {
             return mencoderEncoder.genSnowCommandline("input", "output", (snowSettings)Settings, null);
@@ -189,8 +189,8 @@ namespace MeGUI.packages.video.snow
                 this.logfile.Text = ss.Logfile;
             }
         }
-        #endregion
-        #region events
+        
+        
         private void updateEvent(object sender, EventArgs e)
         {
             genericUpdate();
@@ -208,7 +208,7 @@ namespace MeGUI.packages.video.snow
                 this.showCommandLine();
             }
         }
-        #endregion
+        
     }
 }
 

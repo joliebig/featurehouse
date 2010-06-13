@@ -35,7 +35,7 @@ namespace MeGUI
 	/// </summary>
 	public class FileIndexerWindow : System.Windows.Forms.Form
 	{ 
-		#region variables
+		
         private D2VIndexJob lastJob = null;
         
         private enum IndexType
@@ -90,8 +90,8 @@ namespace MeGUI
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		#endregion
-		#region start / stop
+		
+		
 		public void setConfig(string input, string projectName, int demuxType,
             bool showCloseOnQueue, bool closeOnQueue, bool loadOnComplete, bool updateMode)
 		{
@@ -234,8 +234,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -626,8 +626,8 @@ namespace MeGUI
             this.PerformLayout();
 
 		}
-		#endregion
-		#region buttons
+		
+		
 		private void pickOutputButton_Click(object sender, System.EventArgs e)
 		{
 			if (saveProjectDialog.ShowDialog() == DialogResult.OK)
@@ -900,8 +900,8 @@ namespace MeGUI
                 MessageBox.Show("You must select the input and output file to continue",
                        "Configuration incomplete", MessageBoxButtons.OK);
 		}
-		#endregion
-		#region helper methods
+		
+		
 		private void checkIndexIO()
 		{
 			configured = (!input.Filename.Equals("") && !output.Text.Equals(""));
@@ -968,8 +968,8 @@ namespace MeGUI
         {
             return new FFMSIndexJob(this.input.Filename, loadOnComplete.Checked);
         }
-		#endregion
-		#region properties
+		
+		
 		/// <summary>
 		/// gets the index job created from the current configuration
 		/// </summary>
@@ -987,7 +987,7 @@ namespace MeGUI
         {
             get { return lastJob != null; }
         }
-        #endregion
+        
 
         private void rbtracks_CheckedChanged(object sender, EventArgs e)
         {
@@ -1021,7 +1021,7 @@ namespace MeGUI
     public class D2VCreatorTool : MeGUI.core.plugins.interfaces.ITool
     {
 
-        #region ITool Members
+        
 
         public string Name
         {
@@ -1039,16 +1039,16 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.Ctrl2 }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "d2v_creator"; }
         }
 
-        #endregion
+        
     }
 
     public class d2vIndexJobPostProcessor

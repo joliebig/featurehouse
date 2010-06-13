@@ -54,7 +54,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "TSMuxer");
             this.executable = executablePath;
             lastLine = "";
         }
-        #region setup/start overrides
+        
         protected override void checkJobIO()
         {
             this.numberOfAudioTracks = job.Settings.AudioStreams.Count;
@@ -64,7 +64,7 @@ new JobProcessorFactory(new ProcessorFactory(init), "TSMuxer");
             base.checkJobIO();
         }
 
-        #endregion
+        
 
 
         protected override void setProjectedFileSize()

@@ -41,7 +41,7 @@ namespace MeGUI
 	public class JobUtil
     {
        
-        #region start/stop
+        
 		MainForm mainForm;
         AVCLevels al;
         string mbtreeFile = ".stats.mbtree";
@@ -50,9 +50,9 @@ namespace MeGUI
 			this.mainForm = mainForm;
             al = new AVCLevels();
         }
-        #endregion
-		#region job generation
-		#region single job generation
+        
+		
+		
         
         public VideoJob generateVideoJob(string input, string output, VideoCodecSettings settings, Dar? dar, Zone[] zones)
         {
@@ -252,8 +252,8 @@ namespace MeGUI
 
             return new SequentialChain(jobs.ToArray());
         }
-		#endregion
-		#region job preparation (aka multiple job generation)
+		
+		
 
         public bool AddVideoJobs(string movieInput, string movieOutput, VideoCodecSettings settings,
             int introEndFrame, int creditsStartFrame, Dar? dar, bool prerender, bool checkVideo, Zone[] zones)
@@ -392,9 +392,9 @@ namespace MeGUI
             job.Settings = oldJob.Settings.Clone();
             return job;
 		}
-		#endregion
-		#endregion
-		#region bitrate updates
+		
+		
+		
 		/// <summary>
 		/// updates the video bitrate of a video job with the given bitrate
 		/// in addition, the commandline is regenerated to reflect the bitrate change
@@ -405,8 +405,8 @@ namespace MeGUI
 		{
 			job.Settings.BitrateQuantizer = bitrate;
 		}
-		#endregion
-		#region input properties
+		
+		
 		/// <summary>
 		/// gets the number of frames and framerate from an avisynth script
 		/// </summary>
@@ -525,8 +525,8 @@ namespace MeGUI
 			bool succ = getInputProperties(out retval, out framerate, path);
 			return framerate;
 		}
-		#endregion
-		#region zones
+		
+		
 		/// <summary>
 		/// takes a series of non overlapping zones and adds zones with weight 1.0 in between
 		/// this is used for xvid which doesn't know zone end frames
@@ -749,6 +749,6 @@ namespace MeGUI
 			zones = newZones;
 			return true;
 		}
-		#endregion
+		
 	}
 }

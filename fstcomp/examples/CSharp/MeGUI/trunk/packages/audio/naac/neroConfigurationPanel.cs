@@ -39,10 +39,10 @@ namespace MeGUI.packages.audio.naac
         private ComboBox comboBox1;
         private Label label1;
         public RadioButton rbtnABR;
-		#region variables
+		
 
-        #endregion
-        #region start / stop
+        
+        
         public neroConfigurationPanel():base()
 		{
 			//
@@ -55,8 +55,8 @@ namespace MeGUI.packages.audio.naac
 		}
 
 
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -182,8 +182,8 @@ namespace MeGUI.packages.audio.naac
             this.ResumeLayout(false);
 
 		}
-		#endregion
-		#region properties
+		
+		
 		/// <summary>
 		/// gets / sets the settings that are being shown in this configuration dialog. These will be added to by the base class
 		/// </summary>
@@ -211,7 +211,7 @@ namespace MeGUI.packages.audio.naac
                 comboBox1.SelectedItem = EnumProxy.Create(nas.Profile);
 			}
 		}
-		#endregion
+		
 
         private void rbtnABR_CheckedChanged(object sender, EventArgs e)
         {
@@ -233,7 +233,7 @@ namespace MeGUI.packages.audio.naac
             rbtnVBR.Text = String.Format("Variable Bitrate (Q={0}) ", q);
         }
 
-        #region Editable<NeroAACSettings> Members
+        
 
         NeroAACSettings Editable<NeroAACSettings>.Settings
         {
@@ -247,7 +247,7 @@ namespace MeGUI.packages.audio.naac
             }
         }
 
-        #endregion
+        
     }
 }
 

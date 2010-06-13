@@ -190,7 +190,7 @@ namespace MeGUI
             return supportedContainers;
         }
         
-        #region private, implementation
+        
         /// <summary>
         /// Finds the best mux path if some of the inputs have not yet been
         /// produced (they are yet to be encoded). When this is the case,
@@ -422,7 +422,7 @@ namespace MeGUI
             }
             return comparer.GetBestMuxPath(allMuxPaths);
         }
-        #endregion
+        
     }
     public struct MuxPathLeg
     {
@@ -430,7 +430,7 @@ namespace MeGUI
         public List<MuxableType> handledInputTypes;
         public List<MuxableType> unhandledInputTypes; // those remain for the next leg
     }
-    #region muxer providers
+    
     public class MP4BoxMuxerProvider : MuxerProvider
     {
         
@@ -593,8 +593,8 @@ namespace MeGUI
         }
     }
 
-    #endregion
-    #region top level providers
+    
+    
     public abstract class MuxerProvider : IMuxing
     {
         protected List<VideoType> supportedVideoTypes;
@@ -627,7 +627,7 @@ namespace MeGUI
             videoInputFilter = audioInputFilter = subtitleInputFilter = "";
             this.id = id;
         }
-        #region IMuxing Members
+        
         public string ID
         {
             get
@@ -855,10 +855,10 @@ namespace MeGUI
         {
             return VideoUtil.GenerateCombinedFilter(supportedDeviceTypes.ToArray());
         }
-        #endregion
+        
     }
 
-    #region generic providers
+    
     public abstract class EncodingProvider<TCodec, TType, TEncoderType> : IEncoding<TCodec, TType, TEncoderType>
         where TType : OutputType
     {
@@ -875,7 +875,7 @@ namespace MeGUI
             supportedEncoderTypes = new List<TEncoderType>();
         }
 
-        #region IVideoEncoding Members
+        
 
         public List<TEncoderType> GetSupportedEncoderTypes()
         {
@@ -926,7 +926,7 @@ namespace MeGUI
         {
             return "AviSynth script files(*.avs)|*.avs";
         }
-        #endregion
+        
 
     }
 
@@ -934,10 +934,10 @@ namespace MeGUI
     public class AllEncoderProvider<TCodec, TType, TEncoderType>
         where TType : OutputType
     {
-        List<IEncoding<TCodec, TType, TEncoderType>> registeredEncoders;
+        List<IEncoding<TCodec, TType, TEncoderType> > registeredEncoders;
         public AllEncoderProvider()
         {
-            registeredEncoders = new List<IEncoding<TCodec, TType, TEncoderType>>();
+            registeredEncoders = new List<IEncoding<TCodec, TType, TEncoderType> >();
         }
         /// <summary>
         /// checks all available video encoders to see if one supports the desired video codec with the desired
@@ -1034,7 +1034,7 @@ namespace MeGUI
             this.registeredEncoders.Add(encoder);
         }
     }
-    #endregion
+    
 
     public class AudioEncodingProvider : EncodingProvider<AudioCodec, AudioType, AudioEncoderType>
     {
@@ -1078,8 +1078,8 @@ namespace MeGUI
             RegisterEncoder(new AftenEncodingProvider());
         }
     }
-    #endregion
-    #region video encoding providers
+    
+    
     public class XviDEncoderProvider : EncodingProvider<VideoCodec, VideoType, VideoEncoderType>
     {
         public XviDEncoderProvider()
@@ -1128,8 +1128,8 @@ namespace MeGUI
             return new mencoderEncoder(settings.MencoderPath);
         }
     }
-    #endregion
-    #region audio encoding providers
+    
+    
     public class WinAmpAACEncodingProvider : AudioEncodingProvider
     {
         public WinAmpAACEncodingProvider()
@@ -1233,5 +1233,5 @@ namespace MeGUI
         }
     }
 
-    #endregion
+    
 }

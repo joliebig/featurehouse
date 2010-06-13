@@ -39,7 +39,7 @@ namespace MeGUI
 	/// </summary>
 	public class ProgressWindow : System.Windows.Forms.Form
     {
-        #region variables
+        
 		public event AbortCallback Abort; // event fired if the abort button has been pressed
 		public event PriorityChangedCallback PriorityChanged; // event fired if the priority dropdown has changed
 		private System.Windows.Forms.Label currentVideoFrameLabel;
@@ -69,8 +69,8 @@ namespace MeGUI
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-        #endregion
-        #region start / stop
+        
+        
         /// <summary>
 		/// default constructor, initializes the GUI components
 		/// </summary>
@@ -117,8 +117,8 @@ namespace MeGUI
 			}
 			base.Dispose( disposing );
         }
-        #endregion
-        #region Windows Form Designer generated code
+        
+        
         /// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -401,8 +401,8 @@ namespace MeGUI
             this.PerformLayout();
 
 		}
-		#endregion
-        #region statusupdate processing
+		
+        
         /// <summary>
 		/// catches the StatusUpdate event fired from Form1 and updates the GUI accordingly
 		/// </summary>
@@ -449,8 +449,8 @@ namespace MeGUI
             }
             catch (Exception) { }
         }
-        #endregion
-        #region helper methods
+        
+        
         
         /// <summary>
 		/// calculates the remaining encoding time from the elapsed timespan and the percentage the job is done
@@ -492,8 +492,8 @@ namespace MeGUI
                 isSettingPriority = false;
             });
         }
-        #endregion
-        #region events
+        
+        
         /// <summary>
 		///  handles the abort button
 		///  fires an Abort() event to the main GUI, which looks up the encoder and makes it stop
@@ -536,8 +536,8 @@ namespace MeGUI
 			}
 			else return true;
  		}
-		#endregion
-        #region properties
+		
+        
         /// <summary>
 		/// gets / sets whether the user closed this window or if the system is closing it
 		/// </summary>
@@ -546,6 +546,6 @@ namespace MeGUI
 			get {return isUserClosing;}
 			set {isUserClosing = value;}
         }
-        #endregion
+        
     }
 }

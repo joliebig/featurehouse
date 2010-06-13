@@ -20,7 +20,7 @@ namespace MeGUI.core.gui
             base.Dispose(disposing);
         }
 
-        #region Component Designer generated code
+        
 
         /// <summary> 
         /// Required method for Designer support - do not modify 
@@ -298,7 +298,7 @@ namespace MeGUI.core.gui
 
         }
 
-        #endregion
+        
 
         private FileBar cuts;
         private System.Windows.Forms.Label label1;

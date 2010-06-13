@@ -35,7 +35,7 @@ namespace MeGUI
     public abstract class CommandlineJobProcessor<TJob> : IJobProcessor
         where TJob : Job
     {
-        #region variables
+        
         protected TJob job;
         protected DateTime startTime;
         protected bool isProcessing = false;
@@ -52,9 +52,9 @@ namespace MeGUI
         protected Thread readFromStdOutThread;
         protected List<string> tempFiles = new List<string>();
 
-        #endregion
+        
 
-        #region temp file utils
+        
         protected void writeTempTextFile(string filePath, string text)
         {
             using (Stream temp = new FileStream(filePath, System.IO.FileMode.Create))
@@ -84,7 +84,7 @@ namespace MeGUI
                 // Do Nothing
             }
         }
-        #endregion
+        
 
         protected virtual void checkJobIO()
         {
@@ -126,7 +126,7 @@ namespace MeGUI
             StatusUpdate(su);
         }
 
-        #region IVideoEncoder overridden Members
+        
 
         public void setup(Job job2, StatusUpdate su, LogItem log)
         {
@@ -276,8 +276,8 @@ namespace MeGUI
         }
 
 
-        #endregion
-        #region reading process output
+        
+        
         protected virtual void readStream(StreamReader sr, ManualResetEvent rEvent, StreamType str)
         {
             string line;
@@ -337,8 +337,8 @@ namespace MeGUI
                 stderrBuilder.AppendLine(line);
         }
 
-        #endregion
-        #region status updates
+        
+        
         public event JobProcessingStatusUpdateCallback StatusUpdate;
         protected void RunStatusCycle()
         {
@@ -358,6 +358,6 @@ namespace MeGUI
 
         protected virtual void doStatusCycleOverrides()
         { }
-        #endregion
+        
     }
 }

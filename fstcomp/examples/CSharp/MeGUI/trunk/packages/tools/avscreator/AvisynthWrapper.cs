@@ -121,7 +121,7 @@ namespace MeGUI
 	/// </summary>
 	public class AviSynthClip: IDisposable
 	{
-		#region PInvoke related stuff
+		
 		[StructLayout(LayoutKind.Sequential)]
 		struct AVSDLLVideoInfo
 		{
@@ -159,16 +159,16 @@ namespace MeGUI
         [DllImport("AvisynthWrapper", ExactSpelling = true, SetLastError = false, CharSet = CharSet.Ansi)]
         private static extern int dimzon_avs_getintvariable(IntPtr avs, string name, ref int val);
 
-		#endregion
+		
 
         private IntPtr _avs;
         private AVSDLLVideoInfo _vi;
         private AviSynthColorspace _colorSpace;
         private AudioSampleType _sampleType;
 
-#if dimzon
 
-        #region syncronization staff
+
+        
 
         private class EnvRef
         {
@@ -248,8 +248,8 @@ namespace MeGUI
         private EnvRef _avsEnv;
 
 
-        #endregion
-#endif
+        
+
 
         private string getLastError()
         {
@@ -259,7 +259,7 @@ namespace MeGUI
             return sb.ToString();
         }
 
-		#region Clip Properties
+		
 
         public bool HasVideo
         {
@@ -387,7 +387,7 @@ namespace MeGUI
         }
 
 
-		#endregion
+		
 
         public int GetIntVariable(string variableName, int defaultValue)
         {

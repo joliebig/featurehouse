@@ -40,7 +40,7 @@ namespace MeGUI
 		private StringBuilder sb;
 		private MatrixConfig currentConfig;
 
-		#region designer variables
+		
 		private System.Windows.Forms.ComboBox predefinedMatrix;
 		private System.Windows.Forms.Label predefinedMatrixLabel;
 		private System.Windows.Forms.TextBox mat1x1;
@@ -118,13 +118,13 @@ namespace MeGUI
 		private System.Windows.Forms.Button okButton;
 		private System.Windows.Forms.GroupBox operationsGroupbox;
 		private System.Windows.Forms.TextBox mat1x2;
-		#endregion
+		
         private MeGUI.core.gui.HelpButton helpButton1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
-		#region start/stop
+		
 		public QuantizerMatrixDialog()
 		{
 			//
@@ -172,7 +172,7 @@ namespace MeGUI
 			this.predefinedMatrix.SelectedIndex = 0;
 		}
 
-		#region Windows Form Designer generated code
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -1060,9 +1060,9 @@ namespace MeGUI
             this.PerformLayout();
 
 		}
-		#endregion
-		#endregion
-		#region loading & saving matrices
+		
+		
+		
 		public void blankMatrix()
 		{
 			mat1x5.Text = "0";
@@ -1405,8 +1405,8 @@ namespace MeGUI
 			}
 		}
 
-		#endregion
-		#region dropdowns
+		
+		
 		private void predefinedMatrix_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			doEvents = false; // block other event handlers until everything is set up
@@ -1476,8 +1476,8 @@ namespace MeGUI
 			}
 			doEvents = true;
 		}
-		#endregion
-		#region matrix size / type changing
+		
+		
 		private void matrixSize_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (doEvents)
@@ -1550,8 +1550,8 @@ namespace MeGUI
 				this.currentConfig = this.getCurrentConfig();
 			}
 		}
-		#endregion
-		#region enable/disable matrix
+		
+		
 		/// <summary>
 		/// enables all quantizer input fields
 		/// </summary>
@@ -1704,8 +1704,8 @@ namespace MeGUI
 			mat4x3.Enabled = false;
 			mat4x4.Enabled = false;
 		}
-		#endregion
-		#region helper methods
+		
+		
 		/// <summary>
 		/// converts a twodimensional matrix into a string that can be used for saving a matrix to file
 		/// </summary>
@@ -1786,8 +1786,8 @@ namespace MeGUI
 			return retval;
 		}
 
-		#endregion
-		#region loading / saving matrices for switching between size / type
+		
+		
 		/// <summary>
 		/// gets all the data from the GUI to identify which type of matrix we're currently looking at
 		/// </summary>
@@ -1881,8 +1881,8 @@ namespace MeGUI
 					this.I8x8 = this.getCurrentMatrix();
 			}
 		}
-		#endregion
-		#region loading / saving matrix from / to file
+		
+		
 		/// <summary>
 		/// saves the currently configured matrix to a file
 		/// </summary>
@@ -2013,20 +2013,20 @@ namespace MeGUI
 				}
 			}
 		}
-		#endregion
+		
 	}
-	#region helper structs
+	
 	public struct MatrixConfig
 	{
 		public int size;
 		public int type;
 		public bool onePerSize;
 	}
-	#endregion
+	
 
     public class CQMEditorTool : MeGUI.core.plugins.interfaces.ITool
     {
-        #region ITool Members
+        
 
         public string Name
         {
@@ -2043,15 +2043,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlQ }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "cqmEditor"; }
         }
 
-        #endregion
+        
     }
 }

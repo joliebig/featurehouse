@@ -37,27 +37,27 @@ namespace MeGUI.packages.tools.oneclick
     public partial class OneClickConfigPanel : UserControl, Editable<OneClickSettings>
     {
         private MainForm mainForm;
-        #region profiles
-        #region AVS profiles
+        
+        
         private void initAvsHandler()
         {
             // Init AVS handlers
             avsProfile.Manager = mainForm.Profiles;
         }
-        #endregion
-        #region Video profiles
+        
+        
         private void initVideoHandler()
         {
             videoProfile.Manager = mainForm.Profiles;
         }
-        #endregion
-        #region Audio profiles
+        
+        
         private void initAudioHandler()
         {
             audioProfile.Manager = mainForm.Profiles;
         }
-        #endregion
-        #endregion
+        
+        
         
         public OneClickConfigPanel() 
         {
@@ -73,7 +73,7 @@ namespace MeGUI.packages.tools.oneclick
             initVideoHandler();
         }
 
-        #region Gettable<OneClickSettings> Members
+        
 
         public OneClickSettings Settings
         {
@@ -115,7 +115,7 @@ namespace MeGUI.packages.tools.oneclick
             }
         }
 
-        #endregion
+        
 
         private void dontEncodeAudio_CheckedChanged(object sender, EventArgs e)
         {

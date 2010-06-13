@@ -20,7 +20,7 @@ namespace MeGUI.packages.tools.cutter
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -347,7 +347,7 @@ namespace MeGUI.packages.tools.cutter
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Button addZoneButton;

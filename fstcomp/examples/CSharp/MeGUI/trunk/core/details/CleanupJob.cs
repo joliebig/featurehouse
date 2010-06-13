@@ -102,7 +102,7 @@ namespace MeGUI.core.details
             return i;
         }
 
-        #region IJobProcessor Members
+        
 
         private CleanupJobRunner(MainForm m)
         {
@@ -168,6 +168,6 @@ namespace MeGUI.core.details
             remove { statusUpdate -= value; }
         }
 
-        #endregion
+        
     }
 }

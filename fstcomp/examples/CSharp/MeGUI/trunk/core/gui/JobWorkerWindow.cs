@@ -89,7 +89,7 @@ namespace MeGUI.core.gui
         private decimal progress;
         private LogItem log;
 
-        #region process window opening and closing
+        
         public void HideProcessWindow()
         {
             if (pw != null)
@@ -126,9 +126,9 @@ namespace MeGUI.core.gui
                 log.LogValue("Error attempting to change priority", e, ImageType.Error);
             }
         }
-        #endregion
+        
 
-        #region public interface
+        
         public decimal Progress
         {
             get { return progress; }
@@ -212,7 +212,7 @@ namespace MeGUI.core.gui
         {
             get { return IsEncoding && currentJob != null && currentJob.Job.EncodingMode.Equals("audio"); }
         }
-        #endregion
+        
 
         public event EventHandler WorkerFinishedJobs;
 
@@ -238,7 +238,7 @@ namespace MeGUI.core.gui
 
         }
 
-        #region job run util
+        
 
 
         /// <summary>
@@ -288,9 +288,9 @@ namespace MeGUI.core.gui
             log.Error("No processor found");
             return null;
         }
-        #endregion
+        
 
-        #region shut down
+        
         internal void ShutDown()
         {
             if (IsEncoding)
@@ -305,7 +305,7 @@ namespace MeGUI.core.gui
             if (r == DialogResult.Yes)
                 ShutDown();
         }
-        #endregion
+        
 
         private void returnJobsToMainQueue()
         {
@@ -319,7 +319,7 @@ namespace MeGUI.core.gui
             mainForm.Jobs.DeleteJob(j);
         }
 
-        #region gui updates
+        
         private void refreshAll()
         {
             jobQueue1.refreshQueue();
@@ -355,10 +355,10 @@ namespace MeGUI.core.gui
             else jobProgress.Value = (int)Progress;
             if (alive) mainForm.Jobs.UpdateProgress(this.Name);
         }
-        #endregion
+        
 
-        #region job starting / stopping
-        #region abort
+        
+        
         /// <summary>
         /// aborts the currently active job
         /// </summary>
@@ -382,9 +382,9 @@ namespace MeGUI.core.gui
             refreshAll();
         }
 
-        #endregion
+        
 
-        #region starting jobs
+        
         public void StartEncoding(bool showMessageBoxes)
         {
             status = JobWorkerStatus.Idle;
@@ -674,8 +674,8 @@ namespace MeGUI.core.gui
             mainForm.Jobs.ResourceLock.Release();
             return JobStartInfo.COULDNT_START;
         }
-        #endregion
-        #endregion
+        
+        
 
         /// <summary>
         /// marks job currently marked as processing as aborted
@@ -706,7 +706,7 @@ namespace MeGUI.core.gui
             log.Add(i);
         }
 
-        #region pause / resume
+        
         public void Pause()
         {
             Debug.Assert(pauseStatus == PauseState.Encoding);
@@ -735,7 +735,7 @@ namespace MeGUI.core.gui
                 mainForm.Log.LogValue("Error trying to resume encoding", ex, ImageType.Warning);
             }
         }
-        #endregion
+        
         protected override void OnClosing(CancelEventArgs e)
         {
             if (!alive)

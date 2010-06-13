@@ -48,8 +48,8 @@ namespace MeGUI.core.util
 
     public class LogItem
     {
-        public event EventHandler<EventArgs<LogItem>> SubItemAdded;
-        public event EventHandler<EventArgs<ImageType>> TypeChanged;
+        public event EventHandler<EventArgs<LogItem> > SubItemAdded;
+        public event EventHandler<EventArgs<ImageType> > TypeChanged;
         public event EventHandler Expanded;
         public event EventHandler Collapsed;
 

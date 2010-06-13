@@ -214,7 +214,7 @@ namespace MeGUI
             return this.MemberwiseClone() as VideoCodecSettings;
 		}
 
-        #region GenericSettings Members
+        
         public virtual void FixFileNames(System.Collections.Generic.Dictionary<string, string> _) { }
 
         public virtual string[] RequiredFiles
@@ -227,7 +227,7 @@ namespace MeGUI
             get { return new string[0]; }
         }
 
-        #endregion
+        
     }
 	public enum ZONEMODE: int {Quantizer = 0, Weight};
 	public class Zone

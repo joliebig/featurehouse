@@ -43,7 +43,7 @@ namespace MeGUI
 	/// </summary>
 	public class VideoPlayer : System.Windows.Forms.Form
 	{
-		#region variable declaration
+		
 		private System.Windows.Forms.PictureBox videoPreview;
 		private System.Windows.Forms.GroupBox previewGroupbox;
 		private System.Windows.Forms.TrackBar positionSlider;
@@ -100,8 +100,8 @@ namespace MeGUI
         private Button zoomInButton;
         private Button zoomOutButton;
 		private System.ComponentModel.IContainer components;
-		#endregion
-		#region constructor
+		
+		
 		public VideoPlayer()
 		{
 			InitializeComponent();
@@ -192,7 +192,7 @@ namespace MeGUI
             }
             catch (Exception e)
             {
-#warning fix up this error message to be more correct
+
                 
                 MessageBox.Show("The file " + path + " cannot be opened.\r\n Please make sure it's a valid AviSynth script and that AviSynth is "
                     + " properly installed.\r\nYou can check the validity of your script and AviSynth installation by opening the file in your favorite media player.\r\n"
@@ -231,8 +231,8 @@ namespace MeGUI
 			buttonPanel.Controls.Remove(introEndButton);
 			buttonPanel.Controls.Remove(creditsStartButton);
 		}
-		#endregion
-		#region Form sizing
+		
+		
         /// <summary>
         /// Reset the video preview to the size of the input stream
         /// </summary>
@@ -345,8 +345,8 @@ namespace MeGUI
             }
             return result;
         }
-        #endregion
-        #region destructor
+        
+        
         /// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
@@ -378,8 +378,8 @@ namespace MeGUI
                 file.Dispose();
 			base.OnClosing (e);
 		}
-		#endregion
-		#region Windows Form Designer generated code
+		
+		
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -721,8 +721,8 @@ namespace MeGUI
             this.ResumeLayout(false);
 
 		}
-		#endregion
-		#region position changes
+		
+		
 		/// <summary>
 		/// handles changes in the slider position
 		/// updates the currentPosition indicator (this is used by the playback, as the playback thread cannot access
@@ -772,8 +772,8 @@ namespace MeGUI
             if (mainForm.Settings.AddTimePosition)
                 this.Text += "   -   " + currentTime + "/" + totalTime;
 		}
-		#endregion
-		#region cropping
+		
+		
         public void crop(CropValues cropping)
         {
             crop(cropping.left, cropping.top, cropping.right, cropping.bottom);
@@ -850,8 +850,8 @@ namespace MeGUI
 			}
 			b.UnlockBits(image);
 		}
-		#endregion
-		#region player
+		
+		
 		/// <summary>
 		/// handles the play button
 		/// starts video playback or stops it
@@ -941,8 +941,8 @@ namespace MeGUI
 		{
             safeChangePosition(25);
         }
-		#endregion
-		#region credits / intro
+		
+		
 		/// <summary>
 		/// fires an event indicating the credits start position has been set.
 		/// </summary>
@@ -963,8 +963,8 @@ namespace MeGUI
 			if (IntroCreditsFrameSet != null)
 				IntroCreditsFrameSet(this.currentPosition, false);
 		}
-		#endregion
-		#region zones
+		
+		
 		private void zoneEndButton_Click(object sender, System.EventArgs e)
 		{
 			int pos = (int)positionSlider.Value;
@@ -1023,8 +1023,8 @@ namespace MeGUI
 				ChapterSet(positionSlider.Value);
 			}
 		}
-		#endregion
-		#region context menu
+		
+		
 		private void mnuIntroEnd_Click(object sender, System.EventArgs e)
 		{
 			this.positionSlider.Value = this.introEndFrame;
@@ -1068,8 +1068,8 @@ namespace MeGUI
 			else
 				this.mnuZoneEnd.Enabled = false;
 		}
-		#endregion
-		#region properties
+		
+		
         public Dar? DAR
         {
             get { return arChooser.Value; }
@@ -1162,7 +1162,7 @@ namespace MeGUI
 				}
 			}
 		}
-		#endregion
+		
 
         private void resize(int targetWidth, bool PAR)
         {

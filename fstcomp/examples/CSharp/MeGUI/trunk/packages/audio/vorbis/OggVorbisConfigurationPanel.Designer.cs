@@ -20,7 +20,7 @@ namespace MeGUI.packages.audio.vorbis
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -85,7 +85,7 @@ namespace MeGUI.packages.audio.vorbis
 
         }
 
-        #endregion
+        
 
         public System.Windows.Forms.TrackBar vQuality;
         private System.Windows.Forms.Label label1;

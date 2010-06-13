@@ -20,7 +20,7 @@ namespace MeGUI.packages.audio.audx
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        
 
         /// <summary>
         /// Required method for Designer support - do not modify
@@ -75,7 +75,7 @@ namespace MeGUI.packages.audio.audx
 
         }
 
-        #endregion
+        
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;

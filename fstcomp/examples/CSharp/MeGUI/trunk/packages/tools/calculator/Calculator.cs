@@ -132,7 +132,7 @@ namespace MeGUI
             get { return (int)projectedBitrate.Value; }
         }
 
-        #region Event Handlers
+        
 
         private void audio_SelectedIndexChanged(object sender, System.EventArgs e)
         {
@@ -386,7 +386,7 @@ namespace MeGUI
             this.toolTip1.SetToolTip(this.picTime, showTotal ? "Show hours, minutes, seconds" : "Show total seconds");
         }
 
-        #endregion
+        
         
         protected void SetAudioLength()
         {
@@ -605,7 +605,7 @@ namespace MeGUI
 
     public class CalculatorTool : MeGUI.core.plugins.interfaces.ITool
     {
-        #region ITool Members
+        
 
         public string Name
         {
@@ -660,15 +660,15 @@ namespace MeGUI
             get { return new Shortcut[] { Shortcut.CtrlB }; }
         }
 
-        #endregion
+        
 
-        #region IIDable Members
+        
 
         public string ID
         {
             get { return "bitrate_calculator_window"; }
         }
 
-        #endregion
+        
     }
 }

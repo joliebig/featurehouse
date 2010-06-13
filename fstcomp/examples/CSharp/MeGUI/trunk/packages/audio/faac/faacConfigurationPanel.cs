@@ -36,7 +36,7 @@ namespace MeGUI.packages.audio.faac
             cbrBitrate.DataSource = FaacSettings.SupportedBitrates;
             cbrBitrate.BindingContext = new BindingContext();
         }
-	    #region properties
+	    
 		/// <summary>
 		/// gets / sets the settings that are being shown in this configuration dialog
 		/// </summary>
@@ -59,15 +59,15 @@ namespace MeGUI.packages.audio.faac
                 bitrateModeChanged(null, null);
 			}
 		}
-		#endregion
-        #region checkboxes
+		
+        
         private void bitrateModeChanged(object sender, EventArgs e)
         {
             cbrBitrate.Enabled = !(vbrQuality.Enabled = qualityModeRadioButton.Checked);
         }
-        #endregion
+        
 
-        #region Editable<FaacSettings> Members
+        
 
         FaacSettings Editable<FaacSettings>.Settings
         {
@@ -81,7 +81,7 @@ namespace MeGUI.packages.audio.faac
             }
         }
 
-        #endregion
+        
     }
 }
 

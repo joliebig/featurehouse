@@ -52,7 +52,7 @@ namespace MeGUI
 			CreditsQuantizer = new decimal(20);
             FourCCs = m_fourCCs;
 		}
-		#region properties
+		
 
         /// I believe whe really does'nt need to create this array @ per-instance basis
         private static readonly string[] m_fourCCs = { "SNOW" };
@@ -92,7 +92,7 @@ namespace MeGUI
 			get {return losslessMode;}
 			set {losslessMode = value;}
 		}
-		#endregion
+		
 
         public override bool UsesSAR
         {
