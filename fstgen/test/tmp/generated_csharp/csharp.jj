@@ -68,7 +68,8 @@ TOKEN : {
 	<IS			:	"is"> |				<VOID		:	"void"> |
 	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
 	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
-	<ASSEMBLY	:	"assembly"> |		<MODULE : "module">
+	<ASSEMBLY	:	"assembly"> |		<MODULE : "module"> |
+	<PARTIAL	:	"partial">
 }
 
 TOKEN : {
@@ -115,7 +116,7 @@ TOKEN:{
 
 	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
 	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
+	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/"]>	
 	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
 	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
 	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
@@ -683,7 +684,13 @@ FSTInfo argument(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	[n=argumentPrefix(true){ replaceName(n);}] n=expression(true){ replaceName(n);} {return productionEndTerminal("argument1","-","-","Replacement",first,token);}
  |
-	"delegate" "(" n=formal_parameter_list(true){ replaceName(n);} ")" n=body(true){ replaceName(n);} {return productionEndTerminal("argument2","-","-","Replacement",first,token);}
+	"delegate" [n=delegate_arg(true){ replaceName(n);}] n=body(true){ replaceName(n);} {return productionEndTerminal("argument2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo delegate_arg(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=formal_parameter_list(true){ replaceName(n);} ")" {return productionEndTerminal("delegate_arg","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1110,6 +1117,10 @@ FSTInfo namespace_member_declaration(boolean inTerminal) : { Token first=null,t;
 	n=namespace_declaration(inTerminal){ replaceName("namespace_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration1","{namespace_declaration}","{namespace_declaration}");}
  |
 	[n=attributes(inTerminal){ replaceName(n);}] [n=type_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","{type_declaration}","{type_declaration}");}
+ |
+	"#region" (n=region_id(true){ replaceName(n);})* {return productionEndTerminal("namespace_member_declaration3","{AUTO}","{AUTO}","Replacement",first,token);}
+ |
+	"#endregion"  {return productionEndTerminal("namespace_member_declaration4","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
@@ -1150,6 +1161,8 @@ FSTInfo type_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"sealed"  {return productionEndTerminal("type_modifier7","-","-","Replacement",first,token);}
  |
 	"unsafe"  {return productionEndTerminal("type_modifier8","-","-","Replacement",first,token);}
+ |
+	"partial"  {return productionEndTerminal("type_modifier9","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1266,6 +1279,16 @@ FSTInfo class_member_declarationEnd(boolean inTerminal) : { Token first=null,t;F
 	n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("class_member_declarationEnd5","{type_declaration}","{type_declaration}");}
  |
 	n=type(true){ replaceName("type", n);}{ replaceName(n);} n=typeEnd(true){ replaceName("typeEnd", n);}{ replaceName(n);} {return productionEndTerminal("class_member_declarationEnd6","{type} {typeEnd}","{type} {typeEnd}","{typeEnd}",first,token);}
+ |
+	"#region" (n=region_id(true){ replaceName(n);})* {return productionEndTerminal("class_member_declarationEnd7","{AUTO}","{AUTO}","Replacement",first,token);}
+ |
+	"#endregion"  {return productionEndTerminal("class_member_declarationEnd8","{AUTO}","{AUTO}","Replacement",first,token);}
+
+ )  }
+
+FSTInfo region_id(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=identifier(true){ replaceName(n);} {return productionEndTerminal("region_id","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1837,7 +1860,7 @@ FSTInfo attributes(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo local_attribute(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"[" [n=attribute_target_specifier(true){ replaceName(n);}] n=attribute_section(true){ replaceName(n);} {return productionEndTerminal("local_attribute","-","-","Replacement",first,token);}
+	"[" [LOOKAHEAD(2) n=attribute_target_specifier(true){ replaceName(n);}] n=attribute_section(true){ replaceName(n);} {return productionEndTerminal("local_attribute","-","-","Replacement",first,token);}
 
  )  }
 

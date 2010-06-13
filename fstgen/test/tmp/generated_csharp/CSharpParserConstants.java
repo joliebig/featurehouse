@@ -84,76 +84,77 @@ public interface CSharpParserConstants {
   int WHERE = 84;
   int ASSEMBLY = 85;
   int MODULE = 86;
-  int DOT = 87;
-  int LBRACE = 88;
-  int RBRACE = 89;
-  int LBRACK = 90;
-  int RBRACK = 91;
-  int LPAREN = 92;
-  int RPAREN = 93;
-  int PLUS = 94;
-  int PLUS_ASN = 95;
-  int MINUS = 96;
-  int MINUS_ASN = 97;
-  int STAR = 98;
-  int STAR_ASN = 99;
-  int DIV = 100;
-  int DIV_ASN = 101;
-  int MOD = 102;
-  int MOD_ASN = 103;
-  int INC = 104;
-  int DEC = 105;
-  int SL = 106;
-  int SL_ASN = 107;
-  int SR = 108;
-  int SR_ASN = 109;
-  int BSR = 110;
-  int BSR_ASN = 111;
-  int AMPER = 112;
-  int BAND_ASN = 113;
-  int BOR = 114;
-  int BOR_ASN = 115;
-  int CARET = 116;
-  int BXOR_ASN = 117;
-  int TILDE = 118;
-  int ASSIGN = 119;
-  int EQUAL = 120;
-  int LTHAN = 121;
-  int LE = 122;
-  int GTHAN = 123;
-  int GE = 124;
-  int BANG = 125;
-  int NOT_EQUAL = 126;
-  int LOR = 127;
-  int LAND = 128;
-  int COMMA = 129;
-  int COLON = 130;
-  int SEMI = 131;
-  int HASH = 132;
-  int QUOTE = 133;
-  int QMARK = 134;
-  int ARROW = 135;
-  int UNICODE_ESCAPE_SEQUENCE = 136;
-  int IDENTIFIER = 137;
-  int IDENTIFIER_START_CHARACTER = 138;
-  int IDENTIFIER_PART_CHARACTER = 139;
-  int NUMERIC_LITERAL = 140;
-  int HEXADECIMAL_INTEGER_LITERAL = 141;
-  int CHARACTER_LITERAL = 142;
-  int REGULAR_STRING_LITERAL = 143;
-  int VERBATIM_STRING_LITERAL = 144;
-  int DECIMAL_DIGIT = 145;
-  int INTEGER_TYPE_SUFFIX = 146;
-  int HEX_DIGIT = 147;
-  int EXPONENT_PART = 148;
-  int SIGN = 149;
-  int REAL_TYPE_SUFFIX = 150;
-  int CHARACTER = 151;
-  int SINGLE_CHARACTER = 152;
-  int SIMPLE_ESCAPE_SEQUENCE = 153;
-  int HEXADECIMAL_ESCAPE_SEQUENCE = 154;
-  int REGULAR_STRING_LITERAL_CHARACTER = 155;
-  int SINGLE_REGULAR_STRING_LITERAL_CHARACTER = 156;
+  int PARTIAL = 87;
+  int DOT = 88;
+  int LBRACE = 89;
+  int RBRACE = 90;
+  int LBRACK = 91;
+  int RBRACK = 92;
+  int LPAREN = 93;
+  int RPAREN = 94;
+  int PLUS = 95;
+  int PLUS_ASN = 96;
+  int MINUS = 97;
+  int MINUS_ASN = 98;
+  int STAR = 99;
+  int STAR_ASN = 100;
+  int DIV = 101;
+  int DIV_ASN = 102;
+  int MOD = 103;
+  int MOD_ASN = 104;
+  int INC = 105;
+  int DEC = 106;
+  int SL = 107;
+  int SL_ASN = 108;
+  int SR = 109;
+  int SR_ASN = 110;
+  int BSR = 111;
+  int BSR_ASN = 112;
+  int AMPER = 113;
+  int BAND_ASN = 114;
+  int BOR = 115;
+  int BOR_ASN = 116;
+  int CARET = 117;
+  int BXOR_ASN = 118;
+  int TILDE = 119;
+  int ASSIGN = 120;
+  int EQUAL = 121;
+  int LTHAN = 122;
+  int LE = 123;
+  int GTHAN = 124;
+  int GE = 125;
+  int BANG = 126;
+  int NOT_EQUAL = 127;
+  int LOR = 128;
+  int LAND = 129;
+  int COMMA = 130;
+  int COLON = 131;
+  int SEMI = 132;
+  int HASH = 133;
+  int QUOTE = 134;
+  int QMARK = 135;
+  int ARROW = 136;
+  int UNICODE_ESCAPE_SEQUENCE = 137;
+  int IDENTIFIER = 138;
+  int IDENTIFIER_START_CHARACTER = 139;
+  int IDENTIFIER_PART_CHARACTER = 140;
+  int NUMERIC_LITERAL = 141;
+  int HEXADECIMAL_INTEGER_LITERAL = 142;
+  int CHARACTER_LITERAL = 143;
+  int REGULAR_STRING_LITERAL = 144;
+  int VERBATIM_STRING_LITERAL = 145;
+  int DECIMAL_DIGIT = 146;
+  int INTEGER_TYPE_SUFFIX = 147;
+  int HEX_DIGIT = 148;
+  int EXPONENT_PART = 149;
+  int SIGN = 150;
+  int REAL_TYPE_SUFFIX = 151;
+  int CHARACTER = 152;
+  int SINGLE_CHARACTER = 153;
+  int SIMPLE_ESCAPE_SEQUENCE = 154;
+  int HEXADECIMAL_ESCAPE_SEQUENCE = 155;
+  int REGULAR_STRING_LITERAL_CHARACTER = 156;
+  int SINGLE_REGULAR_STRING_LITERAL_CHARACTER = 157;
 
   int DEFAULT = 0;
 
@@ -245,6 +246,7 @@ public interface CSharpParserConstants {
     "\"where\"",
     "\"assembly\"",
     "\"module\"",
+    "\"partial\"",
     "\".\"",
     "\"{\"",
     "\"}\"",
@@ -315,6 +317,8 @@ public interface CSharpParserConstants {
     "<HEXADECIMAL_ESCAPE_SEQUENCE>",
     "<REGULAR_STRING_LITERAL_CHARACTER>",
     "<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>",
+    "\"#region\"",
+    "\"#endregion\"",
   };
 
 }

@@ -68,7 +68,8 @@ TOKEN : {
 	<IS			:	"is"> |				<VOID		:	"void"> |
 	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
 	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
-	<ASSEMBLY	:	"assembly"> |		<MODULE : "module">
+	<ASSEMBLY	:	"assembly"> |		<MODULE : "module"> |
+	<PARTIAL	:	"partial">
 }
 
 TOKEN : {
@@ -115,7 +116,7 @@ TOKEN:{
 
 	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
 	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$"]>	
+	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/"]>	
 	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
 	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
 	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
@@ -486,8 +487,11 @@ argument_list
 
 argument:	
 		(argumentPrefix)?	expression
-		| "delegate" "(" formal_parameter_list ")"  body
+		| "delegate" (delegate_arg)? body
 	;
+	
+delegate_arg : "(" formal_parameter_list ")";
+	
 argumentPrefix:"ref" | "out";
 
 element_access
@@ -769,6 +773,8 @@ namespace_member_declaration_no_attr
 namespace_member_declaration 
 	:	@FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
 	|	@FSTNonTerminal(name="{type_declaration}") (attributes)? (type_modifiers)? type_declaration
+	|	@FSTTerminal(name="{AUTO}") "#region" (region_id)*
+	|	@FSTTerminal(name="{AUTO}") "#endregion" 
 	;
 
 type_declaration 	//Type declaration that assumes parent rule has already looked for attributes and modifiers
@@ -792,6 +798,7 @@ type_modifier
 	|	"abstract"
 	|	"sealed"
 	|	"unsafe"
+	|	"partial"
 	;
 	
 //***********************************************************************************************************************************/
@@ -866,7 +873,6 @@ class_body
 class_member_declaration 
 	:	(attributes)?	(member_modifiers)? class_member_declarationEnd;
 
-
 class_member_declarationEnd
 		:	@FSTTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
 		|	@FSTTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
@@ -874,8 +880,11 @@ class_member_declarationEnd
 		|	@FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
 		|	@FSTNonTerminal(name="{type_declaration}") type_declaration
 		|	@FSTTerminal(name="{type} {typeEnd}",compose="{typeEnd}") type	typeEnd	
+		|	@FSTTerminal(name="{AUTO}") "#region" (region_id)*
+		|	@FSTTerminal(name="{AUTO}") "#endregion" 
 		;
 		
+region_id : identifier;
 
 typeEnd
 	:	@FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration
@@ -1254,7 +1263,7 @@ attributes
 	;
 	
 local_attribute	
-	:	"["	(attribute_target_specifier)?	attribute_section
+	:	"[" (LOOK_AHEAD(2) attribute_target_specifier)?	attribute_section
 	;
 
 attribute_section
