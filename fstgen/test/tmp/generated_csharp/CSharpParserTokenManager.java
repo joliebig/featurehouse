@@ -999,7 +999,7 @@ private final int jjMoveNfa_0(int startState, int curPos)
                      jjAddStates(22, 23);
                   break;
                case 1:
-                  if ((0x3ff801000000000L & l) == 0L)
+                  if ((0x83ff801000000000L & l) == 0L)
                      break;
                   if (kind > 138)
                      kind = 138;
