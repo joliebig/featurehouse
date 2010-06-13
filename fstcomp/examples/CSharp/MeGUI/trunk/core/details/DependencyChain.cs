@@ -24,7 +24,7 @@ using System.Text;
 
 namespace MeGUI.core.details
 {
-    #region public part
+    #region public_ part
     public abstract partial class JobChain {
         public static implicit operator JobChain(Job j)
         {
@@ -53,7 +53,7 @@ namespace MeGUI.core.details
     }
     #endregion 
 
-    #region private part
+    #region private_ part
     class DUtil
     {
         internal static JobChain[] convert(Job[] jobs)

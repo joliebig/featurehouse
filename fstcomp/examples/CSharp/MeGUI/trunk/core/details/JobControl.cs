@@ -45,7 +45,6 @@ namespace MeGUI.core.details
         private AfterEncoding currentAfterEncoding;
         private Semaphore resourceLock;
 
-        #region public interface: process windows, start/stop/abort
         public void ShowAllProcessWindows()
         {
             foreach (JobWorker w in workers.Values)
@@ -347,7 +346,7 @@ namespace MeGUI.core.details
                     w.StartEncoding(false);
         }
 
-        #region saving / loading jobs
+        #region saving loading jobs
         internal List<string> toStringList(IEnumerable<TaggedJob> jobList)
         {
             List<string> strings = new List<string>();
@@ -373,7 +372,7 @@ namespace MeGUI.core.details
         public class JobListSerializer
         {
             public List<string> mainJobList = new List<string>();
-            public List<Pair<string, List<string>>> workersAndTheirJobLists = new List<Pair<string,List<string>>>(); 
+            public List<Pair<string, List<string> > > workersAndTheirJobLists = new List<Pair<string,List<string> > >(); 
         }
 
         private void saveJobLists()
@@ -383,7 +382,7 @@ namespace MeGUI.core.details
             s.mainJobList = toStringList(jobQueue.JobList);
 
             foreach (JobWorker w in workers.Values)
-                s.workersAndTheirJobLists.Add(new Pair<string, List<string>>(
+                s.workersAndTheirJobLists.Add(new Pair<string, List<string> >(
                     w.Name,
                     toStringList(w.Jobs)));
             string path = Path.Combine(mainForm.MeGUIPath, "joblists.xml");
@@ -398,7 +397,7 @@ namespace MeGUI.core.details
             JobListSerializer s = Util.XmlDeserializeOrDefault<JobListSerializer>(path);
             jobQueue.JobList = toJobList(s.mainJobList);
 
-            foreach (Pair<string, List<string>> p in s.workersAndTheirJobLists)
+            foreach (Pair<string, List<string> > p in s.workersAndTheirJobLists)
             {
                 JobWorkerMode mode = JobWorkerMode.RequestNewJobs;
                 bool bIsTemporaryWorker = false;
@@ -456,7 +455,7 @@ namespace MeGUI.core.details
         /// <summary>
         /// dirty workaround!
         /// </summary>
-#warning delete block after 0.3.6
+
         private void updateJobFile(string strFileName)
         {
             bool bFound = false;
@@ -711,9 +710,9 @@ namespace MeGUI.core.details
             return name;
         }
 
-        internal List<Pair<string, bool>> ListWorkers()
+        internal List<Pair<string, bool> > ListWorkers()
         {
-            List<Pair<string, bool>> ans = new List<Pair<string,bool>>();
+            List<Pair<string, bool> > ans = new List<Pair<string,bool> >();
             
             foreach (JobWorker w in workers.Values)
             {
@@ -813,9 +812,9 @@ namespace MeGUI.core.details
             summary.Remove(w.Name);
         }
 
-        internal List<Pair<string, bool>> ListProgressWindows()
+        internal List<Pair<string, bool> > ListProgressWindows()
         {
-            List<Pair<string, bool>> ans = new List<Pair<string,bool>>();
+            List<Pair<string, bool> > ans = new List<Pair<string,bool> >();
             foreach (JobWorker w in workers.Values)
             {
                 if (w.IsProgressWindowAvailable)

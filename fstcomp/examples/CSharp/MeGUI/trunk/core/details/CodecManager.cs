@@ -216,7 +216,7 @@ namespace MeGUI
                 
         }
     }
-    #region Video/Audio/Subtitle Types
+    #region Video Audio Subtitle Types
     public class VideoType : OutputType
     {
         private VideoCodec[] supportedCodecs;
