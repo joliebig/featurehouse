@@ -3,6 +3,7 @@ options {
   ERROR_REPORTING = true;
 }
 
+
 PARSER_BEGIN(CSharpParser)
 
 package tmp.generated_csharp;
