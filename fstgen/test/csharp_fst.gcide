@@ -1,7 +1,8 @@
 options {
-  STATIC = false;
-  ERROR_REPORTING = true;
+	STATIC = false;
+	ERROR_REPORTING = true;
 }
+
 
 PARSER_BEGIN(CSharpParser)
 
@@ -19,115 +20,167 @@ public class CSharpParser extends AbstractFSTParser {
 PARSER_END(CSharpParser)
 
 SPECIAL_TOKEN : {
- " "
-|  "\t"
-|  "\n"
-|  "\r"
-|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
-|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+	" "
+	|  "\t"
+	|  "\n"
+	|  "\r"
+	|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+	|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
 }
 
 
 TOKEN : {
-	<ABSTRACT	:	"abstract">|			<LONG		:	"long">|
-	<AS			:	"as"> |			<NAMESPACE	:	"namespace"> |
-	<BASE		:	"base"> |		<NEW			:	"new"> |
-	<BOOL		:	"bool"> |		<NULL		:	"null"> |
-	<BREAK		:	"break"> |		<OBJECT		:	"object"> |
-	<BYTE		:	"byte"> |		<OPERATOR	:	"operator"> |
-	<CASE		:	"case"> |		<OUT			:	"out"> |
-	<CATCH		:	"catch"> |		<OVERRIDE	:	"override"> |
-	<CHAR		:	"char"> |		<PARAMS		:	"params"> |
-	<CHECKED		:	"checked"> |	<PRIVATE		:	"private"> |
-	<CLASS		:	"class"> |			<PROTECTED	:	"protected"> |
-	<CONST		:	"const"> |			<PUBLIC		:	"public"> |
-	<CONTINUE	:	"continue"> |		<READONLY	:	"readonly"> |
-	<DECIMAL		:	"decimal"> |	<REF			:	"ref"> |
-	<DEFAULTTOKEN		:	"default"> |	<RETURN		:	"return"> |
-	<DELEGATE	:	"delegate"> |		<SBYTE		:	"sbyte"> |
-	<DO			:	"do"> |				<SEALED		:	"sealed"> |
-	<DOUBLE		:	"double"> |			<SHORT		:	"short"> |
-	<ELSE		:	"else"> |			<SIZEOF		:	"sizeof"> |
-	<ENUM		:	"enum"> |			<STACKALLOC	:	"stackalloc"> |
-	<EVENT		:	"event"> |			<STATIC		:	"static"> |
-	<EXPLICIT	:	"explicit"> |		<STRING		:	"string"> |
-	<EXTERN		:	"extern"> |			<STRUCT		:	"struct"> |
-	<FALSE		:	"false"> |			<SWITCH		:	"switch"> |
-	<FINALLY		:	"finally"> |	<THIS		:	"this"> |
-	<FIXED		:	"fixed"> |			<THROW		:	"throw"> |
-	<FLOAT		:	"float"> |			<TRUE		:	"true"> |
-	<FOR			:	"for"> |		<TRY			:	"try"> |
-	<FOREACH		:	"foreach"> |	<TYPEOF		:	"typeof"> |
-	<GOTO		:	"goto"> |			<UINT		:	"uint"> |
-	<IF			:	"if"> |				<ULONG		:	"ulong"> |
-	<IMPLICIT	:	"implicit"> |		<UNCHECKED	:	"unchecked"> |
-	<IN			:	"in"> |				<UNSAFE		:	"unsafe"> |
-	<INT			:	"int"> |		<USHORT		:	"ushort"> |
-	<INTERFACE	:	"interface"> |		<USING		:	"using"> |
-	<INTERNAL	:	"internal"> |		<VIRTUAL	:	"virtual"> |
-	<IS			:	"is"> |				<VOID		:	"void"> |
-	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
-	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
-	<ASSEMBLY	:	"assembly"> |		<MODULE : "module"> |
-	<PARTIAL	:	"partial">
+	<ABSTRACT	:	"abstract">
+	|  <LONG		:	"long">
+	|  <AS			:	"as">
+	|  <NAMESPACE	:	"namespace">
+	|  <BASE		:	"base">
+	|  <NEW			:	"new">
+	|  <BOOL		:	"bool">
+	|  <NULL		:	"null">
+	|  <BREAK		:	"break">
+	|  <OBJECT		:	"object">
+	|  <BYTE		:	"byte">
+	|  <OPERATOR	:	"operator">
+	|  <CASE		:	"case">
+	|  <OUT			:	"out">
+	|  <CATCH		:	"catch">
+	|  <OVERRIDE	:	"override">
+	|  <CHAR		:	"char">
+	|  <PARAMS		:	"params">
+	|  <CHECKED		:	"checked">
+	|  <PRIVATE		:	"private">
+	|  <CLASS		:	"class">
+	|  <PROTECTED	:	"protected">
+	|  <CONST		:	"const">
+	|  <PUBLIC		:	"public">
+	|  <CONTINUE	:	"continue">
+	|  <READONLY	:	"readonly">
+	|  <DECIMAL		:	"decimal">
+	|  <REF			:	"ref">
+	|  <DEFAULTTOKEN		:	"default">
+	|  <RETURN		:	"return">
+	|  <DELEGATE	:	"delegate">
+	|  <SBYTE		:	"sbyte">
+	|  <DO			:	"do">
+	|  <SEALED		:	"sealed">
+	|  <DOUBLE		:	"double">
+	|  <SHORT		:	"short">
+	|  <ELSE		:	"else">
+	|  <SIZEOF		:	"sizeof">
+	|  <ENUM		:	"enum">
+	|  <STACKALLOC	:	"stackalloc">
+	|  <EVENT		:	"event">
+	|  <STATIC		:	"static">
+	|  <EXPLICIT	:	"explicit">
+	|  <STRING		:	"string">
+	|  <EXTERN		:	"extern">
+	|  <STRUCT		:	"struct">
+	|  <FALSE		:	"false">
+	|  <SWITCH		:	"switch">
+	|  <FINALLY		:	"finally">
+	|  <THIS		:	"this">
+	|  <FIXED		:	"fixed">
+	|  <THROW		:	"throw">
+	|  <FLOAT		:	"float">
+	|  <TRUE		:	"true">
+	|  <FOR			:	"for">
+	|  <TRY			:	"try">
+	|  <FOREACH		:	"foreach">
+	|  <TYPEOF		:	"typeof">
+	|  <GOTO		:	"goto">
+	|  <UINT		:	"uint">
+	|  <IF			:	"if">
+	|  <ULONG		:	"ulong">
+	|  <IMPLICIT	:	"implicit">
+	|  <UNCHECKED	:	"unchecked">
+	|  <IN			:	"in">
+	|  <UNSAFE		:	"unsafe">
+	|  <INT			:	"int">
+	|  <USHORT		:	"ushort">
+	|  <INTERFACE	:	"interface">
+	|  <USING		:	"using">
+	|  <INTERNAL	:	"internal">
+	|  <VIRTUAL		:	"virtual">
+	|  <IS			:	"is">
+	|  <VOID		:	"void">
+	|  <LOCK		:	"lock">
+	|  <WHILE		:	"while">
+	|  <VOLATILE	:	"volatile">
+	|  <WHERE 		:	"where">
+	|  <ASSEMBLY	:	"assembly">
+	|  <MODULE		:	"module">
+	|  <PARTIAL		:	"partial">
 }
 
 TOKEN : {
-	<DOT		:	"."		>| 
-<LBRACE		:	"{"		> |	<RBRACE		:	"}"		> |
-<LBRACK		:	"["		> |	<RBRACK		:	"]"		> |
-<LPAREN		:	"("		> |	<RPAREN		:	")"		> |
-
-<PLUS		:	"+"		> |		<PLUS_ASN	:	"+="	> |	
-<MINUS		:	"-"		> |		<MINUS_ASN	:	"-="	> |	
-<STAR		:	"*"		> |		<STAR_ASN	:	"*="	> |
-<DIV			:	"/"		> |		<DIV_ASN		:	"/="	> |
-<MOD			:	"%"		> |		<MOD_ASN		:	"%="	> |
-<INC			:	"++"	> |		<DEC			:	"--"	> |
-
-<SL			:	"<<"	> |		<SL_ASN		:	"<<="	> |
-<SR			:	">>"	> |		<SR_ASN		:	">>="	> |
-<BSR			:	">>>"	> |		<BSR_ASN		:	">>>="	> |
-
-<AMPER		:	"&"		> |		<BAND_ASN	:	"&="	> |	
-<BOR			:	"|"		> |	<BOR_ASN		:	"|="	> |	
-<CARET		:	"^"		> |		<BXOR_ASN	:	"^="	> |
-<TILDE		:	"~"		> |
-
-<ASSIGN	:	"="		> |		<EQUAL			:	"=="	> |
-<LTHAN		:	"<"		> |		<LE				:	"<="	> |
-<GTHAN		:	">"		> |		<GE				:	">="	> |
-<BANG		:	"!"		> |		<NOT_EQUAL	:	"!="	> |
-<LOR			:	"||"	> |		<LAND			:	"&&"	> |
-
-<COMMA		:	","		> |		<COLON		:	":"		> |	
-<SEMI		:	";"		> |		<HASH		:	"#"     > |
-<QUOTE		:	"\""  > |		<QMARK		:	"?"		> |
-
-<ARROW		:	"->"	> 
+	<DOT		:	"."		>
+	|  <LBRACE		:	"{"		>
+	|  <RBRACE		:	"}"		>
+	|  <LBRACK		:	"["		>
+	|  <RBRACK		:	"]"		>
+	|  <LPAREN		:	"("		>
+	|  <RPAREN		:	")"		>
+	|  <PLUS		:	"+"		>
+	|  <PLUS_ASN	:	"+="	>
+	|  <MINUS		:	"-"		>
+	|  <MINUS_ASN	:	"-="	>
+	|  <STAR		:	"*"		>
+	|  <STAR_ASN	:	"*="	>
+	|  <DIV			:	"/"		>
+	|  <DIV_ASN		:	"/="	>
+	|  <MOD			:	"%"		>
+	|  <MOD_ASN		:	"%="	>
+	|  <INC			:	"++"	>
+	|  <DEC			:	"--"	>
+	|  <SL			:	"<<"	>
+	|  <SL_ASN		:	"<<="	>
+	|  <SR			:	">>"	>
+	|  <SR_ASN		:	">>="	>
+	|  <BSR			:	">>>"	>
+	|  <BSR_ASN		:	">>>="	>
+	|  <AMPER		:	"&"		>
+	|  <BAND_ASN	:	"&="	>
+	|  <BOR			:	"|"		>
+	|  <BOR_ASN		:	"|="	>
+	|  <CARET		:	"^"		>
+	|  <BXOR_ASN	:	"^="	>
+	|  <TILDE		:	"~"		>
+	|  <ASSIGN		:	"="		>
+	|  <EQUAL		:	"=="	>
+	|  <LTHAN		:	"<"		>
+	|  <LE			:	"<="	>
+	|  <GTHAN		:	">"		>
+	|  <GE			:	">="	>
+	|  <BANG		:	"!"		>
+	|  <NOT_EQUAL	:	"!="	>
+	|  <LOR			:	"||"	>
+	|  <LAND		:	"&&"	>
+	|  <COMMA		:	","		>
+	|  <COLON		:	":"		>
+	|  <SEMI		:	";"		>
+	|  <HASH		:	"#"     >
+	|  <QUOTE		:	"\""	>
+	|  <QMARK		:	"?"		>
+	|  <ARROW		:	"->"	> 
 }
 
-TOKEN:{
-		<#UNICODE_ESCAPE_SEQUENCE
-	:	("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
-	|	"\\" "U"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>  
-					<HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)
-	>
-
-	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
-	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/","?"]>	
-	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
-	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
-	|	(<REAL_TYPE_SUFFIX>)
-	| 	(<INTEGER_TYPE_SUFFIX>)?
-	)		
-	>
-|	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
-|	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
-|	<REGULAR_STRING_LITERAL	:	"\""  (<REGULAR_STRING_LITERAL_CHARACTER>)* "\"">
-|	<VERBATIM_STRING_LITERAL:	 "@" "\""  	
+TOKEN : {
+	<#UNICODE_ESCAPE_SEQUENCE
+		:  ("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
+		|  "\\" "U"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>  <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)>
+	|  <IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
+		|  <#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
+		|  <#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/","?"]>	
+		|  <NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
+		|  (<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+		|  (<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
+		|  (<REAL_TYPE_SUFFIX>)
+		|  (<INTEGER_TYPE_SUFFIX>)?)>
+	|	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
+	|	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
+	|	<REGULAR_STRING_LITERAL	:	"\""  (<REGULAR_STRING_LITERAL_CHARACTER>)* "\"">
+	|	<VERBATIM_STRING_LITERAL:	 "@" "\""  	
 		(	"\"\""		
 		|	"\\"		
 		| "\r"
@@ -137,32 +190,30 @@ TOKEN:{
 		|  ~["\"","\\","\r","\n","\u2028","\u2029"]	
 		)* 
 		"\"">
-|	<#DECIMAL_DIGIT
+	|	<#DECIMAL_DIGIT
 	: 	["0"	,	"1"	,	"2"	,	"3"	,	"4"	,	"5"	,	"6"	,	"7"	,	"8"	,	"9"]>
-| 	<#INTEGER_TYPE_SUFFIX: 	(	"UL"	| "LU" 	| "ul"	| "lu"
+	| 	<#INTEGER_TYPE_SUFFIX: 	(	"UL"	| "LU" 	| "ul"	| "lu"
 		|	"UL"	| "LU" 	| "uL"	| "lU"
 		|	"U"		| "L"	| "u"	| "l")>
-|	<#HEX_DIGIT	:	["0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , 
+	|	<#HEX_DIGIT	:	["0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , 
 		"A" , "B" , "C" , "D" , "E" , "F"  ,
 		"a" , "b" , "c" , "d" , "e" , "f"]>	
-|	<#EXPONENT_PART:	("e"  (<SIGN>)*  (<DECIMAL_DIGIT>)+ 	|	"E"  (<SIGN>)*  (<DECIMAL_DIGIT>)+)>
-|	<#SIGN	: ["+" , "-" ]>
-|	<#REAL_TYPE_SUFFIX	: ["F" , "f" , "D" , "d" , "M" , "m"]>
-|	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
+	|	<#EXPONENT_PART:	("e"  (<SIGN>)*  (<DECIMAL_DIGIT>)+ 	|	"E"  (<SIGN>)*  (<DECIMAL_DIGIT>)+)>
+	|	<#SIGN	: ["+" , "-" ]>
+	|	<#REAL_TYPE_SUFFIX	: ["F" , "f" , "D" , "d" , "M" , "m"]>
+	|	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>	)>
-|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
-|	<#SIMPLE_ESCAPE_SEQUENCE: (
+	|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
+	|	<#SIMPLE_ESCAPE_SEQUENCE: (
 		"\\'" | "\\\"" | "\\\\" | "\\0" | "\\a"  
 	|	"\\b" | "\\f"  | "\\n"  | "\\r" | "\\t" | "\\v")>
-|	<#HEXADECIMAL_ESCAPE_SEQUENCE: "\\" "x" <HEX_DIGIT> (<HEX_DIGIT>(<HEX_DIGIT>(<HEX_DIGIT>)?)?)?>
-|	<REGULAR_STRING_LITERAL_CHARACTER :	<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>
+	|	<#HEXADECIMAL_ESCAPE_SEQUENCE: "\\" "x" <HEX_DIGIT> (<HEX_DIGIT>(<HEX_DIGIT>(<HEX_DIGIT>)?)?)?>
+	|	<REGULAR_STRING_LITERAL_CHARACTER :	<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>
 	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>>
-|	<#SINGLE_REGULAR_STRING_LITERAL_CHARACTER: ~[ "\"" , "\\" , "\r" , "\n" , "\u2028" , "\u2029"]>
-
-		
+	|	<#SINGLE_REGULAR_STRING_LITERAL_CHARACTER: ~[ "\"" , "\\" , "\r" , "\n" , "\u2028" , "\u2029"]>
 }
 
 
@@ -172,33 +223,28 @@ GRAMMARSTART
 
 @FSTNonTerminal()
 compilation_unit 
-	:	(using_directive)*   (attributes_either)?   ( compilation_unitEnd)? <EOF>
-		
-	;
+	:  (using_directive)* (attributes_either)? ( compilation_unitEnd)? <EOF> ;
 
 identifier:
-		@FSTExportName("{<IDENTIFIER>}")	
-		<IDENTIFIER>		
-	|	@FSTExportName("module")	
-		"module" <NONE>
-	|	@FSTExportName("assembly")	
-		"assembly"<NONE>
-	;	
+	@FSTExportName("{<IDENTIFIER>}") <IDENTIFIER>		
+	|  @FSTExportName("module") "module" <NONE>
+	|  @FSTExportName("assembly") "assembly"<NONE>
+	;
 
 //C.1.8 Literals
 literal
-	:	boolean_literal
-	|	<NUMERIC_LITERAL>
-	|	<HEXADECIMAL_INTEGER_LITERAL>
-	|	<CHARACTER_LITERAL>
-	|	<REGULAR_STRING_LITERAL>
-	|	<VERBATIM_STRING_LITERAL>
-	|	"null"<NONE>
+	:  boolean_literal
+	|  <NUMERIC_LITERAL>
+	|  <HEXADECIMAL_INTEGER_LITERAL>
+	|  <CHARACTER_LITERAL>
+	|  <REGULAR_STRING_LITERAL>
+	|  <VERBATIM_STRING_LITERAL>
+	|  "null"<NONE>
 	;
 
 boolean_literal
-	:	"true"
-	|	"false"<NONE>
+	:  "true"
+	|  "false"<NONE>
 	;
 
 //***********************************************************************************************************************************/
@@ -207,18 +253,14 @@ boolean_literal
 
 @FSTExportName("{type_name_part}^.")
 type_name
-	:	type_name_part
-		("." type_name_part)*	
-	;
+	:  type_name_part ("." type_name_part)* ;
 	
 @FSTExportName("{identifier}")
-type_name_part
-	:	identifier [LL("type_argument_list(inTerminal)") type_argument_list]
-	;
+type_name_part 
+	:  identifier [LL("type_argument_list(inTerminal)") type_argument_list] ;
 	
 type_argument_list
-	:	"<"  type	(","	type)*	">"
-	;	
+	:  "<"  type	(","	type)*	">" ;	
 
 //***********************************************************************************************************************************/
 //C.2.2 Types
@@ -226,121 +268,108 @@ type_argument_list
 
 @FSTExportName(name="{TOSTRING}")
 type
-	:	non_array_type ( rank_specifiers )? ("*"<NONE>)?
-	;
+	:  non_array_type ( rank_specifiers )? ("*"<NONE>)? ;
 
 rank_specifiers
-	:	(rank_specifier)+
-	;	
+	:  (rank_specifier)+ ;	
 
 rank_specifier
-	 : "[" ( "," <NONE>)* "]"
-   ;
+	:  "[" ( "," <NONE>)* "]" ;
 
 non_array_type
-   :	predefined_type
-   |	type_name
+   :  predefined_type
+   |  type_name
    ;
 
 predefined_type
-   :	simple_type
-   |	"object"<NONE>
-   |	"string"<NONE>
-   |	"void"<NONE>
+   :  simple_type
+   |  "object"<NONE>
+   |  "string"<NONE>
+   |  "void"<NONE>
    ;
 
 simple_type 
-	:	numeric_type
-	|	"bool"<NONE>
+	:  numeric_type
+	|  "bool"<NONE>
 	;
 
 numeric_type 
-	:	integral_type
-	|	floating_point_type
-	|	"decimal"<NONE>
+	:  integral_type
+	|  floating_point_type
+	|  "decimal"<NONE>
 	;
 	
 integral_type 
-	:	"sbyte"<NONE>
-	|	"byte"<NONE>
-	|	"short"<NONE>
-	|	"ushort"<NONE>
-	|	"int"<NONE>
-	|	"uint"<NONE>
-	|	"long"<NONE>
-	|	"ulong"<NONE>
-	|	"char"<NONE>
+	:  "sbyte"<NONE>
+	|  "byte"<NONE>
+	|  "short"<NONE>
+	|  "ushort"<NONE>
+	|  "int"<NONE>
+	|  "uint"<NONE>
+	|  "long"<NONE>
+	|  "ulong"<NONE>
+	|  "char"<NONE>
 	;
 
 class_type
-	:	type_name
-	|	"object"<NONE>
-	|	"string"<NONE>
+	:  type_name
+	|  "object"<NONE>
+	|  "string"<NONE>
 	;
 
 floating_point_type 
-	:	"float"<NONE>
-	|	"double"<NONE>
+	:  "float"<NONE>
+	|  "double"<NONE>
 	;
 
 //***********************************************************************************************************************************/	
 //C.2.4 Expressions
 //***********************************************************************************************************************************/
 expression
-   :	conditional_expression	(expressionInternal )?
-   ;
+	:  conditional_expression (expressionInternal)?
+	;
 
-expressionInternal:  assignment_operator expression;
+expressionInternal
+	:  assignment_operator expression;
 
 assignment
-   : conditional_expression assignment_operator expression
-   ;
+	:  conditional_expression assignment_operator expression ;
 	
 assignment_operator 
-	:	"="
-	|	"+="
-	|	"-="
-	|	"*="
-	|	"/="
-	|	"%="
-	|	"&="
-	|	"|="
-	|	"^="
-	|	"<<="
-	|	">>="
-	|	">>>="
+	:  "="
+	|  "+="
+	|  "-="
+	|  "*="
+	|  "/="
+	|  "%="
+	|  "&="
+	|  "|="
+	|  "^="
+	|  "<<="
+	|  ">>="
+	|  ">>>="
 	;
 
 conditional_expression
-   : conditional_or_expression 
-   		(conditional_expressionInternal )?
-   ;
+	:  conditional_or_expression (conditional_expressionInternal)? ;
    
-conditional_expressionInternal:	"?" expression ":" conditional_expression;
+conditional_expressionInternal
+	:  "?" expression ":" conditional_expression ;
 
 conditional_or_expression
-   : conditional_and_expression 
-   		( "||" conditional_or_expression  )?
-   ;
+	:  conditional_and_expression ( "||" conditional_or_expression )? ;
 	
 conditional_and_expression
-   : inclusive_or_expression 		( "&&" conditional_and_expression	)?
-   ;
+	:  inclusive_or_expression ( "&&" conditional_and_expression )? ;
 
 inclusive_or_expression
-   : exclusive_or_expression 
-   		( "|" inclusive_or_expression )?
-   ;
+	:  exclusive_or_expression ( "|" inclusive_or_expression ) ? ;
 
 exclusive_or_expression
-   : and_expression 
-   		("^" exclusive_or_expression 	)?
-   ;
+	:  and_expression ( "^" exclusive_or_expression ) ? ;
 
 and_expression
-   : equality_expression 
-   		( "&" and_expression 	)?
-   ;
+	:  equality_expression ( "&" and_expression )? ;
 
 equality_expression
    : relational_expression 
@@ -744,50 +773,48 @@ resource_acquisition
 //***********************************************************************************************************************************/
 
 @FSTNonTerminal()
-compilation_unitEnd:namespace_member_declaration_no_attr (namespace_member_declaration)*;
+compilation_unitEnd
+	:  namespace_member_declaration_no_attr (namespace_member_declaration)* ;
 
 @FSTNonTerminal(name="{type_name}")
 namespace_declaration 
-	:	"namespace" type_name   namespace_body    
-	;
+	:  "namespace" type_name namespace_body ;
 
 @FSTNonTerminal()
 namespace_body 
-	:	"{" @+!   (using_directive)*   (namespace_member_declaration)*  @-! "}"	(";"<NONE>)? @!
-	;
+	:  "{" @+! (using_directive)* (namespace_member_declaration)* @-! "}" (";"<NONE>)? @! ;
 
 @FSTTerminal(name="{type_name}")
 using_directive
-	:	"using"	type_name	using_directiveEnd
-	;
+	:  "using" type_name using_directiveEnd ;
 
 using_directiveEnd
-	:	"=" type_name ";" @!
-	|	";" @!<NONE>;
+	:  "=" type_name ";" @!
+	|  ";" @!<NONE>
+	;
 
 namespace_member_declaration_no_attr
-	:	@FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
-	|	@FSTNonTerminal(name="{type_declaration}") (type_modifiers)? type_declaration
+	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
+	|  @FSTNonTerminal(name="{type_declaration}") (type_modifiers)? type_declaration
 	;
 
 namespace_member_declaration 
-	:	@FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
-	|	@FSTNonTerminal(name="{type_declaration}") (attributes)? (type_modifiers)? type_declaration
-	|	@FSTTerminal(name="{AUTO}") "#region" (region_id)*
-	|	@FSTTerminal(name="{AUTO}") "#endregion" 
+	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
+	|  @FSTNonTerminal(name="{type_declaration}") (attributes)? (type_modifiers)? type_declaration
+	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
+	|  @FSTTerminal(name="{AUTO}") "#endregion" 
 	;
 
-type_declaration 	//Type declaration that assumes parent rule has already looked for attributes and modifiers
-	:	@FSTNonTerminal(name="{class_declaration}") class_declaration
-	|	@FSTNonTerminal(name="{struct_declaration}") struct_declaration
-	|	@FSTNonTerminal(name="{interface_declaration}") interface_declaration
-	|	@FSTNonTerminal(name="{enum_declaration}") enum_declaration
-	|	@FSTNonTerminal(name="{delegate_declaration}") delegate_declaration
+type_declaration //Type declaration that assumes parent rule has already looked for attributes and modifiers
+	:  @FSTNonTerminal(name="{class_declaration}") class_declaration
+	|  @FSTNonTerminal(name="{struct_declaration}") struct_declaration
+	|  @FSTNonTerminal(name="{interface_declaration}") interface_declaration
+	|  @FSTNonTerminal(name="{enum_declaration}") enum_declaration
+	|  @FSTNonTerminal(name="{delegate_declaration}") delegate_declaration
 	;
 
 type_modifiers
-	:	(type_modifier)+
-	;
+	:  (type_modifier)+ ;
 
 type_modifier
 	:	"new"
@@ -799,6 +826,7 @@ type_modifier
 	|	"sealed"
 	|	"unsafe"
 	|	"partial"
+	|   "static"
 	;
 	
 //***********************************************************************************************************************************/
@@ -807,24 +835,19 @@ type_modifier
 
 @FSTNonTerminal(name="{identifier}")	
 class_declaration
-	:	"class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body	(";"<NONE>)? 
-	;
+	:  "class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body (";"<NONE>)? ;
 
 type_parameter_list
-	:	"<"	type_parameter	(	","	type_parameter	)*	">"
-	;
+	:  "<" type_parameter (	","	type_parameter )* ">" ;
 
 type_parameter
-	:	[attributes]	identifier
-	;
+	:  [attributes] identifier ;
 	
 type_parameter_constraint_clauses
-	:	type_parameter_constraint_clause (type_parameter_constraint_clause)*
-	;
+	:  type_parameter_constraint_clause (type_parameter_constraint_clause)* ;
 
 type_parameter_constraint_clause
-	:	<WHERE>	type_parameter	":"	type_parameter_constraints
-	;
+	:  <WHERE> type_parameter ":" type_parameter_constraints ;
 
 type_parameter_constraints
 	:	primary_constraint	["," remaining_constraints]
@@ -867,162 +890,158 @@ interface_type_list
 
 @FSTNonTerminal()
 class_body 
-	:	"{" @+!   (class_member_declaration)*   @-! "}" @! 
-	;
+	:  "{" @+! (class_member_declaration)* @-! "}" @! ;
+
 @FSTNonTerminal(name="{class_member_declarationEnd}")
 class_member_declaration 
-	:	(attributes)?	(member_modifiers)? class_member_declarationEnd;
+	:  (attributes)? (member_modifiers)? class_member_declarationEnd ;
 
+@FSTNonTerminal
 class_member_declarationEnd
-		:	@FSTTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
-		|	@FSTTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
-		|	@FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
-		|	@FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
-		|	@FSTNonTerminal(name="{type_declaration}") type_declaration
-		|	@FSTTerminal(name="{type} {typeEnd}",compose="{typeEnd}") type	typeEnd	
-		|	@FSTTerminal(name="{AUTO}") "#region" (region_id)*
-		|	@FSTTerminal(name="{AUTO}") "#endregion" 
-		;
-		
-region_id : identifier;
-
-typeEnd
-	:	@FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration
-	|	@FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
-	|	@FSTTerminal(name="{operator_declaration}")	operator_declaration
-	|	@FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|	@FSTTerminal(name="{type_name}{type_nameEnd}",compose="{type_nameEnd}")	type_name	type_nameEnd
+	:  @FSTTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
+	|  @FSTTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
+	|  @FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
+	|  @FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
+	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
+	|  @FSTNonTerminal(name="{type} {typeEnd}",compose="{typeEnd}") type typeEnd	
+	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
+	|  @FSTTerminal(name="{AUTO}") "#endregion" 
 	;
+		
+region_id
+	:  identifier ;
 
-			
+@FSTNonTerminal
+typeEnd
+	:  @FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration
+	|  @FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
+	|  @FSTTerminal(name="{operator_declaration}")	operator_declaration
+	|  @FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
+	|  @FSTTerminal(name="{type_name}{type_nameEnd}",compose="{type_nameEnd}")	type_name	type_nameEnd
+	;
+		
 type_nameEnd
-	:	@FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding")	method_declaration
-	|	@FSTTerminal(name="{property_declaration}")							property_declaration
-	|	@FSTTerminal(name="",compose="FieldOverriding")						field_declaration
+	:  @FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding") method_declaration
+	|  @FSTTerminal(name="{property_declaration}") property_declaration
+	|  @FSTTerminal(name="",compose="FieldOverriding") field_declaration
 	;
 
 member_modifiers
-	:	(member_modifier)+	
-	;
+	:  (member_modifier)+ ;
 
 member_modifier 
-	:	"new"
-	|	"public"
-	|	"protected"
-	|	"internal"
-	|	"private"
-	|	"static"
-	|	"virtual"
-	|	"sealed"
-	|	"override"
-	|	"abstract"
-	|	"extern"
-	| "readonly"
-	|	"unsafe"
+	:  "new"
+	|  "public"
+	|  "protected"
+	|  "internal"
+	|  "private"
+	|  "static"
+	|  "virtual"
+	|  "sealed"
+	|  "override"
+	|  "abstract"
+	|  "extern"
+	|  "readonly"
+	|  "unsafe"
+	;
+
+accessor_modifiers
+	: (accessor_modifier)+ ;
+
+accessor_modifier
+	: "protected"
+	| "internal"
+	| "private"
 	;
 
 constant_declaration
-	:	"const"	type	constant_declarators	";" @!
-	;
+	:  "const" type constant_declarators ";" @! ;
 	
 constant_declarators
-	:	constant_declarator	(","	constant_declarator)*
-	;
+	:  constant_declarator	( "," constant_declarator )* ;
 	
 constant_declarator 
-	:	identifier	"="	expression 
-		
-	;
+	:  identifier "=" expression ;
 
-field_declaration		//okay I know this is ugly, but as long as it all works out I have saved us an arbitrary look ahead operation
-	:	field_declaration_start	(","	field_declarators)?	";" @!			
-	;
+field_declaration	//okay I know this is ugly, but as long as it all works out I have saved us an arbitrary look ahead operation
+	:  field_declaration_start	(","	field_declarators)?	";" @! ;
 	
 field_declaration_start
-	:	("="	variable_initializer)?
-	;
+	:  ("="	variable_initializer)? ;
 
 field_declarators
-	:	field_declarator (","   field_declarator)*  
-	;
+	:  field_declarator (","   field_declarator)* ;
 
 field_declarator
-	:	identifier  ("="   variable_initializer)?
-	;
+	:  identifier ("=" variable_initializer)? ;
 
 variable_initializer 
-	:		array_initializer
-		|	expression
-		|	stackalloc_initializer
-		
+	:  array_initializer
+	|  expression
+	|  stackalloc_initializer
 	;
 
 @FSTExportName("({formal_parameter_list})")
 method_declaration
-	: [type_parameter_list] "("	(formal_parameter_list)? [type_parameter_constraint_clauses] ")"	body 
-	;
+	: [type_parameter_list] "("	(formal_parameter_list)? [type_parameter_constraint_clauses] ")" body ;
 
 body 
-	:	 block | ";" @!<NONE> 
+	:  block
+	|  ";" @!<NONE> 
 	;
 
 @FSTExportName("{formal_parameter_listEnd}")
 formal_parameter_list
-	:	( attributes )?	formal_parameter_listEnd;
+	:  ( attributes )?	formal_parameter_listEnd;
 
 formal_parameter_listEnd
-	:	@FSTExportName("{fixed_parameter} {fixed_parameterEnd}^~") fixed_parameter	( 	fixed_parameterEnd )* 
-	|	@FSTExportName("{parameter_array}") parameter_array 
+	:  @FSTExportName("{fixed_parameter} {fixed_parameterEnd}^~") fixed_parameter	( 	fixed_parameterEnd )* 
+	|  @FSTExportName("{parameter_array}") parameter_array 
 	;
 
 @FSTExportName("{formal_parameter_listEndInt}")
-fixed_parameterEnd: "," ( attributes )?	 formal_parameter_listEndInt ;
+fixed_parameterEnd
+	:  "," ( attributes )? formal_parameter_listEndInt ;
 
 formal_parameter_listEndInt
 	: @FSTExportName("{fixed_parameter} {fixed_parameterEnd}^~") fixed_parameter 
-	| @FSTExportName("{parameter_array}") parameter_array;
+	| @FSTExportName("{parameter_array}") parameter_array
+	;
 
 @FSTExportName("{type}")
 fixed_parameter
-	:	(parameter_modifier)?	type	identifier 
-	;
+	: (parameter_modifier)?	type identifier ;
 
 @FSTExportName("{TOSTRING}")
 parameter_modifier 
-	:	"ref"
-	|	"out"
+	:  "ref"
+	|  "out"
 	;
 	
 @FSTExportName("params {type}")
 parameter_array
 	//:	PARAMS	non_array_type	rank_specifiers	identifier 
-		:	"params"	type	identifier 
-	;
+	:  "params" type identifier ;
 
 property_declaration
-	:	"{"	accessor_declarations	"}" 
-	;
+	:  "{"  accessor_declarations "}" ;
 
 accessor_declarations
-	:	accessor_declaration (accessor_declaration)?
-	;
+	:  accessor_declaration (accessor_declaration)? ;
 
 accessor_declaration
-	:	(attributes)?	<IDENTIFIER>	body 
-	;
+	:  (accessor_modifiers)? (attributes)? <IDENTIFIER> body ;
 
 event_declaration
-	:	"event"	type	event_declarationInt
-	;
+	:  "event" type	event_declarationInt ;
 	
-event_declarationInt:		LOOK_AHEAD(2)  
-											type_name	"{"	event_accessor_declarations	"}"
-										| event_variable_declarator (","	event_variable_declarator )*	";" @!		
-										;
+event_declarationInt
+	:  LOOK_AHEAD(2) type_name "{" event_accessor_declarations "}"
+	|  event_variable_declarator (","	event_variable_declarator )* ";" @!		
+	;
 
 event_variable_declarator
-	:	identifier  ("="   variable_initializer)?
-	;
+	:  identifier ("=" variable_initializer)? ;
 
 event_accessor_declarations 
 	:	accessor_declaration accessor_declaration
@@ -1067,47 +1086,48 @@ binary_operator_declaration
 	;
 	
 overloadable_binary_operator
-	:	"+"
-	|	"-"
-	|	"*"
-	|	"/"
-	|	"%"
-	|	"&"
-	|	"|"
-	|	"^"
-	|	"<<"
-	|	">>"
-	|	"=="
-	|	"!="
-	|	">"
-	|	"<"
-	|	">="
-	|	"<="
+	:  "+"
+	|  "-"
+	|  "*"
+	|  "/"
+	|  "%"
+	|  "&"
+	|  "|"
+	|  "^"
+	|  "<<"
+	|  ">>"
+	|  "=="
+	|  "!="
+	|  ">"
+	|  "<"
+	|  ">="
+	|  "<="
 	;
 
 conversion_operator_declaration
-	:	conversion_operator	"operator"	type	"("	type	identifier	")"	body
-		
-	;
+	:  conversion_operator "operator" type "(" type identifier ")" body ;
 
 conversion_operator
-	:	"implicit" |"explicit"
+	:  "implicit"
+	|  "explicit"
 	;
 
 @FSTExportName("{formal_parameter_list}")
 constructor_declaration
-	:	"("	(formal_parameter_list)?	")"	(constructor_initializer)?	body 
-	;
+	:  "(" (formal_parameter_list)? ")" (constructor_initializer)? body ;
 
 constructor_initializer 
 	:	":"	constructor_initializerInt	"("	(argument_list)?	")"
 	;
-constructor_initializerInt: "base" | "this";
+
+constructor_initializerInt
+	:  "base"
+	|  "this"
+	;
 
 @FSTTerminal(name="~()",compose="ConstructorConcatenation")
 destructor_declaration
-	:	"~"	identifier	"("	")"	body 
-	;
+	:  "~" identifier "(" ")" body ;
 
 //***********************************************************************************************************************************/
 //C.2.8 Structs
@@ -1115,25 +1135,27 @@ destructor_declaration
 
 @FSTNonTerminal(name="{identifier}")	
 struct_declaration
-	:	"struct"   identifier  [type_parameter_list] (base_interfaces)?  [type_parameter_constraint_clauses] class_body   (";"<NONE>)? 
-	;
+	:  "struct" identifier [type_parameter_list] (base_interfaces)? [type_parameter_constraint_clauses] class_body (";"<NONE>)? ;
 
 @FSTNonTerminal()
 base_interfaces 
-	:	":"   interface_type_list 
-	;
+	:  ":" interface_type_list ;
 	
 //***********************************************************************************************************************************/
 //C.2.9 Arrays
 //***********************************************************************************************************************************/
 array_initializer
-	:	"{" rest_of_array_initializer
-	;
+	:  "{" rest_of_array_initializer ;
+
 rest_of_array_initializer
-	:	"}"
-	|	variable_initializer rest_of_array_initializerEnd
+	:  "}"
+	|  variable_initializer rest_of_array_initializerEnd
 	;
-rest_of_array_initializerEnd:	"}" |  ","	rest_of_array_initializer;
+
+rest_of_array_initializerEnd
+	:  "}"
+	|  "," rest_of_array_initializer
+	;
 
 //***********************************************************************************************************************************/
 //C.2.10 Interfaces
@@ -1141,61 +1163,53 @@ rest_of_array_initializerEnd:	"}" |  ","	rest_of_array_initializer;
 
 @FSTNonTerminal(name="{identifier}")	
 interface_declaration
-	:	"interface"	identifier	[type_parameter_list]	(base_interfaces)?	[type_parameter_constraint_clauses]	interface_body   (";"<NONE>)?
-			
-	;
+	:  "interface" identifier [type_parameter_list] (base_interfaces)? [type_parameter_constraint_clauses] interface_body (";"<NONE>)? ;
 
 @FSTNonTerminal()	
 interface_body 
-	:	"{" @+!   (interface_member_declaration)*   @-! "}" @! 
-	;
+	:  "{" @+! (interface_member_declaration)* @-! "}" @! ;
 
 @FSTTerminal(name="{interface_member_declarationEnd}")
 interface_member_declaration 
-	:	(attributes)?	(interface_member_modifier)*
-		interface_member_declarationEnd
-	;
+	:  (attributes)? (interface_member_modifier)* interface_member_declarationEnd ;
 
 @FSTExportName("{TOSTRING}")	
-interface_member_declarationEnd: 
-		interface_event_declaration			//"event"   type   identifier   ";" 
-		|	type	interface_member_declarationEndType;
+interface_member_declarationEnd
+	:  interface_event_declaration //"event" type identifier ";" 
+	|  type interface_member_declarationEndType
+	;
 							
-interface_member_declarationEndType: 
-		interface_indexer_declaration 	//type   "this"   "["   formal_parameter_list   "]"   "{"   interface_accessors   "}"
-		|	identifier	interface_member_declarationEndTypeIdentifier;
+interface_member_declarationEndType
+	:  interface_indexer_declaration //type "this" "[" formal_parameter_list "]" "{" interface_accessors "}"
+	|  identifier interface_member_declarationEndTypeIdentifier
+	;
 
 interface_member_declarationEndTypeIdentifier:	interface_method_declaration	//type   identifier   "("   (formal_parameter_list)?   ")"   ";" 
 															|	interface_property_declaration	//type   identifier   "{"   interface_accessors   "}"
 															;
 
 interface_member_modifier
-	:	"new" | "unsafe"	
+	:  "new"
+	|  "unsafe"	
 	;
 
 interface_event_declaration
-	:	"event"   type   identifier   ";" @! 
-	;
+	:  "event" type identifier ";" @! ;
 	
 interface_indexer_declaration
-	:	"this"	"["	formal_parameter_list	"]"	"{"	interface_accessors	"}" 
-	;
+	:  "this" "[" formal_parameter_list "]" "{" interface_accessors "}" ;
 	
 interface_method_declaration
-	:	[type_parameter_list]	"("	(formal_parameter_list)?	[type_parameter_constraint_clauses]	")"	";" @! 
-	;
+	:  [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @! ;
 
 interface_property_declaration
-	:	"{"	interface_accessors	"}" 
-	;
+	:  "{" interface_accessors "}" ;
 
 interface_accessors 
-	:	interface_accessor (interface_accessor)?
-	;
+	:  interface_accessor (interface_accessor)? ;
 
 interface_accessor
-	:	(attributes)?	<IDENTIFIER>	";" @! 
-	;
+	:  (attributes)? <IDENTIFIER> ";" @! ;
 
 //***********************************************************************************************************************************/
 //C.2.11 Enums
@@ -1203,31 +1217,29 @@ interface_accessor
 
 @FSTNonTerminal(name="{identifier}")	
 enum_declaration
-	:	"enum"   identifier   (enum_base)?   enum_body   (";"<NONE>)? 
-	;
+	:  "enum" identifier (enum_base)? enum_body (";"<NONE>)? ;
 	
 enum_base 
-	:	":"   integral_type 
-	;
+	:  ":" integral_type ;
 
 enum_body
-	:	"{"	rest_of_enum_body	
-	;
+	:  "{" rest_of_enum_body ;
 
 rest_of_enum_body
-	:	"}"
-	|	enum_member_declaration	 rest_of_enum_bodyEnd
+	:  "}"
+	|  enum_member_declaration rest_of_enum_bodyEnd
 	;
 	
-rest_of_enum_bodyEnd: 	"}" |  ","	rest_of_enum_body;
+rest_of_enum_bodyEnd
+	:  "}"
+	|  "," rest_of_enum_body
+	;
 
 enum_member_declaration 
-	:	(attributes)?	identifier	(enum_member_assignment)?
-	;
+	:  (attributes)? identifier	(enum_member_assignment)? ;
 
 enum_member_assignment
-	:	"="	expression	
-	;
+	:  "=" expression ;
 
 //***********************************************************************************************************************************/	
 //C.2.12 Delegates
@@ -1235,99 +1247,85 @@ enum_member_assignment
 
 @FSTNonTerminal(name="{identifier}")	
 delegate_declaration
-	:	"delegate"   type   identifier	[type_parameter_list]  "("   (formal_parameter_list)?	[type_parameter_constraint_clauses]   ")"   ";" @! 
-	;
+	:  "delegate" type identifier [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @! ;
 
 //***********************************************************************************************************************************/	
 //C.2.13 Attributes
 //***********************************************************************************************************************************/	
 attributes_either
-	:	(attribute_section_start)+
-	;
+	:  (attribute_section_start)+ ;
 
 attribute_section_start
-	:		LOOK_AHEAD("\"[\" (\"assembly\" |\"module\") \":\"") "["global_attribute_target_specifier	attribute_section
-								|	"[" (attribute_target_specifier)?	attribute_section							
+	:  LOOK_AHEAD("\"[\" (\"assembly\" |\"module\") \":\"") "["global_attribute_target_specifier attribute_section
+								|	"[" (attribute_target_specifier)? attribute_section							
 	;
 
 global_attribute_target_specifier
-	:	global_attribute_target	":"	
-	;
+	:  global_attribute_target ":" ;
 
 global_attribute_target
-	:	"assembly"|"module"
+	:  "assembly"
+	|  "module"
 	;
 
 attributes
-	:	(local_attribute)+	
-	;
-	
+	:  (local_attribute)+ ;
+
 local_attribute	
-	:	"[" (LOOK_AHEAD(2) attribute_target_specifier)?	attribute_section
-	;
+	:  "[" (LOOK_AHEAD(2) attribute_target_specifier)? attribute_section ;
 
 attribute_section
-	:	attribute	attribute_sectionEnd;
-	
-attribute_sectionEnd:	"]"	|	LOOK_AHEAD(2) ","	"]"<NONE>	|	"," attribute_section
+	:  attribute attribute_sectionEnd ;
+
+attribute_sectionEnd
+	:  "]"
+	|  LOOK_AHEAD(2) "," "]"<NONE>
+	|  "," attribute_section
 	;
 
 attribute_target_specifier
-	:	attribute_target   ":"
-	;
+	:  attribute_target ":" ;
 
 attribute_target
-	:	"event"
-	|	"return"
-	|	<IDENTIFIER>
+	:  "event"
+	|  "return"
+	|  <IDENTIFIER>
 	;
 
 attribute
-	:	type_name	(attribute_arguments)?
-	;
+	:  type_name (attribute_arguments)? ;
 
 attribute_arguments
-	:	"(" (expression_list)? ")"
-	;
+	:  "(" (expression_list)? ")" ;
 
 //***********************************************************************************************************************************/	
 //C.3 Grammar extensions for unsafe code
 //***********************************************************************************************************************************/	
 sizeof_expression 
-	:	"sizeof" "("  type   ")"	
-	;
+	:  "sizeof" "(" type ")" ;
 	
 unsafe_statement
-	:	"unsafe"	block
-	;
+	:  "unsafe" block ;
 	
 pointer_member_access
-	:	"->"	<IDENTIFIER>	
-	;
+	:  "->" <IDENTIFIER> ;
 
 /*
 addressof_expression
-	:	"&"	unary_expression
-	;
+	:  "&" unary_expression ;
 */
 
 fixed_statement
-	:	"fixed"	"("	type	fixed_pointer_declarators	")"	embedded_statement
-	;
+	:  "fixed" "(" type fixed_pointer_declarators ")" embedded_statement ;
 
 fixed_pointer_declarators
-	:	fixed_pointer_declarator	( ","	fixed_pointer_declarator )*
-	;
+	:  fixed_pointer_declarator ( "," fixed_pointer_declarator )* ;
 
 fixed_pointer_declarator
-	:	identifier	"="	fixed_pointer_initializer
-	;
+	:  identifier "=" fixed_pointer_initializer ;
  
 fixed_pointer_initializer
- 	:	("&"<NONE>)?	expression
- 	;
+ 	:  ("&"<NONE>)? expression ;
 
 stackalloc_initializer
-	:	"stackalloc"	non_array_type	"["	expression	"]"
-	;
-
+	:  "stackalloc"	non_array_type "[" expression "]" ;
