@@ -97,23 +97,18 @@ public class FileLoader {
 	    // features = equationFileContent.split(" ");
 	    // }
 	    // System.out.println("BaseDirectory: " + baseDirectoryName);
-	    Iterator<ArtifactBuilderInterface> iterator = builderList
-		    .iterator();
-	    if (!equationBaseDirectoryName.trim().endsWith(
-		    "" + File.separatorChar)) {
-		equationBaseDirectoryName = equationBaseDirectoryName.trim()
-			+ File.separatorChar;
+	    Iterator<ArtifactBuilderInterface> iterator = builderList.iterator();
+	    if (!equationBaseDirectoryName.trim().endsWith("" + File.separatorChar)) {
+	    	equationBaseDirectoryName = equationBaseDirectoryName.trim() + File.separatorChar;
 	    }
 	    while (iterator.hasNext()) {
-		iterator.next().setBaseDirectoryName(
-			getDirectoryName(new File(equationBaseDirectoryName)));
+	    	iterator.next().setBaseDirectoryName(getDirectoryName(new File(equationBaseDirectoryName)));
 	    }
 	    for (int i = 0; i < features.length; i++) {
-		if (!features[i].equals(" ")) {
-		    File feature = new File(equationBaseDirectoryName
-			    + features[i]);
-		    parseDirectory(feature, !aheadEquation);
-		}
+	    	if (features[i].trim().length() > 0) {
+	    		File feature = new File(equationBaseDirectoryName + features[i]);
+	    		parseDirectory(feature, !aheadEquation);
+	    	}
 	    }
 	}
     }
@@ -150,6 +145,7 @@ public class FileLoader {
 	    }
 
 	} else if (recursive) {
+		
 	    File[] files = directory.listFiles(fileFilter);
 	    if (files != null) {
 
@@ -174,9 +170,9 @@ public class FileLoader {
 	    }
 	    File[] directories = directory.listFiles(directoryFileFilter);
 	    if (directories != null) {
-		for (int i = 0; i < directories.length; i++) {
-		    parseDirectory(directories[i], recursive);
-		}
+	    	for (int i = 0; i < directories.length; i++) {
+	    		parseDirectory(directories[i], recursive);
+	    	}
 	    }
 	} else {
 	    File[] files = directory.listFiles(fileFilter);

@@ -67,7 +67,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 				
 				/*for (FSTNonTerminal feature : features) {
-					System.out.println(feature);
+					System.out.println(feature.getName());
 				}*/
 				
 				FSTNode composition = compose(features);
