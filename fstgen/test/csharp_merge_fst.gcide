@@ -1,23 +1,24 @@
 options {
 	STATIC = false;
 	ERROR_REPORTING = true;
+	UNICODE_INPUT = true;
 }
 
 
-PARSER_BEGIN(CSharpParser)
+PARSER_BEGIN(CSharpMergeParser)									// adapted from csharp_fst.gcide
 
-package tmp.generated_csharp;
+package tmp.generated_csharp_merge;								// adapted from csharp_fst.gcide
 import java.io.*;
 import java.util.*;
 import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
-public class CSharpParser extends AbstractFSTParser {
-	public CSharpParser() {}
+public class CSharpMergeParser extends AbstractFSTParser {		// adapted from csharp_fst.gcide
+	public CSharpMergeParser() {}								// adapted from csharp_fst.gcide
 }
 
-PARSER_END(CSharpParser)
+PARSER_END(CSharpMergeParser)									// adapted from csharp_fst.gcide
 
 SPECIAL_TOKEN : {
 	" "
@@ -225,13 +226,14 @@ TOKEN : {
 GRAMMARSTART
 // workaround to accept the word yield as an identifier
 IDENTIFIER_CSHARP
-	: <IDENTIFIER>
-	| "yield"
+	:  <IDENTIFIER>
+	|  "yield"
 	;
 
 @FSTNonTerminal()
 compilation_unit 
-	:  (using_directive)* (attributes_either)? ( compilation_unitEnd)? <EOF> ;
+	:  (using_directive)* (attributes_either)? ( compilation_unitEnd)? <EOF>
+	;
 
 identifier:
 	@FSTExportName("{IDENTIFIER_CSHARP}") IDENTIFIER_CSHARP		
@@ -276,18 +278,21 @@ type_argument_list
 
 @FSTExportName(name="{TOSTRING}")
 type
-	:  non_array_type ( rank_specifiers )? ("*"<NONE>)? ;
+	:  non_array_type ( rank_specifiers )? ("*"<NONE>)?
+	;
 
 rank_specifiers
-	:  (rank_specifier)+ ;	
+	:  (rank_specifier)+
+	;	
 
 rank_specifier
-	:  "[" ( "," <NONE>)* "]" ;
+	:  "[" ( "," <NONE>)* "]"
+	;
 
 non_array_type
-   :  predefined_type
-   |  type_name
-   ;
+	:  predefined_type
+	|  type_name
+	;
 
 predefined_type
    :  simple_type
@@ -335,14 +340,16 @@ floating_point_type
 //***********************************************************************************************************************************/
 expression
 	:  conditional_expression (expressionInternal)?
-	|  LL(2) lambda_expression
+	//|  LOOK_AHEAD(2) lambda_expression
+	;
+	
+expressionInternal
+	:  assignment_operator expression
 	;
 
-expressionInternal
-	:  assignment_operator expression;
-
 assignment
-	:  conditional_expression assignment_operator expression ;
+	:  conditional_expression assignment_operator expression
+	;
 	
 assignment_operator 
 	:  "="
@@ -358,10 +365,13 @@ assignment_operator
 	|  ">>="
 	|  ">>>="
 	|  "??"			// special assignment operator "null" test
+	|  "::"
+	|  "=>"			// TODO ugly workaround
 	;
 
 conditional_expression
-	:  conditional_or_expression (conditional_expressionInternal)? ;
+	:  conditional_or_expression (conditional_expressionInternal)?
+	;
    
 conditional_expressionInternal
 	:  "?" expression ":" conditional_expression ;
@@ -385,7 +395,8 @@ equality_expression
 	:  relational_expression (equality_expressionInternal)? ;
    
 equality_expressionInternal
-	:  equality_operator equality_expression ;
+	:  equality_operator equality_expression
+	;
 
 equality_operator
 	:  "=="<NONE>
@@ -447,7 +458,7 @@ multiplicative_operator
 	;
 
 unary_expression 
-	:  unary_operator	unary_expression	
+	:  unary_operator unary_expression	
 	|  LOOK_AHEAD("cast_expression()") cast_expression	
 	|  primary_expression
 	;
@@ -460,6 +471,7 @@ unary_operator	//While STAR is listed as a unary operator in the grammar, it app
 	|  "*"
 	|  "++"
 	|  "--"
+	|  "&"
 	;
 
 cast_expression
@@ -467,14 +479,14 @@ cast_expression
 	;
 
 primary_expression
-	:  primary_expression_start ( LL("primary_expression_postfix(inTerminal)") primary_expression_postfix )?
+	:  primary_expression_start (LL("primary_expression_postfix(inTerminal)") primary_expression_postfix)?
 	|  creation_expression
 	;
 	
 primary_expression_start
 	:  literal
 	|  identifier									
-	|  parenthesized_expression			//"("   expression   ")"
+	|  LOOK_AHEAD(3) parenthesized_expression			//"("   expression   ")"
 	|  predefined_type member_access
 	|  this_access						//"this"
 	|  base_access						//"base" (("." identifier) | ("["   expression_list   "]"))
@@ -483,12 +495,14 @@ primary_expression_start
 	|  checked_expression				//CHECKED   "("   expression   ")"
 	|  unchecked_expression				//UNCHECKED   "("   expression   ")"
 	|  LOOK_AHEAD(2) default_value_expression
+	|  anonymous_method_expression		//DELEGATE ...
+	|  LOOK_AHEAD("anonymous_function_signature() \"=>\"") lambda_expression
 	;
 
 default_value_expression
 	:  "default" "(" type ")"
 	;
-	
+
 primary_expression_postfix
 	:  (LL("primary_expression_postfixInternal(inTerminal)") primary_expression_postfixInternal)+
 	;
@@ -515,8 +529,24 @@ array_creation_postfix_expressionInternal
 	;
 
 creation_expression
-	:  "new" non_array_type creation_expressionPostFix
+	:  "new" non_array_type creation_expressionPostFix (object_initializer)?
 	;
+
+object_initializer
+	:  "{" (member_initializer_list)? "}"		// the specification allows a final "," after the last member_initializer
+	;
+
+member_initializer_list
+	:  member_initializer ("," member_initializer)*
+	;
+
+member_initializer
+	:  identifier ("=" initializer_value)?
+	;
+
+initializer_value
+	:  expression
+	;	  
 	
 creation_expressionPostFix
 	:  "(" (argument_list)? ")"	(primary_expression_postfix)?
@@ -542,7 +572,7 @@ argument_list
 
 argument
 	:  (argumentPrefix)? expression
-	|  "delegate" (delegate_arg)? body
+//	|  "delegate" (delegate_arg)? body
 	;
 
 delegate_arg
@@ -597,7 +627,7 @@ unchecked_expression
 //C.2.5 Statements
 //***********************************************************************************************************************************/
 statement
-	:  LOOK_AHEAD(2) identifier ":" statement //labeled_statement
+	:  LOOK_AHEAD(2) identifier ":" statement			//labeled_statement
 	|  LOOK_AHEAD("type() identifier()") local_variable_declaration ";" @!	
 	|  local_constant_declaration ";" @!
 	|  embedded_statement					
@@ -647,14 +677,17 @@ embedded_statement
 	;
 	
 block
-	:  "{" @+! (statement)*  @-! "}" @! ;
+	:  "{" @+! (statement)*  @-! "}" @!
+	;
 
 statement_list
-	:  (statement)+ ;
+	:  (statement)+
+	;
 	
 expression_statement 
-	:  expression ";" @! ; 
-	
+	:  expression ";" @!
+	;
+
 selection_statement 
 	:  if_statement
 	|  switch_statement 
@@ -811,12 +844,12 @@ using_directiveEnd
 
 namespace_member_declaration_no_attr
 	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
-	|  @FSTNonTerminal(name="{type_declaration}") (type_modifiers)? type_declaration
+	|  @FSTNonTerminal(name="{type_declaration}") (class_modifiers)? type_declaration // TODO
 	;
 
 namespace_member_declaration 
 	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
-	|  @FSTNonTerminal(name="{type_declaration}") (attributes)? (type_modifiers)? type_declaration
+	|  @FSTNonTerminal(name="{type_declaration}") (attributes)? (class_modifiers)? type_declaration // TODO
 	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
 	|  @FSTTerminal(name="{AUTO}") "#endregion"
 	;
@@ -829,26 +862,13 @@ type_declaration //Type declaration that assumes parent rule has already looked 
 	|  @FSTNonTerminal(name="{delegate_declaration}") delegate_declaration
 	;
 
-type_modifiers
-	:  (type_modifier)+
-	;
-
-type_modifier
-	:  "new"
-	|  "public"
-	|  "protected"
-	|  "internal"
-	|  "private"
-	|  "abstract"
-	|  "sealed"
-	|  "unsafe"
-	|  "partial"
-	|  "static"
-	|  "volatile"
-	;
 
 lambda_expression
 	:  anonymous_function_signature "=>" anonymous_function_body
+	;
+
+anonymous_method_expression
+	:  "delegate" (eximplicit_anonymous_function_signature)? block
 	;
 
 anonymous_function_body
@@ -857,38 +877,24 @@ anonymous_function_body
 	;
 
 anonymous_function_signature
-	:  explicit_anonymous_function_signature
-	|  implicit_anonymous_function_signature
+	:  eximplicit_anonymous_function_signature
 	;
 
-explicit_anonymous_function_signature
-	:  "(" (explicit_anonymous_function_parameter_list)? ")"
+eximplicit_anonymous_function_signature
+	:  "(" (eximplicit_anonymous_function_parameter_list)? ")"
 	;
 
-explicit_anonymous_function_parameter_list
-	:  explicit_anonymous_function_parameter ("," explicit_anonymous_function_parameter)*
+eximplicit_anonymous_function_parameter_list
+	:  eximplicit_anonymous_function_parameter
 	;
 
-explicit_anonymous_function_parameter
-	:  (explicit_anonymous_function_parameter_modifier)? type identifier
+eximplicit_anonymous_function_parameter
+	:  (eximplicit_anonymous_function_parameter_modifier)? identifier ("," eximplicit_anonymous_function_parameter)*
 	;
 
-explicit_anonymous_function_parameter_modifier
+eximplicit_anonymous_function_parameter_modifier
 	:  "ref"
 	|  "out"
-	;
-
-implicit_anonymous_function_signature
-	:  "(" (implicit_anonymous_function_parameter_list)? ")"
-	|  implicit_anonymous_function_parameter
-	;
-
-implicit_anonymous_function_parameter_list
-	:  implicit_anonymous_function_parameter ("," implicit_anonymous_function_parameter)*
-	;
-
-implicit_anonymous_function_parameter
-	:  identifier
 	;
 
 //***********************************************************************************************************************************/
@@ -899,6 +905,29 @@ implicit_anonymous_function_parameter
 class_declaration
 	:  "class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body (";"<NONE>)?
 	;
+
+class_modifiers
+	:  (class_modifier)+
+	;
+
+class_modifier
+	:  "new"
+	|  "public"
+	|  "protected"
+	|  "internal"
+	|  "private"
+	|  "abstract"
+	|  "sealed"
+	|  "unsafe"			// TODO delete
+	|  "partial"		// TODO move to class declaration (class_modifiers)? ("partial"<NONE>)? "class" ...
+	|  "static"
+	|  "volatile"		// TODO delete
+	|  "override"		// TODO delete
+	|  "readonly"       // TODO delete
+	|  "virtual"		// TODO delete
+	|  "extern"			// TODO delete
+	;
+
 
 type_parameter_list
 	:  "<" type_parameter (	","	type_parameter )* ">"
@@ -913,17 +942,22 @@ type_parameter_constraint_clauses
 	;
 
 type_parameter_constraint_clause
-	:  <WHERE> type_parameter ":" type_parameter_constraints
+	:  "where" type_parameter ":" type_parameter_constraints
 	;
 
 type_parameter_constraints
-	:	primary_constraint	["," remaining_constraints]
-	|	secondary_constraint	["," constructor_constraint]
+	:	primary_constraint ("," secondary_constraints)?
+	|	LOOK_AHEAD(2) secondary_constraints
 	|	constructor_constraint
 	;
-	
-remaining_constraints
-	:  secondary_constraint ["," constructor_constraint]
+
+secondary_constraints
+	:  type_name_or_parameter ("," secondary_constraintsEnd)*
+	|  secondary_constraintsEnd
+	;
+
+secondary_constraintsEnd
+	:  type_name_or_parameter
 	|  constructor_constraint
 	;
 
@@ -933,17 +967,13 @@ primary_constraint
 	|  "struct"
 	;
 	
-secondary_constraint
-	:  type_name_or_paramenter ("," type_name_or_paramenter)*
-	;
-
-type_name_or_paramenter
+type_name_or_parameter
 	:  type_name
 	|  type_parameter
 	;
 
 constructor_constraint
-	:  "new" "(" ")" <NONE>
+	:  "new" "(" ")"<NONE>
 	;
 
 @FSTTerminal(name="{class_type}{type_name}^,")	
@@ -963,11 +993,11 @@ class_body
 
 @FSTNonTerminal(name="{class_member_declarationEnd}")
 class_member_declaration 
-	:  (attributes)? (member_modifiers)? class_member_declarationEnd ;
+	:  (attributes)? (class_modifiers)? class_member_declarationEnd ;
 
 class_member_declarationEnd
-	:  @FSTTerminal(name="{constant_declaration}") constant_declaration		//CONST type   constant_declarators   ";"
-	|  @FSTTerminal(name="{event_declaration}") event_declaration		//"event"   type   variable_declarators   ";"
+	:  @FSTTerminal(name="{constant_declaration}") constant_declaration			//CONST type   constant_declarators   ";"
+	|  @FSTTerminal(name="{event_declaration}") event_declaration				//"event"   type   variable_declarators   ";"
 	|  @FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
 	|  @FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
 	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
@@ -994,26 +1024,6 @@ type_nameEnd
 	|  @FSTTerminal(name="",compose="FieldOverriding") field_declaration
 	;
 
-member_modifiers
-	:  (member_modifier)+
-	;
-
-member_modifier 
-	:  "new"
-	|  "public"
-	|  "protected"
-	|  "internal"
-	|  "private"
-	|  "static"
-	|  "virtual"
-	|  "sealed"
-	|  "override"
-	|  "abstract"
-	|  "extern"
-	|  "readonly"
-	|  "unsafe"
-	;
-
 accessor_modifiers
 	: (accessor_modifier)+
 	;
@@ -1034,7 +1044,8 @@ constant_declarator
 	:  identifier "=" expression ;
 
 field_declaration	//okay I know this is ugly, but as long as it all works out I have saved us an arbitrary look ahead operation
-	:  field_declaration_start ("," field_declarators)? ";" @! ;
+	:  field_declaration_start ("," field_declarators)? ";" @!
+	;
 	
 field_declaration_start
 	:  ("="	variable_initializer)? ;
@@ -1053,7 +1064,7 @@ variable_initializer
 
 @FSTExportName("({formal_parameter_list})")
 method_declaration
-	:  [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" body
+	:  [type_parameter_list] "(" (formal_parameter_list)? ")" (type_parameter_constraint_clauses)? body
 	;
 
 body 
@@ -1063,7 +1074,8 @@ body
 
 @FSTExportName("{formal_parameter_listEnd}")
 formal_parameter_list
-	:  (attributes)?	formal_parameter_listEnd;
+	:  (attributes)? formal_parameter_listEnd
+	;
 
 formal_parameter_listEnd
 	:  @FSTExportName("{fixed_parameter} {fixed_parameterEnd}^~") fixed_parameter (fixed_parameterEnd)* 
@@ -1072,16 +1084,17 @@ formal_parameter_listEnd
 
 @FSTExportName("{formal_parameter_listEndInt}")
 fixed_parameterEnd
-	:  "," ( attributes )? formal_parameter_listEndInt ;
+	:  "," ( attributes )? formal_parameter_listEndInt
+	;
 
 formal_parameter_listEndInt
 	:  @FSTExportName("{fixed_parameter} {fixed_parameterEnd}^~") fixed_parameter 
-	|  @FSTExportName("{parameter_array}") parameter_array
+	|  @FSTExportName("{parameter_array}") LOOK_AHEAD(2) parameter_array
 	;
 
 @FSTExportName("{type}")
 fixed_parameter
-	:  (parameter_modifier)? type identifier
+	:  (parameter_modifier)? type ("*"<NONE>)? identifier
 	;
 
 @FSTExportName("{TOSTRING}")
@@ -1094,7 +1107,7 @@ parameter_modifier
 @FSTExportName("params {type}")
 parameter_array
 	//:	PARAMS	non_array_type	rank_specifiers	identifier 
-	:  "params" type identifier
+	:  (attributes)? "params" type identifier
 	;
 
 property_declaration
@@ -1102,7 +1115,8 @@ property_declaration
 	;
 
 accessor_declarations
-	:  accessor_declaration (accessor_declaration)? ;
+	:  accessor_declaration (accessor_declaration)?
+	;
 
 accessor_declaration
 	:  (accessor_modifiers)? (attributes)? IDENTIFIER_CSHARP body
@@ -1193,7 +1207,7 @@ conversion_operator
 
 @FSTExportName("{formal_parameter_list}")
 constructor_declaration
-	:  "(" (formal_parameter_list)? ")" (constructor_initializer)? body
+	:  "(" (formal_parameter_list)? ")" (constructor_initializer)? constructor_body
 	;
 
 constructor_initializer 
@@ -1205,9 +1219,14 @@ constructor_initializerInt
 	|  "this"
 	;
 
+constructor_body
+	:  block
+	;
+
 @FSTTerminal(name="~()",compose="ConstructorConcatenation")
 destructor_declaration
-	:  "~" identifier "(" ")" body ;
+	:  "~" identifier "(" ")" body
+	;
 
 //***********************************************************************************************************************************/
 //C.2.8 Structs
@@ -1264,9 +1283,10 @@ interface_member_declarationEndType
 	|  identifier interface_member_declarationEndTypeIdentifier
 	;
 
-interface_member_declarationEndTypeIdentifier:	interface_method_declaration	//type   identifier   "("   (formal_parameter_list)?   ")"   ";" 
-															|	interface_property_declaration	//type   identifier   "{"   interface_accessors   "}"
-															;
+interface_member_declarationEndTypeIdentifier
+	:	interface_method_declaration	//type   identifier   "("   (formal_parameter_list)?   ")"   ";"
+	|	interface_property_declaration	//type   identifier   "{"   interface_accessors   "}"
+	;
 
 interface_member_modifier
 	:  "new"
@@ -1274,22 +1294,28 @@ interface_member_modifier
 	;
 
 interface_event_declaration
-	:  "event" type identifier ";" @! ;
+	:  "event" type identifier ";" @!
+	;
 	
 interface_indexer_declaration
-	:  "this" "[" formal_parameter_list "]" "{" interface_accessors "}" ;
+	:  "this" "[" formal_parameter_list "]" "{" interface_accessors "}"
+	;
 	
 interface_method_declaration
-	:  [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @! ;
+	:  [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @!
+	;
 
 interface_property_declaration
-	:  "{" interface_accessors "}" ;
+	:  "{" interface_accessors "}"
+	;
 
 interface_accessors 
-	:  interface_accessor (interface_accessor)? ;
+	:  interface_accessor (interface_accessor)?
+	;
 
 interface_accessor
-	:  (attributes)? IDENTIFIER_CSHARP ";" @! ;
+	:  (attributes)? IDENTIFIER_CSHARP ";" @!
+	;
 
 //***********************************************************************************************************************************/
 //C.2.11 Enums
@@ -1391,10 +1417,10 @@ unsafe_statement
 pointer_member_access
 	:  "->" IDENTIFIER_CSHARP ;
 
-/*
+
 addressof_expression
-	:  "&" unary_expression ;
-*/
+	:  "&" unary_expression
+	;
 
 fixed_statement
 	:  "fixed" "(" type fixed_pointer_declarators ")" embedded_statement ;
