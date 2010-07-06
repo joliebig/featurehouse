@@ -263,7 +263,7 @@ boolean_literal
 
 @FSTExportName("{type_name_part}^.")
 type_name
-	:  type_name_part ("." type_name_part)* ;
+	:  type_name_part ("::" type_name_part)? ("." type_name_part)* ;
 	
 @FSTExportName("{identifier}")
 type_name_part 
@@ -541,7 +541,7 @@ member_initializer_list
 	;
 
 member_initializer
-	:  identifier ("=" initializer_value)?
+	:  expression ("=" initializer_value)?
 	;
 
 initializer_value
@@ -862,13 +862,12 @@ type_declaration //Type declaration that assumes parent rule has already looked 
 	|  @FSTNonTerminal(name="{delegate_declaration}") delegate_declaration
 	;
 
-
 lambda_expression
 	:  anonymous_function_signature "=>" anonymous_function_body
 	;
 
 anonymous_method_expression
-	:  "delegate" (eximplicit_anonymous_function_signature)? block
+	:  "delegate" (explicit_anonymous_function_signature)? block
 	;
 
 anonymous_function_body
@@ -877,25 +876,38 @@ anonymous_function_body
 	;
 
 anonymous_function_signature
-	:  eximplicit_anonymous_function_signature
+	:  implicit_anonymous_function_signature
 	;
 
-eximplicit_anonymous_function_signature
-	:  "(" (eximplicit_anonymous_function_parameter_list)? ")"
+explicit_anonymous_function_signature
+	:  "("  (explicit_anonymous_function_parameter_list)? ")"
 	;
 
-eximplicit_anonymous_function_parameter_list
-	:  eximplicit_anonymous_function_parameter
+explicit_anonymous_function_parameter_list
+	:  explicit_anonymous_function_parameter
 	;
 
-eximplicit_anonymous_function_parameter
-	:  (eximplicit_anonymous_function_parameter_modifier)? identifier ("," eximplicit_anonymous_function_parameter)*
+explicit_anonymous_function_parameter
+	:  type identifier ("," explicit_anonymous_function_parameter)*
 	;
 
-eximplicit_anonymous_function_parameter_modifier
+explicit_anonymous_function_parameter_modifier
 	:  "ref"
 	|  "out"
 	;
+
+implicit_anonymous_function_signature
+	:  "(" (implicit_anonymous_function_parameter_list)? ")"
+	;
+
+implicit_anonymous_function_parameter_list
+	:  implicit_anonymous_function_parameter
+	;
+
+implicit_anonymous_function_parameter
+	:  identifier ("," implicit_anonymous_function_parameter)*
+	;
+
 
 //***********************************************************************************************************************************/
 //C.2.7 Classes section
@@ -1391,7 +1403,7 @@ attribute_sectionEnd
 	;
 
 attribute_target_specifier
-	:  attribute_target ":" ;
+	:  attribute_target "::" ;
 
 attribute_target
 	:  "event"
