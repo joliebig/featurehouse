@@ -37,6 +37,7 @@ public class Counter {
 			collectJava(node);
 			
 		} else if(node.getType().equals("Func") ||
+				node.getType().equals("StmtYL") ||
 				node.getType().equals("StmtTL")) {
 			collectC(node);
 		}
@@ -130,7 +131,7 @@ public class Counter {
     	if (node.getType().equals("Feature")) {
     	    return name;
     	} else {
-    		if(node.getType().equals("H-File") || node.getType().equals("C-File")) {
+    		if(node.getType().equals("H-File") || node.getType().equals("C-File") || node.getType().equals("StructDec")) {
    				name = node.getName() + "." + name;
     		} else if(node.getType().equals("Folder")) {
     			name = node.getName() + "/" + name;
