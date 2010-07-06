@@ -1403,7 +1403,8 @@ attribute_sectionEnd
 	;
 
 attribute_target_specifier
-	:  attribute_target "::" ;
+	:  attribute_target ":"
+	;
 
 attribute_target
 	:  "event"
