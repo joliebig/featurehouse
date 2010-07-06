@@ -9,6 +9,7 @@ import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
+import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
 
 import composer.rules.CSharpMethodOverriding;
@@ -57,7 +58,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				if(cmd.isCount && builder instanceof JavaBuilder) {
+				if(cmd.isCount && (builder instanceof JavaBuilder || builder instanceof CApproxBuilder)) {
 					Counter counter = new Counter();
 					for (FSTNonTerminal feature : features) {
 						counter.collect(feature);
@@ -67,7 +68,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 				
 				/*for (FSTNonTerminal feature : features) {
-					System.out.println(feature.getName());
+					System.out.println(feature.toString());
 				}*/
 				
 				FSTNode composition = compose(features);

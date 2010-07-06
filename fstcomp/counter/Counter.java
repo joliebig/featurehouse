@@ -34,42 +34,64 @@ public class Counter {
 				node.getType().equals("FieldDecl") ||
 				node.getType().equals("ConstructorDecl")) {
 			
-			String name = node.getName();
-			String type = node.getType();
-			String feature = getFeatureName(node);
-
-			if(node.getType().equals("InnerClassDecl")) {
-				type = "ClassDeclaration";
-			}
+			collectJava(node);
 			
-			if(node.getType().equals("MethodDecl") || node.getType().equals("ConstructorDecl")) {
-				//name = node.getName().replace("{FormalParametersInternal}", "");
-				name = name.substring(0, name.indexOf("(")) + "()";
-				/*StringTokenizer st = new StringTokenizer(name, "-");
-				boolean even = true;
-				name = st.nextToken();
-				while(st.hasMoreTokens()) {
-					if(even) {
-						name += "-" + st.nextToken();
-						even = false;
-					} else {
-						st.nextToken();
-						even = true;
-					}
-				}*/
-			} 
-			
-			name = getQualifiedName(name, node.getParent()); 
-			
-			Entry entry = new Entry(name, type, feature);
-			data.add(entry);
-			//System.err.println(entry);
-			
+		} else if(node.getType().equals("Func") ||
+				node.getType().equals("StmtTL")) {
+			collectC(node);
 		}
 		if(node instanceof FSTNonTerminal)
 		for(FSTNode child : ((FSTNonTerminal)node).getChildren())
 			collect(child);
     }
+
+	private void collectJava(FSTNode node) {
+		String name = node.getName();
+		String type = node.getType();
+		String feature = getFeatureName(node);
+
+		if(node.getType().equals("InnerClassDecl")) {
+			type = "ClassDeclaration";
+		}
+		
+		if(node.getType().equals("MethodDecl") || node.getType().equals("ConstructorDecl")) {
+			//name = node.getName().replace("{FormalParametersInternal}", "");
+			name = name.substring(0, name.indexOf("(")) + "()";
+			/*StringTokenizer st = new StringTokenizer(name, "-");
+			boolean even = true;
+			name = st.nextToken();
+			while(st.hasMoreTokens()) {
+				if(even) {
+					name += "-" + st.nextToken();
+					even = false;
+				} else {
+					st.nextToken();
+					even = true;
+				}
+			}*/
+		} 
+		
+		name = getQualifiedJavaName(name, node.getParent()); 
+		
+		Entry entry = new Entry(name, type, feature);
+		data.add(entry);
+		//System.err.println(entry);
+	}
+	
+	private void collectC(FSTNode node) {
+		String name = node.getName();
+		String type = node.getType();
+		String feature = getFeatureName(node);
+
+		if(node.getType().equals("Func")) {
+			name = name.substring(0, name.indexOf("(")) + "()";
+		} 
+		
+		name = getQualifiedCName(name, node.getParent()); 
+		
+		Entry entry = new Entry(name, type, feature);
+		data.add(entry);
+	}
 	
 	public void writeFile(File file) {
 		try {
@@ -86,7 +108,7 @@ public class Counter {
 		
 	}
 	
-    private static String getQualifiedName(String name, FSTNode node) {
+    private static String getQualifiedJavaName(String name, FSTNode node) {
     	if (node.getType().equals("Feature")) {
     	    return name;
     	} else {
@@ -100,7 +122,21 @@ public class Counter {
     			name = node.getName() + "::" + name;
     		}
     		
-    	    return getQualifiedName(name, node.getParent());
+    	    return getQualifiedJavaName(name, node.getParent());
+        }
+		
+	}
+    private static String getQualifiedCName(String name, FSTNode node) {
+    	if (node.getType().equals("Feature")) {
+    	    return name;
+    	} else {
+    		if(node.getType().equals("H-File") || node.getType().equals("C-File")) {
+   				name = node.getName() + "." + name;
+    		} else if(node.getType().equals("Folder")) {
+    			name = node.getName() + "/" + name;
+    		}
+    		
+    	    return getQualifiedCName(name, node.getParent());
         }
 		
 	}
