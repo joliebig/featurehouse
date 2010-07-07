@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 public class Stack<T> implements Serializable {
 	private static final long serialVersionUID = 42;
-	private LinkedList<T> items = new LinkedList<T>();
+	public LinkedList<T> items = new LinkedList<T>();
 	public void push(T item) {
 		items.addFirst(item);
 	}

@@ -35,7 +35,9 @@ public class LineBasedMerger implements MergerInterface {
 
 		if(!(node.getType().equals("MethodDecl") || 
 			node.getType().equals("ConstructorDecl") || 
-			node.getType().contains("-Content"))) {
+			node.getType().contains("-Content") ||
+			node.getType().equals("class_member_declarationEnd6")	
+		)) {
 			if(tokens[0].length() == 0 && tokens[1].length() == 0 && tokens[2].length() == 0) {
 				node.setBody("");
 			} else if(tokens[0].equals(tokens[2])) {
@@ -82,12 +84,6 @@ public class LineBasedMerger implements MergerInterface {
 	        	writerVar2.write(tokens[2] + "\n");
 	        writerVar2.close();
 
-	        //if(node.getType().contains("-Content")) {
-	        //	removeComments(fileVar1);
-	        //	removeComments(fileBase);
-	        //	removeComments(fileVar2);
-	        //}
-
 	        String mergeCmd = ""; 
 	        if(System.getProperty("os.name").contains("Windows"))
 	        	mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
@@ -117,38 +113,6 @@ public class LineBasedMerger implements MergerInterface {
 
 	    } catch (IOException e) {
 	    	e.printStackTrace();
-	    } //catch (InterruptedException e) {
-	    	//e.printStackTrace();
-	    //}
+	    }
 	}
-/*	
-	private void removeComments(File file) throws IOException {
-		
-		String tmpFileName = "FSTMerge__cpp";
-		
-		
-		File workDir = new File("c:/Programme/cygwin/bin");
-		String[] cmdArray = new String[5];
-		cmdArray[0] = "c:/Programme/cygwin/bin/bash";
-		cmdArray[1] = "--login";
-		cmdArray[2] = "-i";
-		cmdArray[3] = "-c";
-		cmdArray[4] = "cpp -P " + "\"" + file.getPath() + "\"" + " -o " + tmpFileName;
-		System.err.println(cmdArray[4]);
-		Process pr = Runtime.getRuntime().exec(cmdArray, null, workDir);
-		
-		File tmpFile = new File(tmpFileName);
-		
-		FileReader in = new FileReader(tmpFile);
-	    FileWriter out = new FileWriter(file);
-	    int c;
-
-	    while ((c = in.read()) != -1)
-	      out.write(c);
-
-	    in.close();
-	    out.close();
-		
-	}
-	*/
 }

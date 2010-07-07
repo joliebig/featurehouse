@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.io.Flushable;
 
 public class Stack<T> implements Flushable {
-	private LinkedList<T> items = new LinkedList<T>();
+	protected LinkedList<T> items = new LinkedList<T>();
 	public void push(T item) {
 		items.addFirst(item);
 	}
