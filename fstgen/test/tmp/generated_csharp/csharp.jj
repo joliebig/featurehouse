@@ -1,6 +1,6 @@
 options {
-  STATIC = false;
-  ERROR_REPORTING = true;
+	STATIC = false;
+	ERROR_REPORTING = true;
 }
 
 
@@ -20,115 +20,170 @@ public class CSharpParser extends AbstractFSTParser {
 PARSER_END(CSharpParser)
 
 SPECIAL_TOKEN : {
- " "
-|  "\t"
-|  "\n"
-|  "\r"
-|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
-|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+	" "
+	|  "\t"
+	|  "\n"
+	|  "\r"
+	|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+	|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
 }
 
 
 TOKEN : {
-	<ABSTRACT	:	"abstract">|			<LONG		:	"long">|
-	<AS			:	"as"> |			<NAMESPACE	:	"namespace"> |
-	<BASE		:	"base"> |		<NEW			:	"new"> |
-	<BOOL		:	"bool"> |		<NULL		:	"null"> |
-	<BREAK		:	"break"> |		<OBJECT		:	"object"> |
-	<BYTE		:	"byte"> |		<OPERATOR	:	"operator"> |
-	<CASE		:	"case"> |		<OUT			:	"out"> |
-	<CATCH		:	"catch"> |		<OVERRIDE	:	"override"> |
-	<CHAR		:	"char"> |		<PARAMS		:	"params"> |
-	<CHECKED		:	"checked"> |	<PRIVATE		:	"private"> |
-	<CLASS		:	"class"> |			<PROTECTED	:	"protected"> |
-	<CONST		:	"const"> |			<PUBLIC		:	"public"> |
-	<CONTINUE	:	"continue"> |		<READONLY	:	"readonly"> |
-	<DECIMAL		:	"decimal"> |	<REF			:	"ref"> |
-	<DEFAULTTOKEN		:	"default"> |	<RETURN		:	"return"> |
-	<DELEGATE	:	"delegate"> |		<SBYTE		:	"sbyte"> |
-	<DO			:	"do"> |				<SEALED		:	"sealed"> |
-	<DOUBLE		:	"double"> |			<SHORT		:	"short"> |
-	<ELSE		:	"else"> |			<SIZEOF		:	"sizeof"> |
-	<ENUM		:	"enum"> |			<STACKALLOC	:	"stackalloc"> |
-	<EVENT		:	"event"> |			<STATIC		:	"static"> |
-	<EXPLICIT	:	"explicit"> |		<STRING		:	"string"> |
-	<EXTERN		:	"extern"> |			<STRUCT		:	"struct"> |
-	<FALSE		:	"false"> |			<SWITCH		:	"switch"> |
-	<FINALLY		:	"finally"> |	<THIS		:	"this"> |
-	<FIXED		:	"fixed"> |			<THROW		:	"throw"> |
-	<FLOAT		:	"float"> |			<TRUE		:	"true"> |
-	<FOR			:	"for"> |		<TRY			:	"try"> |
-	<FOREACH		:	"foreach"> |	<TYPEOF		:	"typeof"> |
-	<GOTO		:	"goto"> |			<UINT		:	"uint"> |
-	<IF			:	"if"> |				<ULONG		:	"ulong"> |
-	<IMPLICIT	:	"implicit"> |		<UNCHECKED	:	"unchecked"> |
-	<IN			:	"in"> |				<UNSAFE		:	"unsafe"> |
-	<INT			:	"int"> |		<USHORT		:	"ushort"> |
-	<INTERFACE	:	"interface"> |		<USING		:	"using"> |
-	<INTERNAL	:	"internal"> |		<VIRTUAL	:	"virtual"> |
-	<IS			:	"is"> |				<VOID		:	"void"> |
-	<LOCK		:	"lock"> |			<WHILE		:	"while"> |
-	<VOLATILE	:	"volatile"> |		<WHERE : "where"> |
-	<ASSEMBLY	:	"assembly"> |		<MODULE : "module"> |
-	<PARTIAL	:	"partial">
+	<ABSTRACT	:	"abstract">
+	|  <LONG		:	"long">
+	|  <AS			:	"as">
+	|  <NAMESPACE	:	"namespace">
+	|  <BASE		:	"base">
+	|  <NEW			:	"new">
+	|  <BOOL		:	"bool">
+	|  <NULL		:	"null">
+	|  <BREAK		:	"break">
+	|  <OBJECT		:	"object">
+	|  <BYTE		:	"byte">
+	|  <OPERATOR	:	"operator">
+	|  <CASE		:	"case">
+	|  <OUT			:	"out">
+	|  <CATCH		:	"catch">
+	|  <OVERRIDE	:	"override">
+	|  <CHAR		:	"char">
+	|  <PARAMS		:	"params">
+	|  <CHECKED		:	"checked">
+	|  <PRIVATE		:	"private">
+	|  <CLASS		:	"class">
+	|  <PROTECTED	:	"protected">
+	|  <CONST		:	"const">
+	|  <PUBLIC		:	"public">
+	|  <CONTINUE	:	"continue">
+	|  <READONLY	:	"readonly">
+	|  <DECIMAL		:	"decimal">
+	|  <REF			:	"ref">
+	|  <DEFAULTTOKEN		:	"default">
+	|  <RETURN		:	"return">
+	|  <DELEGATE	:	"delegate">
+	|  <SBYTE		:	"sbyte">
+	|  <DO			:	"do">
+	|  <SEALED		:	"sealed">
+	|  <DOUBLE		:	"double">
+	|  <SHORT		:	"short">
+	|  <ELSE		:	"else">
+	|  <SIZEOF		:	"sizeof">
+	|  <ENUM		:	"enum">
+	|  <STACKALLOC	:	"stackalloc">
+	|  <EVENT		:	"event">
+	|  <STATIC		:	"static">
+	|  <EXPLICIT	:	"explicit">
+	|  <STRING		:	"string">
+	|  <EXTERN		:	"extern">
+	|  <STRUCT		:	"struct">
+	|  <FALSE		:	"false">
+	|  <SWITCH		:	"switch">
+	|  <FINALLY		:	"finally">
+	|  <THIS		:	"this">
+	|  <FIXED		:	"fixed">
+	|  <THROW		:	"throw">
+	|  <FLOAT		:	"float">
+	|  <TRUE		:	"true">
+	|  <FOR			:	"for">
+	|  <TRY			:	"try">
+	|  <FOREACH		:	"foreach">
+	|  <TYPEOF		:	"typeof">
+	|  <GOTO		:	"goto">
+	|  <UINT		:	"uint">
+	|  <IF			:	"if">
+	|  <ULONG		:	"ulong">
+	|  <IMPLICIT	:	"implicit">
+	|  <UNCHECKED	:	"unchecked">
+	|  <IN			:	"in">
+	|  <UNSAFE		:	"unsafe">
+	|  <INT			:	"int">
+	|  <USHORT		:	"ushort">
+	|  <INTERFACE	:	"interface">
+	|  <USING		:	"using">
+	|  <INTERNAL	:	"internal">
+	|  <VIRTUAL		:	"virtual">
+	|  <IS			:	"is">
+	|  <VOID		:	"void">
+	|  <LOCK		:	"lock">
+	|  <WHILE		:	"while">
+	|  <VOLATILE	:	"volatile">
+	|  <WHERE 		:	"where">
+	|  <ASSEMBLY	:	"assembly">
+	|  <MODULE		:	"module">
+	|  <PARTIAL		:	"partial">
+	|  <YIELD		:   "yield">		// introduce yield as a pseudo keyword see IDENTIFIER_CSHARP for more information
 }
 
 TOKEN : {
-	<DOT		:	"."		>| 
-<LBRACE		:	"{"		> |	<RBRACE		:	"}"		> |
-<LBRACK		:	"["		> |	<RBRACK		:	"]"		> |
-<LPAREN		:	"("		> |	<RPAREN		:	")"		> |
-
-<PLUS		:	"+"		> |		<PLUS_ASN	:	"+="	> |	
-<MINUS		:	"-"		> |		<MINUS_ASN	:	"-="	> |	
-<STAR		:	"*"		> |		<STAR_ASN	:	"*="	> |
-<DIV			:	"/"		> |		<DIV_ASN		:	"/="	> |
-<MOD			:	"%"		> |		<MOD_ASN		:	"%="	> |
-<INC			:	"++"	> |		<DEC			:	"--"	> |
-
-<SL			:	"<<"	> |		<SL_ASN		:	"<<="	> |
-<SR			:	">>"	> |		<SR_ASN		:	">>="	> |
-<BSR			:	">>>"	> |		<BSR_ASN		:	">>>="	> |
-
-<AMPER		:	"&"		> |		<BAND_ASN	:	"&="	> |	
-<BOR			:	"|"		> |	<BOR_ASN		:	"|="	> |	
-<CARET		:	"^"		> |		<BXOR_ASN	:	"^="	> |
-<TILDE		:	"~"		> |
-
-<ASSIGN	:	"="		> |		<EQUAL			:	"=="	> |
-<LTHAN		:	"<"		> |		<LE				:	"<="	> |
-<GTHAN		:	">"		> |		<GE				:	">="	> |
-<BANG		:	"!"		> |		<NOT_EQUAL	:	"!="	> |
-<LOR			:	"||"	> |		<LAND			:	"&&"	> |
-
-<COMMA		:	","		> |		<COLON		:	":"		> |	
-<SEMI		:	";"		> |		<HASH		:	"#"     > |
-<QUOTE		:	"\""  > |		<QMARK		:	"?"		> |
-
-<ARROW		:	"->"	> 
+	<DOT		:	"."		>
+	|  <LBRACE		:	"{"		>
+	|  <RBRACE		:	"}"		>
+	|  <LBRACK		:	"["		>
+	|  <RBRACK		:	"]"		>
+	|  <LPAREN		:	"("		>
+	|  <RPAREN		:	")"		>
+	|  <PLUS		:	"+"		>
+	|  <PLUS_ASN	:	"+="	>
+	|  <MINUS		:	"-"		>
+	|  <MINUS_ASN	:	"-="	>
+	|  <STAR		:	"*"		>
+	|  <STAR_ASN	:	"*="	>
+	|  <DIV			:	"/"		>
+	|  <DIV_ASN		:	"/="	>
+	|  <MOD			:	"%"		>
+	|  <MOD_ASN		:	"%="	>
+	|  <INC			:	"++"	>
+	|  <DEC			:	"--"	>
+	|  <SL			:	"<<"	>
+	|  <SL_ASN		:	"<<="	>
+	|  <SR			:	">>"	>
+	|  <SR_ASN		:	">>="	>
+	|  <BSR			:	">>>"	>
+	|  <BSR_ASN		:	">>>="	>
+	|  <AMPER		:	"&"		>
+	|  <BAND_ASN	:	"&="	>
+	|  <BOR			:	"|"		>
+	|  <BOR_ASN		:	"|="	>
+	|  <CARET		:	"^"		>
+	|  <BXOR_ASN	:	"^="	>
+	|  <TILDE		:	"~"		>
+	|  <ASSIGN		:	"="		>
+	|  <EQUAL		:	"=="	>
+	|  <LTHAN		:	"<"		>
+	|  <LE			:	"<="	>
+	|  <GTHAN		:	">"		>
+	|  <GE			:	">="	>
+	|  <BANG		:	"!"		>
+	|  <NOT_EQUAL	:	"!="	>
+	|  <LOR			:	"||"	>
+	|  <LAND		:	"&&"	>
+	|  <COMMA		:	","		>
+	|  <COLON		:	":"		>
+	|  <SEMI		:	";"		>
+	|  <HASH		:	"#"     >
+	|  <QUOTE		:	"\""	>
+	|  <QMARK		:	"?"		>
+	|  <QMARKS		:	"??"	>
+	|  <ARROW		:	"->"	>
+	|  <ANONFUNC	:	"=>"	>
 }
 
-TOKEN:{
-		<#UNICODE_ESCAPE_SEQUENCE
-	:	("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
-	|	"\\" "U"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>  
-					<HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)
-	>
-
-	|	<IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
-	|	<#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
-	|	<#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/","?"]>	
-	|	<NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
-	|	(<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
-	|	(<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
-	|	(<REAL_TYPE_SUFFIX>)
-	| 	(<INTEGER_TYPE_SUFFIX>)?
-	)		
-	>
-|	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
-|	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
-|	<REGULAR_STRING_LITERAL	:	"\""  (<REGULAR_STRING_LITERAL_CHARACTER>)* "\"">
-|	<VERBATIM_STRING_LITERAL:	 "@" "\""  	
+TOKEN : {
+	<#UNICODE_ESCAPE_SEQUENCE
+		:  ("\\" "u"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>
+		|  "\\" "U"   <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>  <HEX_DIGIT>   <HEX_DIGIT>   <HEX_DIGIT>  <HEX_DIGIT>)>
+	|  <IDENTIFIER: <IDENTIFIER_START_CHARACTER> (<IDENTIFIER_PART_CHARACTER>)*>
+		|  <#IDENTIFIER_START_CHARACTER:	["a"-"z","A"-"Z","_","$","@"]>	
+		|  <#IDENTIFIER_PART_CHARACTER:	["a"-"z","A"-"Z","0"-"9","_","$","/","?"]>	
+		|  <NUMERIC_LITERAL:"."(<DECIMAL_DIGIT>)(<DECIMAL_DIGIT>)*(<EXPONENT_PART>)?(<REAL_TYPE_SUFFIX>)?
+		|  (<DECIMAL_DIGIT>)+ ("." (<DECIMAL_DIGIT>)+ (<EXPONENT_PART>)? (<REAL_TYPE_SUFFIX>)?
+		|  (<EXPONENT_PART>) (<REAL_TYPE_SUFFIX>)?
+		|  (<REAL_TYPE_SUFFIX>)
+		|  (<INTEGER_TYPE_SUFFIX>)?)>
+	|	<HEXADECIMAL_INTEGER_LITERAL:	("0x"|"0X")   (<HEX_DIGIT>)+   (<INTEGER_TYPE_SUFFIX>)?	>
+	|	<CHARACTER_LITERAL	:	"'"   <CHARACTER>   "'">
+	|	<REGULAR_STRING_LITERAL	:	"\""  (<REGULAR_STRING_LITERAL_CHARACTER>)* "\"">
+	|	<VERBATIM_STRING_LITERAL:	 "@" "\""  	
 		(	"\"\""		
 		|	"\\"		
 		| "\r"
@@ -138,33 +193,39 @@ TOKEN:{
 		|  ~["\"","\\","\r","\n","\u2028","\u2029"]	
 		)* 
 		"\"">
-|	<#DECIMAL_DIGIT
+	|	<#DECIMAL_DIGIT
 	: 	["0"	,	"1"	,	"2"	,	"3"	,	"4"	,	"5"	,	"6"	,	"7"	,	"8"	,	"9"]>
-| 	<#INTEGER_TYPE_SUFFIX: 	(	"UL"	| "LU" 	| "ul"	| "lu"
+	| 	<#INTEGER_TYPE_SUFFIX: 	(	"UL"	| "LU" 	| "ul"	| "lu"
 		|	"UL"	| "LU" 	| "uL"	| "lU"
 		|	"U"		| "L"	| "u"	| "l")>
-|	<#HEX_DIGIT	:	["0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , 
+	|	<#HEX_DIGIT	:	["0" , "1" , "2" , "3" , "4" , "5" , "6" , "7" , "8" , "9" , 
 		"A" , "B" , "C" , "D" , "E" , "F"  ,
 		"a" , "b" , "c" , "d" , "e" , "f"]>	
-|	<#EXPONENT_PART:	("e"  (<SIGN>)*  (<DECIMAL_DIGIT>)+ 	|	"E"  (<SIGN>)*  (<DECIMAL_DIGIT>)+)>
-|	<#SIGN	: ["+" , "-" ]>
-|	<#REAL_TYPE_SUFFIX	: ["F" , "f" , "D" , "d" , "M" , "m"]>
-|	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
+	|	<#EXPONENT_PART:	("e"  (<SIGN>)*  (<DECIMAL_DIGIT>)+ 	|	"E"  (<SIGN>)*  (<DECIMAL_DIGIT>)+)>
+	|	<#SIGN	: ["+" , "-" ]>
+	|	<#REAL_TYPE_SUFFIX	: ["F" , "f" , "D" , "d" , "M" , "m"]>
+	|	<#CHARACTER:	(<SINGLE_CHARACTER>	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>	)>
-|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
-|	<#SIMPLE_ESCAPE_SEQUENCE: (
+	|	<SINGLE_CHARACTER:~["\\","\'","\r", "\n", "\u2028", "\u2029"]>
+	|	<#SIMPLE_ESCAPE_SEQUENCE: (
 		"\\'" | "\\\"" | "\\\\" | "\\0" | "\\a"  
 	|	"\\b" | "\\f"  | "\\n"  | "\\r" | "\\t" | "\\v")>
-|	<#HEXADECIMAL_ESCAPE_SEQUENCE: "\\" "x" <HEX_DIGIT> (<HEX_DIGIT>(<HEX_DIGIT>(<HEX_DIGIT>)?)?)?>
-|	<REGULAR_STRING_LITERAL_CHARACTER :	<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>
+	|	<#HEXADECIMAL_ESCAPE_SEQUENCE: "\\" "x" <HEX_DIGIT> (<HEX_DIGIT>(<HEX_DIGIT>(<HEX_DIGIT>)?)?)?>
+	|	<REGULAR_STRING_LITERAL_CHARACTER :	<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>
 	|	<SIMPLE_ESCAPE_SEQUENCE>
 	|	<HEXADECIMAL_ESCAPE_SEQUENCE>
 	|	<UNICODE_ESCAPE_SEQUENCE>>
-|	<#SINGLE_REGULAR_STRING_LITERAL_CHARACTER: ~[ "\"" , "\\" , "\r" , "\n" , "\u2028" , "\u2029"]>
-
-		
+	|	<#SINGLE_REGULAR_STRING_LITERAL_CHARACTER: ~[ "\"" , "\\" , "\r" , "\n" , "\u2028" , "\u2029"]>
 }
+FSTInfo IDENTIFIER_CSHARP(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IDENTIFIER> {return productionEndTerminal("IDENTIFIER_CSHARP1","-","-","Replacement",first,token);}
+ |
+	"yield"  {return productionEndTerminal("IDENTIFIER_CSHARP2","-","-","Replacement",first,token);}
+
+ )  }
+
 FSTInfo compilation_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	(n=using_directive(inTerminal){ replaceName(n);})* [n=attributes_either(inTerminal){ replaceName(n);}] [n=compilation_unitEnd(inTerminal){ replaceName(n);}] <EOF> {return productionEndNonTerminal("compilation_unit","-","-");}
@@ -173,7 +234,7 @@ FSTInfo compilation_unit(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo identifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} {return productionEndTerminal("identifier1","-","{<IDENTIFIER>}","Replacement",first,token);}
+	n=IDENTIFIER_CSHARP(true){ replaceName("IDENTIFIER_CSHARP", n);}{ replaceName(n);} {return productionEndTerminal("identifier1","-","{IDENTIFIER_CSHARP}","Replacement",first,token);}
  |
 	"module"  {return productionEndTerminal("identifier2","-","module","Replacement",first,token);}
  |
@@ -323,7 +384,9 @@ FSTInfo floating_point_type(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=conditional_expression(true){ replaceName(n);} [n=expressionInternal(true){ replaceName(n);}] {return productionEndTerminal("expression","-","-","Replacement",first,token);}
+	n=conditional_expression(true){ replaceName(n);} [n=expressionInternal(true){ replaceName(n);}] {return productionEndTerminal("expression1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(2) n=lambda_expression(true){ replaceName(n);} {return productionEndTerminal("expression2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -364,6 +427,8 @@ FSTInfo assignment_operator(boolean inTerminal) : { Token first=null,t;FSTInfo n
 	">>="  {return productionEndTerminal("assignment_operator11","-","-","Replacement",first,token);}
  |
 	">>>="  {return productionEndTerminal("assignment_operator12","-","-","Replacement",first,token);}
+ |
+	"??"  {return productionEndTerminal("assignment_operator13","-","-","Replacement",first,token);}
 
  )  }
 
@@ -589,7 +654,7 @@ FSTInfo primary_expression_start(boolean inTerminal) : { Token first=null,t;FSTI
  |
 	n=unchecked_expression(true){ replaceName(n);} {return productionEndTerminal("primary_expression_start10","-","-","Replacement",first,token);}
  |
-	n=default_value_expression(true){ replaceName(n);} {return productionEndTerminal("primary_expression_start11","-","-","Replacement",first,token);}
+	LOOKAHEAD(2) n=default_value_expression(true){ replaceName(n);} {return productionEndTerminal("primary_expression_start11","-","-","Replacement",first,token);}
 
  )  }
 
@@ -700,6 +765,8 @@ FSTInfo argumentPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"ref"  {return productionEndTerminal("argumentPrefix1","-","-","Replacement",first,token);}
  |
 	"out"  {return productionEndTerminal("argumentPrefix2","-","-","Replacement",first,token);}
+ |
+	"&"  {return productionEndTerminal("argumentPrefix3","-","-","Replacement",first,token);}
 
  )  }
 
@@ -853,7 +920,9 @@ FSTInfo embedded_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=fixed_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement12","-","-","Replacement",first,token);}
  |
-	n=expression_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement13","-","-","Replacement",first,token);}
+	LOOKAHEAD(2) n=yield_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement13","-","-","Replacement",first,token);}
+ |
+	n=expression_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement14","-","-","Replacement",first,token);}
 
  )  }
 
@@ -891,19 +960,13 @@ FSTInfo if_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo switch_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"switch" "(" n=expression(true){ replaceName(n);} ")" n=switch_block(true){ replaceName(n);} {return productionEndTerminal("switch_statement","-","-","Replacement",first,token);}
+	"switch" "(" n=expression(true){ replaceName(n);} ")" "{" (n=switch_statement_label(true){ replaceName(n);})* "}" {return productionEndTerminal("switch_statement","-","-","Replacement",first,token);}
 
  )  }
 
-FSTInfo switch_block(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+FSTInfo switch_statement_label(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" (n=switch_section(true){ replaceName(n);})+ "}" {return productionEndTerminal("switch_block","-","-","Replacement",first,token);}
-
- )  }
-
-FSTInfo switch_section(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	(n=switch_label(true){ replaceName(n);})+ n=statement_list(true){ replaceName(n);} {return productionEndTerminal("switch_section","-","-","Replacement",first,token);}
+	n=switch_label(true){ replaceName(n);} (LOOKAHEAD(2) n=statement(true){ replaceName(n);})* {return productionEndTerminal("switch_statement_label","-","-","Replacement",first,token);}
 
  )  }
 
@@ -959,9 +1022,23 @@ FSTInfo foreach_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
+FSTInfo yield_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"yield" n=yield_statement_body(true){ replaceName(n);} {return productionEndTerminal("yield_statement","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo yield_statement_body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=break_statement(true){ replaceName(n);} {return productionEndTerminal("yield_statement_body1","-","-","Replacement",first,token);}
+ |
+	"return" n=expression(true){ replaceName(n);} ";" {return productionEndTerminal("yield_statement_body2","-","-","Replacement",first,token);}
+
+ )  }
+
 FSTInfo jump_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"break" ";"  {return productionEndTerminal("jump_statement1","-","-","Replacement",first,token);}
+	n=break_statement(true){ replaceName(n);} {return productionEndTerminal("jump_statement1","-","-","Replacement",first,token);}
  |
 	"continue" ";"  {return productionEndTerminal("jump_statement2","-","-","Replacement",first,token);}
  |
@@ -970,6 +1047,12 @@ FSTInfo jump_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	n=return_statement(true){ replaceName(n);} {return productionEndTerminal("jump_statement4","-","-","Replacement",first,token);}
  |
 	n=throw_statement(true){ replaceName(n);} {return productionEndTerminal("jump_statement5","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo break_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"break" ";"  {return productionEndTerminal("break_statement","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1164,6 +1247,78 @@ FSTInfo type_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"unsafe"  {return productionEndTerminal("type_modifier8","-","-","Replacement",first,token);}
  |
 	"partial"  {return productionEndTerminal("type_modifier9","-","-","Replacement",first,token);}
+ |
+	"static"  {return productionEndTerminal("type_modifier10","-","-","Replacement",first,token);}
+ |
+	"volatile"  {return productionEndTerminal("type_modifier11","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo lambda_expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=anonymous_function_signature(true){ replaceName(n);} "=>" n=anonymous_function_body(true){ replaceName(n);} {return productionEndTerminal("lambda_expression","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo anonymous_function_body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=expression(true){ replaceName(n);} {return productionEndTerminal("anonymous_function_body1","-","-","Replacement",first,token);}
+ |
+	n=body(true){ replaceName(n);} {return productionEndTerminal("anonymous_function_body2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo anonymous_function_signature(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=explicit_anonymous_function_signature(true){ replaceName(n);} {return productionEndTerminal("anonymous_function_signature1","-","-","Replacement",first,token);}
+ |
+	n=implicit_anonymous_function_signature(true){ replaceName(n);} {return productionEndTerminal("anonymous_function_signature2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo explicit_anonymous_function_signature(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [n=explicit_anonymous_function_parameter_list(true){ replaceName(n);}] ")" {return productionEndTerminal("explicit_anonymous_function_signature","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo explicit_anonymous_function_parameter_list(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=explicit_anonymous_function_parameter(true){ replaceName(n);} ("," n=explicit_anonymous_function_parameter(true){ replaceName(n);})* {return productionEndTerminal("explicit_anonymous_function_parameter_list","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo explicit_anonymous_function_parameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[n=explicit_anonymous_function_parameter_modifier(true){ replaceName(n);}] n=type(true){ replaceName(n);} n=identifier(true){ replaceName(n);} {return productionEndTerminal("explicit_anonymous_function_parameter","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo explicit_anonymous_function_parameter_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"ref"  {return productionEndTerminal("explicit_anonymous_function_parameter_modifier1","-","-","Replacement",first,token);}
+ |
+	"out"  {return productionEndTerminal("explicit_anonymous_function_parameter_modifier2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo implicit_anonymous_function_signature(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [n=implicit_anonymous_function_parameter_list(true){ replaceName(n);}] ")" {return productionEndTerminal("implicit_anonymous_function_signature1","-","-","Replacement",first,token);}
+ |
+	n=implicit_anonymous_function_parameter(true){ replaceName(n);} {return productionEndTerminal("implicit_anonymous_function_signature2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo implicit_anonymous_function_parameter_list(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=implicit_anonymous_function_parameter(true){ replaceName(n);} ("," n=implicit_anonymous_function_parameter(true){ replaceName(n);})* {return productionEndTerminal("implicit_anonymous_function_parameter_list","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo implicit_anonymous_function_parameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=identifier(true){ replaceName(n);} {return productionEndTerminal("implicit_anonymous_function_parameter","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1209,7 +1364,9 @@ FSTInfo type_parameter_constraints(boolean inTerminal) : { Token first=null,t;FS
 
 FSTInfo remaining_constraints(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=secondary_constraint(true){ replaceName(n);} ["," n=constructor_constraint(true){ replaceName(n);}] {return productionEndTerminal("remaining_constraints","-","-","Replacement",first,token);}
+	n=secondary_constraint(true){ replaceName(n);} ["," n=constructor_constraint(true){ replaceName(n);}] {return productionEndTerminal("remaining_constraints1","-","-","Replacement",first,token);}
+ |
+	n=constructor_constraint(true){ replaceName(n);} {return productionEndTerminal("remaining_constraints2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1353,6 +1510,22 @@ FSTInfo member_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
+FSTInfo accessor_modifiers(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=accessor_modifier(true){ replaceName(n);})+ {return productionEndTerminal("accessor_modifiers","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo accessor_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"protected"  {return productionEndTerminal("accessor_modifier1","-","-","Replacement",first,token);}
+ |
+	"internal"  {return productionEndTerminal("accessor_modifier2","-","-","Replacement",first,token);}
+ |
+	"private"  {return productionEndTerminal("accessor_modifier3","-","-","Replacement",first,token);}
+
+ )  }
+
 FSTInfo constant_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"const" n=type(true){ replaceName(n);} n=constant_declarators(true){ replaceName(n);} ";" {return productionEndTerminal("constant_declaration","-","-","Replacement",first,token);}
@@ -1458,6 +1631,8 @@ FSTInfo parameter_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"ref"  {return productionEndTerminal("parameter_modifier1","-","{TOSTRING}","Replacement",first,token);}
  |
 	"out"  {return productionEndTerminal("parameter_modifier2","-","{TOSTRING}","Replacement",first,token);}
+ |
+	"this"  {return productionEndTerminal("parameter_modifier3","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
@@ -1481,7 +1656,7 @@ FSTInfo accessor_declarations(boolean inTerminal) : { Token first=null,t;FSTInfo
 
 FSTInfo accessor_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=attributes(true){ replaceName(n);}] <IDENTIFIER> n=body(true){ replaceName(n);} {return productionEndTerminal("accessor_declaration","-","-","Replacement",first,token);}
+	[n=accessor_modifiers(true){ replaceName(n);}] [n=attributes(true){ replaceName(n);}] n=IDENTIFIER_CSHARP(true){ replaceName(n);} n=body(true){ replaceName(n);} {return productionEndTerminal("accessor_declaration","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1539,7 +1714,7 @@ FSTInfo indexer_baseInt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo operator_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD("operator" overloadable_unary_operator()	"("	type()	identifier()	")") "operator" n=unary_operator_declaration(true){ replaceName(n);} {return productionEndTerminal("operator_declaration1","-","-","Replacement",first,token);}
+	LOOKAHEAD("operator" overloadable_unary_operator() "(" type() identifier() ")") "operator" n=unary_operator_declaration(true){ replaceName(n);} {return productionEndTerminal("operator_declaration1","-","-","Replacement",first,token);}
  |
 	"operator" n=binary_operator_declaration(true){ replaceName(n);} {return productionEndTerminal("operator_declaration2","-","-","Replacement",first,token);}
 
@@ -1769,7 +1944,7 @@ FSTInfo interface_accessors(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo interface_accessor(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=attributes(true){ replaceName(n);}] <IDENTIFIER> ";" {return productionEndTerminal("interface_accessor","-","-","Replacement",first,token);}
+	[n=attributes(true){ replaceName(n);}] n=IDENTIFIER_CSHARP(true){ replaceName(n);} ";" {return productionEndTerminal("interface_accessor","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1893,7 +2068,7 @@ FSTInfo attribute_target(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"return"  {return productionEndTerminal("attribute_target2","-","-","Replacement",first,token);}
  |
-	<IDENTIFIER> {return productionEndTerminal("attribute_target3","-","-","Replacement",first,token);}
+	n=IDENTIFIER_CSHARP(true){ replaceName(n);} {return productionEndTerminal("attribute_target3","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1923,7 +2098,7 @@ FSTInfo unsafe_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo pointer_member_access(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"->" <IDENTIFIER> {return productionEndTerminal("pointer_member_access","-","-","Replacement",first,token);}
+	"->" n=IDENTIFIER_CSHARP(true){ replaceName(n);} {return productionEndTerminal("pointer_member_access","-","-","Replacement",first,token);}
 
  )  }
 
