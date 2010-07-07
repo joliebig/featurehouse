@@ -1238,10 +1238,6 @@ FSTInfo namespace_member_declaration(boolean inTerminal) : { Token first=null,t;
 	n=namespace_declaration(inTerminal){ replaceName("namespace_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration1","{namespace_declaration}","{namespace_declaration}");}
  |
 	[n=attributes(inTerminal){ replaceName(n);}] [n=class_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","{type_declaration}","{type_declaration}");}
- |
-	"#region" (n=region_id(true){ replaceName(n);})* {return productionEndTerminal("namespace_member_declaration3","{AUTO}","{AUTO}","Replacement",first,token);}
- |
-	"#endregion"  {return productionEndTerminal("namespace_member_declaration4","{AUTO}","{AUTO}","Replacement",first,token);}
 
  )  }
 
@@ -1372,6 +1368,8 @@ FSTInfo class_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"virtual"  {return productionEndTerminal("class_modifier14","-","-","Replacement",first,token);}
  |
 	"extern"  {return productionEndTerminal("class_modifier15","-","-","Replacement",first,token);}
+ |
+	"fixed"  {return productionEndTerminal("class_modifier16","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1486,10 +1484,62 @@ FSTInfo class_member_declarationEnd(boolean inTerminal) : { Token first=null,t;F
 	n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("class_member_declarationEnd5","{type_declaration}","{type_declaration}");}
  |
 	n=type(true){ replaceName("type", n);}{ replaceName(n);} n=typeEnd(true){ replaceName("typeEnd", n);}{ replaceName(n);} {return productionEndTerminal("class_member_declarationEnd6","{type} {typeEnd}","{type} {typeEnd}","{typeEnd}",first,token);}
+
+ )  }
+
+FSTInfo indexer_modifiers(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=indexer_modifier(true){ replaceName(n);})+ {return productionEndTerminal("indexer_modifiers","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo indexer_modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"new"  {return productionEndTerminal("indexer_modifier1","-","-","Replacement",first,token);}
  |
-	"#region" (n=region_id(true){ replaceName(n);})* {return productionEndTerminal("class_member_declarationEnd7","{AUTO}","{AUTO}","Replacement",first,token);}
+	"public"  {return productionEndTerminal("indexer_modifier2","-","-","Replacement",first,token);}
  |
-	"#endregion"  {return productionEndTerminal("class_member_declarationEnd8","{AUTO}","{AUTO}","Replacement",first,token);}
+	"protected"  {return productionEndTerminal("indexer_modifier3","-","-","Replacement",first,token);}
+ |
+	"internal"  {return productionEndTerminal("indexer_modifier4","-","-","Replacement",first,token);}
+ |
+	"private"  {return productionEndTerminal("indexer_modifier5","-","-","Replacement",first,token);}
+ |
+	"virtual"  {return productionEndTerminal("indexer_modifier6","-","-","Replacement",first,token);}
+ |
+	"sealed"  {return productionEndTerminal("indexer_modifier7","-","-","Replacement",first,token);}
+ |
+	"override"  {return productionEndTerminal("indexer_modifier8","-","-","Replacement",first,token);}
+ |
+	"abstract"  {return productionEndTerminal("indexer_modifier9","-","-","Replacement",first,token);}
+ |
+	"extern"  {return productionEndTerminal("indexer_modifier10","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo indexer_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[n=attributes(true){ replaceName(n);}] [n=indexer_modifiers(true){ replaceName(n);}] n=indexer_declarator(true){ replaceName(n);} "{" n=accessor_declarations(true){ replaceName(n);} "}" {return productionEndTerminal("indexer_declaration","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo indexer_declarator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=type(true){ replaceName(n);} n=indexer_declaratorEnd(true){ replaceName(n);} {return productionEndTerminal("indexer_declarator","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo indexer_declaratorEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"this" "[" n=formal_parameter_list(true){ replaceName(n);} "]" {return productionEndTerminal("indexer_declaratorEnd1","-","-","Replacement",first,token);}
+ |
+	n=interface_type(true){ replaceName(n);} "." "this" "[" n=formal_parameter_list(true){ replaceName(n);} "]" {return productionEndTerminal("indexer_declaratorEnd2","-","-","Replacement",first,token);}
+
+ )  }
+
+FSTInfo interface_type(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=type_name(true){ replaceName(n);} {return productionEndTerminal("interface_type","-","-","Replacement",first,token);}
 
  )  }
 
@@ -1507,9 +1557,7 @@ FSTInfo typeEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=operator_declaration(true){ replaceName("operator_declaration", n);}{ replaceName(n);} {return productionEndTerminal("typeEnd3","{operator_declaration}","{operator_declaration}","Replacement",first,token);}
  |
-	LOOKAHEAD(indexer_base() "[") n=indexer_declaration_interface(true){ replaceName("indexer_declaration_interface", n);}{ replaceName(n);} {return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","Replacement",first,token);}
- |
-	n=type_name(true){ replaceName("type_name", n);}{ replaceName(n);} n=type_nameEnd(true){ replaceName("type_nameEnd", n);}{ replaceName(n);} {return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","{type_nameEnd}",first,token);}
+	n=type_name(true){ replaceName("type_name", n);}{ replaceName(n);} n=type_nameEnd(true){ replaceName("type_nameEnd", n);}{ replaceName(n);} {return productionEndTerminal("typeEnd4","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","{type_nameEnd}",first,token);}
 
  )  }
 
