@@ -326,6 +326,8 @@ public interface CSharpMergeParserConstants {
     "<REGULAR_STRING_LITERAL_CHARACTER>",
     "<SINGLE_REGULAR_STRING_LITERAL_CHARACTER>",
     "\"::\"",
+    "\"#region\"",
+    "\"#endregion\"",
   };
 
 }

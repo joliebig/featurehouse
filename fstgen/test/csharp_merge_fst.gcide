@@ -226,7 +226,7 @@ TOKEN : {
 GRAMMARSTART
 // workaround to accept the word yield as an identifier
 IDENTIFIER_CSHARP
-	:  <IDENTIFIER>
+	:  @FSTExportName("{TOSTRING}")<IDENTIFIER>
 	|  "yield"
 	;
 
@@ -1015,7 +1015,7 @@ class_member_declarationEnd
 	|  @FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
 	|  @FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
 	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
-	|  @FSTTerminal(name="{type} {typeEnd}",compose="{typeEnd}") type typeEnd	
+	|  @FSTTerminal(name="{type}{typeEnd}") type typeEnd	
 	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
 	|  @FSTTerminal(name="{AUTO}") "#endregion" 
 	;
@@ -1025,17 +1025,17 @@ region_id
 	;
 
 typeEnd
-	:  @FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration
+	:  @FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration  :: ConstructorDecl
 	|  @FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
 	|  @FSTTerminal(name="{operator_declaration}")	operator_declaration
 	|  @FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|  @FSTTerminal(name="{type_name}{type_nameEnd}",compose="{type_nameEnd}")	type_name	type_nameEnd
+	|  @FSTTerminal(name="{type_name}{type_nameEnd}")	type_name	type_nameEnd
 	;
 		
 type_nameEnd
-	:  @FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding") method_declaration
-	|  @FSTTerminal(name="{property_declaration}") property_declaration
-	|  @FSTTerminal(name="",compose="FieldOverriding") field_declaration
+	:  @FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding") method_declaration :: MethodDecl
+	|  @FSTTerminal(name="{property_declaration}") property_declaration :: PropertyDecl
+	|  @FSTTerminal(name="{field_declaration}",compose="FieldOverriding") field_declaration :: FieldDecl
 	;
 
 accessor_modifiers
@@ -1058,17 +1058,18 @@ constant_declarator
 	:  identifier "=" expression ;
 
 field_declaration	//okay I know this is ugly, but as long as it all works out I have saved us an arbitrary look ahead operation
-	:  field_declaration_start ("," field_declarators)? ";" @!
+	: field_declaration_start ("," field_declarators)? ";" @!
 	;
-	
+
+
 field_declaration_start
 	:  ("="	variable_initializer)? ;
 
 field_declarators
-	:  field_declarator ("," field_declarator)* ;
+	: field_declarator ("," field_declarator)* ;
 
 field_declarator
-	:  identifier ("=" variable_initializer)? ;
+	: identifier ("=" variable_initializer)? ;
 
 variable_initializer 
 	:  array_initializer
@@ -1219,7 +1220,7 @@ conversion_operator
 	|  "explicit"
 	;
 
-@FSTExportName("{formal_parameter_list}")
+@FSTExportName("({formal_parameter_list})")
 constructor_declaration
 	:  "(" (formal_parameter_list)? ")" (constructor_initializer)? constructor_body
 	;
