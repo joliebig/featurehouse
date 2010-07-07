@@ -86,7 +86,7 @@
 			<param name="parserClass" value="CSharpMergeParser" />
 			<param name="mainProduction" value="compilation_unit" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.cs" />
+			<param name="testFile" value="Test_Merge.cs" />
 		</antcall>
 	</target>
 	
