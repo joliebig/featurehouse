@@ -80,6 +80,16 @@
 		</antcall>
 	</target>
 	
+	<target name="testCSharpMerge">
+		<antcall target="testGrammar">
+			<param name="language" value="csharp_merge" />
+			<param name="parserClass" value="CSharpMergeParser" />
+			<param name="mainProduction" value="compilation_unit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.cs" />
+		</antcall>
+	</target>
+	
 	<target name="testC">
 			<antcall target="testGrammar">
 				<param name="language" value="capprox" />
@@ -88,7 +98,17 @@
 				<param name="directory" value="${fstgen_dir}/test" />
 				<param name="testFile" value="Test.c" />
 			</antcall>
-		</target>
+	</target>
+	
+	<target name="testPython">
+			<antcall target="testGrammar">
+				<param name="language" value="python" />
+				<param name="parserClass" value="PythonParser" />
+				<param name="mainProduction" value="file_input" />
+				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="testFile" value="Test.py" />
+			</antcall>
+	</target>
 	
 	<target name="testHaskell">
 			<antcall target="testGrammar">
