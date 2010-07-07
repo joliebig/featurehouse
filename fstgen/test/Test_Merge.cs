@@ -11,7 +11,7 @@ namespace ProcessHacker.Common.Threading
     	private static global::System.Resources.ResourceManager resourceMan;
     	private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
     	public FastStack () {
-    			
+    			byte* buffer = stackalloc byte[IntPtr.Size];
     	        ex.StreamDetected += (sender, args, asd, asd, asd, asdf) => OnStreamDetected(args.ProgramChain);
         		ex.ChaptersLoaded += (sender) => OnChaptersLoaded(args.ProgramChain);
     			this.buttonStart.Image = global::ProcessHacker.Properties.Resources.control_play_blue;
@@ -106,6 +106,19 @@ namespace ProcessHacker.Common.Threading
                 m_SplitMenu = value;
             }
         }
+        
+        public FileEntry[] GetFiles()
+        {  
+            List<FileEntry> files = new List<FileEntry>();
+
+            //this.EnumFiles((file) => {
+            //        files.Add(file);
+            //        return true;
+            //});
+
+            return typeof(GenericProfile<>).MakeGenericType(SettingsType);
+        }
+        
 
         [DefaultValue(null)]
         public ContextMenuStrip SplitMenuStrip

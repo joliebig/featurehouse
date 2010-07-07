@@ -283,7 +283,7 @@ FSTInfo type_name_part(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo type_argument_list(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"<" n=type(true){ replaceName(n);} ("," n=type(true){ replaceName(n);})* ">" {return productionEndTerminal("type_argument_list","-","-","Replacement",first,token);}
+	"<" [n=type(true){ replaceName(n);}] ("," n=type(true){ replaceName(n);})* ">" {return productionEndTerminal("type_argument_list","-","-","Replacement",first,token);}
 
  )  }
 
@@ -385,7 +385,9 @@ FSTInfo floating_point_type(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=conditional_expression(true){ replaceName(n);} [n=expressionInternal(true){ replaceName(n);}] {return productionEndTerminal("expression","-","-","Replacement",first,token);}
+	n=conditional_expression(true){ replaceName(n);} [n=expressionInternal(true){ replaceName(n);}] {return productionEndTerminal("expression1","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(2) n=lambda_expression(true){ replaceName(n);} {return productionEndTerminal("expression2","-","-","Replacement",first,token);}
 
  )  }
 
@@ -904,6 +906,8 @@ FSTInfo local_variable_initializer(boolean inTerminal) : { Token first=null,t;FS
 	n=array_initializer(true){ replaceName(n);} {return productionEndTerminal("local_variable_initializer1","-","-","Replacement",first,token);}
  |
 	n=expression(true){ replaceName(n);} {return productionEndTerminal("local_variable_initializer2","-","-","Replacement",first,token);}
+ |
+	n=stackalloc_initializer(true){ replaceName(n);} {return productionEndTerminal("local_variable_initializer3","-","-","Replacement",first,token);}
 
  )  }
 
@@ -954,6 +958,8 @@ FSTInfo embedded_statement(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	LOOKAHEAD(2) n=yield_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement13","-","-","Replacement",first,token);}
  |
 	n=expression_statement(true){ replaceName(n);} {return productionEndTerminal("embedded_statement14","-","-","Replacement",first,token);}
+ |
+	LOOKAHEAD(anonymous_function_signature() "=>") n=lambda_expression(true){ replaceName(n);} {return productionEndTerminal("embedded_statement15","-","-","Replacement",first,token);}
 
  )  }
 

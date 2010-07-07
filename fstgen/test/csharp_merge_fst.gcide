@@ -270,7 +270,7 @@ type_name_part
 	:  identifier [LL("type_argument_list(inTerminal)") type_argument_list] ;
 	
 type_argument_list
-	:  "<"  type	(","	type)*	">" ;	
+	:  "<" (type)? ("," type)* ">" ;	
 
 //***********************************************************************************************************************************/
 //C.2.2 Types
@@ -340,7 +340,7 @@ floating_point_type
 //***********************************************************************************************************************************/
 expression
 	:  conditional_expression (expressionInternal)?
-	//|  LOOK_AHEAD(2) lambda_expression
+	|  LOOK_AHEAD(2) lambda_expression
 	;
 	
 expressionInternal
@@ -366,7 +366,7 @@ assignment_operator
 	|  ">>>="
 	|  "??"			// special assignment operator "null" test
 	|  "::"
-	|  "=>"			// TODO ugly workaround
+	|  "=>"
 	;
 
 conditional_expression
@@ -648,6 +648,7 @@ local_variable_assignment
 local_variable_initializer 
 	:  array_initializer
 	|  expression
+	|  stackalloc_initializer
 	;
 
 local_constant_declaration 
@@ -674,6 +675,7 @@ embedded_statement
 	|  fixed_statement
 	|  LOOK_AHEAD(2) yield_statement	//YIELD with break or return
 	|  expression_statement		//statement_expression ","
+	|  LOOK_AHEAD("anonymous_function_signature() \"=>\"") lambda_expression
 	;
 	
 block
@@ -683,7 +685,7 @@ block
 statement_list
 	:  (statement)+
 	;
-	
+
 expression_statement 
 	:  expression ";" @!
 	;
@@ -942,7 +944,7 @@ class_modifier
 
 
 type_parameter_list
-	:  "<" type_parameter (	","	type_parameter )* ">"
+	:  "<" type_parameter ("," type_parameter )* ">"
 	;
 
 type_parameter
