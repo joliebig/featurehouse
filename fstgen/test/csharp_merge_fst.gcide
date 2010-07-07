@@ -380,19 +380,24 @@ conditional_or_expression
 	:  conditional_and_expression ( "||" conditional_or_expression )? ;
 	
 conditional_and_expression
-	:  inclusive_or_expression ( "&&" conditional_and_expression )? ;
+	:  inclusive_or_expression ( "&&" conditional_and_expression)?
+	;
 
 inclusive_or_expression
-	:  exclusive_or_expression ( "|" inclusive_or_expression ) ? ;
+	:  exclusive_or_expression ("|" inclusive_or_expression)?
+	;
 
 exclusive_or_expression
-	:  and_expression ( "^" exclusive_or_expression ) ? ;
+	:  and_expression ("^" exclusive_or_expression)?
+	;
 
 and_expression
-	:  equality_expression ( "&" and_expression )? ;
+	:  equality_expression ( "&" and_expression )?
+	;
 
 equality_expression
-	:  relational_expression (equality_expressionInternal)? ;
+	:  relational_expression (equality_expressionInternal)?
+	;
    
 equality_expressionInternal
 	:  equality_operator equality_expression
@@ -634,13 +639,16 @@ statement
 	;
 
 local_variable_declaration 
-	:  type local_variable_declarators ;
+	:  type local_variable_declarators
+	;
 	
 local_variable_declarators
-	:  local_variable_declarator ("," local_variable_declarators)? ;
+	:  local_variable_declarator ("," local_variable_declarators)?
+	;
 
 local_variable_declarator
-	:  identifier (local_variable_assignment)? ;
+	:  identifier (local_variable_assignment)?
+	;
 	
 local_variable_assignment
 	:  "=" local_variable_initializer ;
@@ -852,8 +860,6 @@ namespace_member_declaration_no_attr
 namespace_member_declaration 
 	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
 	|  @FSTNonTerminal(name="{type_declaration}") (attributes)? (class_modifiers)? type_declaration // TODO
-	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
-	|  @FSTTerminal(name="{AUTO}") "#endregion"
 	;
 
 type_declaration //Type declaration that assumes parent rule has already looked for attributes and modifiers
@@ -1015,13 +1021,28 @@ class_member_declarationEnd
 	|  @FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
 	|  @FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
 	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
-	|  @FSTTerminal(name="{type}{typeEnd}") type typeEnd	
-	|  @FSTTerminal(name="{AUTO}") "#region" (region_id)*
-	|  @FSTTerminal(name="{AUTO}") "#endregion" 
+	|  @FSTTerminal(name="{type}{typeEnd}") type typeEnd
+	|  @FSTTerminal(name="{fixed_size_buffer_declaration}") fixed_size_buffer_declaration
 	;
-		
-region_id
-	:  identifier
+
+fixed_size_buffer_declaration
+	:  "fixed" buffer_element_type fixed_size_buffer_declarators ";"
+	;
+
+buffer_element_type
+	:  type
+	;
+
+fixed_size_buffer_declarators
+	:  (fixed_size_buffer_declarator)+
+	;
+
+fixed_size_buffer_declarator
+	:  identifier "[" expression "]" // the expression should be a constant_expression
+	;
+
+interface_type
+	:  type_name
 	;
 
 typeEnd
@@ -1029,7 +1050,7 @@ typeEnd
 	|  @FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
 	|  @FSTTerminal(name="{operator_declaration}")	operator_declaration
 	|  @FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|  @FSTTerminal(name="{type_name}{type_nameEnd}")	type_name	type_nameEnd
+	|  @FSTTerminal(name="{type_name}{type_nameEnd}") type_name type_nameEnd
 	;
 		
 type_nameEnd
@@ -1043,19 +1064,22 @@ accessor_modifiers
 	;
 
 accessor_modifier
-	: "protected"
-	| "internal"
-	| "private"
+	:  "protected"
+	|  "internal"
+	|  "private"
 	;
 
 constant_declaration
-	:  "const" type constant_declarators ";" @! ;
+	:  "const" type constant_declarators ";" @!
+	;
 	
 constant_declarators
-	:  constant_declarator	( "," constant_declarator )* ;
+	:  constant_declarator ("," constant_declarator)*
+	;
 	
 constant_declarator 
-	:  identifier "=" expression ;
+	:  identifier "=" expression
+	;
 
 field_declaration	//okay I know this is ugly, but as long as it all works out I have saved us an arbitrary look ahead operation
 	: field_declaration_start ("," field_declarators)? ";" @!
@@ -1063,13 +1087,16 @@ field_declaration	//okay I know this is ugly, but as long as it all works out I 
 
 
 field_declaration_start
-	:  ("="	variable_initializer)? ;
+	:  ("="	variable_initializer)?
+	;
 
 field_declarators
-	: field_declarator ("," field_declarator)* ;
+	:  field_declarator ("," field_declarator)*
+	;
 
 field_declarator
-	: identifier ("=" variable_initializer)? ;
+	:  identifier ("=" variable_initializer)?
+	;
 
 variable_initializer 
 	:  array_initializer
@@ -1177,7 +1204,8 @@ operator_declaration
 	;
 
 unary_operator_declaration
-	:  overloadable_unary_operator "(" type identifier ")" body ;
+	:  overloadable_unary_operator "(" type identifier ")" body
+	;
 
 overloadable_unary_operator
 	:  "+"
@@ -1191,7 +1219,8 @@ overloadable_unary_operator
 	;
 	
 binary_operator_declaration
-	:  overloadable_binary_operator "(" type identifier "," type identifier ")" body ;
+	:  overloadable_binary_operator "(" type identifier "," type identifier ")" body
+	;
 	
 overloadable_binary_operator
 	:  "+"
@@ -1213,7 +1242,8 @@ overloadable_binary_operator
 	;
 
 conversion_operator_declaration
-	:  conversion_operator "operator" type "(" type identifier ")" body ;
+	:  conversion_operator "operator" type "(" type identifier ")" body
+	;
 
 conversion_operator
 	:  "implicit"
@@ -1249,11 +1279,13 @@ destructor_declaration
 
 @FSTNonTerminal(name="{identifier}")	
 struct_declaration
-	:  "struct" identifier [type_parameter_list] (base_interfaces)? [type_parameter_constraint_clauses] class_body (";"<NONE>)? ;
+	:  "struct" identifier [type_parameter_list] (base_interfaces)? [type_parameter_constraint_clauses] class_body (";"<NONE>)?
+	;
 
 @FSTNonTerminal()
 base_interfaces 
-	:  ":" interface_type_list ;
+	:  ":" interface_type_list
+	;
 	
 //***********************************************************************************************************************************/
 //C.2.9 Arrays
@@ -1338,13 +1370,16 @@ interface_accessor
 
 @FSTNonTerminal(name="{identifier}")	
 enum_declaration
-	:  "enum" identifier (enum_base)? enum_body (";"<NONE>)? ;
+	:  "enum" identifier (enum_base)? enum_body (";"<NONE>)?
+	;
 	
 enum_base 
-	:  ":" integral_type ;
+	:  ":" integral_type
+	;
 
 enum_body
-	:  "{" rest_of_enum_body ;
+	:  "{" rest_of_enum_body
+	;
 
 rest_of_enum_body
 	:  "}"
@@ -1357,10 +1392,12 @@ rest_of_enum_bodyEnd
 	;
 
 enum_member_declaration 
-	:  (attributes)? identifier	(enum_member_assignment)? ;
+	:  (attributes)? identifier	(enum_member_assignment)?
+	;
 
 enum_member_assignment
-	:  "=" expression ;
+	:  "=" expression
+	;
 
 //***********************************************************************************************************************************/	
 //C.2.12 Delegates
@@ -1368,13 +1405,15 @@ enum_member_assignment
 
 @FSTNonTerminal(name="{identifier}")	
 delegate_declaration
-	:  "delegate" type identifier [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @! ;
+	:  "delegate" type identifier [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @!
+	;
 
 //***********************************************************************************************************************************/	
 //C.2.13 Attributes
 //***********************************************************************************************************************************/	
 attributes_either
-	:  (attribute_section_start)+ ;
+	:  (attribute_section_start)+
+	;
 
 attribute_section_start
 	:  LOOK_AHEAD("\"[\" (\"assembly\" |\"module\") \":\"") "["global_attribute_target_specifier attribute_section
@@ -1382,7 +1421,8 @@ attribute_section_start
 	;
 
 global_attribute_target_specifier
-	:  global_attribute_target ":" ;
+	:  global_attribute_target ":"
+	;
 
 global_attribute_target
 	:  "assembly"
@@ -1394,10 +1434,12 @@ attributes
 	;
 
 local_attribute	
-	:  "[" (LOOK_AHEAD(2) attribute_target_specifier)? attribute_section ;
+	:  "[" (LOOK_AHEAD(2) attribute_target_specifier)? attribute_section
+	;
 
 attribute_section
-	:  attribute attribute_sectionEnd ;
+	:  attribute attribute_sectionEnd
+	;
 
 attribute_sectionEnd
 	:  "]"
@@ -1416,39 +1458,48 @@ attribute_target
 	;
 
 attribute
-	:  type_name (attribute_arguments)? ;
+	:  type_name (attribute_arguments)?
+	;
 
 attribute_arguments
-	:  "(" (expression_list)? ")" ;
+	:  "(" (expression_list)? ")"
+	;
 
 //***********************************************************************************************************************************/	
 //C.3 Grammar extensions for unsafe code
 //***********************************************************************************************************************************/	
 sizeof_expression 
-	:  "sizeof" "(" type ")" ;
+	:  "sizeof" "(" type ")"
+	;
 	
 unsafe_statement
-	:  "unsafe" block ;
+	:  "unsafe" block
+	;
 	
 pointer_member_access
-	:  "->" IDENTIFIER_CSHARP ;
-
+	:  "->" IDENTIFIER_CSHARP
+	;
 
 addressof_expression
 	:  "&" unary_expression
 	;
 
 fixed_statement
-	:  "fixed" "(" type fixed_pointer_declarators ")" embedded_statement ;
+	:  "fixed" "(" type fixed_pointer_declarators ")" embedded_statement
+	;
 
 fixed_pointer_declarators
-	:  fixed_pointer_declarator ( "," fixed_pointer_declarator )* ;
+	:  fixed_pointer_declarator ( "," fixed_pointer_declarator )*
+	;
 
 fixed_pointer_declarator
-	:  identifier "=" fixed_pointer_initializer ;
+	:  identifier "=" fixed_pointer_initializer
+	;
  
 fixed_pointer_initializer
- 	:  ("&"<NONE>)? expression ;
+ 	:  ("&"<NONE>)? expression
+ 	;
 
 stackalloc_initializer
-	:  "stackalloc"	non_array_type "[" expression "]" ;
+	:  "stackalloc"	non_array_type "[" expression "]"
+	;
