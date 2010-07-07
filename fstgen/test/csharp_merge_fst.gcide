@@ -842,7 +842,7 @@ namespace_body
 	:  "{" @+! (using_directive)* (namespace_member_declaration)* @-! "}" (";"<NONE>)? @!
 	;
 
-@FSTTerminal(name="{type_name}")
+@FSTTerminal(name="{type_name}",compose="LINE_BASED_MERGE")
 using_directive
 	:  "using" type_name using_directiveEnd
 	;
@@ -926,6 +926,7 @@ class_declaration
 	:  "class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body (";"<NONE>)?
 	;
 
+@FSTTerminal(name="class_modifiers",compose="LINE_BASED_MERGE")
 class_modifiers
 	:  (class_modifier)+
 	;
@@ -948,7 +949,7 @@ class_modifier
 	|  "extern"			// TODO delete
 	;
 
-
+@FSTTerminal(name="type_parameter_list",compose="LINE_BASED_MERGE")
 type_parameter_list
 	:  "<" type_parameter ("," type_parameter )* ">"
 	;
@@ -956,7 +957,8 @@ type_parameter_list
 type_parameter
 	:  [attributes] identifier
 	;
-	
+
+@FSTTerminal(name="type_parameter_constraint_clauses",compose="LINE_BASED_MERGE")	
 type_parameter_constraint_clauses
 	:  type_parameter_constraint_clause (type_parameter_constraint_clause)*
 	;
@@ -996,12 +998,12 @@ constructor_constraint
 	:  "new" "(" ")"<NONE>
 	;
 
-@FSTTerminal(name="{class_type}{type_name}^,")	
+@FSTTerminal(name="{class_type}{type_name}^,",compose="LINE_BASED_MERGE")	
 class_base 
 	:  ":" class_type ("," type_name)*
 	;
 
-@FSTTerminal(name="{type_name}^,")
+@FSTTerminal(name="{type_name}^,",compose="LINE_BASED_MERGE")
 interface_type_list 
 	:  type_name ("," type_name)*
 	;
@@ -1016,13 +1018,13 @@ class_member_declaration
 	:  (attributes)? (class_modifiers)? class_member_declarationEnd ;
 
 class_member_declarationEnd
-	:  @FSTTerminal(name="{constant_declaration}") constant_declaration			//CONST type   constant_declarators   ";"
-	|  @FSTTerminal(name="{event_declaration}") event_declaration				//"event"   type   variable_declarators   ";"
-	|  @FSTTerminal(name="{destructor_declaration}") destructor_declaration		//"~"   identifier   "("   ")"    body
-	|  @FSTTerminal(name="{conversion_operator_declaration}") conversion_operator_declaration		
+	:  @FSTTerminal(name="{constant_declaration}",compose="LINE_BASED_MERGE") constant_declaration			//CONST type   constant_declarators   ";"
+	|  @FSTTerminal(name="{event_declaration}",compose="LINE_BASED_MERGE") event_declaration				//"event"   type   variable_declarators   ";"
+	|  @FSTTerminal(name="{destructor_declaration}",compose="LINE_BASED_MERGE") destructor_declaration		//"~"   identifier   "("   ")"    body
+	|  @FSTTerminal(name="{conversion_operator_declaration}",compose="LINE_BASED_MERGE") conversion_operator_declaration		
 	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
-	|  @FSTTerminal(name="{type}{typeEnd}") type typeEnd
-	|  @FSTTerminal(name="{fixed_size_buffer_declaration}") fixed_size_buffer_declaration
+	|  @FSTTerminal(name="{type}{typeEnd}", compose="LINE_BASED_MERGE") type typeEnd
+	|  @FSTTerminal(name="{fixed_size_buffer_declaration}",compose="LINE_BASED_MERGE") fixed_size_buffer_declaration
 	;
 
 fixed_size_buffer_declaration
@@ -1047,15 +1049,15 @@ interface_type
 
 typeEnd
 	:  @FSTTerminal(name="{constructor_declaration}",compose="ConstructorConcatenation")	constructor_declaration  :: ConstructorDecl
-	|  @FSTTerminal(name="{indexer_declaration_no_interface}")	indexer_declaration_no_interface
-	|  @FSTTerminal(name="{operator_declaration}")	operator_declaration
-	|  @FSTTerminal(name="{indexer_declaration_interface}")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
-	|  @FSTTerminal(name="{type_name}{type_nameEnd}") type_name type_nameEnd
+	|  @FSTTerminal(name="{indexer_declaration_no_interface}",compose="LINE_BASED_MERGE")	indexer_declaration_no_interface
+	|  @FSTTerminal(name="{operator_declaration}",compose="LINE_BASED_MERGE")	operator_declaration
+	|  @FSTTerminal(name="{indexer_declaration_interface}",compose="LINE_BASED_MERGE")	LOOK_AHEAD("indexer_base() \"[\"") indexer_declaration_interface
+	|  @FSTTerminal(name="{type_name}{type_nameEnd}",compose="LINE_BASED_MERGE") type_name type_nameEnd
 	;
 		
 type_nameEnd
 	:  @FSTTerminal(name="{method_declaration}",compose="CSharpMethodOverriding") method_declaration :: MethodDecl
-	|  @FSTTerminal(name="{property_declaration}") property_declaration :: PropertyDecl
+	|  @FSTTerminal(name="{property_declaration}",compose="PropertyOverriding") property_declaration :: PropertyDecl
 	|  @FSTTerminal(name="{field_declaration}",compose="FieldOverriding") field_declaration :: FieldDecl
 	;
 
@@ -1315,7 +1317,7 @@ interface_declaration
 interface_body 
 	:  "{" @+! (interface_member_declaration)* @-! "}" @! ;
 
-@FSTTerminal(name="{interface_member_declarationEnd}")
+@FSTTerminal(name="{interface_member_declarationEnd}",compose="LINE_BASED_MERGE")
 interface_member_declaration 
 	:  (attributes)? (interface_member_modifier)* interface_member_declarationEnd ;
 
@@ -1429,6 +1431,7 @@ global_attribute_target
 	|  "module"
 	;
 
+@FSTTerminal(name="attributes",compose="LINE_BASED_MERGE")
 attributes
 	:  (local_attribute)+
 	;
