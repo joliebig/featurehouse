@@ -6,13 +6,18 @@ import java.util.List;
 
 import printer.PrintVisitorException;
 import printer.PrintVisitorInterface;
+import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javam.JavaMergePrintVisitor;
+import printer.csharpm.CSharpMergePrintVisitor;
 import printer.textm.TextMergePrintVisitor;
 import builder.ArtifactBuilderInterface;
+import builder.csharp.CSharpBuilder;
+import builder.csharpm.CSharpMergeBuilder;
 import builder.java.JavaBuilder;
 import builder.javam.JavaMergeBuilder;
 import builder.textm.TextMergeBuilder;
+
 
 import composer.FSTGenProcessor;
 import composer.rules.Replacement;
@@ -35,21 +40,38 @@ public class FSTGenMerger extends FSTGenProcessor {
 		super();
 		mergeVisitor.registerMerger(new LineBasedMerger());
 		ArtifactBuilderInterface stdJavaBuilder = null;
+		ArtifactBuilderInterface stdCSharpBuilder = null;
 		for(ArtifactBuilderInterface builder : this.getArtifactBuilders()) {
 			if(builder instanceof JavaBuilder)
 				stdJavaBuilder = builder;
+			if(builder instanceof CSharpBuilder)
+				stdCSharpBuilder = builder;
 		}
+		
 		unregisterArtifactBuilder(stdJavaBuilder);
+		unregisterArtifactBuilder(stdCSharpBuilder);
+		
 		registerArtifactBuilder(new JavaMergeBuilder());
+		registerArtifactBuilder(new CSharpMergeBuilder());
 		registerArtifactBuilder(new TextMergeBuilder(".java"));
+		registerArtifactBuilder(new TextMergeBuilder(".cs"));
+
 		PrintVisitorInterface stdJavaPrinter = null;
+		PrintVisitorInterface stdCSharpPrinter = null;
 		for(PrintVisitorInterface printer : this.getPrintVisitors()) {
 			if(printer instanceof JavaPrintVisitor)
 				stdJavaPrinter = printer;
+			if(printer instanceof CSharpPrintVisitor)
+				stdCSharpPrinter = printer;
 		}
+		
 		unregisterPrintVisitor(stdJavaPrinter);
+		unregisterPrintVisitor(stdCSharpPrinter);
+		
 		registerPrintVisitor(new JavaMergePrintVisitor());
+		registerPrintVisitor(new CSharpMergePrintVisitor());
 		registerPrintVisitor(new TextMergePrintVisitor(".java"));
+		registerPrintVisitor(new TextMergePrintVisitor(".cs"));
 
 	}
 	
@@ -72,8 +94,8 @@ public class FSTGenMerger extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				//for(FSTNonTerminal feature : features)
-				//	System.out.println(feature.toString());
+				for(FSTNonTerminal feature : features)
+					System.out.println(feature.toString());
 				
 				FSTNode merged;
 				
