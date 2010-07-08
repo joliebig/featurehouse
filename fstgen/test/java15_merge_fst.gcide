@@ -419,7 +419,7 @@ ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
 ;
 
-@FSTNonTerminal(name="ImplList")
+@FSTTerminal(name="ImplList", compose="LINE_BASED_MERGE")
 ImplementsList:
    "implements" &LI ClassOrInterfaceType  ( "," &LI ClassOrInterfaceType )*
 ;

@@ -500,8 +500,8 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(IMPLEMENTS);
-    n = ClassOrInterfaceType(inTerminal);
-                                                         replaceName(n);
+    n = ClassOrInterfaceType(true);
+                                                   replaceName(n);
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -513,10 +513,10 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
         break label_8;
       }
       jj_consume_token(COMMA);
-      n = ClassOrInterfaceType(inTerminal);
-                                                                                                                   replaceName(n);
+      n = ClassOrInterfaceType(true);
+                                                                                                       replaceName(n);
     }
-                                                                                                                                       {if (true) return productionEndNonTerminal("ImplementsList","ImplList","ImplList");}
+                                                                                                                           {if (true) return productionEndTerminal("ImplementsList","ImplList","ImplList","LINE_BASED_MERGE",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6199,12 +6199,6 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
     return false;
   }
 
-  final private boolean jj_3R_350() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_159()) return true;
-    return false;
-  }
-
   final private boolean jj_3_46() {
     Token xsp;
     xsp = jj_scanpos;
@@ -6234,6 +6228,12 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
   final private boolean jj_3R_318() {
     if (jj_3R_56()) return true;
     if (jj_3R_332()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_350() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_159()) return true;
     return false;
   }
 

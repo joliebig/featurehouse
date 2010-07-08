@@ -419,7 +419,7 @@ FSTInfo ExtendsList(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ImplementsList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"implements" n=ClassOrInterfaceType(inTerminal){ replaceName(n);} ("," n=ClassOrInterfaceType(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("ImplementsList","ImplList","ImplList");}
+	"implements" n=ClassOrInterfaceType(true){ replaceName(n);} ("," n=ClassOrInterfaceType(true){ replaceName(n);})* {return productionEndTerminal("ImplementsList","ImplList","ImplList","LINE_BASED_MERGE",first,token);}
 
  )  }
 
