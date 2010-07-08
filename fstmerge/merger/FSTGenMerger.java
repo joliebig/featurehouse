@@ -94,9 +94,9 @@ public class FSTGenMerger extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				for(FSTNonTerminal feature : features)
+				/*for(FSTNonTerminal feature : features)
 					System.out.println(feature.toString());
-				
+				*/
 				FSTNode merged;
 				
 				if(features.size() != 0) {

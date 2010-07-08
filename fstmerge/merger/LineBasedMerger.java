@@ -28,9 +28,10 @@ public class LineBasedMerger implements MergerInterface {
 			e.printStackTrace();
 		}
 
-		//System.err.println("|" + tokens[0] + "|");
-		//System.err.println("|" + tokens[1] + "|");
-		//System.err.println("|" + tokens[2] + "|");
+		//System.out.println("|" + tokens[0] + "|");
+		//System.out.println("|" + tokens[1] + "|");
+		//System.out.println("|" + tokens[2] + "|");
+		//System.out.println("--------------------");
 
 
 		if(!(node.getType().equals("MethodDecl") || 
@@ -45,7 +46,7 @@ public class LineBasedMerger implements MergerInterface {
 			} else if(tokens[0].equals(tokens[1]) && tokens[2].length() > 0) {
 				node.setBody(tokens[2]);
 			} else if(tokens[2].equals(tokens[1]) && tokens[0].length() > 0) {
-				node.setBody(tokens[1]);
+				node.setBody(tokens[0]);
 			} else if(tokens[0].equals(tokens[1]) && tokens[2].length() == 0) {
 				node.setBody("");
 			} else if(tokens[2].equals(tokens[1]) && tokens[0].length() == 0) {
@@ -63,22 +64,22 @@ public class LineBasedMerger implements MergerInterface {
 			File fileBase = File.createTempFile("fstmerge_base_", "", tmpDir);
 			File fileVar2 = File.createTempFile("fstmerge_var2_", "", tmpDir);
 			
-	    	BufferedWriter writerVar1 = new BufferedWriter(new FileWriter(fileVar1));
-	        if(node.getType().contains("-Content"))
+			BufferedWriter writerVar1 = new BufferedWriter(new FileWriter(fileVar1));
+	        if(node.getType().contains("-Content") || tokens[0].length() == 0)
 	        	writerVar1.write(tokens[0]);
 	        else 
 	        	writerVar1.write(tokens[0] + "\n");
 	        writerVar1.close();
 	        
 	        BufferedWriter writerBase = new BufferedWriter(new FileWriter(fileBase));
-	        if(node.getType().contains("-Content"))
+	        if(node.getType().contains("-Content") || tokens[1].length() == 0)
 	        	writerBase.write(tokens[1]);
 	        else 
 	        	writerBase.write(tokens[1] + "\n");
 	        writerBase.close();
 
 	        BufferedWriter writerVar2 = new BufferedWriter(new FileWriter(fileVar2));
-	        if(node.getType().contains("-Content"))
+	        if(node.getType().contains("-Content") || tokens[2].length() == 0)
 	        	writerVar2.write(tokens[2]);
 	        else 
 	        	writerVar2.write(tokens[2] + "\n");
@@ -99,6 +100,7 @@ public class LineBasedMerger implements MergerInterface {
 			while ((line=buf.readLine())!=null) {
 				res += line + "\n";
 			}
+			
 			node.setBody(res);
 			
 			buf = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
