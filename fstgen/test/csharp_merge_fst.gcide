@@ -113,6 +113,12 @@ TOKEN : {
 	|  <MODULE		:	"module">
 	|  <PARTIAL		:	"partial">
 	|  <YIELD		:   "yield">		// introduce yield as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <LET         :   "let">          // introduce let as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <BY          :   "by">           // introduce by as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <FROM		:   "from">			// introduce from as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <INTO		:   "into">			// introduce into as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <GROUP		:   "group">		// introduce group as a pseudo keyword see IDENTIFIER_CSHARP for more information
+	|  <SELECT		:	"select">		// introduce select as a pseudo keyword see IDENTIFIER_CSHARP for more information
 }
 
 TOKEN : {
@@ -228,6 +234,13 @@ GRAMMARSTART
 IDENTIFIER_CSHARP
 	:  @FSTExportName("{TOSTRING}")<IDENTIFIER>
 	|  "yield"
+	|  "by"
+	|  "let"
+	|  "from"
+	|  "into"
+	|  "group"
+	|  "select"
+	|  "where"
 	;
 
 @FSTNonTerminal()
@@ -263,12 +276,13 @@ boolean_literal
 
 @FSTExportName("{type_name_part}^.")
 type_name
-	:  type_name_part ("::" type_name_part)? ("." type_name_part)* ;
-	
+	:  type_name_part ("::" type_name_part)? ("." type_name_part)*
+	;
+
 @FSTExportName("{identifier}")
 type_name_part 
 	:  identifier [LL("type_argument_list(inTerminal)") type_argument_list] ;
-	
+
 type_argument_list
 	:  "<" (type)? ("," type)* ">" ;	
 
@@ -339,8 +353,13 @@ floating_point_type
 //C.2.4 Expressions
 //***********************************************************************************************************************************/
 expression
-	:  conditional_expression (expressionInternal)?
-	|  LOOK_AHEAD(2) lambda_expression
+	:  LOOK_AHEAD("anonymous_function_signature() \"=>\"") lambda_expression
+	|  query_expression
+	|  conditional_expression (expressionInternal)?
+	;
+
+constant_expression
+	:  expression
 	;
 	
 expressionInternal
@@ -366,7 +385,6 @@ assignment_operator
 	|  ">>>="
 	|  "??"			// special assignment operator "null" test
 	|  "::"
-	|  "=>"
 	;
 
 conditional_expression
@@ -440,10 +458,12 @@ shift_operator
 	;
 
 additive_expression
-	:  multiplicative_expression (additive_expressionInternal)? ;
+	:  multiplicative_expression (additive_expressionInternal)?
+	;
 
 additive_expressionInternal
-	:  additive_operator additive_expression ;
+	:  additive_operator additive_expression
+	;
 
 additive_operator
 	:  "+"
@@ -451,10 +471,12 @@ additive_operator
 	;
 
 multiplicative_expression
-	:  unary_expression (multiplicative_expressionInternal)? ;
+	:  unary_expression (multiplicative_expressionInternal)?
+	;
    
 multiplicative_expressionInternal
-	:  multiplicative_operator multiplicative_expression ;
+	:  multiplicative_operator multiplicative_expression
+	;
 
 multiplicative_operator
 	:  "*"
@@ -489,10 +511,11 @@ primary_expression
 	;
 	
 primary_expression_start
-	:  literal
+	:  LOOK_AHEAD("\"(\" expression() \")\"") parenthesized_expression	//"("   expression   ")"
+	|  literal
 	|  identifier									
-	|  LOOK_AHEAD(3) parenthesized_expression			//"("   expression   ")"
 	|  predefined_type member_access
+	|  member_access
 	|  this_access						//"this"
 	|  base_access						//"base" (("." identifier) | ("["   expression_list   "]"))
 	|  typeof_expression				//TYPEOF   "("	(type | VOID)	")"
@@ -501,7 +524,6 @@ primary_expression_start
 	|  unchecked_expression				//UNCHECKED   "("   expression   ")"
 	|  LOOK_AHEAD(2) default_value_expression
 	|  anonymous_method_expression		//DELEGATE ...
-	|  LOOK_AHEAD("anonymous_function_signature() \"=>\"") lambda_expression
 	;
 
 default_value_expression
@@ -560,7 +582,7 @@ creation_expressionPostFix
 	;
 
 parenthesized_expression
-	:  "(" expression ")"
+	:  "(" expression ")" ("=>" anonymous_function_body)? // last part should not be here, but look_ahead does not seem to work properly
 	;
 
 member_access //assumes a predefined type or a primaryexpression came before this rule
@@ -677,13 +699,12 @@ embedded_statement
 	|  try_statement			//TRY   block   catch_clauses   finally_clause
 	|  checked_statement		//CHECKED   block
 	|  unchecked_statement		//UNCHECKED   block
-	|  lock_statement			//LOCK   "("   expression   ")"   embedded_statement
-	|  using_statement			//USING   "("    resource_acquisition   ")"    embedded_statement
+	|  lock_statement			//LOCK "(" expression ")" embedded_statement
+	|  using_statement			//USING "(" resource_acquisition ")" embedded_statement
 	|  unsafe_statement			//UNSAFE block
 	|  fixed_statement
 	|  LOOK_AHEAD(2) yield_statement	//YIELD with break or return
 	|  expression_statement		//statement_expression ","
-	|  LOOK_AHEAD("anonymous_function_signature() \"=>\"") lambda_expression
 	;
 	
 block
@@ -892,11 +913,11 @@ explicit_anonymous_function_signature
 	;
 
 explicit_anonymous_function_parameter_list
-	:  explicit_anonymous_function_parameter
+	:  explicit_anonymous_function_parameter ("," explicit_anonymous_function_parameter)*
 	;
 
 explicit_anonymous_function_parameter
-	:  type identifier ("," explicit_anonymous_function_parameter)*
+	:  (explicit_anonymous_function_parameter_modifier)? type identifier
 	;
 
 explicit_anonymous_function_parameter_modifier
@@ -906,16 +927,63 @@ explicit_anonymous_function_parameter_modifier
 
 implicit_anonymous_function_signature
 	:  "(" (implicit_anonymous_function_parameter_list)? ")"
+	|  implicit_anonymous_function_parameter
 	;
 
 implicit_anonymous_function_parameter_list
-	:  implicit_anonymous_function_parameter
+	:  implicit_anonymous_function_parameter ("," implicit_anonymous_function_parameter)*
 	;
 
 implicit_anonymous_function_parameter
-	:  identifier ("," implicit_anonymous_function_parameter)*
+	:  identifier
 	;
 
+query_expression
+	:  from_clause query_body
+	;
+
+from_clause
+	:  "from" identifier "in" expression
+	;
+
+query_body
+	:  (query_body_clauses)? select_or_group_clause (query_continuation)?
+	;
+
+query_body_clauses
+	:  (query_body_clause)+
+	;
+
+query_body_clause
+	:  from_clause
+	|  let_clause
+	|  where_clause
+	;
+
+let_clause
+	:  "let" identifier "=" expression
+	;
+
+where_clause
+	:  "where" expression
+	;
+
+select_or_group_clause
+	:  select_clause
+	|  group_clause
+	;
+
+select_clause
+	:  "select" expression
+	;
+
+group_clause
+	:  "group" expression "by" expression
+	;
+
+query_continuation
+	:  "into" identifier query_body
+	;
 
 //***********************************************************************************************************************************/
 //C.2.7 Classes section
@@ -948,6 +1016,7 @@ class_modifier
 	|  "virtual"		// TODO delete
 	|  "extern"			// TODO delete
 	;
+
 
 @FSTTerminal(name="type_parameter_list",compose="LINE_BASED_MERGE")
 type_parameter_list
@@ -1040,7 +1109,7 @@ fixed_size_buffer_declarators
 	;
 
 fixed_size_buffer_declarator
-	:  identifier "[" expression "]" // the expression should be a constant_expression
+	:  identifier "[" constant_expression "]"
 	;
 
 interface_type
@@ -1492,7 +1561,7 @@ fixed_statement
 	;
 
 fixed_pointer_declarators
-	:  fixed_pointer_declarator ( "," fixed_pointer_declarator )*
+	:  fixed_pointer_declarator ("," fixed_pointer_declarator)*
 	;
 
 fixed_pointer_declarator
