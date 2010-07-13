@@ -3,17 +3,49 @@ using System.Collections.Generic;
 using System.Threading;
 using System;
 
+[type: System.Diagnostics.DebuggerStepThroughAttribute()]
 namespace ProcessHacker.Common.Threading
 {
 	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]
     public class FastStack<T> : IEnumerable<T>
     {
+              ICollection<Type> supportedTypes =
+                  new ICollection<Type>[]
+                  {
+                      typeof (byte), typeof (sbyte), typeof (short), typeof (ushort),
+                      typeof (int), typeof (uint), typeof (long), typeof (ulong)
+                  };
+    
+    	public delegate void LogUpdatedEventHandler(KeyValuePair<DateTime, string> value);
     	private static global::System.Resources.ResourceManager resourceMan;
     	private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+    	
+    	[System.Web.Services.Protocols.SoapRpcMethodAttribute("http://novell.com/ifolder/web/GetUpdateFiles", RequestNamespace="http://novell.com/ifolder/web/", ResponseNamespace="http://novell.com/ifolder/web/")]
+    	public string[] GetUpdateFiles() {
+    	            foreach (KeyValuePair<string, string> p in IfdAWBPlugin.Settings.Images)
+            {   
+                Grid.Rows.Add(new [] { p.Key, p.Value }); 
+            }   
+    	
+        	object[] results = this.Invoke("GetUpdateFiles", new object[0]);
+        	return ((string[])(results[0]));
+    	}
+    	
     	public FastStack () {
+    			AddMenuItemDelegate addMenuItem = (text, onClick) =>
+           		{    
+                shutdownMenuItem.MenuItems.Add(new MenuItem(text, onClick));
+                shutdownTrayMenuItem.MenuItems.Add(new MenuItem(text, onClick));
+                shutDownToolStripMenuItem.DropDownItems.Add(text, null, onClick);
+            	};   
+    			
+    			int hmax = (int)Math.Floor((double)_recHex.Width/1*(double)_charSize.Width);
+    			THUMBBUTTON[] win32Buttons = (from thumbButton in _thumbButtons.Values select thumbButton.Win32ThumbButton).ToArray();
+    			Comparer = comparer ?? Comparer<TKey>.Default;
     			byte* buffer = stackalloc byte[IntPtr.Size];
     	        ex.StreamDetected += (sender, args, asd, asd, asd, asdf) => OnStreamDetected(args.ProgramChain);
         		ex.ChaptersLoaded += (sender) => OnChaptersLoaded(args.ProgramChain);
+				Array.ForEach(buttons, b => _thumbButtons.Add(b.Id, b));
     			this.buttonStart.Image = global::ProcessHacker.Properties.Resources.control_play_blue;
     			//List<string> list = new List<string>(Summaries.Text.Split(new[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries));
     	        this.Original = new UnicodeString(){
@@ -21,6 +53,15 @@ namespace ProcessHacker.Common.Threading
     	  		Length = unicodeStringInfo.Length,
     	  		MaximumLength = unicodeStringInfo.MaximumLength
     	        };
+    	        (kvp) => kvp.Key == info.ModBase;
+    	        
+    	        readMemoryProc = new ReadProcessMemoryProc64(
+                    delegate(IntPtr processHandle, ulong baseAddress, IntPtr buffer, int size, out int bytesRead)
+                    {   
+                        return KProcessHacker.Instance.KphReadVirtualMemorySafe(
+                            ProcessHandle.FromHandle(processHandle), (int)baseAddress, buffer, size, out bytesRead);
+                    }); 
+    	        
         }
         private class FastStackNode<U>
         {
@@ -44,6 +85,7 @@ namespace ProcessHacker.Common.Threading
                     	return new CleanupJobRunner(f);
                 	return null;
             	}), "cleanup");
+
             }
         
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -65,10 +107,19 @@ namespace ProcessHacker.Common.Threading
             foreach (string g in groups)
                 groupByName(g).Register(p, name, typeof(TSettings));
                   OnChaptersLoaded(pgc);
-      OnExtractionComplete();
+      			OnExtractionComplete();
+      			
       return new List<ChapterInfo>() { pgc };
         }
         
+      public double DownloadSpeedKbps
+{
+   get
+   {
+    return this.dlSpeed/1024;
+   }
+  }
+              
         [Browsable(false)]
         public override ContextMenuStrip ContextMenuStrip
         {
@@ -107,14 +158,27 @@ namespace ProcessHacker.Common.Threading
             }
         }
         
+        public unsafe struct DiskPerformanceInfoInternal
+            {    
+                public long BytesRead;
+                public long BytesWritten;
+                public long ReadTime;
+                public long WriteTime;
+                public long IdleTime;
+                public uint ReadCount;
+                public uint WriteCount;
+                public uint QueueDepth;
+                public uint SplitCount;
+                public long QueryTime;
+                public uint StorageDeviceNumber;
+                public fixed short StorageManagerName[8];
+            }    
+               
         public FileEntry[] GetFiles()
         {  
-            List<FileEntry> files = new List<FileEntry>();
+            //List<FileEntry> files = new List<FileEntry>();
 
-            //this.EnumFiles((file) => {
-            //        files.Add(file);
-            //        return true;
-            //});
+            (file);
 
             return typeof(GenericProfile<>).MakeGenericType(SettingsType);
         }
@@ -324,8 +388,6 @@ namespace ProcessHacker.Common.Threading
         
         public void AddThumbButtons(params ThumbButton[] buttons)
         {
-            Array.ForEach(buttons, (b) => _thumbButtons.Add(b.Id, b));
-
             RefreshThumbButtons();
         }
 

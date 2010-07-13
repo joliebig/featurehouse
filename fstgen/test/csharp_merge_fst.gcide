@@ -556,7 +556,7 @@ array_creation_postfix_expressionInternal
 	;
 
 creation_expression
-	:  "new" non_array_type creation_expressionPostFix (object_initializer)?
+	:  "new" (non_array_type)? creation_expressionPostFix (object_initializer)?
 	;
 
 object_initializer
@@ -1488,7 +1488,7 @@ attributes_either
 
 attribute_section_start
 	:  LOOK_AHEAD("\"[\" (\"assembly\" |\"module\") \":\"") "["global_attribute_target_specifier attribute_section
-								|	"[" (attribute_target_specifier)? attribute_section							
+	|  "[" (attribute_target_specifier)? attribute_section							
 	;
 
 global_attribute_target_specifier
@@ -1520,7 +1520,12 @@ attribute_sectionEnd
 	;
 
 attribute_target_specifier
-	:  attribute_target ":"
+	:  attribute_target attribute_target_specifier_mod
+	;
+
+attribute_target_specifier_mod
+	:  ":"
+	|  "."
 	;
 
 attribute_target
