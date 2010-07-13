@@ -1,0 +1,168 @@
+
+
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using ProcessHacker.Native.Api;
+
+namespace ProcessHacker.Native.Security
+{
+    public sealed class PrivilegeSet : IList<Privilege>
+    {
+        private static int _sizeOfLaa = Marshal.SizeOf(typeof(LuidAndAttributes));
+
+        private List<Privilege> _privileges;
+        private PrivilegeSetFlags _flags;
+
+        public PrivilegeSet()
+            : this(null)
+        { }
+
+        public PrivilegeSet(IEnumerable<Privilege> privileges)
+            : this(privileges, PrivilegeSetFlags.AllNecessary)
+        { }
+
+        public PrivilegeSet(IEnumerable<Privilege> privileges, PrivilegeSetFlags flags)
+        {
+            if (privileges != null)
+                _privileges = new List<Privilege>(privileges);
+            else
+                _privileges = new List<Privilege>();
+
+            _flags = flags;
+        }
+
+        public PrivilegeSet(IntPtr memory)
+        {
+            MemoryRegion memoryRegion = new MemoryRegion(memory);
+            PrivilegeSetStruct privilegeSet = memoryRegion.ReadStruct<PrivilegeSetStruct>();
+
+            _flags = privilegeSet.Flags;
+
+            _privileges = new List<Privilege>(privilegeSet.Count);
+
+            for (int i = 0; i < privilegeSet.Count; i++)
+            {
+                _privileges.Add(new Privilege(memoryRegion.ReadStruct<LuidAndAttributes>(PrivilegeSetStruct.PrivilegesOffset, i)));
+            }
+        }
+
+        public PrivilegeSetFlags Flags
+        {
+            get { return _flags; }
+            set { _flags = value; }
+        }
+
+        public MemoryAlloc ToMemory()
+        {
+            int requiredSize = 8 + _sizeOfLaa * _privileges.Count;
+            MemoryAlloc memory = new MemoryAlloc(requiredSize);
+
+            memory.WriteInt32(0, _privileges.Count);
+            memory.WriteInt32(4, (int)_flags);
+
+            for (int i = 0; i < _privileges.Count; i++)
+                memory.WriteStruct<LuidAndAttributes>(8, i, _privileges[i].ToLuidAndAttributes());
+
+            return memory;
+        }
+
+        public TokenPrivileges ToTokenPrivileges()
+        {
+            return new TokenPrivileges()
+            {
+                PrivilegeCount = _privileges.Count,
+                Privileges = _privileges.ConvertAll<LuidAndAttributes>(
+                (privilege) => privilege.ToLuidAndAttributes()).ToArray()
+            };
+        }
+
+
+
+        public int IndexOf(Privilege item)
+        {
+            return _privileges.IndexOf(item);
+        }
+
+        public void Insert(int index, Privilege item)
+        {
+            _privileges.Insert(index, item);
+        }
+
+        public void RemoveAt(int index)
+        {
+            _privileges.RemoveAt(index);
+        }
+
+        public Privilege this[int index]
+        {
+            get
+            {
+                return _privileges[index];
+            }
+            set
+            {
+                _privileges[index] = value;
+            }
+        }
+
+
+
+
+
+        public void Add(Privilege item)
+        {
+            _privileges.Add(item);
+        }
+
+        public void Clear()
+        {
+            _privileges.Clear();
+        }
+
+        public bool Contains(Privilege item)
+        {
+            return _privileges.Contains(item);
+        }
+
+        public void CopyTo(Privilege[] array, int arrayIndex)
+        {
+            _privileges.CopyTo(array, arrayIndex);
+        }
+
+        public int Count
+        {
+            get { return _privileges.Count; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return false; }
+        }
+
+        public bool Remove(Privilege item)
+        {
+            return _privileges.Remove(item);
+        }
+
+
+
+
+
+        public IEnumerator<Privilege> GetEnumerator()
+        {
+            return _privileges.GetEnumerator();
+        }
+
+
+
+
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _privileges.GetEnumerator();
+        }
+
+
+    }
+}
