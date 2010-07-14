@@ -109,7 +109,7 @@ TOKEN_MGR_DECLS: {
 }
 
 
-SKIP : {
+SPECIAL_TOKEN : {
 	<SPACE: " ">
 	|  "\t"
 	|  "\014"
@@ -139,7 +139,7 @@ SKIP : {
 	<""> { indenting(0); }
 }
 
-<INDENTING, INDENTATION_UNCHANGED> SKIP : {
+<INDENTING, INDENTATION_UNCHANGED> SPECIAL_TOKEN : {
 	"\t" { indenting((indent/8+1)*8); }
 	|  " " { indenting(indent+1); }
 	|  "\014" { indenting(0); }
@@ -286,6 +286,7 @@ TOKEN : /* KEYWORDS */ {
 	|  < EXEC: "exec" >
 	|  < ASSERT: "assert" >
 	|  < AS: "as" >
+	|  < WITH: "with" >
 }
 
 
@@ -410,41 +411,55 @@ MORE : /* Strings */ {
 GRAMMARSTART
 
 @FSTNonTerminal
-file_input:
-	(stmt)* <EOF>;
+file_input
+	:  (stmt @!)* <EOF>
+	;
 
 @FSTExportName("{varargslist}")
-parameters :
-	"(" [varargslist] ")" ;
+parameters
+	:  "(" [varargslist] ")"
+	;
 
 @FSTExportName("{TOSTRING}")
-varargslist :
-	defaultarg (LL(2) "," defaultarg)* [LL(3) "," ExtraArgList] [LL(2) "," ExtraKeywordList] ["," <NONE>]
+varargslist
+	:  defaultarg (LL(2) "," defaultarg)* [LL(3) "," ExtraArgList] [LL(2) "," ExtraKeywordList] ["," <NONE>]
 	|  LL(2) ExtraArgList ["," ExtraKeywordList]
 	|  ExtraKeywordList
 	;
 
-ExtraArgList :
-	"*" Name ;
-ExtraKeywordList :
-	power Name ;
-defaultarg :
-	fpdef ["=" test] ;
-fpdef :
-	Name
+ExtraArgList
+	:  "*" Name
+	;
+
+ExtraKeywordList
+	:  power Name
+	;
+
+defaultarg
+	:  fpdef ["=" test]
+	;
+
+fpdef
+	:  Name
 	|  "(" fplist ")"
 	;
-fplist :
-	fpdef (LL(2) "," fpdef)* [","<NONE>] ;
 
-stmt :
-	@FSTNonTerminal simple_stmt
-	|  @FSTNonTerminal compound_stmt
+fplist
+	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
-simple_stmt :
-	small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE> ;
-small_stmt:
-	expr_stmt
+
+@FSTNonTerminal
+stmt
+	:  simple_stmt
+	|  compound_stmt
+	;
+
+simple_stmt
+	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE>
+	;
+
+small_stmt
+	:  expr_stmt
 	|  print_stmt
 	|  del_stmt
 	|  pass_stmt
@@ -455,10 +470,12 @@ small_stmt:
 	|  assert_stmt
 	;
 
-expr_stmt :
-    SmartTestList expr_stmtEnd;
-expr_stmtEnd:
-	<PLUSEQ> SmartTestList 
+expr_stmt
+	:  SmartTestList expr_stmtEnd
+	;
+
+expr_stmtEnd
+	:  <PLUSEQ> SmartTestList 
 	|  <MINUSEQ> SmartTestList 
 	|  <MULTIPLYEQ> SmartTestList 
 	|  <DIVIDEEQ> SmartTestList 
@@ -473,105 +490,163 @@ expr_stmtEnd:
 	|  ("=" SmartTestList)*
 	;
 
-print_stmt: 
-	LL(2) <PRINT> <RSHIFT> test [ print_stmtEndP  ]        
+print_stmt
+	:  LL(2) <PRINT> <RSHIFT> test [print_stmtEndP]        
 	|  LL(2) <PRINT> print_stmtEndA
 	|  <PRINT>
 	;
 
-print_stmtEndP :
-	(LL(2) "," test)+ ["," <NONE>] ;
-print_stmtEndA :
-	test (LL(2) "," test)* ["," <NONE>] ;
-del_stmt: 
-	<DEL> exprlist ;
-pass_stmt: 
-	<PASS> ;
-flow_stmt : 
-	<BREAK> 
+print_stmtEndP
+	:  (LL(2) "," test)+ ["," <NONE>]
+	;
+
+print_stmtEndA
+	:  test (LL(2) "," test)* ["," <NONE>]
+	;
+
+del_stmt
+	:  <DEL> exprlist
+	;
+
+pass_stmt
+	:  <PASS>
+	;
+
+flow_stmt
+	:  <BREAK> 
 	|  <CONTINUE>
 	|  return_stmt
 	|  yield_stmt
 	|  raise_stmt
 	;
 
-return_stmt : 
-	<RETURN> [SmartTestList] ;
-yield_stmt :
-	<YIELD> SmartTestList ;
-raise_stmt :
-	<RAISE> [ raise_stmt_end] ;
-raise_stmt_end :
-	test [","  testcommatest] ;
-testcommatest :
-	test ["," test] ;
-
-import_stmt :
-	<IMPORT> Import
-	| <FROM> ImportFrom
+return_stmt
+	:  <RETURN> [SmartTestList]
 	;
-Import :
-	dotted_as_name ("," dotted_as_name)* ;
-ImportFrom :
-	dotted_name <IMPORT> ImportFromEnd ;
-ImportFromEnd :
-	"*"
-	| import_as_name ("," import_as_name)*
+
+yield_stmt
+	:  <YIELD> SmartTestList
 	;
-dotted_as_name :
-	dotted_name ["as" Name] ;
-dotted_name	:
-	AnyName ("." AnyName)* ;
-import_as_name :
-	AnyName ["as" Name] ;
-global_stmt :
-	<GLOBAL> Name ("," Name)* ;
-exec_stmt :
-	"exec" expr ["in" exec_stmt_end] ;
-exec_stmt_end : 
-	test ["," test] ;
-assert_stmt :
-	"assert" test ["," test] ;
 
-if_stmt: 
-	"if" test ":" suite
-	(elif_stmt)* [ "else" ":" suite] ;     
-elif_stmt :
-	"elif" test ":" suite ;       
-while_stmt :
-	"while" test ":" suite ["else" ":" suite] ;
+raise_stmt
+	:  <RAISE> [raise_stmt_end]
+	;
 
-for_stmt: 
-	"for" exprlist "in" SmartTestList ":" suite ["else" ":" suite] ;
+raise_stmt_end
+	:  test ["," testcommatest]
+	;
 
-try_stmt: 
-	"try" ":" suite tryEnd;
+testcommatest
+	:  test ["," test]
+	;
+
+import_stmt
+	:  <IMPORT> Import
+	|  <FROM> ImportFrom
+	;
+
+Import
+	:  dotted_as_name ("," dotted_as_name)*
+	;
+
+ImportFrom
+	:  dotted_name <IMPORT> ImportFromEnd
+	;
+
+ImportFromEnd
+	:  "*"
+	|  import_as_name ("," import_as_name)*
+	;
+
+dotted_as_name
+	:  dotted_name ["as" Name]
+	;
+
+dotted_name
+	:  AnyName ("." AnyName)*
+	;
+
+import_as_name
+	:  AnyName ["as" Name]
+	;
+
+global_stmt
+	:  <GLOBAL> Name ("," Name)*
+	;
+
+exec_stmt
+	:  "exec" expr ["in" exec_stmt_end]
+	;
+
+exec_stmt_end
+	:  test ["," test]
+	;
+
+assert_stmt
+	:  "assert" test ["," test]
+	;
+
+if_stmt
+	:  "if" test ":" suite (elif_stmt)* [ "else" ":" suite]
+	;     
+
+elif_stmt
+	:  "elif" test ":" suite
+	;
+
+while_stmt
+	:  "while" test ":" suite ["else" ":" suite]
+	;
+
+for_stmt
+	:  "for" exprlist "in" SmartTestList ":" suite ["else" ":" suite]
+	;
+
+try_stmt
+	:  "try" ":" suite tryEnd
+	;
  
-tryEnd:
-    (except_clause)+ ["else" ":" suite]       
+tryEnd
+	:  (except_clause)+ ["else" ":" suite]       
     |  "finally" ":" suite
     ;
 
-except_clause: 
-	"except" [testcommatest] ":" suite ;
-
-test :
-	lambdef
-	| and_test ("or" and_test)*
+with_stmt
+	:  "with" with_item ("," with_item)* ":" suite
 	;
-and_test :
-	not_test ("and" not_test)* ;
-not_test :
-	"not" not_test
-	| comparison
-	;
-comparison :
-	expr (compEnd)*;
-compEnd :
-	comp_op expr;
 
-comp_op : 
-	<LESS> 
+with_item
+	:  test ("as" expr)?
+	;
+
+except_clause
+	:  "except" [testcommatest] ":" suite
+	;
+
+test
+	:  lambdef
+	|  and_test ("or" and_test)*
+	;
+
+and_test
+	:  not_test ("and" not_test)*
+	;
+
+not_test
+	:  "not" not_test
+	|  comparison
+	;
+
+comparison
+	:  expr (compEnd)*
+	;
+
+compEnd
+	:  comp_op expr
+	;
+
+comp_op
+	:  <LESS> 
 	|  <GREATER> 
 	|  <EQEQUAL> 
 	|  <EQGREATER> 
@@ -584,56 +659,71 @@ comp_op :
 	|  <IS>
 	;
 
-expr :
-	xor_expr ("|" xor_expr)* ; 
-xor_expr :
-	and_expr ("^" and_expr )* ;
-and_expr :
-	shift_expr ("&" shift_expr)* ;
-shift_expr :
-	arith_expr (shift_exprEnd )* ;
-shift_exprEnd :
-	"<<" arith_expr
+expr
+	:  xor_expr ("|" xor_expr)*
+	;
+
+xor_expr
+	:  and_expr ("^" and_expr )*
+	;
+
+and_expr
+	:  shift_expr ("&" shift_expr)*
+	;
+
+shift_expr
+	:  arith_expr (shift_exprEnd )*
+	;
+
+shift_exprEnd
+	:  "<<" arith_expr
 	|  ">>" arith_expr
 	;
-arith_expr :
-	term (arith_exprEnd)* ;
-arith_exprEnd :
-	<PLUS> term
+
+arith_expr
+	:  term (arith_exprEnd)*
+	;
+
+arith_exprEnd
+	:  <PLUS> term
 	| <MINUS> term
 	; 
-term :
-	factor ( termEnd )* ;
 
-termEnd	:
-	"*" factor 
+term
+	:  factor (termEnd)*
+	;
+
+termEnd
+	:  "*" factor 
 	|  <DIVIDE> factor 
 	|  <FLOORDIVIDE> factor 
 	|  <MODULO> factor
 	;
 
-factor : 
-	<PLUS> factor
+factor
+	:  <PLUS> factor
 	|  <MINUS> factor 
 	|  <NOT> factor 
 	|  powerfactor
 	;
 
-powerfactor :
-	atomtrailer (LL(2) "**" factor)* ;
+powerfactor
+	:  atomtrailer (LL(2) "**" factor)*
+	;
 
-atomtrailer: 
-    atom ( atomtrailerEnd)*;
+atomtrailer
+	:  atom ( atomtrailerEnd)*
+	;
     
-atomtrailerEnd:
-	LL(2) "(" ")" <NONE>
+atomtrailerEnd
+	:  LL(2) "(" ")" <NONE>
 	|  "(" arglist ")" 
 	|  "[" subscriptlist "]" 
 	|  <DOT> AnyName
 	;
 
-atom : 
-	LL(2)   "(" ")" <NONE>
+atom
+	:  LL(2) "(" ")" <NONE>
 	|  "(" [SmartTestList] ")" 
 	|  <LBRACKET> [listmaker] "]" 
 	|  "{" [dictmaker] "}"
@@ -643,130 +733,153 @@ atom :
 	|  StringNode (StringNode)*
 	;
 
-lambdef:
-	<LAMBDA> [varargslist] ":" test ;
+lambdef
+	:  <LAMBDA> [varargslist] ":" test
+	;
 
-subscriptlist : 
-	subscript (LL(2) "," subscript)* [","<NONE>] ;
+subscriptlist
+	:  subscript (LL(2) "," subscript)* [","<NONE>]
+	;
 
-subscript : 
-	<DOT> <DOT> <DOT> 
+subscript
+	:  <DOT> <DOT> <DOT> 
 	|  test (slice)?
 	|  slice
 	;
 
-slice : 
-	ct [ct];
+slice
+	:  ct [ct]
+	;
 
-ct :
-	":" [test];
+ct
+	:  ":" [test]
+	;
 
-exprlist :
-	expr (LL(2) "," expr)* [","<NONE>];
+exprlist
+	:  expr (LL(2) "," expr)* [","<NONE>]
+	;
 
-SmartTestList : 
-	test (LL(2) "," test)* [","<NONE>];
+SmartTestList
+	:  test (LL(2) "," test)* [","<NONE>]
+	;
 
-testlist : 
-	test (LL(2) "," test)* [","<NONE>];
+testlist
+	:  test (LL(2) "," test)* [","<NONE>]
+	;
 
-dictmaker : 
-	test ":" test (LL(2) dictInt)* [","<NONE>];
+dictmaker
+	:  test ":" test (LL(2) dictInt)* [","<NONE>]
+	;
 
-dictInt :
-	"," test ":" test;
+dictInt
+	:  "," test ":" test
+	;
 
-listmaker : 
-	test listmakerEnd;
+listmaker
+	:  test listmakerEnd
+	;
  
-listmakerEnd :
-	(list_for)+
+listmakerEnd
+	:  (list_for)+
 	|  (LL(2) "," test)* [","<NONE>]
 	; 
 
 list_for: 
  	"for" exprlist "in" SmartTestList (list_if)* ;
 
-list_if : 
-	"if" test ;
+list_if
+	:  "if" test
+	;
 
-compound_stmt :
-	if_stmt
-	| while_stmt
-	| for_stmt
-	| try_stmt
-	| @FSTTerminal(name="{funcdef}", compose="JavaMethodOverriding") funcdef :: FunctionDefinition
-	| @FSTNonTerminal classdef :: ClassDefinition
+compound_stmt
+	:  if_stmt
+	|  while_stmt
+	|  for_stmt
+	|  try_stmt
+	|  with_stmt
+	|  @FSTTerminal(name="{funcdef}", compose="JavaMethodOverriding") funcdef :: FunctionDefinition
+	|  @FSTNonTerminal classdef :: ClassDefinition
 	;
 
 @FSTExportName("{<NAME>}({parameters})")
-funcdef :
-	"def" <NAME> parameters ":" @+ suite ;
+funcdef
+	:  "def" <NAME> parameters ":" suite
+	;
 
 @FSTNonTerminal(name="{<NAME>}")
-classdef: 
-	"class" <NAME> ["(" testlist ")"] ":" suite ;
+classdef
+	:  "class" <NAME> ["(" testlist ")"] ":" suite
+	;
 
 @FSTExportName("{Field}")
-FieldDeclaration:
-	Field (";" Field)* ;
+FieldDeclaration
+	:  Field (";" Field)*
+	;
 	
 @FSTExportName("{<NAME>}")
-Field:
-	<NAME> "=" expr ;
+Field
+	:  <NAME> "=" expr
+	;
 
 @FSTNonTerminal
-suite: 
-	<NEWLINE> JAVA("token_source.expect_indent = true;") <INDENT> JAVA("token_source.expect_indent = false;") (stmt)+ <DEDENT> @- ;
+suite
+	:  <NEWLINE> JAVA("token_source.expect_indent = true;") <INDENT> JAVA("token_source.expect_indent = false;") (stmt)+ <DEDENT>
+	;
 
-arglist : 
-	normalargs [arglist1End]
+arglist
+	:  normalargs [arglist1End]
 	|  [LL(2) arglist1EndEnd]
 	;
 
-arglist1End:
- 	","  [LL(2) arglist1EndEnd];
+arglist1End
+	:  ","  [LL(2) arglist1EndEnd]
+	;
   
-arglist1EndEnd :
-	LL(2) ExtraArgValueList [ "," ExtraKeywordValueList ]
+arglist1EndEnd
+	:  LL(2) ExtraArgValueList ["," ExtraKeywordValueList]
 	|  ExtraKeywordValueList
 	;
 
-normalargs : 
-	argument (LL(2) "," argument)* ;
+normalargs
+	:  argument (LL(2) "," argument)*
+	;
 
-ExtraArgValueList : 
-	"*" test ;
+ExtraArgValueList
+	:  "*" test
+	;
 
-ExtraKeywordValueList : 
-	power test ;
+ExtraKeywordValueList
+	:  power test
+	;
  
-power:
-	"**"<NONE>
+power
+	:  "**"<NONE>
 	|  "*" "*" <NONE>
 	;
- 
-argument : 
-	[LL(2) AnyName "="] test;
 
-Number :
-	<HEXNUMBER>
-	| <OCTNUMBER>
-	| <DECNUMBER>
-	| <FLOAT>
-	| <COMPLEX>
+argument
+	:  [LL(2) AnyName "="] test
+	;
+
+Number
+	:  <HEXNUMBER>
+	|  <OCTNUMBER>
+	|  <DECNUMBER>
+	|  <FLOAT>
+	|  <COMPLEX>
 	;
         
-Complex :
-	<FLOAT> ;
+Complex
+	:  <FLOAT>
+	;
 
-Name:
-	<NAME>
+Name
+	:  <NAME>
 	|  <AS>
 	;
 
-StringNode :
-	<SINGLE_STRING>
+StringNode
+	:  <SINGLE_STRING>
 	|  <SINGLE_STRING2>
 	|  <TRIPLE_STRING>
 	|  <TRIPLE_STRING2>
@@ -776,8 +889,8 @@ StringNode :
 	|  <TRIPLE_USTRING2>
 	;
 
-AnyName :
-	<NAME>
+AnyName
+	:  <NAME>
 	|  "or" 
 	|  "and" 
 	|  "not" 
