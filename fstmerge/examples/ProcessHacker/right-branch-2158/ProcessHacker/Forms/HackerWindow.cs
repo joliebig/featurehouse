@@ -1893,7 +1893,7 @@ namespace ProcessHacker
         }
         private void CreateShutdownMenuItems()
         {
-            AddMenuItemDelegate addMenuItem = (string text, EventHandler onClick) =>
+            AddMenuItemDelegate addMenuItem = (text, onClick) =>
             {
                 shutdownMenuItem.MenuItems.Add(new MenuItem(text, onClick));
                 shutdownTrayMenuItem.MenuItems.Add(new MenuItem(text, onClick));
