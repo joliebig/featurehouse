@@ -587,11 +587,30 @@ assert_stmt
 	;
 
 if_stmt
-	:  "if" test ":" suite (elif_stmt)* [ "else" ":" suite]
-	;     
+	:  "if" test ":" if_stmt_End
+	;
+
+if_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite (elif_stmt)* [else_stmt]
+	;
 
 elif_stmt
-	:  "elif" test ":" suite
+	:  "elif" test ":" elif_stmt_End
+	;
+
+elif_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite
+	;
+
+else_stmt
+	:  "else" ":" else_stmt_End
+	;
+
+else_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite
 	;
 
 while_stmt
@@ -823,7 +842,12 @@ decorator
 
 @FSTExportName("{<NAME>}({parameters})")
 funcdef
-	:  "def" <NAME> parameters ":" suite
+	:  "def" <NAME> parameters ":" funcdef_End
+	;
+
+funcdef_End
+	:  small_stmt <NEWLINE>
+	|  suite
 	;
 
 @FSTNonTerminal(name="{<NAME>}")
