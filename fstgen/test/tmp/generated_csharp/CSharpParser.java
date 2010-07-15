@@ -11,7 +11,8 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
 
   final public FSTInfo IDENTIFIER_CSHARP(boolean inTerminal) throws ParseException {
                                                   Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
+
+    first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
@@ -30,8 +31,9 @@ public class CSharpParser extends AbstractFSTParser implements CSharpParserConst
   }
 
   final public FSTInfo compilation_unit(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
+    Token first=null,t;FSTInfo n;
+     
+    first=getToken(1); productionStart(inTerminal);
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {

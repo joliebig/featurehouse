@@ -32,7 +32,8 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
   }
 
   final public FSTInfo compilation_unit(boolean inTerminal) throws ParseException {
-                                                 Token first=null,t;FSTInfo n;
+
+	  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     label_1:
     while (true) {
