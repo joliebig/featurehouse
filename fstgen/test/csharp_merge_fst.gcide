@@ -292,7 +292,7 @@ type_argument_list
 
 @FSTExportName(name="{TOSTRING}")
 type
-	:  non_array_type ( rank_specifiers )? ("*"<NONE>)?
+	:  non_array_type ("?"<NONE>)? (rank_specifiers)? ("*"<NONE>)?
 	;
 
 rank_specifiers

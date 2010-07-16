@@ -330,12 +330,20 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = non_array_type(true);
                                 replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LBRACK:
-      n = rank_specifiers(true);
-                                                                           replaceName(n);
+    case QMARK:
+      jj_consume_token(QMARK);
       break;
     default:
       jj_la1[11] = jj_gen;
+      ;
+    }
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LBRACK:
+      n = rank_specifiers(true);
+                                                                                  replaceName(n);
+      break;
+    default:
+      jj_la1[12] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -343,10 +351,10 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(STAR);
       break;
     default:
-      jj_la1[12] = jj_gen;
+      jj_la1[13] = jj_gen;
       ;
     }
-                                                                                                     {if (true) return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -362,7 +370,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[13] = jj_gen;
+        jj_la1[14] = jj_gen;
         break label_4;
       }
     }
@@ -381,7 +389,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[14] = jj_gen;
+        jj_la1[15] = jj_gen;
         break label_5;
       }
       jj_consume_token(COMMA);
@@ -431,7 +439,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                              {if (true) return productionEndTerminal("non_array_type2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -472,7 +480,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("predefined_type4","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[16] = jj_gen;
+      jj_la1[17] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -504,7 +512,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("simple_type2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -539,7 +547,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                     {if (true) return productionEndTerminal("numeric_type3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[19] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -587,7 +595,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("integral_type9","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -622,7 +630,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("class_type3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -642,7 +650,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("floating_point_type2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[22] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -737,13 +745,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                       replaceName(n);
           break;
         default:
-          jj_la1[22] = jj_gen;
+          jj_la1[23] = jj_gen;
           ;
         }
                                                                                                          {if (true) return productionEndTerminal("expression3","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[23] = jj_gen;
+        jj_la1[24] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -845,7 +853,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("assignment_operator14","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[24] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -863,7 +871,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[25] = jj_gen;
+      jj_la1[26] = jj_gen;
       ;
     }
                                                                                                                         {if (true) return productionEndTerminal("conditional_expression","-","-","Replacement",first,token);}
@@ -895,7 +903,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                       replaceName(n);
       break;
     default:
-      jj_la1[26] = jj_gen;
+      jj_la1[27] = jj_gen;
       ;
     }
                                                                                                                          {if (true) return productionEndTerminal("conditional_or_expression","-","-","Replacement",first,token);}
@@ -914,7 +922,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                     replaceName(n);
       break;
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[28] = jj_gen;
       ;
     }
                                                                                                                        {if (true) return productionEndTerminal("conditional_and_expression","-","-","Replacement",first,token);}
@@ -933,7 +941,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[29] = jj_gen;
       ;
     }
                                                                                                                    {if (true) return productionEndTerminal("inclusive_or_expression","-","-","Replacement",first,token);}
@@ -952,7 +960,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[29] = jj_gen;
+      jj_la1[30] = jj_gen;
       ;
     }
                                                                                                           {if (true) return productionEndTerminal("exclusive_or_expression","-","-","Replacement",first,token);}
@@ -971,7 +979,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                    replaceName(n);
       break;
     default:
-      jj_la1[30] = jj_gen;
+      jj_la1[31] = jj_gen;
       ;
     }
                                                                                                       {if (true) return productionEndTerminal("and_expression","-","-","Replacement",first,token);}
@@ -990,7 +998,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                               replaceName(n);
       break;
     default:
-      jj_la1[31] = jj_gen;
+      jj_la1[32] = jj_gen;
       ;
     }
                                                                                                                  {if (true) return productionEndTerminal("equality_expression","-","-","Replacement",first,token);}
@@ -1021,7 +1029,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("equality_operator2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[33] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1044,7 +1052,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                            replaceName(n);
       break;
     default:
-      jj_la1[33] = jj_gen;
+      jj_la1[34] = jj_gen;
       ;
     }
                                                                                                               {if (true) return productionEndTerminal("relational_expression","-","-","Replacement",first,token);}
@@ -1074,7 +1082,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                         {if (true) return productionEndTerminal("relational_expressionInternal2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[34] = jj_gen;
+      jj_la1[35] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1102,7 +1110,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("relational_operator4","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[36] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1122,7 +1130,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("relational_operator2I2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[36] = jj_gen;
+      jj_la1[37] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1141,7 +1149,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                          replaceName(n);
       break;
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[38] = jj_gen;
       ;
     }
                                                                                                             {if (true) return productionEndTerminal("shift_expression","-","-","Replacement",first,token);}
@@ -1172,7 +1180,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("shift_operator2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[39] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1191,7 +1199,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                   replaceName(n);
       break;
     default:
-      jj_la1[39] = jj_gen;
+      jj_la1[40] = jj_gen;
       ;
     }
                                                                                                                      {if (true) return productionEndTerminal("additive_expression","-","-","Replacement",first,token);}
@@ -1222,7 +1230,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("additive_operator2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[40] = jj_gen;
+      jj_la1[41] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1242,7 +1250,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                replaceName(n);
       break;
     default:
-      jj_la1[41] = jj_gen;
+      jj_la1[42] = jj_gen;
       ;
     }
                                                                                                                   {if (true) return productionEndTerminal("multiplicative_expression","-","-","Replacement",first,token);}
@@ -1277,7 +1285,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("multiplicative_operator3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[42] = jj_gen;
+      jj_la1[43] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1303,7 +1311,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                              {if (true) return productionEndTerminal("unary_expression1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[43] = jj_gen;
+      jj_la1[44] = jj_gen;
       if (jj_2_3(2147483647)) {
         n = cast_expression(true);
                                                               replaceName(n);
@@ -1361,7 +1369,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                       {if (true) return productionEndTerminal("unary_expression3","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[44] = jj_gen;
+          jj_la1[45] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1407,7 +1415,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("unary_operator8","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[45] = jj_gen;
+      jj_la1[46] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1492,7 +1500,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                        {if (true) return productionEndTerminal("primary_expression2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[46] = jj_gen;
+      jj_la1[47] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1593,7 +1601,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                         {if (true) return productionEndTerminal("primary_expression_start11","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[47] = jj_gen;
+        jj_la1[48] = jj_gen;
         if (jj_2_6(2)) {
           n = default_value_expression(true);
                                                        replaceName(n);
@@ -1606,7 +1614,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                {if (true) return productionEndTerminal("primary_expression_start13","-","-","Replacement",first,token);}
             break;
           default:
-            jj_la1[48] = jj_gen;
+            jj_la1[49] = jj_gen;
             jj_consume_token(-1);
             throw new ParseException();
           }
@@ -1655,7 +1663,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                  {if (true) return productionEndTerminal("primary_expression_postfixInternal1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[49] = jj_gen;
+      jj_la1[50] = jj_gen;
       if (jj_2_8(2147483647)) {
         n = invocation_expression(true);
                                                                                        replaceName(n);
@@ -1683,7 +1691,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                          {if (true) return productionEndTerminal("primary_expression_postfixInternal6","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[50] = jj_gen;
+          jj_la1[51] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1709,7 +1717,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[51] = jj_gen;
+        jj_la1[52] = jj_gen;
         break label_7;
       }
     }
@@ -1727,7 +1735,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                  {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[52] = jj_gen;
+      jj_la1[53] = jj_gen;
       if (jj_2_9(2147483647)) {
         n = invocation_expression(true);
                                                                                        replaceName(n);
@@ -1750,7 +1758,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                          {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal5","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[53] = jj_gen;
+          jj_la1[54] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -1795,7 +1803,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                        replaceName(n);
       break;
     default:
-      jj_la1[54] = jj_gen;
+      jj_la1[55] = jj_gen;
       ;
     }
     n = creation_expressionPostFix(true);
@@ -1806,7 +1814,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                            replaceName(n);
       break;
     default:
-      jj_la1[55] = jj_gen;
+      jj_la1[56] = jj_gen;
       ;
     }
                                                                                                                                                               {if (true) return productionEndTerminal("creation_expression","-","-","Replacement",first,token);}
@@ -1876,7 +1884,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                               replaceName(n);
       break;
     default:
-      jj_la1[56] = jj_gen;
+      jj_la1[57] = jj_gen;
       ;
     }
     jj_consume_token(RBRACE);
@@ -1896,7 +1904,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[57] = jj_gen;
+        jj_la1[58] = jj_gen;
         break label_8;
       }
       jj_consume_token(COMMA);
@@ -1919,7 +1927,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                              replaceName(n);
       break;
     default:
-      jj_la1[58] = jj_gen;
+      jj_la1[59] = jj_gen;
       ;
     }
                                                                                                 {if (true) return productionEndTerminal("member_initializer","-","-","Replacement",first,token);}
@@ -2002,7 +2010,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                     replaceName(n);
         break;
       default:
-        jj_la1[59] = jj_gen;
+        jj_la1[60] = jj_gen;
         ;
       }
       jj_consume_token(RPAREN);
@@ -2018,13 +2026,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                replaceName(n);
         break;
       default:
-        jj_la1[60] = jj_gen;
+        jj_la1[61] = jj_gen;
         ;
       }
                                                                                                                   {if (true) return productionEndTerminal("creation_expressionPostFix1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[65] = jj_gen;
+      jj_la1[66] = jj_gen;
       if (jj_2_10(2)) {
         jj_consume_token(LBRACK);
         n = expression_list(true);
@@ -2036,7 +2044,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                  replaceName(n);
           break;
         default:
-          jj_la1[61] = jj_gen;
+          jj_la1[62] = jj_gen;
           ;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2045,7 +2053,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                replaceName(n);
           break;
         default:
-          jj_la1[62] = jj_gen;
+          jj_la1[63] = jj_gen;
           ;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -2059,7 +2067,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                              replaceName(n);
           break;
         default:
-          jj_la1[63] = jj_gen;
+          jj_la1[64] = jj_gen;
           ;
         }
                                                                                                                                                                                                                                 {if (true) return productionEndTerminal("creation_expressionPostFix2","-","-","Replacement",first,token);}
@@ -2081,13 +2089,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                           replaceName(n);
             break;
           default:
-            jj_la1[64] = jj_gen;
+            jj_la1[65] = jj_gen;
             ;
           }
                                                                                                                                                              {if (true) return productionEndTerminal("creation_expressionPostFix3","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[66] = jj_gen;
+          jj_la1[67] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -2110,7 +2118,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                             replaceName(n);
       break;
     default:
-      jj_la1[67] = jj_gen;
+      jj_la1[68] = jj_gen;
       ;
     }
                                                                                                                {if (true) return productionEndTerminal("parenthesized_expression","-","-","Replacement",first,token);}
@@ -2142,7 +2150,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       break;
     default:
-      jj_la1[68] = jj_gen;
+      jj_la1[69] = jj_gen;
       ;
     }
     jj_consume_token(LPAREN);
@@ -2207,7 +2215,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                    replaceName(n);
       break;
     default:
-      jj_la1[69] = jj_gen;
+      jj_la1[70] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -2227,7 +2235,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[70] = jj_gen;
+        jj_la1[71] = jj_gen;
         break label_9;
       }
       jj_consume_token(COMMA);
@@ -2249,7 +2257,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                  replaceName(n);
       break;
     default:
-      jj_la1[71] = jj_gen;
+      jj_la1[72] = jj_gen;
       ;
     }
     n = expression(true);
@@ -2286,7 +2294,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("argumentPrefix3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[72] = jj_gen;
+      jj_la1[73] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2316,7 +2324,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[73] = jj_gen;
+        jj_la1[74] = jj_gen;
         break label_10;
       }
       n = expression_listList(true);
@@ -2361,7 +2369,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                          {if (true) return productionEndTerminal("base_access2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[74] = jj_gen;
+        jj_la1[75] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -2521,7 +2529,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                       {if (true) return productionEndTerminal("statement4","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[75] = jj_gen;
+        jj_la1[76] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -2552,7 +2560,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[76] = jj_gen;
+      jj_la1[77] = jj_gen;
       ;
     }
                                                                                                                         {if (true) return productionEndTerminal("local_variable_declarators","-","-","Replacement",first,token);}
@@ -2570,7 +2578,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                  replaceName(n);
       break;
     default:
-      jj_la1[77] = jj_gen;
+      jj_la1[78] = jj_gen;
       ;
     }
                                                                                                     {if (true) return productionEndTerminal("local_variable_declarator","-","-","Replacement",first,token);}
@@ -2660,7 +2668,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           {if (true) return productionEndTerminal("local_variable_initializer3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[78] = jj_gen;
+      jj_la1[79] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2691,7 +2699,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[79] = jj_gen;
+      jj_la1[80] = jj_gen;
       ;
     }
                                                                                                                         {if (true) return productionEndTerminal("local_constant_declarators","-","-","Replacement",first,token);}
@@ -2782,7 +2790,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                    {if (true) return productionEndTerminal("embedded_statement12","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[80] = jj_gen;
+      jj_la1[81] = jj_gen;
       if (jj_2_15(2)) {
         n = yield_statement(true);
                                               replaceName(n);
@@ -2848,7 +2856,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                         {if (true) return productionEndTerminal("embedded_statement14","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[81] = jj_gen;
+          jj_la1[82] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -2940,7 +2948,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[82] = jj_gen;
+        jj_la1[83] = jj_gen;
         break label_11;
       }
       n = statement(true);
@@ -3035,7 +3043,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[83] = jj_gen;
+        jj_la1[84] = jj_gen;
         break label_12;
       }
     }
@@ -3068,7 +3076,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                     {if (true) return productionEndTerminal("selection_statement2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[84] = jj_gen;
+      jj_la1[85] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3092,7 +3100,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                            replaceName(n);
       break;
     default:
-      jj_la1[85] = jj_gen;
+      jj_la1[86] = jj_gen;
       ;
     }
                                                                                                                                                               {if (true) return productionEndTerminal("if_statement","-","-","Replacement",first,token);}
@@ -3116,7 +3124,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[86] = jj_gen;
+        jj_la1[87] = jj_gen;
         break label_13;
       }
       n = switch_statement_label(true);
@@ -3163,7 +3171,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                         {if (true) return productionEndTerminal("switch_label2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[87] = jj_gen;
+      jj_la1[88] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3195,7 +3203,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                      {if (true) return productionEndTerminal("iteration_statement4","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[88] = jj_gen;
+      jj_la1[89] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3295,7 +3303,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                             replaceName(n);
       break;
     default:
-      jj_la1[89] = jj_gen;
+      jj_la1[90] = jj_gen;
       ;
     }
     jj_consume_token(SEMI);
@@ -3358,7 +3366,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[90] = jj_gen;
+      jj_la1[91] = jj_gen;
       ;
     }
     jj_consume_token(SEMI);
@@ -3421,7 +3429,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[91] = jj_gen;
+      jj_la1[92] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -3499,7 +3507,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                    {if (true) return productionEndTerminal("for_initializer2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[92] = jj_gen;
+        jj_la1[93] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -3553,7 +3561,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                            {if (true) return productionEndTerminal("yield_statement_body2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[93] = jj_gen;
+      jj_la1[94] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3590,7 +3598,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                    {if (true) return productionEndTerminal("jump_statement5","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[94] = jj_gen;
+      jj_la1[95] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3649,7 +3657,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                         {if (true) return productionEndTerminal("goto_statementEnd3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[95] = jj_gen;
+      jj_la1[96] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3719,7 +3727,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
       break;
     default:
-      jj_la1[96] = jj_gen;
+      jj_la1[97] = jj_gen;
       ;
     }
     jj_consume_token(SEMI);
@@ -3790,7 +3798,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       break;
     default:
-      jj_la1[97] = jj_gen;
+      jj_la1[98] = jj_gen;
       ;
     }
     jj_consume_token(SEMI);
@@ -3823,7 +3831,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                          replaceName(n);
         break;
       default:
-        jj_la1[98] = jj_gen;
+        jj_la1[99] = jj_gen;
         ;
       }
                                                                                             {if (true) return productionEndTerminal("try_statement_clauses1","-","-","Replacement",first,token);}
@@ -3834,7 +3842,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                   {if (true) return productionEndTerminal("try_statement_clauses2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[99] = jj_gen;
+      jj_la1[100] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3853,7 +3861,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[100] = jj_gen;
+        jj_la1[101] = jj_gen;
         break label_15;
       }
     }
@@ -3895,7 +3903,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                 replaceName(n);
         break;
       default:
-        jj_la1[101] = jj_gen;
+        jj_la1[102] = jj_gen;
         ;
       }
       jj_consume_token(RPAREN);
@@ -3909,7 +3917,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                          {if (true) return productionEndTerminal("catch_clauseEnd2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[102] = jj_gen;
+      jj_la1[103] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4042,7 +4050,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                               {if (true) return productionEndTerminal("resource_acquisition2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[103] = jj_gen;
+        jj_la1[104] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -4083,7 +4091,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[104] = jj_gen;
+        jj_la1[105] = jj_gen;
         break label_16;
       }
       n = namespace_member_declaration(inTerminal);
@@ -4117,7 +4125,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[105] = jj_gen;
+        jj_la1[106] = jj_gen;
         break label_17;
       }
       n = using_directive(inTerminal);
@@ -4151,7 +4159,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[106] = jj_gen;
+        jj_la1[107] = jj_gen;
         break label_18;
       }
       n = namespace_member_declaration(inTerminal);
@@ -4163,7 +4171,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(SEMI);
       break;
     default:
-      jj_la1[107] = jj_gen;
+      jj_la1[108] = jj_gen;
       ;
     }
                                                                                                                                            {if (true) return productionEndNonTerminal("namespace_body","-","-");}
@@ -4199,7 +4207,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("using_directiveEnd2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[108] = jj_gen;
+      jj_la1[109] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4256,7 +4264,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                         replaceName(n);
         break;
       default:
-        jj_la1[109] = jj_gen;
+        jj_la1[110] = jj_gen;
         ;
       }
       n = type_declaration(inTerminal);
@@ -4265,7 +4273,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                   {if (true) return productionEndNonTerminal("namespace_member_declaration_no_attr2","{type_declaration}","{type_declaration}");}
       break;
     default:
-      jj_la1[110] = jj_gen;
+      jj_la1[111] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4309,7 +4317,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                    replaceName(n);
         break;
       default:
-        jj_la1[111] = jj_gen;
+        jj_la1[112] = jj_gen;
         ;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4332,7 +4340,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                      replaceName(n);
         break;
       default:
-        jj_la1[112] = jj_gen;
+        jj_la1[113] = jj_gen;
         ;
       }
       n = type_declaration(inTerminal);
@@ -4341,7 +4349,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                {if (true) return productionEndNonTerminal("namespace_member_declaration2","{type_declaration}","{type_declaration}");}
       break;
     default:
-      jj_la1[113] = jj_gen;
+      jj_la1[114] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4383,7 +4391,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                         {if (true) return productionEndNonTerminal("type_declaration5","{delegate_declaration}","{delegate_declaration}");}
       break;
     default:
-      jj_la1[114] = jj_gen;
+      jj_la1[115] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4412,7 +4420,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                    replaceName(n);
       break;
     default:
-      jj_la1[115] = jj_gen;
+      jj_la1[116] = jj_gen;
       ;
     }
     n = block(true);
@@ -4490,7 +4498,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                         {if (true) return productionEndTerminal("anonymous_function_body2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[116] = jj_gen;
+      jj_la1[117] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4544,7 +4552,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                  replaceName(n);
       break;
     default:
-      jj_la1[117] = jj_gen;
+      jj_la1[118] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -4564,7 +4572,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[118] = jj_gen;
+        jj_la1[119] = jj_gen;
         break label_19;
       }
       jj_consume_token(COMMA);
@@ -4585,7 +4593,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                  replaceName(n);
       break;
     default:
-      jj_la1[119] = jj_gen;
+      jj_la1[120] = jj_gen;
       ;
     }
     n = type(true);
@@ -4609,7 +4617,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                 {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_modifier2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[120] = jj_gen;
+      jj_la1[121] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4638,7 +4646,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                  replaceName(n);
         break;
       default:
-        jj_la1[121] = jj_gen;
+        jj_la1[122] = jj_gen;
         ;
       }
       jj_consume_token(RPAREN);
@@ -4660,7 +4668,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                          {if (true) return productionEndTerminal("implicit_anonymous_function_signature2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[122] = jj_gen;
+      jj_la1[123] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4679,7 +4687,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[123] = jj_gen;
+        jj_la1[124] = jj_gen;
         break label_20;
       }
       jj_consume_token(COMMA);
@@ -4734,7 +4742,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       break;
     default:
-      jj_la1[124] = jj_gen;
+      jj_la1[125] = jj_gen;
       ;
     }
     n = select_or_group_clause(true);
@@ -4745,7 +4753,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[125] = jj_gen;
+      jj_la1[126] = jj_gen;
       ;
     }
                                                                                                                                                         {if (true) return productionEndTerminal("query_body","-","-","Replacement",first,token);}
@@ -4766,7 +4774,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[126] = jj_gen;
+        jj_la1[127] = jj_gen;
         break label_21;
       }
     }
@@ -4794,7 +4802,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                 {if (true) return productionEndTerminal("query_body_clause3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[127] = jj_gen;
+      jj_la1[128] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4839,7 +4847,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                 {if (true) return productionEndTerminal("select_or_group_clause2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[128] = jj_gen;
+      jj_la1[129] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4894,7 +4902,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                replaceName(n);
       break;
     default:
-      jj_la1[129] = jj_gen;
+      jj_la1[130] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4903,7 +4911,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                             replaceName(n);
       break;
     default:
-      jj_la1[130] = jj_gen;
+      jj_la1[131] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4912,7 +4920,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[131] = jj_gen;
+      jj_la1[132] = jj_gen;
       ;
     }
     n = class_body(inTerminal);
@@ -4922,7 +4930,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(SEMI);
       break;
     default:
-      jj_la1[132] = jj_gen;
+      jj_la1[133] = jj_gen;
       ;
     }
                                                                                                                                                                                                                                                                                                                      {if (true) return productionEndNonTerminal("class_declaration","{identifier}","{identifier}");}
@@ -4955,7 +4963,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[133] = jj_gen;
+        jj_la1[134] = jj_gen;
         break label_22;
       }
     }
@@ -5028,7 +5036,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("class_modifier15","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[134] = jj_gen;
+      jj_la1[135] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5048,7 +5056,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[135] = jj_gen;
+        jj_la1[136] = jj_gen;
         break label_23;
       }
       jj_consume_token(COMMA);
@@ -5069,7 +5077,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[136] = jj_gen;
+      jj_la1[137] = jj_gen;
       ;
     }
     n = identifier(true);
@@ -5090,7 +5098,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[137] = jj_gen;
+        jj_la1[138] = jj_gen;
         break label_24;
       }
       n = type_parameter_constraint_clause(true);
@@ -5141,13 +5149,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                          replaceName(n);
         break;
       default:
-        jj_la1[138] = jj_gen;
+        jj_la1[139] = jj_gen;
         ;
       }
                                                                                                             {if (true) return productionEndTerminal("type_parameter_constraints1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[139] = jj_gen;
+      jj_la1[140] = jj_gen;
       if (jj_2_19(2)) {
         n = secondary_constraints(true);
                                                     replaceName(n);
@@ -5160,7 +5168,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           {if (true) return productionEndTerminal("type_parameter_constraints3","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[140] = jj_gen;
+          jj_la1[141] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -5194,7 +5202,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
           ;
           break;
         default:
-          jj_la1[141] = jj_gen;
+          jj_la1[142] = jj_gen;
           break label_25;
         }
         jj_consume_token(COMMA);
@@ -5209,7 +5217,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                             {if (true) return productionEndTerminal("secondary_constraints2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[142] = jj_gen;
+      jj_la1[143] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5242,7 +5250,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           {if (true) return productionEndTerminal("secondary_constraintsEnd2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[143] = jj_gen;
+      jj_la1[144] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5279,7 +5287,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("primary_constraint3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[144] = jj_gen;
+      jj_la1[145] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5311,7 +5319,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                   {if (true) return productionEndTerminal("type_name_or_parameter2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[145] = jj_gen;
+      jj_la1[146] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5342,7 +5350,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[146] = jj_gen;
+        jj_la1[147] = jj_gen;
         break label_26;
       }
       jj_consume_token(COMMA);
@@ -5367,7 +5375,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[147] = jj_gen;
+        jj_la1[148] = jj_gen;
         break label_27;
       }
       jj_consume_token(COMMA);
@@ -5443,7 +5451,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[148] = jj_gen;
+        jj_la1[149] = jj_gen;
         break label_28;
       }
       n = class_member_declaration(inTerminal);
@@ -5463,7 +5471,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                    replaceName(n);
       break;
     default:
-      jj_la1[149] = jj_gen;
+      jj_la1[150] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -5486,7 +5494,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[150] = jj_gen;
+      jj_la1[151] = jj_gen;
       ;
     }
     n = class_member_declarationEnd(inTerminal);
@@ -5577,7 +5585,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                     {if (true) return productionEndTerminal("class_member_declarationEnd7","{fixed_size_buffer_declaration}","{fixed_size_buffer_declaration}","LINE_BASED_MERGE",first,token);}
       break;
     default:
-      jj_la1[151] = jj_gen;
+      jj_la1[152] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5628,7 +5636,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[152] = jj_gen;
+        jj_la1[153] = jj_gen;
         break label_29;
       }
     }
@@ -5681,7 +5689,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                   {if (true) return productionEndTerminal("typeEnd3","{operator_declaration}","{operator_declaration}","LINE_BASED_MERGE",first,token);}
       break;
     default:
-      jj_la1[153] = jj_gen;
+      jj_la1[154] = jj_gen;
       if (jj_2_20(2147483647)) {
         n = indexer_declaration_interface(true);
                                                                              replaceName("indexer_declaration_interface", n);
@@ -5709,7 +5717,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                      {if (true) return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","LINE_BASED_MERGE",first,token);}
           break;
         default:
-          jj_la1[154] = jj_gen;
+          jj_la1[155] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -5744,7 +5752,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                             {if (true) return productionEndTerminal("FieldDecl","{field_declaration}","{field_declaration}","FieldOverriding",first,token);}
       break;
     default:
-      jj_la1[155] = jj_gen;
+      jj_la1[156] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5765,7 +5773,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[156] = jj_gen;
+        jj_la1[157] = jj_gen;
         break label_30;
       }
     }
@@ -5790,7 +5798,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                     {if (true) return productionEndTerminal("accessor_modifier3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[157] = jj_gen;
+      jj_la1[158] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5822,7 +5830,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[158] = jj_gen;
+        jj_la1[159] = jj_gen;
         break label_31;
       }
       jj_consume_token(COMMA);
@@ -5857,7 +5865,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                           replaceName(n);
       break;
     default:
-      jj_la1[159] = jj_gen;
+      jj_la1[160] = jj_gen;
       ;
     }
     jj_consume_token(SEMI);
@@ -5875,7 +5883,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                            replaceName(n);
       break;
     default:
-      jj_la1[160] = jj_gen;
+      jj_la1[161] = jj_gen;
       ;
     }
                                                               {if (true) return productionEndTerminal("field_declaration_start","-","-","Replacement",first,token);}
@@ -5894,7 +5902,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[161] = jj_gen;
+        jj_la1[162] = jj_gen;
         break label_32;
       }
       jj_consume_token(COMMA);
@@ -5917,7 +5925,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[162] = jj_gen;
+      jj_la1[163] = jj_gen;
       ;
     }
                                                                                                    {if (true) return productionEndTerminal("field_declarator","-","-","Replacement",first,token);}
@@ -5997,7 +6005,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           {if (true) return productionEndTerminal("variable_initializer3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[163] = jj_gen;
+      jj_la1[164] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6013,7 +6021,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
       break;
     default:
-      jj_la1[164] = jj_gen;
+      jj_la1[165] = jj_gen;
       ;
     }
     jj_consume_token(LPAREN);
@@ -6055,7 +6063,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[165] = jj_gen;
+      jj_la1[166] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -6065,7 +6073,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                          replaceName(n);
       break;
     default:
-      jj_la1[166] = jj_gen;
+      jj_la1[167] = jj_gen;
       ;
     }
     n = body(true);
@@ -6088,7 +6096,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("body2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[167] = jj_gen;
+      jj_la1[168] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6104,7 +6112,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[168] = jj_gen;
+      jj_la1[169] = jj_gen;
       ;
     }
     n = formal_parameter_listEnd(true);
@@ -6158,7 +6166,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
           ;
           break;
         default:
-          jj_la1[169] = jj_gen;
+          jj_la1[170] = jj_gen;
           break label_33;
         }
         n = fixed_parameterEnd(true);
@@ -6175,7 +6183,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                         {if (true) return productionEndTerminal("formal_parameter_listEnd2","-","{parameter_array}","Replacement",first,token);}
       break;
     default:
-      jj_la1[170] = jj_gen;
+      jj_la1[171] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6192,7 +6200,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                  replaceName(n);
       break;
     default:
-      jj_la1[171] = jj_gen;
+      jj_la1[172] = jj_gen;
       ;
     }
     n = formal_parameter_listEndInt(true);
@@ -6242,7 +6250,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                         {if (true) return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement",first,token);}
       break;
     default:
-      jj_la1[172] = jj_gen;
+      jj_la1[173] = jj_gen;
       if (jj_2_21(2)) {
         n = parameter_array(true);
                                               replaceName("parameter_array", n);
@@ -6267,7 +6275,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       break;
     default:
-      jj_la1[173] = jj_gen;
+      jj_la1[174] = jj_gen;
       ;
     }
     n = type(true);
@@ -6278,7 +6286,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(STAR);
       break;
     default:
-      jj_la1[174] = jj_gen;
+      jj_la1[175] = jj_gen;
       ;
     }
     n = identifier(true);
@@ -6304,7 +6312,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("parameter_modifier3","-","{TOSTRING}","Replacement",first,token);}
       break;
     default:
-      jj_la1[175] = jj_gen;
+      jj_la1[176] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6320,7 +6328,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[176] = jj_gen;
+      jj_la1[177] = jj_gen;
       ;
     }
     jj_consume_token(PARAMS);
@@ -6367,7 +6375,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                       replaceName(n);
       break;
     default:
-      jj_la1[177] = jj_gen;
+      jj_la1[178] = jj_gen;
       ;
     }
                                                                                                          {if (true) return productionEndTerminal("accessor_declarations","-","-","Replacement",first,token);}
@@ -6385,7 +6393,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       break;
     default:
-      jj_la1[178] = jj_gen;
+      jj_la1[179] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -6394,7 +6402,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                             replaceName(n);
       break;
     default:
-      jj_la1[179] = jj_gen;
+      jj_la1[180] = jj_gen;
       ;
     }
     n = IDENTIFIER_CSHARP(true);
@@ -6450,7 +6458,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
             ;
             break;
           default:
-            jj_la1[180] = jj_gen;
+            jj_la1[181] = jj_gen;
             break label_34;
           }
           jj_consume_token(COMMA);
@@ -6461,7 +6469,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                             {if (true) return productionEndTerminal("event_declarationInt2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[181] = jj_gen;
+        jj_la1[182] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -6481,7 +6489,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[182] = jj_gen;
+      jj_la1[183] = jj_gen;
       ;
     }
                                                                                                    {if (true) return productionEndTerminal("event_variable_declarator","-","-","Replacement",first,token);}
@@ -6544,7 +6552,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[183] = jj_gen;
+        jj_la1[184] = jj_gen;
         break label_35;
       }
       jj_consume_token(DOT);
@@ -6579,7 +6587,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("indexer_baseInt2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[184] = jj_gen;
+      jj_la1[185] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6603,7 +6611,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                           {if (true) return productionEndTerminal("operator_declaration2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[185] = jj_gen;
+        jj_la1[186] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -6665,7 +6673,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                   {if (true) return productionEndTerminal("overloadable_unary_operator8","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[186] = jj_gen;
+      jj_la1[187] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6763,7 +6771,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                {if (true) return productionEndTerminal("overloadable_binary_operator16","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[187] = jj_gen;
+      jj_la1[188] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6803,7 +6811,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                      {if (true) return productionEndTerminal("conversion_operator2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[188] = jj_gen;
+      jj_la1[189] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -6852,7 +6860,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[189] = jj_gen;
+      jj_la1[190] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -6862,7 +6870,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                replaceName(n);
       break;
     default:
-      jj_la1[190] = jj_gen;
+      jj_la1[191] = jj_gen;
       ;
     }
     n = constructor_body(true);
@@ -6939,7 +6947,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                              replaceName(n);
       break;
     default:
-      jj_la1[191] = jj_gen;
+      jj_la1[192] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -6960,7 +6968,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                  {if (true) return productionEndTerminal("constructor_initializerInt2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[192] = jj_gen;
+      jj_la1[193] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7003,7 +7011,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                 replaceName(n);
       break;
     default:
-      jj_la1[193] = jj_gen;
+      jj_la1[194] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7012,7 +7020,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                   replaceName(n);
       break;
     default:
-      jj_la1[194] = jj_gen;
+      jj_la1[195] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7021,7 +7029,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                                                                       replaceName(n);
       break;
     default:
-      jj_la1[195] = jj_gen;
+      jj_la1[196] = jj_gen;
       ;
     }
     n = class_body(inTerminal);
@@ -7031,7 +7039,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(SEMI);
       break;
     default:
-      jj_la1[196] = jj_gen;
+      jj_la1[197] = jj_gen;
       ;
     }
                                                                                                                                                                                                                                                                                                                            {if (true) return productionEndNonTerminal("struct_declaration","{identifier}","{identifier}");}
@@ -7129,7 +7137,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                {if (true) return productionEndTerminal("rest_of_array_initializer2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[197] = jj_gen;
+      jj_la1[198] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7151,7 +7159,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                  {if (true) return productionEndTerminal("rest_of_array_initializerEnd2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[198] = jj_gen;
+      jj_la1[199] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7171,7 +7179,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                    replaceName(n);
       break;
     default:
-      jj_la1[199] = jj_gen;
+      jj_la1[200] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7180,7 +7188,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[200] = jj_gen;
+      jj_la1[201] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7189,7 +7197,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                                                                          replaceName(n);
       break;
     default:
-      jj_la1[201] = jj_gen;
+      jj_la1[202] = jj_gen;
       ;
     }
     n = interface_body(inTerminal);
@@ -7199,7 +7207,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(SEMI);
       break;
     default:
-      jj_la1[202] = jj_gen;
+      jj_la1[203] = jj_gen;
       ;
     }
                                                                                                                                                                                                                                                                                                                                   {if (true) return productionEndNonTerminal("interface_declaration","{identifier}","{identifier}");}
@@ -7247,7 +7255,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[203] = jj_gen;
+        jj_la1[204] = jj_gen;
         break label_36;
       }
       n = interface_member_declaration(inTerminal);
@@ -7267,7 +7275,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[204] = jj_gen;
+      jj_la1[205] = jj_gen;
       ;
     }
     label_37:
@@ -7278,7 +7286,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[205] = jj_gen;
+        jj_la1[206] = jj_gen;
         break label_37;
       }
       n = interface_member_modifier(true);
@@ -7334,7 +7342,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                       {if (true) return productionEndTerminal("interface_member_declarationEnd2","-","{TOSTRING}","Replacement",first,token);}
       break;
     default:
-      jj_la1[206] = jj_gen;
+      jj_la1[207] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7368,7 +7376,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                       {if (true) return productionEndTerminal("interface_member_declarationEndType2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[207] = jj_gen;
+      jj_la1[208] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7391,7 +7399,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                   {if (true) return productionEndTerminal("interface_member_declarationEndTypeIdentifier2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[208] = jj_gen;
+      jj_la1[209] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7411,7 +7419,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("interface_member_modifier2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[209] = jj_gen;
+      jj_la1[210] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7456,7 +7464,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
       break;
     default:
-      jj_la1[210] = jj_gen;
+      jj_la1[211] = jj_gen;
       ;
     }
     jj_consume_token(LPAREN);
@@ -7497,7 +7505,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                             replaceName(n);
       break;
     default:
-      jj_la1[211] = jj_gen;
+      jj_la1[212] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7506,7 +7514,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                           replaceName(n);
       break;
     default:
-      jj_la1[212] = jj_gen;
+      jj_la1[213] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -7546,7 +7554,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                   replaceName(n);
       break;
     default:
-      jj_la1[213] = jj_gen;
+      jj_la1[214] = jj_gen;
       ;
     }
                                                                                                      {if (true) return productionEndTerminal("interface_accessors","-","-","Replacement",first,token);}
@@ -7562,7 +7570,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[214] = jj_gen;
+      jj_la1[215] = jj_gen;
       ;
     }
     n = IDENTIFIER_CSHARP(true);
@@ -7585,7 +7593,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                     replaceName(n);
       break;
     default:
-      jj_la1[215] = jj_gen;
+      jj_la1[216] = jj_gen;
       ;
     }
     n = enum_body(inTerminal);
@@ -7595,7 +7603,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(SEMI);
       break;
     default:
-      jj_la1[216] = jj_gen;
+      jj_la1[217] = jj_gen;
       ;
     }
                                                                                                                                                                                         {if (true) return productionEndNonTerminal("enum_declaration","{identifier}","{identifier}");}
@@ -7649,7 +7657,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                           {if (true) return productionEndTerminal("rest_of_enum_body2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[217] = jj_gen;
+      jj_la1[218] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7671,7 +7679,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                          {if (true) return productionEndTerminal("rest_of_enum_bodyEnd2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[218] = jj_gen;
+      jj_la1[219] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7687,7 +7695,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
       break;
     default:
-      jj_la1[219] = jj_gen;
+      jj_la1[220] = jj_gen;
       ;
     }
     n = identifier(true);
@@ -7698,7 +7706,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                      replaceName(n);
       break;
     default:
-      jj_la1[220] = jj_gen;
+      jj_la1[221] = jj_gen;
       ;
     }
                                                                                                                                         {if (true) return productionEndTerminal("enum_member_declaration","-","-","Replacement",first,token);}
@@ -7730,7 +7738,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[221] = jj_gen;
+      jj_la1[222] = jj_gen;
       ;
     }
     jj_consume_token(LPAREN);
@@ -7771,7 +7779,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                                                    replaceName(n);
       break;
     default:
-      jj_la1[222] = jj_gen;
+      jj_la1[223] = jj_gen;
       ;
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -7780,7 +7788,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                                                                                                                        replaceName(n);
       break;
     default:
-      jj_la1[223] = jj_gen;
+      jj_la1[224] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -7801,7 +7809,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[224] = jj_gen;
+        jj_la1[225] = jj_gen;
         break label_38;
       }
     }
@@ -7839,7 +7847,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                  replaceName(n);
           break;
         default:
-          jj_la1[225] = jj_gen;
+          jj_la1[226] = jj_gen;
           ;
         }
         n = attribute_section(true);
@@ -7847,7 +7855,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                 {if (true) return productionEndTerminal("attribute_section_start2","-","-","Replacement",first,token);}
         break;
       default:
-        jj_la1[226] = jj_gen;
+        jj_la1[227] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -7878,7 +7886,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                    {if (true) return productionEndTerminal("global_attribute_target2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[227] = jj_gen;
+      jj_la1[228] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -7897,7 +7905,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[228] = jj_gen;
+        jj_la1[229] = jj_gen;
         break label_39;
       }
     }
@@ -7941,7 +7949,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("attribute_sectionEnd1","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[229] = jj_gen;
+      jj_la1[230] = jj_gen;
       if (jj_2_26(2)) {
         jj_consume_token(COMMA);
         jj_consume_token(RBRACK);
@@ -7955,7 +7963,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                          {if (true) return productionEndTerminal("attribute_sectionEnd3","-","-","Replacement",first,token);}
           break;
         default:
-          jj_la1[230] = jj_gen;
+          jj_la1[231] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -7988,7 +7996,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
               {if (true) return productionEndTerminal("attribute_target_specifier_mod2","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[231] = jj_gen;
+      jj_la1[232] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -8021,7 +8029,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                      {if (true) return productionEndTerminal("attribute_target3","-","-","Replacement",first,token);}
       break;
     default:
-      jj_la1[232] = jj_gen;
+      jj_la1[233] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -8039,7 +8047,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                           replaceName(n);
       break;
     default:
-      jj_la1[233] = jj_gen;
+      jj_la1[234] = jj_gen;
       ;
     }
                                                                                              {if (true) return productionEndTerminal("attribute","-","-","Replacement",first,token);}
@@ -8109,7 +8117,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
       break;
     default:
-      jj_la1[234] = jj_gen;
+      jj_la1[235] = jj_gen;
       ;
     }
     jj_consume_token(RPAREN);
@@ -8187,7 +8195,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
         break;
       default:
-        jj_la1[235] = jj_gen;
+        jj_la1[236] = jj_gen;
         break label_40;
       }
       jj_consume_token(COMMA);
@@ -8218,7 +8226,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(AMPER);
       break;
     default:
-      jj_la1[236] = jj_gen;
+      jj_la1[237] = jj_gen;
       ;
     }
     n = expression(true);
@@ -10303,6 +10311,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     return false;
   }
 
+  final private boolean jj_3R_80() {
+    if (jj_3R_119()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_462() {
     if (jj_3R_45()) return true;
     return false;
@@ -10328,11 +10341,6 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     if (jj_3R_352()) return true;
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_80() {
-    if (jj_3R_119()) return true;
     return false;
   }
 
@@ -10678,6 +10686,8 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
   final private boolean jj_3R_53() {
     if (jj_3R_79()) return true;
     Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(142)) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_80()) jj_scanpos = xsp;
     xsp = jj_scanpos;
@@ -11816,7 +11826,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[237];
+  final private int[] jj_la1 = new int[238];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -11832,22 +11842,22 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1_5();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,0x5c401480,0x0,0x4000,0x0,0x0,0x0,0x832100,0x0,0x0,0x0,0x0,0x0,0x832100,0x832100,0x822100,0x820100,0x820100,0x10000,0x0,0x0,0x2837900,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x2837900,0x2836900,0x0,0x0,0x0,0x0,0x0,0x0,0x832100,0x0,0x2837900,0x0,0x0,0x2937900,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2937900,0x0,0x100000,0x100000,0x0,0x800,0xa283f900,0x0,0x0,0x2837900,0x0,0x82008000,0x2837900,0xa283f900,0xa283f900,0x0,0x0,0x80000,0x80000,0x0,0x2837900,0x2837900,0x2837900,0x2837900,0x8000,0x80008000,0x80000,0x2837900,0x2837900,0x0,0x200000,0x200000,0x0,0x0,0x2837900,0x5c401480,0x0,0x5c401480,0x0,0x0,0x54401080,0x5c401480,0x0,0x54401080,0x5c401480,0x8000000,0x0,0x2837900,0x932100,0x0,0x100000,0x100000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x54401080,0x54401080,0x0,0x0,0x0,0x0,0x8010000,0x1000,0x0,0x1000,0x1000,0x8010000,0x0,0x0,0x0,0x7cc33180,0x0,0x54401080,0x28832100,0x0,0x40000,0x0,0x0,0x14000000,0x14000000,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x1932100,0x0,0x0,0x0,0x0,0x1932100,0x0,0x932100,0x100000,0x0,0x100000,0x0,0x14000000,0x14000000,0x0,0x0,0x0,0x0,0x0,0x0,0x40000,0x0,0x0,0x0,0x1932100,0x0,0x2937900,0x800,0x0,0x0,0x0,0x0,0x2837900,0x0,0x0,0x0,0x0,0x0,0x833100,0x0,0x1000,0x832100,0x0,0x0,0x1000,0x0,0x1932100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1932100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x0,0x5c401480,0x0,0x4000,0x0,0x0,0x0,0x832100,0x0,0x0,0x0,0x0,0x0,0x0,0x832100,0x832100,0x822100,0x820100,0x820100,0x10000,0x0,0x0,0x2837900,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x2837900,0x2836900,0x0,0x0,0x0,0x0,0x0,0x0,0x832100,0x0,0x2837900,0x0,0x0,0x2937900,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2937900,0x0,0x100000,0x100000,0x0,0x800,0xa283f900,0x0,0x0,0x2837900,0x0,0x82008000,0x2837900,0xa283f900,0xa283f900,0x0,0x0,0x80000,0x80000,0x0,0x2837900,0x2837900,0x2837900,0x2837900,0x8000,0x80008000,0x80000,0x2837900,0x2837900,0x0,0x200000,0x200000,0x0,0x0,0x2837900,0x5c401480,0x0,0x5c401480,0x0,0x0,0x54401080,0x5c401480,0x0,0x54401080,0x5c401480,0x8000000,0x0,0x2837900,0x932100,0x0,0x100000,0x100000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x54401080,0x54401080,0x0,0x0,0x0,0x0,0x8010000,0x1000,0x0,0x1000,0x1000,0x8010000,0x0,0x0,0x0,0x7cc33180,0x0,0x54401080,0x28832100,0x0,0x40000,0x0,0x0,0x14000000,0x14000000,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x1932100,0x0,0x0,0x0,0x0,0x1932100,0x0,0x932100,0x100000,0x0,0x100000,0x0,0x14000000,0x14000000,0x0,0x0,0x0,0x0,0x0,0x0,0x40000,0x0,0x0,0x0,0x1932100,0x0,0x2937900,0x800,0x0,0x0,0x0,0x0,0x2837900,0x0,0x0,0x0,0x0,0x0,0x833100,0x0,0x1000,0x832100,0x0,0x0,0x1000,0x0,0x1932100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1932100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2837900,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x192121,0x0,0x10200000,0x10200000,0x0,0x0,0x8040642,0x0,0x0,0x0,0x0,0x0,0x8040642,0x8040642,0x8000642,0x8000642,0x440,0x40000,0x8000200,0x0,0x1924166a,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924166a,0x0,0x1924166a,0x19241642,0x20,0x0,0x0,0x0,0x0,0x0,0x8040642,0x0,0x1924166a,0x0,0x0,0x1924166e,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924166e,0x0,0x4,0x4,0x0,0x0,0xff6416fa,0x0,0x0,0x1924566a,0x0,0xe6400090,0x1924166a,0xff6416fa,0xff6416fa,0x400000,0x800,0x8,0x8,0xa0000080,0x1924166a,0x1924166a,0x1924166a,0x1924166a,0x10,0x4000010,0x8,0x1924166a,0x1924166a,0x800000,0x800000,0x0,0x0,0x0,0x1924166a,0x192121,0x0,0x192121,0x0,0x0,0x90101,0x192121,0x0,0x90101,0x192121,0x102020,0x0,0x1924166a,0x8040646,0x0,0x4,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x90101,0x90101,0x0,0x0,0x0,0x0,0x140000,0x0,0x0,0x0,0x0,0x140000,0x0,0x0,0x0,0xa1fa763,0x0,0x90101,0xa16a662,0x0,0x1000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924566a,0x0,0x9040646,0x0,0x0,0x0,0x0,0x9040646,0x0,0x9040646,0x1000004,0x0,0x1000004,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x0,0x10200000,0x0,0x20000,0x9040646,0x0,0x1924166e,0x1000000,0x0,0x0,0x0,0x0,0x1924566a,0x0,0x0,0x0,0x0,0x0,0x8048642,0x0,0x0,0x8048642,0x1000000,0x0,0x0,0x0,0x9040646,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x9040646,0x0,0x0,0x8010,0x0,0x0,0x0,0x0,0x0,0x0,0x8010,0x0,0x1924166a,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x192121,0x0,0x10200000,0x10200000,0x0,0x0,0x8040642,0x0,0x0,0x0,0x0,0x0,0x0,0x8040642,0x8040642,0x8000642,0x8000642,0x440,0x40000,0x8000200,0x0,0x1924166a,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924166a,0x0,0x1924166a,0x19241642,0x20,0x0,0x0,0x0,0x0,0x0,0x8040642,0x0,0x1924166a,0x0,0x0,0x1924166e,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924166e,0x0,0x4,0x4,0x0,0x0,0xff6416fa,0x0,0x0,0x1924566a,0x0,0xe6400090,0x1924166a,0xff6416fa,0xff6416fa,0x400000,0x800,0x8,0x8,0xa0000080,0x1924166a,0x1924166a,0x1924166a,0x1924166a,0x10,0x4000010,0x8,0x1924166a,0x1924166a,0x800000,0x800000,0x0,0x0,0x0,0x1924166a,0x192121,0x0,0x192121,0x0,0x0,0x90101,0x192121,0x0,0x90101,0x192121,0x102020,0x0,0x1924166a,0x8040646,0x0,0x4,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x90101,0x90101,0x0,0x0,0x0,0x0,0x140000,0x0,0x0,0x0,0x0,0x140000,0x0,0x0,0x0,0xa1fa763,0x0,0x90101,0xa16a662,0x0,0x1000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1924566a,0x0,0x9040646,0x0,0x0,0x0,0x0,0x9040646,0x0,0x9040646,0x1000004,0x0,0x1000004,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x0,0x10200000,0x0,0x20000,0x9040646,0x0,0x1924166e,0x1000000,0x0,0x0,0x0,0x0,0x1924566a,0x0,0x0,0x0,0x0,0x0,0x8048642,0x0,0x0,0x8048642,0x1000000,0x0,0x0,0x0,0x9040646,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x9040646,0x0,0x0,0x8010,0x0,0x0,0x0,0x0,0x0,0x0,0x8010,0x0,0x1924166a,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x7f100000,0x1000,0x0,0x886900,0x7f700000,0x0,0x0,0x0,0x80000000,0x7f710614,0x0,0x0,0x0,0x0,0x0,0x7f710614,0x10614,0x614,0x614,0x614,0x7f700000,0x0,0x0,0xff710655,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000,0x8000,0x0,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xff710655,0x0,0xff710655,0xff710655,0x0,0x80000000,0x0,0x80000000,0x80000000,0x0,0x7f710614,0x0,0xff710655,0x0,0x0,0xff710655,0x80000000,0x0,0x0,0x80000000,0x80000000,0x0,0x0,0x0,0x0,0xff710655,0x0,0x0,0x0,0x0,0x0,0xff77175f,0x0,0x0,0xff710655,0x0,0x6114a,0xff710655,0xff77175f,0xff77175f,0x8,0x0,0x0,0x0,0x40000,0xff710655,0xff710655,0xff710655,0xff710655,0x0,0x2,0x7f700000,0xff710655,0xff710655,0x0,0x0,0x0,0x7f700000,0x0,0xff710655,0x886900,0x1000,0x886900,0x0,0x0,0x886100,0x886900,0x0,0x886100,0x886900,0x800,0x0,0xff710655,0x7f710614,0x0,0x0,0x0,0x7f700000,0x7f700000,0x0,0xa100000,0x10000000,0xa100000,0xa100000,0x60000000,0x0,0x0,0x100000,0x0,0x886100,0x886100,0x0,0x0,0x100000,0x0,0x7f700000,0x0,0x0,0x7f700000,0x7f700000,0x7f700000,0x7f700000,0x0,0x0,0x7ff96f34,0x0,0x886100,0x7f710e34,0x7f700000,0x0,0x7f700000,0x0,0x2000,0x2000,0x0,0x0,0x0,0x0,0x0,0xff710655,0x0,0x7f710614,0x100000,0x0,0x0,0x0,0x7f710614,0x0,0x7f710614,0x0,0x0,0x0,0x0,0x7f102000,0x2000,0x0,0x0,0x7f700000,0x0,0x80000000,0x7f700000,0x0,0x0,0x0,0x20,0x7f710614,0x0,0xff710655,0x0,0x0,0x0,0x100000,0x0,0xff710655,0x0,0x0,0x0,0x100000,0x0,0x7f710714,0x0,0x100,0x7f710614,0x7f700000,0x0,0x100,0x0,0x7f710614,0x100000,0x7f100000,0x0,0x0,0x0,0x7f700000,0x0,0x0,0x0,0x0,0x7f710614,0x100000,0x0,0x7f100000,0x0,0x600000,0x0,0x0,0x0,0x80000000,0x7f100000,0x0,0xff710655,0x0,0x0,};
+      jj_la1_2 = new int[] {0x7f100000,0x1000,0x0,0x886900,0x7f700000,0x0,0x0,0x0,0x80000000,0x7f710614,0x0,0x0,0x0,0x0,0x0,0x0,0x7f710614,0x10614,0x614,0x614,0x614,0x7f700000,0x0,0x0,0xff710655,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000,0x8000,0x0,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xff710655,0x0,0xff710655,0xff710655,0x0,0x80000000,0x0,0x80000000,0x80000000,0x0,0x7f710614,0x0,0xff710655,0x0,0x0,0xff710655,0x80000000,0x0,0x0,0x80000000,0x80000000,0x0,0x0,0x0,0x0,0xff710655,0x0,0x0,0x0,0x0,0x0,0xff77175f,0x0,0x0,0xff710655,0x0,0x6114a,0xff710655,0xff77175f,0xff77175f,0x8,0x0,0x0,0x0,0x40000,0xff710655,0xff710655,0xff710655,0xff710655,0x0,0x2,0x7f700000,0xff710655,0xff710655,0x0,0x0,0x0,0x7f700000,0x0,0xff710655,0x886900,0x1000,0x886900,0x0,0x0,0x886100,0x886900,0x0,0x886100,0x886900,0x800,0x0,0xff710655,0x7f710614,0x0,0x0,0x0,0x7f700000,0x7f700000,0x0,0xa100000,0x10000000,0xa100000,0xa100000,0x60000000,0x0,0x0,0x100000,0x0,0x886100,0x886100,0x0,0x0,0x100000,0x0,0x7f700000,0x0,0x0,0x7f700000,0x7f700000,0x7f700000,0x7f700000,0x0,0x0,0x7ff96f34,0x0,0x886100,0x7f710e34,0x7f700000,0x0,0x7f700000,0x0,0x2000,0x2000,0x0,0x0,0x0,0x0,0x0,0xff710655,0x0,0x7f710614,0x100000,0x0,0x0,0x0,0x7f710614,0x0,0x7f710614,0x0,0x0,0x0,0x0,0x7f102000,0x2000,0x0,0x0,0x7f700000,0x0,0x80000000,0x7f700000,0x0,0x0,0x0,0x20,0x7f710614,0x0,0xff710655,0x0,0x0,0x0,0x100000,0x0,0xff710655,0x0,0x0,0x0,0x100000,0x0,0x7f710714,0x0,0x100,0x7f710614,0x7f700000,0x0,0x100,0x0,0x7f710614,0x100000,0x7f100000,0x0,0x0,0x0,0x7f700000,0x0,0x0,0x0,0x0,0x7f710614,0x100000,0x0,0x7f100000,0x0,0x600000,0x0,0x0,0x0,0x80000000,0x7f100000,0x0,0xff710655,0x0,0x0,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x400,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xaaa8aa80,0x41030550,0xaaa8aa80,0x0,0x0,0x0,0x4000000,0x10000000,0x1000000,0x0,0x0,0x0,0x0,0x0,0x0,0x140000,0x140000,0x140,0x140,0x5400,0x5400,0x41030540,0x10,0x41030540,0x10,0x0,0x0,0x0,0x30004,0x30010,0x0,0x30000,0x0,0x1,0x41030550,0x0,0x80000000,0x41030550,0x30014,0x4,0x1,0x30010,0x30010,0x10,0x4,0x0,0x0,0x41030550,0x0,0x1000000,0x1000000,0x0,0x0,0x41030551,0x0,0x80000000,0x41030551,0x0,0x1,0x41030550,0x41030551,0x41030551,0x0,0x0,0x0,0x0,0x0,0x41030550,0x41030550,0x41030550,0x41030550,0x0,0x0,0x0,0x41030550,0x41030550,0x0,0x0,0x0,0x0,0x11,0x41030550,0x4,0x0,0x4,0x0,0x80000000,0x0,0x0,0x4,0x0,0x4,0x0,0x10,0x41030551,0x0,0x0,0x0,0x0,0x0,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x0,0x4,0x4,0x0,0x4,0x0,0x0,0x40000004,0x4,0x0,0x40000000,0x0,0x10,0x0,0x80000011,0x0,0x0,0x0,0x0,0x80000000,0x0,0x80000000,0x41030551,0x0,0x4,0x0,0x1,0x4,0x0,0x4,0x4,0x0,0x0,0x400,0x0,0x4,0x4,0x0,0x4,0x0,0x0,0x80000000,0x0,0x0,0x0,0x40030140,0x15145540,0x0,0x4,0x0,0x41030550,0x0,0x0,0x0,0x0,0x0,0x41030553,0x2,0x0,0x0,0x0,0x0,0x4,0x4,0x0,0x0,0x0,0x11,0x0,0x0,0x4,0x0,0x4,0x4,0x0,0x0,0x6,0x2,0x4,0x80000000,0x0,0x4,0x0,0x4,0x0,0x4,0x0,0x4,0x8,0x0,0x0,0x0,0x10,0x41030550,0x0,0x1000000,};
+      jj_la1_3 = new int[] {0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x400,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xaaa8aa80,0x41030550,0xaaa8aa80,0x0,0x0,0x0,0x4000000,0x10000000,0x1000000,0x0,0x0,0x0,0x0,0x0,0x0,0x140000,0x140000,0x140,0x140,0x5400,0x5400,0x41030540,0x10,0x41030540,0x10,0x0,0x0,0x0,0x30004,0x30010,0x0,0x30000,0x0,0x1,0x41030550,0x0,0x80000000,0x41030550,0x30014,0x4,0x1,0x30010,0x30010,0x10,0x4,0x0,0x0,0x41030550,0x0,0x1000000,0x1000000,0x0,0x0,0x41030551,0x0,0x80000000,0x41030551,0x0,0x1,0x41030550,0x41030551,0x41030551,0x0,0x0,0x0,0x0,0x0,0x41030550,0x41030550,0x41030550,0x41030550,0x0,0x0,0x0,0x41030550,0x41030550,0x0,0x0,0x0,0x0,0x11,0x41030550,0x4,0x0,0x4,0x0,0x80000000,0x0,0x0,0x4,0x0,0x4,0x0,0x10,0x41030551,0x0,0x0,0x0,0x0,0x0,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x0,0x4,0x4,0x0,0x4,0x0,0x0,0x40000004,0x4,0x0,0x40000000,0x0,0x10,0x0,0x80000011,0x0,0x0,0x0,0x0,0x80000000,0x0,0x80000000,0x41030551,0x0,0x4,0x0,0x1,0x4,0x0,0x4,0x4,0x0,0x0,0x400,0x0,0x4,0x4,0x0,0x4,0x0,0x0,0x80000000,0x0,0x0,0x0,0x40030140,0x15145540,0x0,0x4,0x0,0x41030550,0x0,0x0,0x0,0x0,0x0,0x41030553,0x2,0x0,0x0,0x0,0x0,0x4,0x4,0x0,0x0,0x0,0x11,0x0,0x0,0x4,0x0,0x4,0x4,0x0,0x0,0x6,0x2,0x4,0x80000000,0x0,0x4,0x0,0x4,0x0,0x4,0x0,0x4,0x8,0x0,0x0,0x0,0x10,0x41030550,0x0,0x1000000,};
    }
    private static void jj_la1_4() {
-      jj_la1_4 = new int[] {0x80000,0x0,0x0,0x0,0x80000,0x7c00000,0x0,0x0,0x0,0x80000,0x200,0x0,0x0,0x0,0x200,0x80000,0x0,0x0,0x0,0x0,0x80000,0x0,0x8000,0x7c80020,0x8000,0x4000,0x80,0x100,0x0,0x0,0x0,0x41,0x41,0x1e,0x1e,0x1e,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x20,0x7c80000,0x20,0x7c80000,0x7c80000,0x0,0x0,0x10000,0x10002,0x0,0x10000,0x80000,0x0,0x7c80020,0x200,0x0,0x7c80020,0x10002,0x0,0x0,0x10002,0x10002,0x0,0x0,0x20000,0x2,0x7c80020,0x200,0x0,0x0,0x200,0x0,0x7c80820,0x200,0x0,0x7c80020,0x200,0x800,0x7c80020,0x7c80820,0x7c80820,0x0,0x0,0x0,0x0,0x0,0x7c80020,0x7c80020,0x7c80020,0x7c80020,0x0,0x0,0x80000,0x7c80020,0x7c80020,0x0,0x0,0x0,0x80000,0x0,0x7c80020,0x0,0x0,0x0,0x800,0x800,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7c80820,0x80000,0x200,0x0,0x0,0x80000,0x80000,0x200,0x0,0x0,0x0,0x0,0x0,0x2,0x400,0x0,0x800,0x0,0x0,0x200,0x0,0x0,0x200,0x80000,0x0,0x200,0x80000,0x80000,0x80000,0x80000,0x200,0x200,0x80000,0x0,0x0,0x80000,0x80000,0x0,0x80000,0xa02,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x7c80020,0x2,0x80000,0x0,0x800,0x0,0x200,0x80000,0x0,0x80000,0x0,0x0,0x0,0x0,0x80000,0x0,0x0,0x200,0x80000,0x0,0x0,0x80000,0x0,0x20,0x5f,0x0,0x80000,0x400,0x7c80020,0x0,0x2,0x400,0x0,0x800,0x7c80020,0x200,0x2,0x400,0x0,0x800,0x80000,0x0,0x0,0x80000,0x80000,0x2,0x0,0x2,0x80000,0x0,0x80000,0x0,0x400,0x800,0x80000,0x200,0x0,0x0,0x2,0x80000,0x0,0x0,0x80000,0x0,0x0,0x0,0x0,0x200,0x400,0x80000,0x0,0x7c80020,0x200,0x0,};
+      jj_la1_4 = new int[] {0x80000,0x0,0x0,0x0,0x80000,0x7c00000,0x0,0x0,0x0,0x80000,0x200,0x4000,0x0,0x0,0x0,0x200,0x80000,0x0,0x0,0x0,0x0,0x80000,0x0,0x8000,0x7c80020,0x8000,0x4000,0x80,0x100,0x0,0x0,0x0,0x41,0x41,0x1e,0x1e,0x1e,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x20,0x7c80000,0x20,0x7c80000,0x7c80000,0x0,0x0,0x10000,0x10002,0x0,0x10000,0x80000,0x0,0x7c80020,0x200,0x0,0x7c80020,0x10002,0x0,0x0,0x10002,0x10002,0x0,0x0,0x20000,0x2,0x7c80020,0x200,0x0,0x0,0x200,0x0,0x7c80820,0x200,0x0,0x7c80020,0x200,0x800,0x7c80020,0x7c80820,0x7c80820,0x0,0x0,0x0,0x0,0x0,0x7c80020,0x7c80020,0x7c80020,0x7c80020,0x0,0x0,0x80000,0x7c80020,0x7c80020,0x0,0x0,0x0,0x80000,0x0,0x7c80020,0x0,0x0,0x0,0x800,0x800,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7c80820,0x80000,0x200,0x0,0x0,0x80000,0x80000,0x200,0x0,0x0,0x0,0x0,0x0,0x2,0x400,0x0,0x800,0x0,0x0,0x200,0x0,0x0,0x200,0x80000,0x0,0x200,0x80000,0x80000,0x80000,0x80000,0x200,0x200,0x80000,0x0,0x0,0x80000,0x80000,0x0,0x80000,0xa02,0x0,0x0,0x200,0x200,0x0,0x200,0x0,0x7c80020,0x2,0x80000,0x0,0x800,0x0,0x200,0x80000,0x0,0x80000,0x0,0x0,0x0,0x0,0x80000,0x0,0x0,0x200,0x80000,0x0,0x0,0x80000,0x0,0x20,0x5f,0x0,0x80000,0x400,0x7c80020,0x0,0x2,0x400,0x0,0x800,0x7c80020,0x200,0x2,0x400,0x0,0x800,0x80000,0x0,0x0,0x80000,0x80000,0x2,0x0,0x2,0x80000,0x0,0x80000,0x0,0x400,0x800,0x80000,0x200,0x0,0x0,0x2,0x80000,0x0,0x0,0x80000,0x0,0x0,0x0,0x0,0x200,0x400,0x80000,0x0,0x7c80020,0x200,0x0,};
    }
    private static void jj_la1_5() {
-      jj_la1_5 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_5 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[26];
   private boolean jj_rescan = false;
@@ -11858,7 +11868,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 237; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 238; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -11867,7 +11877,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 237; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 238; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -11876,7 +11886,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 237; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 238; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -11885,7 +11895,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 237; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 238; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -12004,7 +12014,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 237; i++) {
+    for (int i = 0; i < 238; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

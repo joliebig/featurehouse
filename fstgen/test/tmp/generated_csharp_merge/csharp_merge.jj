@@ -309,7 +309,7 @@ FSTInfo type_argument_list(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo type(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=non_array_type(true){ replaceName(n);} [n=rank_specifiers(true){ replaceName(n);}] ["*" ] {return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
+	n=non_array_type(true){ replaceName(n);} ["?" ] [n=rank_specifiers(true){ replaceName(n);}] ["*" ] {return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
 
  )  }
 
