@@ -57,7 +57,7 @@ namespace System.Linq
 
   public static ILookup<TKey, TSource> ToLookup<TSource, TKey> (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
   {
-   return Lookup<TKey, TSource>.Create (source, keySelector, x => x, null);
+   return Lookup<TKey, TSource>().Create (source, keySelector, x => x, null);
   }
 
   public static ILookup<TKey, TSource> ToLookup<TSource, TKey> (
@@ -65,7 +65,7 @@ namespace System.Linq
    Func<TSource, TKey> keySelector,
    IEqualityComparer<TKey> comparer)
   {
-   return Lookup<TKey, TSource>.Create (source, keySelector, x => x, comparer);
+   return Lookup<TKey, TSource>().Create (source, keySelector, x => x, comparer);
   }
 
   public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement> (
@@ -73,7 +73,7 @@ namespace System.Linq
    Func<TSource, TKey> keySelector,
    Func<TSource, TElement> elementSelector)
   {
-   return Lookup<TKey, TElement>.Create (source, keySelector, elementSelector, null);
+   return Lookup<TKey, TElement>().Create (source, keySelector, elementSelector, null);
   }
 
   public static ILookup<TKey, TElement> ToLookup<TSource, TKey, TElement> (
@@ -82,7 +82,7 @@ namespace System.Linq
    Func<TSource, TElement> elementSelector,
    IEqualityComparer<TKey> comparer)
   {
-   return Lookup<TKey, TElement>.Create (source, keySelector, elementSelector, comparer);
+   return Lookup<TKey, TElement>().Create (source, keySelector, elementSelector, comparer);
   }
 
   public static IEnumerable<TSource> AsEnumerable<TSource> (this IEnumerable<TSource> source)
