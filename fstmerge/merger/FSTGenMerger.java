@@ -203,7 +203,8 @@ public class FSTGenMerger extends FSTGenProcessor {
 				FSTTerminal terminalA = (FSTTerminal) nodeA;
 				FSTTerminal terminalB = (FSTTerminal) nodeB;
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
-
+				
+				// SPECIAL CONFLICT HANDLER
 				if (!terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME)) {
 					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody(), firstPass, terminalA.index, terminalB.index));
 				} 

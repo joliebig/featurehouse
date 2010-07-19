@@ -33,7 +33,7 @@ public class LineBasedMerger implements MergerInterface {
 		//System.out.println("|" + tokens[2] + "|");
 		//System.out.println("--------------------");
 
-
+		// SPECIAL CONFLICT HANDLER
 		if(!(node.getType().equals("MethodDecl") || 
 			node.getType().equals("ConstructorDecl") || 
 			node.getType().contains("-Content") ||
@@ -54,8 +54,7 @@ public class LineBasedMerger implements MergerInterface {
 			}
 			return;
 		}
-		
-		
+
 	    try {
 	    	File tmpDir = new File(System.getProperty("user.dir") + File.separator + "fstmerge_tmp");
 	    	tmpDir.mkdir();
@@ -87,7 +86,7 @@ public class LineBasedMerger implements MergerInterface {
 
 	        String mergeCmd = ""; 
 	        if(System.getProperty("os.name").contains("Windows"))
-	        	mergeCmd = "C:\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
+	        	mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
 	        else
 	        	mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
 	        Runtime run = Runtime.getRuntime();
