@@ -158,9 +158,22 @@ public class AbstractFSTParser {
 		return "auto" + (++uniqueId);
 	}
 
+	/**
+	 * added only for backward compatibility. do not call
+	 * 
+	 * @deprecated
+	 */
 	protected FSTInfo productionEndTerminal(String type, String namePattern,
-			String exportNamePattern, String compositionMechanism, String mergingMechanism, Token first,
+			String exportNamePattern, String compositionMechanism, Token first,
 			Token last) {
+		return productionEndTerminal(type, namePattern, exportNamePattern,
+				compositionMechanism, FSTTerminal.defaultMergingMechanism,
+				first, last);
+	}
+
+	protected FSTInfo productionEndTerminal(String type, String namePattern,
+			String exportNamePattern, String compositionMechanism,
+			String mergingMechanism, Token first, Token last) {
 		AbstractFSTParser.Context c = currentContext.pop();
 
 		String prefix = getPrefix(first);
@@ -196,8 +209,8 @@ public class AbstractFSTParser {
 			for (String productionKey : composeReplacements.keySet()) {
 
 				compositionMechanism = compositionMechanism.replace("{"
-						+ productionKey + "}", composeReplacements
-						.get(productionKey));
+						+ productionKey + "}",
+						composeReplacements.get(productionKey));
 
 			}
 		}
@@ -236,12 +249,12 @@ public class AbstractFSTParser {
 		StringBuffer result = new StringBuffer();
 		Token t = token.specialToken;
 		while (t != null) {
-			result.insert(0,t.image);
+			result.insert(0, t.image);
 			t = t.specialToken;
 		}
 		return result.toString();
 	}
-	
+
 	protected void replaceName(FSTInfo value) {
 		cc().nameReplacements.add(new Replacement(value.type, value));
 	}

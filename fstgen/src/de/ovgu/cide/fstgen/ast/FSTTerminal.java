@@ -19,9 +19,14 @@ public class FSTTerminal extends FSTNode {
 	}
 
 	public FSTTerminal(String type, String name, String body, String prefix,
-			String compositionMechanism, String mergingMechanism) {
+			String compositionMechanism) {
 		this(type, name, body, prefix);
 		this.compose = compositionMechanism;
+	}
+
+	public FSTTerminal(String type, String name, String body, String prefix,
+			String compositionMechanism, String mergingMechanism) {
+		this(type, name, body, prefix, compositionMechanism);
 		this.merge = mergingMechanism;
 	}
 

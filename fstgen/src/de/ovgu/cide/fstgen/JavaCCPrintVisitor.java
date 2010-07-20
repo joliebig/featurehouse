@@ -143,7 +143,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 				compositionMechanism = "\""
 						+ FSTTerminal.defaultCompositionMechanism + "\"";
 			String mergingMechanism = c.findAnnotationValue("FSTTerminal",
-					"compose");
+					"merge");
 			if (mergingMechanism == null)
 				mergingMechanism = "\"" + FSTTerminal.defaultMergingMechanism
 						+ "\"";
