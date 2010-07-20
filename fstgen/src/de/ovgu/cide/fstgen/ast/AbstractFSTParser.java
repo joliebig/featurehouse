@@ -35,7 +35,7 @@ public class AbstractFSTParser {
 	}
 
 	static enum FSTInfoType {
-		NAME, COMPOSITION
+		NAME, COMPOSE_OR_MERGE
 	};
 
 	protected static class FSTInfo {
@@ -159,7 +159,7 @@ public class AbstractFSTParser {
 	}
 
 	protected FSTInfo productionEndTerminal(String type, String namePattern,
-			String exportNamePattern, String compositionMechanism, Token first,
+			String exportNamePattern, String compositionMechanism, String mergingMechanism, Token first,
 			Token last) {
 		AbstractFSTParser.Context c = currentContext.pop();
 
@@ -172,7 +172,9 @@ public class AbstractFSTParser {
 				c.nameReplacements, FSTInfoType.NAME);
 		type = applyReplacements(type, c.nameReplacements, FSTInfoType.NAME);
 		compositionMechanism = applyReplacements(compositionMechanism,
-				c.nameReplacements, FSTInfoType.COMPOSITION);
+				c.nameReplacements, FSTInfoType.COMPOSE_OR_MERGE);
+		mergingMechanism = applyReplacements(mergingMechanism,
+				c.nameReplacements, FSTInfoType.COMPOSE_OR_MERGE);
 
 		if (!c.isInTerminal) {
 			String name = namePattern.equals(exportNamePattern) ? exportName
@@ -182,7 +184,7 @@ public class AbstractFSTParser {
 			cc().children.addAll(c.children);
 			if (first != null)
 				cc().children.add(new FSTTerminal(type, name, body, prefix,
-						compositionMechanism));
+						compositionMechanism, mergingMechanism));
 		}
 		return new FSTInfo(type, exportName, compositionMechanism);
 	}

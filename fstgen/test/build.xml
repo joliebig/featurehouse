@@ -9,8 +9,8 @@
      ====================================================================== -->
 <project name="test_fstgen" default="testAlloy">
 	<echo>${java.class.path}</echo>
-	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
-	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
+	<eclipse.convertPath resourcePath="fstgen_passau" property="fstgen_dir" />
+	<eclipse.convertPath resourcePath="CIDE2_ast_passau/bin" property="ast_dir" />
 	<eclipse.convertPath resourcePath="CIDE_generateAST/bin" property="astgen_dir" />
 
 	<taskdef name="fstgen" classname="de.ovgu.cide.fstgen.FSTgenTask">

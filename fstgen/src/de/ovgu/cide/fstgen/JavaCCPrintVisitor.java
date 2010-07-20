@@ -140,16 +140,21 @@ public class JavaCCPrintVisitor extends NVisitor {
 			String compositionMechanism = c.findAnnotationValue("FSTTerminal",
 					"compose");
 			if (compositionMechanism == null)
-				compositionMechanism = "\"" + FSTTerminal.defaultCompositionMechanism + "\"";
+				compositionMechanism = "\""
+						+ FSTTerminal.defaultCompositionMechanism + "\"";
+			String mergingMechanism = c.findAnnotationValue("FSTTerminal",
+					"compose");
+			if (mergingMechanism == null)
+				mergingMechanism = "\"" + FSTTerminal.defaultMergingMechanism
+						+ "\"";
 
 			out.println("{return productionEndTerminal(" + getFSTType(c) + ","
 					+ fstNamePattern + "," + fstExportNamePattern + ","
-					+ compositionMechanism + ",first,token);}");
+					+ compositionMechanism + "," + mergingMechanism
+					+ ",first,token);}");
 		} else
-			out
-					.println("{return productionEndNonTerminal("
-							+ getFSTType(c) + "," + fstNamePattern + ","
-							+ fstExportNamePattern + ");}");
+			out.println("{return productionEndNonTerminal(" + getFSTType(c)
+					+ "," + fstNamePattern + "," + fstExportNamePattern + ");}");
 
 		if (c.getParent().getChoices().indexOf(c) != c.getParent().getChoices()
 				.size() - 1)
@@ -264,9 +269,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 						+ x.substring(2, x.indexOf('>') + 1)
 						+ (spaceAfter ? " " : ""));
 			} else {
-				out
-						.print((spaceAfter ? "" : " ") + x
-								+ (spaceAfter ? " " : ""));
+				out.print((spaceAfter ? "" : " ") + x + (spaceAfter ? " " : ""));
 			}
 		if (x.charAt(0) == 'L')
 			out.print("LOOKAHEAD(" + removeQuotes(x.substring(1)) + ") ");
@@ -287,11 +290,11 @@ public class JavaCCPrintVisitor extends NVisitor {
 
 		if (t instanceof NNonTerminal) {
 			out.print(// t.genVariablePlainName() + "=" +
-					"n="+t.getName() + "("
-							+ (inTerminalChoice ? "true" : "inTerminal") + ")");
+			"n=" + t.getName() + "("
+					+ (inTerminalChoice ? "true" : "inTerminal") + ")");
 
 			if (keepName(t)) {
-				out.print("{ replaceName(\""+t.getName()+"\", n);}");
+				out.print("{ replaceName(\"" + t.getName() + "\", n);}");
 				// if (name.equals(\"\") name=\""+fstName+"\";
 				// name=name.replace(\"{}\", n);
 			}
@@ -304,7 +307,7 @@ public class JavaCCPrintVisitor extends NVisitor {
 				out.print("t=");
 
 			out.print(// "t="+
-					t.getName());
+			t.getName());
 			// out.print("{" + t.genVariablePlainName()
 			// + "=new ASTStringNode(t.toString(),new WToken(t));}");
 			if (keepName) {
@@ -335,58 +338,43 @@ public class JavaCCPrintVisitor extends NVisitor {
 		keepName |= getFSTType(t.getParent()).contains("{" + t.getName() + "}");
 		return keepName;
 	}
-	
-	/*private void printInner(NAbstractValue t) {
-		for (String x : t.innerPreTokens)
-			printToken(x, true);
 
-		if (t instanceof NNonTerminal) {
-			boolean keepName = fstNamePattern.contains("{" + t.getName() + "}")
-					|| fstExportNamePattern.contains("{" + t.getName() + "}");
-			if (keepName)
-				out.print("n=");
-			out.print(// t.genVariablePlainName() + "=" +
-					t.getName() + "("
-							+ (inTerminalChoice ? "true" : "inTerminal") + ")");
-
-			if (keepName) {
-				out.print("{ replaceName(\"" + t.getName() + "\",n);}");
-				// if (name.equals(\"\") name=\""+fstName+"\";
-				// name=name.replace(\"{}\", n);
-			}
-
-		}
-		if (t instanceof NValue) {
-			boolean keepName = fstNamePattern.contains("{" + t.getName() + "}")
-					|| fstExportNamePattern.contains("{" + t.getName() + "}");
-			if (keepName)
-				out.print("t=");
-
-			out.print(// "t="+
-					t.getName());
-			// out.print("{" + t.genVariablePlainName()
-			// + "=new ASTStringNode(t.toString(),new WToken(t));}");
-			if (keepName) {
-				out.print("{ replaceName(\"" + t.getName()
-						+ "\",new FSTInfo(t.toString()));}");
-			}
-		}
-		if ((t instanceof NTextOnly) && (t.type != Type.ONE)) {
-			// out.print("{" + t.genVariablePlainName() + "=new ASTTextNode("
-			// + getTextTokenParameter(t) + ",new WToken(token));}");
-		}
-
-		if (t.isListElement()) {
-			// out.print("{list" + t.getParent().getChoiceIdx() + ".add("
-			// + t.genVariablePlainName() + ");}");
-		} else if (t.type == Type.ONEORMORE || t.type == Type.ZEROORMORE) {
-			// out.print("{" + t.genVariableName() + ".add("
-			// + t.genVariablePlainName() + ");}");
-		}
-
-		for (String x : t.innerPostTokens)
-			printToken(x, false);
-	}*/
+	/*
+	 * private void printInner(NAbstractValue t) { for (String x :
+	 * t.innerPreTokens) printToken(x, true);
+	 * 
+	 * if (t instanceof NNonTerminal) { boolean keepName =
+	 * fstNamePattern.contains("{" + t.getName() + "}") ||
+	 * fstExportNamePattern.contains("{" + t.getName() + "}"); if (keepName)
+	 * out.print("n="); out.print(// t.genVariablePlainName() + "=" +
+	 * t.getName() + "(" + (inTerminalChoice ? "true" : "inTerminal") + ")");
+	 * 
+	 * if (keepName) { out.print("{ replaceName(\"" + t.getName() + "\",n);}");
+	 * // if (name.equals(\"\") name=\""+fstName+"\"; //
+	 * name=name.replace(\"{}\", n); }
+	 * 
+	 * } if (t instanceof NValue) { boolean keepName =
+	 * fstNamePattern.contains("{" + t.getName() + "}") ||
+	 * fstExportNamePattern.contains("{" + t.getName() + "}"); if (keepName)
+	 * out.print("t=");
+	 * 
+	 * out.print(// "t="+ t.getName()); // out.print("{" +
+	 * t.genVariablePlainName() // +
+	 * "=new ASTStringNode(t.toString(),new WToken(t));}"); if (keepName) {
+	 * out.print("{ replaceName(\"" + t.getName() +
+	 * "\",new FSTInfo(t.toString()));}"); } } if ((t instanceof NTextOnly) &&
+	 * (t.type != Type.ONE)) { // out.print("{" + t.genVariablePlainName() +
+	 * "=new ASTTextNode(" // + getTextTokenParameter(t) +
+	 * ",new WToken(token));}"); }
+	 * 
+	 * if (t.isListElement()) { // out.print("{list" +
+	 * t.getParent().getChoiceIdx() + ".add(" // + t.genVariablePlainName() +
+	 * ");}"); } else if (t.type == Type.ONEORMORE || t.type == Type.ZEROORMORE)
+	 * { // out.print("{" + t.genVariableName() + ".add(" // +
+	 * t.genVariablePlainName() + ");}"); }
+	 * 
+	 * for (String x : t.innerPostTokens) printToken(x, false); }
+	 */
 
 	// private String getTextTokenParameter(NAbstractValue t) {
 	// List<String> tokens = new ArrayList<String>();
