@@ -57,7 +57,7 @@ namespace System.Linq
 
   public static ILookup<TKey, TSource> ToLookup<TSource, TKey> (this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
   {
-   return Lookup<TKey, TSource>.Create (source, keySelector, x => x, null);
+   return Lookup<TKey, TSource>().Create (source, keySelector, x => x, null);
   }
 
   public static ILookup<TKey, TSource> ToLookup<TSource, TKey> (

@@ -35,7 +35,7 @@ namespace System.Linq
    Func<TSource, TElement> elementSelector,
    IEqualityComparer<TKey> comparer)
   {
-   return Lookup<TKey, TElement>.Create<TSource> (source, keySelector, elementSelector, comparer);
+   return Lookup<TKey, TElement>().Create<TSource> (source, keySelector, elementSelector, comparer);
   }
  }
 }
