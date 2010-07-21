@@ -1,5 +1,5 @@
 class Stack:
-    items = list()
+    items = xlist()
     
     def push(self, item):
         self.items.append(item)
