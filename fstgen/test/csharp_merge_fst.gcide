@@ -1067,12 +1067,12 @@ constructor_constraint
 	:  "new" "(" ")"<NONE>
 	;
 
-@FSTTerminal(name="{class_type}{type_name}^,",compose="LINE_BASED_MERGE")	
+@FSTTerminal(name="class_base",compose="LINE_BASED_MERGE")	
 class_base 
 	:  ":" class_type ("," type_name)*
 	;
 
-@FSTTerminal(name="{type_name}^,",compose="LINE_BASED_MERGE")
+@FSTTerminal(name="interface_type_list",compose="LINE_BASED_MERGE")
 interface_type_list 
 	:  type_name ("," type_name)*
 	;

@@ -17,39 +17,39 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("IDENTIFIER_CSHARP1","-","{TOSTRING}","Replacement",first,token);}
+                      {if (true) return productionEndTerminal("IDENTIFIER_CSHARP1","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     case YIELD:
       jj_consume_token(YIELD);
-                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP2","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BY:
       jj_consume_token(BY);
-               {if (true) return productionEndTerminal("IDENTIFIER_CSHARP3","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("IDENTIFIER_CSHARP3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LET:
       jj_consume_token(LET);
-                {if (true) return productionEndTerminal("IDENTIFIER_CSHARP4","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("IDENTIFIER_CSHARP4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FROM:
       jj_consume_token(FROM);
-                 {if (true) return productionEndTerminal("IDENTIFIER_CSHARP5","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("IDENTIFIER_CSHARP5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INTO:
       jj_consume_token(INTO);
-                 {if (true) return productionEndTerminal("IDENTIFIER_CSHARP6","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("IDENTIFIER_CSHARP6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GROUP:
       jj_consume_token(GROUP);
-                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP7","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SELECT:
       jj_consume_token(SELECT);
-                   {if (true) return productionEndTerminal("IDENTIFIER_CSHARP8","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("IDENTIFIER_CSHARP8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
       jj_consume_token(WHERE);
-                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP9","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("IDENTIFIER_CSHARP9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[0] = jj_gen;
@@ -134,15 +134,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = IDENTIFIER_CSHARP(true);
                                    replaceName("IDENTIFIER_CSHARP", n);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("identifier1","-","{IDENTIFIER_CSHARP}","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("identifier1","-","{IDENTIFIER_CSHARP}","Replacement","SemanticConflict",first,token);}
       break;
     case MODULE:
       jj_consume_token(MODULE);
-                   {if (true) return productionEndTerminal("identifier2","-","module","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("identifier2","-","module","Replacement","SemanticConflict",first,token);}
       break;
     case ASSEMBLY:
       jj_consume_token(ASSEMBLY);
-                     {if (true) return productionEndTerminal("identifier3","-","assembly","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("identifier3","-","assembly","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[4] = jj_gen;
@@ -160,31 +160,31 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case TRUE:
       n = boolean_literal(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("literal1","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("literal1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NUMERIC_LITERAL:
       jj_consume_token(NUMERIC_LITERAL);
-                           {if (true) return productionEndTerminal("literal2","-","-","Replacement",first,token);}
+                           {if (true) return productionEndTerminal("literal2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case HEXADECIMAL_INTEGER_LITERAL:
       jj_consume_token(HEXADECIMAL_INTEGER_LITERAL);
-                                       {if (true) return productionEndTerminal("literal3","-","-","Replacement",first,token);}
+                                       {if (true) return productionEndTerminal("literal3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CHARACTER_LITERAL:
       jj_consume_token(CHARACTER_LITERAL);
-                             {if (true) return productionEndTerminal("literal4","-","-","Replacement",first,token);}
+                             {if (true) return productionEndTerminal("literal4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case REGULAR_STRING_LITERAL:
       jj_consume_token(REGULAR_STRING_LITERAL);
-                                  {if (true) return productionEndTerminal("literal5","-","-","Replacement",first,token);}
+                                  {if (true) return productionEndTerminal("literal5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case VERBATIM_STRING_LITERAL:
       jj_consume_token(VERBATIM_STRING_LITERAL);
-                                   {if (true) return productionEndTerminal("literal6","-","-","Replacement",first,token);}
+                                   {if (true) return productionEndTerminal("literal6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NULL:
       jj_consume_token(NULL);
-                 {if (true) return productionEndTerminal("literal7","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("literal7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[5] = jj_gen;
@@ -200,11 +200,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case TRUE:
       jj_consume_token(TRUE);
-                 {if (true) return productionEndTerminal("boolean_literal1","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("boolean_literal1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FALSE:
       jj_consume_token(FALSE);
-                  {if (true) return productionEndTerminal("boolean_literal2","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("boolean_literal2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[6] = jj_gen;
@@ -246,7 +246,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                                                                                                       replaceName("type_name_part", n);
                                                                                                                                                                                                                                           replaceName(n);
     }
-                                                                                                                                                                                                                                                              {if (true) return productionEndTerminal("type_name","-","{type_name_part}^.","Replacement",first,token);}
+                                                                                                                                                                                                                                                              {if (true) return productionEndTerminal("type_name","-","{type_name_part}^.","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -262,7 +262,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     } else {
       ;
     }
-                                                                                                                                                                       {if (true) return productionEndTerminal("type_name_part","-","{identifier}","Replacement",first,token);}
+                                                                                                                                                                       {if (true) return productionEndTerminal("type_name_part","-","{identifier}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -320,7 +320,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                 replaceName(n);
     }
     jj_consume_token(GTHAN);
-                                                                                        {if (true) return productionEndTerminal("type_argument_list","-","-","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("type_argument_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -354,7 +354,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[13] = jj_gen;
       ;
     }
-                                                                                                            {if (true) return productionEndTerminal("type","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("type","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -374,7 +374,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_4;
       }
     }
-                                                     {if (true) return productionEndTerminal("rank_specifiers","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("rank_specifiers","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -395,7 +395,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(COMMA);
     }
     jj_consume_token(RBRACK);
-                         {if (true) return productionEndTerminal("rank_specifier","-","-","Replacement",first,token);}
+                         {if (true) return productionEndTerminal("rank_specifier","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -421,7 +421,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case VOID:
       n = predefined_type(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("non_array_type1","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("non_array_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
     case ASSEMBLY:
@@ -436,7 +436,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = type_name(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("non_array_type2","-","-","Replacement",first,token);}
+                                             {if (true) return productionEndTerminal("non_array_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[16] = jj_gen;
@@ -465,19 +465,19 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case USHORT:
       n = simple_type(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("predefined_type1","-","-","Replacement",first,token);}
+                                               {if (true) return productionEndTerminal("predefined_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("predefined_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("predefined_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STRING:
       jj_consume_token(STRING);
-                   {if (true) return productionEndTerminal("predefined_type3","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("predefined_type3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case VOID:
       jj_consume_token(VOID);
-                 {if (true) return productionEndTerminal("predefined_type4","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("predefined_type4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[17] = jj_gen;
@@ -505,11 +505,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case USHORT:
       n = numeric_type(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("simple_type1","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("simple_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BOOL:
       jj_consume_token(BOOL);
-                 {if (true) return productionEndTerminal("simple_type2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("simple_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -534,17 +534,17 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case USHORT:
       n = integral_type(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("numeric_type1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("numeric_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DOUBLE:
     case FLOAT:
       n = floating_point_type(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("numeric_type2","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("numeric_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DECIMAL:
       jj_consume_token(DECIMAL);
-                    {if (true) return productionEndTerminal("numeric_type3","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("numeric_type3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -560,39 +560,39 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SBYTE:
       jj_consume_token(SBYTE);
-                  {if (true) return productionEndTerminal("integral_type1","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BYTE:
       jj_consume_token(BYTE);
-                 {if (true) return productionEndTerminal("integral_type2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SHORT:
       jj_consume_token(SHORT);
-                  {if (true) return productionEndTerminal("integral_type3","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case USHORT:
       jj_consume_token(USHORT);
-                   {if (true) return productionEndTerminal("integral_type4","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("integral_type4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INT:
       jj_consume_token(INT);
-                {if (true) return productionEndTerminal("integral_type5","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("integral_type5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case UINT:
       jj_consume_token(UINT);
-                 {if (true) return productionEndTerminal("integral_type6","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LONG:
       jj_consume_token(LONG);
-                 {if (true) return productionEndTerminal("integral_type7","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case ULONG:
       jj_consume_token(ULONG);
-                  {if (true) return productionEndTerminal("integral_type8","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("integral_type8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CHAR:
       jj_consume_token(CHAR);
-                 {if (true) return productionEndTerminal("integral_type9","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("integral_type9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[20] = jj_gen;
@@ -619,15 +619,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = type_name(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("class_type1","-","-","Replacement",first,token);}
+                                             {if (true) return productionEndTerminal("class_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case OBJECT:
       jj_consume_token(OBJECT);
-                   {if (true) return productionEndTerminal("class_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STRING:
       jj_consume_token(STRING);
-                   {if (true) return productionEndTerminal("class_type3","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_type3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[21] = jj_gen;
@@ -643,11 +643,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case FLOAT:
       jj_consume_token(FLOAT);
-                  {if (true) return productionEndTerminal("floating_point_type1","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("floating_point_type1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DOUBLE:
       jj_consume_token(DOUBLE);
-                   {if (true) return productionEndTerminal("floating_point_type2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("floating_point_type2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[22] = jj_gen;
@@ -663,13 +663,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     if (jj_2_2(2147483647)) {
       n = lambda_expression(true);
                                                                                   replaceName(n);
-                                                                                                    {if (true) return productionEndTerminal("expression1","-","-","Replacement",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("expression1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case FROM:
         n = query_expression(true);
                                   replaceName(n);
-                                                    {if (true) return productionEndTerminal("expression2","-","-","Replacement",first,token);}
+                                                    {if (true) return productionEndTerminal("expression2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case LONG:
       case BASE:
@@ -748,7 +748,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
           jj_la1[23] = jj_gen;
           ;
         }
-                                                                                                         {if (true) return productionEndTerminal("expression3","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("expression3","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[24] = jj_gen;
@@ -764,7 +764,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("constant_expression","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("constant_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -775,7 +775,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
     n = expression(true);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("expressionInternal","-","-","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -788,7 +788,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                       replaceName(n);
     n = expression(true);
                                                                                                                            replaceName(n);
-                                                                                                                                             {if (true) return productionEndTerminal("assignment","-","-","Replacement",first,token);}
+                                                                                                                                             {if (true) return productionEndTerminal("assignment","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -798,59 +798,59 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSIGN:
       jj_consume_token(ASSIGN);
-              {if (true) return productionEndTerminal("assignment_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("assignment_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PLUS_ASN:
       jj_consume_token(PLUS_ASN);
-               {if (true) return productionEndTerminal("assignment_operator2","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MINUS_ASN:
       jj_consume_token(MINUS_ASN);
-               {if (true) return productionEndTerminal("assignment_operator3","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STAR_ASN:
       jj_consume_token(STAR_ASN);
-               {if (true) return productionEndTerminal("assignment_operator4","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DIV_ASN:
       jj_consume_token(DIV_ASN);
-               {if (true) return productionEndTerminal("assignment_operator5","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MOD_ASN:
       jj_consume_token(MOD_ASN);
-               {if (true) return productionEndTerminal("assignment_operator6","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BAND_ASN:
       jj_consume_token(BAND_ASN);
-               {if (true) return productionEndTerminal("assignment_operator7","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BOR_ASN:
       jj_consume_token(BOR_ASN);
-               {if (true) return productionEndTerminal("assignment_operator8","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BXOR_ASN:
       jj_consume_token(BXOR_ASN);
-               {if (true) return productionEndTerminal("assignment_operator9","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SL_ASN:
       jj_consume_token(SL_ASN);
-                {if (true) return productionEndTerminal("assignment_operator10","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("assignment_operator10","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SR_ASN:
       jj_consume_token(SR_ASN);
-                {if (true) return productionEndTerminal("assignment_operator11","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("assignment_operator11","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BSR_ASN:
       jj_consume_token(BSR_ASN);
-                 {if (true) return productionEndTerminal("assignment_operator12","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("assignment_operator12","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case QMARKS:
       jj_consume_token(QMARKS);
-               {if (true) return productionEndTerminal("assignment_operator13","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator13","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case 167:
       jj_consume_token(167);
-               {if (true) return productionEndTerminal("assignment_operator14","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("assignment_operator14","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[25] = jj_gen;
@@ -874,7 +874,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[26] = jj_gen;
       ;
     }
-                                                                                                                        {if (true) return productionEndTerminal("conditional_expression","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("conditional_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -887,7 +887,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(COLON);
     n = conditional_expression(true);
                                                                                      replaceName(n);
-                                                                                                       {if (true) return productionEndTerminal("conditional_expressionInternal","-","-","Replacement",first,token);}
+                                                                                                       {if (true) return productionEndTerminal("conditional_expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -906,7 +906,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[27] = jj_gen;
       ;
     }
-                                                                                                                         {if (true) return productionEndTerminal("conditional_or_expression","-","-","Replacement",first,token);}
+                                                                                                                         {if (true) return productionEndTerminal("conditional_or_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -925,7 +925,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[28] = jj_gen;
       ;
     }
-                                                                                                                       {if (true) return productionEndTerminal("conditional_and_expression","-","-","Replacement",first,token);}
+                                                                                                                       {if (true) return productionEndTerminal("conditional_and_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -944,7 +944,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[29] = jj_gen;
       ;
     }
-                                                                                                                   {if (true) return productionEndTerminal("inclusive_or_expression","-","-","Replacement",first,token);}
+                                                                                                                   {if (true) return productionEndTerminal("inclusive_or_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -963,7 +963,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[30] = jj_gen;
       ;
     }
-                                                                                                          {if (true) return productionEndTerminal("exclusive_or_expression","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("exclusive_or_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -982,7 +982,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[31] = jj_gen;
       ;
     }
-                                                                                                      {if (true) return productionEndTerminal("and_expression","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("and_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1001,7 +1001,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[32] = jj_gen;
       ;
     }
-                                                                                                                 {if (true) return productionEndTerminal("equality_expression","-","-","Replacement",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("equality_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1012,7 +1012,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                    replaceName(n);
     n = equality_expression(true);
                                                                                  replaceName(n);
-                                                                                                   {if (true) return productionEndTerminal("equality_expressionInternal","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("equality_expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1022,11 +1022,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EQUAL:
       jj_consume_token(EQUAL);
-               {if (true) return productionEndTerminal("equality_operator1","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("equality_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NOT_EQUAL:
       jj_consume_token(NOT_EQUAL);
-               {if (true) return productionEndTerminal("equality_operator2","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("equality_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[33] = jj_gen;
@@ -1055,7 +1055,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[34] = jj_gen;
       ;
     }
-                                                                                                              {if (true) return productionEndTerminal("relational_expression","-","-","Replacement",first,token);}
+                                                                                                              {if (true) return productionEndTerminal("relational_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1071,7 +1071,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                      replaceName(n);
       n = relational_expression(true);
                                                                                      replaceName(n);
-                                                                                                       {if (true) return productionEndTerminal("relational_expressionInternal1","-","-","Replacement",first,token);}
+                                                                                                       {if (true) return productionEndTerminal("relational_expressionInternal1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case AS:
     case IS:
@@ -1079,7 +1079,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                        replaceName(n);
       n = type(true);
                                                                       replaceName(n);
-                                                                                        {if (true) return productionEndTerminal("relational_expressionInternal2","-","-","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("relational_expressionInternal2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[35] = jj_gen;
@@ -1095,19 +1095,19 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LTHAN:
       jj_consume_token(LTHAN);
-              {if (true) return productionEndTerminal("relational_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("relational_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GTHAN:
       jj_consume_token(GTHAN);
-              {if (true) return productionEndTerminal("relational_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("relational_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LE:
       jj_consume_token(LE);
-               {if (true) return productionEndTerminal("relational_operator3","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("relational_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GE:
       jj_consume_token(GE);
-               {if (true) return productionEndTerminal("relational_operator4","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("relational_operator4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[36] = jj_gen;
@@ -1123,11 +1123,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IS:
       jj_consume_token(IS);
-               {if (true) return productionEndTerminal("relational_operator2I1","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("relational_operator2I1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case AS:
       jj_consume_token(AS);
-               {if (true) return productionEndTerminal("relational_operator2I2","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("relational_operator2I2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[37] = jj_gen;
@@ -1152,7 +1152,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[38] = jj_gen;
       ;
     }
-                                                                                                            {if (true) return productionEndTerminal("shift_expression","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("shift_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1163,7 +1163,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                 replaceName(n);
     n = shift_expression(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("shift_expressionInternal","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("shift_expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1173,11 +1173,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SL:
       jj_consume_token(SL);
-               {if (true) return productionEndTerminal("shift_operator1","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("shift_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SR:
       jj_consume_token(SR);
-               {if (true) return productionEndTerminal("shift_operator2","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("shift_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[39] = jj_gen;
@@ -1202,7 +1202,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[40] = jj_gen;
       ;
     }
-                                                                                                                     {if (true) return productionEndTerminal("additive_expression","-","-","Replacement",first,token);}
+                                                                                                                     {if (true) return productionEndTerminal("additive_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1213,7 +1213,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                    replaceName(n);
     n = additive_expression(true);
                                                                                  replaceName(n);
-                                                                                                   {if (true) return productionEndTerminal("additive_expressionInternal","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("additive_expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1223,11 +1223,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("additive_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("additive_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("additive_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("additive_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[41] = jj_gen;
@@ -1253,7 +1253,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[42] = jj_gen;
       ;
     }
-                                                                                                                  {if (true) return productionEndTerminal("multiplicative_expression","-","-","Replacement",first,token);}
+                                                                                                                  {if (true) return productionEndTerminal("multiplicative_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1264,7 +1264,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                          replaceName(n);
     n = multiplicative_expression(true);
                                                                                              replaceName(n);
-                                                                                                               {if (true) return productionEndTerminal("multiplicative_expressionInternal","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("multiplicative_expressionInternal","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1274,15 +1274,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("multiplicative_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("multiplicative_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DIV:
       jj_consume_token(DIV);
-              {if (true) return productionEndTerminal("multiplicative_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("multiplicative_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MOD:
       jj_consume_token(MOD);
-              {if (true) return productionEndTerminal("multiplicative_operator3","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("multiplicative_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[43] = jj_gen;
@@ -1308,14 +1308,14 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                 replaceName(n);
       n = unary_expression(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("unary_expression1","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("unary_expression1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[44] = jj_gen;
       if (jj_2_3(2147483647)) {
         n = cast_expression(true);
                                                               replaceName(n);
-                                                                                {if (true) return productionEndTerminal("unary_expression2","-","-","Replacement",first,token);}
+                                                                                {if (true) return productionEndTerminal("unary_expression2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LONG:
@@ -1366,7 +1366,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         case VERBATIM_STRING_LITERAL:
           n = primary_expression(true);
                                     replaceName(n);
-                                                      {if (true) return productionEndTerminal("unary_expression3","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("unary_expression3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[45] = jj_gen;
@@ -1384,35 +1384,35 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("unary_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("unary_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BANG:
       jj_consume_token(BANG);
-              {if (true) return productionEndTerminal("unary_operator3","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case TILDE:
       jj_consume_token(TILDE);
-              {if (true) return productionEndTerminal("unary_operator4","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("unary_operator5","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INC:
       jj_consume_token(INC);
-               {if (true) return productionEndTerminal("unary_operator6","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("unary_operator6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DEC:
       jj_consume_token(DEC);
-               {if (true) return productionEndTerminal("unary_operator7","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("unary_operator7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case AMPER:
       jj_consume_token(AMPER);
-              {if (true) return productionEndTerminal("unary_operator8","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("unary_operator8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[46] = jj_gen;
@@ -1431,7 +1431,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = unary_expression(true);
                                                                          replaceName(n);
-                                                                                           {if (true) return productionEndTerminal("cast_expression","-","-","Replacement",first,token);}
+                                                                                           {if (true) return productionEndTerminal("cast_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1492,12 +1492,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       } else {
         ;
       }
-                                                                                                                                                                     {if (true) return productionEndTerminal("primary_expression1","-","-","Replacement",first,token);}
+                                                                                                                                                                     {if (true) return productionEndTerminal("primary_expression1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NEW:
       n = creation_expression(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("primary_expression2","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("primary_expression2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[47] = jj_gen;
@@ -1513,7 +1513,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     if (jj_2_5(2147483647)) {
       n = parenthesized_expression(true);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("primary_expression_start1","-","-","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("primary_expression_start1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NULL:
@@ -1526,7 +1526,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       case VERBATIM_STRING_LITERAL:
         n = literal(true);
                          replaceName(n);
-                                           {if (true) return productionEndTerminal("primary_expression_start2","-","-","Replacement",first,token);}
+                                           {if (true) return productionEndTerminal("primary_expression_start2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case WHERE:
       case ASSEMBLY:
@@ -1541,7 +1541,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       case IDENTIFIER:
         n = identifier(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("primary_expression_start3","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("primary_expression_start3","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case LONG:
       case BOOL:
@@ -1563,55 +1563,55 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                  replaceName(n);
         n = member_access(true);
                                                                          replaceName(n);
-                                                                                           {if (true) return productionEndTerminal("primary_expression_start4","-","-","Replacement",first,token);}
+                                                                                           {if (true) return productionEndTerminal("primary_expression_start4","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case DOT:
         n = member_access(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("primary_expression_start5","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("primary_expression_start5","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case THIS:
         n = this_access(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("primary_expression_start6","-","-","Replacement",first,token);}
+                                               {if (true) return productionEndTerminal("primary_expression_start6","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case BASE:
         n = base_access(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("primary_expression_start7","-","-","Replacement",first,token);}
+                                               {if (true) return productionEndTerminal("primary_expression_start7","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case TYPEOF:
         n = typeof_expression(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("primary_expression_start8","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("primary_expression_start8","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case SIZEOF:
         n = sizeof_expression(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("primary_expression_start9","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("primary_expression_start9","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case CHECKED:
         n = checked_expression(true);
                                     replaceName(n);
-                                                      {if (true) return productionEndTerminal("primary_expression_start10","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("primary_expression_start10","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case UNCHECKED:
         n = unchecked_expression(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("primary_expression_start11","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("primary_expression_start11","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[48] = jj_gen;
         if (jj_2_6(2)) {
           n = default_value_expression(true);
                                                        replaceName(n);
-                                                                         {if (true) return productionEndTerminal("primary_expression_start12","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("primary_expression_start12","-","-","Replacement","SemanticConflict",first,token);}
         } else {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case DELEGATE:
             n = anonymous_method_expression(true);
                                              replaceName(n);
-                                                               {if (true) return productionEndTerminal("primary_expression_start13","-","-","Replacement",first,token);}
+                                                               {if (true) return productionEndTerminal("primary_expression_start13","-","-","Replacement","SemanticConflict",first,token);}
             break;
           default:
             jj_la1[49] = jj_gen;
@@ -1632,7 +1632,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = type(true);
                                     replaceName(n);
     jj_consume_token(RPAREN);
-                                                          {if (true) return productionEndTerminal("default_value_expression","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("default_value_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1649,7 +1649,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_6;
       }
     }
-                                                                                                                                   {if (true) return productionEndTerminal("primary_expression_postfix","-","-","Replacement",first,token);}
+                                                                                                                                   {if (true) return productionEndTerminal("primary_expression_postfix","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1660,35 +1660,35 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case DOT:
       n = member_access(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("primary_expression_postfixInternal1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("primary_expression_postfixInternal1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[50] = jj_gen;
       if (jj_2_8(2147483647)) {
         n = invocation_expression(true);
                                                                                        replaceName(n);
-                                                                                                         {if (true) return productionEndTerminal("primary_expression_postfixInternal2","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("primary_expression_postfixInternal2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LBRACK:
           n = element_access(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("primary_expression_postfixInternal3","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("primary_expression_postfixInternal3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         case INC:
           n = post_increment_expression(true);
                                            replaceName(n);
-                                                             {if (true) return productionEndTerminal("primary_expression_postfixInternal4","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("primary_expression_postfixInternal4","-","-","Replacement","SemanticConflict",first,token);}
           break;
         case DEC:
           n = post_decrement_expression(true);
                                            replaceName(n);
-                                                             {if (true) return productionEndTerminal("primary_expression_postfixInternal5","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("primary_expression_postfixInternal5","-","-","Replacement","SemanticConflict",first,token);}
           break;
         case ARROW:
           n = pointer_member_access(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("primary_expression_postfixInternal6","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("primary_expression_postfixInternal6","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[51] = jj_gen;
@@ -1721,7 +1721,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_7;
       }
     }
-                                                                                {if (true) return productionEndTerminal("array_creation_postfix_expression","-","-","Replacement",first,token);}
+                                                                                {if (true) return productionEndTerminal("array_creation_postfix_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1732,30 +1732,30 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case DOT:
       n = member_access(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[53] = jj_gen;
       if (jj_2_9(2147483647)) {
         n = invocation_expression(true);
                                                                                        replaceName(n);
-                                                                                                         {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal2","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INC:
           n = post_increment_expression(true);
                                            replaceName(n);
-                                                             {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal3","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         case DEC:
           n = post_decrement_expression(true);
                                            replaceName(n);
-                                                             {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal4","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal4","-","-","Replacement","SemanticConflict",first,token);}
           break;
         case ARROW:
           n = pointer_member_access(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal5","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("array_creation_postfix_expressionInternal5","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[54] = jj_gen;
@@ -1817,7 +1817,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[56] = jj_gen;
       ;
     }
-                                                                                                                                                              {if (true) return productionEndTerminal("creation_expression","-","-","Replacement",first,token);}
+                                                                                                                                                              {if (true) return productionEndTerminal("creation_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1888,7 +1888,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(RBRACE);
-                                                                     {if (true) return productionEndTerminal("object_initializer","-","-","Replacement",first,token);}
+                                                                     {if (true) return productionEndTerminal("object_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1911,7 +1911,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = member_initializer(true);
                                                                                       replaceName(n);
     }
-                                                                                                          {if (true) return productionEndTerminal("member_initializer_list","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("member_initializer_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1930,7 +1930,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[59] = jj_gen;
       ;
     }
-                                                                                                {if (true) return productionEndTerminal("member_initializer","-","-","Replacement",first,token);}
+                                                                                                {if (true) return productionEndTerminal("member_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1939,7 +1939,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("initializer_value","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("initializer_value","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2029,7 +2029,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         jj_la1[61] = jj_gen;
         ;
       }
-                                                                                                                  {if (true) return productionEndTerminal("creation_expressionPostFix1","-","-","Replacement",first,token);}
+                                                                                                                  {if (true) return productionEndTerminal("creation_expressionPostFix1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[66] = jj_gen;
@@ -2070,7 +2070,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
           jj_la1[64] = jj_gen;
           ;
         }
-                                                                                                                                                                                                                                {if (true) return productionEndTerminal("creation_expressionPostFix2","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                {if (true) return productionEndTerminal("creation_expressionPostFix2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LBRACK:
@@ -2092,7 +2092,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
             jj_la1[65] = jj_gen;
             ;
           }
-                                                                                                                                                             {if (true) return productionEndTerminal("creation_expressionPostFix3","-","-","Replacement",first,token);}
+                                                                                                                                                             {if (true) return productionEndTerminal("creation_expressionPostFix3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[67] = jj_gen;
@@ -2121,7 +2121,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[68] = jj_gen;
       ;
     }
-                                                                                                               {if (true) return productionEndTerminal("parenthesized_expression","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("parenthesized_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2137,7 +2137,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     } else {
       ;
     }
-                                                                                                                                           {if (true) return productionEndTerminal("member_access","-","-","Replacement",first,token);}
+                                                                                                                                           {if (true) return productionEndTerminal("member_access","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2219,7 +2219,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                                          {if (true) return productionEndTerminal("invocation_expression","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("invocation_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2242,7 +2242,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = argument(true);
                                                                   replaceName(n);
     }
-                                                                                      {if (true) return productionEndTerminal("argument_list","-","-","Replacement",first,token);}
+                                                                                      {if (true) return productionEndTerminal("argument_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2262,7 +2262,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = expression(true);
                                                                        replaceName(n);
-                                                                                         {if (true) return productionEndTerminal("argument","-","-","Replacement",first,token);}
+                                                                                         {if (true) return productionEndTerminal("argument","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2273,7 +2273,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = formal_parameter_list(true);
                                            replaceName(n);
     jj_consume_token(RPAREN);
-                                                                 {if (true) return productionEndTerminal("delegate_arg","-","-","Replacement",first,token);}
+                                                                 {if (true) return productionEndTerminal("delegate_arg","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2283,15 +2283,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case REF:
       jj_consume_token(REF);
-                {if (true) return productionEndTerminal("argumentPrefix1","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("argumentPrefix1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case OUT:
       jj_consume_token(OUT);
-                {if (true) return productionEndTerminal("argumentPrefix2","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("argumentPrefix2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case AMPER:
       jj_consume_token(AMPER);
-              {if (true) return productionEndTerminal("argumentPrefix3","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("argumentPrefix3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[73] = jj_gen;
@@ -2308,7 +2308,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = argument_list(true);
                                    replaceName(n);
     jj_consume_token(RBRACK);
-                                                         {if (true) return productionEndTerminal("element_access","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("element_access","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2330,7 +2330,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = expression_listList(true);
                                                                            replaceName(n);
     }
-                                                                                               {if (true) return productionEndTerminal("expression_list","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("expression_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2340,7 +2340,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(COMMA);
     n = expression(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("expression_listList","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("expression_listList","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2348,7 +2348,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("this_access","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("this_access","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2359,14 +2359,14 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(BASE);
       n = member_access(true);
                                                    replaceName(n);
-                                                                     {if (true) return productionEndTerminal("base_access1","-","-","Replacement",first,token);}
+                                                                     {if (true) return productionEndTerminal("base_access1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case BASE:
         jj_consume_token(BASE);
         n = element_access(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("base_access2","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("base_access2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[75] = jj_gen;
@@ -2381,7 +2381,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INC);
-               {if (true) return productionEndTerminal("post_increment_expression","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("post_increment_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2389,7 +2389,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(DEC);
-               {if (true) return productionEndTerminal("post_decrement_expression","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("post_decrement_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2401,7 +2401,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = type(true);
                                    replaceName(n);
     jj_consume_token(RPAREN);
-                                                         {if (true) return productionEndTerminal("typeof_expression","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("typeof_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2413,7 +2413,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = expression(true);
                                           replaceName(n);
     jj_consume_token(RPAREN);
-                                                                {if (true) return productionEndTerminal("checked_expression","-","-","Replacement",first,token);}
+                                                                {if (true) return productionEndTerminal("checked_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2425,7 +2425,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = expression(true);
                                             replaceName(n);
     jj_consume_token(RPAREN);
-                                                                  {if (true) return productionEndTerminal("unchecked_expression","-","-","Replacement",first,token);}
+                                                                  {if (true) return productionEndTerminal("unchecked_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2438,19 +2438,19 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(COLON);
       n = statement(true);
                                                                                  replaceName(n);
-                                                                                                   {if (true) return productionEndTerminal("statement1","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("statement1","-","-","Replacement","SemanticConflict",first,token);}
     } else if (jj_2_14(2147483647)) {
       n = local_variable_declaration(true);
                                                                            replaceName(n);
       jj_consume_token(SEMI);
-                                                                                                 {if (true) return productionEndTerminal("statement2","-","-","Replacement",first,token);}
+                                                                                                 {if (true) return productionEndTerminal("statement2","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CONST:
         n = local_constant_declaration(true);
                                             replaceName(n);
         jj_consume_token(SEMI);
-                                                                  {if (true) return productionEndTerminal("statement3","-","-","Replacement",first,token);}
+                                                                  {if (true) return productionEndTerminal("statement3","-","-","Replacement","SemanticConflict",first,token);}
         break;
       case LONG:
       case BASE:
@@ -2526,7 +2526,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       case VERBATIM_STRING_LITERAL:
         n = embedded_statement(true);
                                     replaceName(n);
-                                                      {if (true) return productionEndTerminal("statement4","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("statement4","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[76] = jj_gen;
@@ -2544,7 +2544,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                       replaceName(n);
     n = local_variable_declarators(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("local_variable_declaration","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("local_variable_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2563,7 +2563,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[77] = jj_gen;
       ;
     }
-                                                                                                                        {if (true) return productionEndTerminal("local_variable_declarators","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("local_variable_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2581,7 +2581,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[78] = jj_gen;
       ;
     }
-                                                                                                    {if (true) return productionEndTerminal("local_variable_declarator","-","-","Replacement",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("local_variable_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2591,7 +2591,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = local_variable_initializer(true);
                                                 replaceName(n);
-                                                                  {if (true) return productionEndTerminal("local_variable_assignment","-","-","Replacement",first,token);}
+                                                                  {if (true) return productionEndTerminal("local_variable_assignment","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2602,7 +2602,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case LBRACE:
       n = array_initializer(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("local_variable_initializer1","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("local_variable_initializer1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LONG:
     case BASE:
@@ -2660,12 +2660,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case VERBATIM_STRING_LITERAL:
       n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("local_variable_initializer2","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("local_variable_initializer2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STACKALLOC:
       n = stackalloc_initializer(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("local_variable_initializer3","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("local_variable_initializer3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[79] = jj_gen;
@@ -2683,7 +2683,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                               replaceName(n);
     n = local_constant_declarators(true);
                                                                                    replaceName(n);
-                                                                                                     {if (true) return productionEndTerminal("local_constant_declaration","-","-","Replacement",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("local_constant_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2702,7 +2702,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[80] = jj_gen;
       ;
     }
-                                                                                                                        {if (true) return productionEndTerminal("local_constant_declarators","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("local_constant_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2714,7 +2714,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = local_variable_initializer(true);
                                                                                      replaceName(n);
-                                                                                                       {if (true) return productionEndTerminal("local_constant_declarator","-","-","Replacement",first,token);}
+                                                                                                       {if (true) return productionEndTerminal("local_constant_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2725,17 +2725,17 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case LBRACE:
       n = block(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("embedded_statement1","-","-","Replacement",first,token);}
+                                         {if (true) return productionEndTerminal("embedded_statement1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SEMI:
       jj_consume_token(SEMI);
-              {if (true) return productionEndTerminal("embedded_statement2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("embedded_statement2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SWITCH:
     case IF:
       n = selection_statement(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("embedded_statement3","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("embedded_statement3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DO:
     case FOR:
@@ -2743,7 +2743,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case WHILE:
       n = iteration_statement(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("embedded_statement4","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("embedded_statement4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BREAK:
     case CONTINUE:
@@ -2752,49 +2752,49 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case GOTO:
       n = jump_statement(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("embedded_statement5","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("embedded_statement5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case TRY:
       n = try_statement(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("embedded_statement6","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("embedded_statement6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CHECKED:
       n = checked_statement(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("embedded_statement7","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("embedded_statement7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case UNCHECKED:
       n = unchecked_statement(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("embedded_statement8","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("embedded_statement8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LOCK:
       n = lock_statement(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("embedded_statement9","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("embedded_statement9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case USING:
       n = using_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("embedded_statement10","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("embedded_statement10","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case UNSAFE:
       n = unsafe_statement(true);
                                   replaceName(n);
-                                                    {if (true) return productionEndTerminal("embedded_statement11","-","-","Replacement",first,token);}
+                                                    {if (true) return productionEndTerminal("embedded_statement11","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FIXED:
       n = fixed_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("embedded_statement12","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("embedded_statement12","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[81] = jj_gen;
       if (jj_2_15(2)) {
         n = yield_statement(true);
                                               replaceName(n);
-                                                                {if (true) return productionEndTerminal("embedded_statement13","-","-","Replacement",first,token);}
+                                                                {if (true) return productionEndTerminal("embedded_statement13","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LONG:
@@ -2853,7 +2853,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         case VERBATIM_STRING_LITERAL:
           n = expression_statement(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("embedded_statement14","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("embedded_statement14","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[82] = jj_gen;
@@ -2955,7 +2955,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                 replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                        {if (true) return productionEndTerminal("block","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("block","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3047,7 +3047,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_12;
       }
     }
-                                                {if (true) return productionEndTerminal("statement_list","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("statement_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3057,7 +3057,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = expression(true);
                             replaceName(n);
     jj_consume_token(SEMI);
-                                                  {if (true) return productionEndTerminal("expression_statement","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("expression_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3068,12 +3068,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IF:
       n = if_statement(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("selection_statement1","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("selection_statement1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SWITCH:
       n = switch_statement(true);
                                   replaceName(n);
-                                                    {if (true) return productionEndTerminal("selection_statement2","-","-","Replacement",first,token);}
+                                                    {if (true) return productionEndTerminal("selection_statement2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[85] = jj_gen;
@@ -3103,7 +3103,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[86] = jj_gen;
       ;
     }
-                                                                                                                                                              {if (true) return productionEndTerminal("if_statement","-","-","Replacement",first,token);}
+                                                                                                                                                              {if (true) return productionEndTerminal("if_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3131,7 +3131,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                    replaceName(n);
     }
     jj_consume_token(RBRACE);
-                                                                                                                           {if (true) return productionEndTerminal("switch_statement","-","-","Replacement",first,token);}
+                                                                                                                           {if (true) return productionEndTerminal("switch_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3150,7 +3150,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = statement(true);
                                                                                 replaceName(n);
     }
-                                                                                                    {if (true) return productionEndTerminal("switch_statement_label","-","-","Replacement",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("switch_statement_label","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3163,12 +3163,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = expression(true);
                                    replaceName(n);
       jj_consume_token(COLON);
-                                                         {if (true) return productionEndTerminal("switch_label1","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("switch_label1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DEFAULTTOKEN:
       jj_consume_token(DEFAULTTOKEN);
       jj_consume_token(COLON);
-                        {if (true) return productionEndTerminal("switch_label2","-","-","Replacement",first,token);}
+                        {if (true) return productionEndTerminal("switch_label2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[88] = jj_gen;
@@ -3185,22 +3185,22 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case WHILE:
       n = while_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("iteration_statement1","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("iteration_statement1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DO:
       n = do_statement(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("iteration_statement2","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("iteration_statement2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FOR:
       n = for_statement(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("iteration_statement3","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("iteration_statement3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FOREACH:
       n = foreach_statement(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("iteration_statement4","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("iteration_statement4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[89] = jj_gen;
@@ -3220,7 +3220,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                          replaceName(n);
-                                                                                                           {if (true) return productionEndTerminal("while_statement","-","-","Replacement",first,token);}
+                                                                                                           {if (true) return productionEndTerminal("while_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3235,7 +3235,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = expression(true);
                                                                                           replaceName(n);
     jj_consume_token(RPAREN);
-                                                                                                                {if (true) return productionEndTerminal("do_statement","-","-","Replacement",first,token);}
+                                                                                                                {if (true) return productionEndTerminal("do_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3435,7 +3435,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                                                                                                                          replaceName(n);
-                                                                                                                                                                                                           {if (true) return productionEndTerminal("for_statement","-","-","Replacement",first,token);}
+                                                                                                                                                                                                           {if (true) return productionEndTerminal("for_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3445,7 +3445,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     if (jj_2_17(2147483647)) {
       n = local_variable_declaration(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("for_initializer1","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("for_initializer1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LONG:
@@ -3504,7 +3504,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       case VERBATIM_STRING_LITERAL:
         n = expression_list(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("for_initializer2","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("for_initializer2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[93] = jj_gen;
@@ -3530,7 +3530,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                                                                                                     replaceName(n);
-                                                                                                                                                                                      {if (true) return productionEndTerminal("foreach_statement","-","-","Replacement",first,token);}
+                                                                                                                                                                                      {if (true) return productionEndTerminal("foreach_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3540,7 +3540,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(YIELD);
     n = yield_statement_body(true);
                                               replaceName(n);
-                                                                {if (true) return productionEndTerminal("yield_statement","-","-","Replacement",first,token);}
+                                                                {if (true) return productionEndTerminal("yield_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3551,14 +3551,14 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case BREAK:
       n = break_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("yield_statement_body1","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("yield_statement_body1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case RETURN:
       jj_consume_token(RETURN);
       n = expression(true);
                                      replaceName(n);
       jj_consume_token(SEMI);
-                                                           {if (true) return productionEndTerminal("yield_statement_body2","-","-","Replacement",first,token);}
+                                                           {if (true) return productionEndTerminal("yield_statement_body2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[94] = jj_gen;
@@ -3575,27 +3575,27 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case BREAK:
       n = break_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("jump_statement1","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("jump_statement1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CONTINUE:
       jj_consume_token(CONTINUE);
       jj_consume_token(SEMI);
-                         {if (true) return productionEndTerminal("jump_statement2","-","-","Replacement",first,token);}
+                         {if (true) return productionEndTerminal("jump_statement2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GOTO:
       n = goto_statement(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("jump_statement3","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("jump_statement3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case RETURN:
       n = return_statement(true);
                                   replaceName(n);
-                                                    {if (true) return productionEndTerminal("jump_statement4","-","-","Replacement",first,token);}
+                                                    {if (true) return productionEndTerminal("jump_statement4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case THROW:
       n = throw_statement(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("jump_statement5","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("jump_statement5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[95] = jj_gen;
@@ -3610,7 +3610,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(BREAK);
     jj_consume_token(SEMI);
-                      {if (true) return productionEndTerminal("break_statement","-","-","Replacement",first,token);}
+                      {if (true) return productionEndTerminal("break_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3620,7 +3620,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(GOTO);
     n = goto_statementEnd(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("goto_statement","-","-","Replacement",first,token);}
+                                                            {if (true) return productionEndTerminal("goto_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3642,19 +3642,19 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = identifier(true);
                             replaceName(n);
       jj_consume_token(SEMI);
-                                                  {if (true) return productionEndTerminal("goto_statementEnd1","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("goto_statementEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CASE:
       jj_consume_token(CASE);
       n = expression(true);
                                    replaceName(n);
       jj_consume_token(SEMI);
-                                                         {if (true) return productionEndTerminal("goto_statementEnd2","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("goto_statementEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DEFAULTTOKEN:
       jj_consume_token(DEFAULTTOKEN);
       jj_consume_token(SEMI);
-                        {if (true) return productionEndTerminal("goto_statementEnd3","-","-","Replacement",first,token);}
+                        {if (true) return productionEndTerminal("goto_statementEnd3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[96] = jj_gen;
@@ -3731,7 +3731,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(SEMI);
-                                                             {if (true) return productionEndTerminal("return_statement","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("return_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3802,7 +3802,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(SEMI);
-                                                            {if (true) return productionEndTerminal("throw_statement","-","-","Replacement",first,token);}
+                                                            {if (true) return productionEndTerminal("throw_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3814,7 +3814,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
     n = try_statement_clauses(true);
                                                                              replaceName(n);
-                                                                                               {if (true) return productionEndTerminal("try_statement","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("try_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3834,12 +3834,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         jj_la1[99] = jj_gen;
         ;
       }
-                                                                                            {if (true) return productionEndTerminal("try_statement_clauses1","-","-","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("try_statement_clauses1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FINALLY:
       n = finally_clause(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("try_statement_clauses2","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("try_statement_clauses2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[100] = jj_gen;
@@ -3865,7 +3865,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_15;
       }
     }
-                                                   {if (true) return productionEndTerminal("catch_clauses","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("catch_clauses","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3875,7 +3875,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(CATCH);
     n = catch_clauseEnd(true);
                                          replaceName(n);
-                                                           {if (true) return productionEndTerminal("catch_clause","-","-","Replacement",first,token);}
+                                                           {if (true) return productionEndTerminal("catch_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3909,12 +3909,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(RPAREN);
       n = block(true);
                                                                                                      replaceName(n);
-                                                                                                                       {if (true) return productionEndTerminal("catch_clauseEnd1","-","-","Replacement",first,token);}
+                                                                                                                       {if (true) return productionEndTerminal("catch_clauseEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LBRACE:
       n = block(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("catch_clauseEnd2","-","-","Replacement",first,token);}
+                                         {if (true) return productionEndTerminal("catch_clauseEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[103] = jj_gen;
@@ -3930,7 +3930,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(FINALLY);
     n = block(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("finally_clause","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("finally_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3940,7 +3940,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(CHECKED);
     n = block(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("checked_statement","-","-","Replacement",first,token);}
+                                                   {if (true) return productionEndTerminal("checked_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3950,7 +3950,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(UNCHECKED);
     n = block(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("unchecked_statement","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("unchecked_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3964,7 +3964,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                         replaceName(n);
-                                                                                                          {if (true) return productionEndTerminal("lock_statement","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("lock_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3978,7 +3978,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                                    replaceName(n);
-                                                                                                                     {if (true) return productionEndTerminal("using_statement","-","-","Replacement",first,token);}
+                                                                                                                     {if (true) return productionEndTerminal("using_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3988,7 +3988,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     if (jj_2_18(2147483647)) {
       n = local_variable_declaration(true);
                                                                                          replaceName(n);
-                                                                                                           {if (true) return productionEndTerminal("resource_acquisition1","-","-","Replacement",first,token);}
+                                                                                                           {if (true) return productionEndTerminal("resource_acquisition1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LONG:
@@ -4047,7 +4047,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       case VERBATIM_STRING_LITERAL:
         n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("resource_acquisition2","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("resource_acquisition2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[104] = jj_gen;
@@ -4187,7 +4187,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                   replaceName(n);
     n = using_directiveEnd(true);
                                                                                                                replaceName(n);
-                                                                                                                                 {if (true) return productionEndTerminal("using_directive","{type_name}","{type_name}","LINE_BASED_MERGE",first,token);}
+                                                                                                                                 {if (true) return productionEndTerminal("using_directive","{type_name}","{type_name}","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4200,11 +4200,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = type_name(true);
                                replaceName(n);
       jj_consume_token(SEMI);
-                                                     {if (true) return productionEndTerminal("using_directiveEnd1","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("using_directiveEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SEMI:
       jj_consume_token(SEMI);
-              {if (true) return productionEndTerminal("using_directiveEnd2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("using_directiveEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[109] = jj_gen;
@@ -4406,7 +4406,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ANONFUNC);
     n = anonymous_function_body(true);
                                                                                                      replaceName(n);
-                                                                                                                       {if (true) return productionEndTerminal("lambda_expression","-","-","Replacement",first,token);}
+                                                                                                                       {if (true) return productionEndTerminal("lambda_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4425,7 +4425,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = block(true);
                                                                                                     replaceName(n);
-                                                                                                                      {if (true) return productionEndTerminal("anonymous_method_expression","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("anonymous_method_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4489,13 +4489,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case VERBATIM_STRING_LITERAL:
       n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("anonymous_function_body1","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("anonymous_function_body1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LBRACE:
     case SEMI:
       n = body(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("anonymous_function_body2","-","-","Replacement",first,token);}
+                                        {if (true) return productionEndTerminal("anonymous_function_body2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[117] = jj_gen;
@@ -4510,7 +4510,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = implicit_anonymous_function_signature(true);
                                                        replaceName(n);
-                                                                         {if (true) return productionEndTerminal("anonymous_function_signature","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("anonymous_function_signature","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4556,7 +4556,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                        {if (true) return productionEndTerminal("explicit_anonymous_function_signature","-","-","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("explicit_anonymous_function_signature","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4579,7 +4579,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = explicit_anonymous_function_parameter(true);
                                                                                                                             replaceName(n);
     }
-                                                                                                                                                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_list","-","-","Replacement",first,token);}
+                                                                                                                                                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4600,7 +4600,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                  replaceName(n);
     n = identifier(true);
                                                                                                                                       replaceName(n);
-                                                                                                                                                        {if (true) return productionEndTerminal("explicit_anonymous_function_parameter","-","-","Replacement",first,token);}
+                                                                                                                                                        {if (true) return productionEndTerminal("explicit_anonymous_function_parameter","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4610,11 +4610,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case REF:
       jj_consume_token(REF);
-                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_modifier1","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_modifier1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case OUT:
       jj_consume_token(OUT);
-                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_modifier2","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("explicit_anonymous_function_parameter_modifier2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[121] = jj_gen;
@@ -4650,7 +4650,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         ;
       }
       jj_consume_token(RPAREN);
-                                                                                        {if (true) return productionEndTerminal("implicit_anonymous_function_signature1","-","-","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("implicit_anonymous_function_signature1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
     case ASSEMBLY:
@@ -4665,7 +4665,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = implicit_anonymous_function_parameter(true);
                                                        replaceName(n);
-                                                                         {if (true) return productionEndTerminal("implicit_anonymous_function_signature2","-","-","Replacement",first,token);}
+                                                                         {if (true) return productionEndTerminal("implicit_anonymous_function_signature2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[123] = jj_gen;
@@ -4694,7 +4694,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = implicit_anonymous_function_parameter(true);
                                                                                                                             replaceName(n);
     }
-                                                                                                                                                {if (true) return productionEndTerminal("implicit_anonymous_function_parameter_list","-","-","Replacement",first,token);}
+                                                                                                                                                {if (true) return productionEndTerminal("implicit_anonymous_function_parameter_list","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4703,7 +4703,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = identifier(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("implicit_anonymous_function_parameter","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("implicit_anonymous_function_parameter","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4714,7 +4714,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                              replaceName(n);
     n = query_body(true);
                                                                   replaceName(n);
-                                                                                    {if (true) return productionEndTerminal("query_expression","-","-","Replacement",first,token);}
+                                                                                    {if (true) return productionEndTerminal("query_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4727,7 +4727,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(IN);
     n = expression(true);
                                                                              replaceName(n);
-                                                                                               {if (true) return productionEndTerminal("from_clause","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("from_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4756,7 +4756,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[126] = jj_gen;
       ;
     }
-                                                                                                                                                        {if (true) return productionEndTerminal("query_body","-","-","Replacement",first,token);}
+                                                                                                                                                        {if (true) return productionEndTerminal("query_body","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4778,7 +4778,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_21;
       }
     }
-                                                        {if (true) return productionEndTerminal("query_body_clauses","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("query_body_clauses","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4789,17 +4789,17 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case FROM:
       n = from_clause(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("query_body_clause1","-","-","Replacement",first,token);}
+                                               {if (true) return productionEndTerminal("query_body_clause1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LET:
       n = let_clause(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("query_body_clause2","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("query_body_clause2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
       n = where_clause(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("query_body_clause3","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("query_body_clause3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[128] = jj_gen;
@@ -4818,7 +4818,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = expression(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("let_clause","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("let_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4828,7 +4828,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(WHERE);
     n = expression(true);
                                     replaceName(n);
-                                                      {if (true) return productionEndTerminal("where_clause","-","-","Replacement",first,token);}
+                                                      {if (true) return productionEndTerminal("where_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4839,12 +4839,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case SELECT:
       n = select_clause(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("select_or_group_clause1","-","-","Replacement",first,token);}
+                                                 {if (true) return productionEndTerminal("select_or_group_clause1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GROUP:
       n = group_clause(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("select_or_group_clause2","-","-","Replacement",first,token);}
+                                                {if (true) return productionEndTerminal("select_or_group_clause2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[129] = jj_gen;
@@ -4860,7 +4860,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(SELECT);
     n = expression(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("select_clause","-","-","Replacement",first,token);}
+                                                       {if (true) return productionEndTerminal("select_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4873,7 +4873,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(BY);
     n = expression(true);
                                                                               replaceName(n);
-                                                                                                {if (true) return productionEndTerminal("group_clause","-","-","Replacement",first,token);}
+                                                                                                {if (true) return productionEndTerminal("group_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4885,7 +4885,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                    replaceName(n);
     n = query_body(true);
                                                                         replaceName(n);
-                                                                                          {if (true) return productionEndTerminal("query_continuation","-","-","Replacement",first,token);}
+                                                                                          {if (true) return productionEndTerminal("query_continuation","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4967,7 +4967,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_22;
       }
     }
-                                                     {if (true) return productionEndTerminal("class_modifiers","class_modifiers","class_modifiers","LINE_BASED_MERGE",first,token);}
+                                                     {if (true) return productionEndTerminal("class_modifiers","class_modifiers","class_modifiers","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -4977,63 +4977,63 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NEW:
       jj_consume_token(NEW);
-                {if (true) return productionEndTerminal("class_modifier1","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("class_modifier1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PUBLIC:
       jj_consume_token(PUBLIC);
-                   {if (true) return productionEndTerminal("class_modifier2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_modifier2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PROTECTED:
       jj_consume_token(PROTECTED);
-                      {if (true) return productionEndTerminal("class_modifier3","-","-","Replacement",first,token);}
+                      {if (true) return productionEndTerminal("class_modifier3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INTERNAL:
       jj_consume_token(INTERNAL);
-                     {if (true) return productionEndTerminal("class_modifier4","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("class_modifier4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PRIVATE:
       jj_consume_token(PRIVATE);
-                    {if (true) return productionEndTerminal("class_modifier5","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("class_modifier5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case ABSTRACT:
       jj_consume_token(ABSTRACT);
-                     {if (true) return productionEndTerminal("class_modifier6","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("class_modifier6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SEALED:
       jj_consume_token(SEALED);
-                   {if (true) return productionEndTerminal("class_modifier7","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_modifier7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case UNSAFE:
       jj_consume_token(UNSAFE);
-                   {if (true) return productionEndTerminal("class_modifier8","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_modifier8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PARTIAL:
       jj_consume_token(PARTIAL);
-                    {if (true) return productionEndTerminal("class_modifier9","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("class_modifier9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STATIC:
       jj_consume_token(STATIC);
-                   {if (true) return productionEndTerminal("class_modifier10","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_modifier10","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case VOLATILE:
       jj_consume_token(VOLATILE);
-                     {if (true) return productionEndTerminal("class_modifier11","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("class_modifier11","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case OVERRIDE:
       jj_consume_token(OVERRIDE);
-                     {if (true) return productionEndTerminal("class_modifier12","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("class_modifier12","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case READONLY:
       jj_consume_token(READONLY);
-                     {if (true) return productionEndTerminal("class_modifier13","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("class_modifier13","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case VIRTUAL:
       jj_consume_token(VIRTUAL);
-                    {if (true) return productionEndTerminal("class_modifier14","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("class_modifier14","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case EXTERN:
       jj_consume_token(EXTERN);
-                   {if (true) return productionEndTerminal("class_modifier15","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("class_modifier15","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[135] = jj_gen;
@@ -5064,7 +5064,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                   replaceName(n);
     }
     jj_consume_token(GTHAN);
-                                                                                                          {if (true) return productionEndTerminal("type_parameter_list","type_parameter_list","type_parameter_list","LINE_BASED_MERGE",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("type_parameter_list","type_parameter_list","type_parameter_list","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5082,7 +5082,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = identifier(true);
                                                                    replaceName(n);
-                                                                                     {if (true) return productionEndTerminal("type_parameter","-","-","Replacement",first,token);}
+                                                                                     {if (true) return productionEndTerminal("type_parameter","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5104,7 +5104,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = type_parameter_constraint_clause(true);
                                                                                                               replaceName(n);
     }
-                                                                                                                                  {if (true) return productionEndTerminal("type_parameter_constraint_clauses","type_parameter_constraint_clauses","type_parameter_constraint_clauses","LINE_BASED_MERGE",first,token);}
+                                                                                                                                  {if (true) return productionEndTerminal("type_parameter_constraint_clauses","type_parameter_constraint_clauses","type_parameter_constraint_clauses","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5117,7 +5117,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(COLON);
     n = type_parameter_constraints(true);
                                                                                                  replaceName(n);
-                                                                                                                   {if (true) return productionEndTerminal("type_parameter_constraint_clause","-","-","Replacement",first,token);}
+                                                                                                                   {if (true) return productionEndTerminal("type_parameter_constraint_clause","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5152,20 +5152,20 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         jj_la1[139] = jj_gen;
         ;
       }
-                                                                                                            {if (true) return productionEndTerminal("type_parameter_constraints1","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("type_parameter_constraints1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[140] = jj_gen;
       if (jj_2_19(2)) {
         n = secondary_constraints(true);
                                                     replaceName(n);
-                                                                      {if (true) return productionEndTerminal("type_parameter_constraints2","-","-","Replacement",first,token);}
+                                                                      {if (true) return productionEndTerminal("type_parameter_constraints2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case NEW:
           n = constructor_constraint(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("type_parameter_constraints3","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("type_parameter_constraints3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[141] = jj_gen;
@@ -5209,12 +5209,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         n = secondary_constraintsEnd(true);
                                                                                                 replaceName(n);
       }
-                                                                                                                    {if (true) return productionEndTerminal("secondary_constraints1","-","-","Replacement",first,token);}
+                                                                                                                    {if (true) return productionEndTerminal("secondary_constraints1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NEW:
       n = secondary_constraintsEnd(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("secondary_constraints2","-","-","Replacement",first,token);}
+                                                            {if (true) return productionEndTerminal("secondary_constraints2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[143] = jj_gen;
@@ -5242,12 +5242,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = type_name_or_parameter(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("secondary_constraintsEnd1","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("secondary_constraintsEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NEW:
       n = constructor_constraint(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("secondary_constraintsEnd2","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("secondary_constraintsEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[144] = jj_gen;
@@ -5276,15 +5276,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = class_type(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("primary_constraint1","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("primary_constraint1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CLASS:
       jj_consume_token(CLASS);
-                  {if (true) return productionEndTerminal("primary_constraint2","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("primary_constraint2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STRUCT:
       jj_consume_token(STRUCT);
-                   {if (true) return productionEndTerminal("primary_constraint3","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("primary_constraint3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[145] = jj_gen;
@@ -5311,12 +5311,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = type_name(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("type_name_or_parameter1","-","-","Replacement",first,token);}
+                                             {if (true) return productionEndTerminal("type_name_or_parameter1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LBRACK:
       n = type_parameter(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("type_name_or_parameter2","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("type_name_or_parameter2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[146] = jj_gen;
@@ -5332,7 +5332,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(NEW);
     jj_consume_token(LPAREN);
     jj_consume_token(RPAREN);
-                        {if (true) return productionEndTerminal("constructor_constraint","-","-","Replacement",first,token);}
+                        {if (true) return productionEndTerminal("constructor_constraint","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5341,8 +5341,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COLON);
     n = class_type(true);
-                                replaceName("class_type", n);
-                                                                replaceName(n);
+                                replaceName(n);
     label_26:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -5355,10 +5354,9 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       }
       jj_consume_token(COMMA);
       n = type_name(true);
-                                                                                                         replaceName("type_name", n);
-                                                                                                                                        replaceName(n);
+                                                                         replaceName(n);
     }
-                                                                                                                                                            {if (true) return productionEndTerminal("class_base","{class_type}{type_name}^,","{class_type}{type_name}^,","LINE_BASED_MERGE",first,token);}
+                                                                                             {if (true) return productionEndTerminal("class_base","class_base","class_base","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5383,7 +5381,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                    replaceName("type_name", n);
                                                                                                                                   replaceName(n);
     }
-                                                                                                                                                      {if (true) return productionEndTerminal("interface_type_list","{type_name}^,","{type_name}^,","LINE_BASED_MERGE",first,token);}
+                                                                                                                                                      {if (true) return productionEndTerminal("interface_type_list","{type_name}^,","{type_name}^,","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5512,26 +5510,26 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = constant_declaration(true);
                                       replaceName("constant_declaration", n);
                                                                                 replaceName(n);
-                                                                                                  {if (true) return productionEndTerminal("class_member_declarationEnd1","{constant_declaration}","{constant_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("class_member_declarationEnd1","{constant_declaration}","{constant_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case EVENT:
       n = event_declaration(true);
                                    replaceName("event_declaration", n);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("class_member_declarationEnd2","{event_declaration}","{event_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                            {if (true) return productionEndTerminal("class_member_declarationEnd2","{event_declaration}","{event_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case TILDE:
       n = destructor_declaration(true);
                                         replaceName("destructor_declaration", n);
                                                                                     replaceName(n);
-                                                                                                      {if (true) return productionEndTerminal("class_member_declarationEnd3","{destructor_declaration}","{destructor_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("class_member_declarationEnd3","{destructor_declaration}","{destructor_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case EXPLICIT:
     case IMPLICIT:
       n = conversion_operator_declaration(true);
                                                  replaceName("conversion_operator_declaration", n);
                                                                                                       replaceName(n);
-                                                                                                                        {if (true) return productionEndTerminal("class_member_declarationEnd4","{conversion_operator_declaration}","{conversion_operator_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("class_member_declarationEnd4","{conversion_operator_declaration}","{conversion_operator_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case CLASS:
     case DELEGATE:
@@ -5576,13 +5574,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = typeEnd(true);
                                                                                   replaceName("typeEnd", n);
                                                                                                                replaceName(n);
-                                                                                                                                 {if (true) return productionEndTerminal("class_member_declarationEnd6","{type}{typeEnd}","{type}{typeEnd}","LINE_BASED_MERGE",first,token);}
+                                                                                                                                 {if (true) return productionEndTerminal("class_member_declarationEnd6","{type}{typeEnd}","{type}{typeEnd}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case FIXED:
       n = fixed_size_buffer_declaration(true);
                                                replaceName("fixed_size_buffer_declaration", n);
                                                                                                   replaceName(n);
-                                                                                                                    {if (true) return productionEndTerminal("class_member_declarationEnd7","{fixed_size_buffer_declaration}","{fixed_size_buffer_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                                                    {if (true) return productionEndTerminal("class_member_declarationEnd7","{fixed_size_buffer_declaration}","{fixed_size_buffer_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[152] = jj_gen;
@@ -5601,7 +5599,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = fixed_size_buffer_declarators(true);
                                                                                                      replaceName(n);
     jj_consume_token(SEMI);
-                                                                                                                           {if (true) return productionEndTerminal("fixed_size_buffer_declaration","-","-","Replacement",first,token);}
+                                                                                                                           {if (true) return productionEndTerminal("fixed_size_buffer_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5610,7 +5608,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = type(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("buffer_element_type","-","-","Replacement",first,token);}
+                                        {if (true) return productionEndTerminal("buffer_element_type","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5640,7 +5638,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_29;
       }
     }
-                                                                   {if (true) return productionEndTerminal("fixed_size_buffer_declarators","-","-","Replacement",first,token);}
+                                                                   {if (true) return productionEndTerminal("fixed_size_buffer_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5653,7 +5651,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = constant_expression(true);
                                                                               replaceName(n);
     jj_consume_token(RBRACK);
-                                                                                                    {if (true) return productionEndTerminal("fixed_size_buffer_declarator","-","-","Replacement",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("fixed_size_buffer_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5662,7 +5660,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = type_name(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("interface_type","-","-","Replacement",first,token);}
+                                             {if (true) return productionEndTerminal("interface_type","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5674,19 +5672,19 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = constructor_declaration(true);
                                          replaceName("constructor_declaration", n);
                                                                                       replaceName(n);
-                                                                                                        {if (true) return productionEndTerminal("ConstructorDecl","{constructor_declaration}","{constructor_declaration}","ConstructorConcatenation",first,token);}
+                                                                                                        {if (true) return productionEndTerminal("ConstructorDecl","{constructor_declaration}","{constructor_declaration}","ConstructorConcatenation","SemanticConflict",first,token);}
       break;
     case THIS:
       n = indexer_declaration_no_interface(true);
                                                   replaceName("indexer_declaration_no_interface", n);
                                                                                                         replaceName(n);
-                                                                                                                          {if (true) return productionEndTerminal("typeEnd2","{indexer_declaration_no_interface}","{indexer_declaration_no_interface}","LINE_BASED_MERGE",first,token);}
+                                                                                                                          {if (true) return productionEndTerminal("typeEnd2","{indexer_declaration_no_interface}","{indexer_declaration_no_interface}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     case OPERATOR:
       n = operator_declaration(true);
                                       replaceName("operator_declaration", n);
                                                                                 replaceName(n);
-                                                                                                  {if (true) return productionEndTerminal("typeEnd3","{operator_declaration}","{operator_declaration}","LINE_BASED_MERGE",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("typeEnd3","{operator_declaration}","{operator_declaration}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[154] = jj_gen;
@@ -5694,7 +5692,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         n = indexer_declaration_interface(true);
                                                                              replaceName("indexer_declaration_interface", n);
                                                                                                                                 replaceName(n);
-                                                                                                                                                  {if (true) return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","LINE_BASED_MERGE",first,token);}
+                                                                                                                                                  {if (true) return productionEndTerminal("typeEnd4","{indexer_declaration_interface}","{indexer_declaration_interface}","LINE_BASED_MERGE","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case WHERE:
@@ -5714,7 +5712,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
           n = type_nameEnd(true);
                                                                                                  replaceName("type_nameEnd", n);
                                                                                                                                    replaceName(n);
-                                                                                                                                                     {if (true) return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","LINE_BASED_MERGE",first,token);}
+                                                                                                                                                     {if (true) return productionEndTerminal("typeEnd5","{type_name}{type_nameEnd}","{type_name}{type_nameEnd}","LINE_BASED_MERGE","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[155] = jj_gen;
@@ -5735,13 +5733,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = method_declaration(true);
                                     replaceName("method_declaration", n);
                                                                             replaceName(n);
-                                                                                              {if (true) return productionEndTerminal("MethodDecl","{method_declaration}","{method_declaration}","CSharpMethodOverriding",first,token);}
+                                                                                              {if (true) return productionEndTerminal("MethodDecl","{method_declaration}","{method_declaration}","CSharpMethodOverriding","SemanticConflict",first,token);}
       break;
     case LBRACE:
       n = property_declaration(true);
                                       replaceName("property_declaration", n);
                                                                                 replaceName(n);
-                                                                                                  {if (true) return productionEndTerminal("PropertyDecl","{property_declaration}","{property_declaration}","PropertyOverriding",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("PropertyDecl","{property_declaration}","{property_declaration}","PropertyOverriding","SemanticConflict",first,token);}
       break;
     case ASSIGN:
     case COMMA:
@@ -5749,7 +5747,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = field_declaration(true);
                                    replaceName("field_declaration", n);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("FieldDecl","{field_declaration}","{field_declaration}","FieldOverriding",first,token);}
+                                                                                            {if (true) return productionEndTerminal("FieldDecl","{field_declaration}","{field_declaration}","FieldOverriding","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[156] = jj_gen;
@@ -5777,7 +5775,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_30;
       }
     }
-                                                        {if (true) return productionEndTerminal("accessor_modifiers","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("accessor_modifiers","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5787,15 +5785,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PROTECTED:
       jj_consume_token(PROTECTED);
-                      {if (true) return productionEndTerminal("accessor_modifier1","-","-","Replacement",first,token);}
+                      {if (true) return productionEndTerminal("accessor_modifier1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INTERNAL:
       jj_consume_token(INTERNAL);
-                     {if (true) return productionEndTerminal("accessor_modifier2","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("accessor_modifier2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case PRIVATE:
       jj_consume_token(PRIVATE);
-                    {if (true) return productionEndTerminal("accessor_modifier3","-","-","Replacement",first,token);}
+                    {if (true) return productionEndTerminal("accessor_modifier3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[158] = jj_gen;
@@ -5814,7 +5812,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = constant_declarators(true);
                                                                              replaceName(n);
     jj_consume_token(SEMI);
-                                                                                                   {if (true) return productionEndTerminal("constant_declaration","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("constant_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5837,7 +5835,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = constant_declarator(true);
                                                                                         replaceName(n);
     }
-                                                                                                            {if (true) return productionEndTerminal("constant_declarators","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("constant_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5849,7 +5847,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = expression(true);
                                                                      replaceName(n);
-                                                                                       {if (true) return productionEndTerminal("constant_declarator","-","-","Replacement",first,token);}
+                                                                                       {if (true) return productionEndTerminal("constant_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5869,7 +5867,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(SEMI);
-                                                                                                                 {if (true) return productionEndTerminal("field_declaration","-","-","Replacement",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("field_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5886,7 +5884,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[161] = jj_gen;
       ;
     }
-                                                              {if (true) return productionEndTerminal("field_declaration_start","-","-","Replacement",first,token);}
+                                                              {if (true) return productionEndTerminal("field_declaration_start","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5909,7 +5907,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = field_declarator(true);
                                                                                   replaceName(n);
     }
-                                                                                                      {if (true) return productionEndTerminal("field_declarators","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("field_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5928,7 +5926,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[163] = jj_gen;
       ;
     }
-                                                                                                   {if (true) return productionEndTerminal("field_declarator","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("field_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -5939,7 +5937,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case LBRACE:
       n = array_initializer(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("variable_initializer1","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("variable_initializer1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LONG:
     case BASE:
@@ -5997,12 +5995,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case VERBATIM_STRING_LITERAL:
       n = expression(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("variable_initializer2","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("variable_initializer2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STACKALLOC:
       n = stackalloc_initializer(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("variable_initializer3","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("variable_initializer3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[164] = jj_gen;
@@ -6078,7 +6076,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = body(true);
                                                                                                                                                                                                                                          replaceName(n);
-                                                                                                                                                                                                                                                           {if (true) return productionEndTerminal("method_declaration","-","({formal_parameter_list})","Replacement",first,token);}
+                                                                                                                                                                                                                                                           {if (true) return productionEndTerminal("method_declaration","-","({formal_parameter_list})","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6089,11 +6087,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case LBRACE:
       n = block(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("body1","-","-","Replacement",first,token);}
+                                         {if (true) return productionEndTerminal("body1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SEMI:
       jj_consume_token(SEMI);
-              {if (true) return productionEndTerminal("body2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("body2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[168] = jj_gen;
@@ -6118,7 +6116,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = formal_parameter_listEnd(true);
                                                                                  replaceName("formal_parameter_listEnd", n);
                                                                                                                                replaceName(n);
-                                                                                                                                                 {if (true) return productionEndTerminal("formal_parameter_list","-","{formal_parameter_listEnd}","Replacement",first,token);}
+                                                                                                                                                 {if (true) return productionEndTerminal("formal_parameter_list","-","{formal_parameter_listEnd}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6173,14 +6171,14 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                     replaceName("fixed_parameterEnd", n);
                                                                                                                                                             replaceName(n);
       }
-                                                                                                                                                                                {if (true) return productionEndTerminal("formal_parameter_listEnd1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement",first,token);}
+                                                                                                                                                                                {if (true) return productionEndTerminal("formal_parameter_listEnd1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement","SemanticConflict",first,token);}
       break;
     case PARAMS:
     case LBRACK:
       n = parameter_array(true);
                                  replaceName("parameter_array", n);
                                                                       replaceName(n);
-                                                                                        {if (true) return productionEndTerminal("formal_parameter_listEnd2","-","{parameter_array}","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("formal_parameter_listEnd2","-","{parameter_array}","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[171] = jj_gen;
@@ -6206,7 +6204,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = formal_parameter_listEndInt(true);
                                                                                         replaceName("formal_parameter_listEndInt", n);
                                                                                                                                          replaceName(n);
-                                                                                                                                                           {if (true) return productionEndTerminal("fixed_parameterEnd","-","{formal_parameter_listEndInt}","Replacement",first,token);}
+                                                                                                                                                           {if (true) return productionEndTerminal("fixed_parameterEnd","-","{formal_parameter_listEndInt}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6247,7 +6245,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = fixed_parameter(true);
                                  replaceName("fixed_parameter", n);
                                                                       replaceName(n);
-                                                                                        {if (true) return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement",first,token);}
+                                                                                        {if (true) return productionEndTerminal("formal_parameter_listEndInt1","-","{fixed_parameter} {fixed_parameterEnd}^~","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[173] = jj_gen;
@@ -6255,7 +6253,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         n = parameter_array(true);
                                               replaceName("parameter_array", n);
                                                                                    replaceName(n);
-                                                                                                     {if (true) return productionEndTerminal("formal_parameter_listEndInt2","-","{parameter_array}","Replacement",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("formal_parameter_listEndInt2","-","{parameter_array}","Replacement","SemanticConflict",first,token);}
       } else {
         jj_consume_token(-1);
         throw new ParseException();
@@ -6291,7 +6289,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = identifier(true);
                                                                                                                                            replaceName(n);
-                                                                                                                                                             {if (true) return productionEndTerminal("fixed_parameter","-","{type}","Replacement",first,token);}
+                                                                                                                                                             {if (true) return productionEndTerminal("fixed_parameter","-","{type}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6301,15 +6299,15 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case REF:
       jj_consume_token(REF);
-                {if (true) return productionEndTerminal("parameter_modifier1","-","{TOSTRING}","Replacement",first,token);}
+                {if (true) return productionEndTerminal("parameter_modifier1","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     case OUT:
       jj_consume_token(OUT);
-                {if (true) return productionEndTerminal("parameter_modifier2","-","{TOSTRING}","Replacement",first,token);}
+                {if (true) return productionEndTerminal("parameter_modifier2","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("parameter_modifier3","-","{TOSTRING}","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("parameter_modifier3","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[176] = jj_gen;
@@ -6337,7 +6335,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                 replaceName(n);
     n = identifier(true);
                                                                                                                                      replaceName(n);
-                                                                                                                                                       {if (true) return productionEndTerminal("parameter_array","-","params {type}","Replacement",first,token);}
+                                                                                                                                                       {if (true) return productionEndTerminal("parameter_array","-","params {type}","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6348,7 +6346,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = accessor_declarations(true);
                                            replaceName(n);
     jj_consume_token(RBRACE);
-                                                                 {if (true) return productionEndTerminal("property_declaration","-","-","Replacement",first,token);}
+                                                                 {if (true) return productionEndTerminal("property_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6378,7 +6376,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[178] = jj_gen;
       ;
     }
-                                                                                                         {if (true) return productionEndTerminal("accessor_declarations","-","-","Replacement",first,token);}
+                                                                                                         {if (true) return productionEndTerminal("accessor_declarations","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6409,7 +6407,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                                          replaceName(n);
     n = body(true);
                                                                                                                                                         replaceName(n);
-                                                                                                                                                                          {if (true) return productionEndTerminal("accessor_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                          {if (true) return productionEndTerminal("accessor_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6421,7 +6419,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                               replaceName(n);
     n = event_declarationInt(true);
                                                                              replaceName(n);
-                                                                                               {if (true) return productionEndTerminal("event_declaration","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("event_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6435,7 +6433,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = event_accessor_declarations(true);
                                                                                                   replaceName(n);
       jj_consume_token(RBRACE);
-                                                                                                                        {if (true) return productionEndTerminal("event_declarationInt1","-","-","Replacement",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("event_declarationInt1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case WHERE:
@@ -6466,7 +6464,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                     replaceName(n);
         }
         jj_consume_token(SEMI);
-                                                                                                                            {if (true) return productionEndTerminal("event_declarationInt2","-","-","Replacement",first,token);}
+                                                                                                                            {if (true) return productionEndTerminal("event_declarationInt2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[182] = jj_gen;
@@ -6492,7 +6490,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[183] = jj_gen;
       ;
     }
-                                                                                                   {if (true) return productionEndTerminal("event_variable_declarator","-","-","Replacement",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("event_variable_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6503,7 +6501,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
     n = accessor_declaration(true);
                                                                                      replaceName(n);
-                                                                                                       {if (true) return productionEndTerminal("event_accessor_declarations","-","-","Replacement",first,token);}
+                                                                                                       {if (true) return productionEndTerminal("event_accessor_declarations","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6519,7 +6517,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = accessor_declarations(true);
                                                                                                           replaceName(n);
     jj_consume_token(RBRACE);
-                                                                                                                                {if (true) return productionEndTerminal("indexer_declaration_no_interface","-","-","Replacement",first,token);}
+                                                                                                                                {if (true) return productionEndTerminal("indexer_declaration_no_interface","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6536,7 +6534,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = accessor_declarations(true);
                                                                                                                                           replaceName(n);
     jj_consume_token(RBRACE);
-                                                                                                                                                                {if (true) return productionEndTerminal("indexer_declaration_interface","-","-","Replacement",first,token);}
+                                                                                                                                                                {if (true) return productionEndTerminal("indexer_declaration_interface","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6559,7 +6557,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = indexer_baseInt(true);
                                                                            replaceName(n);
     }
-                                                                                               {if (true) return productionEndTerminal("indexer_base","-","-","Replacement",first,token);}
+                                                                                               {if (true) return productionEndTerminal("indexer_base","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6580,11 +6578,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = identifier(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("indexer_baseInt1","-","-","Replacement",first,token);}
+                                              {if (true) return productionEndTerminal("indexer_baseInt1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("indexer_baseInt2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("indexer_baseInt2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[185] = jj_gen;
@@ -6601,14 +6599,14 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_consume_token(OPERATOR);
       n = unary_operator_declaration(true);
                                                                                                                                        replaceName(n);
-                                                                                                                                                         {if (true) return productionEndTerminal("operator_declaration1","-","-","Replacement",first,token);}
+                                                                                                                                                         {if (true) return productionEndTerminal("operator_declaration1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case OPERATOR:
         jj_consume_token(OPERATOR);
         n = binary_operator_declaration(true);
                                                         replaceName(n);
-                                                                          {if (true) return productionEndTerminal("operator_declaration2","-","-","Replacement",first,token);}
+                                                                          {if (true) return productionEndTerminal("operator_declaration2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[186] = jj_gen;
@@ -6632,7 +6630,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = body(true);
                                                                                                                                                         replaceName(n);
-                                                                                                                                                                          {if (true) return productionEndTerminal("unary_operator_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                          {if (true) return productionEndTerminal("unary_operator_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6642,35 +6640,35 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("overloadable_unary_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_unary_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("overloadable_unary_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_unary_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BANG:
       jj_consume_token(BANG);
-              {if (true) return productionEndTerminal("overloadable_unary_operator3","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_unary_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case TILDE:
       jj_consume_token(TILDE);
-              {if (true) return productionEndTerminal("overloadable_unary_operator4","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_unary_operator4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case INC:
       jj_consume_token(INC);
-               {if (true) return productionEndTerminal("overloadable_unary_operator5","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_unary_operator5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DEC:
       jj_consume_token(DEC);
-               {if (true) return productionEndTerminal("overloadable_unary_operator6","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_unary_operator6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case TRUE:
       jj_consume_token(TRUE);
-                 {if (true) return productionEndTerminal("overloadable_unary_operator7","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("overloadable_unary_operator7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case FALSE:
       jj_consume_token(FALSE);
-                  {if (true) return productionEndTerminal("overloadable_unary_operator8","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("overloadable_unary_operator8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[187] = jj_gen;
@@ -6698,7 +6696,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = body(true);
                                                                                                                                                                                                                                  replaceName(n);
-                                                                                                                                                                                                                                                   {if (true) return productionEndTerminal("binary_operator_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                                                                                                   {if (true) return productionEndTerminal("binary_operator_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6708,67 +6706,67 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("overloadable_binary_operator1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("overloadable_binary_operator2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("overloadable_binary_operator3","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DIV:
       jj_consume_token(DIV);
-              {if (true) return productionEndTerminal("overloadable_binary_operator4","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator4","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MOD:
       jj_consume_token(MOD);
-              {if (true) return productionEndTerminal("overloadable_binary_operator5","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator5","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case AMPER:
       jj_consume_token(AMPER);
-              {if (true) return productionEndTerminal("overloadable_binary_operator6","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator6","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case BOR:
       jj_consume_token(BOR);
-              {if (true) return productionEndTerminal("overloadable_binary_operator7","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator7","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case CARET:
       jj_consume_token(CARET);
-              {if (true) return productionEndTerminal("overloadable_binary_operator8","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator8","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SL:
       jj_consume_token(SL);
-               {if (true) return productionEndTerminal("overloadable_binary_operator9","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator9","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case SR:
       jj_consume_token(SR);
-               {if (true) return productionEndTerminal("overloadable_binary_operator10","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator10","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case EQUAL:
       jj_consume_token(EQUAL);
-               {if (true) return productionEndTerminal("overloadable_binary_operator11","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator11","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case NOT_EQUAL:
       jj_consume_token(NOT_EQUAL);
-               {if (true) return productionEndTerminal("overloadable_binary_operator12","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator12","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GTHAN:
       jj_consume_token(GTHAN);
-              {if (true) return productionEndTerminal("overloadable_binary_operator13","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator13","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LTHAN:
       jj_consume_token(LTHAN);
-              {if (true) return productionEndTerminal("overloadable_binary_operator14","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("overloadable_binary_operator14","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case GE:
       jj_consume_token(GE);
-               {if (true) return productionEndTerminal("overloadable_binary_operator15","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator15","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LE:
       jj_consume_token(LE);
-               {if (true) return productionEndTerminal("overloadable_binary_operator16","-","-","Replacement",first,token);}
+               {if (true) return productionEndTerminal("overloadable_binary_operator16","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[188] = jj_gen;
@@ -6794,7 +6792,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = body(true);
                                                                                                                                                                                           replaceName(n);
-                                                                                                                                                                                                            {if (true) return productionEndTerminal("conversion_operator_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                                                            {if (true) return productionEndTerminal("conversion_operator_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6804,11 +6802,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IMPLICIT:
       jj_consume_token(IMPLICIT);
-                     {if (true) return productionEndTerminal("conversion_operator1","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("conversion_operator1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case EXPLICIT:
       jj_consume_token(EXPLICIT);
-                     {if (true) return productionEndTerminal("conversion_operator2","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("conversion_operator2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[189] = jj_gen;
@@ -6875,7 +6873,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = constructor_body(true);
                                                                                                                                                                                            replaceName(n);
-                                                                                                                                                                                                             {if (true) return productionEndTerminal("constructor_declaration","-","({formal_parameter_list})","Replacement",first,token);}
+                                                                                                                                                                                                             {if (true) return productionEndTerminal("constructor_declaration","-","({formal_parameter_list})","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6951,7 +6949,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                                                    {if (true) return productionEndTerminal("constructor_initializer","-","-","Replacement",first,token);}
+                                                                                                                    {if (true) return productionEndTerminal("constructor_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6961,11 +6959,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BASE:
       jj_consume_token(BASE);
-                 {if (true) return productionEndTerminal("constructor_initializerInt1","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("constructor_initializerInt1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("constructor_initializerInt2","-","-","Replacement",first,token);}
+                 {if (true) return productionEndTerminal("constructor_initializerInt2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[193] = jj_gen;
@@ -6980,7 +6978,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
      first=getToken(1); productionStart(inTerminal);
     n = block(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("constructor_body","-","-","Replacement",first,token);}
+                                         {if (true) return productionEndTerminal("constructor_body","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6994,7 +6992,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = body(true);
                                                                        replaceName(n);
-                                                                                         {if (true) return productionEndTerminal("destructor_declaration","~()","~()","ConstructorConcatenation",first,token);}
+                                                                                         {if (true) return productionEndTerminal("destructor_declaration","~()","~()","ConstructorConcatenation","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7062,7 +7060,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(LBRACE);
     n = rest_of_array_initializer(true);
                                                replaceName(n);
-                                                                 {if (true) return productionEndTerminal("array_initializer","-","-","Replacement",first,token);}
+                                                                 {if (true) return productionEndTerminal("array_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7072,7 +7070,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RBRACE:
       jj_consume_token(RBRACE);
-              {if (true) return productionEndTerminal("rest_of_array_initializer1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("rest_of_array_initializer1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LONG:
     case BASE:
@@ -7134,7 +7132,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                       replaceName(n);
       n = rest_of_array_initializerEnd(true);
                                                                                              replaceName(n);
-                                                                                                               {if (true) return productionEndTerminal("rest_of_array_initializer2","-","-","Replacement",first,token);}
+                                                                                                               {if (true) return productionEndTerminal("rest_of_array_initializer2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[198] = jj_gen;
@@ -7150,13 +7148,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RBRACE:
       jj_consume_token(RBRACE);
-              {if (true) return productionEndTerminal("rest_of_array_initializerEnd1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("rest_of_array_initializerEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case COMMA:
       jj_consume_token(COMMA);
       n = rest_of_array_initializer(true);
                                                replaceName(n);
-                                                                 {if (true) return productionEndTerminal("rest_of_array_initializerEnd2","-","-","Replacement",first,token);}
+                                                                 {if (true) return productionEndTerminal("rest_of_array_initializerEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[199] = jj_gen;
@@ -7295,7 +7293,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = interface_member_declarationEnd(true);
                                                                                                                                                replaceName("interface_member_declarationEnd", n);
                                                                                                                                                                                                     replaceName(n);
-                                                                                                                                                                                                                      {if (true) return productionEndTerminal("interface_member_declaration","{interface_member_declarationEnd}","{interface_member_declarationEnd}","LINE_BASED_MERGE",first,token);}
+                                                                                                                                                                                                                      {if (true) return productionEndTerminal("interface_member_declaration","{interface_member_declarationEnd}","{interface_member_declarationEnd}","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7306,7 +7304,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case EVENT:
       n = interface_event_declaration(true);
                                              replaceName(n);
-                                                               {if (true) return productionEndTerminal("interface_member_declarationEnd1","-","{TOSTRING}","Replacement",first,token);}
+                                                               {if (true) return productionEndTerminal("interface_member_declarationEnd1","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     case LONG:
     case BOOL:
@@ -7339,7 +7337,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                       replaceName(n);
       n = interface_member_declarationEndType(true);
                                                                                     replaceName(n);
-                                                                                                      {if (true) return productionEndTerminal("interface_member_declarationEnd2","-","{TOSTRING}","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("interface_member_declarationEnd2","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[207] = jj_gen;
@@ -7356,7 +7354,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case THIS:
       n = interface_indexer_declaration(true);
                                                replaceName(n);
-                                                                 {if (true) return productionEndTerminal("interface_member_declarationEndType1","-","-","Replacement",first,token);}
+                                                                 {if (true) return productionEndTerminal("interface_member_declarationEndType1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
     case ASSEMBLY:
@@ -7373,7 +7371,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                             replaceName(n);
       n = interface_member_declarationEndTypeIdentifier(true);
                                                                                                     replaceName(n);
-                                                                                                                      {if (true) return productionEndTerminal("interface_member_declarationEndType2","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("interface_member_declarationEndType2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[208] = jj_gen;
@@ -7391,12 +7389,12 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case LTHAN:
       n = interface_method_declaration(true);
                                               replaceName(n);
-                                                                {if (true) return productionEndTerminal("interface_member_declarationEndTypeIdentifier1","-","-","Replacement",first,token);}
+                                                                {if (true) return productionEndTerminal("interface_member_declarationEndTypeIdentifier1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case LBRACE:
       n = interface_property_declaration(true);
                                                 replaceName(n);
-                                                                  {if (true) return productionEndTerminal("interface_member_declarationEndTypeIdentifier2","-","-","Replacement",first,token);}
+                                                                  {if (true) return productionEndTerminal("interface_member_declarationEndTypeIdentifier2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[209] = jj_gen;
@@ -7412,11 +7410,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NEW:
       jj_consume_token(NEW);
-                {if (true) return productionEndTerminal("interface_member_modifier1","-","-","Replacement",first,token);}
+                {if (true) return productionEndTerminal("interface_member_modifier1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case UNSAFE:
       jj_consume_token(UNSAFE);
-                   {if (true) return productionEndTerminal("interface_member_modifier2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("interface_member_modifier2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[210] = jj_gen;
@@ -7435,7 +7433,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = identifier(true);
                                                                    replaceName(n);
     jj_consume_token(SEMI);
-                                                                                         {if (true) return productionEndTerminal("interface_event_declaration","-","-","Replacement",first,token);}
+                                                                                         {if (true) return productionEndTerminal("interface_event_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7451,7 +7449,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = interface_accessors(true);
                                                                                                         replaceName(n);
     jj_consume_token(RBRACE);
-                                                                                                                              {if (true) return productionEndTerminal("interface_indexer_declaration","-","-","Replacement",first,token);}
+                                                                                                                              {if (true) return productionEndTerminal("interface_indexer_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7519,7 +7517,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     jj_consume_token(RPAREN);
     jj_consume_token(SEMI);
-                                                                                                                                                                                     {if (true) return productionEndTerminal("interface_method_declaration","-","-","Replacement",first,token);}
+                                                                                                                                                                                     {if (true) return productionEndTerminal("interface_method_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7530,7 +7528,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = interface_accessors(true);
                                          replaceName(n);
     jj_consume_token(RBRACE);
-                                                               {if (true) return productionEndTerminal("interface_property_declaration","-","-","Replacement",first,token);}
+                                                               {if (true) return productionEndTerminal("interface_property_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7557,7 +7555,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[214] = jj_gen;
       ;
     }
-                                                                                                     {if (true) return productionEndTerminal("interface_accessors","-","-","Replacement",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("interface_accessors","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7576,7 +7574,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = IDENTIFIER_CSHARP(true);
                                                                           replaceName(n);
     jj_consume_token(SEMI);
-                                                                                                {if (true) return productionEndTerminal("interface_accessor","-","-","Replacement",first,token);}
+                                                                                                {if (true) return productionEndTerminal("interface_accessor","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7616,7 +7614,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(COLON);
     n = integral_type(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("enum_base","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("enum_base","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7626,7 +7624,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(LBRACE);
     n = rest_of_enum_body(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("enum_body","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("enum_body","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7636,7 +7634,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RBRACE:
       jj_consume_token(RBRACE);
-              {if (true) return productionEndTerminal("rest_of_enum_body1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("rest_of_enum_body1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
     case ASSEMBLY:
@@ -7654,7 +7652,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                          replaceName(n);
       n = rest_of_enum_bodyEnd(true);
                                                                                         replaceName(n);
-                                                                                                          {if (true) return productionEndTerminal("rest_of_enum_body2","-","-","Replacement",first,token);}
+                                                                                                          {if (true) return productionEndTerminal("rest_of_enum_body2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[218] = jj_gen;
@@ -7670,13 +7668,13 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RBRACE:
       jj_consume_token(RBRACE);
-              {if (true) return productionEndTerminal("rest_of_enum_bodyEnd1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("rest_of_enum_bodyEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case COMMA:
       jj_consume_token(COMMA);
       n = rest_of_enum_body(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("rest_of_enum_bodyEnd2","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("rest_of_enum_bodyEnd2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[219] = jj_gen;
@@ -7709,7 +7707,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[221] = jj_gen;
       ;
     }
-                                                                                                                                        {if (true) return productionEndTerminal("enum_member_declaration","-","-","Replacement",first,token);}
+                                                                                                                                        {if (true) return productionEndTerminal("enum_member_declaration","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7719,7 +7717,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = expression(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("enum_member_assignment","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("enum_member_assignment","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7813,7 +7811,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_38;
       }
     }
-                                                              {if (true) return productionEndTerminal("attributes_either","-","-","Replacement",first,token);}
+                                                              {if (true) return productionEndTerminal("attributes_either","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7826,7 +7824,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                                                                                  replaceName(n);
       n = attribute_section(true);
                                                                                                                                              replaceName(n);
-                                                                                                                                                               {if (true) return productionEndTerminal("attribute_section_start1","-","-","Replacement",first,token);}
+                                                                                                                                                               {if (true) return productionEndTerminal("attribute_section_start1","-","-","Replacement","SemanticConflict",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LBRACK:
@@ -7852,7 +7850,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         }
         n = attribute_section(true);
                                                                                               replaceName(n);
-                                                                                                                {if (true) return productionEndTerminal("attribute_section_start2","-","-","Replacement",first,token);}
+                                                                                                                {if (true) return productionEndTerminal("attribute_section_start2","-","-","Replacement","SemanticConflict",first,token);}
         break;
       default:
         jj_la1[227] = jj_gen;
@@ -7869,7 +7867,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = global_attribute_target(true);
                                          replaceName(n);
     jj_consume_token(COLON);
-                                                               {if (true) return productionEndTerminal("global_attribute_target_specifier","-","-","Replacement",first,token);}
+                                                               {if (true) return productionEndTerminal("global_attribute_target_specifier","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7879,11 +7877,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ASSEMBLY:
       jj_consume_token(ASSEMBLY);
-                     {if (true) return productionEndTerminal("global_attribute_target1","-","-","Replacement",first,token);}
+                     {if (true) return productionEndTerminal("global_attribute_target1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case MODULE:
       jj_consume_token(MODULE);
-                   {if (true) return productionEndTerminal("global_attribute_target2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("global_attribute_target2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[228] = jj_gen;
@@ -7909,7 +7907,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
         break label_39;
       }
     }
-                                                      {if (true) return productionEndTerminal("attributes","attributes","attributes","LINE_BASED_MERGE",first,token);}
+                                                      {if (true) return productionEndTerminal("attributes","attributes","attributes","LINE_BASED_MERGE","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7925,7 +7923,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = attribute_section(true);
                                                                                                            replaceName(n);
-                                                                                                                             {if (true) return productionEndTerminal("local_attribute","-","-","Replacement",first,token);}
+                                                                                                                             {if (true) return productionEndTerminal("local_attribute","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7936,7 +7934,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                            replaceName(n);
     n = attribute_sectionEnd(true);
                                                                           replaceName(n);
-                                                                                            {if (true) return productionEndTerminal("attribute_section","-","-","Replacement",first,token);}
+                                                                                            {if (true) return productionEndTerminal("attribute_section","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7946,21 +7944,21 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RBRACK:
       jj_consume_token(RBRACK);
-              {if (true) return productionEndTerminal("attribute_sectionEnd1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("attribute_sectionEnd1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[230] = jj_gen;
       if (jj_2_26(2)) {
         jj_consume_token(COMMA);
         jj_consume_token(RBRACK);
-                               {if (true) return productionEndTerminal("attribute_sectionEnd2","-","-","Replacement",first,token);}
+                               {if (true) return productionEndTerminal("attribute_sectionEnd2","-","-","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COMMA:
           jj_consume_token(COMMA);
           n = attribute_section(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("attribute_sectionEnd3","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("attribute_sectionEnd3","-","-","Replacement","SemanticConflict",first,token);}
           break;
         default:
           jj_la1[231] = jj_gen;
@@ -7979,7 +7977,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
                                   replaceName(n);
     n = attribute_target_specifier_mod(true);
                                                                                            replaceName(n);
-                                                                                                             {if (true) return productionEndTerminal("attribute_target_specifier","-","-","Replacement",first,token);}
+                                                                                                             {if (true) return productionEndTerminal("attribute_target_specifier","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7989,11 +7987,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case COLON:
       jj_consume_token(COLON);
-              {if (true) return productionEndTerminal("attribute_target_specifier_mod1","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("attribute_target_specifier_mod1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case DOT:
       jj_consume_token(DOT);
-              {if (true) return productionEndTerminal("attribute_target_specifier_mod2","-","-","Replacement",first,token);}
+              {if (true) return productionEndTerminal("attribute_target_specifier_mod2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[232] = jj_gen;
@@ -8009,11 +8007,11 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EVENT:
       jj_consume_token(EVENT);
-                  {if (true) return productionEndTerminal("attribute_target1","-","-","Replacement",first,token);}
+                  {if (true) return productionEndTerminal("attribute_target1","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case RETURN:
       jj_consume_token(RETURN);
-                   {if (true) return productionEndTerminal("attribute_target2","-","-","Replacement",first,token);}
+                   {if (true) return productionEndTerminal("attribute_target2","-","-","Replacement","SemanticConflict",first,token);}
       break;
     case WHERE:
     case YIELD:
@@ -8026,7 +8024,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     case IDENTIFIER:
       n = IDENTIFIER_CSHARP(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("attribute_target3","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("attribute_target3","-","-","Replacement","SemanticConflict",first,token);}
       break;
     default:
       jj_la1[233] = jj_gen;
@@ -8050,7 +8048,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       jj_la1[234] = jj_gen;
       ;
     }
-                                                                                             {if (true) return productionEndTerminal("attribute","-","-","Replacement",first,token);}
+                                                                                             {if (true) return productionEndTerminal("attribute","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8121,7 +8119,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       ;
     }
     jj_consume_token(RPAREN);
-                                                             {if (true) return productionEndTerminal("attribute_arguments","-","-","Replacement",first,token);}
+                                                             {if (true) return productionEndTerminal("attribute_arguments","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8133,7 +8131,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = type(true);
                                    replaceName(n);
     jj_consume_token(RPAREN);
-                                                         {if (true) return productionEndTerminal("sizeof_expression","-","-","Replacement",first,token);}
+                                                         {if (true) return productionEndTerminal("sizeof_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8143,7 +8141,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(UNSAFE);
     n = block(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("unsafe_statement","-","-","Replacement",first,token);}
+                                                  {if (true) return productionEndTerminal("unsafe_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8153,7 +8151,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ARROW);
     n = IDENTIFIER_CSHARP(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("pointer_member_access","-","-","Replacement",first,token);}
+                                                          {if (true) return productionEndTerminal("pointer_member_access","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8163,7 +8161,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(AMPER);
     n = unary_expression(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("addressof_expression","-","-","Replacement",first,token);}
+                                                        {if (true) return productionEndTerminal("addressof_expression","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8179,7 +8177,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(RPAREN);
     n = embedded_statement(true);
                                                                                                                                        replaceName(n);
-                                                                                                                                                         {if (true) return productionEndTerminal("fixed_statement","-","-","Replacement",first,token);}
+                                                                                                                                                         {if (true) return productionEndTerminal("fixed_statement","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8202,7 +8200,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
       n = fixed_pointer_declarator(true);
                                                                                                   replaceName(n);
     }
-                                                                                                                      {if (true) return productionEndTerminal("fixed_pointer_declarators","-","-","Replacement",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("fixed_pointer_declarators","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8214,7 +8212,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     jj_consume_token(ASSIGN);
     n = fixed_pointer_initializer(true);
                                                                                     replaceName(n);
-                                                                                                      {if (true) return productionEndTerminal("fixed_pointer_declarator","-","-","Replacement",first,token);}
+                                                                                                      {if (true) return productionEndTerminal("fixed_pointer_declarator","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8231,7 +8229,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     }
     n = expression(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("fixed_pointer_initializer","-","-","Replacement",first,token);}
+                                                     {if (true) return productionEndTerminal("fixed_pointer_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -8245,7 +8243,7 @@ public class CSharpMergeParser extends AbstractFSTParser implements CSharpMergeP
     n = expression(true);
                                                                                       replaceName(n);
     jj_consume_token(RBRACK);
-                                                                                                            {if (true) return productionEndTerminal("stackalloc_initializer","-","-","Replacement",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("stackalloc_initializer","-","-","Replacement","SemanticConflict",first,token);}
     throw new Error("Missing return statement in function");
   }
 
