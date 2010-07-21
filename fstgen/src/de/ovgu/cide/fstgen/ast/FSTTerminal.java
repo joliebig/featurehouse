@@ -3,7 +3,7 @@ package de.ovgu.cide.fstgen.ast;
 public class FSTTerminal extends FSTNode {
 
 	public final static String defaultCompositionMechanism = "Replacement";
-	public final static String defaultMergingMechanism = "SemanticConflict";
+	public final static String defaultMergingMechanism = "Default";
 
 	private String body;
 

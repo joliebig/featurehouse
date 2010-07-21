@@ -448,28 +448,29 @@ fplist
 	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
 
-@FSTNonTerminal
 stmt
-	:  simple_stmt
-	|  compound_stmt
+	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	| @FSTNonTerminal(name="{compound_stmt}") compound_stmt @!
 	;
 
+@FSTNonTerminal(name="{small_stmt}^-")
 simple_stmt
-	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE>
+	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE> 
 	;
 
 small_stmt
-	:  expr_stmt
-	|  print_stmt
-	|  del_stmt
-	|  pass_stmt
-	|  flow_stmt
-	|  import_stmt
-	|  global_stmt
-	|  exec_stmt
-	|  assert_stmt
+	:  @FSTTerminal(name="{expr_stmt}",merge="SemanticConflict") expr_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") print_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") del_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") pass_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") flow_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") import_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") global_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") exec_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") assert_stmt
 	;
 
+@FSTExportName("{SmartTestList}")
 expr_stmt
 	:  SmartTestList expr_stmtEnd
 	;
@@ -778,6 +779,7 @@ exprlist
 	:  expr (LL(2) "," expr)* [","<NONE>]
 	;
 
+@FSTExportName("{TOSTRING}")
 SmartTestList
 	:  test (LL(2) "," test)* [","<NONE>]
 	;
@@ -811,14 +813,14 @@ list_if
 	;
 
 compound_stmt
-	:  if_stmt
-	|  while_stmt
-	|  for_stmt
-	|  try_stmt
-	|  with_stmt
-	|  @FSTTerminal(name="{funcdef}", compose="JavaMethodOverriding") funcdef :: FunctionDefinition
-	|  @FSTNonTerminal classdef :: ClassDefinition
-	|  @FSTNonTerminal decorated
+	:  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
+	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
+	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
 @FSTInline
@@ -826,10 +828,9 @@ decorated
 	:  decorators decorated_End
 	;
 
-@FSTNonTerminal
 decorated_End
-	:  @FSTTerminal(name="{funcdef}", compose="JavaMethodOverriding") funcdef
-	|  @FSTNonTerminal classdef
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
+	|  @FSTNonTerminal(name="{classdef}") classdef
 	;
 
 decorators
