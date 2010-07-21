@@ -37,7 +37,8 @@ public class LineBasedMerger implements MergerInterface {
 		if(!(node.getType().equals("MethodDecl") || 
 			node.getType().equals("ConstructorDecl") || 
 			node.getType().contains("-Content") ||
-			node.getType().equals("class_member_declarationEnd6")	
+			node.getType().equals("class_member_declarationEnd6") ||
+			node.getMergingMechanism().equals("LineBased")
 		)) {
 			if(tokens[0].length() == 0 && tokens[1].length() == 0 && tokens[2].length() == 0) {
 				node.setBody("");
@@ -52,6 +53,12 @@ public class LineBasedMerger implements MergerInterface {
 			} else if(tokens[2].equals(tokens[1]) && tokens[0].length() == 0) {
 				node.setBody("");
 			}
+			//System.out.println(node.getMergingMechanism());
+			//System.out.println("|" + tokens[1] + "|");
+			//System.out.println("|" + tokens[2] + "|");
+			//System.out.println("--------------------");
+			
+			
 			return;
 		}
 

@@ -9,6 +9,6 @@ class Stack:
             return self.items.pop()
         else:
             return None
-    
-    def flush(self):
-        pass
+
+	def flush(self):
+		pass    

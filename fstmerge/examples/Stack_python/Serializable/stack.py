@@ -1,9 +1,10 @@
 class Stack:
     items = list()
-    serialVersionUID = 42
-    
+   
     def push(self, item):
         self.items.append(item)
+
+    serialVersionUID = 42
     
     def pop(self):
         if len(self.items) > 0:

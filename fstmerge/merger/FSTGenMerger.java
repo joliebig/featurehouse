@@ -10,12 +10,14 @@ import printer.csharp.CSharpPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javam.JavaMergePrintVisitor;
 import printer.csharpm.CSharpMergePrintVisitor;
+import printer.pythonm.PythonMergePrintVisitor;
 import printer.textm.TextMergePrintVisitor;
 import builder.ArtifactBuilderInterface;
 import builder.csharp.CSharpBuilder;
 import builder.csharpm.CSharpMergeBuilder;
 import builder.java.JavaBuilder;
 import builder.javam.JavaMergeBuilder;
+import builder.pythonm.PythonMergeBuilder;
 import builder.textm.TextMergeBuilder;
 
 
@@ -53,9 +55,11 @@ public class FSTGenMerger extends FSTGenProcessor {
 		
 		registerArtifactBuilder(new JavaMergeBuilder());
 		registerArtifactBuilder(new CSharpMergeBuilder());
+		registerArtifactBuilder(new PythonMergeBuilder());
 		registerArtifactBuilder(new TextMergeBuilder(".java"));
 		registerArtifactBuilder(new TextMergeBuilder(".cs"));
-
+		registerArtifactBuilder(new TextMergeBuilder(".py"));
+		
 		PrintVisitorInterface stdJavaPrinter = null;
 		PrintVisitorInterface stdCSharpPrinter = null;
 		for(PrintVisitorInterface printer : this.getPrintVisitors()) {
@@ -70,8 +74,10 @@ public class FSTGenMerger extends FSTGenProcessor {
 		
 		registerPrintVisitor(new JavaMergePrintVisitor());
 		registerPrintVisitor(new CSharpMergePrintVisitor());
+		registerPrintVisitor(new PythonMergePrintVisitor());
 		registerPrintVisitor(new TextMergePrintVisitor(".java"));
 		registerPrintVisitor(new TextMergePrintVisitor(".cs"));
+		registerPrintVisitor(new TextMergePrintVisitor(".py"));
 
 	}
 	
@@ -94,15 +100,17 @@ public class FSTGenMerger extends FSTGenProcessor {
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				/*for(FSTNonTerminal feature : features)
+				for(FSTNonTerminal feature : features)
 					System.out.println(feature.toString());
-				*/
+				
 				FSTNode merged;
 				
 				if(features.size() != 0) {
 					merged = merge(features);
 					
 					mergeVisitor.visit(merged);
+					
+					System.err.println(merged.toString());
 					
 					try {
 						featureVisitor.visit((FSTNonTerminal) merged);
@@ -205,7 +213,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 				
 				// SPECIAL CONFLICT HANDLER
-				if (!terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME)) {
+				if (!terminalA.getCompositionMechanism().equals(Replacement.COMPOSITION_RULE_NAME) || !terminalA.getMergingMechanism().equals("Default")) {
 					terminalComp.setBody(mergeBody(terminalA.getBody(), terminalB.getBody(), firstPass, terminalA.index, terminalB.index));
 				} 
 				return terminalComp;
