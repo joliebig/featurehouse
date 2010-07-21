@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-class Graph {
+class Graph : X {
     List<Node> nodes = new List<Node>();
     List<Edge> edges = new List<Edge>();
     public Edge Add(Node n, Node m) {

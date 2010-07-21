@@ -1,4 +1,4 @@
-class Graph {
+class Graph : X, Y {
     List<Node> nodes = new List<Node>();
     List<Edge> edges = new List<Edge>();
     public Edge Add(Node n, Node m) {
