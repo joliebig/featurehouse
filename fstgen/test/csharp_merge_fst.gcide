@@ -1140,10 +1140,12 @@ accessor_modifier
 	|  "private"
 	;
 
+@FSTExportName("{constant_declarators}")
 constant_declaration
 	:  "const" type constant_declarators ";" @!
 	;
-	
+
+@FSTExportName("{TOSTRING}")	
 constant_declarators
 	:  constant_declarator ("," constant_declarator)*
 	;
@@ -1235,10 +1237,12 @@ accessor_declaration
 	:  (accessor_modifiers)? (attributes)? IDENTIFIER_CSHARP body
 	;
 
+@FSTExportName("{event_declarationInt}")
 event_declaration
 	:  "event" type	event_declarationInt
 	;
-	
+
+@FSTExportName("{TOSTRING}")	
 event_declarationInt
 	:  LOOK_AHEAD(2) type_name "{" event_accessor_declarations "}"
 	|  event_variable_declarator (","	event_variable_declarator )* ";" @!		
