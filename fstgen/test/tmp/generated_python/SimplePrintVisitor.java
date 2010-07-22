@@ -65,6 +65,17 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
+		if (nonTerminal.getType().equals("ClassDefinition")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "classdef");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		if (nonTerminal.getType().equals("compound_stmt8")) {
 			printFeatures(nonTerminal,true);
 			{
@@ -90,6 +101,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (nonTerminal.getType().equals("classdef")) {
 			printFeatures(nonTerminal,true);
 			printToken("class");
+			{
+				FSTNode v=getChild(nonTerminal, "ClassName");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			{
 				FSTNode v=getChild(nonTerminal, "testlist");
 				if (v!=null) {

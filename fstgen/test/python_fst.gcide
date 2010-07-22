@@ -453,7 +453,7 @@ stmt
 	| @FSTNonTerminal(name="{compound_stmt}") compound_stmt @!
 	;
 
-@FSTNonTerminal(name="{small_stmt}^-")
+@FSTNonTerminal(name="{small_stmt}")
 simple_stmt
 	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE> 
 	;
@@ -833,7 +833,7 @@ compound_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
 	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
-	|  @FSTInline classdef :: ClassDefinition
+	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
 	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
@@ -864,12 +864,15 @@ funcdef_End
 	|  suite
 	;
 
-@FSTNonTerminal(name="{<NAME>}")
+@FSTNonTerminal(name="{ClassName}")
 classdef
-	:  "class" <NAME> ["(" testlist ")"] ":" @! classdef_End
+	:  "class" ClassName ["(" testlist ")"] ":" @! classdef_End
 	;
 
-@FSTNonTerminal
+@FSTExportName("{<NAME>}")
+ClassName : <NAME>;
+
+@FSTNonTerminal()
 classdef_End
 	:  small_stmt <NEWLINE>
 	|  suite

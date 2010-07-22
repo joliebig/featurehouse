@@ -464,7 +464,7 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo simple_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);} (LOOKAHEAD(2) ";" n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);})* [";" ] <NEWLINE> {return productionEndNonTerminal("simple_stmt","{small_stmt}^-","{small_stmt}^-");}
+	n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);} (LOOKAHEAD(2) ";" n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);})* [";" ] <NEWLINE> {return productionEndNonTerminal("simple_stmt","{small_stmt}","{small_stmt}");}
 
  )  }
 
@@ -1066,7 +1066,7 @@ FSTInfo compound_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
  |
-	n=classdef(true){ replaceName(n);} {return productionEndTerminal("ClassDefinition","-","-","Replacement","Default",first,token);}
+	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
  |
 	n=decorated(inTerminal){ replaceName("decorated", n);}{ replaceName(n);} {return productionEndNonTerminal("compound_stmt8","{decorated}","{decorated}");}
 
@@ -1114,7 +1114,13 @@ FSTInfo funcdef_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo classdef(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"class" t=<NAME>{ replaceName(new FSTInfo("<NAME>",t.image));} ["(" n=testlist(inTerminal){ replaceName(n);} ")"] ":" n=classdef_End(inTerminal){ replaceName(n);} {return productionEndNonTerminal("classdef","{<NAME>}","{<NAME>}");}
+	"class" n=ClassName(inTerminal){ replaceName("ClassName", n);}{ replaceName(n);} ["(" n=testlist(inTerminal){ replaceName(n);} ")"] ":" n=classdef_End(inTerminal){ replaceName(n);} {return productionEndNonTerminal("classdef","{ClassName}","{ClassName}");}
+
+ )  }
+
+FSTInfo ClassName(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<NAME>{ replaceName(new FSTInfo("<NAME>",t.image));} {return productionEndTerminal("ClassName","-","{<NAME>}","Replacement","Default",first,token);}
 
  )  }
 

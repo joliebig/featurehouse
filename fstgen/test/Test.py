@@ -6,7 +6,7 @@ from java import io
 
 from org.python.core import PathPackageManager
 class YaPM(PathPackageManager):
-
+	
     def __init__(self, registry):
         self.findAllPackages(registry)
 
