@@ -93,7 +93,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       ;
     }
     jj_consume_token(RPAREN);
-                                                                                          {if (true) return productionEndTerminal("parameters","-","{varargslist}","Replacement","Default",first,token);}
+                                                                                          {if (true) return productionEndTerminal("parameters","-","{varargslist}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -139,7 +139,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[2] = jj_gen;
         ;
       }
-                                                                                                                                                                                                                                      {if (true) return productionEndTerminal("varargslist1","-","{TOSTRING}","Replacement","Default",first,token);}
+                                                                                                                                                                                                                                      {if (true) return productionEndTerminal("varargslist1","-","{TOSTRING}","Replacement",first,token);}
       break;
     default:
       jj_la1[4] = jj_gen;
@@ -156,14 +156,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           jj_la1[3] = jj_gen;
           ;
         }
-                                                                                                              {if (true) return productionEndTerminal("varargslist2","-","{TOSTRING}","Replacement","Default",first,token);}
+                                                                                                              {if (true) return productionEndTerminal("varargslist2","-","{TOSTRING}","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case MULTIPLY:
         case POWER:
           n = ExtraKeywordList(true);
                                   replaceName(n);
-                                                    {if (true) return productionEndTerminal("varargslist3","-","{TOSTRING}","Replacement","Default",first,token);}
+                                                    {if (true) return productionEndTerminal("varargslist3","-","{TOSTRING}","Replacement",first,token);}
           break;
         default:
           jj_la1[5] = jj_gen;
@@ -181,7 +181,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(MULTIPLY);
     n = Name(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("ExtraArgList","-","-","Replacement","Default",first,token);}
+                                            {if (true) return productionEndTerminal("ExtraArgList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -192,7 +192,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                        replaceName(n);
     n = Name(true);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("ExtraKeywordList","-","-","Replacement","Default",first,token);}
+                                                                        {if (true) return productionEndTerminal("ExtraKeywordList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -211,7 +211,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[6] = jj_gen;
       ;
     }
-                                                                              {if (true) return productionEndTerminal("defaultarg","-","-","Replacement","Default",first,token);}
+                                                                              {if (true) return productionEndTerminal("defaultarg","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -223,14 +223,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case NAME:
       n = Name(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("fpdef1","-","-","Replacement","Default",first,token);}
+                                        {if (true) return productionEndTerminal("fpdef1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
       n = fplist(true);
                             replaceName(n);
       jj_consume_token(RPAREN);
-                                                  {if (true) return productionEndTerminal("fpdef2","-","-","Replacement","Default",first,token);}
+                                                  {if (true) return productionEndTerminal("fpdef2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[7] = jj_gen;
@@ -264,7 +264,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[8] = jj_gen;
       ;
     }
-                                                                                                    {if (true) return productionEndTerminal("fplist","-","-","Replacement","Default",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("fplist","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -397,22 +397,22 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = expr_stmt(true);
                            replaceName("expr_stmt", n);
                                                           replaceName(n);
-                                                                            {if (true) return productionEndTerminal("small_stmt1","{expr_stmt}","{expr_stmt}","Replacement","SemanticConflict",first,token);}
+                                                                            {if (true) return productionEndTerminal("small_stmt1","{expr_stmt}","{expr_stmt}","Replacement",first,token);}
       break;
     case PRINT:
       n = print_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("small_stmt2","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                              {if (true) return productionEndTerminal("small_stmt2","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case DEL:
       n = del_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("small_stmt3","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("small_stmt3","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case PASS:
       n = pass_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("small_stmt4","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("small_stmt4","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case BREAK:
     case CONTINUE:
@@ -421,28 +421,28 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case RAISE:
       n = flow_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("small_stmt5","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("small_stmt5","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case IMPORT:
     case FROM:
       n = import_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("small_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("small_stmt6","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case GLOBAL:
       n = global_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("small_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("small_stmt7","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case EXEC:
       n = exec_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("small_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("small_stmt8","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     case ASSERT:
       n = assert_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("small_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("small_stmt9","{TOSTRING}","{TOSTRING}","Replacement",first,token);}
       break;
     default:
       jj_la1[11] = jj_gen;
@@ -460,7 +460,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                   replaceName(n);
     n = expr_stmtEnd(true);
                                                                                                          replaceName(n);
-                                                                                                                           {if (true) return productionEndTerminal("expr_stmt","-","{SmartTestList}","Replacement","Default",first,token);}
+                                                                                                                           {if (true) return productionEndTerminal("expr_stmt","-","{SmartTestList}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -472,73 +472,73 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(PLUSEQ);
       n = SmartTestList(true);
                                         replaceName(n);
-                                                          {if (true) return productionEndTerminal("expr_stmtEnd1","-","-","Replacement","Default",first,token);}
+                                                          {if (true) return productionEndTerminal("expr_stmtEnd1","-","-","Replacement",first,token);}
       break;
     case MINUSEQ:
       jj_consume_token(MINUSEQ);
       n = SmartTestList(true);
                                          replaceName(n);
-                                                           {if (true) return productionEndTerminal("expr_stmtEnd2","-","-","Replacement","Default",first,token);}
+                                                           {if (true) return productionEndTerminal("expr_stmtEnd2","-","-","Replacement",first,token);}
       break;
     case MULTIPLYEQ:
       jj_consume_token(MULTIPLYEQ);
       n = SmartTestList(true);
                                             replaceName(n);
-                                                              {if (true) return productionEndTerminal("expr_stmtEnd3","-","-","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndTerminal("expr_stmtEnd3","-","-","Replacement",first,token);}
       break;
     case DIVIDEEQ:
       jj_consume_token(DIVIDEEQ);
       n = SmartTestList(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("expr_stmtEnd4","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("expr_stmtEnd4","-","-","Replacement",first,token);}
       break;
     case FLOORDIVIDEEQ:
       jj_consume_token(FLOORDIVIDEEQ);
       n = SmartTestList(true);
                                                replaceName(n);
-                                                                 {if (true) return productionEndTerminal("expr_stmtEnd5","-","-","Replacement","Default",first,token);}
+                                                                 {if (true) return productionEndTerminal("expr_stmtEnd5","-","-","Replacement",first,token);}
       break;
     case MODULOEQ:
       jj_consume_token(MODULOEQ);
       n = SmartTestList(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("expr_stmtEnd6","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("expr_stmtEnd6","-","-","Replacement",first,token);}
       break;
     case ANDEQ:
       jj_consume_token(ANDEQ);
       n = SmartTestList(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("expr_stmtEnd7","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("expr_stmtEnd7","-","-","Replacement",first,token);}
       break;
     case OREQ:
       jj_consume_token(OREQ);
       n = SmartTestList(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("expr_stmtEnd8","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("expr_stmtEnd8","-","-","Replacement",first,token);}
       break;
     case XOREQ:
       jj_consume_token(XOREQ);
       n = SmartTestList(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("expr_stmtEnd9","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("expr_stmtEnd9","-","-","Replacement",first,token);}
       break;
     case LSHIFTEQ:
       jj_consume_token(LSHIFTEQ);
       n = SmartTestList(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("expr_stmtEnd10","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("expr_stmtEnd10","-","-","Replacement",first,token);}
       break;
     case RSHIFTEQ:
       jj_consume_token(RSHIFTEQ);
       n = SmartTestList(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("expr_stmtEnd11","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("expr_stmtEnd11","-","-","Replacement",first,token);}
       break;
     case POWEREQ:
       jj_consume_token(POWEREQ);
       n = SmartTestList(true);
                                          replaceName(n);
-                                                           {if (true) return productionEndTerminal("expr_stmtEnd12","-","-","Replacement","Default",first,token);}
+                                                           {if (true) return productionEndTerminal("expr_stmtEnd12","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[13] = jj_gen;
@@ -556,7 +556,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         n = SmartTestList(true);
                                     replaceName(n);
       }
-                                                        {if (true) return productionEndTerminal("expr_stmtEnd13","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("expr_stmtEnd13","-","-","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -578,17 +578,17 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[14] = jj_gen;
         ;
       }
-                                                                                                                 {if (true) return productionEndTerminal("print_stmt1","-","-","Replacement","Default",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("print_stmt1","-","-","Replacement",first,token);}
     } else if (jj_2_8(2)) {
       jj_consume_token(PRINT);
       n = print_stmtEndA(true);
                                                      replaceName(n);
-                                                                       {if (true) return productionEndTerminal("print_stmt2","-","-","Replacement","Default",first,token);}
+                                                                       {if (true) return productionEndTerminal("print_stmt2","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRINT:
         jj_consume_token(PRINT);
-                 {if (true) return productionEndTerminal("print_stmt3","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("print_stmt3","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[15] = jj_gen;
@@ -621,7 +621,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[16] = jj_gen;
       ;
     }
-                                                                   {if (true) return productionEndTerminal("print_stmtEndP","-","-","Replacement","Default",first,token);}
+                                                                   {if (true) return productionEndTerminal("print_stmtEndP","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -649,7 +649,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[17] = jj_gen;
       ;
     }
-                                                                                                  {if (true) return productionEndTerminal("print_stmtEndA","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("print_stmtEndA","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -659,7 +659,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(DEL);
     n = exprlist(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("del_stmt","-","-","Replacement","Default",first,token);}
+                                                  {if (true) return productionEndTerminal("del_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -667,7 +667,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(PASS);
-                {if (true) return productionEndTerminal("pass_stmt","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("pass_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -677,26 +677,26 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case BREAK:
       jj_consume_token(BREAK);
-                 {if (true) return productionEndTerminal("flow_stmt1","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("flow_stmt1","-","-","Replacement",first,token);}
       break;
     case CONTINUE:
       jj_consume_token(CONTINUE);
-                    {if (true) return productionEndTerminal("flow_stmt2","-","-","Replacement","Default",first,token);}
+                    {if (true) return productionEndTerminal("flow_stmt2","-","-","Replacement",first,token);}
       break;
     case RETURN:
       n = return_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("flow_stmt3","-","-","Replacement","Default",first,token);}
+                                               {if (true) return productionEndTerminal("flow_stmt3","-","-","Replacement",first,token);}
       break;
     case YIELD:
       n = yield_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("flow_stmt4","-","-","Replacement","Default",first,token);}
+                                              {if (true) return productionEndTerminal("flow_stmt4","-","-","Replacement",first,token);}
       break;
     case RAISE:
       n = raise_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("flow_stmt5","-","-","Replacement","Default",first,token);}
+                                              {if (true) return productionEndTerminal("flow_stmt5","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[18] = jj_gen;
@@ -742,7 +742,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[19] = jj_gen;
       ;
     }
-                                                            {if (true) return productionEndTerminal("return_stmt","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("return_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -752,7 +752,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(YIELD);
     n = SmartTestList(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("yield_stmt","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("yield_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -792,7 +792,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[20] = jj_gen;
       ;
     }
-                                                            {if (true) return productionEndTerminal("raise_stmt","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("raise_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -811,7 +811,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[21] = jj_gen;
       ;
     }
-                                                                                      {if (true) return productionEndTerminal("raise_stmt_end","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("raise_stmt_end","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -830,7 +830,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[22] = jj_gen;
       ;
     }
-                                                                             {if (true) return productionEndTerminal("testcommatest","-","-","Replacement","Default",first,token);}
+                                                                             {if (true) return productionEndTerminal("testcommatest","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -842,13 +842,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(IMPORT);
       n = Import(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("import_stmt1","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("import_stmt1","-","-","Replacement",first,token);}
       break;
     case FROM:
       jj_consume_token(FROM);
       n = ImportFrom(true);
                                    replaceName(n);
-                                                     {if (true) return productionEndTerminal("import_stmt2","-","-","Replacement","Default",first,token);}
+                                                     {if (true) return productionEndTerminal("import_stmt2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[23] = jj_gen;
@@ -877,7 +877,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = dotted_as_name(true);
                                                                               replaceName(n);
     }
-                                                                                                  {if (true) return productionEndTerminal("Import","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("Import","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -889,7 +889,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(IMPORT);
     n = ImportFromEnd(true);
                                                                               replaceName(n);
-                                                                                                {if (true) return productionEndTerminal("ImportFrom","-","-","Replacement","Default",first,token);}
+                                                                                                {if (true) return productionEndTerminal("ImportFrom","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -899,7 +899,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case MULTIPLY:
       jj_consume_token(MULTIPLY);
-              {if (true) return productionEndTerminal("ImportFromEnd1","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("ImportFromEnd1","-","-","Replacement",first,token);}
       break;
     case OR_BOOL:
     case AND_BOOL:
@@ -948,7 +948,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         n = import_as_name(true);
                                                                               replaceName(n);
       }
-                                                                                                  {if (true) return productionEndTerminal("ImportFromEnd2","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("ImportFromEnd2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[26] = jj_gen;
@@ -973,7 +973,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[27] = jj_gen;
       ;
     }
-                                                                                     {if (true) return productionEndTerminal("dotted_as_name","-","-","Replacement","Default",first,token);}
+                                                                                     {if (true) return productionEndTerminal("dotted_as_name","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -996,7 +996,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = AnyName(true);
                                                                 replaceName(n);
     }
-                                                                                    {if (true) return productionEndTerminal("dotted_name","-","-","Replacement","Default",first,token);}
+                                                                                    {if (true) return productionEndTerminal("dotted_name","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1015,7 +1015,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[29] = jj_gen;
       ;
     }
-                                                                                 {if (true) return productionEndTerminal("import_as_name","-","-","Replacement","Default",first,token);}
+                                                                                 {if (true) return productionEndTerminal("import_as_name","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1039,7 +1039,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = Name(true);
                                                                    replaceName(n);
     }
-                                                                                       {if (true) return productionEndTerminal("global_stmt","-","-","Replacement","Default",first,token);}
+                                                                                       {if (true) return productionEndTerminal("global_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1059,7 +1059,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[31] = jj_gen;
       ;
     }
-                                                                                              {if (true) return productionEndTerminal("exec_stmt","-","-","Replacement","Default",first,token);}
+                                                                                              {if (true) return productionEndTerminal("exec_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1078,7 +1078,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[32] = jj_gen;
       ;
     }
-                                                                             {if (true) return productionEndTerminal("exec_stmt_end","-","-","Replacement","Default",first,token);}
+                                                                             {if (true) return productionEndTerminal("exec_stmt_end","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1098,7 +1098,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[33] = jj_gen;
       ;
     }
-                                                                                      {if (true) return productionEndTerminal("assert_stmt","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("assert_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1111,7 +1111,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = if_stmt_End(true);
                                                                      replaceName(n);
-                                                                                       {if (true) return productionEndTerminal("if_stmt","-","-","Replacement","Default",first,token);}
+                                                                                       {if (true) return productionEndTerminal("if_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1159,7 +1159,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = small_stmt(true);
                             replaceName(n);
       jj_consume_token(NEWLINE);
-                                                        {if (true) return productionEndTerminal("if_stmt_End1","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("if_stmt_End1","-","-","Replacement",first,token);}
       break;
     case NEWLINE:
       n = suite(true);
@@ -1186,7 +1186,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[35] = jj_gen;
         ;
       }
-                                                                                                                      {if (true) return productionEndTerminal("if_stmt_End2","-","-","Replacement","Default",first,token);}
+                                                                                                                      {if (true) return productionEndTerminal("if_stmt_End2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[36] = jj_gen;
@@ -1205,7 +1205,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = elif_stmt_End(true);
                                                                          replaceName(n);
-                                                                                           {if (true) return productionEndTerminal("elif_stmt","-","-","Replacement","Default",first,token);}
+                                                                                           {if (true) return productionEndTerminal("elif_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1253,12 +1253,12 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = small_stmt(true);
                             replaceName(n);
       jj_consume_token(NEWLINE);
-                                                        {if (true) return productionEndTerminal("elif_stmt_End1","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("elif_stmt_End1","-","-","Replacement",first,token);}
       break;
     case NEWLINE:
       n = suite(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("elif_stmt_End2","-","-","Replacement","Default",first,token);}
+                                         {if (true) return productionEndTerminal("elif_stmt_End2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[37] = jj_gen;
@@ -1275,7 +1275,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = else_stmt_End(true);
                                           replaceName(n);
-                                                            {if (true) return productionEndTerminal("else_stmt","-","-","Replacement","Default",first,token);}
+                                                            {if (true) return productionEndTerminal("else_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1323,12 +1323,12 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = small_stmt(true);
                             replaceName(n);
       jj_consume_token(NEWLINE);
-                                                        {if (true) return productionEndTerminal("else_stmt_End1","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("else_stmt_End1","-","-","Replacement",first,token);}
       break;
     case NEWLINE:
       n = suite(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("else_stmt_End2","-","-","Replacement","Default",first,token);}
+                                         {if (true) return productionEndTerminal("else_stmt_End2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[38] = jj_gen;
@@ -1358,7 +1358,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[39] = jj_gen;
       ;
     }
-                                                                                                                                 {if (true) return productionEndTerminal("while_stmt","-","-","Replacement","Default",first,token);}
+                                                                                                                                 {if (true) return productionEndTerminal("while_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1385,7 +1385,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[40] = jj_gen;
       ;
     }
-                                                                                                                                                                                {if (true) return productionEndTerminal("for_stmt","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                                {if (true) return productionEndTerminal("for_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1398,7 +1398,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                  replaceName(n);
     n = tryEnd(true);
                                                                   replaceName(n);
-                                                                                    {if (true) return productionEndTerminal("try_stmt","-","-","Replacement","Default",first,token);}
+                                                                                    {if (true) return productionEndTerminal("try_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1431,14 +1431,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[42] = jj_gen;
         ;
       }
-                                                                                                 {if (true) return productionEndTerminal("tryEnd1","-","-","Replacement","Default",first,token);}
+                                                                                                 {if (true) return productionEndTerminal("tryEnd1","-","-","Replacement",first,token);}
       break;
     case FINALLY:
       jj_consume_token(FINALLY);
       jj_consume_token(COLON);
       n = suite(true);
                                      replaceName(n);
-                                                       {if (true) return productionEndTerminal("tryEnd2","-","-","Replacement","Default",first,token);}
+                                                       {if (true) return productionEndTerminal("tryEnd2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[43] = jj_gen;
@@ -1471,7 +1471,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = suite(true);
                                                                                                                  replaceName(n);
-                                                                                                                                   {if (true) return productionEndTerminal("with_stmt","-","-","Replacement","Default",first,token);}
+                                                                                                                                   {if (true) return productionEndTerminal("with_stmt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1490,7 +1490,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[45] = jj_gen;
       ;
     }
-                                                                              {if (true) return productionEndTerminal("with_item","-","-","Replacement","Default",first,token);}
+                                                                              {if (true) return productionEndTerminal("with_item","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1533,7 +1533,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = suite(true);
                                                                               replaceName(n);
-                                                                                                {if (true) return productionEndTerminal("except_clause","-","-","Replacement","Default",first,token);}
+                                                                                                {if (true) return productionEndTerminal("except_clause","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1544,7 +1544,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case LAMBDA:
       n = lambdef(true);
                          replaceName(n);
-                                           {if (true) return productionEndTerminal("test1","-","-","Replacement","Default",first,token);}
+                                           {if (true) return productionEndTerminal("test1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
     case LBRACE:
@@ -1585,7 +1585,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         n = and_test(true);
                                                                    replaceName(n);
       }
-                                                                                       {if (true) return productionEndTerminal("test2","-","-","Replacement","Default",first,token);}
+                                                                                       {if (true) return productionEndTerminal("test2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[48] = jj_gen;
@@ -1614,7 +1614,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = not_test(true);
                                                                     replaceName(n);
     }
-                                                                                        {if (true) return productionEndTerminal("and_test","-","-","Replacement","Default",first,token);}
+                                                                                        {if (true) return productionEndTerminal("and_test","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1626,7 +1626,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(NOT_BOOL);
       n = not_test(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("not_test1","-","-","Replacement","Default",first,token);}
+                                                  {if (true) return productionEndTerminal("not_test1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
     case LBRACE:
@@ -1652,7 +1652,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case 136:
       n = comparison(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("not_test2","-","-","Replacement","Default",first,token);}
+                                              {if (true) return productionEndTerminal("not_test2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[50] = jj_gen;
@@ -1689,7 +1689,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = compEnd(true);
                                                          replaceName(n);
     }
-                                                                             {if (true) return productionEndTerminal("comparison","-","-","Replacement","Default",first,token);}
+                                                                             {if (true) return productionEndTerminal("comparison","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1700,7 +1700,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                          replaceName(n);
     n = expr(true);
                                                         replaceName(n);
-                                                                          {if (true) return productionEndTerminal("compEnd","-","-","Replacement","Default",first,token);}
+                                                                          {if (true) return productionEndTerminal("compEnd","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1710,52 +1710,52 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LESS:
       jj_consume_token(LESS);
-                {if (true) return productionEndTerminal("comp_op1","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("comp_op1","-","-","Replacement",first,token);}
       break;
     case GREATER:
       jj_consume_token(GREATER);
-                   {if (true) return productionEndTerminal("comp_op2","-","-","Replacement","Default",first,token);}
+                   {if (true) return productionEndTerminal("comp_op2","-","-","Replacement",first,token);}
       break;
     case EQEQUAL:
       jj_consume_token(EQEQUAL);
-                   {if (true) return productionEndTerminal("comp_op3","-","-","Replacement","Default",first,token);}
+                   {if (true) return productionEndTerminal("comp_op3","-","-","Replacement",first,token);}
       break;
     case EQGREATER:
       jj_consume_token(EQGREATER);
-                     {if (true) return productionEndTerminal("comp_op4","-","-","Replacement","Default",first,token);}
+                     {if (true) return productionEndTerminal("comp_op4","-","-","Replacement",first,token);}
       break;
     case EQLESS:
       jj_consume_token(EQLESS);
-                  {if (true) return productionEndTerminal("comp_op5","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("comp_op5","-","-","Replacement",first,token);}
       break;
     case LESSGREATER:
       jj_consume_token(LESSGREATER);
-                       {if (true) return productionEndTerminal("comp_op6","-","-","Replacement","Default",first,token);}
+                       {if (true) return productionEndTerminal("comp_op6","-","-","Replacement",first,token);}
       break;
     case NOTEQUAL:
       jj_consume_token(NOTEQUAL);
-                    {if (true) return productionEndTerminal("comp_op7","-","-","Replacement","Default",first,token);}
+                    {if (true) return productionEndTerminal("comp_op7","-","-","Replacement",first,token);}
       break;
     case IN:
       jj_consume_token(IN);
-              {if (true) return productionEndTerminal("comp_op8","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("comp_op8","-","-","Replacement",first,token);}
       break;
     case NOT_BOOL:
       jj_consume_token(NOT_BOOL);
       jj_consume_token(IN);
-                    {if (true) return productionEndTerminal("comp_op9","-","-","Replacement","Default",first,token);}
+                    {if (true) return productionEndTerminal("comp_op9","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[52] = jj_gen;
       if (jj_2_11(2)) {
         jj_consume_token(IS);
         jj_consume_token(NOT_BOOL);
-                                 {if (true) return productionEndTerminal("comp_op10","-","-","Replacement","Default",first,token);}
+                                 {if (true) return productionEndTerminal("comp_op10","-","-","Replacement",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IS:
           jj_consume_token(IS);
-              {if (true) return productionEndTerminal("comp_op11","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("comp_op11","-","-","Replacement",first,token);}
           break;
         default:
           jj_la1[53] = jj_gen;
@@ -1786,7 +1786,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = xor_expr(true);
                                                                   replaceName(n);
     }
-                                                                                      {if (true) return productionEndTerminal("expr","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("expr","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1809,7 +1809,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = and_expr(true);
                                                                   replaceName(n);
     }
-                                                                                      {if (true) return productionEndTerminal("xor_expr","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("xor_expr","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1832,7 +1832,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = shift_expr(true);
                                                                       replaceName(n);
     }
-                                                                                          {if (true) return productionEndTerminal("and_expr","-","-","Replacement","Default",first,token);}
+                                                                                          {if (true) return productionEndTerminal("and_expr","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1855,7 +1855,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = shift_exprEnd(true);
                                                                      replaceName(n);
     }
-                                                                                         {if (true) return productionEndTerminal("shift_expr","-","-","Replacement","Default",first,token);}
+                                                                                         {if (true) return productionEndTerminal("shift_expr","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1867,13 +1867,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(LSHIFT);
       n = arith_expr(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("shift_exprEnd1","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("shift_exprEnd1","-","-","Replacement",first,token);}
       break;
     case RSHIFT:
       jj_consume_token(RSHIFT);
       n = arith_expr(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("shift_exprEnd2","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("shift_exprEnd2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[58] = jj_gen;
@@ -1902,7 +1902,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = arith_exprEnd(true);
                                                                replaceName(n);
     }
-                                                                                   {if (true) return productionEndTerminal("arith_expr","-","-","Replacement","Default",first,token);}
+                                                                                   {if (true) return productionEndTerminal("arith_expr","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1914,13 +1914,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(PLUS);
       n = term(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("arith_exprEnd1","-","-","Replacement","Default",first,token);}
+                                               {if (true) return productionEndTerminal("arith_exprEnd1","-","-","Replacement",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
       n = term(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("arith_exprEnd2","-","-","Replacement","Default",first,token);}
+                                                {if (true) return productionEndTerminal("arith_exprEnd2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[60] = jj_gen;
@@ -1951,7 +1951,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = termEnd(true);
                                                            replaceName(n);
     }
-                                                                               {if (true) return productionEndTerminal("term","-","-","Replacement","Default",first,token);}
+                                                                               {if (true) return productionEndTerminal("term","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1963,25 +1963,25 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(MULTIPLY);
       n = factor(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("termEnd1","-","-","Replacement","Default",first,token);}
+                                              {if (true) return productionEndTerminal("termEnd1","-","-","Replacement",first,token);}
       break;
     case DIVIDE:
       jj_consume_token(DIVIDE);
       n = factor(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("termEnd2","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("termEnd2","-","-","Replacement",first,token);}
       break;
     case FLOORDIVIDE:
       jj_consume_token(FLOORDIVIDE);
       n = factor(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("termEnd3","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("termEnd3","-","-","Replacement",first,token);}
       break;
     case MODULO:
       jj_consume_token(MODULO);
       n = factor(true);
                                  replaceName(n);
-                                                   {if (true) return productionEndTerminal("termEnd4","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("termEnd4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[62] = jj_gen;
@@ -1999,19 +1999,19 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(PLUS);
       n = factor(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("factor1","-","-","Replacement","Default",first,token);}
+                                                 {if (true) return productionEndTerminal("factor1","-","-","Replacement",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
       n = factor(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("factor2","-","-","Replacement","Default",first,token);}
+                                                  {if (true) return productionEndTerminal("factor2","-","-","Replacement",first,token);}
       break;
     case NOT:
       jj_consume_token(NOT);
       n = factor(true);
                               replaceName(n);
-                                                {if (true) return productionEndTerminal("factor3","-","-","Replacement","Default",first,token);}
+                                                {if (true) return productionEndTerminal("factor3","-","-","Replacement",first,token);}
       break;
     case LPAREN:
     case LBRACE:
@@ -2034,7 +2034,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case 136:
       n = powerfactor(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("factor4","-","-","Replacement","Default",first,token);}
+                                               {if (true) return productionEndTerminal("factor4","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[63] = jj_gen;
@@ -2060,7 +2060,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = factor(true);
                                                                                  replaceName(n);
     }
-                                                                                                     {if (true) return productionEndTerminal("powerfactor","-","-","Replacement","Default",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("powerfactor","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2084,7 +2084,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = atomtrailerEnd(true);
                                                                 replaceName(n);
     }
-                                                                                    {if (true) return productionEndTerminal("atomtrailer","-","-","Replacement","Default",first,token);}
+                                                                                    {if (true) return productionEndTerminal("atomtrailer","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2094,7 +2094,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     if (jj_2_13(2)) {
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
-                               {if (true) return productionEndTerminal("atomtrailerEnd1","-","-","Replacement","Default",first,token);}
+                               {if (true) return productionEndTerminal("atomtrailerEnd1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
@@ -2102,20 +2102,20 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         n = arglist(true);
                              replaceName(n);
         jj_consume_token(RPAREN);
-                                                   {if (true) return productionEndTerminal("atomtrailerEnd2","-","-","Replacement","Default",first,token);}
+                                                   {if (true) return productionEndTerminal("atomtrailerEnd2","-","-","Replacement",first,token);}
         break;
       case LBRACKET:
         jj_consume_token(LBRACKET);
         n = subscriptlist(true);
                                    replaceName(n);
         jj_consume_token(RBRACKET);
-                                                         {if (true) return productionEndTerminal("atomtrailerEnd3","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("atomtrailerEnd3","-","-","Replacement",first,token);}
         break;
       case DOT:
         jj_consume_token(DOT);
         n = AnyName(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("atomtrailerEnd4","-","-","Replacement","Default",first,token);}
+                                                 {if (true) return productionEndTerminal("atomtrailerEnd4","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[65] = jj_gen;
@@ -2132,7 +2132,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     if (jj_2_14(2)) {
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
-                               {if (true) return productionEndTerminal("atom1","-","-","Replacement","Default",first,token);}
+                               {if (true) return productionEndTerminal("atom1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
@@ -2170,7 +2170,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
         }
         jj_consume_token(RPAREN);
-                                                           {if (true) return productionEndTerminal("atom2","-","-","Replacement","Default",first,token);}
+                                                           {if (true) return productionEndTerminal("atom2","-","-","Replacement",first,token);}
         break;
       case LBRACKET:
         jj_consume_token(LBRACKET);
@@ -2207,7 +2207,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
         }
         jj_consume_token(RBRACKET);
-                                                              {if (true) return productionEndTerminal("atom3","-","-","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndTerminal("atom3","-","-","Replacement",first,token);}
         break;
       case LBRACE:
         jj_consume_token(LBRACE);
@@ -2244,20 +2244,20 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
         }
         jj_consume_token(RBRACE);
-                                                       {if (true) return productionEndTerminal("atom4","-","-","Replacement","Default",first,token);}
+                                                       {if (true) return productionEndTerminal("atom4","-","-","Replacement",first,token);}
         break;
       case 136:
         jj_consume_token(136);
         n = SmartTestList(true);
                                    replaceName(n);
         jj_consume_token(136);
-                                                         {if (true) return productionEndTerminal("atom5","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("atom5","-","-","Replacement",first,token);}
         break;
       case AS:
       case NAME:
         n = Name(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("atom6","-","-","Replacement","Default",first,token);}
+                                        {if (true) return productionEndTerminal("atom6","-","-","Replacement",first,token);}
         break;
       case DECNUMBER:
       case HEXNUMBER:
@@ -2266,7 +2266,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       case COMPLEX:
         n = Number(true);
                         replaceName(n);
-                                          {if (true) return productionEndTerminal("atom7","-","-","Replacement","Default",first,token);}
+                                          {if (true) return productionEndTerminal("atom7","-","-","Replacement",first,token);}
         break;
       case SINGLE_STRING:
       case SINGLE_STRING2:
@@ -2298,7 +2298,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           n = StringNode(true);
                                                                   replaceName(n);
         }
-                                                                                      {if (true) return productionEndTerminal("atom8","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("atom8","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[70] = jj_gen;
@@ -2329,7 +2329,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = test(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("lambdef","-","-","Replacement","Default",first,token);}
+                                                                                             {if (true) return productionEndTerminal("lambdef","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2357,7 +2357,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[72] = jj_gen;
       ;
     }
-                                                                                                            {if (true) return productionEndTerminal("subscriptlist","-","-","Replacement","Default",first,token);}
+                                                                                                            {if (true) return productionEndTerminal("subscriptlist","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2369,7 +2369,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(DOT);
       jj_consume_token(DOT);
       jj_consume_token(DOT);
-                           {if (true) return productionEndTerminal("subscript1","-","-","Replacement","Default",first,token);}
+                           {if (true) return productionEndTerminal("subscript1","-","-","Replacement",first,token);}
       break;
     case LPAREN:
     case LBRACE:
@@ -2406,12 +2406,12 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[73] = jj_gen;
         ;
       }
-                                                                          {if (true) return productionEndTerminal("subscript2","-","-","Replacement","Default",first,token);}
+                                                                          {if (true) return productionEndTerminal("subscript2","-","-","Replacement",first,token);}
       break;
     case COLON:
       n = slice(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("subscript3","-","-","Replacement","Default",first,token);}
+                                         {if (true) return productionEndTerminal("subscript3","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[74] = jj_gen;
@@ -2435,7 +2435,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[75] = jj_gen;
       ;
     }
-                                                                     {if (true) return productionEndTerminal("slice","-","-","Replacement","Default",first,token);}
+                                                                     {if (true) return productionEndTerminal("slice","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2475,7 +2475,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[76] = jj_gen;
       ;
     }
-                                              {if (true) return productionEndTerminal("ct","-","-","Replacement","Default",first,token);}
+                                              {if (true) return productionEndTerminal("ct","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2503,7 +2503,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[77] = jj_gen;
       ;
     }
-                                                                                                  {if (true) return productionEndTerminal("exprlist","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("exprlist","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2531,7 +2531,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[78] = jj_gen;
       ;
     }
-                                                                                                  {if (true) return productionEndTerminal("SmartTestList","-","{TOSTRING}","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("SmartTestList","-","{TOSTRING}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2559,7 +2559,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[79] = jj_gen;
       ;
     }
-                                                                                                  {if (true) return productionEndTerminal("testlist","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("testlist","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2589,7 +2589,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[80] = jj_gen;
       ;
     }
-                                                                                                                                    {if (true) return productionEndTerminal("dictmaker","-","-","Replacement","Default",first,token);}
+                                                                                                                                    {if (true) return productionEndTerminal("dictmaker","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2602,7 +2602,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = test(true);
                                                              replaceName(n);
-                                                                               {if (true) return productionEndTerminal("dictInt","-","-","Replacement","Default",first,token);}
+                                                                               {if (true) return productionEndTerminal("dictInt","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2613,7 +2613,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                       replaceName(n);
     n = listmakerEnd(true);
                                                              replaceName(n);
-                                                                               {if (true) return productionEndTerminal("listmaker","-","-","Replacement","Default",first,token);}
+                                                                               {if (true) return productionEndTerminal("listmaker","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2635,7 +2635,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           break label_32;
         }
       }
-                                               {if (true) return productionEndTerminal("listmakerEnd1","-","-","Replacement","Default",first,token);}
+                                               {if (true) return productionEndTerminal("listmakerEnd1","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[83] = jj_gen;
@@ -2658,7 +2658,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[82] = jj_gen;
         ;
       }
-                                                                   {if (true) return productionEndTerminal("listmakerEnd2","-","-","Replacement","Default",first,token);}
+                                                                   {if (true) return productionEndTerminal("listmakerEnd2","-","-","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -2685,7 +2685,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = list_if(true);
                                                                                                                 replaceName(n);
     }
-                                                                                                                                    {if (true) return productionEndTerminal("list_for","-","-","Replacement","Default",first,token);}
+                                                                                                                                    {if (true) return productionEndTerminal("list_for","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2695,7 +2695,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(IF);
     n = test(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("list_if","-","-","Replacement","Default",first,token);}
+                                             {if (true) return productionEndTerminal("list_if","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2706,33 +2706,33 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case IF:
       n = if_stmt(true);
                          replaceName(n);
-                                           {if (true) return productionEndTerminal("compound_stmt1","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                           {if (true) return productionEndTerminal("compound_stmt1","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case WHILE:
       n = while_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("compound_stmt2","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                              {if (true) return productionEndTerminal("compound_stmt2","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case FOR:
       n = for_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("compound_stmt3","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("compound_stmt3","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case TRY:
       n = try_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("compound_stmt4","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("compound_stmt4","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case WITH:
       n = with_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("compound_stmt5","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("compound_stmt5","{AUTO}","{AUTO}","Replacement",first,token);}
       break;
     case DEF:
       n = funcdef(true);
                          replaceName("funcdef", n);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+                                                                        {if (true) return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement",first,token);}
       break;
     case CLASS:
       n = classdef(inTerminal);
@@ -2762,7 +2762,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                             replaceName(n);
     n = decorated_End(true);
                                                                     replaceName(n);
-                                                                                      {if (true) return productionEndTerminal("decorated","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("decorated","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2774,7 +2774,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = funcdef(true);
                          replaceName("funcdef", n);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+                                                                        {if (true) return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement",first,token);}
       break;
     case CLASS:
       n = classdef(inTerminal);
@@ -2806,7 +2806,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         break label_35;
       }
     }
-                                                {if (true) return productionEndTerminal("decorators","-","-","Replacement","Default",first,token);}
+                                                {if (true) return productionEndTerminal("decorators","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2817,7 +2817,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     n = dotted_name(true);
                                  replaceName(n);
     jj_consume_token(NEWLINE);
-                                                             {if (true) return productionEndTerminal("decorator","-","-","Replacement","Default",first,token);}
+                                                             {if (true) return productionEndTerminal("decorator","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2833,7 +2833,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(COLON);
     n = funcdef_End(true);
                                                                                                                                                                    replaceName(n);
-                                                                                                                                                                                     {if (true) return productionEndTerminal("funcdef","-","{<NAME>}({parameters})","Replacement","Default",first,token);}
+                                                                                                                                                                                     {if (true) return productionEndTerminal("funcdef","-","{<NAME>}({parameters})","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2881,12 +2881,12 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = small_stmt(true);
                             replaceName(n);
       jj_consume_token(NEWLINE);
-                                                        {if (true) return productionEndTerminal("funcdef_End1","-","-","Replacement","Default",first,token);}
+                                                        {if (true) return productionEndTerminal("funcdef_End1","-","-","Replacement",first,token);}
       break;
     case NEWLINE:
       n = suite(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("funcdef_End2","-","-","Replacement","Default",first,token);}
+                                         {if (true) return productionEndTerminal("funcdef_End2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[88] = jj_gen;
@@ -2941,7 +2941,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                        replaceName("Field", n);
                                                                                                                   replaceName(n);
     }
-                                                                                                                                      {if (true) return productionEndTerminal("FieldDeclaration","-","{Field}","Replacement","Default",first,token);}
+                                                                                                                                      {if (true) return productionEndTerminal("FieldDeclaration","-","{Field}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -2953,7 +2953,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(EQUAL);
     n = expr(true);
                                                                                  replaceName(n);
-                                                                                                   {if (true) return productionEndTerminal("Field","-","{<NAME>}","Replacement","Default",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("Field","-","{<NAME>}","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3090,7 +3090,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[92] = jj_gen;
         ;
       }
-                                                                                      {if (true) return productionEndTerminal("arglist1","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("arglist1","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[93] = jj_gen;
@@ -3100,7 +3100,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       } else {
         ;
       }
-                                                                 {if (true) return productionEndTerminal("arglist2","-","-","Replacement","Default",first,token);}
+                                                                 {if (true) return productionEndTerminal("arglist2","-","-","Replacement",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -3115,7 +3115,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     } else {
       ;
     }
-                                                                     {if (true) return productionEndTerminal("arglist1End","-","-","Replacement","Default",first,token);}
+                                                                     {if (true) return productionEndTerminal("arglist1End","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3135,14 +3135,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_la1[94] = jj_gen;
         ;
       }
-                                                                                                                        {if (true) return productionEndTerminal("arglist1EndEnd1","-","-","Replacement","Default",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("arglist1EndEnd1","-","-","Replacement",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case MULTIPLY:
       case POWER:
         n = ExtraKeywordValueList(true);
                                        replaceName(n);
-                                                         {if (true) return productionEndTerminal("arglist1EndEnd2","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("arglist1EndEnd2","-","-","Replacement",first,token);}
         break;
       default:
         jj_la1[95] = jj_gen;
@@ -3169,7 +3169,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = argument(true);
                                                                                replaceName(n);
     }
-                                                                                                   {if (true) return productionEndTerminal("normalargs","-","-","Replacement","Default",first,token);}
+                                                                                                   {if (true) return productionEndTerminal("normalargs","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3179,7 +3179,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(MULTIPLY);
     n = test(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("ExtraArgValueList","-","-","Replacement","Default",first,token);}
+                                            {if (true) return productionEndTerminal("ExtraArgValueList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3190,7 +3190,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                        replaceName(n);
     n = test(true);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("ExtraKeywordValueList","-","-","Replacement","Default",first,token);}
+                                                                        {if (true) return productionEndTerminal("ExtraKeywordValueList","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3200,12 +3200,12 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case POWER:
       jj_consume_token(POWER);
-               {if (true) return productionEndTerminal("power1","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("power1","-","-","Replacement",first,token);}
       break;
     case MULTIPLY:
       jj_consume_token(MULTIPLY);
       jj_consume_token(MULTIPLY);
-                  {if (true) return productionEndTerminal("power2","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("power2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[96] = jj_gen;
@@ -3227,7 +3227,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     }
     n = test(true);
                                                                            replaceName(n);
-                                                                                             {if (true) return productionEndTerminal("argument","-","-","Replacement","Default",first,token);}
+                                                                                             {if (true) return productionEndTerminal("argument","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3237,23 +3237,23 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case HEXNUMBER:
       jj_consume_token(HEXNUMBER);
-                     {if (true) return productionEndTerminal("Number1","-","-","Replacement","Default",first,token);}
+                     {if (true) return productionEndTerminal("Number1","-","-","Replacement",first,token);}
       break;
     case OCTNUMBER:
       jj_consume_token(OCTNUMBER);
-                     {if (true) return productionEndTerminal("Number2","-","-","Replacement","Default",first,token);}
+                     {if (true) return productionEndTerminal("Number2","-","-","Replacement",first,token);}
       break;
     case DECNUMBER:
       jj_consume_token(DECNUMBER);
-                     {if (true) return productionEndTerminal("Number3","-","-","Replacement","Default",first,token);}
+                     {if (true) return productionEndTerminal("Number3","-","-","Replacement",first,token);}
       break;
     case FLOAT:
       jj_consume_token(FLOAT);
-                 {if (true) return productionEndTerminal("Number4","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("Number4","-","-","Replacement",first,token);}
       break;
     case COMPLEX:
       jj_consume_token(COMPLEX);
-                   {if (true) return productionEndTerminal("Number5","-","-","Replacement","Default",first,token);}
+                   {if (true) return productionEndTerminal("Number5","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[97] = jj_gen;
@@ -3267,7 +3267,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(FLOAT);
-                 {if (true) return productionEndTerminal("Complex","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("Complex","-","-","Replacement",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3277,11 +3277,11 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NAME:
       jj_consume_token(NAME);
-                {if (true) return productionEndTerminal("Name1","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("Name1","-","-","Replacement",first,token);}
       break;
     case AS:
       jj_consume_token(AS);
-              {if (true) return productionEndTerminal("Name2","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("Name2","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[98] = jj_gen;
@@ -3297,35 +3297,35 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SINGLE_STRING:
       jj_consume_token(SINGLE_STRING);
-                         {if (true) return productionEndTerminal("StringNode1","-","-","Replacement","Default",first,token);}
+                         {if (true) return productionEndTerminal("StringNode1","-","-","Replacement",first,token);}
       break;
     case SINGLE_STRING2:
       jj_consume_token(SINGLE_STRING2);
-                          {if (true) return productionEndTerminal("StringNode2","-","-","Replacement","Default",first,token);}
+                          {if (true) return productionEndTerminal("StringNode2","-","-","Replacement",first,token);}
       break;
     case TRIPLE_STRING:
       jj_consume_token(TRIPLE_STRING);
-                         {if (true) return productionEndTerminal("StringNode3","-","-","Replacement","Default",first,token);}
+                         {if (true) return productionEndTerminal("StringNode3","-","-","Replacement",first,token);}
       break;
     case TRIPLE_STRING2:
       jj_consume_token(TRIPLE_STRING2);
-                          {if (true) return productionEndTerminal("StringNode4","-","-","Replacement","Default",first,token);}
+                          {if (true) return productionEndTerminal("StringNode4","-","-","Replacement",first,token);}
       break;
     case SINGLE_USTRING:
       jj_consume_token(SINGLE_USTRING);
-                          {if (true) return productionEndTerminal("StringNode5","-","-","Replacement","Default",first,token);}
+                          {if (true) return productionEndTerminal("StringNode5","-","-","Replacement",first,token);}
       break;
     case SINGLE_USTRING2:
       jj_consume_token(SINGLE_USTRING2);
-                           {if (true) return productionEndTerminal("StringNode6","-","-","Replacement","Default",first,token);}
+                           {if (true) return productionEndTerminal("StringNode6","-","-","Replacement",first,token);}
       break;
     case TRIPLE_USTRING:
       jj_consume_token(TRIPLE_USTRING);
-                          {if (true) return productionEndTerminal("StringNode7","-","-","Replacement","Default",first,token);}
+                          {if (true) return productionEndTerminal("StringNode7","-","-","Replacement",first,token);}
       break;
     case TRIPLE_USTRING2:
       jj_consume_token(TRIPLE_USTRING2);
-                           {if (true) return productionEndTerminal("StringNode8","-","-","Replacement","Default",first,token);}
+                           {if (true) return productionEndTerminal("StringNode8","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[99] = jj_gen;
@@ -3341,127 +3341,127 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case NAME:
       jj_consume_token(NAME);
-                {if (true) return productionEndTerminal("AnyName1","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName1","-","-","Replacement",first,token);}
       break;
     case OR_BOOL:
       jj_consume_token(OR_BOOL);
-               {if (true) return productionEndTerminal("AnyName2","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("AnyName2","-","-","Replacement",first,token);}
       break;
     case AND_BOOL:
       jj_consume_token(AND_BOOL);
-                {if (true) return productionEndTerminal("AnyName3","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName3","-","-","Replacement",first,token);}
       break;
     case NOT_BOOL:
       jj_consume_token(NOT_BOOL);
-                {if (true) return productionEndTerminal("AnyName4","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName4","-","-","Replacement",first,token);}
       break;
     case IS:
       jj_consume_token(IS);
-              {if (true) return productionEndTerminal("AnyName5","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("AnyName5","-","-","Replacement",first,token);}
       break;
     case IN:
       jj_consume_token(IN);
-              {if (true) return productionEndTerminal("AnyName6","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("AnyName6","-","-","Replacement",first,token);}
       break;
     case LAMBDA:
       jj_consume_token(LAMBDA);
-                  {if (true) return productionEndTerminal("AnyName7","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName7","-","-","Replacement",first,token);}
       break;
     case IF:
       jj_consume_token(IF);
-              {if (true) return productionEndTerminal("AnyName8","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("AnyName8","-","-","Replacement",first,token);}
       break;
     case ELSE:
       jj_consume_token(ELSE);
-                {if (true) return productionEndTerminal("AnyName9","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName9","-","-","Replacement",first,token);}
       break;
     case ELIF:
       jj_consume_token(ELIF);
-                {if (true) return productionEndTerminal("AnyName10","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName10","-","-","Replacement",first,token);}
       break;
     case WHILE:
       jj_consume_token(WHILE);
-                 {if (true) return productionEndTerminal("AnyName11","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName11","-","-","Replacement",first,token);}
       break;
     case FOR:
       jj_consume_token(FOR);
-               {if (true) return productionEndTerminal("AnyName12","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("AnyName12","-","-","Replacement",first,token);}
       break;
     case TRY:
       jj_consume_token(TRY);
-               {if (true) return productionEndTerminal("AnyName13","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("AnyName13","-","-","Replacement",first,token);}
       break;
     case EXCEPT:
       jj_consume_token(EXCEPT);
-                  {if (true) return productionEndTerminal("AnyName14","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName14","-","-","Replacement",first,token);}
       break;
     case DEF:
       jj_consume_token(DEF);
-               {if (true) return productionEndTerminal("AnyName15","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("AnyName15","-","-","Replacement",first,token);}
       break;
     case CLASS:
       jj_consume_token(CLASS);
-                 {if (true) return productionEndTerminal("AnyName16","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName16","-","-","Replacement",first,token);}
       break;
     case FINALLY:
       jj_consume_token(FINALLY);
-                   {if (true) return productionEndTerminal("AnyName17","-","-","Replacement","Default",first,token);}
+                   {if (true) return productionEndTerminal("AnyName17","-","-","Replacement",first,token);}
       break;
     case PRINT:
       jj_consume_token(PRINT);
-                 {if (true) return productionEndTerminal("AnyName18","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName18","-","-","Replacement",first,token);}
       break;
     case PASS:
       jj_consume_token(PASS);
-                {if (true) return productionEndTerminal("AnyName19","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName19","-","-","Replacement",first,token);}
       break;
     case BREAK:
       jj_consume_token(BREAK);
-                 {if (true) return productionEndTerminal("AnyName20","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName20","-","-","Replacement",first,token);}
       break;
     case CONTINUE:
       jj_consume_token(CONTINUE);
-                    {if (true) return productionEndTerminal("AnyName21","-","-","Replacement","Default",first,token);}
+                    {if (true) return productionEndTerminal("AnyName21","-","-","Replacement",first,token);}
       break;
     case RETURN:
       jj_consume_token(RETURN);
-                  {if (true) return productionEndTerminal("AnyName22","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName22","-","-","Replacement",first,token);}
       break;
     case YIELD:
       jj_consume_token(YIELD);
-                 {if (true) return productionEndTerminal("AnyName23","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName23","-","-","Replacement",first,token);}
       break;
     case IMPORT:
       jj_consume_token(IMPORT);
-                  {if (true) return productionEndTerminal("AnyName24","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName24","-","-","Replacement",first,token);}
       break;
     case FROM:
       jj_consume_token(FROM);
-                {if (true) return productionEndTerminal("AnyName25","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName25","-","-","Replacement",first,token);}
       break;
     case DEL:
       jj_consume_token(DEL);
-               {if (true) return productionEndTerminal("AnyName26","-","-","Replacement","Default",first,token);}
+               {if (true) return productionEndTerminal("AnyName26","-","-","Replacement",first,token);}
       break;
     case RAISE:
       jj_consume_token(RAISE);
-                 {if (true) return productionEndTerminal("AnyName27","-","-","Replacement","Default",first,token);}
+                 {if (true) return productionEndTerminal("AnyName27","-","-","Replacement",first,token);}
       break;
     case GLOBAL:
       jj_consume_token(GLOBAL);
-                  {if (true) return productionEndTerminal("AnyName28","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName28","-","-","Replacement",first,token);}
       break;
     case EXEC:
       jj_consume_token(EXEC);
-                {if (true) return productionEndTerminal("AnyName29","-","-","Replacement","Default",first,token);}
+                {if (true) return productionEndTerminal("AnyName29","-","-","Replacement",first,token);}
       break;
     case ASSERT:
       jj_consume_token(ASSERT);
-                  {if (true) return productionEndTerminal("AnyName30","-","-","Replacement","Default",first,token);}
+                  {if (true) return productionEndTerminal("AnyName30","-","-","Replacement",first,token);}
       break;
     case AS:
       jj_consume_token(AS);
-              {if (true) return productionEndTerminal("AnyName31","-","-","Replacement","Default",first,token);}
+              {if (true) return productionEndTerminal("AnyName31","-","-","Replacement",first,token);}
       break;
     default:
       jj_la1[100] = jj_gen;
