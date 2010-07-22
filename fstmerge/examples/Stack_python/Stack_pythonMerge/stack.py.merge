@@ -1,0 +1,22 @@
+class Stack:
+<<<<<<< /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var1_8391437184728129647
+	items = llist()
+   
+=======
+	items = xlist()
+	
+>>>>>>> /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var2_6684505144724569224
+	def push(self, item):
+		self.items.append(item)
+
+	serialVersionUID = 42
+	
+	def pop(self):
+		if len(self.items) > 0:
+			return self.items.pop()
+		else:
+			return None
+
+	def flush(self):
+		pass
+
