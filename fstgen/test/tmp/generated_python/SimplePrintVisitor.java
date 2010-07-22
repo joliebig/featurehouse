@@ -58,10 +58,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			for (FSTNode v : getChildren(nonTerminal,"small_stmt")) {
-				printToken(";");
-				v.accept(this);
-			}
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -128,6 +124,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		if (nonTerminal.getType().equals("classdef_End1")) {
 			printFeatures(nonTerminal,true);
+			hintIncIndent();
 			{
 				FSTNode v=getChild(nonTerminal, "small_stmt");
 				if (v!=null) {
@@ -139,6 +136,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		if (nonTerminal.getType().equals("classdef_End2")) {
 			printFeatures(nonTerminal,true);
+			hintIncIndent();
 			{
 				FSTNode v=getChild(nonTerminal, "suite");
 				if (v!=null) {

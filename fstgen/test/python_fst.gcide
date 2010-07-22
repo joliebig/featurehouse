@@ -455,7 +455,8 @@ stmt
 
 @FSTNonTerminal(name="{small_stmt}")
 simple_stmt
-	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE> 
+//	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE>
+	:  small_stmt <NEWLINE>
 	;
 
 small_stmt
@@ -874,8 +875,8 @@ ClassName : <NAME>;
 
 @FSTNonTerminal()
 classdef_End
-	:  small_stmt <NEWLINE>
-	|  suite
+	:  @+ small_stmt <NEWLINE>
+	|  @+ suite
 	;
 
 @FSTExportName("{Field}")
