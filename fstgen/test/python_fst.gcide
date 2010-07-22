@@ -623,13 +623,31 @@ for_stmt
 	;
 
 try_stmt
-	:  "try" ":" suite tryEnd
+	:  "try" ":" try_stmt_End [except_clause] [finally_stmt]
 	;
- 
-tryEnd
-	:  (except_clause)+ ["else" ":" suite]       
-    |  "finally" ":" suite
-    ;
+
+try_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite
+	;
+
+except_clause
+	:  "except" [testcommatest] ":" except_clause_End [else_stmt]
+	;
+
+except_clause_End
+	:  small_stmt <NEWLINE>
+	|  suite
+	;
+
+finally_stmt
+	:  "finally" ":" finally_stmt_End
+	;
+
+finally_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite
+	;
 
 with_stmt
 	:  "with" with_item ("," with_item)* ":" suite
@@ -637,10 +655,6 @@ with_stmt
 
 with_item
 	:  test ("as" expr)?
-	;
-
-except_clause
-	:  "except" [testcommatest] ":" suite
 	;
 
 test
@@ -819,11 +833,10 @@ compound_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
 	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
-	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
+	|  @FSTInline classdef :: ClassDefinition
 	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
-@FSTInline
 decorated
 	:  decorators decorated_End
 	;
@@ -853,7 +866,13 @@ funcdef_End
 
 @FSTNonTerminal(name="{<NAME>}")
 classdef
-	:  "class" <NAME> ["(" testlist ")"] ":" suite
+	:  "class" <NAME> ["(" testlist ")"] ":" @! classdef_End
+	;
+
+@FSTNonTerminal
+classdef_End
+	:  small_stmt <NEWLINE>
+	|  suite
 	;
 
 @FSTExportName("{Field}")

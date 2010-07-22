@@ -65,27 +65,10 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("ClassDefinition")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "classdef");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
 		if (nonTerminal.getType().equals("compound_stmt8")) {
 			printFeatures(nonTerminal,true);
 			{
-				FSTNode v=getChild(nonTerminal, "decorators");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "decorated_End");
+				FSTNode v=getChild(nonTerminal, "decorated");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -116,6 +99,29 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			printToken(":");
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "classdef_End");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("classdef_End1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "small_stmt");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("classdef_End2")) {
+			printFeatures(nonTerminal,true);
 			{
 				FSTNode v=getChild(nonTerminal, "suite");
 				if (v!=null) {
@@ -148,6 +154,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("varargslist2") && expectedType.equals("varargslist")) return true;
 		if (type.equals("stmt1") && expectedType.equals("stmt")) return true;
 		if (type.equals("AnyName30") && expectedType.equals("AnyName")) return true;
+		if (type.equals("classdef_End2") && expectedType.equals("classdef_End")) return true;
 		if (type.equals("expr_stmtEnd7") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("varargslist3") && expectedType.equals("varargslist")) return true;
 		if (type.equals("fpdef1") && expectedType.equals("fpdef")) return true;
@@ -169,6 +176,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("expr_stmtEnd8") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("comp_op4") && expectedType.equals("comp_op")) return true;
 		if (type.equals("AnyName10") && expectedType.equals("AnyName")) return true;
+		if (type.equals("try_stmt_End2") && expectedType.equals("try_stmt_End")) return true;
 		if (type.equals("termEnd1") && expectedType.equals("termEnd")) return true;
 		if (type.equals("AnyName24") && expectedType.equals("AnyName")) return true;
 		if (type.equals("Number5") && expectedType.equals("Number")) return true;
@@ -236,8 +244,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnyName28") && expectedType.equals("AnyName")) return true;
 		if (type.equals("print_stmt1") && expectedType.equals("print_stmt")) return true;
 		if (type.equals("AnyName4") && expectedType.equals("AnyName")) return true;
-		if (type.equals("ImportFromEnd2") && expectedType.equals("ImportFromEnd")) return true;
 		if (type.equals("compound_stmt3") && expectedType.equals("compound_stmt")) return true;
+		if (type.equals("ImportFromEnd2") && expectedType.equals("ImportFromEnd")) return true;
 		if (type.equals("if_stmt_End2") && expectedType.equals("if_stmt_End")) return true;
 		if (type.equals("flow_stmt4") && expectedType.equals("flow_stmt")) return true;
 		if (type.equals("FunctionDefinition") && expectedType.equals("compound_stmt")) return true;
@@ -246,6 +254,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("atomtrailerEnd4") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("Number2") && expectedType.equals("Number")) return true;
 		if (type.equals("power1") && expectedType.equals("power")) return true;
+		if (type.equals("finally_stmt_End1") && expectedType.equals("finally_stmt_End")) return true;
 		if (type.equals("comp_op9") && expectedType.equals("comp_op")) return true;
 		if (type.equals("arith_exprEnd2") && expectedType.equals("arith_exprEnd")) return true;
 		if (type.equals("atom5") && expectedType.equals("atom")) return true;
@@ -272,11 +281,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("small_stmt7") && expectedType.equals("small_stmt")) return true;
 		if (type.equals("test1") && expectedType.equals("test")) return true;
 		if (type.equals("expr_stmtEnd9") && expectedType.equals("expr_stmtEnd")) return true;
+		if (type.equals("except_clause_End2") && expectedType.equals("except_clause_End")) return true;
 		if (type.equals("elif_stmt_End1") && expectedType.equals("elif_stmt_End")) return true;
 		if (type.equals("AnyName2") && expectedType.equals("AnyName")) return true;
+		if (type.equals("except_clause_End1") && expectedType.equals("except_clause_End")) return true;
+		if (type.equals("try_stmt_End1") && expectedType.equals("try_stmt_End")) return true;
 		if (type.equals("expr_stmtEnd1") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("compound_stmt1") && expectedType.equals("compound_stmt")) return true;
-		if (type.equals("tryEnd1") && expectedType.equals("tryEnd")) return true;
 		if (type.equals("comp_op7") && expectedType.equals("comp_op")) return true;
 		if (type.equals("atom3") && expectedType.equals("atom")) return true;
 		if (type.equals("stmt2") && expectedType.equals("stmt")) return true;
@@ -290,8 +301,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("expr_stmtEnd2") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("StringNode7") && expectedType.equals("StringNode")) return true;
 		if (type.equals("compound_stmt2") && expectedType.equals("compound_stmt")) return true;
-		if (type.equals("tryEnd2") && expectedType.equals("tryEnd")) return true;
+		if (type.equals("classdef_End1") && expectedType.equals("classdef_End")) return true;
 		if (type.equals("atom4") && expectedType.equals("atom")) return true;
+		if (type.equals("finally_stmt_End2") && expectedType.equals("finally_stmt_End")) return true;
 		if (type.equals("comp_op6") && expectedType.equals("comp_op")) return true;
 		if (type.equals("arith_exprEnd1") && expectedType.equals("arith_exprEnd")) return true;
 		return false;
