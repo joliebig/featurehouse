@@ -464,7 +464,7 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo simple_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);} <NEWLINE> {return productionEndNonTerminal("simple_stmt","{small_stmt}","{small_stmt}");}
+	n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);} (LOOKAHEAD(2) ";" n=small_stmt(inTerminal){ replaceName("small_stmt", n);}{ replaceName(n);})* [";" ] <NEWLINE> {return productionEndNonTerminal("simple_stmt","{small_stmt}","{small_stmt}");}
 
  )  }
 
@@ -730,7 +730,7 @@ FSTInfo for_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo try_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"try" ":" n=try_stmt_End(true){ replaceName(n);} [n=except_clause(true){ replaceName(n);}] [n=finally_stmt(true){ replaceName(n);}] {return productionEndTerminal("try_stmt","-","-","Replacement","Default",first,token);}
+	"try" ":" n=try_stmt_End(true){ replaceName(n);} (n=except_clause(true){ replaceName(n);})* [n=finally_stmt(true){ replaceName(n);}] {return productionEndTerminal("try_stmt","-","-","Replacement","Default",first,token);}
 
  )  }
 

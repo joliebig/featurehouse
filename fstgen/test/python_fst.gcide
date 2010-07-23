@@ -455,8 +455,7 @@ stmt
 
 @FSTNonTerminal(name="{small_stmt}")
 simple_stmt
-//	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE>
-	:  small_stmt <NEWLINE>
+	:  &LI small_stmt (LL(2) ";" &LI small_stmt)* [";" <NONE>] <NEWLINE>
 	;
 
 small_stmt
@@ -624,7 +623,7 @@ for_stmt
 	;
 
 try_stmt
-	:  "try" ":" try_stmt_End [except_clause] [finally_stmt]
+	:  "try" ":" try_stmt_End (except_clause)* [finally_stmt]
 	;
 
 try_stmt_End
