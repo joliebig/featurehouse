@@ -1,11 +1,11 @@
 class Stack:
-<<<<<<< /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var1_8391437184728129647
+<<<<<<< /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var1_196570824853882111
 	items = llist()
    
 =======
 	items = xlist()
 	
->>>>>>> /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var2_6684505144724569224
+>>>>>>> /work/joliebig/workspace/fstmerge/fstmerge_tmp/fstmerge_var2_8733154647047176806
 	def push(self, item):
 		self.items.append(item)
 
