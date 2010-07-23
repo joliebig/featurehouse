@@ -718,13 +718,13 @@ FSTInfo else_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo while_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"while" n=test(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} ["else" ":" n=suite(true){ replaceName(n);}] {return productionEndTerminal("while_stmt","-","-","Replacement","Default",first,token);}
+	"while" n=test(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("while_stmt","-","-","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo for_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"for" n=exprlist(true){ replaceName(n);} "in" n=SmartTestList(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} ["else" ":" n=suite(true){ replaceName(n);}] {return productionEndTerminal("for_stmt","-","-","Replacement","Default",first,token);}
+	"for" n=exprlist(true){ replaceName(n);} "in" n=SmartTestList(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("for_stmt","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1074,15 +1074,15 @@ FSTInfo compound_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo decorated(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=decorators(true){ replaceName(n);} n=decorated_End(true){ replaceName(n);} {return productionEndTerminal("decorated","-","-","Replacement","Default",first,token);}
+	n=decorators(inTerminal){ replaceName(n);} n=decorated_End(inTerminal){ replaceName(n);} {return productionEndNonTerminal("decorated","-","-");}
 
  )  }
 
 FSTInfo decorated_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
  |
-	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("decorated_End2","{classdef}","{classdef}");}
+	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
 
  )  }
 
@@ -1144,7 +1144,7 @@ FSTInfo classdef_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=small_stmt(inTerminal){ replaceName(n);} <NEWLINE> {return productionEndNonTerminal("classdef_End1","-","-");}
  |
-	n=suite(inTerminal){ replaceName(n);} {return productionEndNonTerminal("classdef_End2","-","-");}
+	<NEWLINE> <INDENT> (n=stmt(inTerminal){ replaceName(n);})+ <DEDENT> {return productionEndNonTerminal("classdef_End2","-","-");}
 
  )  }
 
@@ -1162,7 +1162,7 @@ FSTInfo Field(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo suite(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<NEWLINE> <INDENT> (n=stmt(inTerminal){ replaceName(n);})+ <DEDENT> {return productionEndNonTerminal("suite","-","-");}
+	<NEWLINE> <INDENT> (n=stmt(true){ replaceName(n);})+ <DEDENT> {return productionEndTerminal("suite","-","-","Replacement","Default",first,token);}
 
  )  }
 

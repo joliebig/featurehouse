@@ -448,6 +448,7 @@ fplist
 	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
 
+@FSTInline
 stmt
 	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
 	| @FSTNonTerminal(name="{compound_stmt}") compound_stmt @!
@@ -615,11 +616,11 @@ else_stmt_End
 	;
 
 while_stmt
-	:  "while" test ":" suite ["else" ":" suite]
+	:  "while" test ":" suite [else_stmt]
 	;
 
 for_stmt
-	:  "for" exprlist "in" SmartTestList ":" suite ["else" ":" suite]
+	:  "for" exprlist "in" SmartTestList ":" suite [else_stmt]
 	;
 
 try_stmt
@@ -837,13 +838,14 @@ compound_stmt
 	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
+@FSTNonTerminal
 decorated
 	:  decorators decorated_End
 	;
 
 decorated_End
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
-	|  @FSTNonTerminal(name="{classdef}") classdef
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
+	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
 	;
 
 decorators
@@ -880,12 +882,13 @@ classdef
 	;
 
 @FSTExportName("{<NAME>}")
-ClassName : <NAME>;
+ClassName
+	:  <NAME>
+	;
 
-@FSTNonTerminal()
 classdef_End
-	:  @+ small_stmt <NEWLINE>
-	|  @+ suite
+	:  @FSTNonTerminal @+ small_stmt <NEWLINE>
+	|  @FSTNonTerminal @+ suite
 	;
 
 @FSTExportName("{Field}")
@@ -898,7 +901,7 @@ Field
 	:  <NAME> "=" expr
 	;
 
-@FSTNonTerminal
+@FSTInline
 suite
 	:  <NEWLINE> <INDENT> (stmt)+ <DEDENT>
 	;
