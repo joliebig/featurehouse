@@ -851,7 +851,17 @@ decorators
 	;
 
 decorator
-	:  "@" dotted_name <NEWLINE>
+	:  "@" dotted_name decorator_End
+	;
+
+decorator_End
+	:  <NEWLINE>
+	|  "(" decorator_End_Par
+	;
+	
+decorator_End_Par
+	:  ")"<NONE> <NEWLINE>
+	|  arglist ")" <NEWLINE>  
 	;
 
 @FSTExportName("{<NAME>}({parameters})")

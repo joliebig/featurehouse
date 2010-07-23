@@ -1094,7 +1094,23 @@ FSTInfo decorators(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo decorator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"@" n=dotted_name(true){ replaceName(n);} <NEWLINE> {return productionEndTerminal("decorator","-","-","Replacement","Default",first,token);}
+	"@" n=dotted_name(true){ replaceName(n);} n=decorator_End(true){ replaceName(n);} {return productionEndTerminal("decorator","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo decorator_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<NEWLINE> {return productionEndTerminal("decorator_End1","-","-","Replacement","Default",first,token);}
+ |
+	"(" n=decorator_End_Par(true){ replaceName(n);} {return productionEndTerminal("decorator_End2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo decorator_End_Par(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	")"  <NEWLINE> {return productionEndTerminal("decorator_End_Par1","-","-","Replacement","Default",first,token);}
+ |
+	n=arglist(true){ replaceName(n);} ")" <NEWLINE> {return productionEndTerminal("decorator_End_Par2","-","-","Replacement","Default",first,token);}
 
  )  }
 
