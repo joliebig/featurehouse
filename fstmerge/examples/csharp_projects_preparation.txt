@@ -1,0 +1,31 @@
+This file holds all information about the preparation of csharp projects for the semi-structured-merge analysis.
+
+1. utf8 to latin1 conversion (generated javacc parser out of gcide grammar cannot handle utf8 encoded files)
+2. substituted '>>' in nested generic types to '> >' to resolve ambiguity with right shift operator
+3. removed #region, #endregion, #pragma
+4. removed #if, #ifdef, #endif by applying the preprocessor cpp; no values for defines are given
+5. errorneous code
+ e.g.
+   659             display.
+   660        }
+   is transformed into
+   659             //ERROR display.
+   660        }
+6. not parseable code:
+   52             ICollection<Type> supportedTypes =   // implicit array type
+   53                 new [] { ...
+   is transformed into
+   52             ICollection<Type> supportedTypes =
+   53                 new ICollection<Type>[] {
+ or
+   275            mnuBitmapChildren = new List<MenuItem> { mnuItem };  // optional constructor brackets
+   is transformed into
+   275            mnuBitmapChildren = new List<MenuItem>() { mnuItem };
+ or
+   2202     int hmax = (int)Math.Floor((double)_recHex.Width/(double)_charSize.Width);  // cast in division expression
+   is transformed into
+   2202     int hmax = (int)Math.Floor((double)_recHex.Width/1*(double)_charSize.Width);
+ or
+   39         private void HackerWindow_LogUpdated(KeyValuePair<DateTime, string>? value)   // nullable type
+   is transformed into
+   39         private void HackerWindow_LogUpdated(KeyValuePair<DateTime, string> value)
