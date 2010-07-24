@@ -1,6 +1,0 @@
-from misc import WicdError
-
-
-
-
-
