@@ -1080,9 +1080,9 @@ FSTInfo decorated(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo decorated_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
  |
-	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
+	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("decorated_End2","{classdef}","{classdef}");}
 
  )  }
 

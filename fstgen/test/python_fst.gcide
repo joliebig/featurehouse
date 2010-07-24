@@ -844,8 +844,8 @@ decorated
 	;
 
 decorated_End
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
-	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
+	|  @FSTNonTerminal(name="{classdef}") classdef
 	;
 
 decorators
@@ -903,7 +903,7 @@ Field
 
 @FSTInline
 suite
-	:  <NEWLINE> <INDENT> (stmt)+ <DEDENT>
+	:  <NEWLINE> <INDENT> @+ (stmt)+ @- <DEDENT>
 	;
 
 arglist

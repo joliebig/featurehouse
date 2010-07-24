@@ -2940,13 +2940,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       n = funcdef(true);
                          replaceName("funcdef", n);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+                                                                        {if (true) return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
       break;
     case CLASS:
       n = classdef(inTerminal);
                                 replaceName("classdef", n);
                                                               replaceName(n);
-                                                                                {if (true) return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
+                                                                                {if (true) return productionEndNonTerminal("decorated_End2","{classdef}","{classdef}");}
       break;
     default:
       jj_la1[89] = jj_gen;
