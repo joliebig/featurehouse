@@ -838,7 +838,7 @@ compound_stmt
 	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
-@FSTNonTerminal
+@FSTNonTerminal(name="{decorated_End}")
 decorated
 	:  decorators decorated_End
 	;
@@ -878,7 +878,7 @@ funcdef_End
 
 @FSTNonTerminal(name="{ClassName}")
 classdef
-	:  "class" ClassName ["(" testlist ")"] ":" @! classdef_End
+	:  "class" ClassName ["(" testlist ")"] ":" @! (classdef_End)+
 	;
 
 @FSTExportName("{<NAME>}")
@@ -887,8 +887,8 @@ ClassName
 	;
 
 classdef_End
-	:  @FSTNonTerminal @+ small_stmt <NEWLINE>
-	|  @FSTNonTerminal @+ suite
+	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") @+ small_stmt <NEWLINE>
+	|  @FSTNonTerminal() @+ suite
 	;
 
 @FSTExportName("{Field}")

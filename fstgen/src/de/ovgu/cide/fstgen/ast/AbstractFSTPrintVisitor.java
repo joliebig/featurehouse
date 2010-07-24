@@ -139,7 +139,7 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		if (result.size() > 1) {
 			throw new RuntimeException(
 					"Cannot handle multple FST nodes of type " + childType
-							+ " here (" + result.get(0).getName() + " and " + result.get(1).getName() + ")");
+							+ " here (" + result.get(0).getName() + ":" + result.get(0).getType() + " and " + result.get(1).getName() + ":" + result.get(0).getType() + " parent: " + nonTerminal.toString() +  ")");
 		}
 		if (result.size() == 1)
 			return result.get(0);
