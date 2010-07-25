@@ -451,7 +451,7 @@ fplist
 @FSTInline
 stmt
 	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
-	| @FSTNonTerminal(name="{compound_stmt}") compound_stmt @!
+	| @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -593,7 +593,7 @@ if_stmt
 	;
 
 if_stmt_End
-	:  small_stmt <NEWLINE>
+	:  small_stmt <NEWLINE> (elif_stmt)* [else_stmt]
 	|  suite (elif_stmt)* [else_stmt]
 	;
 
@@ -620,7 +620,12 @@ while_stmt
 	;
 
 for_stmt
-	:  "for" exprlist "in" SmartTestList ":" suite [else_stmt]
+	:  "for" exprlist "in" SmartTestList ":" for_stmt_End
+	;
+
+for_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite [else_stmt]
 	;
 
 try_stmt

@@ -458,7 +458,7 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=simple_stmt(inTerminal){ replaceName("simple_stmt", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt1","{simple_stmt}","{simple_stmt}");}
  |
-	n=compound_stmt(inTerminal){ replaceName("compound_stmt", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt2","{compound_stmt}","{compound_stmt}");}
+	(n=compound_stmt(inTerminal){ replaceName("compound_stmt", n);}{ replaceName(n);})+ {return productionEndNonTerminal("stmt2","{compound_stmt}","{compound_stmt}");}
 
  )  }
 
@@ -682,7 +682,7 @@ FSTInfo if_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo if_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=small_stmt(true){ replaceName(n);} <NEWLINE> {return productionEndTerminal("if_stmt_End1","-","-","Replacement","Default",first,token);}
+	n=small_stmt(true){ replaceName(n);} <NEWLINE> (n=elif_stmt(true){ replaceName(n);})* [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("if_stmt_End1","-","-","Replacement","Default",first,token);}
  |
 	n=suite(true){ replaceName(n);} (n=elif_stmt(true){ replaceName(n);})* [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("if_stmt_End2","-","-","Replacement","Default",first,token);}
 
@@ -724,7 +724,15 @@ FSTInfo while_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo for_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"for" n=exprlist(true){ replaceName(n);} "in" n=SmartTestList(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("for_stmt","-","-","Replacement","Default",first,token);}
+	"for" n=exprlist(true){ replaceName(n);} "in" n=SmartTestList(true){ replaceName(n);} ":" n=for_stmt_End(true){ replaceName(n);} {return productionEndTerminal("for_stmt","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo for_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=small_stmt(true){ replaceName(n);} <NEWLINE> {return productionEndTerminal("for_stmt_End1","-","-","Replacement","Default",first,token);}
+ |
+	n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("for_stmt_End2","-","-","Replacement","Default",first,token);}
 
  )  }
 
