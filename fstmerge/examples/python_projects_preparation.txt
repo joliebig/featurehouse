@@ -1,6 +1,7 @@
 1. conversion utf8 into latin1
 2. removing comments; # i'm a comment
-3. removing erroreous code
+3. adding pass statement into empty python files such as __init__.py
+4. removing erroreous code
    wicd/rev519-557/right-branch-557/wicd/xmlui/xmlui.py
        63,71d62
        <     def _log(_debug(self):
