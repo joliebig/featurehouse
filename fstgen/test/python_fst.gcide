@@ -448,10 +448,10 @@ fplist
 	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
 
-@FSTNonTerminal
+@FSTInline
 stmt
-	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
-	|  @FSTInline() (compound_stmt)+ @!
+	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	| @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -644,16 +644,7 @@ try_stmt_End
 	;
 
 except_clause
-	:  "except" [testexceptclause] ":" except_clause_End [else_stmt]
-	;
-
-testexceptclause
-	:  test [testexceptclause_End]
-	;
-
-testexceptclause_End
-	:  ("," test)+
-	|  "as" test
+	:  "except" [testcommatest] ":" except_clause_End [else_stmt]
 	;
 
 except_clause_End
@@ -779,7 +770,6 @@ atomtrailerEnd
 
 atom
 	:  LL(2) "(" ")" <NONE>
-	|  LL(2) Name "=" test
 	|  "(" [SmartTestList] ")" 
 	|  <LBRACKET> [listmaker] "]" 
 	|  "{" [dictmaker] "}"
@@ -848,7 +838,6 @@ list_if
 	:  "if" test
 	;
 
-@FSTInline
 compound_stmt
 	:  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt

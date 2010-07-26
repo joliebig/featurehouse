@@ -458,7 +458,7 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=simple_stmt(inTerminal){ replaceName("simple_stmt", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt1","{simple_stmt}","{simple_stmt}");}
  |
-	(n=compound_stmt(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("stmt2","-","-");}
+	(n=compound_stmt(inTerminal){ replaceName("compound_stmt", n);}{ replaceName(n);})+ {return productionEndNonTerminal("stmt2","{compound_stmt}","{compound_stmt}");}
 
  )  }
 
@@ -762,21 +762,7 @@ FSTInfo try_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo except_clause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"except" [n=testexceptclause(true){ replaceName(n);}] ":" n=except_clause_End(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("except_clause","-","-","Replacement","Default",first,token);}
-
- )  }
-
-FSTInfo testexceptclause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=test(true){ replaceName(n);} [n=testexceptclause_End(true){ replaceName(n);}] {return productionEndTerminal("testexceptclause","-","-","Replacement","Default",first,token);}
-
- )  }
-
-FSTInfo testexceptclause_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	("," n=test(true){ replaceName(n);})+ {return productionEndTerminal("testexceptclause_End1","-","-","Replacement","Default",first,token);}
- |
-	"as" n=test(true){ replaceName(n);} {return productionEndTerminal("testexceptclause_End2","-","-","Replacement","Default",first,token);}
+	"except" [n=testcommatest(true){ replaceName(n);}] ":" n=except_clause_End(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("except_clause","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -978,21 +964,19 @@ FSTInfo atom(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "(" ")"  {return productionEndTerminal("atom1","-","-","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(2) n=Name(true){ replaceName(n);} "=" n=test(true){ replaceName(n);} {return productionEndTerminal("atom2","-","-","Replacement","Default",first,token);}
+	"(" [n=SmartTestList(true){ replaceName(n);}] ")" {return productionEndTerminal("atom2","-","-","Replacement","Default",first,token);}
  |
-	"(" [n=SmartTestList(true){ replaceName(n);}] ")" {return productionEndTerminal("atom3","-","-","Replacement","Default",first,token);}
+	<LBRACKET> [n=listmaker(true){ replaceName(n);}] "]" {return productionEndTerminal("atom3","-","-","Replacement","Default",first,token);}
  |
-	<LBRACKET> [n=listmaker(true){ replaceName(n);}] "]" {return productionEndTerminal("atom4","-","-","Replacement","Default",first,token);}
+	"{" [n=dictmaker(true){ replaceName(n);}] "}" {return productionEndTerminal("atom4","-","-","Replacement","Default",first,token);}
  |
-	"{" [n=dictmaker(true){ replaceName(n);}] "}" {return productionEndTerminal("atom5","-","-","Replacement","Default",first,token);}
+	"`" n=SmartTestList(true){ replaceName(n);} "`" {return productionEndTerminal("atom5","-","-","Replacement","Default",first,token);}
  |
-	"`" n=SmartTestList(true){ replaceName(n);} "`" {return productionEndTerminal("atom6","-","-","Replacement","Default",first,token);}
+	n=Name(true){ replaceName(n);} {return productionEndTerminal("atom6","-","-","Replacement","Default",first,token);}
  |
-	n=Name(true){ replaceName(n);} {return productionEndTerminal("atom7","-","-","Replacement","Default",first,token);}
+	n=Number(true){ replaceName(n);} {return productionEndTerminal("atom7","-","-","Replacement","Default",first,token);}
  |
-	n=Number(true){ replaceName(n);} {return productionEndTerminal("atom8","-","-","Replacement","Default",first,token);}
- |
-	n=StringNode(true){ replaceName(n);} (n=StringNode(true){ replaceName(n);})* {return productionEndTerminal("atom9","-","-","Replacement","Default",first,token);}
+	n=StringNode(true){ replaceName(n);} (n=StringNode(true){ replaceName(n);})* {return productionEndTerminal("atom8","-","-","Replacement","Default",first,token);}
 
  )  }
 
