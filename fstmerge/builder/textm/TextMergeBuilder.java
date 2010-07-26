@@ -32,7 +32,7 @@ public class TextMergeBuilder extends ArtifactBuilder {
 		String docName = st.nextToken();
 		FSTNonTerminal rootDocument = new FSTNonTerminal(getSuffix() + ".merge-File", docName + ".merge");
 		parent.addChild(rootDocument);
-		FSTTerminal contentNode = new FSTTerminal(getSuffix() + "-Content", docName, content, "", StringConcatenation.COMPOSITION_RULE_NAME);
+		FSTTerminal contentNode = new FSTTerminal(getSuffix() + "-Content", docName, content, "", StringConcatenation.COMPOSITION_RULE_NAME, "LineBased");
 		rootDocument.addChild(contentNode);
 	}
 }
