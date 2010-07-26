@@ -34,10 +34,7 @@ public class LineBasedMerger implements MergerInterface {
 		//System.out.println("--------------------");
 
 		// SPECIAL CONFLICT HANDLER
-		if(!(node.getType().equals("MethodDecl") || 
-			node.getType().equals("ConstructorDecl") || 
-			node.getType().contains("-Content") ||
-			node.getType().equals("class_member_declarationEnd6") ||
+		if(!(node.getType().contains("-Content") ||
 			node.getMergingMechanism().equals("LineBased")
 		)) {
 			if(tokens[0].length() == 0 && tokens[1].length() == 0 && tokens[2].length() == 0) {
