@@ -456,23 +456,9 @@ FSTInfo fplist(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=simple_stmt(inTerminal){ replaceName("simple_stmt", n);}{ replaceName(n);})+ {return productionEndNonTerminal("X0","{simple_stmt}","{simple_stmt}");}
+	n=simple_stmt(inTerminal){ replaceName("simple_stmt", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt1","{simple_stmt}","{simple_stmt}");}
  |
-	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt2","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=while_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt3","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt4","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=try_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt5","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=with_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt6","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
- |
-	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
- |
-	n=decorated(inTerminal){ replaceName("decorated", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt9","{decorated}","{decorated}");}
+	(n=compound_stmt(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("stmt2","-","-");}
 
  )  }
 

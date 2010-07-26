@@ -448,17 +448,10 @@ fplist
 	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
 
-@FSTInline
+@FSTNonTerminal
 stmt
-	: @FSTNonTerminal(name="{simple_stmt}") (simple_stmt)+ @! :: X0
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
-	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
-	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
-	|  @FSTNonTerminal(name="{decorated}") decorated
+	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	|  @FSTInline() (compound_stmt)+ @!
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -855,6 +848,7 @@ list_if
 	:  "if" test
 	;
 
+@FSTInline
 compound_stmt
 	:  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
