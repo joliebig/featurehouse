@@ -994,7 +994,7 @@ class_declaration
 	:  "class" identifier [type_parameter_list] (class_base)? [type_parameter_constraint_clauses] class_body (";"<NONE>)?
 	;
 
-@FSTTerminal(name="class_modifiers", merge="SemanticConflict")
+@FSTTerminal(name="class_modifiers", merge="SemanticConflict"
 class_modifiers
 	:  (class_modifier)+
 	;
@@ -1092,7 +1092,7 @@ class_member_declarationEnd
 	|  @FSTTerminal(name="{destructor_declaration}", merge="SemanticConflict") destructor_declaration		//"~"   identifier   "("   ")"    body
 	|  @FSTTerminal(name="{conversion_operator_declaration}", merge="SemanticConflict") conversion_operator_declaration		
 	|  @FSTNonTerminal(name="{type_declaration}") type_declaration
-	|  @FSTTerminal(name="{type}{typeEnd}", merge="LineBased") type typeEnd
+	|  @FSTTerminal(name="{type}{typeEnd}", merge="SemanticConflict") type typeEnd
 	|  @FSTTerminal(name="{fixed_size_buffer_declaration}", merge="SemanticConflict") fixed_size_buffer_declaration
 	;
 

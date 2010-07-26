@@ -354,7 +354,7 @@ ImportDeclaration:
 ImportPackage:
 	<NONE> "." "*" ;
 
-@FSTTerminal(merge="SemanticConflict")
+@FSTTerminal(merge="SemanticConflict)
 Modifiers:
   (LL(2) Modifier)*
 ;

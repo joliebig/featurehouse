@@ -354,7 +354,7 @@ ImportDeclaration:
 ImportPackage:
 	<NONE> "." "*" ;
 
-@FSTTerminal(merge="SemanticConflict")
+@FSTTerminal(compose="ModifierListSpecialization")
 Modifiers:
   (LL(2) Modifier)*
 ;
@@ -419,7 +419,7 @@ ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
 ;
 
-@FSTTerminal(name="ImplList", merge="SemanticConflict")
+@FSTTerminal(name="ImplList", compose="LINE_BASED_MERGE")
 ImplementsList:
    "implements" &LI ClassOrInterfaceType  ( "," &LI ClassOrInterfaceType )*
 ;
@@ -481,15 +481,15 @@ ClassOrInterfaceBodyDeclaration:
   	LOOK_AHEAD("Modifiers() \"enum\"")
   	Modifiers EnumDeclaration :: InnerEnumDecl
 |
-  	@FSTTerminal(name="{ConstructorDeclaration}", merge="LineBased")
+  	@FSTTerminal(name="{ConstructorDeclaration}",compose="ConstructorConcatenation")
     LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
 	Modifiers ConstructorDeclaration :: ConstructorDecl
 |
-  	@FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict")
+  	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers FieldDeclaration :: FieldDecl
 |
-  	@FSTTerminal(name="{MethodDeclaration}", merge="LineBased")
+  	@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
 	LOOK_AHEAD(2)
   	Modifiers MethodDeclaration :: MethodDecl
 |
@@ -1175,7 +1175,7 @@ AnnotationTypeBody:
 ;
 
 AnnotationTypeMemberDeclaration:
-	@FSTTerminal(name="{<IDENTIFIER>}", merge="SemanticConflict")
+	@FSTTerminal(name="{<IDENTIFIER>}")
    	LOOK_AHEAD("Modifiers() Type() <IDENTIFIER> \"(\"")
 	Modifiers   Type <IDENTIFIER> "(" ")" [ DefaultValue ] ";" ::AnnotationMethodDecl
 |
@@ -1191,7 +1191,7 @@ AnnotationTypeMemberDeclaration:
   	LOOK_AHEAD(2)
  	Modifiers   EnumDeclaration	::AnnotationInnerEnum
 |
-	@FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict")
+	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
   	LOOK_AHEAD(1)
  	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
  |
