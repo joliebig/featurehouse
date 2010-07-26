@@ -450,8 +450,15 @@ fplist
 
 @FSTInline
 stmt
-	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
-	| @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
+	: @FSTNonTerminal(name="{simple_stmt}") (simple_stmt)+ @! :: X0
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
+	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
+	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -553,6 +560,12 @@ Import
 
 ImportFrom
 	:  dotted_name <IMPORT> ImportFromEnd
+	|  ("."<NONE>)+ ImportFrom_End
+	;
+
+ImportFrom_End
+	:   <IMPORT> ImportFromEnd
+	|   dotted_name <IMPORT> ImportFromEnd
 	;
 
 ImportFromEnd
@@ -638,7 +651,16 @@ try_stmt_End
 	;
 
 except_clause
-	:  "except" [testcommatest] ":" except_clause_End [else_stmt]
+	:  "except" [testexceptclause] ":" except_clause_End [else_stmt]
+	;
+
+testexceptclause
+	:  test [testexceptclause_End]
+	;
+
+testexceptclause_End
+	:  ("," test)+
+	|  "as" test
 	;
 
 except_clause_End
@@ -764,6 +786,7 @@ atomtrailerEnd
 
 atom
 	:  LL(2) "(" ")" <NONE>
+	|  LL(2) Name "=" test
 	|  "(" [SmartTestList] ")" 
 	|  <LBRACKET> [listmaker] "]" 
 	|  "{" [dictmaker] "}"

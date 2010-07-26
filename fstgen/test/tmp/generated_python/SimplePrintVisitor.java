@@ -26,24 +26,34 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("stmt1")) {
+		if (nonTerminal.getType().equals("X0")) {
 			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "simple_stmt");
-				if (v!=null) {
-					v.accept(this);
-				}
+			for (FSTNode v : getChildren(nonTerminal,"simple_stmt")) {
+				v.accept(this);
 			}
 			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("stmt2")) {
+		if (nonTerminal.getType().equals("ClassDefinition")) {
 			printFeatures(nonTerminal,true);
-			for (FSTNode v : getChildren(nonTerminal,"compound_stmt")) {
-				v.accept(this);
+			{
+				FSTNode v=getChild(nonTerminal, "classdef");
+				if (v!=null) {
+					v.accept(this);
+				}
 			}
-			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("stmt9")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "decorated");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -158,12 +168,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnyName18") && expectedType.equals("AnyName")) return true;
 		if (type.equals("else_stmt_End1") && expectedType.equals("else_stmt_End")) return true;
 		if (type.equals("varargslist2") && expectedType.equals("varargslist")) return true;
-		if (type.equals("stmt1") && expectedType.equals("stmt")) return true;
 		if (type.equals("AnyName30") && expectedType.equals("AnyName")) return true;
 		if (type.equals("classdef_End2") && expectedType.equals("classdef_End")) return true;
 		if (type.equals("expr_stmtEnd7") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("varargslist3") && expectedType.equals("varargslist")) return true;
+		if (type.equals("stmt9") && expectedType.equals("stmt")) return true;
 		if (type.equals("fpdef1") && expectedType.equals("fpdef")) return true;
+		if (type.equals("testexceptclause_End2") && expectedType.equals("testexceptclause_End")) return true;
 		if (type.equals("comp_op5") && expectedType.equals("comp_op")) return true;
 		if (type.equals("small_stmt1") && expectedType.equals("small_stmt")) return true;
 		if (type.equals("AnyName23") && expectedType.equals("AnyName")) return true;
@@ -173,6 +184,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("compound_stmt8") && expectedType.equals("compound_stmt")) return true;
 		if (type.equals("not_test1") && expectedType.equals("not_test")) return true;
 		if (type.equals("flow_stmt1") && expectedType.equals("flow_stmt")) return true;
+		if (type.equals("ImportFrom_End2") && expectedType.equals("ImportFrom_End")) return true;
 		if (type.equals("atomtrailerEnd1") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("StringNode5") && expectedType.equals("StringNode")) return true;
 		if (type.equals("AnyName17") && expectedType.equals("AnyName")) return true;
@@ -181,6 +193,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnyName1") && expectedType.equals("AnyName")) return true;
 		if (type.equals("varargslist1") && expectedType.equals("varargslist")) return true;
 		if (type.equals("expr_stmtEnd8") && expectedType.equals("expr_stmtEnd")) return true;
+		if (type.equals("X0") && expectedType.equals("stmt")) return true;
+		if (type.equals("testexceptclause_End1") && expectedType.equals("testexceptclause_End")) return true;
 		if (type.equals("comp_op4") && expectedType.equals("comp_op")) return true;
 		if (type.equals("AnyName10") && expectedType.equals("AnyName")) return true;
 		if (type.equals("try_stmt_End2") && expectedType.equals("try_stmt_End")) return true;
@@ -207,8 +221,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("small_stmt8") && expectedType.equals("small_stmt")) return true;
 		if (type.equals("expr_stmtEnd5") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("AnyName21") && expectedType.equals("AnyName")) return true;
-		if (type.equals("import_stmt2") && expectedType.equals("import_stmt")) return true;
 		if (type.equals("subscript3") && expectedType.equals("subscript")) return true;
+		if (type.equals("import_stmt2") && expectedType.equals("import_stmt")) return true;
 		if (type.equals("AnyName6") && expectedType.equals("AnyName")) return true;
 		if (type.equals("small_stmt3") && expectedType.equals("small_stmt")) return true;
 		if (type.equals("termEnd2") && expectedType.equals("termEnd")) return true;
@@ -219,9 +233,10 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("factor4") && expectedType.equals("factor")) return true;
 		if (type.equals("ClassDefinition") && expectedType.equals("compound_stmt")) return true;
 		if (type.equals("AnyName31") && expectedType.equals("AnyName")) return true;
+		if (type.equals("atom9") && expectedType.equals("atom")) return true;
+		if (type.equals("atomtrailerEnd3") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("expr_stmtEnd11") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("shift_exprEnd2") && expectedType.equals("shift_exprEnd")) return true;
-		if (type.equals("atomtrailerEnd3") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("StringNode3") && expectedType.equals("StringNode")) return true;
 		if (type.equals("decorator_End_Par2") && expectedType.equals("decorator_End_Par")) return true;
 		if (type.equals("AnyName19") && expectedType.equals("AnyName")) return true;
@@ -231,14 +246,15 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnyName12") && expectedType.equals("AnyName")) return true;
 		if (type.equals("comp_op2") && expectedType.equals("comp_op")) return true;
 		if (type.equals("expr_stmtEnd6") && expectedType.equals("expr_stmtEnd")) return true;
+		if (type.equals("stmt6") && expectedType.equals("stmt")) return true;
 		if (type.equals("Number3") && expectedType.equals("Number")) return true;
 		if (type.equals("factor3") && expectedType.equals("factor")) return true;
 		if (type.equals("AnyName22") && expectedType.equals("AnyName")) return true;
 		if (type.equals("termEnd3") && expectedType.equals("termEnd")) return true;
 		if (type.equals("AnyName7") && expectedType.equals("AnyName")) return true;
 		if (type.equals("listmakerEnd2") && expectedType.equals("listmakerEnd")) return true;
-		if (type.equals("import_stmt1") && expectedType.equals("import_stmt")) return true;
 		if (type.equals("subscript2") && expectedType.equals("subscript")) return true;
+		if (type.equals("import_stmt1") && expectedType.equals("import_stmt")) return true;
 		if (type.equals("power2") && expectedType.equals("power")) return true;
 		if (type.equals("small_stmt2") && expectedType.equals("small_stmt")) return true;
 		if (type.equals("small_stmt9") && expectedType.equals("small_stmt")) return true;
@@ -246,8 +262,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Name1") && expectedType.equals("Name")) return true;
 		if (type.equals("factor1") && expectedType.equals("factor")) return true;
 		if (type.equals("StringNode2") && expectedType.equals("StringNode")) return true;
-		if (type.equals("fpdef2") && expectedType.equals("fpdef")) return true;
 		if (type.equals("atom6") && expectedType.equals("atom")) return true;
+		if (type.equals("fpdef2") && expectedType.equals("fpdef")) return true;
+		if (type.equals("stmt5") && expectedType.equals("stmt")) return true;
 		if (type.equals("decorator_End_Par1") && expectedType.equals("decorator_End_Par")) return true;
 		if (type.equals("AnyName14") && expectedType.equals("AnyName")) return true;
 		if (type.equals("small_stmt5") && expectedType.equals("small_stmt")) return true;
@@ -256,12 +273,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnyName4") && expectedType.equals("AnyName")) return true;
 		if (type.equals("compound_stmt3") && expectedType.equals("compound_stmt")) return true;
 		if (type.equals("ImportFromEnd2") && expectedType.equals("ImportFromEnd")) return true;
-		if (type.equals("if_stmt_End2") && expectedType.equals("if_stmt_End")) return true;
 		if (type.equals("flow_stmt4") && expectedType.equals("flow_stmt")) return true;
-		if (type.equals("FunctionDefinition") && expectedType.equals("compound_stmt")) return true;
-		if (type.equals("expr_stmtEnd3") && expectedType.equals("expr_stmtEnd")) return true;
-		if (type.equals("termEnd4") && expectedType.equals("termEnd")) return true;
+		if (type.equals("if_stmt_End2") && expectedType.equals("if_stmt_End")) return true;
+		if (type.equals("ImportFrom1") && expectedType.equals("ImportFrom")) return true;
 		if (type.equals("atomtrailerEnd4") && expectedType.equals("atomtrailerEnd")) return true;
+		if (type.equals("expr_stmtEnd3") && expectedType.equals("expr_stmtEnd")) return true;
+		if (type.equals("FunctionDefinition") && expectedType.equals("compound_stmt")) return true;
+		if (type.equals("termEnd4") && expectedType.equals("termEnd")) return true;
 		if (type.equals("for_stmt_End2") && expectedType.equals("for_stmt_End")) return true;
 		if (type.equals("Number2") && expectedType.equals("Number")) return true;
 		if (type.equals("power1") && expectedType.equals("power")) return true;
@@ -276,17 +294,20 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("decorated_End2") && expectedType.equals("decorated_End")) return true;
 		if (type.equals("expr_stmtEnd13") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("atom7") && expectedType.equals("atom")) return true;
+		if (type.equals("stmt4") && expectedType.equals("stmt")) return true;
 		if (type.equals("print_stmt2") && expectedType.equals("print_stmt")) return true;
 		if (type.equals("AnyName13") && expectedType.equals("AnyName")) return true;
 		if (type.equals("small_stmt4") && expectedType.equals("small_stmt")) return true;
-		if (type.equals("if_stmt_End1") && expectedType.equals("if_stmt_End")) return true;
 		if (type.equals("flow_stmt5") && expectedType.equals("flow_stmt")) return true;
+		if (type.equals("if_stmt_End1") && expectedType.equals("if_stmt_End")) return true;
 		if (type.equals("AnyName5") && expectedType.equals("AnyName")) return true;
 		if (type.equals("Number1") && expectedType.equals("Number")) return true;
 		if (type.equals("compound_stmt4") && expectedType.equals("compound_stmt")) return true;
+		if (type.equals("ImportFrom2") && expectedType.equals("ImportFrom")) return true;
 		if (type.equals("AnyName20") && expectedType.equals("AnyName")) return true;
 		if (type.equals("expr_stmtEnd4") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("comp_op8") && expectedType.equals("comp_op")) return true;
+		if (type.equals("stmt3") && expectedType.equals("stmt")) return true;
 		if (type.equals("AnyName26") && expectedType.equals("AnyName")) return true;
 		if (type.equals("AnyName16") && expectedType.equals("AnyName")) return true;
 		if (type.equals("small_stmt7") && expectedType.equals("small_stmt")) return true;
@@ -299,6 +320,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("expr_stmtEnd1") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("try_stmt_End1") && expectedType.equals("try_stmt_End")) return true;
 		if (type.equals("compound_stmt1") && expectedType.equals("compound_stmt")) return true;
+		if (type.equals("ImportFrom_End1") && expectedType.equals("ImportFrom_End")) return true;
 		if (type.equals("comp_op7") && expectedType.equals("comp_op")) return true;
 		if (type.equals("atom3") && expectedType.equals("atom")) return true;
 		if (type.equals("stmt2") && expectedType.equals("stmt")) return true;
