@@ -450,8 +450,8 @@ fplist
 
 @FSTInline
 stmt
-	: @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
-	| @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
+	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	|  @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -644,7 +644,16 @@ try_stmt_End
 	;
 
 except_clause
-	:  "except" [testcommatest] ":" except_clause_End [else_stmt]
+	:  "except" [except_clause_test] ":" except_clause_End [else_stmt]
+	;
+
+except_clause_test
+	:  test [except_clause_test_End]
+	;
+
+except_clause_test_End
+	:  "," test
+	|  "as" test
 	;
 
 except_clause_End
@@ -758,7 +767,7 @@ powerfactor
 	;
 
 atomtrailer
-	:  atom ( atomtrailerEnd)*
+	:  atom (atomtrailerEnd)*
 	;
     
 atomtrailerEnd
@@ -770,6 +779,7 @@ atomtrailerEnd
 
 atom
 	:  LL(2) "(" ")" <NONE>
+	|  LL(2) Name "=" test
 	|  "(" [SmartTestList] ")" 
 	|  <LBRACKET> [listmaker] "]" 
 	|  "{" [dictmaker] "}"
