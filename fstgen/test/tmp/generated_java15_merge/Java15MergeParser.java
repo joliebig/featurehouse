@@ -66,11 +66,10 @@ public class Java15MergeParser extends AbstractFSTParser implements Java15MergeP
         break label_2;
       }
       n = TypeDeclaration(inTerminal);
-                                                                                                                                                  replaceName("TypeDeclaration", n);
-                                                                                                                                                                                       replaceName(n);
+                                                                                                                                                  replaceName(n);
     }
     jj_consume_token(0);
-                                                                                                                                                                                                                 {if (true) return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
+                                                                                                                                                                            {if (true) return productionEndNonTerminal("CompilationUnit","-","-");}
     throw new Error("Missing return statement in function");
   }
 

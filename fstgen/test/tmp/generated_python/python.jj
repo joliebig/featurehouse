@@ -194,11 +194,11 @@ SPECIAL_TOKEN : {
 }
 
 
-<DEFAULT> SKIP: /* COMMENTS */ {
-	<TRAILING_COMMENT: "#" (~["\n","\r"])*>
+<DEFAULT> SPECIAL_TOKEN: /* COMMENTS */ {
+	<TRAILING_COMMENT: "#" (~["\n","\r"])* (<NEWLINE>)* >
 }
 
-<INDENTING, INDENTATION_UNCHANGED> SKIP: /* COMMENTS */ {
+<INDENTING, INDENTATION_UNCHANGED> SPECIAL_TOKEN: /* COMMENTS */ {
 	<SINGLE_LINE_COMMENT: "#" (~["\n","\r"])* ("\r\n" | "\n" | "\r")> {
 		indenting(0);
 	}

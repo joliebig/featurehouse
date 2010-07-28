@@ -333,7 +333,7 @@ GRAMMARSTART
  * Program structuring syntax follows.
  */
 
-@FSTNonTerminal(name="{TypeDeclaration}")
+@FSTNonTerminal()
 CompilationUnit:
   [ PackageDeclaration ]
   ( ImportDeclaration )*
