@@ -1066,7 +1066,7 @@ FSTInfo SmartTestList(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo testlist(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=test(true){ replaceName(n);} (LOOKAHEAD(2) "," n=test(true){ replaceName(n);})* ["," ] {return productionEndTerminal("testlist","-","-","Replacement","Default",first,token);}
+	n=test(true){ replaceName(n);} (LOOKAHEAD(2) "," n=test(true){ replaceName(n);})* ["," ] {return productionEndTerminal("testlist","-","{TOSTRING}","Replacement","Default",first,token);}
 
  )  }
 
@@ -1166,7 +1166,7 @@ FSTInfo funcdef_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo classdef(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"class" n=ClassName(inTerminal){ replaceName("ClassName", n);}{ replaceName(n);} ["(" n=testlist(inTerminal){ replaceName(n);} ")"] ":" (n=classdef_End(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("classdef","{ClassName}","{ClassName}");}
+	"class" n=ClassName(inTerminal){ replaceName("ClassName", n);}{ replaceName(n);} ["(" n=testlist(inTerminal){ replaceName("testlist", n);}{ replaceName(n);} ")"] ":" (n=classdef_End(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("classdef","{ClassName}({testlist})","{ClassName}({testlist})");}
 
  )  }
 

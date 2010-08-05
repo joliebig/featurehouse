@@ -831,6 +831,7 @@ SmartTestList
 	:  test (LL(2) "," test)* [","<NONE>]
 	;
 
+@FSTExportName("{TOSTRING}")
 testlist
 	:  test (LL(2) "," test)* [","<NONE>]
 	;
@@ -897,7 +898,7 @@ funcdef_End
 	|  suite
 	;
 
-@FSTNonTerminal(name="{ClassName}")
+@FSTNonTerminal(name="{ClassName}({testlist})")
 classdef
 	:  "class" ClassName ["(" testlist ")"] ":" @! (classdef_End)+
 	;

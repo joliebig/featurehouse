@@ -3081,7 +3081,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[94] = jj_gen;
       ;
     }
-                                                                                                  {if (true) return productionEndTerminal("testlist","-","-","Replacement","Default",first,token);}
+                                                                                                  {if (true) return productionEndTerminal("testlist","-","{TOSTRING}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3473,7 +3473,8 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     case LPAREN:
       jj_consume_token(LPAREN);
       n = testlist(inTerminal);
-                                                                                                                      replaceName(n);
+                                                                                                                      replaceName("testlist", n);
+                                                                                                                                                    replaceName(n);
       jj_consume_token(RPAREN);
       break;
     default:
@@ -3484,7 +3485,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     label_38:
     while (true) {
       n = classdef_End(inTerminal);
-                                                                                                                                                                             replaceName(n);
+                                                                                                                                                                                                           replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NEWLINE:
       case LPAREN:
@@ -3531,7 +3532,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         break label_38;
       }
     }
-                                                                                                                                                                                                 {if (true) return productionEndNonTerminal("classdef","{ClassName}","{ClassName}");}
+                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("classdef","{ClassName}({testlist})","{ClassName}({testlist})");}
     throw new Error("Missing return statement in function");
   }
 
