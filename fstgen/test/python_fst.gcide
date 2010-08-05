@@ -194,11 +194,11 @@ SPECIAL_TOKEN : {
 }
 
 
-<DEFAULT> SPECIAL_TOKEN: /* COMMENTS */ {
-	<TRAILING_COMMENT: "#" (~["\n","\r"])* (<NEWLINE>)* >
+<DEFAULT> SKIP: /* COMMENTS */ {
+	<TRAILING_COMMENT: "#" (~["\n","\r"])*>
 }
 
-<INDENTING, INDENTATION_UNCHANGED> SPECIAL_TOKEN: /* COMMENTS */ {
+<INDENTING, INDENTATION_UNCHANGED> SKIP: /* COMMENTS */ {
 	<SINGLE_LINE_COMMENT: "#" (~["\n","\r"])* ("\r\n" | "\n" | "\r")> {
 		indenting(0);
 	}
@@ -412,7 +412,7 @@ GRAMMARSTART
 
 @FSTNonTerminal
 file_input
-	:  (stmt @!)* <EOF>
+	:  (<NEWLINE>)? (stmt @!)* <EOF>
 	;
 
 @FSTExportName("{varargslist}")
@@ -448,10 +448,16 @@ fplist
 	:  fpdef (LL(2) "," fpdef)* [","<NONE>]
 	;
 
-@FSTInline
 stmt
 	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
-	|  @FSTNonTerminal(name="{compound_stmt}") (compound_stmt)+ @!
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef :: FunctionDefinition
+	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
+	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -563,7 +569,7 @@ ImportFrom_End
 
 ImportFromEnd
 	:  "*"
-	|  import_as_name ("," import_as_name)*
+	|  ["("<NONE>] import_as_name ("," import_as_name)* [")"<NONE>]
 	;
 
 dotted_as_name
@@ -622,7 +628,12 @@ else_stmt_End
 	;
 
 while_stmt
-	:  "while" test ":" suite [else_stmt]
+	:  "while" test ":" while_stmt_End
+	;
+
+while_stmt_End
+	:  small_stmt <NEWLINE>
+	|  suite [else_stmt]
 	;
 
 for_stmt
@@ -848,17 +859,6 @@ list_if
 	:  "if" test
 	;
 
-compound_stmt
-	:  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
-	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
-	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
-	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
-	|  @FSTNonTerminal(name="{decorated}") decorated
-	;
-
 @FSTNonTerminal(name="{decorated_End}")
 decorated
 	:  decorators decorated_End
@@ -909,7 +909,35 @@ ClassName
 
 classdef_End
 	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") @+ small_stmt <NEWLINE>
-	|  @FSTNonTerminal() @+ suite
+	|  @FSTNonTerminal() @+ classsuite
+	;
+
+@FSTInline
+classsuite
+	:  <NEWLINE> <INDENT> @+ (classsimple_stmt)+ @- <DEDENT>
+	;
+
+@FSTNonTerminal(name="{classsmall_stmt}")
+classsimple_stmt
+	:  classsmall_stmt (<NEWLINE>)? @!
+	;
+
+classsmall_stmt
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef
+	|  @FSTNonTerminal(name="{classdef}") classdef
+	|  @FSTNonTerminal(name="{decorated}") decorated
+	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
+	|  @FSTTerminal(name="{AUTO}") expr_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") print_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") del_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") pass_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") flow_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") import_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") global_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") exec_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") assert_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
+	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	;
 
 @FSTExportName("{Field}")
@@ -919,7 +947,7 @@ FieldDeclaration
 	
 @FSTExportName("{<NAME>}")
 Field
-	:  <NAME> "=" expr
+	:  <NAME> "=" SmartTestList
 	;
 
 @FSTInline

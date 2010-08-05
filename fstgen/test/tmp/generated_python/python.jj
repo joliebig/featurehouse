@@ -194,11 +194,11 @@ SPECIAL_TOKEN : {
 }
 
 
-<DEFAULT> SPECIAL_TOKEN: /* COMMENTS */ {
-	<TRAILING_COMMENT: "#" (~["\n","\r"])* (<NEWLINE>)* >
+<DEFAULT> SKIP: /* COMMENTS */ {
+	<TRAILING_COMMENT: "#" (~["\n","\r"])*>
 }
 
-<INDENTING, INDENTATION_UNCHANGED> SPECIAL_TOKEN: /* COMMENTS */ {
+<INDENTING, INDENTATION_UNCHANGED> SKIP: /* COMMENTS */ {
 	<SINGLE_LINE_COMMENT: "#" (~["\n","\r"])* ("\r\n" | "\n" | "\r")> {
 		indenting(0);
 	}
@@ -402,7 +402,7 @@ MORE : /* Strings */ {
 }
 FSTInfo file_input(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=stmt(inTerminal){ replaceName(n);})* <EOF> {return productionEndNonTerminal("file_input","-","-");}
+	[<NEWLINE>] (n=stmt(inTerminal){ replaceName(n);})* <EOF> {return productionEndNonTerminal("file_input","-","-");}
 
  )  }
 
@@ -458,7 +458,21 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=simple_stmt(inTerminal){ replaceName("simple_stmt", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt1","{simple_stmt}","{simple_stmt}");}
  |
-	(n=compound_stmt(inTerminal){ replaceName("compound_stmt", n);}{ replaceName(n);})+ {return productionEndNonTerminal("stmt2","{compound_stmt}","{compound_stmt}");}
+	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt2","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=while_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt3","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt4","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=try_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt5","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=with_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt6","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+ |
+	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
+ |
+	n=decorated(inTerminal){ replaceName("decorated", n);}{ replaceName(n);} {return productionEndNonTerminal("stmt9","{decorated}","{decorated}");}
 
  )  }
 
@@ -638,7 +652,7 @@ FSTInfo ImportFromEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"*"  {return productionEndTerminal("ImportFromEnd1","-","-","Replacement","Default",first,token);}
  |
-	n=import_as_name(true){ replaceName(n);} ("," n=import_as_name(true){ replaceName(n);})* {return productionEndTerminal("ImportFromEnd2","-","-","Replacement","Default",first,token);}
+	["(" ] n=import_as_name(true){ replaceName(n);} ("," n=import_as_name(true){ replaceName(n);})* [")" ] {return productionEndTerminal("ImportFromEnd2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -728,7 +742,15 @@ FSTInfo else_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo while_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"while" n=test(true){ replaceName(n);} ":" n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("while_stmt","-","-","Replacement","Default",first,token);}
+	"while" n=test(true){ replaceName(n);} ":" n=while_stmt_End(true){ replaceName(n);} {return productionEndTerminal("while_stmt","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo while_stmt_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=small_stmt(true){ replaceName(n);} <NEWLINE> {return productionEndTerminal("while_stmt_End1","-","-","Replacement","Default",first,token);}
+ |
+	n=suite(true){ replaceName(n);} [n=else_stmt(true){ replaceName(n);}] {return productionEndTerminal("while_stmt_End2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1086,26 +1108,6 @@ FSTInfo list_if(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
-FSTInfo compound_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("compound_stmt1","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=while_stmt(true){ replaceName(n);} {return productionEndTerminal("compound_stmt2","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("compound_stmt3","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=try_stmt(true){ replaceName(n);} {return productionEndTerminal("compound_stmt4","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=with_stmt(true){ replaceName(n);} {return productionEndTerminal("compound_stmt5","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
- |
-	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
- |
-	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
- |
-	n=decorated(inTerminal){ replaceName("decorated", n);}{ replaceName(n);} {return productionEndNonTerminal("compound_stmt8","{decorated}","{decorated}");}
-
- )  }
-
 FSTInfo decorated(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=decorators(inTerminal){ replaceName(n);} n=decorated_End(inTerminal){ replaceName("decorated_End", n);}{ replaceName(n);} {return productionEndNonTerminal("decorated","{decorated_End}","{decorated_End}");}
@@ -1178,7 +1180,53 @@ FSTInfo classdef_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=small_stmt(true){ replaceName("small_stmt", n);}{ replaceName(n);} <NEWLINE> {return productionEndTerminal("classdef_End1","{small_stmt}","{small_stmt}","Replacement","SemanticConflict",first,token);}
  |
-	<NEWLINE> <INDENT> (n=stmt(inTerminal){ replaceName(n);})+ <DEDENT> {return productionEndNonTerminal("classdef_End2","-","-");}
+	<NEWLINE> <INDENT> (n=classsimple_stmt(inTerminal){ replaceName(n);})+ <DEDENT> {return productionEndNonTerminal("classdef_End2","-","-");}
+
+ )  }
+
+FSTInfo classsuite(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<NEWLINE> <INDENT> (n=classsimple_stmt(true){ replaceName(n);})+ <DEDENT> {return productionEndTerminal("classsuite","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo classsimple_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=classsmall_stmt(inTerminal){ replaceName("classsmall_stmt", n);}{ replaceName(n);} [<NEWLINE>] {return productionEndNonTerminal("classsimple_stmt","{classsmall_stmt}","{classsmall_stmt}");}
+
+ )  }
+
+FSTInfo classsmall_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("classsmall_stmt1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+ |
+	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("classsmall_stmt2","{classdef}","{classdef}");}
+ |
+	n=decorated(inTerminal){ replaceName("decorated", n);}{ replaceName(n);} {return productionEndNonTerminal("classsmall_stmt3","{decorated}","{decorated}");}
+ |
+	LOOKAHEAD(Name() "=") n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("classsmall_stmt4","{FieldDeclaration}","{FieldDeclaration}","Replacement","SemanticConflict",first,token);}
+ |
+	n=expr_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt5","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+ |
+	n=print_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=del_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=pass_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=flow_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=import_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=global_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt11","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=exec_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt12","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=assert_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt13","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+ |
+	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt14","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
 
  )  }
 
@@ -1190,7 +1238,7 @@ FSTInfo FieldDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Field(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	t=<NAME>{ replaceName(new FSTInfo("<NAME>",t.image));} "=" n=expr(true){ replaceName(n);} {return productionEndTerminal("Field","-","{<NAME>}","Replacement","Default",first,token);}
+	t=<NAME>{ replaceName(new FSTInfo("<NAME>",t.image));} "=" n=SmartTestList(true){ replaceName(n);} {return productionEndTerminal("Field","-","{<NAME>}","Replacement","Default",first,token);}
 
  )  }
 
