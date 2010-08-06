@@ -1066,7 +1066,7 @@ FSTInfo SmartTestList(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo testlist(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=test(true){ replaceName(n);} (LOOKAHEAD(2) "," n=test(true){ replaceName(n);})* ["," ] {return productionEndTerminal("testlist","-","{TOSTRING}","Replacement","Default",first,token);}
+	n=test(true){ replaceName(n);} (LOOKAHEAD(2) "," n=test(true){ replaceName(n);})* ["," ] {return productionEndTerminal("testlist","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1208,25 +1208,27 @@ FSTInfo classsmall_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=expr_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt5","{AUTO}","{AUTO}","Replacement","Default",first,token);}
  |
-	n=print_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=try_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=del_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=print_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=pass_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=del_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=flow_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=pass_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=import_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=flow_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=global_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt11","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=import_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt11","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=exec_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt12","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=global_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt12","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=assert_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt13","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+	n=exec_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt13","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt14","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+	n=assert_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt14","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
  |
-	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+	n=for_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+ |
+	n=if_stmt(true){ replaceName(n);} {return productionEndTerminal("classsmall_stmt16","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
 
  )  }
 

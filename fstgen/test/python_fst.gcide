@@ -831,7 +831,6 @@ SmartTestList
 	:  test (LL(2) "," test)* [","<NONE>]
 	;
 
-@FSTExportName("{TOSTRING}")
 testlist
 	:  test (LL(2) "," test)* [","<NONE>]
 	;
@@ -929,6 +928,7 @@ classsmall_stmt
 	|  @FSTNonTerminal(name="{decorated}") decorated
 	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
 	|  @FSTTerminal(name="{AUTO}") expr_stmt
+	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") print_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") del_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") pass_stmt
