@@ -19,4 +19,9 @@ public interface ArtifactBuilderInterface {
 
 	public abstract void processFile(File inputFile) throws FileNotFoundException, ParseException;
 
+	public abstract void preprocessFile(File file) throws FileNotFoundException;
+
+	public abstract boolean isPreprocessNode();
+
+	public abstract void setPreprocessNode(boolean preprocessNode);
 }

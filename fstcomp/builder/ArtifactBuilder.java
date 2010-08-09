@@ -17,6 +17,16 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 	private LinkedList<FSTNonTerminal> featureNodes = new LinkedList<FSTNonTerminal>();
 
 	private String[] suffixes;
+	
+	private boolean preprocessNode = false;
+
+	public boolean isPreprocessNode() {
+		return preprocessNode;
+	}
+
+	public void setPreprocessNode(boolean preprocessNode) {
+		this.preprocessNode = preprocessNode;
+	}
 
 	public ArtifactBuilder(String suffix) {
 		String[] suffixes = new String[1];
@@ -87,6 +97,8 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 		featureNodes.add(newFeatureNode);
 		return newFeatureNode;
 	}
+	
+	public void preprocessFile(File inputFile) throws FileNotFoundException { }
 
 	/*
 	 * (non-Javadoc)
