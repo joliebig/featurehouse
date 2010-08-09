@@ -9,6 +9,8 @@ public class CmdLineInterpreter {
 	public static final String INPUT_OPTION_BASE_DIRECTORY = "--base-directory";
 
 	public static final String INPUT_OPTION_OUTPUT_DIRECTORY = "--output-directory";
+	
+	public static final String INPUT_OPTION_PREPROCESS_FILES = "--preprocess-files";
 
 	public static final String INPUT_OPTION_HELP = "--help";
 
@@ -17,6 +19,8 @@ public class CmdLineInterpreter {
 	public String equationBaseDirectoryName;
 
 	public String outputDirectoryName=null;
+	
+	public boolean preprocessFiles = false;
 	
 	public boolean isBaseDirectoryName = false;
 	
@@ -54,6 +58,14 @@ public class CmdLineInterpreter {
 						outputDirectoryName = args[i];
 					} else {
 						System.out.println("Error occured option: " + INPUT_OPTION_OUTPUT_DIRECTORY);
+						errorOccured = true;
+					}
+				} else if (args[i].equals(INPUT_OPTION_PREPROCESS_FILES)) {
+					i++;
+					if (i < args.length) {
+						preprocessFiles = Boolean.parseBoolean(args[i]);
+					} else {
+						System.out.println("Error occured option: " + INPUT_OPTION_PREPROCESS_FILES);
 						errorOccured = true;
 					}
 				} else if (args[i].equals(INPUT_OPTION_HELP)) {

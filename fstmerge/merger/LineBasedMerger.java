@@ -95,21 +95,22 @@ public class LineBasedMerger implements MergerInterface {
 	        	mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
 	        Runtime run = Runtime.getRuntime();
 			Process pr = run.exec(mergeCmd);
-			//pr.waitFor();
-			
+
 			BufferedReader buf = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			String line = "";
 			String res = "";
 			while ((line=buf.readLine())!=null) {
 				res += line + "\n";
 			}
-			
+			pr.getInputStream().close();
 			node.setBody(res);
 			
 			buf = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
 			while ((line=buf.readLine())!=null) {
 				System.err.println(line);
 			}
+			pr.getErrorStream().close();
+			pr.getOutputStream().close();
 	        
 		    fileVar1.delete();
 		    fileBase.delete();

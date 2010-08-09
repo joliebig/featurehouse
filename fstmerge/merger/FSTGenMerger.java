@@ -85,6 +85,9 @@ public class FSTGenMerger extends FSTGenProcessor {
 		cmd.parseCmdLineArguments(args);
 		try {
 			try {
+				if (cmd.preprocessFiles)
+					fileLoader.setPreprocessFiles(true);
+
 				fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, false);
 			} catch (cide.gparser.ParseException e1) {
 				fireParseErrorOccured(e1);
