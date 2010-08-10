@@ -1,226 +1,63 @@
-1. conversion utf8 into latin1
-2. removing comments; # i'm a comment
-3. adding pass statement into empty python files such as __init__.py
-4. removing erroreous code
-   wicd/rev519-557/right-branch-557/wicd/xmlui/xmlui.py
-       63,71d62
-       <     def _log(_debug(self):
-       <         log( 'Last top element:'
-       <         log( self.last_top_element
-       <         log( 'Last element:'
-       <         log( self.last_element
-       <         log( 'Latest text:'
-       <         log( self.latest_text
-       <         log( 'Controls:'
-       <         log( self.controls
+01. conversion utf8 into latin1
+02. removing comments, but keeping trailing comments (after statements); # i'm a comment
+03. adding pass statement into empty python files such as __init__.py
+04. changed octal values into decimal values, e.g. 0o100 -> 64
+05. indention errors
+06. rewriting list comprehension ->  matchOrder += list(filter(lambda e: isinstance(e,Optional) and e.expr in tmpOpt, self.exprs))
+07. rewriting inline if -> color = 'white' if w > 0 else 'black' into normal if ...: ... else: ... 
+08. removing soft links
+09. removing erroreous code
 
-   wicd/rev519-557/right-branch-557/wicd/prefs.py
-       9d8
-       < from logfile import log)
 
-   wicd/rev519-557/right-branch-557/wicd/networking.py
-       188d187
-       <         log( 'Setting false IP...'
-       194d192
-       <         log( 'Putting interface down'
-       204d201
-       <             log( 'Executing %s script' % (msg)
-       209d205
-       <         log( 'Flushing the routing table...'
-       216d211
-       <             log( 'Setting the broadcast address...' + self.network['broadcast']
-       224d218
-       <             log( 'Setting static IP : ' + self.network['ip']
-       226d219
-       <             log( 'Setting default gateway : ' + self.network['gateway']
-       230d222
-       <             log( "Running DHCP"
-       261d252
-       <         log( 'exiting connection thread'
-       268d258
-       <         log( "Releasing DHCP leases..."
-       273d262
-       <         log( 'Stopping wpa_supplicant and any DHCP clients'
-       288d276
-       <         log( 'Putting interface up...'
-       335d322
-       <             log( 'Setting hidden essid' + essid
-       408,409d394
-       <         log( 'Creating ad-hoc network'
-       <         log( 'Killing dhclient and wpa_supplicant'
-       412d396
-       <         log( 'Putting wireless interface down'
-       414d397
-       <         log( 'Setting mode, channel, and essid'
-       419d401
-       <             log( 'Setting encryption key'
-       421d402
-       <         log( 'Putting interface up'
-       423d403
-       <         log( 'Setting IP address'
-       464d443
-       <             log( 'Running wireless network disconnect script'
-       553,555d531
-       <         log( 'Connecting thread exiting.'
-       <         if self.debug:
-       <             log( "IP Address is: " + str(wiface.GetIP())
-       574d549
-       <             log( 'Generating psk...'
-       583d557
-       <                 log( 'WARNING: PSK generation failed!  Falling back to ' + \
-       588d561
-       <             log( 'Attempting to authenticate...'
-       646d618
-       <             log( 'Running wired disconnect script'
-       726,728d697
-       <         log( 'Connecting thread exiting.'
-       <         if self.debug:
-       <             log( "IP Address is: " + str(liface.GetIP())
-
-   wicd/rev519-557/right-branch-557/wicd/monitor.py
-       69d68
-       <             wifi_signal = self._get_log(able_sig_strength()
-       71d69
-       <             log( self.connection_lost_counter
-       94d91
-       <                 log( "Suspended."
-       120c117
-       <             log( 'Ignoring DBus Error: ' + str(e)
-       ---
-       >             pass
-       137,139d133
-       <             info = [wifi_ip, wireless.GetCurrentNetwork(iwconfig),
-       <                     str(self._get_log(able_sig_strength()),
-       <                     str(wireless.GetCurrentNetworkID(iwconfig))]
-       144d137
-       <             log( 'ERROR: Invalid state!'
-       152,161d144
-       <     def _get_log(able_sig_strength(self):
-       <         """ Get the correct signal strength format. """
-       <         try:
-       <             if daemon.GetSignalDisplayType() == 0:
-       <                 wifi_signal = int(wireless.GetCurrentSignalStrength(self.iwconfig))
-       <             else:
-       <                 wifi_signal = int(wireless.GetCurrentDBMStrength(self.iwconfig))
-       <         except TypeError:
-       <             wifi_signal = 0
-       <         return wifi_signal
-       176d158
-       <             log( 'Starting automatic reconnect process'
-       181,182d162
-       <                 log( 'Trying to reconnect to last used wireless ' + \
-       <                        'network'
-       195c175
-       <             log( 'dbus exception while attempting rescan: %s' % str(e)
-       ---
-       >             pass
-
-   wicd/rev519-557/right-branch-557/wicd/wnettools.py
-       39d38
-       <                 log( 'Setting DNS : ' + dns
-       41,42d39
-       <             else:
-       <                 log( 'DNS IP is not a valid IP address, not writing to resolv.conf'
-       51d47
-       <         log( words
-       57,58d52
-       <     if not gateway:
-       <         log( 'couldn\'t retrieve default gateway from route -n'
-       82,83d75
-       <     log( ("NeedsExternalCalls: returning default of True.  You should " +
-       <           "implement this yourself.")
-       158,160d149
-       <             if not dhcp_path:
-       <                 log( "WARNING: Could not find selected dhcp client.  Wicd " + \
-       <                       " will try to find another supported client."
-       171d159
-       <             log( "WARNING: No supported DHCP Client could be found!"
-       215d202
-       <             log( "wpa_cli not found.  Authentication will not be validated."
-       235d221
-       <         if self.verbose: log( cmd
-       245d230
-       <         if self.verbose: log( cmd
-       261d245
-       <                 log( 'WARNING: Invalid IP address found, aborting!'
-       270d253
-       <         if self.verbose: log( cmd
-       287,288d269
-       <             else:
-       <                 log( line.strip('\n')
-       309d289
-       <             log( line
-       327d306
-       <             log( line
-       337d315
-       <             log( 'DHCP connection successful'
-       340d317
-       <             log( 'DHCP connection failed'
-       350d326
-       <         if self.verbose: log( cmd
-       371d346
-       <         if self.verbose: log( cmd
-       380d354
-       <             log( 'WARNING: Invalid gateway found.  Aborting!'
-       383d356
-       <         if self.verbose: log( cmd
-       390d362
-       <         log( 'Implement this in a derived class!'
-       397d368
-       <         log( 'Implement this in a derived class!'
-       416d386
-       <         log( 'Implement this in a derived class!'
-       439d408
-       <         if self.verbose: log( cmd
-       444d412
-       <         if self.verbose: log( cmd
-       463d430
-       <         if self.verbose: log( cmd
-       483c450
-       <             log( "Couldn't determine channel number for frequency: " + str(freq)
-       ---
-       >             pass
-       521d487
-       <                         log( 'Unknown AuthMode, can\'t assign encryption_method!!'
-       537d502
-       <         if self.verbose: log( cmd
-       546d510
-       <             log( 'WARNING: Invalid channel found.  Aborting!'
-       549d512
-       <         if self.verbose: log( cmd
-       559d521
-       <         if self.verbose: log( cmd
-       574d535
-       <         if self.verbose: log( cmd
-       588d548
-       <             if self.verbose: log( cmd
-       603d562
-       <         log( 'Implement this in a derived class!'
-       621d579
-       <                         log( 'Setting up WEP'
-       624d581
-       <                         if self.verbose: log( cmd
-       628d584
-       <                             log( 'Setting up WEP'
-       632d587
-       <                             log( 'Setting up WPA-PSK'
-       636d590
-       <                             log( 'Setting up WPA2-PSK'
-       640,641d593
-       <                             log( 'Unknown AuthMode, can\'t complete ' + \
-       <                             'connection process!'
-       654d605
-       <                             if self.verbose: log( cmd
-       658d608
-       <         log( 'Implement this in a derived class!'
-       665d614
-       <         log( 'Implement this in a derived class!'
-       672d620
-       <         log( 'Implement this in a derived class!'
-       679d626
-       <         log( 'Implement this in a derived class!'
-
-   wicd/rev519-557/right-branch-557/wicd/configscript.py
-       15d14
-       < from logfile import log)
-
+projects checked:
+- spambayes
+  rev2415-2547
+  rev2415-2601
+  rev2415-2698
+  rev2415-2775
+  rev2415-2874
+  rev2415-2881
+  rev3103-3133
+  rev3250-3267
+- wicd
+  rev519-537
+  rev519-546
+  rev519-557
+  rev519-568
+  rev519-578
+- emesene
+  rev1286-1505
+- epydoc
+  rev1371-1395
+- matplotlib v0_99
+  rev7315-7404
+  rev7315-7444
+  rev7315-7531
+  rev7315-7638
+  rev7315-7734
+  rev7315-7844
+  rev7315-7944
+  rev7315-8057
+  rev7315-8135
+  rev7315-8375
+- matplotlib v1_0
+  rev8503-8562
+- exe
+  rev1889-1952
+  rev2283-2337
+  rev2283-2366
+  rev2283-2409
+  rev2669-2722
+  rev2735-2828
+  rev2735-2877
+  rev3426-3457
+  rev3426-3500
+  rev3426-3513
+- BitPim
+  rev2895-2929
+  rev2895-2954
+  rev2895-2991
+  rev2895-2993
+  rev3177-3237
+  rev3177-3275
+  rev3177-3296

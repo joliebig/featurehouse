@@ -5,27 +5,36 @@ This file holds all information about the preparation of csharp projects for the
 3. removed #region, #endregion, #pragma
 4. removed #if, #ifdef, #endif by applying the preprocessor cpp; no values for defines are given
 5. errorneous code
- e.g.
-   659             display.
-   660        }
-   is transformed into
-   659             //ERROR display.
-   660        }
-6. not parseable code:
-   52             ICollection<Type> supportedTypes =   // implicit array type
-   53                 new [] { ...
-   is transformed into
-   52             ICollection<Type> supportedTypes =
-   53                 new ICollection<Type>[] {
- or
-   275            mnuBitmapChildren = new List<MenuItem> { mnuItem };  // optional constructor brackets
-   is transformed into
-   275            mnuBitmapChildren = new List<MenuItem>() { mnuItem };
- or
-   2202     int hmax = (int)Math.Floor((double)_recHex.Width/(double)_charSize.Width);  // cast in division expression
-   is transformed into
-   2202     int hmax = (int)Math.Floor((double)_recHex.Width/1*(double)_charSize.Width);
- or
-   39         private void HackerWindow_LogUpdated(KeyValuePair<DateTime, string>? value)   // nullable type
-   is transformed into
-   39         private void HackerWindow_LogUpdated(KeyValuePair<DateTime, string> value)
+
+projects checked:
+- wicd
+  rev519-537
+  rev519-546
+  rev519-557
+  rev519-568
+  rev519-578
+- ProcessHacker
+  rev2147-2158
+- ifolder
+  rev5762-5858
+  rev6767-6829
+  rev6893-6939
+  rev7104-7145
+  rev7104-7277
+  rev7341-7353
+- Eraser
+  rev1386-1515-hyp
+  rev1385-1610
+  rev1386-1611-hyp
+  rev1501-1514
+  rev1518-1610
+  rev1518-1611
+  rev1518-1680
+  rev1518-1744
+  rev1518-1768
+  rev1518-1801
+- ccnet
+- AutoWikiBrowser
+- RSSBandit
+- worldwind
+
