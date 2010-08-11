@@ -1,10 +1,13 @@
 This file holds all information about the preparation of csharp projects for the semi-structured-merge analysis.
 
-1. utf8 to latin1 conversion (generated javacc parser out of gcide grammar cannot handle utf8 encoded files)
-2. substituted '>>' in nested generic types to '> >' to resolve ambiguity with right shift operator
-3. removed #region, #endregion, #pragma
-4. removed #if, #ifdef, #endif by applying the preprocessor cpp; no values for defines are given
-5. errorneous code
+1. substitute whitespaces in file- and foldernames with "_"
+2. convert dos files (line endings ^M to unix)
+3. utf8 to latin1 conversion (generated javacc parser out of gcide grammar cannot handle utf8 encoded files)
+4. remove comments
+5. substituted '>>' in nested generic types to '> >' to resolve ambiguity with right shift operator
+6. removed #region, #endregion, #pragma
+7. removed #if, #ifdef, #endif by applying the preprocessor cpp; no values for defines are given
+8. errorneous code
 
 projects checked:
 - wicd
