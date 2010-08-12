@@ -348,6 +348,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                              {if (true) return productionEndTerminal("stmt6","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
       break;
     case DEF:
+    case 137:
       n = funcdef(true);
                          replaceName("funcdef", n);
                                                       replaceName(n);
@@ -358,12 +359,6 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                 replaceName("classdef", n);
                                                               replaceName(n);
                                                                                 {if (true) return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
-      break;
-    case 137:
-      n = decorated(inTerminal);
-                                 replaceName("decorated", n);
-                                                                replaceName(n);
-                                                                                  {if (true) return productionEndNonTerminal("stmt9","{decorated}","{decorated}");}
       break;
     default:
       jj_la1[10] = jj_gen;
@@ -407,86 +402,105 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo small_stmt(boolean inTerminal) throws ParseException {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LPAREN:
-    case LBRACE:
-    case LBRACKET:
-    case PLUS:
-    case MINUS:
-    case NOT:
-    case NOT_BOOL:
-    case LAMBDA:
-    case AS:
-    case NAME:
-    case DECNUMBER:
-    case HEXNUMBER:
-    case OCTNUMBER:
-    case FLOAT:
-    case COMPLEX:
-    case SINGLE_STRING:
-    case SINGLE_STRING2:
-    case TRIPLE_STRING:
-    case TRIPLE_STRING2:
-    case SINGLE_USTRING:
-    case SINGLE_USTRING2:
-    case TRIPLE_USTRING:
-    case TRIPLE_USTRING2:
-    case 136:
-      n = expr_stmt(true);
+    if (jj_2_7(2147483647)) {
+      n = assignment_stmt(true);
+                                                       replaceName("assignment_stmt", n);
+                                                                                            replaceName(n);
+                                                                                                              {if (true) return productionEndTerminal("small_stmt1","{assignment_stmt}","{assignment_stmt}","Replacement","SemanticConflict",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LPAREN:
+      case LBRACE:
+      case LBRACKET:
+      case PLUS:
+      case MINUS:
+      case NOT:
+      case NOT_BOOL:
+      case LAMBDA:
+      case AS:
+      case NAME:
+      case DECNUMBER:
+      case HEXNUMBER:
+      case OCTNUMBER:
+      case FLOAT:
+      case COMPLEX:
+      case SINGLE_STRING:
+      case SINGLE_STRING2:
+      case TRIPLE_STRING:
+      case TRIPLE_STRING2:
+      case SINGLE_USTRING:
+      case SINGLE_USTRING2:
+      case TRIPLE_USTRING:
+      case TRIPLE_USTRING2:
+      case 136:
+        n = expr_stmt(true);
                            replaceName("expr_stmt", n);
                                                           replaceName(n);
-                                                                            {if (true) return productionEndTerminal("small_stmt1","{expr_stmt}","{expr_stmt}","Replacement","SemanticConflict",first,token);}
-      break;
-    case PRINT:
-      n = print_stmt(true);
+                                                                            {if (true) return productionEndTerminal("small_stmt2","{expr_stmt}","{expr_stmt}","Replacement","SemanticConflict",first,token);}
+        break;
+      case PRINT:
+        n = print_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("small_stmt2","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case DEL:
-      n = del_stmt(true);
+                                              {if (true) return productionEndTerminal("small_stmt3","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      case DEL:
+        n = del_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("small_stmt3","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case PASS:
-      n = pass_stmt(true);
-                           replaceName(n);
-                                             {if (true) return productionEndTerminal("small_stmt4","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case BREAK:
-    case CONTINUE:
-    case RETURN:
-    case YIELD:
-    case RAISE:
-      n = flow_stmt(true);
+                                            {if (true) return productionEndTerminal("small_stmt4","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      case PASS:
+        n = pass_stmt(true);
                            replaceName(n);
                                              {if (true) return productionEndTerminal("small_stmt5","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case IMPORT:
-    case FROM:
-      n = import_stmt(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("small_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case GLOBAL:
-      n = global_stmt(true);
+        break;
+      case BREAK:
+      case CONTINUE:
+      case RETURN:
+      case YIELD:
+      case RAISE:
+        n = flow_stmt(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("small_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      case IMPORT:
+      case FROM:
+        n = import_stmt(true);
                              replaceName(n);
                                                {if (true) return productionEndTerminal("small_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case EXEC:
-      n = exec_stmt(true);
-                           replaceName(n);
-                                             {if (true) return productionEndTerminal("small_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    case ASSERT:
-      n = assert_stmt(true);
+        break;
+      case GLOBAL:
+        n = global_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("small_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
-      break;
-    default:
-      jj_la1[12] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+                                               {if (true) return productionEndTerminal("small_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      case EXEC:
+        n = exec_stmt(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("small_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      case ASSERT:
+        n = assert_stmt(true);
+                             replaceName(n);
+                                               {if (true) return productionEndTerminal("small_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+        break;
+      default:
+        jj_la1[12] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo assignment_stmt(boolean inTerminal) throws ParseException {
+                                                Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    t = jj_consume_token(NAME);
+                  replaceName(new FSTInfo("<NAME>",t.image));
+    jj_consume_token(EQUAL);
+    n = SmartTestList(true);
+                                                                                          replaceName(n);
+                                                                                                            {if (true) return productionEndTerminal("assignment_stmt","-","{<NAME>}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -602,7 +616,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo print_stmt(boolean inTerminal) throws ParseException {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_7(2)) {
+    if (jj_2_8(2)) {
       jj_consume_token(PRINT);
       jj_consume_token(RSHIFT);
       n = test(true);
@@ -617,7 +631,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
       }
                                                                                                                  {if (true) return productionEndTerminal("print_stmt1","-","-","Replacement","Default",first,token);}
-    } else if (jj_2_8(2)) {
+    } else if (jj_2_9(2)) {
       jj_consume_token(PRINT);
       n = print_stmtEndA(true);
                                                      replaceName(n);
@@ -645,7 +659,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       n = test(true);
                                         replaceName(n);
-      if (jj_2_9(2)) {
+      if (jj_2_10(2)) {
         ;
       } else {
         break label_6;
@@ -670,7 +684,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                       replaceName(n);
     label_7:
     while (true) {
-      if (jj_2_10(2)) {
+      if (jj_2_11(2)) {
         ;
       } else {
         break label_7;
@@ -2262,7 +2276,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       break;
     default:
       jj_la1[67] = jj_gen;
-      if (jj_2_11(2)) {
+      if (jj_2_12(2)) {
         jj_consume_token(IS);
         jj_consume_token(NOT_BOOL);
                                  {if (true) return productionEndTerminal("comp_op10","-","-","Replacement","Default",first,token);}
@@ -2566,7 +2580,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                              replaceName(n);
     label_26:
     while (true) {
-      if (jj_2_12(2)) {
+      if (jj_2_13(2)) {
         ;
       } else {
         break label_26;
@@ -2606,7 +2620,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo atomtrailerEnd(boolean inTerminal) throws ParseException {
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_13(2)) {
+    if (jj_2_14(2)) {
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
                                {if (true) return productionEndTerminal("atomtrailerEnd1","-","-","Replacement","Default",first,token);}
@@ -2644,11 +2658,11 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo atom(boolean inTerminal) throws ParseException {
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_14(2)) {
+    if (jj_2_15(2)) {
       jj_consume_token(LPAREN);
       jj_consume_token(RPAREN);
                                {if (true) return productionEndTerminal("atom1","-","-","Replacement","Default",first,token);}
-    } else if (jj_2_15(2)) {
+    } else if (jj_2_16(2)) {
       n = Name(true);
                                    replaceName(n);
       jj_consume_token(EQUAL);
@@ -2862,7 +2876,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                            replaceName(n);
     label_29:
     while (true) {
-      if (jj_2_16(2)) {
+      if (jj_2_17(2)) {
         ;
       } else {
         break label_29;
@@ -3008,7 +3022,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                       replaceName(n);
     label_30:
     while (true) {
-      if (jj_2_17(2)) {
+      if (jj_2_18(2)) {
         ;
       } else {
         break label_30;
@@ -3036,7 +3050,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                       replaceName(n);
     label_31:
     while (true) {
-      if (jj_2_18(2)) {
+      if (jj_2_19(2)) {
         ;
       } else {
         break label_31;
@@ -3064,7 +3078,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                       replaceName(n);
     label_32:
     while (true) {
-      if (jj_2_19(2)) {
+      if (jj_2_20(2)) {
         ;
       } else {
         break label_32;
@@ -3095,7 +3109,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          replaceName(n);
     label_33:
     while (true) {
-      if (jj_2_20(2)) {
+      if (jj_2_21(2)) {
         ;
       } else {
         break label_33;
@@ -3163,7 +3177,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1[98] = jj_gen;
       label_35:
       while (true) {
-        if (jj_2_21(2)) {
+        if (jj_2_22(2)) {
           ;
         } else {
           break label_35;
@@ -3221,42 +3235,6 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo decorated(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = decorators(inTerminal);
-                                  replaceName(n);
-    n = decorated_End(inTerminal);
-                                                                                replaceName("decorated_End", n);
-                                                                                                                   replaceName(n);
-                                                                                                                                     {if (true) return productionEndNonTerminal("decorated","{decorated_End}","{decorated_End}");}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo decorated_End(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case DEF:
-      n = funcdef(true);
-                         replaceName("funcdef", n);
-                                                      replaceName(n);
-                                                                        {if (true) return productionEndTerminal("decorated_End1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
-      break;
-    case CLASS:
-      n = classdef(inTerminal);
-                                replaceName("classdef", n);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndNonTerminal("decorated_End2","{classdef}","{classdef}");}
-      break;
-    default:
-      jj_la1[100] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
   final public FSTInfo decorators(boolean inTerminal) throws ParseException {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
@@ -3269,7 +3247,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[101] = jj_gen;
+        jj_la1[100] = jj_gen;
         break label_37;
       }
     }
@@ -3304,7 +3282,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("decorator_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[102] = jj_gen;
+      jj_la1[101] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3380,7 +3358,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("decorator_End_Par2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[103] = jj_gen;
+      jj_la1[102] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3390,16 +3368,25 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo funcdef(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 137:
+      n = decorators(true);
+                             replaceName(n);
+      break;
+    default:
+      jj_la1[103] = jj_gen;
+      ;
+    }
     jj_consume_token(DEF);
     t = jj_consume_token(NAME);
-                        replaceName(new FSTInfo("<NAME>",t.image));
+                                                               replaceName(new FSTInfo("<NAME>",t.image));
     n = parameters(true);
-                                                                                         replaceName("parameters", n);
-                                                                                                                         replaceName(n);
+                                                                                                                                replaceName("parameters", n);
+                                                                                                                                                                replaceName(n);
     jj_consume_token(COLON);
     n = funcdef_End(true);
-                                                                                                                                                                   replaceName(n);
-                                                                                                                                                                                     {if (true) return productionEndTerminal("funcdef","-","{<NAME>}({parameters})","Replacement","Default",first,token);}
+                                                                                                                                                                                                          replaceName(n);
+                                                                                                                                                                                                                            {if (true) return productionEndTerminal("funcdef","-","{<NAME>}({parameters})","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3465,27 +3452,36 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo classdef(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case 137:
+      n = decorators(inTerminal);
+                                   replaceName(n);
+      break;
+    default:
+      jj_la1[105] = jj_gen;
+      ;
+    }
     jj_consume_token(CLASS);
     n = ClassName(inTerminal);
-                                         replaceName("ClassName", n);
-                                                                        replaceName(n);
+                                                                                      replaceName("ClassName", n);
+                                                                                                                     replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LPAREN:
       jj_consume_token(LPAREN);
       n = testlist(inTerminal);
-                                                                                                                      replaceName("testlist", n);
-                                                                                                                                                    replaceName(n);
+                                                                                                                                                                   replaceName("testlist", n);
+                                                                                                                                                                                                 replaceName(n);
       jj_consume_token(RPAREN);
       break;
     default:
-      jj_la1[105] = jj_gen;
+      jj_la1[106] = jj_gen;
       ;
     }
     jj_consume_token(COLON);
     label_38:
     while (true) {
       n = classdef_End(inTerminal);
-                                                                                                                                                                                                           replaceName(n);
+                                                                                                                                                                                                                                                        replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case NEWLINE:
       case LPAREN:
@@ -3528,11 +3524,11 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[106] = jj_gen;
+        jj_la1[107] = jj_gen;
         break label_38;
       }
     }
-                                                                                                                                                                                                                               {if (true) return productionEndNonTerminal("classdef","{ClassName}({testlist})","{ClassName}({testlist})");}
+                                                                                                                                                                                                                                                                            {if (true) return productionEndNonTerminal("classdef","{ClassName}({testlist})","{ClassName}({testlist})");}
     throw new Error("Missing return statement in function");
   }
 
@@ -3646,7 +3642,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[107] = jj_gen;
+          jj_la1[108] = jj_gen;
           break label_39;
         }
       }
@@ -3654,7 +3650,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                          {if (true) return productionEndNonTerminal("classdef_End2","-","-");}
       break;
     default:
-      jj_la1[108] = jj_gen;
+      jj_la1[109] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3717,7 +3713,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[109] = jj_gen;
+        jj_la1[110] = jj_gen;
         break label_40;
       }
     }
@@ -3737,7 +3733,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(NEWLINE);
       break;
     default:
-      jj_la1[110] = jj_gen;
+      jj_la1[111] = jj_gen;
       ;
     }
                                                                                                           {if (true) return productionEndNonTerminal("classsimple_stmt","{classsmall_stmt}","{classsmall_stmt}");}
@@ -3749,6 +3745,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case DEF:
+    case 137:
       n = funcdef(true);
                          replaceName("funcdef", n);
                                                       replaceName(n);
@@ -3760,19 +3757,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                               replaceName(n);
                                                                                 {if (true) return productionEndNonTerminal("classsmall_stmt2","{classdef}","{classdef}");}
       break;
-    case 137:
-      n = decorated(inTerminal);
-                                 replaceName("decorated", n);
-                                                                replaceName(n);
-                                                                                  {if (true) return productionEndNonTerminal("classsmall_stmt3","{decorated}","{decorated}");}
-      break;
     default:
-      jj_la1[111] = jj_gen;
-      if (jj_2_22(2147483647)) {
+      jj_la1[112] = jj_gen;
+      if (jj_2_23(2147483647)) {
         n = FieldDeclaration(true);
                                                         replaceName("FieldDeclaration", n);
                                                                                               replaceName(n);
-                                                                                                                {if (true) return productionEndTerminal("classsmall_stmt4","{FieldDeclaration}","{FieldDeclaration}","Replacement","SemanticConflict",first,token);}
+                                                                                                                {if (true) return productionEndTerminal("classsmall_stmt3","{FieldDeclaration}","{FieldDeclaration}","Replacement","SemanticConflict",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LPAREN:
@@ -3801,27 +3792,27 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         case 136:
           n = expr_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("classsmall_stmt5","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+                                             {if (true) return productionEndTerminal("classsmall_stmt4","{AUTO}","{AUTO}","Replacement","Default",first,token);}
           break;
         case TRY:
           n = try_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("classsmall_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("classsmall_stmt5","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case PRINT:
           n = print_stmt(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("classsmall_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                              {if (true) return productionEndTerminal("classsmall_stmt6","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case DEL:
           n = del_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("classsmall_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("classsmall_stmt7","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case PASS:
           n = pass_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("classsmall_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("classsmall_stmt8","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case BREAK:
         case CONTINUE:
@@ -3830,41 +3821,41 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         case RAISE:
           n = flow_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("classsmall_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("classsmall_stmt9","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case IMPORT:
         case FROM:
           n = import_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("classsmall_stmt11","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("classsmall_stmt10","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case GLOBAL:
           n = global_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("classsmall_stmt12","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("classsmall_stmt11","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case EXEC:
           n = exec_stmt(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("classsmall_stmt13","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("classsmall_stmt12","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case ASSERT:
           n = assert_stmt(true);
                              replaceName(n);
-                                               {if (true) return productionEndTerminal("classsmall_stmt14","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                               {if (true) return productionEndTerminal("classsmall_stmt13","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
           break;
         case FOR:
           n = for_stmt(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("classsmall_stmt14","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
           break;
         case IF:
           n = if_stmt(true);
                          replaceName(n);
-                                           {if (true) return productionEndTerminal("classsmall_stmt16","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                           {if (true) return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
           break;
         default:
-          jj_la1[112] = jj_gen;
+          jj_la1[113] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -3886,7 +3877,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[113] = jj_gen;
+        jj_la1[114] = jj_gen;
         break label_41;
       }
       jj_consume_token(SEMICOLON);
@@ -3968,7 +3959,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[114] = jj_gen;
+        jj_la1[115] = jj_gen;
         break label_42;
       }
     }
@@ -4040,14 +4031,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                    replaceName(n);
         break;
       default:
-        jj_la1[115] = jj_gen;
+        jj_la1[116] = jj_gen;
         ;
       }
                                                                                       {if (true) return productionEndTerminal("arglist1","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[116] = jj_gen;
-      if (jj_2_23(2)) {
+      jj_la1[117] = jj_gen;
+      if (jj_2_24(2)) {
         n = arglist1EndEnd(true);
                                               replaceName(n);
       } else {
@@ -4062,7 +4053,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(COMMA);
-    if (jj_2_24(2)) {
+    if (jj_2_25(2)) {
       n = arglist1EndEnd(true);
                                                   replaceName(n);
     } else {
@@ -4075,7 +4066,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo arglist1EndEnd(boolean inTerminal) throws ParseException {
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_25(2)) {
+    if (jj_2_26(2)) {
       n = ExtraArgValueList(true);
                                                 replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -4085,7 +4076,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                      replaceName(n);
         break;
       default:
-        jj_la1[117] = jj_gen;
+        jj_la1[118] = jj_gen;
         ;
       }
                                                                                                                         {if (true) return productionEndTerminal("arglist1EndEnd1","-","-","Replacement","Default",first,token);}
@@ -4098,7 +4089,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("arglist1EndEnd2","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[118] = jj_gen;
+        jj_la1[119] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -4113,7 +4104,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                           replaceName(n);
     label_43:
     while (true) {
-      if (jj_2_26(2)) {
+      if (jj_2_27(2)) {
         ;
       } else {
         break label_43;
@@ -4161,7 +4152,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                   {if (true) return productionEndTerminal("power2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[119] = jj_gen;
+      jj_la1[120] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4171,7 +4162,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   final public FSTInfo argument(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_27(2)) {
+    if (jj_2_28(2)) {
       n = AnyName(true);
                                        replaceName(n);
       jj_consume_token(EQUAL);
@@ -4209,7 +4200,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                    {if (true) return productionEndTerminal("Number5","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[120] = jj_gen;
+      jj_la1[121] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4237,7 +4228,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
               {if (true) return productionEndTerminal("Name2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[121] = jj_gen;
+      jj_la1[122] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4281,7 +4272,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                            {if (true) return productionEndTerminal("StringNode8","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[122] = jj_gen;
+      jj_la1[123] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4417,7 +4408,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
               {if (true) return productionEndTerminal("AnyName31","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[123] = jj_gen;
+      jj_la1[124] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4613,25 +4604,32 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     finally { jj_save(26, xla); }
   }
 
-  final private boolean jj_3_19() {
+  final private boolean jj_2_28(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_28(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(27, xla); }
+  }
+
+  final private boolean jj_3_20() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
-  final private boolean jj_3_21() {
+  final private boolean jj_3_22() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_51()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_19() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
   final private boolean jj_3_18() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_17() {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_54()) return true;
     return false;
@@ -4639,257 +4637,213 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
 
   final private boolean jj_3R_55() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
-  final private boolean jj_3R_126() {
+  final private boolean jj_3R_128() {
     if (jj_scan_token(ASSERT)) return true;
     return false;
   }
 
-  final private boolean jj_3_16() {
+  final private boolean jj_3_17() {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_53()) return true;
     return false;
   }
 
-  final private boolean jj_3R_125() {
+  final private boolean jj_3R_127() {
     if (jj_scan_token(EXEC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_133() {
-    if (jj_3R_50()) return true;
+  final private boolean jj_3R_135() {
+    if (jj_3R_51()) return true;
     return false;
   }
 
-  final private boolean jj_3R_124() {
+  final private boolean jj_3R_126() {
     if (jj_scan_token(GLOBAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_144() {
+  final private boolean jj_3R_146() {
     if (jj_scan_token(COLON)) return true;
     return false;
   }
 
-  final private boolean jj_3R_130() {
-    if (jj_3R_144()) return true;
+  final private boolean jj_3R_132() {
+    if (jj_3R_146()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_83() {
+    if (jj_3R_132()) return true;
     return false;
   }
 
   final private boolean jj_3R_82() {
-    if (jj_3R_130()) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
   final private boolean jj_3R_81() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_80() {
     if (jj_scan_token(DOT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_115() {
-    if (jj_scan_token(AS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_114() {
-    if (jj_scan_token(ASSERT)) return true;
     return false;
   }
 
   final private boolean jj_3R_53() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_80()) {
-    jj_scanpos = xsp;
     if (jj_3R_81()) {
     jj_scanpos = xsp;
-    if (jj_3R_82()) return true;
+    if (jj_3R_82()) {
+    jj_scanpos = xsp;
+    if (jj_3R_83()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_113() {
-    if (jj_scan_token(EXEC)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_112() {
-    if (jj_scan_token(GLOBAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_111() {
-    if (jj_scan_token(RAISE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_110() {
-    if (jj_scan_token(DEL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_109() {
-    if (jj_scan_token(FROM)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_108() {
-    if (jj_scan_token(IMPORT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_127() {
+  final private boolean jj_3R_129() {
     if (jj_scan_token(LAMBDA)) return true;
     return false;
   }
 
-  final private boolean jj_3R_107() {
-    if (jj_scan_token(YIELD)) return true;
+  final private boolean jj_3R_116() {
+    if (jj_scan_token(AS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_162() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_13() {
+    if (jj_scan_token(POWER)) return true;
+    if (jj_3R_52()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_115() {
+    if (jj_scan_token(ASSERT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_161() {
+    if (jj_3R_164()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_114() {
+    if (jj_scan_token(EXEC)) return true;
     return false;
   }
 
   final private boolean jj_3R_160() {
-    if (jj_3R_163()) return true;
+    if (jj_3R_49()) return true;
     return false;
   }
 
-  final private boolean jj_3_12() {
-    if (jj_scan_token(POWER)) return true;
-    if (jj_3R_51()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_106() {
-    if (jj_scan_token(RETURN)) return true;
+  final private boolean jj_3R_113() {
+    if (jj_scan_token(GLOBAL)) return true;
     return false;
   }
 
   final private boolean jj_3R_159() {
-    if (jj_3R_162()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_105() {
-    if (jj_scan_token(CONTINUE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_158() {
-    if (jj_3R_52()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_104() {
-    if (jj_scan_token(BREAK)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_157() {
     if (jj_scan_token(136)) return true;
     return false;
   }
 
-  final private boolean jj_3R_103() {
-    if (jj_scan_token(PASS)) return true;
+  final private boolean jj_3R_112() {
+    if (jj_scan_token(RAISE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_156() {
+  final private boolean jj_3R_158() {
     if (jj_scan_token(LBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_141() {
+  final private boolean jj_3R_143() {
     if (jj_scan_token(FROM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_102() {
-    if (jj_scan_token(PRINT)) return true;
+  final private boolean jj_3R_111() {
+    if (jj_scan_token(DEL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_155() {
+  final private boolean jj_3R_157() {
     if (jj_scan_token(LBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_140() {
+  final private boolean jj_3R_142() {
     if (jj_scan_token(IMPORT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_101() {
-    if (jj_scan_token(FINALLY)) return true;
+  final private boolean jj_3R_110() {
+    if (jj_scan_token(FROM)) return true;
     return false;
   }
 
-  final private boolean jj_3R_154() {
+  final private boolean jj_3R_156() {
     if (jj_scan_token(LPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_100() {
-    if (jj_scan_token(CLASS)) return true;
+  final private boolean jj_3R_109() {
+    if (jj_scan_token(IMPORT)) return true;
     return false;
   }
 
-  final private boolean jj_3_15() {
-    if (jj_3R_52()) return true;
+  final private boolean jj_3_16() {
+    if (jj_3R_49()) return true;
     if (jj_scan_token(EQUAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_99() {
-    if (jj_scan_token(DEF)) return true;
+  final private boolean jj_3R_108() {
+    if (jj_scan_token(YIELD)) return true;
     return false;
   }
 
-  final private boolean jj_3R_123() {
+  final private boolean jj_3R_125() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_140()) {
+    if (jj_3R_142()) {
     jj_scanpos = xsp;
-    if (jj_3R_141()) return true;
+    if (jj_3R_143()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3_14() {
+  final private boolean jj_3_15() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_98() {
-    if (jj_scan_token(EXCEPT)) return true;
+  final private boolean jj_3R_107() {
+    if (jj_scan_token(RETURN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_97() {
-    if (jj_scan_token(TRY)) return true;
+  final private boolean jj_3R_106() {
+    if (jj_scan_token(CONTINUE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_151() {
+  final private boolean jj_3R_153() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_14()) {
-    jj_scanpos = xsp;
     if (jj_3_15()) {
     jj_scanpos = xsp;
-    if (jj_3R_154()) {
-    jj_scanpos = xsp;
-    if (jj_3R_155()) {
+    if (jj_3_16()) {
     jj_scanpos = xsp;
     if (jj_3R_156()) {
     jj_scanpos = xsp;
@@ -4899,7 +4853,11 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_scanpos = xsp;
     if (jj_3R_159()) {
     jj_scanpos = xsp;
-    if (jj_3R_160()) return true;
+    if (jj_3R_160()) {
+    jj_scanpos = xsp;
+    if (jj_3R_161()) {
+    jj_scanpos = xsp;
+    if (jj_3R_162()) return true;
     }
     }
     }
@@ -4911,105 +4869,140 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_96() {
-    if (jj_scan_token(FOR)) return true;
+  final private boolean jj_3R_105() {
+    if (jj_scan_token(BREAK)) return true;
     return false;
   }
 
-  final private boolean jj_3R_95() {
-    if (jj_scan_token(WHILE)) return true;
+  final private boolean jj_3R_104() {
+    if (jj_scan_token(PASS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_94() {
-    if (jj_scan_token(ELIF)) return true;
+  final private boolean jj_3R_103() {
+    if (jj_scan_token(PRINT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_93() {
-    if (jj_scan_token(ELSE)) return true;
+  final private boolean jj_3R_102() {
+    if (jj_scan_token(FINALLY)) return true;
     return false;
   }
 
-  final private boolean jj_3_13() {
+  final private boolean jj_3_14() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_92() {
-    if (jj_scan_token(IF)) return true;
+  final private boolean jj_3R_101() {
+    if (jj_scan_token(CLASS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_91() {
-    if (jj_scan_token(LAMBDA)) return true;
+  final private boolean jj_3R_100() {
+    if (jj_scan_token(DEF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_90() {
-    if (jj_scan_token(IN)) return true;
+  final private boolean jj_3R_99() {
+    if (jj_scan_token(EXCEPT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_148() {
+  final private boolean jj_3R_150() {
     if (jj_scan_token(RAISE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_89() {
-    if (jj_scan_token(IS)) return true;
+  final private boolean jj_3R_98() {
+    if (jj_scan_token(TRY)) return true;
     return false;
   }
 
-  final private boolean jj_3R_88() {
-    if (jj_scan_token(NOT_BOOL)) return true;
+  final private boolean jj_3R_97() {
+    if (jj_scan_token(FOR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_143() {
-    if (jj_3R_151()) return true;
+  final private boolean jj_3R_145() {
+    if (jj_3R_153()) return true;
     return false;
   }
 
-  final private boolean jj_3R_87() {
-    if (jj_scan_token(AND_BOOL)) return true;
+  final private boolean jj_3R_96() {
+    if (jj_scan_token(WHILE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_147() {
+  final private boolean jj_3R_149() {
     if (jj_scan_token(YIELD)) return true;
     return false;
   }
 
-  final private boolean jj_3_10() {
+  final private boolean jj_3_11() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
-  final private boolean jj_3R_86() {
-    if (jj_scan_token(OR_BOOL)) return true;
+  final private boolean jj_3R_95() {
+    if (jj_scan_token(ELIF)) return true;
     return false;
   }
 
-  final private boolean jj_3R_85() {
-    if (jj_scan_token(NAME)) return true;
+  final private boolean jj_3R_94() {
+    if (jj_scan_token(ELSE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_129() {
-    if (jj_3R_143()) return true;
+  final private boolean jj_3R_131() {
+    if (jj_3R_145()) return true;
     return false;
   }
 
-  final private boolean jj_3R_146() {
+  final private boolean jj_3R_93() {
+    if (jj_scan_token(IF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_148() {
     if (jj_scan_token(RETURN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_77() {
-    if (jj_3R_129()) return true;
+  final private boolean jj_3R_80() {
+    if (jj_3R_131()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_141() {
+    if (jj_3R_150()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_92() {
+    if (jj_scan_token(LAMBDA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_79() {
+    if (jj_scan_token(NOT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_140() {
+    if (jj_3R_149()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_91() {
+    if (jj_scan_token(IN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_78() {
+    if (jj_scan_token(MINUS)) return true;
     return false;
   }
 
@@ -5018,16 +5011,84 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_76() {
-    if (jj_scan_token(NOT)) return true;
+  final private boolean jj_3R_90() {
+    if (jj_scan_token(IS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_77() {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_138() {
+    if (jj_scan_token(CONTINUE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_89() {
+    if (jj_scan_token(NOT_BOOL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_137() {
+    if (jj_scan_token(BREAK)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_88() {
+    if (jj_scan_token(AND_BOOL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_52() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_77()) {
+    jj_scanpos = xsp;
+    if (jj_3R_78()) {
+    jj_scanpos = xsp;
+    if (jj_3R_79()) {
+    jj_scanpos = xsp;
+    if (jj_3R_80()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_87() {
+    if (jj_scan_token(OR_BOOL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_86() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_124() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_137()) {
+    jj_scanpos = xsp;
+    if (jj_3R_138()) {
+    jj_scanpos = xsp;
+    if (jj_3R_139()) {
+    jj_scanpos = xsp;
+    if (jj_3R_140()) {
+    jj_scanpos = xsp;
+    if (jj_3R_141()) return true;
+    }
+    }
+    }
+    }
     return false;
   }
 
   final private boolean jj_3R_59() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_85()) {
-    jj_scanpos = xsp;
     if (jj_3R_86()) {
     jj_scanpos = xsp;
     if (jj_3R_87()) {
@@ -5086,7 +5147,9 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_scanpos = xsp;
     if (jj_3R_114()) {
     jj_scanpos = xsp;
-    if (jj_3R_115()) return true;
+    if (jj_3R_115()) {
+    jj_scanpos = xsp;
+    if (jj_3R_116()) return true;
     }
     }
     }
@@ -5120,108 +5183,23 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_176() {
+  final private boolean jj_3R_178() {
     if (jj_scan_token(TRIPLE_USTRING2)) return true;
     return false;
   }
 
-  final private boolean jj_3R_138() {
-    if (jj_3R_147()) return true;
+  final private boolean jj_3R_123() {
+    if (jj_scan_token(PASS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_75() {
-    if (jj_scan_token(MINUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_175() {
+  final private boolean jj_3R_177() {
     if (jj_scan_token(TRIPLE_USTRING)) return true;
     return false;
   }
 
-  final private boolean jj_3R_137() {
-    if (jj_3R_146()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_74() {
-    if (jj_scan_token(PLUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_174() {
+  final private boolean jj_3R_176() {
     if (jj_scan_token(SINGLE_USTRING2)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_136() {
-    if (jj_scan_token(CONTINUE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_173() {
-    if (jj_scan_token(SINGLE_USTRING)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_135() {
-    if (jj_scan_token(BREAK)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_172() {
-    if (jj_scan_token(TRIPLE_STRING2)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_51() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_74()) {
-    jj_scanpos = xsp;
-    if (jj_3R_75()) {
-    jj_scanpos = xsp;
-    if (jj_3R_76()) {
-    jj_scanpos = xsp;
-    if (jj_3R_77()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_171() {
-    if (jj_scan_token(TRIPLE_STRING)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_122() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_135()) {
-    jj_scanpos = xsp;
-    if (jj_3R_136()) {
-    jj_scanpos = xsp;
-    if (jj_3R_137()) {
-    jj_scanpos = xsp;
-    if (jj_3R_138()) {
-    jj_scanpos = xsp;
-    if (jj_3R_139()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_170() {
-    if (jj_scan_token(SINGLE_STRING2)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_169() {
-    if (jj_scan_token(SINGLE_STRING)) return true;
     return false;
   }
 
@@ -5231,18 +5209,55 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_121() {
-    if (jj_scan_token(PASS)) return true;
+  final private boolean jj_3R_175() {
+    if (jj_scan_token(SINGLE_USTRING)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_122() {
+    if (jj_scan_token(DEL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_174() {
+    if (jj_scan_token(TRIPLE_STRING2)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_173() {
+    if (jj_scan_token(TRIPLE_STRING)) return true;
     return false;
   }
 
   final private boolean jj_3R_163() {
+    if (jj_3R_52()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_172() {
+    if (jj_scan_token(SINGLE_STRING2)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_10() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_51()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_50() {
+    if (jj_3R_51()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_171() {
+    if (jj_scan_token(SINGLE_STRING)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_165() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_169()) {
-    jj_scanpos = xsp;
-    if (jj_3R_170()) {
-    jj_scanpos = xsp;
     if (jj_3R_171()) {
     jj_scanpos = xsp;
     if (jj_3R_172()) {
@@ -5253,43 +5268,17 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_scanpos = xsp;
     if (jj_3R_175()) {
     jj_scanpos = xsp;
-    if (jj_3R_176()) return true;
-    }
-    }
-    }
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_79() {
-    if (jj_scan_token(AS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_78() {
-    if (jj_scan_token(NAME)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_120() {
-    if (jj_scan_token(DEL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_161() {
-    if (jj_3R_51()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_52() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_78()) {
+    if (jj_3R_176()) {
     jj_scanpos = xsp;
-    if (jj_3R_79()) return true;
+    if (jj_3R_177()) {
+    jj_scanpos = xsp;
+    if (jj_3R_178()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
     }
     return false;
   }
@@ -5300,95 +5289,114 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3_9() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_49() {
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_168() {
-    if (jj_scan_token(COMPLEX)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_167() {
-    if (jj_scan_token(FLOAT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_134() {
+  final private boolean jj_3R_136() {
     if (jj_scan_token(PRINT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_166() {
-    if (jj_scan_token(DECNUMBER)) return true;
+  final private boolean jj_3R_74() {
+    if (jj_scan_token(AS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_9() {
+    if (jj_scan_token(PRINT)) return true;
+    if (jj_3R_50()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_73() {
+    if (jj_scan_token(NAME)) return true;
     return false;
   }
 
   final private boolean jj_3_8() {
     if (jj_scan_token(PRINT)) return true;
-    if (jj_3R_49()) return true;
+    if (jj_scan_token(RSHIFT)) return true;
     return false;
   }
 
-  final private boolean jj_3_26() {
+  final private boolean jj_3R_154() {
+    if (jj_3R_163()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_49() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_73()) {
+    jj_scanpos = xsp;
+    if (jj_3R_74()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_121() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_8()) {
+    jj_scanpos = xsp;
+    if (jj_3_9()) {
+    jj_scanpos = xsp;
+    if (jj_3R_136()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_170() {
+    if (jj_scan_token(COMPLEX)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_169() {
+    if (jj_scan_token(FLOAT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_168() {
+    if (jj_scan_token(DECNUMBER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_147() {
+    if (jj_3R_154()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_27() {
     if (jj_scan_token(COMMA)) return true;
     if (jj_3R_58()) return true;
     return false;
   }
 
-  final private boolean jj_3R_165() {
+  final private boolean jj_3R_167() {
     if (jj_scan_token(OCTNUMBER)) return true;
     return false;
   }
 
-  final private boolean jj_3_7() {
-    if (jj_scan_token(PRINT)) return true;
-    if (jj_scan_token(RSHIFT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_152() {
-    if (jj_3R_161()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_164() {
+  final private boolean jj_3R_166() {
     if (jj_scan_token(HEXNUMBER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_119() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_7()) {
-    jj_scanpos = xsp;
-    if (jj_3_8()) {
-    jj_scanpos = xsp;
-    if (jj_3R_134()) return true;
-    }
-    }
+  final private boolean jj_3R_133() {
+    if (jj_3R_147()) return true;
     return false;
   }
 
-  final private boolean jj_3R_162() {
+  final private boolean jj_3R_164() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_164()) {
-    jj_scanpos = xsp;
-    if (jj_3R_165()) {
-    jj_scanpos = xsp;
     if (jj_3R_166()) {
     jj_scanpos = xsp;
     if (jj_3R_167()) {
     jj_scanpos = xsp;
-    if (jj_3R_168()) return true;
+    if (jj_3R_168()) {
+    jj_scanpos = xsp;
+    if (jj_3R_169()) {
+    jj_scanpos = xsp;
+    if (jj_3R_170()) return true;
     }
     }
     }
@@ -5396,64 +5404,54 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3_27() {
+  final private boolean jj_3_28() {
     if (jj_3R_59()) return true;
     if (jj_scan_token(EQUAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_84() {
+    if (jj_3R_133()) return true;
     return false;
   }
 
   final private boolean jj_3R_58() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_27()) jj_scanpos = xsp;
-    if (jj_3R_50()) return true;
+    if (jj_3_28()) jj_scanpos = xsp;
+    if (jj_3R_51()) return true;
     return false;
   }
 
-  final private boolean jj_3R_145() {
-    if (jj_3R_152()) return true;
+  final private boolean jj_3R_118() {
+    if (jj_scan_token(MULTIPLY)) return true;
+    if (jj_scan_token(MULTIPLY)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_54() {
+    if (jj_3R_84()) return true;
     return false;
   }
 
   final private boolean jj_3R_117() {
-    if (jj_scan_token(MULTIPLY)) return true;
-    if (jj_scan_token(MULTIPLY)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_116() {
     if (jj_scan_token(POWER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_131() {
-    if (jj_3R_145()) return true;
+  final private boolean jj_3_12() {
+    if (jj_scan_token(IS)) return true;
+    if (jj_scan_token(NOT_BOOL)) return true;
     return false;
   }
 
   final private boolean jj_3R_60() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_116()) {
+    if (jj_3R_117()) {
     jj_scanpos = xsp;
-    if (jj_3R_117()) return true;
+    if (jj_3R_118()) return true;
     }
-    return false;
-  }
-
-  final private boolean jj_3R_83() {
-    if (jj_3R_131()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_132() {
-    if (jj_3R_60()) return true;
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_54() {
-    if (jj_3R_83()) return true;
     return false;
   }
 
@@ -5463,35 +5461,112 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
+  final private boolean jj_3R_120() {
+    if (jj_3R_135()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_134() {
+    if (jj_3R_60()) return true;
+    if (jj_3R_51()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_119() {
+    if (jj_scan_token(NAME)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_72() {
+    if (jj_3R_128()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_57() {
     if (jj_scan_token(MULTIPLY)) return true;
-    if (jj_3R_50()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_11() {
-    if (jj_scan_token(IS)) return true;
-    if (jj_scan_token(NOT_BOOL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_84() {
-    if (jj_3R_132()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_118() {
-    if (jj_3R_133()) return true;
+    if (jj_3R_51()) return true;
     return false;
   }
 
   final private boolean jj_3R_71() {
+    if (jj_3R_127()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_70() {
     if (jj_3R_126()) return true;
     return false;
   }
 
-  final private boolean jj_3_25() {
+  final private boolean jj_3R_69() {
+    if (jj_3R_125()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_68() {
+    if (jj_3R_124()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_7() {
+    if (jj_3R_49()) return true;
+    if (jj_scan_token(EQUAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_85() {
+    if (jj_3R_134()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_67() {
+    if (jj_3R_123()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_26() {
     if (jj_3R_57()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_25() {
+    if (jj_3R_56()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_66() {
+    if (jj_3R_122()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_65() {
+    if (jj_3R_121()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_56() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_26()) {
+    jj_scanpos = xsp;
+    if (jj_3R_85()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_64() {
+    if (jj_3R_120()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_5() {
+    if (jj_scan_token(COMMA)) return true;
+    if (jj_3R_47()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_63() {
+    if (jj_3R_119()) return true;
     return false;
   }
 
@@ -5500,64 +5575,8 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_3R_125()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_69() {
-    if (jj_3R_124()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_56() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_25()) {
-    jj_scanpos = xsp;
-    if (jj_3R_84()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_68() {
-    if (jj_3R_123()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_67() {
-    if (jj_3R_122()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_66() {
-    if (jj_3R_121()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_23() {
-    if (jj_3R_56()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_65() {
-    if (jj_3R_120()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_64() {
-    if (jj_3R_119()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_63() {
-    if (jj_3R_118()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_5() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_47()) return true;
+  final private boolean jj_3R_155() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -5580,7 +5599,10 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_scanpos = xsp;
     if (jj_3R_70()) {
     jj_scanpos = xsp;
-    if (jj_3R_71()) return true;
+    if (jj_3R_71()) {
+    jj_scanpos = xsp;
+    if (jj_3R_72()) return true;
+    }
     }
     }
     }
@@ -5592,43 +5614,48 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_153() {
-    if (jj_3R_54()) return true;
+  final private boolean jj_3R_152() {
+    if (jj_3R_155()) return true;
     return false;
   }
 
-  final private boolean jj_3R_150() {
-    if (jj_3R_153()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_149() {
+  final private boolean jj_3R_151() {
     if (jj_scan_token(NOT_BOOL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_142() {
+  final private boolean jj_3R_144() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_149()) {
+    if (jj_3R_151()) {
     jj_scanpos = xsp;
-    if (jj_3R_150()) return true;
+    if (jj_3R_152()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_128() {
-    if (jj_3R_142()) return true;
+  final private boolean jj_3R_130() {
+    if (jj_3R_144()) return true;
     return false;
   }
 
-  final private boolean jj_3R_73() {
-    if (jj_3R_128()) return true;
+  final private boolean jj_3R_76() {
+    if (jj_3R_130()) return true;
     return false;
   }
 
-  final private boolean jj_3R_72() {
-    if (jj_3R_127()) return true;
+  final private boolean jj_3R_75() {
+    if (jj_3R_129()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_51() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_75()) {
+    jj_scanpos = xsp;
+    if (jj_3R_76()) return true;
+    }
     return false;
   }
 
@@ -5638,29 +5665,19 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3R_50() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_72()) {
-    jj_scanpos = xsp;
-    if (jj_3R_73()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3_22() {
-    if (jj_3R_52()) return true;
-    if (jj_scan_token(EQUAL)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_62() {
     if (jj_scan_token(LPAREN)) return true;
     return false;
   }
 
   final private boolean jj_3R_61() {
-    if (jj_3R_52()) return true;
+    if (jj_3R_49()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_23() {
+    if (jj_3R_49()) return true;
+    if (jj_scan_token(EQUAL)) return true;
     return false;
   }
 
@@ -5686,7 +5703,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
 
   final private boolean jj_3R_45() {
     if (jj_scan_token(MULTIPLY)) return true;
-    if (jj_3R_52()) return true;
+    if (jj_3R_49()) return true;
     return false;
   }
 
@@ -5695,7 +5712,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     return false;
   }
 
-  final private boolean jj_3_20() {
+  final private boolean jj_3_21() {
     if (jj_3R_55()) return true;
     return false;
   }
@@ -5708,7 +5725,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[124];
+  final private int[] jj_la1 = new int[125];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -5722,21 +5739,21 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1_4();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x40,0x30540000,0x40040000,0x2000000,0x2000000,0x40000,0x40000000,0x0,0x40000,0x2000000,0x30540000,0x1000000,0x30540000,0x0,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x30540000,0x30540000,0x2000000,0x2000000,0x0,0x2000000,0x4000000,0x4000000,0x0,0x40000,0x2000000,0x80000,0x40040000,0x0,0x4000000,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x30540040,0x30540040,0x30540040,0x0,0x30540040,0x0,0x30540040,0x0,0x0,0x30540040,0x30540000,0x0,0x2000000,0x2000000,0x30540040,0x30540040,0x2000000,0x0,0x0,0x30540000,0x0,0x30540000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x30000000,0x30000000,0xc0000000,0xc0000000,0x30540000,0x4440000,0x4440000,0x30540000,0x30540000,0x30540000,0x0,0x540000,0x40040000,0x2000000,0x8000000,0x3c540000,0x8000000,0x30540000,0x2000000,0x2000000,0x2000000,0x2000000,0x0,0x2000000,0x0,0x0,0x0,0x0,0x40040,0x705c0000,0x30540040,0x40000,0x30540040,0x30540000,0x30540040,0x30540000,0x40,0x0,0x30540000,0x1000000,0x30540000,0x2000000,0x30540000,0x2000000,0x40000000,0x40000000,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x40,0x30540000,0x40040000,0x2000000,0x2000000,0x40000,0x40000000,0x0,0x40000,0x2000000,0x30540000,0x1000000,0x30540000,0x0,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x30540000,0x30540000,0x2000000,0x2000000,0x0,0x2000000,0x4000000,0x4000000,0x0,0x40000,0x2000000,0x80000,0x40040000,0x0,0x4000000,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x30540040,0x30540040,0x30540040,0x0,0x30540040,0x0,0x30540040,0x0,0x0,0x30540040,0x30540000,0x0,0x2000000,0x2000000,0x30540040,0x30540040,0x2000000,0x0,0x0,0x30540000,0x0,0x30540000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x30000000,0x30000000,0xc0000000,0xc0000000,0x30540000,0x4440000,0x4440000,0x30540000,0x30540000,0x30540000,0x0,0x540000,0x40040000,0x2000000,0x8000000,0x3c540000,0x8000000,0x30540000,0x2000000,0x2000000,0x2000000,0x2000000,0x0,0x2000000,0x0,0x0,0x0,0x40040,0x705c0000,0x0,0x30540040,0x0,0x40000,0x30540040,0x30540000,0x30540040,0x30540000,0x40,0x0,0x30540000,0x1000000,0x30540000,0x2000000,0x30540000,0x2000000,0x40000000,0x40000000,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x80000020,0x2,0x0,0x0,0x0,0x2,0x200,0x0,0x0,0x80000020,0x0,0x80000020,0x200,0x1ffe0000,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x0,0x0,0xe0000000,0xe0000000,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x20000000,0x80000020,0x40000000,0x80000020,0x8001fc00,0x8001fc00,0x0,0x80,0x40,0x100,0xc,0xc,0x0,0x0,0x11,0x11,0x20,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x0,0x2,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe0000022,0x80000020,0x0,0x80000020,0x80000020,0x80000020,0x80000020,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0xe0000020,0x0,0x2,0x2,0x0,0x0,0x0,0xe0000000,};
+      jj_la1_1 = new int[] {0x0,0x80000020,0x2,0x0,0x0,0x0,0x2,0x200,0x0,0x0,0x80000020,0x0,0x80000020,0x200,0x1ffe0000,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x0,0x0,0xe0000000,0xe0000000,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x20000000,0x80000020,0x40000000,0x80000020,0x8001fc00,0x8001fc00,0x0,0x80,0x40,0x100,0xc,0xc,0x0,0x0,0x11,0x11,0x20,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x0,0x2,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe0000022,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x80000020,0x80000020,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0xe0000020,0x0,0x2,0x2,0x0,0x0,0x0,0xe0000000,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0xdfffedcc,0x14000000,0x0,0x0,0x14000000,0x0,0x0,0x14000000,0x0,0xdfffedcc,0x0,0xd7ffe004,0x0,0x0,0x0,0x2000,0x0,0x0,0x478000,0xd4000004,0xd4000004,0x0,0x0,0x180000,0x0,0x0,0x17ffffff,0x17ffffff,0x0,0x0,0x0,0x17ffffff,0x4000000,0x0,0x4000000,0x0,0x2,0x0,0x0,0x20,0x10,0x20,0x10,0xd7ffe004,0xd7ffe004,0xd7ffe004,0x10,0xd7ffe004,0x10,0xd7ffe004,0x200,0x1000,0xd7ffe004,0xd4000004,0x10,0x4000000,0x4000000,0xd7ffe004,0xd7ffe004,0x0,0x4000000,0x0,0xd4000004,0x0,0xd4000000,0x3,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd4000000,0x0,0x0,0xd4000004,0xd4000004,0xd4000004,0x0,0xd4000000,0x14000000,0x0,0x0,0xd4000004,0x0,0xd4000004,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x8,0xc00,0x0,0x0,0xd7ffffff,0xd7ffe004,0x0,0xd7ffe004,0xd7ffed8c,0xd7ffe004,0xd7ffed8c,0x0,0xc00,0xd7ffe18c,0x0,0xdfffedcc,0x0,0xd7ffffff,0x0,0x0,0x0,0xc0000000,0x14000000,0x0,0x17ffffff,};
+      jj_la1_2 = new int[] {0x0,0xdfffedcc,0x14000000,0x0,0x0,0x14000000,0x0,0x0,0x14000000,0x0,0xdfffedcc,0x0,0xd7ffe004,0x0,0x0,0x0,0x2000,0x0,0x0,0x478000,0xd4000004,0xd4000004,0x0,0x0,0x180000,0x0,0x0,0x17ffffff,0x17ffffff,0x0,0x0,0x0,0x17ffffff,0x4000000,0x0,0x4000000,0x0,0x2,0x0,0x0,0x20,0x10,0x20,0x10,0xd7ffe004,0xd7ffe004,0xd7ffe004,0x10,0xd7ffe004,0x10,0xd7ffe004,0x200,0x1000,0xd7ffe004,0xd4000004,0x10,0x4000000,0x4000000,0xd7ffe004,0xd7ffe004,0x0,0x4000000,0x0,0xd4000004,0x0,0xd4000000,0x3,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd4000000,0x0,0x0,0xd4000004,0xd4000004,0xd4000004,0x0,0xd4000000,0x14000000,0x0,0x0,0xd4000004,0x0,0xd4000004,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x8,0x0,0x0,0xd7ffffff,0x0,0xd7ffe004,0x0,0x0,0xd7ffe004,0xd7ffed8c,0xd7ffe004,0xd7ffed8c,0x0,0xc00,0xd7ffe18c,0x0,0xdfffedcc,0x0,0xd7ffffff,0x0,0x0,0x0,0xc0000000,0x14000000,0x0,0x17ffffff,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe000,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe007,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x7,0x0,0x1fe000,0x0,};
+      jj_la1_3 = new int[] {0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe000,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe007,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x7,0x0,0x1fe000,0x0,};
    }
    private static void jj_la1_4() {
-      jj_la1_4 = new int[] {0x0,0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x100,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x100,0x100,0x0,0x100,0x300,0x100,0x300,0x0,0x200,0x100,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_4 = new int[] {0x0,0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x100,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x100,0x200,0x100,0x200,0x0,0x100,0x300,0x100,0x300,0x0,0x200,0x100,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[27];
+  final private JJCalls[] jj_2_rtns = new JJCalls[28];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -5745,7 +5762,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 124; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5754,7 +5771,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 124; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5763,7 +5780,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 124; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5772,7 +5789,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 124; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5891,7 +5908,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 124; i++) {
+    for (int i = 0; i < 125; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -5937,7 +5954,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 27; i++) {
+    for (int i = 0; i < 28; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -5971,6 +5988,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
             case 24: jj_3_25(); break;
             case 25: jj_3_26(); break;
             case 26: jj_3_27(); break;
+            case 27: jj_3_28(); break;
           }
         }
         p = p.next;

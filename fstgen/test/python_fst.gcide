@@ -457,7 +457,6 @@ stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
 	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef :: FunctionDefinition
 	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
-	|  @FSTNonTerminal(name="{decorated}") decorated
 	;
 
 @FSTNonTerminal(name="{small_stmt}")
@@ -466,7 +465,8 @@ simple_stmt
 	;
 
 small_stmt
-	:  @FSTTerminal(name="{expr_stmt}",merge="SemanticConflict") expr_stmt
+	:  @FSTTerminal(name="{assignment_stmt}",merge="SemanticConflict") LOOK_AHEAD("Name() \"=\"") assignment_stmt
+	|  @FSTTerminal(name="{expr_stmt}",merge="SemanticConflict") expr_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") print_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") del_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") pass_stmt
@@ -475,6 +475,11 @@ small_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") global_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") exec_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") assert_stmt
+	;
+
+@FSTExportName("{<NAME>}")
+assignment_stmt
+	:  <NAME> "=" SmartTestList
 	;
 
 @FSTExportName("{SmartTestList}")
@@ -859,16 +864,6 @@ list_if
 	:  "if" test
 	;
 
-@FSTNonTerminal(name="{decorated_End}")
-decorated
-	:  decorators decorated_End
-	;
-
-decorated_End
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
-	|  @FSTNonTerminal(name="{classdef}") classdef
-	;
-
 decorators
 	:  (decorator @!)+
 	;
@@ -889,7 +884,7 @@ decorator_End_Par
 
 @FSTExportName("{<NAME>}({parameters})")
 funcdef
-	:  "def" <NAME> parameters ":" funcdef_End
+	:  [decorators] "def" <NAME> parameters ":" funcdef_End
 	;
 
 funcdef_End
@@ -899,7 +894,7 @@ funcdef_End
 
 @FSTNonTerminal(name="{ClassName}({testlist})")
 classdef
-	:  "class" ClassName ["(" testlist ")"] ":" @! (classdef_End)+
+	:  [decorators] "class" ClassName ["(" testlist ")"] ":" @! (classdef_End)+
 	;
 
 @FSTExportName("{<NAME>}")
@@ -925,7 +920,6 @@ classsimple_stmt
 classsmall_stmt
 	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef
 	|  @FSTNonTerminal(name="{classdef}") classdef
-	|  @FSTNonTerminal(name="{decorated}") decorated
 	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
 	|  @FSTTerminal(name="{AUTO}") expr_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") try_stmt
