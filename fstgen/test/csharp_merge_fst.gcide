@@ -852,7 +852,7 @@ resource_acquisition
 
 @FSTNonTerminal()
 compilation_unitEnd
-	:  namespace_member_declaration_no_attr (namespace_member_declaration)* ;
+	:  (namespace_member_declaration_no_attr)+ (namespace_member_declaration)* ;
 
 @FSTNonTerminal(name="{type_name}")
 namespace_declaration 
@@ -880,7 +880,12 @@ namespace_member_declaration_no_attr
 
 namespace_member_declaration 
 	:  @FSTNonTerminal(name="{namespace_declaration}") namespace_declaration
-	|  @FSTNonTerminal(name="{type_declaration}") (attributes)? (class_modifiers)? type_declaration // TODO
+	|  @FSTNonTerminal(name="{namespace_member_declarationEnd}") (attributes)? (class_modifiers)? namespace_member_declarationEnd // TODO
+	;
+
+namespace_member_declarationEnd
+	:  @FSTNonTerminal(name="{type_declaration}") type_declaration
+	|  @FSTNonTerminal(name="{type}{typeEnd}") type typeEnd
 	;
 
 type_declaration //Type declaration that assumes parent rule has already looked for attributes and modifiers
@@ -1424,7 +1429,7 @@ interface_indexer_declaration
 	;
 	
 interface_method_declaration
-	:  [type_parameter_list] "(" (formal_parameter_list)? [type_parameter_constraint_clauses] ")" ";" @!
+	:  [type_parameter_list] "(" (formal_parameter_list)? ")" [type_parameter_constraint_clauses] ";" @!
 	;
 
 interface_property_declaration
