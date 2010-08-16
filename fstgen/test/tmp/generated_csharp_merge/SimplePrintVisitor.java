@@ -39,11 +39,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		if (nonTerminal.getType().equals("compilation_unitEnd")) {
 			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "namespace_member_declaration_no_attr");
-				if (v!=null) {
-					v.accept(this);
-				}
+			for (FSTNode v : getChildren(nonTerminal,"namespace_member_declaration_no_attr")) {
+				v.accept(this);
 			}
 			for (FSTNode v : getChildren(nonTerminal,"namespace_member_declaration")) {
 				v.accept(this);
@@ -141,7 +138,35 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			{
+				FSTNode v=getChild(nonTerminal, "namespace_member_declarationEnd");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("namespace_member_declarationEnd1")) {
+			printFeatures(nonTerminal,true);
+			{
 				FSTNode v=getChild(nonTerminal, "type_declaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("namespace_member_declarationEnd2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "type");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "typeEnd");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -653,8 +678,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("embedded_statement7") && expectedType.equals("embedded_statement")) return true;
 		if (type.equals("relational_operator3") && expectedType.equals("relational_operator")) return true;
 		if (type.equals("overloadable_binary_operator2") && expectedType.equals("overloadable_binary_operator")) return true;
-		if (type.equals("primary_expression_postfixInternal3") && expectedType.equals("primary_expression_postfixInternal")) return true;
 		if (type.equals("select_or_group_clause1") && expectedType.equals("select_or_group_clause")) return true;
+		if (type.equals("primary_expression_postfixInternal3") && expectedType.equals("primary_expression_postfixInternal")) return true;
 		if (type.equals("jump_statement1") && expectedType.equals("jump_statement")) return true;
 		if (type.equals("integral_type8") && expectedType.equals("integral_type")) return true;
 		if (type.equals("namespace_member_declaration1") && expectedType.equals("namespace_member_declaration")) return true;
@@ -721,6 +746,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("non_array_type1") && expectedType.equals("non_array_type")) return true;
 		if (type.equals("numeric_type1") && expectedType.equals("numeric_type")) return true;
 		if (type.equals("class_member_declarationEnd5") && expectedType.equals("class_member_declarationEnd")) return true;
+		if (type.equals("namespace_member_declarationEnd2") && expectedType.equals("namespace_member_declarationEnd")) return true;
 		if (type.equals("parameter_modifier3") && expectedType.equals("parameter_modifier")) return true;
 		if (type.equals("assignment_operator5") && expectedType.equals("assignment_operator")) return true;
 		if (type.equals("literal4") && expectedType.equals("literal")) return true;
@@ -743,6 +769,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("class_modifier5") && expectedType.equals("class_modifier")) return true;
 		if (type.equals("overloadable_binary_operator13") && expectedType.equals("overloadable_binary_operator")) return true;
 		if (type.equals("class_member_declarationEnd4") && expectedType.equals("class_member_declarationEnd")) return true;
+		if (type.equals("namespace_member_declarationEnd1") && expectedType.equals("namespace_member_declarationEnd")) return true;
 		if (type.equals("primary_expression1") && expectedType.equals("primary_expression")) return true;
 		if (type.equals("non_array_type2") && expectedType.equals("non_array_type")) return true;
 		if (type.equals("numeric_type2") && expectedType.equals("numeric_type")) return true;

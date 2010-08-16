@@ -1219,7 +1219,7 @@ FSTInfo resource_acquisition(boolean inTerminal) : { Token first=null,t;FSTInfo 
 
 FSTInfo compilation_unitEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=namespace_member_declaration_no_attr(inTerminal){ replaceName(n);} (n=namespace_member_declaration(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("compilation_unitEnd","-","-");}
+	(n=namespace_member_declaration_no_attr(inTerminal){ replaceName(n);})+ (n=namespace_member_declaration(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("compilation_unitEnd","-","-");}
 
  )  }
 
@@ -1261,7 +1261,15 @@ FSTInfo namespace_member_declaration(boolean inTerminal) : { Token first=null,t;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=namespace_declaration(inTerminal){ replaceName("namespace_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration1","{namespace_declaration}","{namespace_declaration}");}
  |
-	[n=attributes(inTerminal){ replaceName(n);}] [n=class_modifiers(inTerminal){ replaceName(n);}] n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","{type_declaration}","{type_declaration}");}
+	[n=attributes(inTerminal){ replaceName(n);}] [n=class_modifiers(inTerminal){ replaceName(n);}] n=namespace_member_declarationEnd(inTerminal){ replaceName("namespace_member_declarationEnd", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declaration2","{namespace_member_declarationEnd}","{namespace_member_declarationEnd}");}
+
+ )  }
+
+FSTInfo namespace_member_declarationEnd(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=type_declaration(inTerminal){ replaceName("type_declaration", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declarationEnd1","{type_declaration}","{type_declaration}");}
+ |
+	n=type(inTerminal){ replaceName("type", n);}{ replaceName(n);} n=typeEnd(inTerminal){ replaceName("typeEnd", n);}{ replaceName(n);} {return productionEndNonTerminal("namespace_member_declarationEnd2","{type}{typeEnd}","{type}{typeEnd}");}
 
  )  }
 
@@ -2061,7 +2069,7 @@ FSTInfo interface_indexer_declaration(boolean inTerminal) : { Token first=null,t
 
 FSTInfo interface_method_declaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=type_parameter_list(true){ replaceName(n);}] "(" [n=formal_parameter_list(true){ replaceName(n);}] [n=type_parameter_constraint_clauses(true){ replaceName(n);}] ")" ";" {return productionEndTerminal("interface_method_declaration","-","-","Replacement","Default",first,token);}
+	[n=type_parameter_list(true){ replaceName(n);}] "(" [n=formal_parameter_list(true){ replaceName(n);}] ")" [n=type_parameter_constraint_clauses(true){ replaceName(n);}] ";" {return productionEndTerminal("interface_method_declaration","-","-","Replacement","Default",first,token);}
 
  )  }
 
