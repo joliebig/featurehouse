@@ -1,63 +1,11 @@
-01. conversion utf8 into latin1
-02. removing comments, but keeping trailing comments (after statements); # i'm a comment
-03. adding pass statement into empty python files such as __init__.py
-04. changed octal values into decimal values, e.g. 0o100 -> 64
-05. indention errors
-06. rewriting list comprehension ->  matchOrder += list(filter(lambda e: isinstance(e,Optional) and e.expr in tmpOpt, self.exprs))
-07. rewriting inline if -> color = 'white' if w > 0 else 'black' into normal if ...: ... else: ... 
-08. removing soft links
-09. removing erroreous code
+This file holds all information about the preparation of python projects for the semi-structured-merge analysis.
 
-
-projects checked:
-- spambayes
-  rev2415-2547
-  rev2415-2601
-  rev2415-2698
-  rev2415-2775
-  rev2415-2874
-  rev2415-2881
-  rev3103-3133
-  rev3250-3267
-- wicd
-  rev519-537
-  rev519-546
-  rev519-557
-  rev519-568
-  rev519-578
-- emesene
-  rev1286-1505
-- epydoc
-  rev1371-1395
-- matplotlib v0_99
-  rev7315-7404
-  rev7315-7444
-  rev7315-7531
-  rev7315-7638
-  rev7315-7734
-  rev7315-7844
-  rev7315-7944
-  rev7315-8057
-  rev7315-8135
-  rev7315-8375
-- matplotlib v1_0
-  rev8503-8562
-- exe
-  rev1889-1952
-  rev2283-2337
-  rev2283-2366
-  rev2283-2409
-  rev2669-2722
-  rev2735-2828
-  rev2735-2877
-  rev3426-3457
-  rev3426-3500
-  rev3426-3513
-- BitPim
-  rev2895-2929
-  rev2895-2954
-  rev2895-2991
-  rev2895-2993
-  rev3177-3237
-  rev3177-3275
-  rev3177-3296
+01. convert dos files (line endings ^M to unix)
+02. remove symlinks in project folder
+03. convert fileencoding to utf8
+04. remove comments, but keeping trailing comments (after statements); print('no comment') # i'm a comment
+05. change octal values into decimal values, e.g. 0o100 -> 64
+06. change indention errors
+07. rewrite list comprehension (inline for) -> matchOrder += list(filter(lambda e: isinstance(e,Optional) and e.expr in tmpOpt, self.exprs))
+08. rewrite inline if -> color = 'white' if w > 0 else 'black' into normal if ...: ... else: ... 
+10. remove erroreous code
