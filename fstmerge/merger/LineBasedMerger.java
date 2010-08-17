@@ -60,7 +60,8 @@ public class LineBasedMerger implements MergerInterface {
 		}
 
 	    try {
-	    	File tmpDir = new File(System.getProperty("user.dir") + File.separator + "fstmerge_tmp");
+	    	long time = System.currentTimeMillis();
+	    	File tmpDir = new File(System.getProperty("user.dir") + File.separator + "fstmerge_tmp"+time);
 	    	tmpDir.mkdir();
 	    	
 			File fileVar1 = File.createTempFile("fstmerge_var1_", "", tmpDir);
