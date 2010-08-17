@@ -109,6 +109,16 @@
 				<param name="testFile" value="Test.py" />
 			</antcall>
 	</target>
+
+	<target name="testPythonCleanup">
+			<antcall target="testGrammar">
+				<param name="language" value="python_cleanup" />
+				<param name="parserClass" value="PythonParserCleanup" />
+				<param name="mainProduction" value="file_input" />
+				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="testFile" value="Test.py" />
+			</antcall>
+	</target>
 	
 	<target name="testHaskell">
 			<antcall target="testGrammar">
