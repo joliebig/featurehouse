@@ -461,7 +461,8 @@ stmt
 
 @FSTNonTerminal(name="{small_stmt}")
 simple_stmt
-	:  &LI small_stmt (LL(2) ";" &LI small_stmt)* [";" <NONE>] <NEWLINE>
+//	:  small_stmt (LL(2) ";" small_stmt)* [";" <NONE>] <NEWLINE>  // original version
+	:  small_stmt <NEWLINE>
 	;
 
 small_stmt
@@ -868,13 +869,15 @@ decorators
 	:  (decorator @!)+
 	;
 
-decorator
-	:  "@" dotted_name decorator_End
+@FSTNonTerminal
+decorated
+	:  decorators decorated_End
 	;
 
-decorator_End
-	:  <NEWLINE>
-	|  "(" decorator_End_Par
+@FSTNonTerminal
+decorated_End
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
+	|  @FSTNonTerminal(name="{classdef}") classdef
 	;
 	
 decorator_End_Par
