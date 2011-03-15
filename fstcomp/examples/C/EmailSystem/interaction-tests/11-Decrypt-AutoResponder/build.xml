@@ -17,7 +17,7 @@
     </taskdef>
     
     <target name="compose" description="composition of features">
-			<java jar="/home/apel/Desktop/FeatureHouse.jar" fork="true">
+		<java jar="../../../../../lib/FeatureHouse.jar" fork="true">
 					<arg value="--expression"/>
 					<arg value="features.exp"/>
 					<arg value="--base-directory"/>

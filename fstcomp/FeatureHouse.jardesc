@@ -11,8 +11,8 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="false" exportJavaFiles="false" exportOutputFolder="true">
-        <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
         <folder path="/CIDE2_ast/META-INF"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
         <javaElement handleIdentifier="=fstgen/test"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.javam"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.pythonm"/>
@@ -22,8 +22,8 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.alloy"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
@@ -39,18 +39,18 @@
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser"/>
         <javaElement handleIdentifier="=CIDE_generateAST/src"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.csharpm"/>
-        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.textm"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer"/>
         <file path="/fstmerge/.classpath"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;modification"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
@@ -60,8 +60,8 @@
         <javaElement handleIdentifier="=fstmerge/&lt;builder.javam"/>
         <file path="/CIDE2_ast/FormsPlSql.jj"/>
         <javaElement handleIdentifier="=CIDE2_ast/src"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;builder"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.pythonm"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder"/>
         <javaElement handleIdentifier="=fstgen/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.alloy"/>
     </selectedElements>

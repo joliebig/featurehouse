@@ -82,6 +82,11 @@ public class JavaMethodOverriding {
 			//System.err.println("#######" + terminalComp2.getBody());
 			//System.err.println("+++++++" + terminalComp2.getBody().replaceFirst(modPrefix, ""));
 			
+			prefix = prefix.replaceFirst("public", "private");
+			prefix = prefix.replaceFirst("protected", "private");
+			if(!prefix.contains("private") && !isC(nonterminalParent))
+				prefix = "private " + prefix;
+			
 			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(modPrefix, "").replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
 		}
@@ -94,6 +99,21 @@ public class JavaMethodOverriding {
 			return getFeatureName(node.getParent());
 	}
 
+	private static boolean isC(FSTNode node) {
+		if (node.getType().equals("C-File")) {
+			return true;
+		} else {
+			FSTNode parent = node.getParent();
+			if(parent != null) {
+				return isC(parent);
+			} else {
+				return false;
+			}
+		}
+			
+	}
+
+	
 	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
 		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
