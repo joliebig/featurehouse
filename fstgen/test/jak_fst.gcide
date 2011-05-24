@@ -1,0 +1,1196 @@
+
+/*
+ * Copyright © 2002 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+ * California 95054, U.S.A. All rights reserved.  Sun Microsystems, Inc. has
+ * intellectual property rights relating to technology embodied in the product
+ * that is described in this document. In particular, and without limitation,
+ * these intellectual property rights may include one or more of the U.S.
+ * patents listed at http://www.sun.com/patents and one or more additional
+ * patents or pending patent applications in the U.S. and in other countries.
+ * U.S. Government Rights - Commercial software. Government users are subject
+ * to the Sun Microsystems, Inc. standard license agreement and applicable
+ * provisions of the FAR and its supplements.  Use is subject to license terms.
+ * Sun,  Sun Microsystems,  the Sun logo and  Java are trademarks or registered
+ * trademarks of Sun Microsystems, Inc. in the U.S. and other countries.  This
+ * product is covered and controlled by U.S. Export Control laws and may be
+ * subject to the export or import laws in other countries.  Nuclear, missile,
+ * chemical biological weapons or nuclear maritime end uses or end users,
+ * whether direct or indirect, are strictly prohibited.  Export or reexport
+ * to countries subject to U.S. embargo or to entities identified on U.S.
+ * export exclusion lists, including, but not limited to, the denied persons
+ * and specially designated nationals lists is strictly prohibited.
+ */
+
+options {
+  JAVA_UNICODE_ESCAPE = true;
+  ERROR_REPORTING = true;
+  STATIC = false;
+}
+
+
+PARSER_BEGIN(JakParser)
+package tmp.generated_jak;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+
+/**
+ * Grammar to parse Java version 1.5
+ * @author Sreenivasa Viswanadha - Simplified and enhanced for 1.5
+ */
+public class JakParser extends AbstractFSTParser
+{
+ 	public JakParser(){}
+}
+
+PARSER_END(JakParser)
+
+/* WHITE SPACE */
+
+SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+/* COMMENTS */
+
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
+}
+
+/* RESERVED WORDS AND LITERALS */
+
+TOKEN :
+{
+  < ABSTRACT: "abstract" >
+| < ASSERT: "assert" >
+| < BOOLEAN: "boolean" >
+| < BREAK: "break" >
+| < BYTE: "byte" >
+| < CASE: "case" >
+| < CATCH: "catch" >
+| < CHAR: "char" >
+| < CLASS: "class" >
+| < CONST: "const" >
+| < CONTINUE: "continue" >
+| < _DEFAULT: "default" >
+| < DO: "do" >
+| < DOUBLE: "double" >
+| < ELSE: "else" >
+| < ENUM: "enum" >
+| < EXTENDS: "extends" >
+| < FALSE: "false" >
+| < FINAL: "final" >
+| < FINALLY: "finally" >
+| < FLOAT: "float" >
+| < FOR: "for" >
+| < GOTO: "goto" >
+| < IF: "if" >
+| < IMPLEMENTS: "implements" >
+| < IMPORT: "import" >
+| < INSTANCEOF: "instanceof" >
+| < INT: "int" >
+| < INTERFACE: "interface" >
+| < LONG: "long" >
+| < NATIVE: "native" >
+| < NEW: "new" >
+| < NULL: "null" >
+| < PACKAGE: "package">
+| < PRIVATE: "private" >
+| < PROTECTED: "protected" >
+| < PUBLIC: "public" >
+| < REFINES: "refines" >
+| < LAYER: "layer" >
+| < SSUPER: "Super" >
+| < RETURN: "return" >
+| < SHORT: "short" >
+| < STATIC: "static" >
+| < STRICTFP: "strictfp" >
+| < SUPER: "super" >
+| < SWITCH: "switch" >
+| < SYNCHRONIZED: "synchronized" >
+| < THIS: "this" >
+| < THROW: "throw" >
+| < THROWS: "throws" >
+| < TRANSIENT: "transient" >
+| < TRUE: "true" >
+| < TRY: "try" >
+| < VOID: "void" >
+| < VOLATILE: "volatile" >
+| < WHILE: "while" >
+}
+
+/* LITERALS */
+
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < CHARACTER_LITERAL:
+      "'"
+      (   (~["'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","u","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )
+      "'"
+  >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","u","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be7"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
+
+/* SEPARATORS */
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COMMA: "," >
+| < DOT: "." >
+| < AT: "@" >
+}
+
+/* OPERATORS */
+
+TOKEN :
+{
+  < ASSIGN: "=" >
+| < LT: "<" >
+| < BANG: "!" >
+| < TILDE: "~" >
+| < HOOK: "?" >
+| < COLON: ":" >
+| < EQ: "==" >
+| < LE: "<=" >
+| < GE: ">=" >
+| < NE: "!=" >
+| < SC_OR: "||" >
+| < SC_AND: "&&" >
+| < INCR: "++" >
+| < DECR: "--" >
+| < PLUS: "+" >
+| < MINUS: "-" >
+| < STAR: "*" >
+| < SLASH: "/" >
+| < BIT_AND: "&" >
+| < BIT_OR: "|" >
+| < XOR: "^" >
+| < REM: "%" >
+| < LSHIFT: "<<" >
+| < PLUSASSIGN: "+=" >
+| < MINUSASSIGN: "-=" >
+| < STARASSIGN: "*=" >
+| < SLASHASSIGN: "/=" >
+| < ANDASSIGN: "&=" >
+| < ORASSIGN: "|=" >
+| < XORASSIGN: "^=" >
+| < REMASSIGN: "%=" >
+| < LSHIFTASSIGN: "<<=" >
+| < RSIGNEDSHIFTASSIGN: ">>=" >
+| < RUNSIGNEDSHIFTASSIGN: ">>>=" >
+| < ELLIPSIS: "..." >
+}
+
+/* >'s need special attention due to generics syntax. */
+TOKEN :
+{
+//  < RUNSIGNEDSHIFT: ">>>" >
+//| < RSIGNEDSHIFT: ">>" >
+ < GT: ">" >
+}
+
+
+
+
+
+GRAMMARSTART
+
+
+
+//grammar
+/*****************************************
+ * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
+ *****************************************/
+
+/*
+ * Program structuring syntax follows.
+ */
+
+@FSTNonTerminal(name="{TypeDeclaration}")
+CompilationUnit:
+  [ LayerDeclaration ]
+  [ PackageDeclaration ]
+  ( ImportDeclaration )*
+  ( TypeDeclaration )*
+  <EOF>
+;
+
+PackageDeclaration:
+  "package" Name ";" @!
+;
+LayerDeclaration:
+  "layer" Name ";" @!
+;
+
+@FSTTerminal(name="{Name}{ImportPackage}")
+ImportDeclaration:
+  "import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
+;
+
+@FSTExportName(".*")
+ImportPackage:
+	<NONE> "." "*" ;
+
+@FSTTerminal(compose="ModifierListSpecialization")
+Modifiers:
+  (LL(2) Modifier)*
+;
+
+Modifier: 
+  
+   "refines" <NONE>
+  |
+   "public" <NONE>
+  |
+   "static" <NONE>
+  |
+   "protected"<NONE>
+  |
+   "private" <NONE>
+  |
+   "final" <NONE>
+  |
+   "abstract" <NONE>
+  |
+   "synchronized" <NONE>
+  |
+   "native" <NONE>
+  |
+   "transient"<NONE>
+  |
+   "volatile" <NONE>
+  |
+   "strictfp" <NONE>
+  |
+   Annotation
+;
+
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id: <IDENTIFIER>;
+
+TypeDeclaration:
+	@FSTTerminal(name="{AUTO}")	
+	";"<NONE> :: EmptyTypeDecl
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
+  	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
+|
+	@FSTNonTerminal(name="{Id}")
+	LOOK_AHEAD(2)
+  	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD(2)
+   	Modifiers    "enum" Id [ ImplementsList ]  EnumBody :: EnumDecl
+;
+
+@FSTInline
+AnnotationTypeDeclaration: "@" "interface" Id AnnotationTypeBody;
+
+@FSTInline
+ClassOrInterfaceDeclaration: 
+		ClassOrInterface Id [ TypeParameters ] [ ExtendsList ] [ ImplementsList ]  ClassOrInterfaceBody;
+
+ClassOrInterface: "class"<NONE> | "interface"<NONE>;
+
+ExtendsList:
+   "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
+;
+
+@FSTTerminal(compose="ImplementsListMerging")
+ImplementsList:
+   "implements" &LI ClassOrInterfaceType  ( "," &LI ClassOrInterfaceType )*
+;
+
+
+@FSTInline 
+EnumDeclaration:
+  "enum" Id
+  [ ImplementsList ]
+  EnumBody
+;
+
+@FSTInline
+EnumBody:
+   "{"
+   &LI EnumConstant ( "," &LI EnumConstant )*
+   [ EnumBodyInternal ]
+   "}"
+;
+
+@FSTNonTerminal(name="")
+EnumBodyInternal: ";" ( ClassOrInterfaceBodyDeclaration )* ;
+
+EnumConstant:
+  <IDENTIFIER> [ Arguments ] [ ClassOrInterfaceBody ]
+;
+
+TypeParameters:
+   "<" &LI TypeParameter ( "," &LI TypeParameter )* ">"
+;
+
+TypeParameter:
+   <IDENTIFIER> [ TypeBound ]
+;
+
+TypeBound:
+   "extends" ClassOrInterfaceType ( "&" ClassOrInterfaceType )*
+;
+
+@FSTInline
+ClassOrInterfaceBody:
+  "{" @+ @! ( ClassOrInterfaceBodyDeclaration @! @! )*  @- @! "}"
+;
+
+ClassOrInterfaceBodyDeclaration:
+  	@FSTTerminal(name="{AUTO}")
+  	LOOK_AHEAD(2)
+  	Initializer :: InitializerDecl
+|
+  	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() ClassOrInterface()")
+  	Modifiers  ClassOrInterfaceDeclaration :: InnerClassDecl
+|
+  	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() \"enum\"")
+  	Modifiers EnumDeclaration :: InnerEnumDecl
+|
+  	@FSTTerminal(name="{ConstructorDeclaration}",compose="ConstructorConcatenation")
+    LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
+	Modifiers ConstructorDeclaration :: ConstructorDecl
+|
+  	@FSTTerminal(name="{FieldDeclaration}")
+    LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
+	Modifiers FieldDeclaration :: FieldDecl
+|
+  	@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
+	LOOK_AHEAD(2)
+  	Modifiers MethodDeclaration :: MethodDecl
+|
+	@FSTTerminal(name="{AUTO}")
+  	";" <NONE> :: EmptyDecl
+;
+
+@FSTExportName("{Type}-{VariableDeclarator}^,")
+FieldDeclaration:
+  Type VariableDeclarator ( "," VariableDeclarator )* ";"
+;
+
+
+@FSTExportName("{VariableDeclaratorId}")
+VariableDeclarator:
+  VariableDeclaratorId [ "=" VariableInitializer ]
+;
+
+@FSTExportName("{<IDENTIFIER>}")
+VariableDeclaratorId:
+  <IDENTIFIER> ( "[" "]" <NONE> )*
+;
+
+
+VariableInitializer:
+  ArrayInitializer
+|
+  Expression
+;
+
+ArrayInitializer:
+  "{" [ ArrayInitializerInternal ] [ ","<NONE> ] "}"
+;
+
+ArrayInitializerInternal: 
+VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
+
+
+@FSTExportName("{MethodDeclarator}")
+MethodDeclaration:
+  [ TypeParameters ]
+  ResultType
+  MethodDeclarator [ "throws" NameList ]
+  MethodDeclarationBody
+;
+
+MethodDeclarationBody: Block | ";"<NONE>; 
+
+@FSTExportName("{<IDENTIFIER>}({FormalParameters})")
+MethodDeclarator:
+  <IDENTIFIER> FormalParameters ( "[" "]"<NONE> )*
+;
+
+@FSTExportName("{FormalParametersInternal}")
+FormalParameters:
+  "(" [ FormalParametersInternal ] ")"
+;
+
+@FSTExportName("{FormalParameter}^-")
+FormalParametersInternal:
+&LI FormalParameter ( "," &LI FormalParameter )*;
+
+@FSTExportName("{Type}")
+FormalParameter:
+  [ "final" <NONE>] Type [ "..."<NONE> ] VariableDeclaratorId
+;
+
+@FSTInline @FSTExportName("{<IDENTIFIER>}-{FormalParameters}")
+ConstructorDeclaration:
+  [ TypeParameters ]
+  <IDENTIFIER> FormalParameters [ "throws" NameList ]
+  "{"
+    [ LOOK_AHEAD("ExplicitConstructorInvocation()") ExplicitConstructorInvocation ]
+    ( BlockStatement )*
+  "}"
+;
+
+ExplicitConstructorInvocation:
+  LOOK_AHEAD("\"this\" Arguments() \";\"")
+  "this" Arguments ";" @!
+|
+  [ LOOK_AHEAD(2) PrimaryExpression "." ] "super" Arguments ";" @!
+;
+
+Initializer:
+  [ "static"<NONE> ] Block
+;
+
+
+/*
+ * Type, name and expression syntax follows.
+ */
+
+@FSTExportName("{TOSTRING}")
+Type:
+   LOOK_AHEAD(2) ReferenceTypeP
+ |
+   PrimitiveType
+;
+
+ReferenceTypeP:
+   PrimitiveType ( LOOK_AHEAD(2) "[" "]" <NONE> )+
+  |
+   ClassOrInterfaceType ( LOOK_AHEAD(2) "[" "]" <NONE> )*
+;
+
+ClassOrInterfaceType:
+  <IDENTIFIER> [ LOOK_AHEAD(2) TypeArguments ]
+  ( LOOK_AHEAD(2) ClassOrInterfaceTypeIntern )*
+;
+
+ClassOrInterfaceTypeIntern:
+ "." <IDENTIFIER> [ LOOK_AHEAD(2) TypeArguments ]
+;
+
+TypeArguments:
+   "<" TypeArgument ( "," TypeArgument )* ">"
+;
+
+TypeArgument:
+   ReferenceTypeP
+ |
+   "?" [ WildcardBounds ]
+;
+
+WildcardBounds:
+   "extends" ReferenceTypeP
+ |
+   "super" ReferenceTypeP
+;
+
+
+PrimitiveType:
+  "boolean"<NONE>
+|
+  "char"<NONE>
+|
+  "byte"<NONE>
+|
+  "short"<NONE>
+|
+  "int"<NONE>
+|
+  "long"<NONE>
+|
+  "float"<NONE>
+|
+  "double"<NONE>
+;
+
+ResultType:
+  "void"<NONE>
+|
+  Type
+;
+
+@FSTExportName("{<IDENTIFIER>}^.")
+Name:
+  <IDENTIFIER>
+  ( LOOK_AHEAD(2) "." <IDENTIFIER> )*
+;
+
+NameList:
+  &LI Name ( "," &LI Name )*
+;
+
+
+/*
+ * Expression syntax follows.
+ */
+
+/*
+ * This expansion has been written this way instead of:
+ *   Assignment | ConditionalExpression
+ * for performance reasons.
+ * However, it is a weakening of the grammar for it allows the LHS of
+ * assignments to be any conditional expression whereas it can only be
+ * a primary expression.  Consider adding a semantic predicate to work
+ * around this.
+ */
+Expression:
+  	ConditionalExpression [ LOOK_AHEAD(2) AssignExp ]
+;
+
+AssignExp :
+	AssignmentOperator Expression
+;
+
+AssignmentOperator:
+  "="<NONE> | "*="<NONE> | "/="<NONE> | "%="<NONE> | "+="<NONE> | "-="<NONE> | "<<=" <NONE>| ">>="<NONE>| ">>>="<NONE> | "&="<NONE> | "^="<NONE> | "|="<NONE>
+;
+
+ConditionalExpression: 
+		LOOK_AHEAD("ConditionalOrExpression() \"?\"") 
+		ConditionalExpressionFull{Expression}
+	|
+		ConditionalOrExpression
+;
+
+ConditionalExpressionFull:
+  ConditionalOrExpression "?" Expression! ":" Expression 
+;
+
+ConditionalOrExpression:
+  ConditionalAndExpression ( "||" ConditionalAndExpression )*
+;
+
+ConditionalAndExpression:
+  InclusiveOrExpression ( "&&" InclusiveOrExpression )*
+;
+
+InclusiveOrExpression:
+  ExclusiveOrExpression ( "|" ExclusiveOrExpression )*
+;
+
+ExclusiveOrExpression:
+  AndExpression ( "^" AndExpression )*
+;
+
+AndExpression:
+  EqualityExpression ( "&" EqualityExpression )*
+;
+
+EqualityExpression:
+  InstanceOfExpression ( EqualityExpressionIntern )*
+;
+
+EqualityExpressionIntern: EqualityOp InstanceOfExpression;
+
+EqualityOp:  "=="<NONE> | "!="<NONE>;
+
+InstanceOfExpression:
+  RelationalExpression [ "instanceof" Type ]
+;
+
+RelationalExpression:
+  ShiftExpression ( RelationalExpressionIntern )*
+;
+
+RelationalExpressionIntern:RelationalOp ShiftExpression;
+
+RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> ;
+
+ShiftExpression:
+  AdditiveExpression ( LL(2) ShiftExpressionRight )*
+;
+
+
+ShiftExpressionRight:
+	ShiftOp AdditiveExpression
+;
+
+ShiftOp: "<<"<NONE> | LOOK_AHEAD(3) ">" ">" ">"   <NONE> | LL(2) ">" ">"  <NONE>;
+
+
+AdditiveExpression:
+  MultiplicativeExpression (AdditiveExpressionIntern )*
+;
+
+AdditiveExpressionIntern:AdditiveOp MultiplicativeExpression ;
+
+AdditiveOp: "+"<NONE> | "-"<NONE>;
+
+MultiplicativeExpression:
+  UnaryExpression (MultiplicativeExpressionIntern)*
+;
+
+MultiplicativeExpressionIntern:  MultiplicativeOp UnaryExpression ;
+MultiplicativeOp: "*" <NONE>| "/" <NONE>| "%"<NONE>;
+
+UnaryExpression:
+  AdditiveOp UnaryExpression
+|
+  PreIncrementExpression
+|
+  PreDecrementExpression
+|
+  UnaryExpressionNotPlusMinus
+;
+
+PreIncrementExpression:
+  "++" PrimaryExpression
+;
+
+PreDecrementExpression:
+  "--" PrimaryExpression
+;
+
+UnaryExpressionNotPlusMinus:
+  UnaryOp UnaryExpression
+|
+  LOOK_AHEAD( "CastLookahead()" )
+  CastExpression
+|
+  PostfixExpression
+;
+
+UnaryOp: "~" <NONE>| "!"<NONE>;
+
+// This production is to determine LOOK_AHEAD only.  The LOOK_AHEAD specifications
+// below are not used, but they are there just to indicate that we know about
+// this.
+CastLookahead:
+  LOOK_AHEAD(2)
+  "(" PrimitiveType
+|
+  LOOK_AHEAD("\"(\" Type() \"[\"")
+  "(" Type "[" "]"
+|
+   "(" Type ")" CastLAOp
+;
+
+CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "Super" "(" [TypeList] ")" | "new"<NONE> |
+	 <IDENTIFIER> |
+	 Literal;
+
+PostfixExpression:
+  PrimaryExpression [ PostfixOp ]
+;
+
+PostfixOp: "++"<NONE> | "--"<NONE>;
+
+CastExpression:
+  LOOK_AHEAD("\"(\" PrimitiveType()")
+  "(" Type ")" UnaryExpression
+|
+  "(" Type ")" UnaryExpressionNotPlusMinus
+;
+
+PrimaryExpression:
+  PrimaryPrefix ( LOOK_AHEAD(2) PrimarySuffix )*
+;
+
+MemberSelector:
+  "." TypeArguments <IDENTIFIER>
+;
+
+PrimaryPrefix:
+  Literal
+|
+  "this"<NONE>
+|
+  "super" "." <IDENTIFIER>
+|
+  "Super" "(" [TypeList] ")" 
+|
+  "(" Expression ")"
+|
+  AllocationExpression
+|
+  LOOK_AHEAD(" ResultType() \".\" \"class\"" )
+  ResultType "." "class"
+|
+  Name
+;
+
+TypeList:
+   &LI ResultType  ( "," &LI ResultType )*
+;
+
+PrimarySuffix:
+  LOOK_AHEAD(2)
+  "." "this"<NONE>
+|
+  LOOK_AHEAD(2)
+  "." AllocationExpression
+|
+  LOOK_AHEAD(3)
+  MemberSelector
+|
+  "[" Expression "]"
+|
+  "." <IDENTIFIER>
+|
+  Arguments
+;
+
+Literal:
+  <INTEGER_LITERAL>
+|
+  <FLOATING_POINT_LITERAL>
+|
+  <CHARACTER_LITERAL>
+|
+  <STRING_LITERAL>
+|
+  BooleanLiteral
+|
+  NullLiteral
+;
+
+BooleanLiteral:
+  "true"<NONE>
+|
+  "false"<NONE>
+;
+
+NullLiteral:
+  "null"<NONE>
+;
+
+Arguments:
+  "(" [ ArgumentList ] ")"
+;
+
+ArgumentList:
+  Expression ( "," Expression )*
+;
+
+AllocationExpression:
+  LOOK_AHEAD(2)
+  "new" PrimitiveType ArrayDimsAndInits
+|
+  "new" ClassOrInterfaceType [ TypeArguments ] AllocationExpressionInit
+;
+
+AllocationExpressionInit:
+      ArrayDimsAndInits
+    |
+      Arguments [ ClassOrInterfaceBody ]
+;
+
+
+/*
+ * The third LOOK_AHEAD specification below is to parse to PrimarySuffix
+ * if there is an expression between the "[...]".
+ */
+ArrayDimsAndInits:
+  LOOK_AHEAD(2) "[" Expression "]" ( LOOK_AHEAD(2) "[" Expression "]" )* ( LOOK_AHEAD(2) "[" "]" <NONE> )*
+|
+  ( "[" "]"<NONE> )+ ArrayInitializer
+;
+
+
+/*
+ * Statement syntax follows.
+ */
+Statement:
+  LOOK_AHEAD(2)
+  LabeledStatement
+|
+  AssertStatement @!
+|
+  Block
+|
+  EmptyStatement
+|
+  StatementExpression ";" @!
+|
+  SwitchStatement @!
+|
+  IfStatement{Statement} @!
+|
+  WhileStatement{Statement} @!
+|
+  DoStatement{Statement} @!
+|
+  ForStatement{Statement} @!
+|
+  BreakStatement @!
+|
+  ContinueStatement @!
+|
+  ReturnStatement @!
+|
+  ThrowStatement @!
+|
+  SynchronizedStatement{Statement} @!
+|
+  TryStatement{Statement} @!
+;
+
+AssertStatement:
+  "assert" Expression [ ":" Expression ] ";" 
+;
+
+LabeledStatement:
+  <IDENTIFIER> ":" Statement
+;
+
+Block:
+  "{" @+  @! ( BlockStatement )* @- "}" @!
+;
+
+BlockStatement:
+  LOOK_AHEAD("[ \"final\" ] Type() <IDENTIFIER>")
+  LocalVariableDeclaration ";"
+|
+  Statement
+|
+  ClassOrInterfaceDeclaration
+;
+
+LocalVariableDeclaration:
+  [ "final"<NONE> ] Type VariableDeclarator ( "," VariableDeclarator )*
+;
+
+EmptyStatement:
+  ";"<NONE>
+;
+
+StatementExpression:/*
+ * The last expansion of this production accepts more than the legal
+ * Java expansions for StatementExpression.  This expansion does not
+ * use PostfixExpression for performance reasons.
+ */  PreIncrementExpression  | PreDecrementExpression  | PrimaryExpression [ StatementExpressionAssignment ];
+
+StatementExpressionAssignment: 
+	"++"<NONE> |
+	"--"<NONE> |
+	AssignmentOperator Expression
+;
+
+
+SwitchStatement:
+  "switch" "(" Expression ")" "{" @+ @!
+    ( SwitchStatementLabel )*
+  @- "}" @!
+;
+
+SwitchStatementLabel :SwitchLabel ( BlockStatement )*;
+
+SwitchLabel:
+  "case" Expression ":"
+|
+  "default" ":"<NONE>
+;
+
+IfStatement:
+/*
+ * The disambiguating algorithm of JavaCC automatically binds dangling
+ * else's to the innermost if statement.  The LOOK_AHEAD specification
+ * is to tell JavaCC that we know what we are doing.
+ */
+  "if" "(" Expression ")" @! @+ Statement! @- [ LOOK_AHEAD(1) "else" @! @+ Statement @- ]
+;
+
+WhileStatement:
+  "while" "(" Expression ")" @! @+ Statement! @-
+;
+
+DoStatement:
+  "do" @! @+ Statement! @- "while" "(" Expression ")" ";"
+;
+
+ForStatement:
+  "for" "("
+  ForStatementInternal
+   
+  ")" @! @+ Statement! @-
+;
+
+ForStatementInternal:
+   LOOK_AHEAD("Type() <IDENTIFIER> \":\"")
+      Type <IDENTIFIER> ":" Expression 
+    |
+     [ ForInit ] ";" [ Expression ] ";" [ ForUpdate ]
+  ;
+
+ForInit:
+  LOOK_AHEAD( "[ \"final\" ] Type() <IDENTIFIER>" )
+  LocalVariableDeclaration
+|
+  StatementExpressionList
+;
+
+StatementExpressionList:
+  StatementExpression ( "," StatementExpression )*
+;
+
+ForUpdate:
+  StatementExpressionList
+;
+
+BreakStatement:
+  "break" [ <IDENTIFIER> ] ";"
+;
+
+ContinueStatement:
+  "continue" [ <IDENTIFIER> ] ";"
+;
+
+ReturnStatement:
+  "return" [ Expression ] ";"
+;
+
+ThrowStatement:
+  "throw" Expression ";"
+;
+
+SynchronizedStatement:
+  "synchronized" "(" Expression ")" Block!
+;
+
+TryStatement:
+/*
+ * Semantic check required here to make sure that at least one
+ * finally/catch is present.
+ */
+  "try" Block! TryStatementEnd
+;
+
+TryStatementEnd:
+  	(CatchBlock )+ ["finally" Block ]
+  |
+     "finally" Block 
+;
+
+CatchBlock:
+   "catch" "(" FormalParameter ")" Block 
+;
+
+/* We use productions to match >>>, >> and > so that we can keep the
+ * type declaration syntax with generics clean
+ */
+
+
+/* Annotation syntax follows. */
+
+Annotation:
+   LOOK_AHEAD( "\"@\" Name() \"(\" ( <IDENTIFIER> \"=\" | \")\" )")
+   NormalAnnotation
+ |
+   LOOK_AHEAD( "\"@\" Name() \"(\"" )
+   SingleMemberAnnotation
+ |
+   MarkerAnnotation
+;
+
+NormalAnnotation:
+   "@" Name "(" [ MemberValuePairs ] ")" @!
+;
+
+MarkerAnnotation:
+  "@" Name @!
+;
+
+SingleMemberAnnotation:
+  "@" Name "(" MemberValue ")" @!
+;
+
+MemberValuePairs:
+   MemberValuePair ( "," MemberValuePair )*
+;
+
+MemberValuePair:
+    <IDENTIFIER> "=" MemberValue
+;
+
+MemberValue:
+   Annotation
+ |
+   MemberValueArrayInitializer
+ |
+   ConditionalExpression
+;
+
+MemberValueArrayInitializer:
+  "{" MemberValue ( LOOK_AHEAD(2) "," MemberValue )* [ ","<NONE> ] "}"
+;
+
+
+/* Annotation Types. */
+
+
+
+@FSTInline
+AnnotationTypeBody:
+  "{" ( AnnotationTypeMemberDeclaration )* "}"
+;
+
+AnnotationTypeMemberDeclaration:
+	@FSTTerminal(name="{<IDENTIFIER>}")
+   	LOOK_AHEAD("Modifiers() Type() <IDENTIFIER> \"(\"")
+	Modifiers   Type <IDENTIFIER> "(" ")" [ DefaultValue ] ";" ::AnnotationMethodDecl
+|
+	@FSTNonTerminal(name="{<IDENTIFIER>}")
+	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
+ 	Modifiers   AnnotationTypeDeclaration :: AnnotationInnerAnnotation
+|
+	@FSTNonTerminal(name="{<IDENTIFIER>}")
+	LOOK_AHEAD(1) 
+  	Modifiers  ClassOrInterfaceDeclaration :: AnnotationInnerClass
+|
+	@FSTNonTerminal(name="{<IDENTIFIER>}")
+  	LOOK_AHEAD(2)
+ 	Modifiers   EnumDeclaration	::AnnotationInnerEnum
+|
+	@FSTTerminal(name="{FieldDeclaration}")
+  	LOOK_AHEAD(1)
+ 	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
+ |
+	@FSTTerminal(name="{AUTO}")
+   	";" <NONE> :: AnnoationEmptyDecl
+;
+
+DefaultValue:
+  "default" MemberValue
+;

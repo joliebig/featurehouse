@@ -1,0 +1,750 @@
+
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(HaskellParser)
+
+package tmp.generated_haskell;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+  public class HaskellParser  extends AbstractFSTParser {
+
+	/**
+	 * Append the given {@link Token} and any preceding special tokens to a
+	 * given {@link StringBuffer}.
+	 * 
+	 * @param token
+	 *            the given JavaCC {@link Token} object
+	 * @param buffer
+	 *            the buffer to which to append <code>token</code>
+	 */
+	final private static void accumulate(Token token, StringBuffer buffer) {
+
+		// Append preceding special tokens to <code>buffer</code>:
+		//
+		Token special = firstSpecial(token);
+		if (special != token)
+			while (special != null) {
+				buffer.append(special.toString());
+				special = special.next;
+			}
+
+		// Finally, append the token itself:
+		//
+		buffer.append(token.toString());
+	}
+
+	/**
+	 * Accumulate {@list Token} objects from the token stream, respecting nested
+	 * code inside <code>open</code> and <code>close</code> pairs, until an
+	 * unmatched <code>close</code> is the next token in the stream. This
+	 * method assumes that an <code>open</code> token has just been read from
+	 * the stream so the initial nesting level is 1. The method returns when a
+	 * matching <code>close</code> token is the next token in the token
+	 * stream. <em>The <code>close</code> token is left in the stream!</em>
+	 * 
+	 * @return the accumulated tokens as a {@link String}.
+	 * 
+	 * @throws ParseException
+	 *             if an end-of-file is found before an unmatched
+	 *             <code>close</code> token.
+	 */
+	final private Token accumulateNestedRegion(int open, int close)
+			throws ParseException {
+
+		StringBuffer buffer = new StringBuffer();
+		Token token = getToken(1);
+
+		// Initialize result with known information (starting position, etc.):
+		//
+		Token result = Token.newToken(UNANTICIPATED_SYMBOL);
+		result.specialToken = null;
+
+		Token startToken = firstSpecial(token);
+		result.beginColumn = startToken.beginColumn;
+		result.beginLine = startToken.beginLine;
+		result.offset=startToken.offset;
+
+		// Accumulate tokens until a <code>close</code> token is found:
+		//
+		for (int nesting = 1; nesting > 0;) {
+
+
+			if (token.kind == EOF)
+				throw new ParseException("accumulating from line "
+						+ result.beginLine + " at column " + result.beginColumn
+						+ ": EOF reached before ending " + tokenImage[close]
+						+ " found");
+
+			if (token.kind == open)
+				++nesting;
+			else if (token.kind == close) {
+				if (nesting == 1)
+					break;
+				--nesting;
+			}
+
+			// Update information in result:
+			//
+			result.endColumn = token.endColumn;
+			result.endLine = token.endLine;
+			result.length=(token.offset-result.offset)+token.length;
+			result.next = token.next;
+
+			accumulate(token, buffer);
+			getNextToken();
+			token = getToken(1);
+		}
+
+		result.image = buffer.toString();
+		return result;
+	}
+
+
+	final private Token accumulateUntil(boolean considerInnerBlocks,
+			int endTokenKind) throws ParseException {
+		return accumulateUntil(considerInnerBlocks, new int[] { endTokenKind });
+	}
+
+	final private Token accumulateUntil(boolean considerInnerBlocks,
+			int endTokenKind1, int endTokenKind2) throws ParseException {
+		return accumulateUntil(considerInnerBlocks, new int[] { endTokenKind1,
+				endTokenKind2 });
+	}
+
+	final private Token accumulateUntil(boolean considerInnerBlocks,
+			int endTokenKind1, int endTokenKind2, int endTokenKind3)
+			throws ParseException {
+		return accumulateUntil(considerInnerBlocks, new int[] { endTokenKind1,
+				endTokenKind2, endTokenKind3 });
+	}
+	final private Token accumulateUntil(boolean considerInnerBlocks,
+			int endTokenKind1, int endTokenKind2, int endTokenKind3, int endTokenKind4)
+			throws ParseException {
+		return accumulateUntil(considerInnerBlocks, new int[] { endTokenKind1,
+				endTokenKind2, endTokenKind3, endTokenKind4 });
+	}
+
+	final private boolean isNot(int kind) {
+		return getToken(1).kind != kind;
+	}
+
+	final private boolean isNot(int k1, int k2) {
+		return isNot(k1) && isNot(k2);
+	}
+
+	final private boolean isNot(int k1, int k2, int k3) {
+		return isNot(k1, k2) && isNot(k3);
+	}
+	final private boolean isNot(int k1, int k2, int k3, int k4) {
+		return isNot(k1, k2, k3) && isNot(k4);
+	}
+	
+	/** returns true if the CONTEXT_ARROW is found before the SEMICOLON **/
+	final private boolean isContext() throws ParseException {
+		int lookahead=1;
+		while (true) {
+			Token t = getToken(lookahead);
+			if (t.kind==EOF) throw new ParseException("EOF found before ; or =>  (line " + token.beginLine
+                                                + ", column " + token.beginColumn
+                                                + ")");
+			if (t.kind==SEMICOLON) return false;
+			if (t.kind==CONTEXT_ARROW) return true;	
+			lookahead++;
+		}
+	}
+
+	/**
+	 * Accumulate {@link Token} objects from the token stream until a token
+	 * matching <code>tokenKind</code> is consumed from the stream. The tokens
+	 * are accumulated in <code>buffer</code>, NOT including the terminating
+	 * token.
+	 * 
+	 * @return a {@link Token} formed by concatenating all intervening tokens
+	 *         and special tokens.
+	 */
+	final private Token accumulateUntil(boolean considerInnerBlocks,
+			int[] endTokenKinds) throws ParseException {
+
+		StringBuffer buffer = new StringBuffer();
+		Token token = getToken(1);
+
+		// Initialize result with known information (starting position, etc.):
+		//
+		Token result = Token.newToken(UNANTICIPATED_SYMBOL);
+		result.specialToken = null;
+
+		Token startToken = firstSpecial(token);
+		result.beginColumn = startToken.beginColumn;
+		result.beginLine = startToken.beginLine;
+		result.offset=startToken.offset;
+
+		// Accumulate tokens until a <code>tokenKind</code> token is found:
+		//
+		int nesting=0;
+		while (!contains(endTokenKinds, token.kind) || nesting >0) {
+			// Update information in result:
+			//
+			result.endColumn = token.endColumn;
+			result.endLine = token.endLine;
+			result.next = token.next;
+			result.length=(token.offset-result.offset)+token.length;
+
+			if (token.kind == EOF)
+				throw new ParseException("from line " + result.beginLine
+						+ " at column " + result.beginColumn
+						+ ": EOF reached before " + images(endTokenKinds)
+						+ " found");
+			
+			if (considerInnerBlocks && token.kind == LEFT_CURLY)
+				++nesting;
+			else if (considerInnerBlocks && token.kind == RIGHT_CURLY) {
+				--nesting;
+			}
+
+			accumulate(token, buffer);
+			getNextToken();
+			token = getToken(1);
+		}
+
+		if (buffer.length() == 0)
+			throw new ParseException("syntax error - empty pseudo-match (line " + result.beginLine
+                                                + ", column " + result.beginColumn
+                                                + ")");
+
+		result.image = buffer.toString();
+		return result;
+	}
+
+	private String images(int[] endTokenKinds) {
+		String result = "";
+		for (int i : endTokenKinds)
+			result += tokenImage[i] + " ";
+		return result;
+	}
+
+	private boolean contains(int[] endTokenKinds, int kind) {
+		for (int i : endTokenKinds)
+			if (i == kind)
+				return true;
+		return false;
+	}
+
+    /**
+     * Finds the first token, special or otherwise, in the list of special
+     * tokens preceding this {@link Token}.  If this list is non-empty, the
+     * result will be a special token.  Otherwise, it will be the starting
+     * token.
+     *
+     * @param token the given {@link Token}.
+     * @return the first special token preceding <code>token</code>.
+     **/
+    final private static Token firstSpecial (Token token) {
+
+	while (token.specialToken != null)
+	    token = token.specialToken ;
+
+	return token ;
+    }
+  }
+
+PARSER_END(HaskellParser)
+
+
+JAVACODE
+Token findListContent () {
+    return accumulateNestedRegion(LEFT_PAREN, RIGHT_PAREN) ;
+}
+
+JAVACODE
+Token findBlockContent () {
+    return accumulateNestedRegion (LEFT_CURLY, RIGHT_CURLY) ;
+}
+
+JAVACODE
+Token findConRest () {
+	//(block | ~(SEMICOLON|ALT|RIGHT_CURLY))*
+    return accumulateUntil(true,SEMICOLON,ALT,RIGHT_CURLY,DERIVING) ;
+}
+
+JAVACODE
+Token findNonstddeclRest () {
+	//(block | ~(SEMICOLON|RIGHT_CURLY))+
+    return accumulateUntil(true,SEMICOLON,RIGHT_CURLY) ;
+}
+
+JAVACODE
+Token findUntilSemiOrCCB () {
+	//~(SEMICOLON | RIGHT_CURLY)*
+    return accumulateUntil(false,SEMICOLON,RIGHT_CURLY) ;
+}
+JAVACODE
+Token findUntilSemiOrContextArrow () {
+	//(~(CONTEXT_ARROW|SEMICOLON))*;
+    return accumulateUntil(false,CONTEXT_ARROW,SEMICOLON) ;
+}
+JAVACODE
+Token findUntilSemiOrEquals () {
+	//~(EQUALS|SEMICOLON))*
+    return accumulateUntil(false,SEMICOLON,EQUALS) ;
+}
+JAVACODE
+Token findUntilEquals () {
+	//~(EQUALS))*
+    return accumulateUntil(false,EQUALS) ;
+}
+
+
+
+
+
+//options	{
+//    k = 9;
+//    // Allow any char but \uFFFF (16 bit -1)
+//    charVocabulary='\u0000'..'\uFFFE';
+//}
+
+TOKEN : {
+	<MODULE : "module">
+|	<WHERE : "where" >
+|	<IMPORT : "import" >
+|	<QUALIFIED : "qualified" >
+|	<DERIVING : "deriving" >
+|	<AS : "as" >
+|	<HIDING : "hiding" >
+|	<TYPE : "type" >
+|	<DATA : "data" >
+|	<NEWTYPE : "newtype" >
+|	<CLASS : "class" >
+|	<INSTANCE : "instance" >
+|	<DEFAULTTOKEN : "default" >
+|	<LET : "let" >
+|	<IN : "in" >
+|	<DO : "do" >
+|	<CASE : "case" >
+|	<OF : "of" >
+|	<IF : "if">
+|	<THEN : "then">
+|	<ELSE : "else">
+|	<INFIXL : "infixl" >
+|	<INFIXR : "infixr" >
+|	<INFIX : "infix" >
+|	<CONTEXT_ARROW : "=>" >
+|	<EQUALS : "=" >
+|	<ALT : "|" >
+|	<OFTYPE : "::" >
+|	<OTHER1 : "." >
+|	<OTHER2 : "-" >
+|	<OTHER3 : "@" >
+|	<OTHER4 : "_" >
+|	<OTHER5 : "~" >
+|	<OTHER6 : ":" >
+|	<OTHER7 : "->" >
+|	<OTHER8 : "+" >
+|	<OTHER9 : "\\" >
+|	<OTHER10 : "<-" >
+|	<OTHER11 : "--" >
+|	<OTHER12 : ".." >
+//|	<QVARID>//|	<QCONID>//|	<QVARSYM>
+}
+
+SPECIAL_TOKEN : {
+ " "
+|  "\t"
+|  "\n"
+|  "\r"
+|  <"--" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+| <"{-"(~["-"])*"-"("-" | ~["-", "}"](~["-"])*"-")*"}">
+}
+
+    
+//PPDIRECTIVE
+//	:	'#' (~('\n'))* NEWLINE { $setType(Token.SKIP); }
+//	;
+
+
+TOKEN : {
+	<CONSTRUCTOR_ID : <UPPER_CASE>	( <LETTER>
+							| <DIGIT>
+							| "'"  | "#" )* >
+|	<VARIABLE_ID : <LOWER_CASE>	( <LETTER>
+							| <DIGIT>
+							| "'"  | "#" )*>
+
+|	<INTEGER:	(<DECIMAL>	|	"0o" <OCTAL> | "0O" <OCTAL>
+		|	"0x" <HEXADECIMAL> | "0X" <HEXADECIMAL>)>
+		
+|   <FLOAT: <DECIMAL> "." <DECIMAL> (["e","E"] (["+","-"])? <DECIMAL>)?>
+|	<#DECIMAL : (<DIGIT>)+ >
+
+|	<#HEXADECIMAL : (<HEXIT>)+>
+
+|	<#OCTAL : (<OCTIT>)+ >
+
+//|	<CHARACTER_LITERAL : "'" (~["'","\\"]|<CHARACTER_ESCAPE>) "'" >////|	<STRING_LITERAL : "\"" (~["\"","\\"]|<STRING_ESCAPE>|<GAP>)* "\"" >
+|  < CHARACTER_LITERAL:
+      "'"
+      (   (~["'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","a","b","r","f","\\","'","\"","&"]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )
+      "'"
+  >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","a","b","r","f","\\","'","\"","&"]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""
+  >
+|	<#CHARACTER_ESCAPE	:	"\\"
+		( <CHAR_ESC>
+		| <DECIMAL>
+		| "x" <HEXADECIMAL>
+		| "o" <OCTAL>
+		)
+	>
+	
+|	<#CHAR_ESC
+	:
+    	( "a"
+    	| "b"  
+    	| "f"  
+    	| "n"  
+    	| "r" 
+    	| "t" 
+    	| "v"
+    	| "\\" 
+    	| "\""
+    	| "'" )
+	>
+
+|	<#STRING_ESCAPE	: ("\\&" | <CHARACTER_ESCAPE>)>
+    
+    
+|	<#ASCII : "NUL" >
+    
+//|	<NEWLINE : "\n">
+
+//|	<#GAP : "\\" (<WS> | <NEWLINE>)+ "\\" >
+
+|	<#LOWER_CASE:	["a"-"z","_"]>	
+|	<#UPPER_CASE:	["A"-"Z"]>	
+|	<#LETTER : <UPPER_CASE> | <LOWER_CASE>>
+
+|	<#DIGIT:	["0"-"9"]>	
+
+|	<#HEXIT:	(<DIGIT> | ["A"-"F"] | ["a"-"f"] )>	
+
+|	<#OCTIT:	["0"-"7"]>	
+
+|	<LEFT_CURLY : "{" >
+
+|	<RIGHT_CURLY : "}" >
+
+|	<SEMICOLON : ";" >
+
+//extension: unboxed tuple
+|	<LEFT_HPAREN : "(#" >
+
+|	<RIGHT_HPAREN : "#)" >
+|	<LEFT_PAREN : "(" >
+
+|	<RIGHT_PAREN : ")" >
+
+|	<LEFT_BRACKET : "[" >
+
+|	<RIGHT_BRACKET : "]" >
+
+|	<COMMA : "," >
+
+|	<INFIX_QUOTE : "`" >
+
+|	<VARSYM : <SYMBOL> (<SYMBOL> | ":" )* >
+
+|	<CONSYM : ":" (<SYMBOL> | ":"  )* >
+
+|	<SYMBOL : "!" | "#" | "$" | "%" | "&" | "*" | "+" | "." | "/" | "<" | "="
+       | ">" | "?" | "@" | "\\" | "^" | "-" | "~" | "|"
+       >
+       
+|	<UNANTICIPATED_SYMBOL : ~["a"-"z","A"-"Z","0"-"9"] >
+}
+
+
+<PAREN> TOKEN :{
+ 	<ANYTHINGP: ~["(",")"]>
+}
+
+GRAMMARSTART
+
+//module
+
+@FSTNonTerminal(name="{moduleHeader}")
+module: [moduleHeader] "{" @+! body @-!"}";
+
+@FSTNonTerminal
+body: [imports] [";"<NONE>] [definitions];
+
+@FSTNonTerminal
+imports: &LI importDecl (LL(2) ";"@!@! &LI importDecl)* ";";
+
+//body: 
+//	&LI importDecl (LL(2) ";"@!@! &LI importDecl)* [";"@!@! definitions] 
+//	| [definitions];
+
+@FSTNonTerminal(name="{naam}")
+moduleHeader: "module" naam [exports] "where" @!;
+
+@FSTNonTerminal
+exports: "(" [exportList]  ")";
+
+@FSTTerminal(name="{TOSTRING}")
+importDecl: "import" ["qualified"<NONE>] naam ["as" naam] [hiding];
+hiding: ["hiding"<NONE>] "(" [exportList] ")";
+
+//export
+
+@FSTNonTerminal
+exportList: &LI export ("," &LI export)*;
+
+@FSTTerminal(name="{TOSTRING}")
+export:
+	LL("var()") var
+	| naam [ exportNaamParam]
+	| "module" naam;
+
+exportNaamParam: 
+	LL(2) "(" ".." ")"<NONE>
+	| "(" [naamOrVarList] ")";
+	
+naamOrVarList: &LI naamOrVar ("," &LI naamOrVar)*;
+naamOrVar: LL("naam()") naam | var; 
+
+//definition
+@FSTNonTerminal
+definitions: &LI definition (";"@!@! &LI definition)*;
+
+definition:
+		@FSTNonTerminal(name="{simpletype}")	
+		"type"		simpletype "=" functiontype :: typedecl	|   @FSTNonTerminal(name="{simpletype}")	
+		"data" [LL("context()") context] simpletype "=" constrs [deriving] :: datadecl	|	@FSTNonTerminal(name="{simpletype}")	
+		"newtype"  [LL("context()") context] simpletype "=" naam newtypeParam [deriving]  :: newtypedecl	|	@FSTNonTerminal(name="{naam}")	
+		"class"    [LL("context()") context] naam (var)+ [whereDecls] :: classdecl    |	@FSTNonTerminal(name="{inst}")	   
+    	"instance" [LL("context()") context] inst [whereDecls]  :: instancedecl	|	@FSTNonTerminal(name="{functiontypeList}")	   
+		"default" functiontypeList  :: defaultdecl	|	@FSTTerminal(name="{declaration}")	
+		declaration  :: declaration	;
+
+@FSTTerminal(name="{naam}")
+simpletype: naam (var)*;
+
+@FSTNonTerminal
+constrs: @+ &LI constr ("|"@! &LI constr)* @-;
+
+
+constr: 
+		@FSTTerminal(name="{naam}")
+		LL("naam() \"{\"")  naam "{"  &LI fielddeclaration ("," &LI fielddeclaration)* "}"
+	| 
+		@FSTTerminal(name="{operator}")
+		LL("(type())+ operator()") (LL("type()")type)+ operator (type)+
+	| 
+		@FSTTerminal(name="{naam}")
+		naam (type)*;
+
+fielddeclaration: varList "::" functiontype;
+
+deriving: 
+	LL(2) @! "deriving" "(" naamList ")"
+	| @! "deriving" naam;
+	
+newtypeParam: "{" var "::" functiontype "}" | type; 
+
+@FSTTerminal(name="{TOSTRING}")
+inst: naam (type)+;
+//inst: naam inst_rest;//inst_rest: type;//	LL("naam()") naam//	| LL("\"(\" var() \"->\"") 	"(" var "->" var ")"//	| LL("\"(\" var() \",\"")		"(" &LI var ("," &LI var)+ ")"//	| "(" [simpletype] ")"//	| "[" var "]";
+
+//declaratie
+@FSTNonTerminal
+decls: "{" @+ [ declarationList] @- "}";
+@FSTNonTerminal
+declarationList: &LI declaration (";" @! &LI declaration)*;
+
+@FSTTerminal(name="{TOSTRING}")
+declaration:
+		LL("function() \"=\"") function "=" expr [whereDecls]
+	| 	LL("function() \"|\"") function (altExprAss)+ [whereDecls]
+	|	LL("varList() \"::\"") varList "::" [LL("context()") context] functiontype
+	| 	LL("patr() \"=\"") patr "=" expr [whereDecls]
+	|	LL("patr() \"|\"") patr (altExprAss)+ [whereDecls]
+	|	"infix" [<INTEGER>] operatorList
+	| 	"infixl" [<INTEGER>] operatorList
+	|	"infixr" [<INTEGER>] operatorList;
+
+altExprAss: "|" expr "=" expr;
+
+@FSTExportName("{TOSTRING}")
+function:
+	LL("var() patroon()")  var &LI patroon (&LI patroon)*
+	| LL("\"(\" function()") "(" function ")" (patroon)+
+	| patroon operator patr;
+
+@FSTNonTerminal
+whereDecls: "where" @+! decls @-;
+
+//expression
+expressie: 
+		literal 
+		| LL("var()") var [contrExprParam]
+		| LL("naam()") naam [contrExprParam]
+		| LL("\"(\" expr() operator()") "(" expr operator ")"
+		| LL("\"(\" operator()") "(" operator expr ")"
+		| "(" [exprList] ")"
+		| "(#" [exprList] "#)"//extension: unboxed tuple
+		| "[" [exprListSpecial] "]"; 
+		
+contrExprParam: "{" &LI contrExprAssign ("," &LI contrExprAssign)* "}";
+contrExprAssign: var "=" expr;
+		
+		
+expr: exprMain (LL("exprOperator()") exprOperator)* [LL("exprEnd()") exprEnd];
+
+exprEnd: "::" [LL("context()") context] functiontype;
+
+exprMain:
+	(LL(1) &LI expressie)+
+	| "-" expr
+	| "\\" (patroon)+ "->" expr
+	| "if" expr "then" expr "else" expr
+	| "case" expr "of" "{" @+ &LI caseInner (";"@! &LI caseInner)* @- "}"
+	| "let" decls "in" expr
+	| "do" "{" altSpecialSemiList "}";
+
+exprOperator: operator expr;
+exprList: &LI expr ("," &LI expr)*;
+exprListSpecial: 
+	LL("expr() \"|\"") expr "|" altSpecialList 
+	| LL("expr() [\",\" expr()] \"..\"") expr ["," expr] ".." [expr]
+	| &LI expr ("," &LI expr)*;
+	
+altSpecialSemiList: &LI altSpecial (";" &LI altSpecial)*;
+altSpecialList: &LI altSpecial ("," &LI altSpecial)*;
+altSpecial: 
+	LL("patr() \"<-\"") patr "<-" expr
+	| LL("expr()") expr	
+	| "let" decls;
+
+caseInner: LL("patr() \"->\"") patr "->" expr [whereDecls]
+		| @+ patr (caseInnerAlt)* @- [whereDecls];
+caseInnerAlt: "|"@! expr "->" expr;
+
+//pattern
+patr: patrMain (LL("qconop()") patrOp)*;
+
+patrOp: qconop patr;
+patrMain: 
+	LL("naam() patroon()") naam (LL(1) patroon)+
+	| LL("var() \"+\" <INTEGER>") var "+" <INTEGER>
+	| patroon;
+
+patroon: (LL("patroonPrefix()") patroonPrefix)* patroonMain;
+
+patroonPrefix: "~" | var "@";
+
+patroonMain: "_" 
+	| ["-"<NONE>] literal
+	| LL("var()") var
+	| LL("naam()") naam [contrPatrParam]:: constructorNaam
+	| "(" [patrList] ")"
+	| "(#" [patrList] "#)"
+	| "[" [patrList] "]";
+
+patrList: &LI patr ("," &LI patr)*;
+
+contrPatrParam: "{" &LI contrPatrAssign ("," &LI contrPatrAssign)* "}";
+contrPatrAssign: var "=" patr;
+
+//type
+type: LL("naam()") /*type*/naam
+	| /*tyvar*/<VARIABLE_ID>
+	| "(" [functiontypeList] ")"
+	| "(#" [functiontypeList] "#)"//extension: unboxed tuple
+	| "[" functiontype "]" ;
+functiontypeList: &LI functiontype ("," &LI functiontype)*;
+
+functiontype: &LI paramtype (LL("\"->\" paramtype()") "->" &LI paramtype)*;
+paramtype: (LL("type()") type)+;
+	
+//context
+context: LL("klasse() \"=>\"") klasse "=>"
+		| LL(2) "(" ")" "=>" <NONE>
+		| "(" &LI klasse ("," &LI klasse)* ")" "=>";
+
+//class
+klasse: /*klasse*/naam (klasseTypeVar)+;
+klasseTypeVar: "(" /*tyvar*/<VARIABLE_ID> (type)* ")" | /*tyvar*/<VARIABLE_ID>; 	
+	
+//var and naam	
+@FSTExportName("{TOSTRING}")
+varList: &LI var ("," &LI var)*;
+
+@FSTTerminal(name="{varMain}")
+var : [LL("ModuleNaamPrefix()") ModuleNaamPrefix] varMain;
+
+@FSTTerminal(name="{TOSTRING}")
+varMain: <VARIABLE_ID>
+	| "(" varsym ")";
+	//|	"`" varOperator "`"	; does not fit H98 standard
+
+naamList: &LI naam ("," &LI naam)*;
+
+@FSTTerminal(name="{TOSTRING}")
+naam: qcon;
+
+qcon: qconid | "(" gconsym ")";
+
+//naam: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] naamMain;//naamMain: <CONSTRUCTOR_ID>  //	|	"`" constructorOperator "`"	;
+
+operatorList: &LI operator ("," &LI operator)*;
+operator: qop;
+op: LL("varop()") varop | conop | otherOperators;
+qop: LL("qvarop()") qvarop | LL("qconop()")qconop | [LL("ModuleNaamPrefix()") ModuleNaamPrefix] otherOperators;
+
+//varOperator: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] varOperatorMain;//varOperatorMain: <VARSYM> | otherOperators | "(" var ")";
+varop:   varsym | "`" <VARIABLE_ID> "`";
+qvarop:  LL(1) "`" qvarid "`" | qvarsym;
+conop:   <CONSYM> | "`" <CONSTRUCTOR_ID> "`";
+qconop:  LL(1) "`" qconid "`" | gconsym;
+
+qvarsym: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] varsym;
+qvarid: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] <VARIABLE_ID>;
+qconsym: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] <CONSYM>;
+qconid: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] <CONSTRUCTOR_ID>;
+gconsym: ":"|qconsym;
+varsym: <VARSYM> | otherOperators;
+
+//constructorOperator: [LL("ModuleNaamPrefix()") ModuleNaamPrefix] constructorOperatorMain;//constructorOperatorMain: <CONSYM> | otherOperators | ":" | "(" naam ")";
+
+ModuleNaamPrefix: <CONSTRUCTOR_ID> "." (LL("<CONSTRUCTOR_ID> \".\"") <CONSTRUCTOR_ID> ".")*;
+
+otherOperators: "+"|"."|"-"|"_";//not an operator: .. : :: = \ | <- -> @ ~ => --
+//reservedOperators: ".."|":"|"::"|"="|"\\"|"|"|"<-"|"->"|"@"|"~"|"=>"|"--";
+		
+literal :<INTEGER>|<FLOAT>|<CHARACTER_LITERAL>|<STRING_LITERAL>;
+		

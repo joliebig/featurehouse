@@ -1,0 +1,105 @@
+Non-Terminals and Terminals
+---------------------------
+
+all productions for non-terminals are annotated with 
+
+@FSTNonTerminal
+
+All child elements are assumed to be terminals if not specified otherwise.
+In order to reconstruct the original document, non-terminals may not reference tokens like <IDENTIFIER>, but
+those must be refactored into an external declaration.
+The name is decuded from the production name. By default the name of a non-terminal is a constant "-", 
+but can be specified otherwise with the "name" parameter of the annotation (see below).
+
+Every production that is not annotated or annotated with @FSTTerminal is considered a terminal. 
+	* Its type is deduced from the production name
+	* Its name is a constant "-" if not specified otherwise with an "name" annotation parameter.
+	* Its body is the parsed text of this production.
+
+The type can be overwritten in both cases an annotation parameter "type", eg. @FSTTerminal(type="newType").
+
+(Exported) Names
+----------------
+
+By default all nodes are named with a constant "-". With a "name" attribute to the @FSTTerminal or 
+@FSTNonTerminal annotation, it is possible to specify a different name. Names are generally strings,
+where sequences in curly brackets can be patterns and are replaced with values during parsing.
+
+@Terminal(name="abc") 
+		=> the terminal is always named "abc"
+@Terminal(name="{Name}) 
+		=> the terminal is always named like the exported name of the production Name.
+@Terminal(name="_{<IDENTIFER>}_" 
+		=> the terminal is always named with the containing identifer token (first one observed during parsing),
+		   that is surounded by underscores, e.g., "_ABC_".
+@Terminal(name="{<IDENTIFER>}-{<IDENTIFER>}"
+		=> named by the first and the second identifier-token found during parsing of the production, e.g, "ABC-abc"
+
+There are some special constructs. {AUTO} generates a unique name, {TOSTRING} is replaced by the content
+of the whole production (whitespaces are striped). Finally "{X}^." can be used as list construct, where
+X can occur 0 to n times during parsing. When replaced, all occurances of X are separated by a . (the character
+following the ^ symbol, use ~ for no separator). For example: "{Type}^." can be replaced by "com.util.Test".
+
+Again, {X} replaced by the exported name of the production. By default, the exported name is the name of the production 
+("-" if not specified otherwise). Additionally, it is possible to specify an export name that is different from the
+name using the @FSTExportName("...") annotation, where ... specifies the constant or pattern for the export name.	
+
+Example:	 
+		   
+@FSTNonTerminal(name="{Name}")
+TypeDeclaration : 
+	"class"  Name "extends" ExtendedType "{" ( LL(2) VarDeclaration )*
+	ClassConstructor ( MethodDeclaration )* "}" <EOF>;
+
+@FSTTerminal(name="fix") @FSTExportName("{<IDENTIFIER>}")
+Name: <IDENTIFIER>;
+  
+In this example, the TypeDeclaration non-terminal nodes always have the exported name of the inner production
+which is constructed from the parsed identifier. Nevertheless, the Name terminal node is always named with a
+fixed name "fix", not with the exported name it exports.
+
+
+Inlining
+--------
+
+If a production with only a single choice (i.e., no "|") is referenced by a non-terminal that is not qualified
+(not optional or part of a list), it can be inlined. Consider the following example
+
+
+@FSTNonTerminal(name="{M}") 	X: A B [C];
+@FSTInline 						B: M N; 
+
+is inlined internally to
+@FSTNonTerminal(name="{M}") 	X: A M N [C];
+
+Note that name patters must refer to the inlined version. Inlined production do not have a name or type.
+
+Inlining might be useful to break down complex productions during grammar declaration, but not for FST construction.
+Generally the following construct is semantically equivalent, just uses to non-terminals instead of one.
+
+@FSTNonTerminal(name="{B}") 			X: A B [C];
+@FSTNonTerminal @FSTExportName("{M}")	B: M N; 
+
+
+Composition
+-----------
+
+NonTerminals can be annotated with an additional composition parameter
+@FSTTerminal(name="xy",compose="concat")
+where the compose attribute specifies the composition mechanism.
+The default mechanism is "Replacement", i.e. composition is regarded as an error.
+
+The value of compose can be derived using "{TerminalName}" just as with names from other terminals (not from non-
+terminals; there is no separate export mechanism).
+@FSTNonTerminal(name="xy",compose="compose-{Member}") 
+
+
+Merging
+-------
+
+Terminals can be annotated with a parameter merge
+@FSTTerminal(name="xy",compose="mech1")
+in which the attribute specifies the merging mechanism.
+The default is 'SemanticConflict'.
+
+The name is processed as for argument "compose".

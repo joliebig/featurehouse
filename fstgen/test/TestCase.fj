@@ -1,0 +1,3 @@
+class TestCase extends Object{
+	TestCase(){super();}
+}

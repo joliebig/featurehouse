@@ -1,0 +1,554 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(CApproxParser)
+
+package tmp.generated_capprox;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+public class CApproxParser extends AbstractFSTParser {
+
+	public CApproxParser() {}
+
+    // Run the parser
+    public static void main ( String args [ ] ) {
+      CApproxParser parser ;
+
+  	
+      if(args.length == 0){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Reading from standard input . . .");
+        parser = new CApproxParser(new OffsetCharStream(System.in));
+      }
+      else if(args.length == 1){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Reading from file " + args[0] + " . . ." );
+      try {
+        parser = new CApproxParser(new OffsetCharStream(new java.io.FileInputStream(args[0])));
+      }
+      catch(java.io.FileNotFoundException e){
+        System.out.println("C (approx) Parser Version 0.1:  File " + args[0] + " not found.");
+        return ;
+        }
+      }
+      else {
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Usage is one of:");
+        System.out.println("         java CParser < inputfile");
+        System.out.println("OR");
+        System.out.println("         java CParser inputfile");
+        return ;
+      }
+      try {
+        parser.TranslationUnit(false);
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Java program parsed successfully.");
+      }
+      catch(ParseException e){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Encountered errors during parse.");
+        e.printStackTrace();
+      }
+    }
+
+        
+         /**
+     * Append the given {@link Token} and any preceding special tokens to a
+     * given {@link StringBuffer}.
+     *
+     * @param token the given JavaCC {@link Token} object
+     * @param buffer the buffer to which to append <code>token</code>
+     **/
+    final private static void accumulate (Token token, StringBuffer buffer) {
+
+	// Append preceding special tokens to <code>buffer</code>:
+	//
+	Token special = firstSpecial (token) ;
+	if (special != token)
+	    while (special != null) {
+		buffer.append (special.toString ()) ;
+		special = special.next ;
+	    }
+
+	// Finally, append the token itself:
+	//
+	buffer.append (token.toString ()) ;
+    }
+      
+    /**
+     * Accumulate {@list Token} objects from the token stream, respecting
+     * nested code inside <code>open</code> and <code>close</code> pairs,
+     * until an unmatched <code>close</code> is the next token in the stream.
+     * This method assumes that an <code>open</code> token has just been read
+     * from the stream so the initial nesting level is 1.  The method returns
+     * when a matching <code>close</code> token is the next token in the token
+     * stream.  <em>The <code>close</code> token is left in the stream!</em>
+     *
+     * @return the accumulated tokens as a {@link String}.
+     *
+     * @throws ParseException
+     * if an end-of-file is found before an unmatched <code>close</code> token.
+     **/
+    final private Token accumulateNestedRegion (int open, int close)
+    throws ParseException {
+
+	StringBuffer buffer = new StringBuffer () ;
+
+	// Initialize result with known information (starting position, etc.):
+	//
+	Token result = Token.newToken (OTHER) ;
+	result.specialToken = null ;
+
+	Token startToken = firstSpecial (getToken (1)) ;
+	result.beginColumn = startToken.beginColumn ;
+	result.beginLine = startToken.beginLine ;
+
+	// Accumulate tokens until a <code>close</code> token is found:
+	//
+	for (int nesting = 1 ; nesting > 0 ; ) {
+
+	    getNextToken () ;
+
+	    // Update information in result:
+	    //
+	    result.endColumn = token.endColumn ;
+	    result.endLine = token.endLine ;
+	    result.next = token.next ;
+
+	    if (token.kind == EOF)
+		throw new ParseException (
+		    "accumulating from line "
+		    + result.beginLine
+		    + " at column "
+		    + result.beginColumn
+		    + ": EOF reached before ending "
+		    + tokenImage [close]
+		    + " found"
+		) ;
+
+		accumulate (token, buffer) ;
+	    if (token.kind == open)
+			++ nesting ;
+	    else if (token.kind == close) {
+			if (nesting == 1)
+		    	break ;
+			-- nesting ;
+	    }
+
+	    
+	    
+	}
+
+	result.image = buffer.toString () ;
+	return result ;
+    }
+
+    /**
+     * Accumulate {@link Token} objects from the token stream until a token
+     * matching <code>tokenKind</code> is consumed from the stream.  The
+     * tokens are accumulated in <code>buffer</code>, including the terminating
+     * token.
+     *
+     * @return a {@link Token}
+     * formed by concatenating all intervening tokens and special tokens.
+     **/
+    final private Token accumulateUntilToken (int tokenKind)
+    throws ParseException {
+
+	StringBuffer buffer = new StringBuffer () ;
+	Token token = getNextToken () ;
+
+	// Initialize result with known information (starting position, etc.):
+	//
+	Token result = Token.newToken (OTHER) ;
+	result.specialToken = null ;
+
+	Token startToken = firstSpecial (token) ;
+	result.beginColumn = startToken.beginColumn ;
+	result.beginLine = startToken.beginLine ;
+
+	// Accumulate tokens until a <code>tokenKind</code> token is found:
+	//
+	while (token.kind != tokenKind) {
+
+	    // Update information in result:
+	    //
+	    result.endColumn = token.endColumn ;
+	    result.endLine = token.endLine ;
+	    result.next = token.next ;
+
+	    if (token.kind == EOF)
+		throw new ParseException (
+		    "from line "
+		    + result.beginLine
+		    + " at column "
+		    + result.beginColumn
+		    + ": EOF reached before "
+		    + tokenImage [tokenKind]
+		    + " found"
+		) ;
+
+	    accumulate (token, buffer) ;
+	    token = getNextToken () ;
+	}
+
+	accumulate (token, buffer) ;
+
+	result.image = buffer.toString () ;
+	return result ;
+    }
+	/**
+	 * finds the end of the current line for preprocessor instructions. handles
+	 * also multiline makros ending with \
+	 * 
+	 * @return
+	 * @throws ParseException
+	 */
+	final private Token accumulateUntilLineEnd() throws ParseException {
+		StringBuffer buffer = new StringBuffer();
+		Token nextToken = peekNext();
+
+		// Initialize result with known information (starting position, etc.):
+		//
+		Token result = Token.newToken(OTHER);
+		result.specialToken = null;
+
+		Token startToken = firstSpecial(nextToken);
+		result.beginColumn = startToken.beginColumn;
+		result.beginLine = startToken.beginLine;
+
+		// Accumulate tokens until a <code>tokenKind</code> token is found:
+		//
+		while (!preceededByLinebreak(nextToken) || token.image.equals("\\")) {
+			getNextToken();
+
+			// Update information in result:
+			//
+			result.endColumn = token.endColumn;
+			result.endLine = token.endLine;
+			result.next = token.next;
+
+			if (token.kind == EOF)
+				throw new ParseException("from line " + result.beginLine
+						+ " at column " + result.beginColumn
+						+ ": EOF reached before special token" + " found");
+
+			accumulate(token, buffer);
+			nextToken = peekNext();
+		}
+
+		result.image = buffer.toString();
+		return result;
+	}
+
+	private boolean preceededByLinebreak(Token t) {
+		assert t != null;
+		Token specialToken = t.specialToken;
+		while (specialToken != null) {
+			if (specialToken.image.indexOf('\n')>=0)
+				return true;
+			specialToken = specialToken.specialToken;
+		}
+		return false;
+	}
+	private Token peekNext() {
+		if (token.next == null)
+			token.next = token_source.getNextToken();
+		return token.next;
+	}	
+    /**
+     * Finds the first token, special or otherwise, in the list of special
+     * tokens preceding this {@link Token}.  If this list is non-empty, the
+     * result will be a special token.  Otherwise, it will be the starting
+     * token.
+     *
+     * @param token the given {@link Token}.
+     * @return the first special token preceding <code>token</code>.
+     **/
+    final private static Token firstSpecial (Token token) {
+
+	while (token.specialToken != null)
+	    token = token.specialToken ;
+
+	return token ;
+    }
+  }
+
+PARSER_END(CApproxParser)
+
+SPECIAL_TOKEN : {
+ " "
+|  "\t"
+|  "\r"
+|  "\n"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+| <"__attribute__((" (~[")"])* "))">
+| <"__attribute__((format(" (~[")"])* ")))">
+}
+
+
+TOKEN : {
+	<LITERAL: <INTEGER_LITERAL> | <FLOATING_POINT_LITERAL> | <STRING_LITERAL>|<CHARACTER_LITERAL>>
+|  <#INTEGER_LITERAL: <DECIMAL_LITERAL> (["l","L"])? | <HEX_LITERAL> (["l","L"])? | <OCTAL_LITERAL> (["l","L"])?>
+|  <#DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])*>
+|  <#HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+>
+|  <#OCTAL_LITERAL: "0" (["0"-"7"])*>
+|  <#FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])? | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])? | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])? | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]>
+|  <#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+>
+|  <#CHARACTER_LITERAL: "\'" (~["\'","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"])) "\'">
+|  <#STRING_LITERAL: "\"" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])?  | ["0"-"3"] ["0"-"7"] ["0"-"7"] | ( ["\n","\r"] | "\r\n")))* "\"">
+}
+
+TOKEN : {
+	<INCLUDE: "include"> 
+|	<DEFINE: "define"> 
+|	<IFDEF: "ifdef"> 
+|	<IFNDEF: "ifndef"> 
+|	<ENDIF: "endif"> 
+|	<ELIF: "elif"> 
+|	<ELSIF: "elsif"> 
+|	<PPLINE: "line"> 
+|	<PPUNDEF: "undef"> 
+|	<PPPRAGMA: "pragma"> 
+|	<PPERROR: "error"> 
+|	<TYPEDEF: "typedef"> 
+//|	<LONG: "long"> 
+//|	<STRUCT: "struct"> 
+|	<ENUM: "enum"> 
+|	<EXTERN: "extern"> 
+|	<UNSIGNED: "unsigned"> 
+|	<CONST: "const"> 
+|	<STATIC: "static"> 
+|	<STRUCT: "struct"> 
+|	<INLINE: "inline"> 
+|	<INLINE2: "__inline__">
+|	<INLINE3: "__inline">
+|	<WEIREDSTUFF1: "__regbank">
+|	<WEIREDSTUFF2: "__TIPOFUNC__">
+|	<IF: "if"> 
+|	<ELSE: "else"> 
+|	<FOR: "for"> 
+|	<WHILE: "while"> 
+|	<DO: "do"> 
+|	<SWITCH: "switch"> 
+|	<CASE: "case"> 
+|	<SWDEFAULT: "default"> 
+|	<SEMI: ";"> 
+|	<COLON: ":"> 
+|	<COMMA: ","> 
+|	<LT: "<"> 
+|	<GT: ">"> 
+|	<OB: "("> 
+|	<CB: ")"> 
+|	<OCB: "{"> 
+|	<CCB: "}"> 
+|	<STAR: "*"> 
+|	<EQ: "="> 
+|	<HASH: "#"> 
+| 	<PIPE: "|">
+}
+
+TOKEN : {
+ <IDENTIFIER: <LETTER> (<LETTER> | <DIGIT>)* | "long long">
+|  <#LETTER: ["$","A"-"Z","_","a"-"z"]>
+|  <#DIGIT: ["0"-"9"]>
+| <OTHER: ~[]>
+}
+
+JAVACODE
+Token findEndGT () {
+    return accumulateNestedRegion (LT, GT) ;
+}
+JAVACODE
+Token findLineEnd () {
+    return accumulateUntilLineEnd() ;
+}
+JAVACODE
+Token findEndCB () {
+    return accumulateNestedRegion(OB, CB) ;
+}
+JAVACODE
+Token findEndCCB () {
+    return accumulateNestedRegion(OCB, CCB) ;
+}
+
+GRAMMARSTART
+
+@FSTNonTerminal
+TranslationUnit:
+	Sequence_CodeUnit_TopLevel <EOF>;
+
+@FSTNonTerminal	
+Sequence_CodeUnit_TopLevel:
+	(LL(2) CodeUnit_TopLevel @!)*;
+
+CodeUnit_TopLevel:
+	@FSTTerminal(name="{PPIncludeStatement}") LL(2) PPIncludeStatement :: Include | 
+	@FSTTerminal(name="{PPDefineStatement}") LL(2) PPDefineStatement :: Define | 
+	@FSTTerminal(name="{PPIfDef_TopLevel}") LL(2) PPIfDef_TopLevel :: IfDefTL |
+	@FSTTerminal(name="{PPOtherIgnore}") LL(2) "#" PPOtherIgnore JAVATOKEN(findLineEnd) @! :: Preprocessor | 
+	@FSTTerminal(name="{Function}",compose="JavaMethodOverriding") LL("FunctionHeader()") Function :: Func | 
+	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
+	@FSTTerminal(name="{ExternDecl}") LL(3) ExternDecl :: ExternDec |
+	@FSTNonTerminal(name="{Id}") LL(3) "struct" Id "{" (Statement)* "}" ";" :: StructDec |
+	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
+	
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id: <IDENTIFIER>;
+
+CodeUnit_InBlock:
+	LL(2) PPIfDef_BlockLevel :: IfDefBL |
+	LL(2) PPIncludeStatement :: IncludeBL | 
+	LL(2) PPDefineStatement :: DefineBL | 
+	LL(2) "#" PPOtherIgnore JAVATOKEN(findLineEnd) @! :: PreprocessorBL | 
+	LL(1) IfStatement :: If |
+	LL(1) ForStatement :: For |
+	LL(1) WhileStatement :: While |
+	LL(1) DoStatement :: Do |
+	LL(1) SwitchStatement :: Switch |
+	LL(2) GotoLabel  |
+	LL(1) Block :: Blck |
+	Statement :: Stmt;	
+
+@FSTTerminal(name="{TOSTRING}")		
+Statement:
+	(AnyStmtToken)* ";" @!;
+	
+IfStatement:
+	"if" "(" JAVATOKEN(findEndCB) BlockOrSingleStatement [ LL(1) ElseBlock ];
+ElseBlock: 
+	"else" ;//[ LL(1) BlockOrSingleStatement ];
+
+ForStatement:
+	"for" "(" JAVATOKEN(findEndCB) @+! BlockOrSingleStatement @-;
+
+WhileStatement:
+	"while" "(" JAVATOKEN(findEndCB) @+! BlockOrSingleStatement @-;
+
+DoStatement:
+	"do" @+! BlockOrSingleStatement @-! "while" "(" JAVATOKEN(findEndCB) ";" @!;
+
+SwitchStatement:
+	"switch" "(" JAVATOKEN(findEndCB) "{" @+! (SwCase)* @- "}";
+SwCase: 
+	"default" ":" Sequence_CodeUnit_InBlock @!
+|
+	"case" [LL(1) "("<IDENTIFIER>")"] SwCaseLabel (MoreSwCaseLabel)* ":" Sequence_CodeUnit_InBlock @!;
+SwCaseLabel: <IDENTIFIER> | [<OTHER>] <LITERAL>;
+MoreSwCaseLabel: "|" SwCaseLabel;
+	
+@FSTExportName("{TOSTRING}")	
+ExternDecl: 
+	"extern" <LITERAL> Block;
+
+@FSTExportName("{TOSTRING}")		
+PPIncludeStatement:
+	"#" "include" JAVATOKEN(findLineEnd)@!;//"<" JAVATOKEN(findEndGT);
+
+@FSTExportName("{TOSTRING}")	
+PPDefineStatement:
+	LL(2) "#" "define" JAVATOKEN(findLineEnd)@! |
+	LL(2) "#" "undef" JAVATOKEN(findLineEnd)@!;
+
+@FSTExportName("{TOSTRING}")	
+PPIfDef_TopLevel:
+	IfDefLine  @+
+	Sequence_CodeUnit_TopLevel
+	(LL(2) IfElseIf_TopLevel)*
+	[ LL(2) @- "#" "else" @+! Sequence_CodeUnit_TopLevel ] 
+	@- "#" "endif" @!;
+
+PPIfDef_BlockLevel:
+	IfDefLine @+
+	Sequence_CodeUnit_InBlock
+	(LL(2) IfElseIf_BlockLevel)*
+	[ LL(2)@- "#" "else" @+! Sequence_CodeUnit_InBlock @!] 
+	@-"#" "endif"@!;
+
+@FSTExportName("{TOSTRING}")
+PPOtherIgnore:
+	"line" | "pragma" |"error";
+	
+IfDefLine:
+	LL(2) "#" "ifdef" <IDENTIFIER> @!| LL(2)  "#" "ifndef" <IDENTIFIER>@! | "#" "if" JAVATOKEN(findLineEnd)@!;
+IfElseIf:
+	LL(2) "#" "elif" <NONE> | "#" "elsif"<NONE>;
+IfElseIf_BlockLevel:
+	@- IfElseIf JAVATOKEN(findLineEnd) @+!
+	Sequence_CodeUnit_InBlock;
+IfElseIf_TopLevel:
+	IfElseIf JAVATOKEN(findLineEnd)@!
+	Sequence_CodeUnit_TopLevel;
+
+@FSTExportName("{FunctionHeader}({FunctionParameterList})")
+Function:
+	 FunctionHeader [FunctionParameterList] ")" @+! BlockOrSemi @-!;
+
+@FSTExportName("{<IDENTIFIER>}")	 
+FunctionHeader:
+	 (Modifier)* FunctionReturnType ["*"<NONE>] [LL(1) FunctionExoticStuff] <IDENTIFIER> "(";
+
+FunctionReturnType:
+	 ["const"<NONE>] ["struct" <NONE>]["unsigned"<NONE>] <IDENTIFIER>;
+Modifier:
+	"static" | "inline" | "__inline__" | "__inline" | "extern"  | "__TIPOFUNC__";
+FunctionExoticStuff:
+	"__regbank" "(" <LITERAL> ")";
+
+@FSTExportName("{TOSTRING}")	 
+FunctionParameterList:	
+	&LI FunctionParameter ("," &LI FunctionParameter)*;
+FunctionParameter:
+	(VarDeclToken)+;
+
+Block:
+	"{" @+! Sequence_CodeUnit_InBlock  @-! "}";
+
+GotoLabel:
+	 <IDENTIFIER> ":";
+	 
+Sequence_CodeUnit_InBlock:
+	(LL(2) CodeUnit_InBlock)*;
+
+BlockOrSemi:
+	LL(1) ";" <NONE> |
+	LL(1) Block |
+	(VarDecl)+ Block;//oldstyle method declarations
+
+BlockOrSingleStatement:
+	LL(1) Block |
+	CodeUnit_InBlock;
+
+@FSTExportName("{TOSTRING}")		
+TypeDef:
+	LL(2) "typedef" "enum" (AnyTypeDefToken)* ";"@! |
+	"typedef" (AnyStmtToken)* ";"@! ; 
+	
+BlockAssignment: //= {a,b}
+	"=" [Cast] "{" JAVATOKEN(findEndCCB);
+EnumBlock: 
+	 "enum" [<IDENTIFIER>] "{" JAVATOKEN(findEndCCB);
+	
+Cast:
+	"(" FunctionReturnType ")";
+	
+AnyTypeDefToken: LL(1) "{" <NONE> | "}" | AnyStmtToken;
+	
+AnyStmtToken: <IDENTIFIER> | <LITERAL>  | <OTHER> | "," | "|" | "<" | ">" | "(" | ")" | 
+	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | "*" |
+	LL("\"=\" [Cast()]\"{\"") BlockAssignment | "=" | ":"  
+	| Modifier  
+	|  "ifdef" | "ifndef" | "define" | "include" | "elif" | "elsif" | PPOtherIgnore
+	| "const" | "struct" | "unsigned";
+
+VarDecl:
+	(VarDeclTokenOrComma)* ";"@!;
+VarDeclTokenOrComma: VarDeclToken | ",";
+
+VarDeclToken:
+	<IDENTIFIER> | <LITERAL> | "*" | <OTHER> | "|" | "const" |  "struct" | "unsigned" | "enum" | PPOtherIgnore | Modifier | "(" JAVATOKEN(findEndCB);
+	
+//TestOnly:
+Literal: <LITERAL>;

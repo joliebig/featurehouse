@@ -1,0 +1,323 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(AlloyParser)
+package tmp.generated_alloy;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
+
+public class AlloyParser extends AbstractFSTParser
+{
+ 	public AlloyParser(){}
+}
+
+PARSER_END(AlloyParser)
+
+/* WHITE SPACE */
+
+SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+/* COMMENTS */
+
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
+}
+
+/* RESERVED WORDS AND LITERALS */
+
+TOKEN :
+{
+
+
+      < LARROW: "->"> | < INT: "int"> | < INTT: "Int"> | < AND: "&">  | < COLON: ":" >
+
+ 	  | < AT: "@" >| < IN: "in" > | < EXACTLY: "exactly" > | < EXPECT: "expect" >
+
+      | < ALL: "all" > | < NO: "no" > | < LONE: "lone" > | < SOME: "SOME" >
+
+      | < ONE: "one" > | < SET: "set" > | < OPEN: "open" > | < AS: "as" >
+
+      | < ABSTRACT: "abstract"> | < SIG: "sig"> | < EXTENDS: "extends">
+
+      | < ENUM: "enum" > | < FACT: "fact" > | < ASSERT: "assert" > | < UNIV: "univ" >
+
+      | < THIS: "this" > | < SEQINT: "seq/Int" > | < PRIVATE: "private" > | < DISJ: "disj" >
+
+      | < FUN: "fun" >  | < PRED: "pred" > | < FOR: "for" > | < BUT: "but" > | < RUN: "run" >
+      
+      | < OR: "or" >  | < AND1: "and" > | < IFF: "iff" > | < SUM: "sum" > | < seq: "seq" >
+      
+      | < LET: "let" >  | < NOT: "not" > | < SOME1: "some" > | < ELSE: "else" > | < NONE1: "none" >
+      
+      | < IDEN: "iden" >  | < CHECK: "check" > | < MODULE: "module" > | < IMPLIES: "implies" >
+
+}
+
+/* LITERALS */
+
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0027",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039"
+      ]
+  >
+}
+
+/* SEPARATORS */
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < COMMA: "," >
+| < DOT: "." >
+}
+
+/* OPERATORS */
+
+TOKEN :
+{
+  < PLUS: "+" >
+| < MINUS: "-" >
+| < STAR: "*" >
+| < SLASH: "/" >
+}
+
+GRAMMARSTART
+
+NatInteger : <INTEGER_LITERAL> ;
+
+Integer : "-" NatInteger | NatInteger;
+
+@FSTNonTerminal()
+Specification : 
+	[Module] 
+	(LL(10) Open)* 
+	(Paragraph)*
+	<EOF>
+	;
+
+@FSTNonTerminal(name="{Name}")
+Module : "module" Name  [ ExactlyClause ] ;
+
+ExactlyClause : "["  [<EXACTLY>] Name  (ExactlyClauseListElement)* "]" ;
+
+ExactlyClauseListElement : "," [<EXACTLY>] NatInteger ;
+
+@FSTNonTerminal(name="{Name}")
+Open : [<PRIVATE>] "open"  Name  [RefClause]  [ AsClause ] ;
+
+RefClause :  "[" Ref ( "," Ref )* "]" ;
+
+AsClause : "as" Name ;
+
+Paragraph : @FSTTerminal(name="{FactDecl}") FactDecl 
+          | @FSTTerminal(name="{AssertDecl}") AssertDecl 
+          | @FSTTerminal(name="{FunDecl}") LL(2) FunDecl 
+          | @FSTTerminal(name="{CmdDecl}") CmdDecl 
+          | @FSTNonTerminal(name="{EnumDecl}") EnumDecl 
+          | @FSTNonTerminal(name="{SigDecl}") SigDecl 
+          ; 
+
+@FSTExportName("{MaybeName}")
+FactDecl : "fact" MaybeName Block ;
+
+@FSTExportName(name="{MaybeName}")
+AssertDecl : "assert" MaybeName Block ;
+
+@FSTExportName("{Name}({FunParams})") 
+FunDecl : LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "(" FunParams ")" ":" Expr Block
+        | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" ":" Expr Block
+        | LL(7) ["private" <NONE>] "fun" [LL("Ref() \".\"") Ref "."] Name                 ":" Expr Block
+        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "(" FunParams ")" Block
+        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name "[" FunParams "]" Block
+        | LL(7) ["private" <NONE>] "pred" [LL("Ref() \".\"") Ref "."] Name Block ;
+
+@FSTExportName("{TOSTRING}")
+FunParams : [Decls];
+
+@FSTExportName("{AUTO}")
+CmdDecl : [ LL(1) CmdDeclClause ] [ RunOrCheck ] NameOrBlock [Scope] ;
+
+CmdDeclClause : Name ":" ;
+
+RunOrCheck : "run" | "check" ;
+
+@FSTNonTerminal()
+NameOrBlock : NonEmptyName | Block;
+
+Scope :  LL("\"for\" NatInteger()\"but\"") "for" NatInteger "but" TypeScope ("," TypeScope)*
+       | "for" TypeScope ("," TypeScope)*
+       ;
+
+TypeScope : [ "exactly" <NONE> ] NatInteger TypeScopeClause ;
+
+TypeScopeClause : Name | "int" | "seq" | <NONE>;
+
+@FSTNonTerminal(name="{Name}")
+SigDecl : (SigQual)* "sig" &LI Name ("," &LI Name)* [SigExt] "{" SigBody "}" [LL(1) Block] ;
+
+@FSTNonTerminal(name="SigBody")
+SigBody : [Decls] ;
+
+@FSTNonTerminal()
+Decls : &LI Decl ("," &LI Decl )* ;
+
+@FSTTerminal(name="{Name}")
+Decl : [ "private" <NONE> ] [ "disj" <NONE> ] &LI Name ("," &LI Name)* ":" [ "disj" <NONE> ] Expr ;
+
+@FSTNonTerminal(name="{Name}")
+EnumDecl : "enum" Name "{" &LI Name  ( "," &LI Name )*  "}" ;
+
+@FSTTerminal(name="SigQual")
+SigQual : "abstract" | "lone" | "one" | "some" | "private" ;
+
+@FSTTerminal(name="SigExt")
+SigExt : "extends" Ref | "in" Ref ( "+" Ref )* ;
+
+@FSTTerminal(name="{AUTO}")
+Expr : Expr1 [ LL(2) BinOpExpr ] ;
+
+BinOpExpr : BinOp Expr;
+
+Expr1 : Expr2 [ LL(2) ArrowOpExpr ] ;
+
+ArrowOpExpr : ArrowOp Expr ;
+
+Expr2 : Expr3 [ LL(2) CompareOpExpr ] ;
+
+CompareOpExpr : [ NotClause ] CompareOp Expr ;
+
+Expr3 : Expr4 [ LL("ElseExpr()") ElseExpr ] ;
+
+ElseExpr : [ImpliesClause] Expr "else" Expr ;
+
+Expr4 :  Expr5 [ LL(2) ExprList ] ;
+
+ExprList : "[" Expr ("," Expr)* "]" ;
+
+Expr5 : "let" LetDecl (LL(2) "," LetDecl)* [LL(2) BlockOrBar]
+       | LL(3) Quant Decl (LL(2) "," Decl)* [LL(2) BlockOrBar]
+       | UnOp Expr
+       | NatInteger
+       | "-" NatInteger
+       | "none"
+       | "iden"
+       | "univ"
+       | "Int"
+       | "seq/Int"
+       | "(" Expr ")"
+       | LL(3) Block
+       | [ "as" <NONE> ] NonEmptyName
+       | "{" Decl ("," Decl)* BlockOrBar "}" 
+       ;
+
+NotClause : "!" | "not" ;
+
+ImpliesClause : "=>" | "implies" ;
+
+LetDecl : Name "=" Expr ;
+
+Quant : "all" | "no" | "some" | "lone" | "one" | "sum" ;
+
+BinOp : "||" | "or" | "&&" | "and" | "&" | "<=>" | "iff"
+        | "=>" | "implies" | "+" | "-" | "++" | "<:" | ":>" | "." | "<<" | ">>" | ">>>" ;
+
+ArrowOp :  [LL(2) ArrowOpClause] "->" [LL(2) ArrowOpClause] ;
+
+ArrowOpClause : "some" | "one" | "lone" | "set" ;
+
+CompareOp : "=" | "in" | "<" | ">" | "=<" | ">=" ;
+
+UnOp : "!" | "not" | "no" | "some" | "lone" | "one" | "set" | "seq" | "#" | "~" | "*" | "^" ;
+
+@FSTNonTerminal(name="Block")
+Block : "{" (Expr)* "}" ;
+
+BlockOrBar : Block | "|" Expr ;
+
+@FSTTerminal(name="{TOSTRING}")
+Name :  NameClause  ( LL(2) "/" <IDENTIFIER> )* ;
+
+NameClause : "this" | <IDENTIFIER> | <NONE> ;
+
+@FSTTerminal(name="{TOSTRING}")
+NonEmptyName : NonEmptyNameClause (  LL(2) "/" <IDENTIFIER> )* ;
+
+NonEmptyNameClause : "this" | <IDENTIFIER>;
+
+@FSTTerminal(name="{TOSTRING}")
+MaybeName : [NonEmptyName] ;
+
+Ref : Name | "univ" | "Int" | "seq/Int" ;
