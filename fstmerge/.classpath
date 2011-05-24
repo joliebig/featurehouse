@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="examples/|scripts/" kind="src" path=""/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fstcomp"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CIDE_generateAST"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CIDE2_ast"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/fstgen"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

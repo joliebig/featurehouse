@@ -1,0 +1,641 @@
+Betrachtete Revision
+====================
+
+Base: /trunk/jabref/src/java/net/sf/jabref Revision 2118
+ svn co -r 2118 https://jabref.svn.sourceforge.net/svnroot/jabref/trunk/jabref/src/java/net/sf/jabref trunk-2118
+
+Left: /trunk/jabref/src/java/net/sf/jabref Revision 2290
+ svn co -r 2290 https://jabref.svn.sourceforge.net/svnroot/jabref/trunk/jabref/src/java/net/sf/jabref left-trunk-2290
+
+Right:  /branches/beta_2.3/jabref/src/java/net/sf/jabref Revision 2290
+ svn co -r 2290 https://jabref.svn.sourceforge.net/svnroot/jabref/branches/beta_2.3/jabref/src/java/net/sf/jabref right-branch-2290
+
+
+Logeintrag zum tatsächlichen Merge
+==================================
+
+<logentry
+   revision="2291">
+<author>mortenalver</author>
+<date>2007-08-23T21:18:12.896495Z</date>
+<paths>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/PreviewHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/CustomEntriesHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/OpenOfficeHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/build.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_no.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/FieldTextField.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/layout/LayoutEntry.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/MedlineHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/PreviewPanel.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/CustomExports.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/CustomImports.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/GeneralTab.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/MarkingHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/About.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/jgoodies.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/EntryEditor.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/GenFieldsCustomizer.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/JabRefHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/JournalAbbreviations.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/util/XMPUtil.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ContentSelectorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ExternalFiles.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_en.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/SearchHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/StringEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/Globals.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/CustomImports.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/EntryEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/IEEEXploreHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_fr.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/TimeStampHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ImportInspectionDialog.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/EntryEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/GroupsHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/JournalAbbreviations.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/OwnerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/layout/format/ResolvePDF.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ExternalFiles.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/OpenOfficeHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/SynchronizeFileField.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/BaseFrameHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ShortAuxImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/PreviewHelp.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/images/splash-2.3.svg"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/images/splash-2.3.svg</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_de.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/CiteSeerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/TimeStampHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/RemoteHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/date/DatePickerButton.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/XMPHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/LabelPatterns.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/HelpHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/ExportFormat.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/CustomEntriesHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_du.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/CiteSeerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ShortIntegrityCheck.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ShortPlainImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/EndNoteFilters.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/wizard/integrity/IntegrityCheck.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/LabelPatterns.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/txt/TODO</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ContentSelectorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/ExportFormats.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/BibtexHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ImportInspectionDialog.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/GeneralRenderer.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/HelpHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/IEEEXploreHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/RightClickMenu.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/CustomExports.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/FieldComparator.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/tablerefsabsbib/tablerefsabsbib.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_no.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/MainTable.java</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/java/net/sf/jabref/external/IconSelection.java"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/java/net/sf/jabref/external/IconSelection.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ShortPlainImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/OpenOfficeHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.phdthesis.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/BibtexParser.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/CommandLine.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.mastersthesis.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/tablerefs/tablerefs.begin.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/CustomExports.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/help/fr/FileLinks.html"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/help/fr/FileLinks.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/Menu_it.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/MarkingHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/BibtexEntry.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/EndNoteFilters.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/FileLinksUpgradeWarning.java</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/java/net/sf/jabref/export/SaveDatabaseAction.java"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/java/net/sf/jabref/export/SaveDatabaseAction.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/BibtexFields.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_en.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/JabRefHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ShortIntegrityCheck.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/simplehtml.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/Contents.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/GeneralFields.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/BaseFrameHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileMenuItem.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/SearchHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/ImportInspectionDialog.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_fr.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/layout/LayoutHelper.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/EntryEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileTypeEditor.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/FieldContentSelector.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/FileActions.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ImportInspectionDialog.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/java/net/sf/jabref/export/layout/format/FileLink.java"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/java/net/sf/jabref/export/layout/format/FileLink.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/GroupsHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/BaseFrameHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/MedlineHelp.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/resource/layout/simplehtml.begin.layout"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/resource/layout/simplehtml.begin.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/images/splash.png</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_de.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/AdvancedTab.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/RemoteHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/Contents.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/JabRef-UserManual_de.tex</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileType.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/CustomEntriesHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_du.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/MarkingHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/OwnerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/EndNoteFilters.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/help/FileLinks.html"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/help/FileLinks.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/AccessLinksForEntries.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/GUIGlobals.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/labelPattern/LabelPatternUtil.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/BibtexHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/BasePanel.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/HelpHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/PreviewHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/StringEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/ShortPlainImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/ExternalTab.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/JabRefPreferences.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/ImportMenuItem.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.inbook.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/Util.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/About.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/GeneralFields.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/JabRef_it.properties</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/build.xml</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/java/net/sf/jabref/export/layout/ParamLayoutFormatter.java"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/java/net/sf/jabref/export/layout/ParamLayoutFormatter.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/FieldTextArea.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/OpenDatabaseAction.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/tests/net/sf/jabref/util/XMPUtilTest.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/CommandLine.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/PrefsDialog3.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/HelpContent.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.inproceedings.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/JournalAbbreviations.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ContentSelectorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/FileListEntryEditor.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/SearchHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/StringEditorHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/CustomImports.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/JabRefHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/GeneralFields.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/GroupsHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/JabRefFrame.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/OwnerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ExternalFiles.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ShortAuxImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/layout/format/HTMLChars.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/RemoteHelp.html</path>
+<path
+   kind=""
+   action="D">/trunk/jabref/src/help/LabelPatterns.txt</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/TimeStampHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/CiteSeerHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/XMPHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/MedlineHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.book.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/AppearancePrefsTab.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/AppendDatabaseAction.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/XMPHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/ParserResult.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/Contents.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/JabRef.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/gui/MainTableSelectionListener.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/html.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/bibtexml.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/resource/layout/tablerefsabsbib/tablerefsabsbib.begin.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/external/ExternalFileTypeEntryEditor.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/ShortIntegrityCheck.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/imports/IEEEXploreFetcher.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/CommandLine.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/BibtexDatabase.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/LabelPatterns.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/images/crystal_16/Icons.properties</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/help/de/FileLinks.html"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/help/de/FileLinks.html</path>
+<path
+   kind=""
+   copyfrom-path="/branches/beta_2.3/jabref/src/resource/layout/simplehtml.end.layout"
+   copyfrom-rev="2290"
+   action="A">/trunk/jabref/src/resource/layout/simplehtml.end.layout</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/java/net/sf/jabref/export/layout/Layout.java</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/IEEEXploreHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/de/BibtexHelp.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/ShortAuxImport.html</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/txt/README</path>
+<path
+   kind=""
+   action="M">/trunk/jabref/src/help/fr/About.html</path>
+</paths>
+<msg>Merged beta_2.3 changes r2119:2290 into the trunk.</msg>
+</logentry>

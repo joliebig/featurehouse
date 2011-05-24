@@ -1,0 +1,22 @@
+createMerge.sh
+Dies ist ein einfaches Skript. Es iteriert über alle Dateien aus dem
+linken Zweig und wendet auf alle Dateien mit Endung JAVA merge an.
+Der Merge für eine Datei gelingt nur, wenn die Datei in allen drei
+Verzeichnissen vorhanden ist.
+Der Aufruf des Skripts ist:
+	./createMerge leftDir/ baseDir/ rightDir/
+
+createMerge3.sh
+Dieses Skript deckt die drei Fälle ab.
+Es iteriert zunächst über alle JAVA-Dateien in left. Ist eine Datei von
+left auch in base und right, so wird merge wie oben angewandt. Fehlt die
+Datei in einem Verzeichnis, so wird merge mit einer leeren Datei angewandt.
+In der zweiten Phase iteriert das Skript über alle Dateien in right. Ist
+dort eine Datei auch in left, so wird zur nächsten Datei gesprungen.
+Fehlt die Datei in left, so wird geprüft, ob die Datei in base ist. Wenn
+ja, so wird ein merge mit einer leeren Datei links ausgeführt.
+Das Verzeichnis base wird nicht mehr betrachtet, da Treffer bereits
+durch die beiden vorherigen Phasen abgearbeitet sind.
+Der Aufruf des Skripts ist:
+   ./createMerge3 leftDir/ baseDir/ rightDir/ mergeDir/
+wobei der vierte Parameter für das Zielverzeichnis optinal ist.
