@@ -1,0 +1,23 @@
+
+
+GRAMMARSTART
+
+//To test &LI and standard operations
+
+MethodDeclaration: Type ["static" <NONE> ] <IDENTIFIER> "(" [ParameterList] ")" ["throws" NameList] "{" "}";
+Type: "void" | "int";
+ParameterList: &LI Parameter ("," &LI Parameter)*;
+Parameter: Type <IDENTIFIER>;
+NameList: &LI Name ("," &LI Name)*;
+Name: <IDENTIFIER>;
+
+Statement:
+		LOOK_AHEAD(2) <IDENTIFIER> ";"
+	|	IfStatement{Statement};
+IfStatement: "if" "(" <EXPRESSION> ")" Statement! [ "else" Statement];
+
+//Test of References
+Production: @RefTarget(Production) <IDENTIFIER> ":" Units ";" ;
+Units: (Unit)* ;
+Unit: <STRING_LITERAL> | NonTerminal;
+NonTerminal: @Reference(Production) <IDENTIFIER>;
