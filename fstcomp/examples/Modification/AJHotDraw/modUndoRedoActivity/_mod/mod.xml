@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..DeleteCommand*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{setUndoActivity(createUndoActivity());
+						getUndoActivity().setAffectedFigures(view().selection());
+						original();}</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

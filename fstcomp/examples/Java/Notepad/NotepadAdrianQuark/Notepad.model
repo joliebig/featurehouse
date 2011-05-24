@@ -1,0 +1,8 @@
+Notepad : [Print] [Format] [Find] [Clipboard] [Undo] [File] [MenuBar] [ToolBar] Text Base :: _Notepad;
+Text : TextRaw | TextStyled;
+Format : FormatRaw | FormatStyled;
+
+%% // non-grammar constraints
+
+FormatRaw implies TextRaw;
+FormatStyled implies TextStyled;

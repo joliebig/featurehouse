@@ -1,0 +1,3 @@
+this layer generates a list of disjunctive clauses in clause.clist.
+It does so by taking each production, pattern, grammar, and ESList 
+formula, converting it to cnf, and then to a clause form.

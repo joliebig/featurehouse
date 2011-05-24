@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<!-- imports -->
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.standard.FigureEnumerator;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.standard.FigureTransferCommand;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.util.Undoable;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.util.UndoableAdapter;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..CutCommand*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{setUndoActivity(createUndoActivity());
+						getUndoActivity().setAffectedFigures(collectAffectedFigures());
+						UndoActivity ua = (UndoActivity) acommand.getUndoActivity();
+						ua.setSelectedFigures(acommand.view().selection());
+						original();}</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public Undoable createUndoActivity() {
+						return new UndoActivity(this);
+					}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..CutCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<externLink>AuxClass.java</externLink>
+				<cTraversal>..*:InnerClass*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

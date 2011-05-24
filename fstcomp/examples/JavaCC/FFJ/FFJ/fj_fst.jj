@@ -1,0 +1,20 @@
+PARSER_BEGIN(FJParser)
+
+PARSER_END(FJParser)
+
+String TypeDeclaration(boolean inTerminal) : { Token first=null,t;String n; 
+} { { int i = 0; original(); i++; } ( original() | "refines" "class" n=Name(inTerminal){ replaceName("Name",n);} "{" (LOOKAHEAD(2) VarDeclaration(inTerminal))* ClassConstructorRefinement(inTerminal) (MethodDeclaration(inTerminal))* (MethodRefinement(inTerminal))* "}" <EOF> {return productionEndNonTerminal("TypeDeclaration","{Name}");}
+
+ )  }
+
+String ClassConstructorRefinement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"refines" Type(true) "(" [FormalParameterList(true)] ")" "{" "original" "(" [ExpressionList(true)] ")" ";" (FieldAssign(true))* "}" {return productionEndTerminal("ClassConstructorRefinement","",first,token);}
+
+ )  }
+
+String MethodRefinement(boolean inTerminal) : { Token first=null,t;String n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"refines" Type(true) t=<IDENTIFIER>{ replaceName("<IDENTIFIER>",t.toString());} "(" [FormalParameterList(true)] ")" "{" "return" Expression(true) ";" "}" {return productionEndTerminal("MethodRefinement","{<IDENTIFIER>}",first,token);}
+
+ )  }

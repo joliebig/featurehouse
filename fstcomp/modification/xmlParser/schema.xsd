@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+	<element name="modificationComposition">
+		<complexType>
+			<sequence>
+				<element name="modification" minOccurs="1" maxOccurs="unbounded">
+					<complexType>
+						<sequence>
+							<element name="type" type="string"></element>
+							<element name="traversal" type="string"></element>
+							<element name="content">
+								<complexType>
+									<choice>
+										<element name="parsed">
+											<complexType>
+												<sequence>
+													<choice>
+														<element name="plainText">
+															<complexType>
+																<sequence>
+																	<element name="text" type="string">
+																	</element>
+																	<element name="tType" type="string">
+																	</element>
+																</sequence>
+															</complexType>
+														</element>
+														<element name="externLink" type="string">
+														</element>
+													</choice>
+													<element name="cTraversal" type="string" maxOccurs="1" minOccurs="0">
+													</element>
+												</sequence>
+											</complexType>
+										</element>
+										<element name="custom">
+											<complexType>
+												<sequence>
+													<element name="nodeType" type="string">
+													</element>
+													<element name="name" type="string">
+													</element>
+													<element name="body" type="string">
+													</element>
+													<element name="prefix" type="string">
+													</element>
+													<element name="compositionMechanism" type="string">
+													</element>
+												</sequence>
+											</complexType>
+										</element>
+									</choice>
+								</complexType>
+							</element>
+						</sequence>
+					</complexType>
+				</element>
+			</sequence>
+		</complexType>
+	</element>
+</schema>

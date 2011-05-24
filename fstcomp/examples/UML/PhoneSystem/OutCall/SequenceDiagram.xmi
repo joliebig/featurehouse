@@ -1,0 +1,189 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jan 17 18:07:01 CET 2009'>
+  <XMI.header>    <XMI.documentation>
+      <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
+      <XMI.exporterVersion>0.26.2(6) revised on $Date: 2010-04-26 12:31:32 $ </XMI.exporterVersion>
+    </XMI.documentation>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC0'
+      name = 'untitledModel' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+      isAbstract = 'false'>
+      <UML:Namespace.ownedElement>
+        <UML:Collaboration xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC1'
+          name = 'unattachedCollaboration' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false'>
+          <UML:Namespace.ownedElement>
+            <UML:ClassifierRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC2'
+              name = 'Client' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ClassifierRole.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC4'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC3'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:ClassifierRole.multiplicity>
+            </UML:ClassifierRole>
+            <UML:ClassifierRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC5'
+              name = 'Phone' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ClassifierRole.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC7'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC6'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:ClassifierRole.multiplicity>
+            </UML:ClassifierRole>
+            <UML:ClassifierRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'
+              name = 'OutCall' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:ClassifierRole.multiplicity>
+                <UML:Multiplicity xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACA'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC9'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:ClassifierRole.multiplicity>
+            </UML:ClassifierRole>
+            <UML:AssociationRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACC'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEndRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACD'
+                  isSpecification = 'false' isNavigable = 'false'>
+                  <UML:AssociationEnd.participant>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC2'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEndRole>
+                <UML:AssociationEndRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACE'
+                  isSpecification = 'false' isNavigable = 'false'>
+                  <UML:AssociationEnd.participant>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC5'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEndRole>
+              </UML:Association.connection>
+              <UML:AssociationRole.message>
+                <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD0'/>
+              </UML:AssociationRole.message>
+            </UML:AssociationRole>
+            <UML:CallAction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACB'
+              isSpecification = 'false' isAsynchronous = 'false'/>
+            <UML:AssociationRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD2'
+              isSpecification = 'false' isRoot = 'false' isLeaf = 'false' isAbstract = 'false'>
+              <UML:Association.connection>
+                <UML:AssociationEndRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD3'
+                  isSpecification = 'false' isNavigable = 'false'>
+                  <UML:AssociationEnd.participant>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC5'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEndRole>
+                <UML:AssociationEndRole xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD4'
+                  isSpecification = 'false' isNavigable = 'false'>
+                  <UML:AssociationEnd.participant>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:AssociationEnd.participant>
+                </UML:AssociationEndRole>
+              </UML:Association.connection>
+              <UML:AssociationRole.message>
+                <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD5'/>
+                <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD9'/>
+                <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ADB'/>
+              </UML:AssociationRole.message>
+            </UML:AssociationRole>
+            <UML:CallAction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD1'
+              isSpecification = 'false' isAsynchronous = 'false'/>
+            <UML:CallAction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD6'
+              isSpecification = 'false' isAsynchronous = 'false'/>
+            <UML:CallAction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD8'
+              isSpecification = 'false' isAsynchronous = 'false'/>
+            <UML:CallAction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ADA'
+              isSpecification = 'false' isAsynchronous = 'false'/>
+          </UML:Namespace.ownedElement>
+          <UML:Collaboration.interaction>
+            <UML:Interaction xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACF'
+              name = 'newInteraction' isSpecification = 'false'>
+              <UML:Interaction.message>
+                <UML:Message xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD0'
+                  name = 'outCall' isSpecification = 'false'>
+                  <UML:Message.sender>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC2'/>
+                  </UML:Message.sender>
+                  <UML:Message.receiver>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC5'/>
+                  </UML:Message.receiver>
+                  <UML:Message.communicationConnection>
+                    <UML:AssociationRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACC'/>
+                  </UML:Message.communicationConnection>
+                  <UML:Message.action>
+                    <UML:CallAction xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ACB'/>
+                  </UML:Message.action>
+                </UML:Message>
+                <UML:Message xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD5'
+                  name = 'makeCall' isSpecification = 'false'>
+                  <UML:Message.activator>
+                    <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD0'/>
+                  </UML:Message.activator>
+                  <UML:Message.sender>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC5'/>
+                  </UML:Message.sender>
+                  <UML:Message.receiver>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:Message.receiver>
+                  <UML:Message.communicationConnection>
+                    <UML:AssociationRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD2'/>
+                  </UML:Message.communicationConnection>
+                  <UML:Message.action>
+                    <UML:CallAction xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD1'/>
+                  </UML:Message.action>
+                </UML:Message>
+                <UML:Message xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD9'
+                  name = 'setDate' isSpecification = 'false'>
+                  <UML:Message.activator>
+                    <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD0'/>
+                  </UML:Message.activator>
+                  <UML:Message.sender>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:Message.sender>
+                  <UML:Message.receiver>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:Message.receiver>
+                  <UML:Message.communicationConnection>
+                    <UML:AssociationRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD2'/>
+                  </UML:Message.communicationConnection>
+                  <UML:Message.action>
+                    <UML:CallAction xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD8'/>
+                  </UML:Message.action>
+                </UML:Message>
+                <UML:Message xmi.id = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ADB'
+                  name = 'setTime' isSpecification = 'false'>
+                  <UML:Message.activator>
+                    <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD0'/>
+                  </UML:Message.activator>
+                  <UML:Message.sender>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:Message.sender>
+                  <UML:Message.receiver>
+                    <UML:ClassifierRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AC8'/>
+                  </UML:Message.receiver>
+                  <UML:Message.predecessor>
+                    <UML:Message xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD9'/>
+                  </UML:Message.predecessor>
+                  <UML:Message.communicationConnection>
+                    <UML:AssociationRole xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001AD2'/>
+                  </UML:Message.communicationConnection>
+                  <UML:Message.action>
+                    <UML:CallAction xmi.idref = '-64--88-2-3--2497aa54:11ebc32be17:-8000:0000000000001ADA'/>
+                  </UML:Message.action>
+                </UML:Message>
+              </UML:Interaction.message>
+            </UML:Interaction>
+          </UML:Collaboration.interaction>
+        </UML:Collaboration>
+      </UML:Namespace.ownedElement>
+    </UML:Model>
+  </XMI.content>
+</XMI>

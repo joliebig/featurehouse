@@ -1,0 +1,226 @@
+<?xml version = '1.0' encoding = 'UTF-8' ?>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Dec 08 10:55:17 CET 2008'>
+  <XMI.header>    <XMI.documentation>
+      <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
+      <XMI.exporterVersion>0.26(6) revised on $Date: 2010-04-01 11:25:41 $ </XMI.exporterVersion>
+    </XMI.documentation>
+    <XMI.metamodel xmi.name="UML" xmi.version="1.4"/></XMI.header>
+  <XMI.content>
+    <UML:Model xmi.id = '62--7-74--40--43f6c904:11dfbdf44bd:-8000:00000000000012AD'
+      name = 'untitledModel' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+      isAbstract = 'false'>
+      <UML:Namespace.ownedElement>
+        <UML:Class xmi.id = '62--7-74--40--43f6c904:11dfbdf44bd:-8000:00000000000012AE'
+          name = 'General' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          <UML:Classifier.feature>
+            <UML:Operation xmi.id = '62--7-74--40--43f6c904:11dfbdf44bd:-8000:00000000000012AF'
+              name = 'feature_BMF' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '62--7-74--40--43f6c904:11dfbdf44bd:-8000:00000000000012B0'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+          </UML:Classifier.feature>
+        </UML:Class>
+        <UML:Class xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F38'
+          name = 'BCOM' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          <UML:Classifier.feature>
+            <UML:Operation xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F41'
+              name = 'feature_BMF' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F42'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+          </UML:Classifier.feature>
+        </UML:Class>
+        <UML:Class xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F39'
+          name = 'Boiler' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
+        <UML:Association xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3A'
+          name = 'hasBCOM' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Association.connection>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3B'
+              name = 'Boiler' visibility = 'public' isSpecification = 'false' isNavigable = 'false'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3C'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3D'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F39'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3E'
+              name = 'BCOM' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F3F'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F40'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F38'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+          </UML:Association.connection>
+        </UML:Association>
+        <UML:Class xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F43'
+          name = 'Prepare' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          <UML:Classifier.feature>
+            <UML:Operation xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:000000000000206E'
+              name = 'feature_BMF' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:000000000000206F'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+          </UML:Classifier.feature>
+        </UML:Class>
+        <UML:Class xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F44'
+          name = 'Handle' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          <UML:Classifier.feature>
+            <UML:Operation xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002070'
+              name = 'feature_BMF' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002071'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+          </UML:Classifier.feature>
+        </UML:Class>
+        <UML:Association xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F45'
+          name = 'hasPrepare' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Association.connection>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F46'
+              name = 'BCOM' visibility = 'public' isSpecification = 'false' isNavigable = 'false'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F47'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F48'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F38'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F49'
+              name = 'Prepare' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4A'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4B'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F43'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+          </UML:Association.connection>
+        </UML:Association>
+        <UML:Association xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4C'
+          name = 'hasHandle' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Association.connection>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4D'
+              name = 'BCOM' visibility = 'public' isSpecification = 'false' isNavigable = 'false'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4E'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F4F'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F38'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F50'
+              name = 'Handle' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F51'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F52'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F44'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+          </UML:Association.connection>
+        </UML:Association>
+        <UML:Class xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002072'
+          name = 'Template' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'/>
+        <UML:Association xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002073'
+          name = 'hasTemplate' isSpecification = 'false' isRoot = 'false' isLeaf = 'false'
+          isAbstract = 'false'>
+          <UML:Association.connection>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002074'
+              name = 'BCOM' visibility = 'public' isSpecification = 'false' isNavigable = 'false'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002075'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002076'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000001F38'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+            <UML:AssociationEnd xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002077'
+              name = 'Template' visibility = 'public' isSpecification = 'false' isNavigable = 'true'
+              ordering = 'unordered' aggregation = 'none' targetScope = 'instance' changeability = 'changeable'>
+              <UML:AssociationEnd.multiplicity>
+                <UML:Multiplicity xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002078'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002079'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:AssociationEnd.multiplicity>
+              <UML:AssociationEnd.participant>
+                <UML:Class xmi.idref = '62--7-74--40--cb6e916:11e01a6ae4b:-8000:0000000000002072'/>
+              </UML:AssociationEnd.participant>
+            </UML:AssociationEnd>
+          </UML:Association.connection>
+        </UML:Association>
+      </UML:Namespace.ownedElement>
+    </UML:Model>
+  </XMI.content>
+</XMI>

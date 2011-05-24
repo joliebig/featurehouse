@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>introduction</type>
+		<traversal>..ContentProducerRegistry*:ClassDeclaration || ..TextHolderContentProducer*:ClassDeclaration || ..FigureDataContentProducer*:ClassDeclaration || ..ResourceContentProducer*:ClassDeclaration || ..AttributeFigureContentProducer*:ClassDeclaration || ..ColorContentProducer*:ClassDeclaration || ..URLContentProducer*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.*;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ContentProducerRegistry*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		dw.writeInt(fContentProducers.size());
+		Map.Entry producerEntry;
+		Iterator iter = fContentProducers.entrySet().iterator();
+		while (iter.hasNext()) {
+			producerEntry = (Map.Entry) iter.next();
+			dw.writeString(((Class) producerEntry.getKey()).getName());
+			dw.writeStorable((Storable) producerEntry.getKey());
+		}
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ContentProducerRegistry*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) throws IOException {
+		// read the default content producers, count first
+		int prodCount = dr.readInt();
+		String prodClass;
+		ContentProducer producer;
+		for (int cnt = 0; cnt < prodCount; cnt++) {
+			prodClass = dr.readString();
+			producer = (ContentProducer) dr.readStorable();
+			try {
+				registerContentProducer(Class.forName(prodClass), producer);
+			} catch (ClassNotFoundException ex) {
+				// the class does not exist in this application
+				// cannot do much about it so ignore it, the entities of
+				// this class will get their toString() value instead
+			}
+		}
+
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AbstractContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AbstractContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr)
+			throws IOException {
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..TextHolderContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeStorable(getTextHolder().getRepresentingFigure());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..TextHolderContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr)
+			throws IOException {
+		super.read(dr);
+		setTextHolder((TextHolder) dr.readStorable());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..FigureDataContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..FigureDataContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr)
+			throws IOException {
+		super.read(dr);
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ResourceContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeString(getResourceName());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ResourceContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr)
+			throws IOException {
+		super.read(dr);
+		setResourceName(dr.readString());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AttributeFigureContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AttributeFigureContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr)
+			throws IOException {
+		super.read(dr);
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ColorContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeBoolean((getColor() != null));
+		if (getColor() != null) {
+			dw.writeInt(getColor().getRGB());
+		}
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..ColorContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) throws IOException {
+		super.read(dr);
+		boolean hasColor = dr.readBoolean();
+		if (hasColor) {
+			setColor(new Color(dr.readInt()));
+		} else {
+			setColor(null);
+		}
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..URLContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeBoolean((getURL() != null));
+		if (getURL() != null) {
+			dw.writeString(getURL().toExternalForm());
+		}
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..URLContentProducer*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) throws IOException {
+		super.read(dr);
+		boolean hasURL = dr.readBoolean();
+		if (hasURL) {
+			setURL(new URL(dr.readString()));
+		}
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

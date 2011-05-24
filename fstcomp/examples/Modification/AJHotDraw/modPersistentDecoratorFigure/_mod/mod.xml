@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>introduction</type>
+		<traversal>..DecoratorFigure*:ClassDeclaration || ..AnimationDecorator*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.*;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..DecoratorFigure*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeStorable(getDecoratedFigure());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..DecoratorFigure*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) /*@AJHD refactored throws IOException*/ {
+		super.read(dr);
+		decorate((Figure)dr.readStorable());
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AnimationDecorator*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		super.write(dw);
+		dw.writeInt(fXVelocity);
+		dw.writeInt(fYVelocity);
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..AnimationDecorator*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) /*@AJHD refactored throws IOException*/ {
+		super.read(dr);
+		fXVelocity = dr.readInt();
+		fYVelocity = dr.readInt();
+	}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification><!-- add edgeColoring method in Graph.java -->
+		<type>introduction</type>
+		<traversal>..Graph*:*..*:ClassDeclaration
+		</traversal>
+		<content>
+			<parsed>
+				<externLink>Graph.java</externLink>
+				<cTraversal>..*edgeColoring*:*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+	<modification><!-- add DescendingDegreeComparator Class -->
+		<type>introduction</type>
+		<traversal>..*:Feature</traversal>
+		<content>
+			<parsed>
+				<externLink>DescendingDegreeComparator.java</externLink>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

@@ -1,0 +1,96 @@
+Changes
+-------
+@Contact: marius00@users.sourceforge.net (or Marius Marin @ SWERL, TU Delft)
+
+Changes in the original code are (typically) indicated by a "@AJHD" comment. 
+
+As for version 0.4 the refactoring is structured and conducted by the
+documentation of concerns in SoQueT (http://swerl.tudelft.nl/view/AMR/SoQueT).
+
+version - 0.4 
+*************
+
+- The package organization for the aspect code has been revised, based on the 
+documentation of the concerns in SoQueT. The aspects go under 
+org.jhotdraw.ccconcerns and will be orgranized on a 
+feature/sub-feature/(collection of ) concerns(/sort instances) basis. 
+An aspect file can comprise the refactoring of several sort instances like, 
+for example, CommandContracts that takes care of both pre- and post- command 
+execution checks/notification. However, a refactoring step deals with one sort 
+instance only - the sort instances just share the host aspect (file).
+
+- Changes due to aspected refactoring are annotated: @AJHD
+
+- This version includes refactoring of crosscutting concerns in Command and Undo support.
+
+
+
+version - 0.3
+*************
+
+ObservFigureSelection concern
+-----------------------------
+
+A first step refactoring of an Observer pattern instance.
+This refactoring has 3 parts: the 2 (Observer and Subject) 
+roles extraction and the observers notification of changes.
+
+1. 
+new package: org.jhotdraw.lib - generic, reusable aspects (crosscutting concerns)
+(includes: GenericRole)
+
+2.new package: org.jhotdraw.observselection - the crosscutting concerns
+in one instance of the Observer pattern: Figure Selection Listener
+
+
+CmdCheckViewRef concern - Contract enforcement for commands: 
+check the reference to the editor's drawing view for non-null values
+before executing a command.
+-----------------------------
+
+1.
+- new package: org.jhotdraw.cmdcontracts
+
+2.
+- the aspect for refactoring the concern of type Contract Enforcement:
+CmdCheckViewRef
+
+3.
+- changes in the affected commands
+
+
+
+version - 0.2
+*************
+
+Persistence concern 
+-------------------
+
+Affected units:
+ 
+1.
+- PersistentFigure: in org.jhotdraw.persistence
+- Figure, AbstractFigure: in the Figure hierarchy 
+
+2.
+- PersistentCompositeFigure: in org.jhotdraw.persistence
+- CompositeFigure: in org.jhotdraw.standard
+
+3.
+- PersistentAttributeFigure: in org.jhotdraw.persistence
+- AttributeFigure: in org.jhotdraw.figures
+
+4.
+- PersistentTextFigure: in org.jhotdraw.persistence
+- TextFigure: in org.jhotdraw.figures
+
+5.
+- PersistentImageFigure: in org.jhotdraw.persistence
+- ImageFigure: in org.jhotdraw.figures
+
+6. 
+- PersistentDrawing: in org.jhotdraw.persistence
+- Drawing: in org.jhotdraw.framework
+
+
+

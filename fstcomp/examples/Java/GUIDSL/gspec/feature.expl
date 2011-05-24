@@ -1,0 +1,51 @@
+This feature/layer introduces a set of classes that will
+encode the information that is parsed from a guidsl model specification.
+I created these classes because they are a much easier set of objects
+to traverse than a parse tree.  So the idea is to harvest information
+off of parse trees and populate objects of the following classes.
+The layer that does AST traversal and object population is fillgs.
+
+But before we talk about fillgs, we need to talk about the set of
+classes that fillgs will be targeting.
+
+The key classes of this layer are:
+
+gObj -- root of inheritance hierarchy that contains every key concept 
+        in a grammar
+variable -- every key concept of a grammar will have a variable associated 
+        with it
+
+a gObj has a name and variable;  A variable will have a name,
+a type, a reference to a gObj, among other attributes.  Since variables
+and gObjs are almost in 1-1 correspondence -- e.g., there may be
+variables that don't have gObj counterparts.  When there is correspondence,
+gObj.name equals variable.name.
+
+Every key concept of a grammar corresponds to a class:
+grammar -- there is only one gramamr object per grammar.  A grammar
+    object points to the root production.
+production -- each production in the grammar has a production object
+    each production object has a set of one or more patterns
+pattern -- each pattern is a sequence of terms
+term -- an abstract class that encapsulates commonalities among terms,
+      which are listed below
+optprim -- an optional primitive (e.g., [TOKEN])
+optprod -- an optional production (e.g., [PRODUCTION])
+plus -- one or more production instances ( PRODUCTION+ )
+prim -- a primitive (TOKEN)
+prod -- a production instance ( PRODUCTION )
+star -- zero or more production instances ( PRODUCTION * )
+
+Each non-term class has a traverse method.  This supports the 
+GVisitor visitor, which is an interface that allows visitors
+of a grammar to be defined.  There is an action method vor
+each of the classes listed above.
+
+The difference between GVisitor and Visitor is that Visitor will
+allow you to walk the nodes of a parse tree, whereas GVisitor will
+allow you to walk the nodes of a gspec "tree".  Please note another
+difference.  When writing GVisitor visitor, you will have to explicitly
+invoke traverse methods on non-term classes.  This isn't required
+for Visitor.
+
+The next layer is fillgs.

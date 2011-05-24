@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<!-- imports -->
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import java.util.List;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.figures.GroupFigure;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.framework.DrawingView;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.standard.FigureEnumerator;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import java.util.CollectionsFactory;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.util.Undoable;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.util.UndoableAdapter;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..GroupCommand*:ClassDeclaration.*execute*:MethodDecl</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{setUndoActivity(createUndoActivity());
+						original();}
+						List affectedFigures = CollectionsFactory.current().createList();
+						affectedFigures.add(gFigure);
+						getUndoActivity().setAffectedFigures(new FigureEnumerator(affectedFigures));
+
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public Undoable createUndoActivity() {
+						return new UndoActivity(view());
+					}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..GroupCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<externLink>AuxClass.java</externLink>
+				<cTraversal>..*:InnerClass*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

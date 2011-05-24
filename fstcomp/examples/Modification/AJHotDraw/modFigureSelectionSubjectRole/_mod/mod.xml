@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<!-- Konstruktor überschreiben --!>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration.*StandardDrawingView*:*</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{
+							original();
+							fSelectionListeners = CollectionsFactory.current().createList();
+							addFigureSelectionListener(editor());
+						}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>javaMethodBodyOverriding</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration.*readObject*:*</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						{
+							original();
+							fSelectionListeners = CollectionsFactory.current().createList();
+						}
+					</text>
+					<tType>java.methodBody</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public void addFigureSelectionListener(FigureSelectionListener fsl) {
+							fSelectionListeners.add(fsl);
+						}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public void removeFigureSelectionListener(FigureSelectionListener fsl) {
+							fSelectionListeners.remove(fsl);
+						}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..StandardDrawingView*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public void fireSelectionChanged() {
+							if (fSelectionListeners != null) {
+								for (int i = 0; i < fSelectionListeners.size(); i++) {
+									FigureSelectionListener l = (FigureSelectionListener) fSelectionListeners.get(i);
+									l.figureSelectionChanged(this);
+								}
+							}
+						}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..NullDrawingView*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public void addFigureSelectionListener(FigureSelectionListener fsl) {
+						}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..NullDrawingView*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						public void removeFigureSelectionListener(FigureSelectionListener fsl) {
+						}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<!-- TODO passende stelle im Projekt finden --!>
+		<traversal>..AlignCommand*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<externLink>AuxClass.java</externLink>
+				<cTraversal>..*:InnerClass*</cTraversal>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

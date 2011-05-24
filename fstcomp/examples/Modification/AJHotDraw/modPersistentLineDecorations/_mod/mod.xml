@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modificationComposition>
+	<modification>
+		<type>introduction</type>
+		<traversal>..AbstractLineDecoration*:ClassDeclaration || ..ArrowTip*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+						import org.jhotdraw.*;
+					</text>
+					<tType>java.import</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..AbstractLineDecoration*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		if (getFillColor() != null) {
+			FigureAttributes.writeColor(dw, FigureAttributeConstant.FILL_COLOR
+					.getName(), getFillColor());
+		} else {
+			dw.writeString("no" + FigureAttributeConstant.FILL_COLOR.getName());
+		}
+
+		if (getBorderColor() != null) {
+			FigureAttributes.writeColor(dw, FigureAttributeConstant.FRAME_COLOR
+					.getName(), getBorderColor());
+		} else {
+			dw
+					.writeString("no"
+							+ FigureAttributeConstant.FRAME_COLOR.getName());
+		}
+	}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..AbstractLineDecoration*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) throws IOException {
+		String fillColorId = dr.readString();
+		// read color only if one has been written
+		if (fillColorId.equals(FigureAttributeConstant.FRAME_COLOR.getName())) {
+			setFillColor(FigureAttributes.readColor(dr));
+		}
+		String borderColorId = dr.readString();
+		// read color only if one has been written
+		if (borderColorId.equals("BorderColor")
+				|| borderColorId.equals(FigureAttributeConstant.FRAME_COLOR
+						.getName())) {
+			setBorderColor(FigureAttributes.readColor(dr));
+		}
+	}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..ArrowTip*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void write(StorableOutput dw) {
+		dw.writeDouble(getAngle());
+		dw.writeDouble(getOuterRadius());
+		dw.writeDouble(getInnerRadius());
+		super.write(dw);
+	}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+	<modification>
+		<type>introduction</type>
+		<traversal>..ArrowTip*:ClassDeclaration</traversal>
+		<content>
+			<parsed>
+				<plainText>
+					<text>
+	public void read(StorableInput dr) throws IOException {
+		setAngle(dr.readDouble());
+		setOuterRadius(dr.readDouble());
+		setInnerRadius(dr.readDouble());
+		super.read(dr);
+	}
+					</text>
+					<tType>java.method</tType>
+				</plainText>
+			</parsed>
+		</content>
+	</modification>
+</modificationComposition>

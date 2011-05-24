@@ -1,0 +1,1 @@
+find . -name "*.jak" | java -cp ../LOC.jar textui.LOC -n 
