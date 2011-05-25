@@ -1,0 +1,13 @@
+FeatureHouse is a general approach to the composition of software artifacts.
+FeatureHouse is language-independent in that software artifacts written in
+various languages can be composed, e.g., source code, test cases, models,
+documentation, makefiles. Software artifacts are represented as feature
+structure trees (FSTs) that capture the essence of an artifact's modular
+structure in the form of a tree. As composition paradigm, FeatureHouse supports
+two approaches: superimposition and three-way merge. FeatureHouse consists of a
+tool for superimposition, called FSTComposer, a tool for three-way merge,
+called FSTMerge, and a plug-in and generation mechanism for integrating new
+languages automatically, called FSTGenerator. FeatureHouse can be used with the
+visual development environment FeatureIDE.
+
+Please see the website http://fosd.net/fh for more information.
