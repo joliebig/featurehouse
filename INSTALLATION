@@ -1,0 +1,24 @@
+The featurehouse (fh) toolsuite was developed in Eclipse and
+uses some of the features Eclipse provides.
+
+After cloning the entire repository 5 different components
+should appear as separate projects in the Eclipse Package
+Explorer (CIDE_generateAST, CIDE2_ast, fstcomp, fstgen, and
+fstmerge). Each project comes with all necessary libraries and
+all dependencies between the projects are allready set.
+
+fstcomp:
+fstgen:
+  - project that creates the parsers from annotated grammars
+    for the projects fstcomp and fstmerge
+  - remember to re-create the parsers after changing the grammars
+  - re-creation is done with and ant build script (see test/build.xml)
+  - before running the build.xml make sure that in the configuration
+    of the build script the Runtime JRE is set to: Run in the same JRE
+    as workspace (otherwise recreation of parsers does not work)
+fstmerge:
+  - project that implements semistructured-merge for different
+    programming languages (C#, Java, and Python)
+  - fstmerge relies on the other 4 projects
+  - there are two example run-configurations in the folder
+    run_configurations; right-click -> [Run As]
