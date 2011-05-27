@@ -236,7 +236,8 @@ public class FileLoader {
 			if (pathname.isFile()) {
 				return false;
 			} else if (pathname.isDirectory()) {
-				return true;
+				// ignore .svn directories
+				return !pathname.getName().equals(".svn");
 			}
 			return false;
 		}

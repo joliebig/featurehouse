@@ -4,20 +4,28 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import metadata.CompositionMetadataStore;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class JavaMethodOverriding {
-	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
-
-	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB,
+public class JavaMethodOverriding extends AbstractCompositionRule {
+	
+	//TODO: Ich weiss nicht ob das richtig ist.
+	public final static String COMPOSITION_RULE_NAME = FSTTerminal.defaultCompositionMechanism;
+	
+	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 
+		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
+		
 		specializeModifiers(terminalA, terminalB);
 
 		if (!terminalA.getBody().matches("(?s).*\\s*original\\s*.*")) {
 			terminalComp.setBody(terminalA.getBody());
+			String funcName = meta.getMethodName(terminalA);
+			meta.putMapping(funcName, getFeatureName(terminalA), funcName);
 		} else {
 			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			nonterminalParent.addChild(terminalComp2);
@@ -45,12 +53,10 @@ public class JavaMethodOverriding {
 			if (st.hasMoreTokens()) {
 				auxBody = st.nextToken();
 			}
-
-			//System.err.println(oldMethodName);
-			//System.err.println(auxBody);
 			
-			//String sep = "";
-			
+			meta.putMapping(oldMethodName, getFeatureName(terminalB), newMethodName);
+			meta.putMapping(oldMethodName, getFeatureName(terminalA), oldMethodName);
+		
 			st = new StringTokenizer(auxBody);
 			String prefix = "";
 			boolean found = false;
@@ -92,7 +98,7 @@ public class JavaMethodOverriding {
 		}
 	}
 
-	private static String getFeatureName(FSTNode node) {
+	public static String getFeatureName(FSTNode node) {
 		if (node.getType().equals("Feature"))
 			return node.getName();
 		else

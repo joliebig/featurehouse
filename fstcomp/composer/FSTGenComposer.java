@@ -2,9 +2,12 @@ package composer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import metadata.CompositionMetadataStore;
 import modification.content.InvalidFSTTraversalException;
 import modification.traversalLanguageParser.ParseException;
 import printer.PrintVisitorException;
@@ -12,6 +15,7 @@ import builder.ArtifactBuilderInterface;
 import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
 
+import composer.rules.CompositionRule;
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.ConstructorConcatenation;
@@ -21,6 +25,14 @@ import composer.rules.ImplementsListMerging;
 import composer.rules.JavaMethodOverriding;
 import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
+import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
+import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
+import composer.rules.rtcomp.c.CRuntimeReplacement;
+import composer.rules.rtcomp.c.CRuntimeSubtreeIntegration;
+import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
+import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
+import composer.rules.rtcomp.java.JavaRuntimeReplacement;
+import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
 import composer.rules.StringConcatenation;
 import counter.Counter;
 
@@ -28,18 +40,65 @@ import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
-import de.ovgu.cide.fstgen.ast.FSTVisitor;
 
 public class FSTGenComposer extends FSTGenProcessor {
 
 	private CmdLineInterpreter cmd = new CmdLineInterpreter();
-
+	
+	private CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
+	private List<CompositionRule> compositionRules;
+	private CRuntimeSubtreeIntegration subtreeRewriterC = null;
+	private JavaRuntimeSubtreeIntegration subtreeRewriterJava = null;
+	
 	public FSTGenComposer() {
 		super();
 	}
+	
+	private FSTNode rewriteSubtree(FSTNode n) {
+		meta.discoverFuncIntroductions(n);	
+		if (cmd.lifting) {
+			if (cmd.lifting_language.equals("c")) { 
+				return subtreeRewriterC.rewrite(n.getDeepClone());
+			} else if (cmd.lifting_language.equals("java")) {
+				return subtreeRewriterJava.rewrite(n.getDeepClone());
+			} else {
+				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
+			}
+		} else {
+			return n.getDeepClone();
+		}
+	}
+	
 
 	public void run(String[] args) {
 		cmd.parseCmdLineArguments(args);
+		//select the composition rules
+		compositionRules = new ArrayList<CompositionRule>();
+		if (cmd.lifting) {
+			if (cmd.lifting_language.equals("c")) { 
+				compositionRules.add(new CRuntimeReplacement());
+				compositionRules.add(new CRuntimeFunctionRefinement());			
+				subtreeRewriterC = new CRuntimeSubtreeIntegration();
+			} else if (cmd.lifting_language.equals("java")) {
+				compositionRules.add(new JavaRuntimeReplacement());
+				compositionRules.add(new JavaRuntimeFunctionRefinement());
+				subtreeRewriterJava = new JavaRuntimeSubtreeIntegration();
+			} else {
+				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
+			}
+		} else {
+			compositionRules.add(new Replacement());
+			compositionRules.add(new JavaMethodOverriding());
+		}
+		compositionRules.add(new StringConcatenation());
+		compositionRules.add(new ImplementsListMerging());
+		compositionRules.add(new CSharpMethodOverriding());
+		compositionRules.add(new ConstructorConcatenation());
+		compositionRules.add(new ModifierListSpecialization());
+		compositionRules.add(new FieldOverriding());
+		compositionRules.add(new ExpansionOverriding());
+		compositionRules.add(new CompositionError());
+		
 		try {
 			try {
 				fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, cmd.isAheadEquationFile);
@@ -52,6 +111,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 			if (cmd.outputDirectoryName != null)
 				outputDir = cmd.outputDirectoryName;
 
+			if (outputDir.endsWith(File.separator))
+				outputDir = outputDir.substring(0, outputDir.length()-1);
+				
 			featureVisitor.setWorkingDir(outputDir);
 			featureVisitor.setExpressionName(cmd.equationFileName);
 			
@@ -70,7 +132,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 				/*for (FSTNonTerminal feature : features) {
 					System.out.println(feature.toString());
 				}*/
-				
+				for (FSTNonTerminal feature : features) {
+					meta.addFeature(feature.getName());
+				}
 				FSTNode composition = compose(features);
 //				modify(composition);
 
@@ -81,7 +145,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				/* 
 				 * hook for general purpose visitors
 				 */
-				/*if (null != composition)
+				 /*	if (null != composition)
         				for (FSTVisitor visitor: getFSTVisitors()) {
         				    composition.accept(visitor);
         				}
@@ -93,29 +157,35 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
-		} catch (FileNotFoundException e1) {
-			//e1.printStackTrace();
-		}
-	}
-
-	private void modify(FSTNode composition) {
-		if (composition != null) {
 			try {
-				fileLoader.getModifications().apply(composition);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (cide.gparser.ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidFSTTraversalException e) {
-				// TODO Auto-generated catch block
+				//System.out.println(outputDir + "features/roles.meta");
+				
+				String exp = new File(cmd.equationFileName).getName();
+				exp = exp.substring(0, exp.length() - 4);
+				//was passiert hier?!
+				// outputDir: /home/rhein/FeatureHouseWS/Test_Features/features
+				// equationFileName: Selection.features
+				// -> exp = Selection.feat
+				
+				//meta.saveToFile(outputDir + "/" + exp + "/roles.meta");
+				meta.saveToFile(outputDir + File.separator + "roles.meta");
+				if (cmd.lifting) {
+					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
+					System.err.println("cnfFile:" + cnfFile.getAbsolutePath());
+					//hier auch geändert.
+					// wollte in /home/rhein/FeatureHouseWS/Test_Features/featuresfeatures/featureselect.h speichern
+					//new RuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + "features/featureselect");
+					if (cmd.lifting_language.equals("c")) {
+						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
+					} else if (cmd.lifting_language.equals("java")) {
+						new JavaRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator);
+					}
+				}
+			} catch (IOException e) {			
 				e.printStackTrace();
 			}
-			System.out.println(composition);
+		} catch (FileNotFoundException e1) {
+			//e1.printStackTrace();
 		}
 	}
 
@@ -124,7 +194,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 		composer.run(args);
 	}
 
-	private static FSTNode compose(List<FSTNonTerminal> tl) {
+	private FSTNode compose(List<FSTNonTerminal> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {
 			if (composed != null) {
@@ -135,11 +205,11 @@ public class FSTGenComposer extends FSTGenProcessor {
 		return composed;
 	}
 
-	public static FSTNode compose(FSTNode nodeA, FSTNode nodeB) {
+	public FSTNode compose(FSTNode nodeA, FSTNode nodeB) {
 		return compose(nodeA, nodeB, null);
 	}
 
-	public static FSTNode compose(FSTNode nodeA, FSTNode nodeB,
+	public FSTNode compose(FSTNode nodeA, FSTNode nodeB,
 			FSTNode compParent) {
 
 		if (nodeA.compatibleWith(nodeB)) {
@@ -161,7 +231,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					// root)
 					if (childA == null) {
 						// no compatible child, FST-node only in B
-						nonterminalComp.addChild(childB.getDeepClone());
+						//nonterminalComp.addChild(childB.getDeepClone());
+						nonterminalComp.addChild(rewriteSubtree(childB));
 					} else {
 						nonterminalComp.addChild(compose(childA, childB,
 								nonterminalComp));
@@ -171,7 +242,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
 						// no compatible child, FST-node only in A
-						nonterminalComp.addChild(childA.getDeepClone());
+						//nonterminalComp.addChild(childA.getDeepClone());
+						nonterminalComp.addChild(rewriteSubtree(childA));
 					}
 				}
 				return nonterminalComp;
@@ -182,7 +254,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				FSTTerminal terminalB = (FSTTerminal) nodeB;
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 				FSTNonTerminal nonterminalParent = (FSTNonTerminal) compParent;
-
+/*
 				if (terminalA.getCompositionMechanism().equals(
 						Replacement.COMPOSITION_RULE_NAME)) {
 					// System.out.println("Terminal replacement: " +
@@ -207,7 +279,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 					// System.out.println("Java method overriding: " +
 					// terminalA.toString() + " overrides " +
 					// terminalB.toString());
-					JavaMethodOverriding.compose(terminalA, terminalB,
+					(new JavaMethodOverriding()).compose(terminalA, terminalB,
 							terminalComp, nonterminalParent);
 				} else if (terminalA.getCompositionMechanism().equals(
 						CSharpMethodOverriding.COMPOSITION_RULE_NAME)) {
@@ -248,6 +320,18 @@ public class FSTGenComposer extends FSTGenProcessor {
 						CompositionError.COMPOSITION_RULE_NAME)) {
 					CompositionError.compose(terminalA, terminalB,
 							terminalComp, nonterminalParent);
+*/
+				CompositionRule applicableRule = null;
+				//get applicable rule from compositionRules
+				for (CompositionRule rule: compositionRules) {
+					if (terminalA.getCompositionMechanism().equals(rule.getRuleName())) {						
+						 applicableRule = rule;
+						 break;
+					}
+				}
+				if (applicableRule != null) {
+					//apply composition rule
+					applicableRule.compose(terminalA, terminalB, terminalComp, nonterminalParent);
 				} else {
 					System.err
 							.println("Error: don't know how to compose terminals: "

@@ -29,6 +29,10 @@ public class CmdLineInterpreter {
 
 	public static final String INPUT_OPTION_COUNT = "--count";
 
+	public static final String INPUT_OPTION_LIFTING = "--lift";
+	
+	public boolean verbose = false;
+
 	public boolean isCount = false;
 	
 	public boolean isAheadEquationFile;
@@ -51,6 +55,9 @@ public class CmdLineInterpreter {
 
 	public boolean fileOutput = false;
 	
+	public boolean lifting = false;
+	
+	public String lifting_language = "";
 	
 	public void parseCmdLineArguments(String[] args) {
 		boolean errorOccured = false;
@@ -101,6 +108,12 @@ public class CmdLineInterpreter {
 					showSum = true;
 				} else if (args[i].equals(INPUT_OPTION_AHEAD_EQUATION_FILE)) {
 					isAheadEquationFile = true;
+				} else if (args[i].startsWith(INPUT_OPTION_LIFTING)) {
+					lifting  = true;
+					lifting_language = args[i].substring(INPUT_OPTION_LIFTING.length()).trim().toLowerCase();
+					if (!(lifting_language.equals("java") || lifting_language.equals("c"))) {
+						throw new IllegalArgumentException("Lifting requires a language as parameter (e.g. --liftC or --liftJava)");
+					}
 				} else if (args[i].equals(INPUT_OPTION_RESOLVE_REFERENCES)) {
 					System.out.println("The option '" + INPUT_OPTION_RESOLVE_REFERENCES + "' is obsolete.");
 				} else if (args[i].equals(INPUT_OPTION_HELP)) {
@@ -129,6 +142,11 @@ public class CmdLineInterpreter {
 				+ "' defines the name of the file that lists the input features/components.");
 		System.out.println("The option `" + INPUT_OPTION_BASE_DIRECTORY
 				+ "' defines the working directory, which is the search path for the input features/components.");
+		System.out.println("The option `" + INPUT_OPTION_LIFTING
+				+ "' can currently only be used with C Code. It composes the " +
+						"sources in a way that allows feature selection at runtime");
+		
+		
 	}
 	
 	private static String getDirectoryName(File file) {

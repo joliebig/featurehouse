@@ -53,7 +53,7 @@ public class ParseableTest {
 
 	FSTNode par = new FSTNonTerminal("nonterminal", "parent");
 
-	System.out.println(FSTGenComposer
+	System.out.println((new FSTGenComposer())
 		.compose(csNew.getFST(), csOldFST, par).getParent());
 	System.out.println();
 

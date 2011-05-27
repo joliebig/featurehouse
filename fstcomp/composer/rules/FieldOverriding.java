@@ -6,9 +6,9 @@ import java.util.StringTokenizer;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class FieldOverriding {
+public class FieldOverriding extends AbstractCompositionRule {
 	public final static String COMPOSITION_RULE_NAME = "FieldOverriding";
-	public static void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+	public void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 
 		specializeModifiers(terminalA, terminalB);
 

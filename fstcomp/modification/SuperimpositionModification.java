@@ -42,7 +42,7 @@ public class SuperimpositionModification extends ContentModification {
 		getFstTraversal(), root);
 	for (FSTNode node : tlp.parse()) {
 	    // TODO catch null pointer
-	    FSTNode composedNode = FSTGenComposer.compose(
+	    FSTNode composedNode = (new FSTGenComposer()).compose(
 		    getContent().getFST(), node, node.getParent());
 	    ((FSTNonTerminal) node.getParent()).addChild(composedNode);
 	    ((FSTNonTerminal) node.getParent()).removeChild(node);

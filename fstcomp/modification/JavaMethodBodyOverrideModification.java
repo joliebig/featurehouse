@@ -46,7 +46,7 @@ public class JavaMethodBodyOverrideModification extends
 	    contentFST.setBody(newBody);	    
 	    
 	    // TODO catch null pointer
-	    FSTNode composedNode = FSTGenComposer.compose(contentFST, node,
+	    FSTNode composedNode = (new FSTGenComposer()).compose(contentFST, node,
 		    node.getParent());	    
 	    ((FSTNonTerminal) node.getParent()).addChild(composedNode);
 	    ((FSTNonTerminal) node.getParent()).removeChild(node);

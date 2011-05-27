@@ -6,10 +6,10 @@ import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class CSharpMethodOverriding {
+public class CSharpMethodOverriding extends AbstractCompositionRule {
     public final static String COMPOSITION_RULE_NAME = "CSharpMethodOverriding";
 
-    public static void compose(FSTTerminal terminalA, FSTTerminal terminalB,
+    public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 	    FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 
 	if (terminalA.getBody().matches("(?s).*\\s*original\\s*.*")) {
