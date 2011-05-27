@@ -1,11 +1,7 @@
 package composer.rules.rtcomp.java;
 
 import java.util.StringTokenizer;
-
-import metadata.CompositionMetadataStore;
-
 import composer.rules.CompositionRule;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -16,8 +12,6 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		
-			CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
-
 			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			FSTTerminal terminalComp3 = (FSTTerminal) terminalB.getDeepClone();
 			nonterminalParent.addChild(terminalComp2);

@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import metadata.CompositionMetadataStore;
-import modification.content.InvalidFSTTraversalException;
-import modification.traversalLanguageParser.ParseException;
 import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
 import builder.capprox.CApproxBuilder;

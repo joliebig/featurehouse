@@ -22,7 +22,6 @@ import builder.textm.TextMergeBuilder;
 
 
 import composer.FSTGenProcessor;
-import composer.rules.Replacement;
 
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;

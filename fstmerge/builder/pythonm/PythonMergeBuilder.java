@@ -3,13 +3,11 @@ package builder.pythonm;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.StringTokenizer;
 
 import tmp.generated_python.PythonParser;
 import tmp.generated_python.SimplePrintVisitor;
-import printer.PrintVisitorException;
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;

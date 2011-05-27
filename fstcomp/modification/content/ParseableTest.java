@@ -46,7 +46,6 @@ public class ParseableTest {
 	FSTNode csOldFST = csOld.getFST();
 	List<FSTNode> l = new LinkedList<FSTNode>();
 	l.add(csOldFST);
-	FSTNode featOld = new FSTNonTerminal("Feature", "oldFeature", l);
 
 	CSharpMethod csNew = new CSharpMethod(
 		"public int method(){original();something();}");
