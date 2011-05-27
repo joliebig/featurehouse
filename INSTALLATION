@@ -1,7 +1,7 @@
 The featurehouse (fh) toolsuite was developed in Eclipse and
 uses some of the features Eclipse provides.
 
-After cloning the entire repository 5 different components
+After cloning the entire repository with git 5 different components
 should appear as separate projects in the Eclipse Package
 Explorer (CIDE_generateAST, CIDE2_ast, fstcomp, fstgen, and
 fstmerge). Each project comes with all necessary libraries and
