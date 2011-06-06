@@ -24,7 +24,7 @@ class Cdb(object):
         self.map = mmap.mmap(fd, self.size, access=mmap.ACCESS_READ)
         self.eod = uint32_unpack(self.map[:4])
         self.findstart()
-        self.loop = 0 
+        self.loop = 0 # number of hash slots searched under this key
         self.khash = 0
         self.hpos = 0
         self.hslots = 0
@@ -124,7 +124,7 @@ def cdb_dump(infile):
     print()
 def cdb_make(outfile, items):
     pos = 2048
-    tables = {} 
+    tables = {} # { h & 255 : [(h, p)] }
     outfile.seek(pos)
     for key, value in items:
         outfile.write(uint32_pack(len(key)) + uint32_pack(len(value)))

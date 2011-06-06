@@ -263,7 +263,7 @@ def configure_mozilla(config_location):
     prefs_file.close()
     options.update_file(optionsPathname)
     filter_filename = "%s%smsgFilterRules.dat" % (config_location, os.sep)
-    store_name = "" 
+    store_name = "" # how do we get this?
     spam_folder_url = "mailbox:////%s//Junk%%20Mail" % (store_name,)
     unsure_folder_url = "mailbox:////%s//Possible%%20Junk" % (store_name,)
     header_name = options["Headers", "classification_header_name"]
@@ -291,7 +291,7 @@ def configure_m2(config_location):
     ini_filename = os.path.join(config_location, "Mail", "accounts.ini")
     ini_file = file(ini_filename, "r")
     faked_up = StringIO.StringIO()
-    faked_up.write(";") 
+    faked_up.write(";") # Missing at the start
     faked_up.write(ini_file.read())
     faked_up.seek(0)
     ini_file.close()
@@ -414,7 +414,7 @@ def configure_pegasus_mail(config_location):
     ham_tag = options["Headers", "header_ham_string"]
     spam_weight = 500
     ham_weight = -500
-    unsure_weight = -50 
+    unsure_weight = -50 # leave judgement up to the rest of the rules
     rule = '# SpamBayes adjustments\n' \
            'if header "%s" contains "%s" weight %s\n' \
            'if header "%s" contains "%s" weight %s\n' \

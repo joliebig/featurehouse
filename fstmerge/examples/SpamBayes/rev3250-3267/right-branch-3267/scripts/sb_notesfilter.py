@@ -293,12 +293,12 @@ if __name__ == '__main__':
     except getopt.error as msg:
         print(str(msg) + '\n\n' + __doc__, file=sys.stderr)
         sys.exit()
-    ldbname = None  
-    rdbname = None  
-    sbfname = None  
-    idxname = None  
-    logname = None  
-    pwd = None 
+    ldbname = None  # local notes database name
+    rdbname = None  # remote notes database location
+    sbfname = None  # spambayes folder name
+    idxname = None  # index file name
+    logname = None  # log database name
+    pwd = None # password
     doTrain = False
     doClassify = False
     doPrompt = False

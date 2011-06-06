@@ -1,7 +1,3 @@
-
-
-
-
 namespace Eraser.Util
 {
     using System;
@@ -9,70 +5,37 @@ namespace Eraser.Util
     using System.Management;
     using System.Collections;
     using System.Globalization;
-
-
-
-
-
-
-
     public class SystemRestore : System.ComponentModel.Component {
-
-
         private static string CreatedWmiNamespace = "root\\default";
-
-
         private static string CreatedClassName = "SystemRestore";
-
-
         private static System.Management.ManagementScope statMgmtScope = null;
-
         private ManagementSystemProperties PrivateSystemProperties;
-
-
         private System.Management.ManagementObject PrivateLateBoundObject;
-
-
         private bool AutoCommitProp;
-
-
         private System.Management.ManagementBaseObject embeddedObj;
-
-
         private System.Management.ManagementBaseObject curObj;
-
-
         private bool isEmbedded;
-
-
         public SystemRestore() {
             this.InitializeObject(null, null, null);
         }
-
         public SystemRestore(uint keySequenceNumber) {
             this.InitializeObject(null, new System.Management.ManagementPath(SystemRestore.ConstructPath(keySequenceNumber)), null);
         }
-
         public SystemRestore(System.Management.ManagementScope mgmtScope, uint keySequenceNumber) {
             this.InitializeObject(((System.Management.ManagementScope)(mgmtScope)), new System.Management.ManagementPath(SystemRestore.ConstructPath(keySequenceNumber)), null);
         }
-
         public SystemRestore(System.Management.ManagementPath path, System.Management.ObjectGetOptions getOptions) {
             this.InitializeObject(null, path, getOptions);
         }
-
         public SystemRestore(System.Management.ManagementScope mgmtScope, System.Management.ManagementPath path) {
             this.InitializeObject(mgmtScope, path, null);
         }
-
         public SystemRestore(System.Management.ManagementPath path) {
             this.InitializeObject(null, path, null);
         }
-
         public SystemRestore(System.Management.ManagementScope mgmtScope, System.Management.ManagementPath path, System.Management.ObjectGetOptions getOptions) {
             this.InitializeObject(mgmtScope, path, getOptions);
         }
-
         public SystemRestore(System.Management.ManagementObject theObject) {
             Initialize();
             if ((CheckIfProperClass(theObject) == true)) {
@@ -84,7 +47,6 @@ namespace Eraser.Util
                 throw new System.ArgumentException("Class name does not match.");
             }
         }
-
         public SystemRestore(System.Management.ManagementBaseObject theObject) {
             Initialize();
             if ((CheckIfProperClass(theObject) == true)) {
@@ -97,8 +59,6 @@ namespace Eraser.Util
                 throw new System.ArgumentException("Class name does not match.");
             }
         }
-
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string OriginatingNamespace {
@@ -106,7 +66,6 @@ namespace Eraser.Util
                 return "root\\default";
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ManagementClassName {
@@ -124,8 +83,6 @@ namespace Eraser.Util
                 return strRet;
             }
         }
-
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public ManagementSystemProperties SystemProperties {
@@ -133,8 +90,6 @@ namespace Eraser.Util
                 return PrivateSystemProperties;
             }
         }
-
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public System.Management.ManagementBaseObject LateBoundObject {
@@ -142,8 +97,6 @@ namespace Eraser.Util
                 return curObj;
             }
         }
-
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public System.Management.ManagementScope Scope {
@@ -161,8 +114,6 @@ namespace Eraser.Util
                 }
             }
         }
-
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool AutoCommit {
@@ -173,8 +124,6 @@ namespace Eraser.Util
                 AutoCommitProp = value;
             }
         }
-
-
         [Browsable(true)]
         public System.Management.ManagementPath Path {
             get {
@@ -194,8 +143,6 @@ namespace Eraser.Util
                 }
             }
         }
-
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public static System.Management.ManagementScope StaticScope {
@@ -206,7 +153,6 @@ namespace Eraser.Util
                 statMgmtScope = value;
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string CreationTime {
@@ -221,7 +167,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Description {
@@ -236,7 +181,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsEventTypeNull {
@@ -249,7 +193,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [TypeConverter(typeof(WMIValueTypeConverter))]
@@ -268,7 +211,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsRestorePointTypeNull {
@@ -281,7 +223,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [TypeConverter(typeof(WMIValueTypeConverter))]
@@ -300,7 +241,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsSequenceNumberNull {
@@ -313,7 +253,6 @@ namespace Eraser.Util
                 }
             }
         }
-
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [TypeConverter(typeof(WMIValueTypeConverter))]
@@ -325,7 +264,6 @@ namespace Eraser.Util
                 return ((uint)(curObj["SequenceNumber"]));
             }
         }
-
         private bool CheckIfProperClass(System.Management.ManagementScope mgmtScope, System.Management.ManagementPath path, System.Management.ObjectGetOptions OptionsParam) {
             if (((path != null)
                         && (string.Compare(path.ClassName, this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0))) {
@@ -335,7 +273,6 @@ namespace Eraser.Util
                 return CheckIfProperClass(new System.Management.ManagementObject(mgmtScope, path, OptionsParam));
             }
         }
-
         private bool CheckIfProperClass(System.Management.ManagementBaseObject theObj) {
             if (((theObj != null)
                         && (string.Compare(((string)(theObj["__CLASS"])), this.ManagementClassName, true, System.Globalization.CultureInfo.InvariantCulture) == 0))) {
@@ -354,7 +291,6 @@ namespace Eraser.Util
             }
             return false;
         }
-
         private void ResetCreationTime() {
             curObj["CreationTime"] = null;
             if (((isEmbedded == false)
@@ -362,7 +298,6 @@ namespace Eraser.Util
                 PrivateLateBoundObject.Put();
             }
         }
-
         private void ResetDescription() {
             curObj["Description"] = null;
             if (((isEmbedded == false)
@@ -370,14 +305,12 @@ namespace Eraser.Util
                 PrivateLateBoundObject.Put();
             }
         }
-
         private bool ShouldSerializeEventType() {
             if ((this.IsEventTypeNull == false)) {
                 return true;
             }
             return false;
         }
-
         private void ResetEventType() {
             curObj["EventType"] = null;
             if (((isEmbedded == false)
@@ -385,14 +318,12 @@ namespace Eraser.Util
                 PrivateLateBoundObject.Put();
             }
         }
-
         private bool ShouldSerializeRestorePointType() {
             if ((this.IsRestorePointTypeNull == false)) {
                 return true;
             }
             return false;
         }
-
         private void ResetRestorePointType() {
             curObj["RestorePointType"] = null;
             if (((isEmbedded == false)
@@ -400,39 +331,33 @@ namespace Eraser.Util
                 PrivateLateBoundObject.Put();
             }
         }
-
         private bool ShouldSerializeSequenceNumber() {
             if ((this.IsSequenceNumberNull == false)) {
                 return true;
             }
             return false;
         }
-
         [Browsable(true)]
         public void CommitObject() {
             if ((isEmbedded == false)) {
                 PrivateLateBoundObject.Put();
             }
         }
-
         [Browsable(true)]
         public void CommitObject(System.Management.PutOptions putOptions) {
             if ((isEmbedded == false)) {
                 PrivateLateBoundObject.Put(putOptions);
             }
         }
-
         private void Initialize() {
             AutoCommitProp = true;
             isEmbedded = false;
         }
-
         private static string ConstructPath(uint keySequenceNumber) {
             string strPath = "root\\default:SystemRestore";
             strPath = string.Concat(strPath, string.Concat(".SequenceNumber=", ((System.UInt32 )(keySequenceNumber)).ToString()));
             return strPath;
         }
-
         private void InitializeObject(System.Management.ManagementScope mgmtScope, System.Management.ManagementPath path, System.Management.ObjectGetOptions getOptions) {
             Initialize();
             if ((path != null)) {
@@ -444,24 +369,18 @@ namespace Eraser.Util
             PrivateSystemProperties = new ManagementSystemProperties(PrivateLateBoundObject);
             curObj = PrivateLateBoundObject;
         }
-
-
         public static SystemRestoreCollection GetInstances() {
             return GetInstances(null, null, null);
         }
-
         public static SystemRestoreCollection GetInstances(string condition) {
             return GetInstances(null, condition, null);
         }
-
         public static SystemRestoreCollection GetInstances(System.String [] selectedProperties) {
             return GetInstances(null, null, selectedProperties);
         }
-
         public static SystemRestoreCollection GetInstances(string condition, System.String [] selectedProperties) {
             return GetInstances(null, condition, selectedProperties);
         }
-
         public static SystemRestoreCollection GetInstances(System.Management.ManagementScope mgmtScope, System.Management.EnumerationOptions enumOptions) {
             if ((mgmtScope == null)) {
                 if ((statMgmtScope == null)) {
@@ -482,15 +401,12 @@ namespace Eraser.Util
             }
             return new SystemRestoreCollection(clsObject.GetInstances(enumOptions));
         }
-
         public static SystemRestoreCollection GetInstances(System.Management.ManagementScope mgmtScope, string condition) {
             return GetInstances(mgmtScope, condition, null);
         }
-
         public static SystemRestoreCollection GetInstances(System.Management.ManagementScope mgmtScope, System.String [] selectedProperties) {
             return GetInstances(mgmtScope, null, selectedProperties);
         }
-
         public static SystemRestoreCollection GetInstances(System.Management.ManagementScope mgmtScope, string condition, System.String [] selectedProperties) {
             if ((mgmtScope == null)) {
                 if ((statMgmtScope == null)) {
@@ -507,7 +423,6 @@ namespace Eraser.Util
             ObjectSearcher.Options = enumOptions;
             return new SystemRestoreCollection(ObjectSearcher.Get());
         }
-
         [Browsable(true)]
         public static SystemRestore CreateInstance() {
             System.Management.ManagementScope mgmtScope = null;
@@ -522,12 +437,10 @@ namespace Eraser.Util
             System.Management.ManagementClass tmpMgmtClass = new System.Management.ManagementClass(mgmtScope, mgmtPath, null);
             return new SystemRestore(tmpMgmtClass.CreateInstance());
         }
-
         [Browsable(true)]
         public void Delete() {
             PrivateLateBoundObject.Delete();
         }
-
         public static uint CreateRestorePoint(string Description, uint EventType, uint RestorePointType) {
             bool IsMethodStatic = true;
             if ((IsMethodStatic == true)) {
@@ -545,7 +458,6 @@ namespace Eraser.Util
                 return System.Convert.ToUInt32(0);
             }
         }
-
         public static uint Disable(string Drive) {
             bool IsMethodStatic = true;
             if ((IsMethodStatic == true)) {
@@ -561,7 +473,6 @@ namespace Eraser.Util
                 return System.Convert.ToUInt32(0);
             }
         }
-
         public static uint Enable(string Drive, bool WaitTillEnabled) {
             bool IsMethodStatic = true;
             if ((IsMethodStatic == true)) {
@@ -578,7 +489,6 @@ namespace Eraser.Util
                 return System.Convert.ToUInt32(0);
             }
         }
-
         public static uint GetLastRestoreStatus() {
             bool IsMethodStatic = true;
             if ((IsMethodStatic == true)) {
@@ -592,7 +502,6 @@ namespace Eraser.Util
                 return System.Convert.ToUInt32(0);
             }
         }
-
         public static uint Restore(uint SequenceNumber) {
             bool IsMethodStatic = true;
             if ((IsMethodStatic == true)) {
@@ -608,34 +517,26 @@ namespace Eraser.Util
                 return System.Convert.ToUInt32(0);
             }
         }
-
-
         public class SystemRestoreCollection : object, ICollection {
-
             private ManagementObjectCollection privColObj;
-
             public SystemRestoreCollection(ManagementObjectCollection objCollection) {
                 privColObj = objCollection;
             }
-
             public virtual int Count {
                 get {
                     return privColObj.Count;
                 }
             }
-
             public virtual bool IsSynchronized {
                 get {
                     return privColObj.IsSynchronized;
                 }
             }
-
             public virtual object SyncRoot {
                 get {
                     return this;
                 }
             }
-
             public virtual void CopyTo(System.Array array, int index) {
                 privColObj.CopyTo(array, index);
                 int nCtr;
@@ -643,87 +544,64 @@ namespace Eraser.Util
                     array.SetValue(new SystemRestore(((System.Management.ManagementObject)(array.GetValue(nCtr)))), nCtr);
                 }
             }
-
             public virtual System.Collections.IEnumerator GetEnumerator() {
                 return new SystemRestoreEnumerator(privColObj.GetEnumerator());
             }
-
             public class SystemRestoreEnumerator : object, System.Collections.IEnumerator {
-
                 private ManagementObjectCollection.ManagementObjectEnumerator privObjEnum;
-
                 public SystemRestoreEnumerator(ManagementObjectCollection.ManagementObjectEnumerator objEnum) {
                     privObjEnum = objEnum;
                 }
-
                 public virtual object Current {
                     get {
                         return new SystemRestore(((System.Management.ManagementObject)(privObjEnum.Current)));
                     }
                 }
-
                 public virtual bool MoveNext() {
                     return privObjEnum.MoveNext();
                 }
-
                 public virtual void Reset() {
                     privObjEnum.Reset();
                 }
             }
         }
-
-
         public class WMIValueTypeConverter : TypeConverter {
-
             private TypeConverter baseConverter;
-
             private System.Type baseType;
-
             public WMIValueTypeConverter(System.Type inBaseType) {
                 baseConverter = TypeDescriptor.GetConverter(inBaseType);
                 baseType = inBaseType;
             }
-
             public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Type srcType) {
                 return baseConverter.CanConvertFrom(context, srcType);
             }
-
             public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Type destinationType) {
                 return baseConverter.CanConvertTo(context, destinationType);
             }
-
             public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value) {
                 return baseConverter.ConvertFrom(context, culture, value);
             }
-
             public override object CreateInstance(System.ComponentModel.ITypeDescriptorContext context, System.Collections.IDictionary dictionary) {
                 return baseConverter.CreateInstance(context, dictionary);
             }
-
             public override bool GetCreateInstanceSupported(System.ComponentModel.ITypeDescriptorContext context) {
                 return baseConverter.GetCreateInstanceSupported(context);
             }
-
             public override PropertyDescriptorCollection GetProperties(System.ComponentModel.ITypeDescriptorContext context, object value, System.Attribute[] attributeVar) {
                 return baseConverter.GetProperties(context, value, attributeVar);
             }
-
             public override bool GetPropertiesSupported(System.ComponentModel.ITypeDescriptorContext context) {
                 return baseConverter.GetPropertiesSupported(context);
             }
-
             public override System.ComponentModel.TypeConverter.StandardValuesCollection GetStandardValues(System.ComponentModel.ITypeDescriptorContext context) {
                 return baseConverter.GetStandardValues(context);
             }
-
             public override bool GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext context) {
                 return baseConverter.GetStandardValuesExclusive(context);
             }
-
             public override bool GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext context) {
                 return baseConverter.GetStandardValuesSupported(context);
             }
-
             public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, System.Type destinationType) {
                 if ((baseType.BaseType == typeof(System.Enum))) {
                     if ((value.GetType() == destinationType)) {
@@ -752,80 +630,66 @@ namespace Eraser.Util
                 return baseConverter.ConvertTo(context, culture, value, destinationType);
             }
         }
-
-
         [TypeConverter(typeof(System.ComponentModel.ExpandableObjectConverter))]
         public class ManagementSystemProperties {
-
             private System.Management.ManagementBaseObject PrivateLateBoundObject;
-
             public ManagementSystemProperties(System.Management.ManagementBaseObject ManagedObject) {
                 PrivateLateBoundObject = ManagedObject;
             }
-
             [Browsable(true)]
             public int GENUS {
                 get {
                     return ((int)(PrivateLateBoundObject["__GENUS"]));
                 }
             }
-
             [Browsable(true)]
             public string CLASS {
                 get {
                     return ((string)(PrivateLateBoundObject["__CLASS"]));
                 }
             }
-
             [Browsable(true)]
             public string SUPERCLASS {
                 get {
                     return ((string)(PrivateLateBoundObject["__SUPERCLASS"]));
                 }
             }
-
             [Browsable(true)]
             public string DYNASTY {
                 get {
                     return ((string)(PrivateLateBoundObject["__DYNASTY"]));
                 }
             }
-
             [Browsable(true)]
             public string RELPATH {
                 get {
                     return ((string)(PrivateLateBoundObject["__RELPATH"]));
                 }
             }
-
             [Browsable(true)]
             public int PROPERTY_COUNT {
                 get {
                     return ((int)(PrivateLateBoundObject["__PROPERTY_COUNT"]));
                 }
             }
-
             [Browsable(true)]
             public string[] DERIVATION {
                 get {
                     return ((string[])(PrivateLateBoundObject["__DERIVATION"]));
                 }
             }
-
             [Browsable(true)]
             public string SERVER {
                 get {
                     return ((string)(PrivateLateBoundObject["__SERVER"]));
                 }
             }
-
             [Browsable(true)]
             public string NAMESPACE {
                 get {
                     return ((string)(PrivateLateBoundObject["__NAMESPACE"]));
                 }
             }
-
             [Browsable(true)]
             public string PATH {
                 get {

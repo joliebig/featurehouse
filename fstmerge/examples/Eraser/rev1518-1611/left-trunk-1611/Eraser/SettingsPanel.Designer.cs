@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class SettingsPanel
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
             this.components = new System.ComponentModel.Container();
@@ -72,18 +55,12 @@ namespace Eraser
             this.pluginsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
-
-
-
             this.titleLabel.AccessibleDescription = null;
             this.titleLabel.AccessibleName = null;
             resources.ApplyResources(this.titleLabel, "titleLabel");
             this.errorProvider.SetError(this.titleLabel, resources.GetString("titleLabel.Error"));
             this.errorProvider.SetIconAlignment(this.titleLabel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("titleLabel.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.titleLabel, ((int)(resources.GetObject("titleLabel.IconPadding"))));
-
-
-
             this.titleIcon.AccessibleDescription = null;
             this.titleIcon.AccessibleName = null;
             resources.ApplyResources(this.titleIcon, "titleIcon");
@@ -94,9 +71,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.titleIcon, ((int)(resources.GetObject("titleIcon.IconPadding"))));
             this.titleIcon.Image = global::Eraser.Properties.Resources.ToolbarSettings;
             this.titleIcon.ImageLocation = null;
-
-
-
             this.content.AccessibleDescription = null;
             this.content.AccessibleName = null;
             resources.ApplyResources(this.content, "content");
@@ -129,9 +103,6 @@ namespace Eraser
             this.content.Font = null;
             this.errorProvider.SetIconAlignment(this.content, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("content.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.content, ((int)(resources.GetObject("content.IconPadding"))));
-
-
-
             this.ui.AccessibleDescription = null;
             this.ui.AccessibleName = null;
             resources.ApplyResources(this.ui, "ui");
@@ -141,9 +112,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.ui, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("ui.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.ui, ((int)(resources.GetObject("ui.IconPadding"))));
             this.ui.Name = "ui";
-
-
-
             this.uiContextMenu.AccessibleDescription = null;
             this.uiContextMenu.AccessibleName = null;
             resources.ApplyResources(this.uiContextMenu, "uiContextMenu");
@@ -156,9 +124,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.uiContextMenu, ((int)(resources.GetObject("uiContextMenu.IconPadding"))));
             this.uiContextMenu.Name = "uiContextMenu";
             this.uiContextMenu.UseVisualStyleBackColor = true;
-
-
-
             this.lockedForceUnlock.AccessibleDescription = null;
             this.lockedForceUnlock.AccessibleName = null;
             resources.ApplyResources(this.lockedForceUnlock, "lockedForceUnlock");
@@ -171,9 +136,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.lockedForceUnlock, ((int)(resources.GetObject("lockedForceUnlock.IconPadding"))));
             this.lockedForceUnlock.Name = "lockedForceUnlock";
             this.lockedForceUnlock.UseVisualStyleBackColor = true;
-
-
-
             this.erase.AccessibleDescription = null;
             this.erase.AccessibleName = null;
             resources.ApplyResources(this.erase, "erase");
@@ -183,9 +145,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.erase, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("erase.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.erase, ((int)(resources.GetObject("erase.IconPadding"))));
             this.erase.Name = "erase";
-
-
-
             this.eraseFilesMethodLbl.AccessibleDescription = null;
             this.eraseFilesMethodLbl.AccessibleName = null;
             resources.ApplyResources(this.eraseFilesMethodLbl, "eraseFilesMethodLbl");
@@ -194,9 +153,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.eraseFilesMethodLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("eraseFilesMethodLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.eraseFilesMethodLbl, ((int)(resources.GetObject("eraseFilesMethodLbl.IconPadding"))));
             this.eraseFilesMethodLbl.Name = "eraseFilesMethodLbl";
-
-
-
             this.eraseUnusedMethodLbl.AccessibleDescription = null;
             this.eraseUnusedMethodLbl.AccessibleName = null;
             resources.ApplyResources(this.eraseUnusedMethodLbl, "eraseUnusedMethodLbl");
@@ -205,9 +161,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.eraseUnusedMethodLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("eraseUnusedMethodLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.eraseUnusedMethodLbl, ((int)(resources.GetObject("eraseUnusedMethodLbl.IconPadding"))));
             this.eraseUnusedMethodLbl.Name = "eraseUnusedMethodLbl";
-
-
-
             this.eraseFilesMethod.AccessibleDescription = null;
             this.eraseFilesMethod.AccessibleName = null;
             resources.ApplyResources(this.eraseFilesMethod, "eraseFilesMethod");
@@ -218,9 +171,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.eraseFilesMethod, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("eraseFilesMethod.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.eraseFilesMethod, ((int)(resources.GetObject("eraseFilesMethod.IconPadding"))));
             this.eraseFilesMethod.Name = "eraseFilesMethod";
-
-
-
             this.eraseUnusedMethod.AccessibleDescription = null;
             this.eraseUnusedMethod.AccessibleName = null;
             resources.ApplyResources(this.eraseUnusedMethod, "eraseUnusedMethod");
@@ -231,9 +181,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.eraseUnusedMethod, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("eraseUnusedMethod.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.eraseUnusedMethod, ((int)(resources.GetObject("eraseUnusedMethod.IconPadding"))));
             this.eraseUnusedMethod.Name = "eraseUnusedMethod";
-
-
-
             this.plugins.AccessibleDescription = null;
             this.plugins.AccessibleName = null;
             resources.ApplyResources(this.plugins, "plugins");
@@ -243,9 +190,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.plugins, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("plugins.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.plugins, ((int)(resources.GetObject("plugins.IconPadding"))));
             this.plugins.Name = "plugins";
-
-
-
             this.pluginsManager.AccessibleDescription = null;
             this.pluginsManager.AccessibleName = null;
             resources.ApplyResources(this.pluginsManager, "pluginsManager");
@@ -270,25 +214,10 @@ namespace Eraser
             this.pluginsManager.UseCompatibleStateImageBehavior = false;
             this.pluginsManager.View = System.Windows.Forms.View.Details;
             this.pluginsManager.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.pluginsManager_ItemCheck);
-
-
-
             resources.ApplyResources(this.pluginsManagerColName, "pluginsManagerColName");
-
-
-
             resources.ApplyResources(this.pluginsManagerColAuthor, "pluginsManagerColAuthor");
-
-
-
             resources.ApplyResources(this.pluginsManagerColVersion, "pluginsManagerColVersion");
-
-
-
             resources.ApplyResources(this.pluginsManagerColPath, "pluginsManagerColPath");
-
-
-
             this.pluginsMenu.AccessibleDescription = null;
             this.pluginsMenu.AccessibleName = null;
             resources.ApplyResources(this.pluginsMenu, "pluginsMenu");
@@ -301,9 +230,6 @@ namespace Eraser
             this.settingsToolStripMenuItem});
             this.pluginsMenu.Name = "pluginsContextMenu";
             this.pluginsMenu.Opening += new System.ComponentModel.CancelEventHandler(this.pluginsMenu_Opening);
-
-
-
             this.settingsToolStripMenuItem.AccessibleDescription = null;
             this.settingsToolStripMenuItem.AccessibleName = null;
             resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
@@ -311,15 +237,9 @@ namespace Eraser
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             this.settingsToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
-
-
-
             this.pluginsManagerImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("pluginsManagerImageList.ImageStream")));
             this.pluginsManagerImageList.TransparentColor = System.Drawing.Color.Transparent;
             this.pluginsManagerImageList.Images.SetKeyName(0, "Key.png");
-
-
-
             this.scheduler.AccessibleDescription = null;
             this.scheduler.AccessibleName = null;
             resources.ApplyResources(this.scheduler, "scheduler");
@@ -329,9 +249,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduler, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduler.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduler, ((int)(resources.GetObject("scheduler.IconPadding"))));
             this.scheduler.Name = "scheduler";
-
-
-
             this.schedulerMissed.AccessibleDescription = null;
             this.schedulerMissed.AccessibleName = null;
             resources.ApplyResources(this.schedulerMissed, "schedulerMissed");
@@ -340,9 +257,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.schedulerMissed, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("schedulerMissed.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.schedulerMissed, ((int)(resources.GetObject("schedulerMissed.IconPadding"))));
             this.schedulerMissed.Name = "schedulerMissed";
-
-
-
             this.schedulerMissedImmediate.AccessibleDescription = null;
             this.schedulerMissedImmediate.AccessibleName = null;
             resources.ApplyResources(this.schedulerMissedImmediate, "schedulerMissedImmediate");
@@ -355,9 +269,6 @@ namespace Eraser
             this.schedulerMissedImmediate.Name = "schedulerMissedImmediate";
             this.schedulerMissedImmediate.TabStop = true;
             this.schedulerMissedImmediate.UseVisualStyleBackColor = true;
-
-
-
             this.schedulerMissedIgnore.AccessibleDescription = null;
             this.schedulerMissedIgnore.AccessibleName = null;
             resources.ApplyResources(this.schedulerMissedIgnore, "schedulerMissedIgnore");
@@ -369,9 +280,6 @@ namespace Eraser
             this.schedulerMissedIgnore.Name = "schedulerMissedIgnore";
             this.schedulerMissedIgnore.TabStop = true;
             this.schedulerMissedIgnore.UseVisualStyleBackColor = true;
-
-
-
             this.saveSettings.AccessibleDescription = null;
             this.saveSettings.AccessibleName = null;
             resources.ApplyResources(this.saveSettings, "saveSettings");
@@ -383,9 +291,6 @@ namespace Eraser
             this.saveSettings.Name = "saveSettings";
             this.saveSettings.UseVisualStyleBackColor = true;
             this.saveSettings.Click += new System.EventHandler(this.saveSettings_Click);
-
-
-
             this.erasePRNGLbl.AccessibleDescription = null;
             this.erasePRNGLbl.AccessibleName = null;
             resources.ApplyResources(this.erasePRNGLbl, "erasePRNGLbl");
@@ -394,9 +299,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.erasePRNGLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("erasePRNGLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.erasePRNGLbl, ((int)(resources.GetObject("erasePRNGLbl.IconPadding"))));
             this.erasePRNGLbl.Name = "erasePRNGLbl";
-
-
-
             this.erasePRNG.AccessibleDescription = null;
             this.erasePRNG.AccessibleName = null;
             resources.ApplyResources(this.erasePRNG, "erasePRNG");
@@ -408,14 +310,8 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.erasePRNG, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("erasePRNG.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.erasePRNG, ((int)(resources.GetObject("erasePRNG.IconPadding"))));
             this.erasePRNG.Name = "erasePRNG";
-
-
-
             this.errorProvider.ContainerControl = this;
             resources.ApplyResources(this.errorProvider, "errorProvider");
-
-
-
             this.plausibleDeniability.AccessibleDescription = null;
             this.plausibleDeniability.AccessibleName = null;
             resources.ApplyResources(this.plausibleDeniability, "plausibleDeniability");
@@ -427,9 +323,6 @@ namespace Eraser
             this.plausibleDeniability.Name = "plausibleDeniability";
             this.plausibleDeniability.UseVisualStyleBackColor = true;
             this.plausibleDeniability.CheckedChanged += new System.EventHandler(this.plausibleDeniability_CheckedChanged);
-
-
-
             this.uiLanguageLbl.AccessibleDescription = null;
             this.uiLanguageLbl.AccessibleName = null;
             resources.ApplyResources(this.uiLanguageLbl, "uiLanguageLbl");
@@ -438,9 +331,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.uiLanguageLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("uiLanguageLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.uiLanguageLbl, ((int)(resources.GetObject("uiLanguageLbl.IconPadding"))));
             this.uiLanguageLbl.Name = "uiLanguageLbl";
-
-
-
             this.uiLanguage.AccessibleDescription = null;
             this.uiLanguage.AccessibleName = null;
             resources.ApplyResources(this.uiLanguage, "uiLanguage");
@@ -452,9 +342,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.uiLanguage, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("uiLanguage.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.uiLanguage, ((int)(resources.GetObject("uiLanguage.IconPadding"))));
             this.uiLanguage.Name = "uiLanguage";
-
-
-
             this.plausibleDeniabilityFiles.AccessibleDescription = null;
             this.plausibleDeniabilityFiles.AccessibleName = null;
             resources.ApplyResources(this.plausibleDeniabilityFiles, "plausibleDeniabilityFiles");
@@ -467,9 +354,6 @@ namespace Eraser
             this.plausibleDeniabilityFiles.Name = "plausibleDeniabilityFiles";
             this.plausibleDeniabilityFiles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.plausibleDeniabilityFiles.SelectedIndexChanged += new System.EventHandler(this.plausibleDeniabilityFiles_SelectedIndexChanged);
-
-
-
             this.plausibleDeniabilityFilesAddFile.AccessibleDescription = null;
             this.plausibleDeniabilityFilesAddFile.AccessibleName = null;
             resources.ApplyResources(this.plausibleDeniabilityFilesAddFile, "plausibleDeniabilityFilesAddFile");
@@ -481,9 +365,6 @@ namespace Eraser
             this.plausibleDeniabilityFilesAddFile.Name = "plausibleDeniabilityFilesAddFile";
             this.plausibleDeniabilityFilesAddFile.UseVisualStyleBackColor = true;
             this.plausibleDeniabilityFilesAddFile.Click += new System.EventHandler(this.plausibleDeniabilityFilesAddFile_Click);
-
-
-
             this.plausibleDeniabilityFilesRemove.AccessibleDescription = null;
             this.plausibleDeniabilityFilesRemove.AccessibleName = null;
             resources.ApplyResources(this.plausibleDeniabilityFilesRemove, "plausibleDeniabilityFilesRemove");
@@ -495,9 +376,6 @@ namespace Eraser
             this.plausibleDeniabilityFilesRemove.Name = "plausibleDeniabilityFilesRemove";
             this.plausibleDeniabilityFilesRemove.UseVisualStyleBackColor = true;
             this.plausibleDeniabilityFilesRemove.Click += new System.EventHandler(this.plausibleDeniabilityFilesRemove_Click);
-
-
-
             this.plausibleDeniabilityFilesAddFolder.AccessibleDescription = null;
             this.plausibleDeniabilityFilesAddFolder.AccessibleName = null;
             resources.ApplyResources(this.plausibleDeniabilityFilesAddFolder, "plausibleDeniabilityFilesAddFolder");
@@ -509,9 +387,6 @@ namespace Eraser
             this.plausibleDeniabilityFilesAddFolder.Name = "plausibleDeniabilityFilesAddFolder";
             this.plausibleDeniabilityFilesAddFolder.UseVisualStyleBackColor = true;
             this.plausibleDeniabilityFilesAddFolder.Click += new System.EventHandler(this.plausibleDeniabilityFilesAddFolder_Click);
-
-
-
             this.schedulerClearCompleted.AccessibleDescription = null;
             this.schedulerClearCompleted.AccessibleName = null;
             resources.ApplyResources(this.schedulerClearCompleted, "schedulerClearCompleted");
@@ -522,18 +397,9 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.schedulerClearCompleted, ((int)(resources.GetObject("schedulerClearCompleted.IconPadding"))));
             this.schedulerClearCompleted.Name = "schedulerClearCompleted";
             this.schedulerClearCompleted.UseVisualStyleBackColor = true;
-
-
-
             resources.ApplyResources(this.openFileDialog, "openFileDialog");
             this.openFileDialog.Multiselect = true;
-
-
-
             resources.ApplyResources(this.folderBrowserDialog, "folderBrowserDialog");
-
-
-
             this.AccessibleDescription = null;
             this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
@@ -555,11 +421,7 @@ namespace Eraser
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
   }
-
-
-
   private System.Windows.Forms.CheckBox lockedForceUnlock;
   private System.Windows.Forms.CheckBox uiContextMenu;
   private LightGroup ui;

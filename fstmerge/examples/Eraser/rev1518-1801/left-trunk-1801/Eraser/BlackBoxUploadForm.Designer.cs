@@ -2,15 +2,7 @@ namespace Eraser
 {
  partial class BlackBoxUploadForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -19,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlackBoxUploadForm));
@@ -38,9 +23,6 @@ namespace Eraser
             this.ProgressLbl = new System.Windows.Forms.Label();
             this.ButtonsPnl.SuspendLayout();
             this.SuspendLayout();
-
-
-
             this.ButtonsBevel.AccessibleDescription = null;
             this.ButtonsBevel.AccessibleName = null;
             resources.ApplyResources(this.ButtonsBevel, "ButtonsBevel");
@@ -48,9 +30,6 @@ namespace Eraser
             this.ButtonsBevel.BackgroundImage = null;
             this.ButtonsBevel.Font = null;
             this.ButtonsBevel.Name = "ButtonsBevel";
-
-
-
             this.ButtonsPnl.AccessibleDescription = null;
             this.ButtonsPnl.AccessibleName = null;
             resources.ApplyResources(this.ButtonsPnl, "ButtonsPnl");
@@ -60,9 +39,6 @@ namespace Eraser
             this.ButtonsPnl.Controls.Add(this.CancelBtn);
             this.ButtonsPnl.Font = null;
             this.ButtonsPnl.Name = "ButtonsPnl";
-
-
-
             this.CancelBtn.AccessibleDescription = null;
             this.CancelBtn.AccessibleName = null;
             resources.ApplyResources(this.CancelBtn, "CancelBtn");
@@ -71,42 +47,27 @@ namespace Eraser
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.UseVisualStyleBackColor = true;
             this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
-
-
-
             this.TitleLbl.AccessibleDescription = null;
             this.TitleLbl.AccessibleName = null;
             resources.ApplyResources(this.TitleLbl, "TitleLbl");
             this.TitleLbl.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))));
             this.TitleLbl.Name = "TitleLbl";
-
-
-
             this.ProgressPb.AccessibleDescription = null;
             this.ProgressPb.AccessibleName = null;
             resources.ApplyResources(this.ProgressPb, "ProgressPb");
             this.ProgressPb.BackgroundImage = null;
             this.ProgressPb.Font = null;
             this.ProgressPb.Name = "ProgressPb";
-
-
-
             this.UploadWorker.WorkerReportsProgress = true;
             this.UploadWorker.WorkerSupportsCancellation = true;
             this.UploadWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.UploadWorker_DoWork);
             this.UploadWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.UploadWorker_RunWorkerCompleted);
             this.UploadWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.UploadWorker_ProgressChanged);
-
-
-
             this.ProgressLbl.AccessibleDescription = null;
             this.ProgressLbl.AccessibleName = null;
             resources.ApplyResources(this.ProgressLbl, "ProgressLbl");
             this.ProgressLbl.Font = null;
             this.ProgressLbl.Name = "ProgressLbl";
-
-
-
             this.AccessibleDescription = null;
             this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
@@ -124,11 +85,7 @@ namespace Eraser
             this.ButtonsPnl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
-
   }
-
-
-
   private Trustbridge.Windows.Controls.BevelLine ButtonsBevel;
   private System.Windows.Forms.Panel ButtonsPnl;
   private System.Windows.Forms.Button CancelBtn;

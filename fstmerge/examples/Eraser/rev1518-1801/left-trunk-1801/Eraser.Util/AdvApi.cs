@@ -1,65 +1,41 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel;
 using System.Security.Principal;
 using System.Runtime.InteropServices;
-
 namespace Eraser.Util
 {
  public static class AdvApi
  {
-
-
-
-
-
-
   public static bool IsAdministrator()
   {
    WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
    return principal.IsInRole(WindowsBuiltInRole.Administrator);
   }
-
-
-
-
-
-
   public static bool UacEnabled()
   {
-
    if (Environment.OSVersion.Platform != PlatformID.Win32NT ||
     Environment.OSVersion.Version < new Version(6, 0))
    {
-
     return false;
    }
-
-
    SafeTokenHandle hToken = new SafeTokenHandle();
    bool result = NativeMethods.OpenProcessToken(KernelApi.NativeMethods.GetCurrentProcess(),
     NativeMethods.TOKEN_QUERY, out hToken);
    if (!result || hToken.IsInvalid)
     throw KernelApi.GetExceptionForWin32Error(Marshal.GetLastWin32Error());
-
    IntPtr pElevationType = Marshal.AllocHGlobal(Marshal.SizeOf(
     typeof(NativeMethods.TOKEN_ELEVATION_TYPE)));
    try
    {
-
     uint returnSize = 0;
     result = NativeMethods.GetTokenInformation(hToken,
      NativeMethods.TOKEN_INFORMATION_CLASS.TokenElevationType,
      pElevationType, sizeof(NativeMethods.TOKEN_ELEVATION_TYPE),
      out returnSize);
-
-
     if (!result)
      throw KernelApi.GetExceptionForWin32Error(Marshal.GetLastWin32Error());
-
     NativeMethods.TOKEN_ELEVATION_TYPE elevationType =
      (NativeMethods.TOKEN_ELEVATION_TYPE)Marshal.PtrToStructure(
       pElevationType, typeof(NativeMethods.TOKEN_ELEVATION_TYPE));
@@ -70,10 +46,6 @@ namespace Eraser.Util
     Marshal.FreeHGlobal(pElevationType);
    }
   }
-
-
-
-
   internal static class NativeMethods
   {
    [DllImport("Advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]

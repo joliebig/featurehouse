@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class TaskPropertiesForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
             this.components = new System.ComponentModel.Container();
@@ -101,9 +84,6 @@ namespace Eraser
             this.scheduleTimePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
-
-
-
             this.nameLbl.AccessibleDescription = null;
             this.nameLbl.AccessibleName = null;
             resources.ApplyResources(this.nameLbl, "nameLbl");
@@ -112,9 +92,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.nameLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("nameLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.nameLbl, ((int)(resources.GetObject("nameLbl.IconPadding"))));
             this.nameLbl.Name = "nameLbl";
-
-
-
             this.name.AccessibleDescription = null;
             this.name.AccessibleName = null;
             resources.ApplyResources(this.name, "name");
@@ -124,9 +101,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.name, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("name.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.name, ((int)(resources.GetObject("name.IconPadding"))));
             this.name.Name = "name";
-
-
-
             this.eraseLbl.AccessibleDescription = null;
             this.eraseLbl.AccessibleName = null;
             resources.ApplyResources(this.eraseLbl, "eraseLbl");
@@ -135,9 +109,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.eraseLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("eraseLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.eraseLbl, ((int)(resources.GetObject("eraseLbl.IconPadding"))));
             this.eraseLbl.Name = "eraseLbl";
-
-
-
             this.typeLbl.AccessibleDescription = null;
             this.typeLbl.AccessibleName = null;
             resources.ApplyResources(this.typeLbl, "typeLbl");
@@ -146,9 +117,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.typeLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("typeLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.typeLbl, ((int)(resources.GetObject("typeLbl.IconPadding"))));
             this.typeLbl.Name = "typeLbl";
-
-
-
             this.typeImmediate.AccessibleDescription = null;
             this.typeImmediate.AccessibleName = null;
             resources.ApplyResources(this.typeImmediate, "typeImmediate");
@@ -160,9 +128,6 @@ namespace Eraser
             this.typeImmediate.Name = "typeImmediate";
             this.typeImmediate.UseVisualStyleBackColor = true;
             this.typeImmediate.CheckedChanged += new System.EventHandler(this.taskType_CheckedChanged);
-
-
-
             this.typeRecurring.AccessibleDescription = null;
             this.typeRecurring.AccessibleName = null;
             resources.ApplyResources(this.typeRecurring, "typeRecurring");
@@ -174,9 +139,6 @@ namespace Eraser
             this.typeRecurring.Name = "typeRecurring";
             this.typeRecurring.UseVisualStyleBackColor = true;
             this.typeRecurring.CheckedChanged += new System.EventHandler(this.taskType_CheckedChanged);
-
-
-
             this.data.AccessibleDescription = null;
             this.data.AccessibleName = null;
             resources.ApplyResources(this.data, "data");
@@ -195,17 +157,8 @@ namespace Eraser
             this.data.UseCompatibleStateImageBehavior = false;
             this.data.View = System.Windows.Forms.View.Details;
             this.data.ItemActivate += new System.EventHandler(this.data_ItemActivate);
-
-
-
             resources.ApplyResources(this.dataColData, "dataColData");
-
-
-
             resources.ApplyResources(this.dataColMethod, "dataColMethod");
-
-
-
             this.dataContextMenuStrip.AccessibleDescription = null;
             this.dataContextMenuStrip.AccessibleName = null;
             resources.ApplyResources(this.dataContextMenuStrip, "dataContextMenuStrip");
@@ -218,9 +171,6 @@ namespace Eraser
             this.deleteDataToolStripMenuItem});
             this.dataContextMenuStrip.Name = "dataContextMenuStrip";
             this.dataContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.dataContextMenuStrip_Opening);
-
-
-
             this.deleteDataToolStripMenuItem.AccessibleDescription = null;
             this.deleteDataToolStripMenuItem.AccessibleName = null;
             resources.ApplyResources(this.deleteDataToolStripMenuItem, "deleteDataToolStripMenuItem");
@@ -228,9 +178,6 @@ namespace Eraser
             this.deleteDataToolStripMenuItem.Name = "deleteDataToolStripMenuItem";
             this.deleteDataToolStripMenuItem.ShortcutKeyDisplayString = null;
             this.deleteDataToolStripMenuItem.Click += new System.EventHandler(this.deleteDataToolStripMenuItem_Click);
-
-
-
             this.dataAdd.AccessibleDescription = null;
             this.dataAdd.AccessibleName = null;
             resources.ApplyResources(this.dataAdd, "dataAdd");
@@ -242,9 +189,6 @@ namespace Eraser
             this.dataAdd.Name = "dataAdd";
             this.dataAdd.UseVisualStyleBackColor = true;
             this.dataAdd.Click += new System.EventHandler(this.dataAdd_Click);
-
-
-
             this.ok.AccessibleDescription = null;
             this.ok.AccessibleName = null;
             resources.ApplyResources(this.ok, "ok");
@@ -256,9 +200,6 @@ namespace Eraser
             this.ok.Name = "ok";
             this.ok.UseVisualStyleBackColor = true;
             this.ok.Click += new System.EventHandler(this.ok_Click);
-
-
-
             this.cancel.AccessibleDescription = null;
             this.cancel.AccessibleName = null;
             resources.ApplyResources(this.cancel, "cancel");
@@ -270,9 +211,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.cancel, ((int)(resources.GetObject("cancel.IconPadding"))));
             this.cancel.Name = "cancel";
             this.cancel.UseVisualStyleBackColor = true;
-
-
-
             this.container.AccessibleDescription = null;
             this.container.AccessibleName = null;
             resources.ApplyResources(this.container, "container");
@@ -285,9 +223,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.container, ((int)(resources.GetObject("container.IconPadding"))));
             this.container.Name = "container";
             this.container.SelectedIndex = 0;
-
-
-
             this.containerTask.AccessibleDescription = null;
             this.containerTask.AccessibleName = null;
             resources.ApplyResources(this.containerTask, "containerTask");
@@ -308,9 +243,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.containerTask, ((int)(resources.GetObject("containerTask.IconPadding"))));
             this.containerTask.Name = "containerTask";
             this.containerTask.UseVisualStyleBackColor = true;
-
-
-
             this.typeManual.AccessibleDescription = null;
             this.typeManual.AccessibleName = null;
             resources.ApplyResources(this.typeManual, "typeManual");
@@ -323,9 +255,6 @@ namespace Eraser
             this.typeManual.TabStop = true;
             this.typeManual.UseVisualStyleBackColor = true;
             this.typeManual.CheckedChanged += new System.EventHandler(this.taskType_CheckedChanged);
-
-
-
             this.typeRestart.AccessibleDescription = null;
             this.typeRestart.AccessibleName = null;
             resources.ApplyResources(this.typeRestart, "typeRestart");
@@ -337,9 +266,6 @@ namespace Eraser
             this.typeRestart.Name = "typeRestart";
             this.typeRestart.TabStop = true;
             this.typeRestart.UseVisualStyleBackColor = true;
-
-
-
             this.containerSchedule.AccessibleDescription = null;
             this.containerSchedule.AccessibleName = null;
             resources.ApplyResources(this.containerSchedule, "containerSchedule");
@@ -351,9 +277,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.containerSchedule, ((int)(resources.GetObject("containerSchedule.IconPadding"))));
             this.containerSchedule.Name = "containerSchedule";
             this.containerSchedule.UseVisualStyleBackColor = true;
-
-
-
             this.tableLayoutPanel1.AccessibleDescription = null;
             this.tableLayoutPanel1.AccessibleName = null;
             resources.ApplyResources(this.tableLayoutPanel1, "tableLayoutPanel1");
@@ -366,9 +289,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.tableLayoutPanel1, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("tableLayoutPanel1.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.tableLayoutPanel1, ((int)(resources.GetObject("tableLayoutPanel1.IconPadding"))));
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-
-
-
             this.schedulePattern.AccessibleDescription = null;
             this.schedulePattern.AccessibleName = null;
             resources.ApplyResources(this.schedulePattern, "schedulePattern");
@@ -392,9 +312,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.schedulePattern, ((int)(resources.GetObject("schedulePattern.IconPadding"))));
             this.schedulePattern.Name = "schedulePattern";
             this.schedulePattern.TabStop = false;
-
-
-
             this.scheduleMonthlyLbl.AccessibleDescription = null;
             this.scheduleMonthlyLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthlyLbl, "scheduleMonthlyLbl");
@@ -403,9 +320,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleMonthlyLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleMonthlyLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleMonthlyLbl, ((int)(resources.GetObject("scheduleMonthlyLbl.IconPadding"))));
             this.scheduleMonthlyLbl.Name = "scheduleMonthlyLbl";
-
-
-
             this.scheduleMonthlyDayNumber.AccessibleDescription = null;
             this.scheduleMonthlyDayNumber.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthlyDayNumber, "scheduleMonthlyDayNumber");
@@ -429,9 +343,6 @@ namespace Eraser
             0,
             0,
             0});
-
-
-
             this.scheduleMonthlyFreq.AccessibleDescription = null;
             this.scheduleMonthlyFreq.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthlyFreq, "scheduleMonthlyFreq");
@@ -455,9 +366,6 @@ namespace Eraser
             0,
             0,
             0});
-
-
-
             this.scheduleMonthlyMonthLbl.AccessibleDescription = null;
             this.scheduleMonthlyMonthLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthlyMonthLbl, "scheduleMonthlyMonthLbl");
@@ -466,9 +374,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleMonthlyMonthLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleMonthlyMonthLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleMonthlyMonthLbl, ((int)(resources.GetObject("scheduleMonthlyMonthLbl.IconPadding"))));
             this.scheduleMonthlyMonthLbl.Name = "scheduleMonthlyMonthLbl";
-
-
-
             this.scheduleMonthlyEveryLbl.AccessibleDescription = null;
             this.scheduleMonthlyEveryLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthlyEveryLbl, "scheduleMonthlyEveryLbl");
@@ -477,9 +382,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleMonthlyEveryLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleMonthlyEveryLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleMonthlyEveryLbl, ((int)(resources.GetObject("scheduleMonthlyEveryLbl.IconPadding"))));
             this.scheduleMonthlyEveryLbl.Name = "scheduleMonthlyEveryLbl";
-
-
-
             this.scheduleWeeklyFreq.AccessibleDescription = null;
             this.scheduleWeeklyFreq.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyFreq, "scheduleWeeklyFreq");
@@ -503,9 +405,6 @@ namespace Eraser
             0,
             0,
             0});
-
-
-
             this.scheduleDaily.AccessibleDescription = null;
             this.scheduleDaily.AccessibleName = null;
             resources.ApplyResources(this.scheduleDaily, "scheduleDaily");
@@ -517,9 +416,6 @@ namespace Eraser
             this.scheduleDaily.Name = "scheduleDaily";
             this.scheduleDaily.UseVisualStyleBackColor = true;
             this.scheduleDaily.CheckedChanged += new System.EventHandler(this.scheduleSpan_CheckedChanged);
-
-
-
             this.scheduleDailyPanel.AccessibleDescription = null;
             this.scheduleDailyPanel.AccessibleName = null;
             resources.ApplyResources(this.scheduleDailyPanel, "scheduleDailyPanel");
@@ -533,9 +429,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleDailyPanel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleDailyPanel.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleDailyPanel, ((int)(resources.GetObject("scheduleDailyPanel.IconPadding"))));
             this.scheduleDailyPanel.Name = "scheduleDailyPanel";
-
-
-
             this.scheduleDailyByDayFreq.AccessibleDescription = null;
             this.scheduleDailyByDayFreq.AccessibleName = null;
             resources.ApplyResources(this.scheduleDailyByDayFreq, "scheduleDailyByDayFreq");
@@ -559,9 +452,6 @@ namespace Eraser
             0,
             0,
             0});
-
-
-
             this.scheduleDailyByDay.AccessibleDescription = null;
             this.scheduleDailyByDay.AccessibleName = null;
             resources.ApplyResources(this.scheduleDailyByDay, "scheduleDailyByDay");
@@ -575,9 +465,6 @@ namespace Eraser
             this.scheduleDailyByDay.TabStop = true;
             this.scheduleDailyByDay.UseVisualStyleBackColor = true;
             this.scheduleDailyByDay.CheckedChanged += new System.EventHandler(this.scheduleDailySpan_CheckedChanged);
-
-
-
             this.scheduleDailyByDayLbl.AccessibleDescription = null;
             this.scheduleDailyByDayLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleDailyByDayLbl, "scheduleDailyByDayLbl");
@@ -586,9 +473,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleDailyByDayLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleDailyByDayLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleDailyByDayLbl, ((int)(resources.GetObject("scheduleDailyByDayLbl.IconPadding"))));
             this.scheduleDailyByDayLbl.Name = "scheduleDailyByDayLbl";
-
-
-
             this.scheduleDailyByWeekday.AccessibleDescription = null;
             this.scheduleDailyByWeekday.AccessibleName = null;
             resources.ApplyResources(this.scheduleDailyByWeekday, "scheduleDailyByWeekday");
@@ -600,9 +484,6 @@ namespace Eraser
             this.scheduleDailyByWeekday.Name = "scheduleDailyByWeekday";
             this.scheduleDailyByWeekday.UseVisualStyleBackColor = true;
             this.scheduleDailyByWeekday.CheckedChanged += new System.EventHandler(this.scheduleDailySpan_CheckedChanged);
-
-
-
             this.scheduleWeeklyDays.AccessibleDescription = null;
             this.scheduleWeeklyDays.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyDays, "scheduleWeeklyDays");
@@ -619,9 +500,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleWeeklyDays, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleWeeklyDays.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleWeeklyDays, ((int)(resources.GetObject("scheduleWeeklyDays.IconPadding"))));
             this.scheduleWeeklyDays.Name = "scheduleWeeklyDays";
-
-
-
             this.scheduleWeeklyMonday.AccessibleDescription = null;
             this.scheduleWeeklyMonday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyMonday, "scheduleWeeklyMonday");
@@ -632,9 +510,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklyMonday, ((int)(resources.GetObject("scheduleWeeklyMonday.IconPadding"))));
             this.scheduleWeeklyMonday.Name = "scheduleWeeklyMonday";
             this.scheduleWeeklyMonday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklyTuesday.AccessibleDescription = null;
             this.scheduleWeeklyTuesday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyTuesday, "scheduleWeeklyTuesday");
@@ -645,9 +520,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklyTuesday, ((int)(resources.GetObject("scheduleWeeklyTuesday.IconPadding"))));
             this.scheduleWeeklyTuesday.Name = "scheduleWeeklyTuesday";
             this.scheduleWeeklyTuesday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklyWednesday.AccessibleDescription = null;
             this.scheduleWeeklyWednesday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyWednesday, "scheduleWeeklyWednesday");
@@ -658,9 +530,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklyWednesday, ((int)(resources.GetObject("scheduleWeeklyWednesday.IconPadding"))));
             this.scheduleWeeklyWednesday.Name = "scheduleWeeklyWednesday";
             this.scheduleWeeklyWednesday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklyThursday.AccessibleDescription = null;
             this.scheduleWeeklyThursday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyThursday, "scheduleWeeklyThursday");
@@ -671,9 +540,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklyThursday, ((int)(resources.GetObject("scheduleWeeklyThursday.IconPadding"))));
             this.scheduleWeeklyThursday.Name = "scheduleWeeklyThursday";
             this.scheduleWeeklyThursday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklyFriday.AccessibleDescription = null;
             this.scheduleWeeklyFriday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyFriday, "scheduleWeeklyFriday");
@@ -684,9 +550,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklyFriday, ((int)(resources.GetObject("scheduleWeeklyFriday.IconPadding"))));
             this.scheduleWeeklyFriday.Name = "scheduleWeeklyFriday";
             this.scheduleWeeklyFriday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklySaturday.AccessibleDescription = null;
             this.scheduleWeeklySaturday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklySaturday, "scheduleWeeklySaturday");
@@ -697,9 +560,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklySaturday, ((int)(resources.GetObject("scheduleWeeklySaturday.IconPadding"))));
             this.scheduleWeeklySaturday.Name = "scheduleWeeklySaturday";
             this.scheduleWeeklySaturday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklySunday.AccessibleDescription = null;
             this.scheduleWeeklySunday.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklySunday, "scheduleWeeklySunday");
@@ -710,9 +570,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleWeeklySunday, ((int)(resources.GetObject("scheduleWeeklySunday.IconPadding"))));
             this.scheduleWeeklySunday.Name = "scheduleWeeklySunday";
             this.scheduleWeeklySunday.UseVisualStyleBackColor = true;
-
-
-
             this.scheduleWeeklyFreqLbl.AccessibleDescription = null;
             this.scheduleWeeklyFreqLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyFreqLbl, "scheduleWeeklyFreqLbl");
@@ -721,9 +578,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleWeeklyFreqLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleWeeklyFreqLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleWeeklyFreqLbl, ((int)(resources.GetObject("scheduleWeeklyFreqLbl.IconPadding"))));
             this.scheduleWeeklyFreqLbl.Name = "scheduleWeeklyFreqLbl";
-
-
-
             this.scheduleWeeklyLbl.AccessibleDescription = null;
             this.scheduleWeeklyLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeeklyLbl, "scheduleWeeklyLbl");
@@ -732,9 +586,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleWeeklyLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleWeeklyLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleWeeklyLbl, ((int)(resources.GetObject("scheduleWeeklyLbl.IconPadding"))));
             this.scheduleWeeklyLbl.Name = "scheduleWeeklyLbl";
-
-
-
             this.scheduleWeekly.AccessibleDescription = null;
             this.scheduleWeekly.AccessibleName = null;
             resources.ApplyResources(this.scheduleWeekly, "scheduleWeekly");
@@ -746,9 +597,6 @@ namespace Eraser
             this.scheduleWeekly.Name = "scheduleWeekly";
             this.scheduleWeekly.UseVisualStyleBackColor = true;
             this.scheduleWeekly.CheckedChanged += new System.EventHandler(this.scheduleSpan_CheckedChanged);
-
-
-
             this.scheduleMonthly.AccessibleDescription = null;
             this.scheduleMonthly.AccessibleName = null;
             resources.ApplyResources(this.scheduleMonthly, "scheduleMonthly");
@@ -761,9 +609,6 @@ namespace Eraser
             this.scheduleMonthly.TabStop = true;
             this.scheduleMonthly.UseVisualStyleBackColor = true;
             this.scheduleMonthly.CheckedChanged += new System.EventHandler(this.scheduleSpan_CheckedChanged);
-
-
-
             this.nonRecurringPanel.AccessibleDescription = null;
             this.nonRecurringPanel.AccessibleName = null;
             resources.ApplyResources(this.nonRecurringPanel, "nonRecurringPanel");
@@ -775,9 +620,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.nonRecurringPanel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("nonRecurringPanel.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.nonRecurringPanel, ((int)(resources.GetObject("nonRecurringPanel.IconPadding"))));
             this.nonRecurringPanel.Name = "nonRecurringPanel";
-
-
-
             this.nonRecurringLbl.AccessibleDescription = null;
             this.nonRecurringLbl.AccessibleName = null;
             resources.ApplyResources(this.nonRecurringLbl, "nonRecurringLbl");
@@ -786,9 +628,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.nonRecurringLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("nonRecurringLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.nonRecurringLbl, ((int)(resources.GetObject("nonRecurringLbl.IconPadding"))));
             this.nonRecurringLbl.Name = "nonRecurringLbl";
-
-
-
             this.nonRecurringBitmap.AccessibleDescription = null;
             this.nonRecurringBitmap.AccessibleName = null;
             resources.ApplyResources(this.nonRecurringBitmap, "nonRecurringBitmap");
@@ -801,9 +640,6 @@ namespace Eraser
             this.nonRecurringBitmap.ImageLocation = null;
             this.nonRecurringBitmap.Name = "nonRecurringBitmap";
             this.nonRecurringBitmap.TabStop = false;
-
-
-
             this.scheduleTimePanel.AccessibleDescription = null;
             this.scheduleTimePanel.AccessibleName = null;
             resources.ApplyResources(this.scheduleTimePanel, "scheduleTimePanel");
@@ -815,9 +651,6 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleTimePanel, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleTimePanel.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleTimePanel, ((int)(resources.GetObject("scheduleTimePanel.IconPadding"))));
             this.scheduleTimePanel.Name = "scheduleTimePanel";
-
-
-
             this.scheduleTime.AccessibleDescription = null;
             this.scheduleTime.AccessibleName = null;
             resources.ApplyResources(this.scheduleTime, "scheduleTime");
@@ -831,9 +664,6 @@ namespace Eraser
             this.errorProvider.SetIconPadding(this.scheduleTime, ((int)(resources.GetObject("scheduleTime.IconPadding"))));
             this.scheduleTime.Name = "scheduleTime";
             this.scheduleTime.ShowUpDown = true;
-
-
-
             this.scheduleTimeLbl.AccessibleDescription = null;
             this.scheduleTimeLbl.AccessibleName = null;
             resources.ApplyResources(this.scheduleTimeLbl, "scheduleTimeLbl");
@@ -842,14 +672,8 @@ namespace Eraser
             this.errorProvider.SetIconAlignment(this.scheduleTimeLbl, ((System.Windows.Forms.ErrorIconAlignment)(resources.GetObject("scheduleTimeLbl.IconAlignment"))));
             this.errorProvider.SetIconPadding(this.scheduleTimeLbl, ((int)(resources.GetObject("scheduleTimeLbl.IconPadding"))));
             this.scheduleTimeLbl.Name = "scheduleTimeLbl";
-
-
-
             this.errorProvider.ContainerControl = this;
             resources.ApplyResources(this.errorProvider, "errorProvider");
-
-
-
             this.AcceptButton = this.ok;
             this.AccessibleDescription = null;
             this.AccessibleName = null;
@@ -889,11 +713,7 @@ namespace Eraser
             this.scheduleTimePanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
             this.ResumeLayout(false);
-
   }
-
-
-
   private System.Windows.Forms.Label nameLbl;
   private System.Windows.Forms.TextBox name;
   private System.Windows.Forms.Label eraseLbl;

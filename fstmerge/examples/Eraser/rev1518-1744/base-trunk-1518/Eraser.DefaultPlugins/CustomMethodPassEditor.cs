@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +6,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
  public partial class CustomMethodPassEditor : UserControl
@@ -18,10 +15,6 @@ namespace Eraser.DefaultPlugins
    InitializeComponent();
    UXThemeApi.UpdateControlTheme(this);
   }
-
-
-
-
   [Description("The type of pass being edited")]
   [Category("Behavior")]
   public CustomMethodPassEditorPassType PassType
@@ -48,14 +41,12 @@ namespace Eraser.DefaultPlugins
     }
    }
   }
-
   [Description("The pass constant being edited.")]
   [Category("Behavior")]
   public byte[] PassData
   {
    get
    {
-
     switch (PassType)
     {
      case CustomMethodPassEditorPassType.Random:
@@ -66,10 +57,7 @@ namespace Eraser.DefaultPlugins
    }
    set
    {
-
     passData = value;
-
-
     UpdateEditorSuitably();
    }
   }

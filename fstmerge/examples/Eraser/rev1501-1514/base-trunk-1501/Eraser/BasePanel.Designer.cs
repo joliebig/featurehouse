@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class BasePanel
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BasePanel));
@@ -36,25 +19,13 @@ namespace Eraser
    this.titleIcon = new System.Windows.Forms.PictureBox();
    ((System.ComponentModel.ISupportInitialize)(this.titleIcon)).BeginInit();
    this.SuspendLayout();
-
-
-
    resources.ApplyResources(this.titleLabel, "titleLabel");
    this.titleLabel.Name = "titleLabel";
-
-
-
    resources.ApplyResources(this.content, "content");
    this.content.Name = "content";
-
-
-
    resources.ApplyResources(this.titleIcon, "titleIcon");
    this.titleIcon.Name = "titleIcon";
    this.titleIcon.TabStop = false;
-
-
-
    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
    this.Controls.Add(this.content);
    this.Controls.Add(this.titleIcon);
@@ -64,11 +35,7 @@ namespace Eraser
    ((System.ComponentModel.ISupportInitialize)(this.titleIcon)).EndInit();
    this.ResumeLayout(false);
    this.PerformLayout();
-
   }
-
-
-
   protected System.Windows.Forms.Label titleLabel;
   protected System.Windows.Forms.PictureBox titleIcon;
   protected System.Windows.Forms.Panel content;

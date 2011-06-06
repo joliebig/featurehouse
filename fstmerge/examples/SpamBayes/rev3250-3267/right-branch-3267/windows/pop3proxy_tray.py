@@ -398,7 +398,7 @@ class MainWindow(object):
     def ShowHTML(self, url):
         """Displays the main SpamBayes documentation in your Web browser"""
         import sys, os, urllib.request, urllib.parse, urllib.error
-        if urllib.parse.splittype(url)[0] is None: 
+        if urllib.parse.splittype(url)[0] is None: # just a file spec
             if hasattr(sys, "frozen"):
                 fname = os.path.join(os.path.dirname(sys.argv[0]),
                                      "..", "docs", "sb_server", url)

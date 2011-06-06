@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,19 +6,13 @@ using System.Text.RegularExpressions;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Threading;
-
 using Eraser.Util;
 using Eraser.Util.ExtensionMethods;
-
 namespace Eraser.Manager
 {
-
-
-
  [Serializable]
  public class Task : ISerializable
  {
-
   protected Task(SerializationInfo info, StreamingContext context)
   {
    Name = (string)info.GetValue("Name", typeof(string));
@@ -29,7 +21,6 @@ namespace Eraser.Manager
    Targets.Owner = this;
    Log = (List<LogSink>)info.GetValue("Log", typeof(List<LogSink>));
    Canceled = false;
-
    Schedule schedule = (Schedule)info.GetValue("Schedule", typeof(Schedule));
    if (schedule.GetType() == Schedule.RunManually.GetType())
     Schedule = Schedule.RunManually;
@@ -43,7 +34,6 @@ namespace Eraser.Manager
     throw new InvalidDataException(S._("An invalid type was found when loading " +
      "the task schedule"));
   }
-
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
   {
@@ -52,11 +42,6 @@ namespace Eraser.Manager
    info.AddValue("Targets", Targets);
    info.AddValue("Log", Log);
   }
-
-
-
-
-
   public Task()
   {
    Name = string.Empty;
@@ -65,70 +50,36 @@ namespace Eraser.Manager
    Canceled = false;
    Log = new List<LogSink>();
   }
-
-
-
-
-
   public void Cancel()
   {
    Executor.UnqueueTask(this);
    Canceled = true;
   }
-
-
-
-
   public Executor Executor { get; internal set; }
-
-
-
-
-
   public string Name { get; set; }
-
-
-
-
   public string UIText
   {
    get
    {
-
     if (Name.Length != 0)
      return Name;
-
     string result = string.Empty;
     if (Targets.Count < 5)
     {
-
      foreach (ErasureTarget tgt in Targets)
       result += tgt.UIText + ", ";
-
      return result.Remove(result.Length - 2);
     }
     else
     {
-
      result = Targets[0].UIText + ", ";
      result += Targets[Targets.Count / 2].UIText + ", ";
      result += Targets[Targets.Count - 1].UIText;
-
      return S._("{0} and {1} other targets", result, Targets.Count - 3);
     }
    }
   }
-
-
-
-
   public bool Executing { get; private set; }
-
-
-
-
-
-
   public bool Queued
   {
    get
@@ -136,24 +87,12 @@ namespace Eraser.Manager
     return Executor.IsTaskQueued(this);
    }
   }
-
-
-
-
   public bool Canceled
   {
    get;
    internal set;
   }
-
-
-
-
   public ErasureTargetsCollection Targets { get; private set; }
-
-
-
-
   public Schedule Schedule
   {
    get
@@ -165,7 +104,6 @@ namespace Eraser.Manager
     if (value.Owner != null)
      throw new ArgumentException("The schedule provided can only " +
       "belong to one task at a time");
-
     if (schedule is RecurringSchedule)
      ((RecurringSchedule)schedule).Owner = null;
     schedule = value;
@@ -174,15 +112,7 @@ namespace Eraser.Manager
     OnTaskEdited();
    }
   }
-
-
-
-
   public List<LogSink> Log { get; private set; }
-
-
-
-
   public SteppedProgressManager Progress
   {
    get
@@ -190,7 +120,6 @@ namespace Eraser.Manager
     if (!Executing)
      throw new InvalidOperationException("The progress of an erasure can only " +
       "be queried when the task is being executed.");
-
     return progress;
    }
    private set
@@ -198,43 +127,17 @@ namespace Eraser.Manager
     progress = value;
    }
   }
-
   private Schedule schedule;
   private SteppedProgressManager progress;
-
-
-
-
-
   public EventHandler TaskEdited { get; set; }
-
-
-
-
   public EventHandler TaskStarted { get; set; }
-
-
-
-
   public EventHandler<ProgressChangedEventArgs> ProgressChanged { get; set; }
-
-
-
-
   public EventHandler TaskFinished { get; set; }
-
-
-
-
   internal void OnTaskEdited()
   {
    if (TaskEdited != null)
     TaskEdited(this, EventArgs.Empty);
   }
-
-
-
-
   internal void OnTaskStarted()
   {
    if (TaskStarted != null)

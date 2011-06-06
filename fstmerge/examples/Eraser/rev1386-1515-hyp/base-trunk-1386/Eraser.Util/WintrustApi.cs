@@ -1,26 +1,17 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-
 namespace Eraser.Util
 {
  public static class WintrustApi
  {
-
-
-
-
-
   public static bool VerifyAuthenticode(string pathToFile)
   {
    NativeMethods.WINTRUST_FILE_INFO fileinfo = new NativeMethods.WINTRUST_FILE_INFO();
    fileinfo.cbStruct = (uint)Marshal.SizeOf(typeof(NativeMethods.WINTRUST_FILE_INFO));
    fileinfo.pcwszFilePath = pathToFile;
-
    NativeMethods.WINTRUST_DATA data = new NativeMethods.WINTRUST_DATA();
    data.cbStruct = (uint)Marshal.SizeOf(typeof(NativeMethods.WINTRUST_DATA));
    data.dwUIChoice = NativeMethods.WINTRUST_DATA.UIChoices.WTD_UI_NONE;
@@ -28,13 +19,11 @@ namespace Eraser.Util
    data.dwUnionChoice = NativeMethods.WINTRUST_DATA.UnionChoices.WTD_CHOICE_FILE;
    data.pUnion = Marshal.AllocHGlobal((int)fileinfo.cbStruct);
    Marshal.StructureToPtr(fileinfo, data.pUnion, false);
-
    Guid guid = NativeMethods.WINTRUST_ACTION_GENERIC_VERIFY_V2;
    int result = NativeMethods.WinVerifyTrust(IntPtr.Zero, ref guid, ref data);
    Marshal.FreeHGlobal(data.pUnion);
    return result == 0;
   }
-
   internal static class NativeMethods
   {
    [DllImport("Wintrust.dll", CharSet = CharSet.Unicode)]

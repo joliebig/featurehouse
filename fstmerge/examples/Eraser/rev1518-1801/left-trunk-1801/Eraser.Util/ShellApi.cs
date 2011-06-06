@@ -1,31 +1,18 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.Win32;
-
 namespace Eraser.Util
 {
  public static class ShellApi
  {
-
-
-
-
-
   public static void EmptyRecycleBin(EmptyRecycleBinOptions options)
   {
    NativeMethods.SHEmptyRecycleBin(IntPtr.Zero, null,
     (NativeMethods.SHEmptyRecycleBinFlags)options);
   }
-
-
-
-
-
   public static bool LowDiskSpaceNotificationsEnabled
   {
    get
@@ -47,10 +34,6 @@ namespace Eraser.Util
     }
    }
   }
-
-
-
-
   internal static class NativeMethods
   {
    [DllImport("Shlwapi.dll", CharSet = CharSet.Unicode)]

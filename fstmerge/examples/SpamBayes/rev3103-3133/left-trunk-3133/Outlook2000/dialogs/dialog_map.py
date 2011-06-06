@@ -4,7 +4,7 @@ import wizard_processors as wiz
 from dialogs import ShowDialog, MakePropertyPage, ShowWizard
 try:
     enumerate
-except NameError:   
+except NameError:   # enumerate new in 2.3
     def enumerate(seq):
         return [(i, seq[i]) for i in xrange(len(seq))]
 class StatsProcessor(ControlProcessor):
@@ -43,7 +43,7 @@ class StatsProcessor(ControlProcessor):
                                question, "SpamBayes", flags) == win32con.IDYES:
             self.stats.Reset()
             self.stats.ResetTotal(True)
-            self.Init()  
+            self.Init()  # update the statistics display
 class VersionStringProcessor(ControlProcessor):
     def Init(self):
         from spambayes.Version import get_current_version
@@ -130,7 +130,7 @@ class FilterEnableProcessor(BoolButtonProcessor):
             if reason is not None:
                 win32gui.SendMessage(self.GetControl(), win32con.BM_SETCHECK, 0)
                 raise ValueError, reason
-        check = not not check 
+        check = not not check # force bool!
         self.SetOptionValue(check)
 class FilterStatusProcessor(ControlProcessor):
     def OnOptionChanged(self, option):
@@ -213,12 +213,12 @@ class TabProcessor(ControlProcessor):
         address,l = win32gui.PyGetBufferAddressAndLen(lbuf)
         win32gui.PySetString(address, label)
         buf = struct.pack(format,
-            commctrl.TCIF_TEXT, 
-            0, 
-            0, 
+            commctrl.TCIF_TEXT, # mask
+            0, # state
+            0, # state mask
             address,
-            0, 
-            0, 
+            0, #unused
+            0, #image
             item
             )
         item = win32gui.SendMessage(self.GetControl(),
@@ -258,9 +258,9 @@ def ShowLog(window):
                    "Do you want to execute this viewer?")
         if not window.manager.AskQuestion(question):
             return
-        import win32traceutil 
+        import win32traceutil # will already be imported
         py_name = win32traceutil.__file__
-        if py_name[-1] in 'co': 
+        if py_name[-1] in 'co': # pyc/pyo
             py_name = py_name[:-1]
         os.system('start ' + win32api.GetShortPathName(py_name))
 def ResetConfig(window):
@@ -322,7 +322,7 @@ class ShowWizardCommand(DialogCommand):
         try:
             parent = win32gui.GetParent(dlg)
         except win32gui.error:
-            parent = 0 
+            parent = 0 # no parent
         win32gui.EndDialog(dlg, win32con.IDOK)
         ShowWizard(parent, manager, self.idd, use_existing_config = True)
 def WizardFinish(mgr, window):
@@ -348,7 +348,7 @@ def WizardTrainer(mgr, config, progress):
     progress.set_stages(stages)
     train.real_trainer(classifier_data, config, mgr.message_store, progress)
     orig_classifier_data = mgr.classifier_data
-    mgr.classifier_data = classifier_data 
+    mgr.classifier_data = classifier_data # temporary
     try:
         progress.tick()
         if rescore:

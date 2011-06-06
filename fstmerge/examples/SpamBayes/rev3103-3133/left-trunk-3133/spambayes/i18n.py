@@ -25,7 +25,7 @@ if hasattr(sys, "frozen"):
 else:
     try:
         this_filename = os.path.abspath(__file__)
-    except NameError: 
+    except NameError: # no __file__ - means Py2.2 and __name__=='__main__'
         this_filename = os.path.abspath(sys.argv[0])
     LANG_DIR = os.path.join(os.path.dirname(this_filename), "languages")
     LC_DIR = LANG_DIR

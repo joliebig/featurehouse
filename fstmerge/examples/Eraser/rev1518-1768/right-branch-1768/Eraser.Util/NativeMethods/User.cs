@@ -1,16 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
-
 namespace Eraser.Util
 {
-
-
-
  internal static partial class NativeMethods
  {
   [DllImport("User32.dll", SetLastError = true)]

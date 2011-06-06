@@ -71,7 +71,7 @@ def main():
             print "Invalid arg"
             return
     if not folder_names:
-        folder_names = ["Inbox"] 
+        folder_names = ["Inbox"] # Assume this exists!
     if len(args) != 1:
         print "You must specify a property tag/name"
         print

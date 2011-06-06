@@ -289,7 +289,7 @@ class Option(object):
                 else:
                     v = str(v)
                 strval += v + self.delimiter
-            strval = strval[:-len(self.delimiter)] 
+            strval = strval[:-len(self.delimiter)] # trailing seperator
         else:
             strval = str(self.value)
         return strval
@@ -310,16 +310,16 @@ class OptionsClass(object):
         self.verbose = None
         self._options = {}
         self.restore_point = {}
-        self.conversion_table = {} 
+        self.conversion_table = {} # set by creator if they need it.
     SECTCRE = re.compile(
-        r'\['                                 
-        r'(?P<header>[^]]+)'                  
-        r'\]'                                 
+        r'\['                                 # [
+        r'(?P<header>[^]]+)'                  # very permissive!
+        r'\]'                                 # ]
         )
     OPTCRE = re.compile(
-        r'(?P<option>[^:=\s][^:=]*)'          
-        r'\s*(?P<vi>[:=])\s*'                 
-        r'(?P<value>.*)$'                     
+        r'(?P<option>[^:=\s][^:=]*)'          # very permissive!
+        r'\s*(?P<vi>[:=])\s*'                 # any number of space/tab,
+        r'(?P<value>.*)$'                     # everything up to EOL
         )
     def update_file(self, filename):
         '''Update the specified configuration file.'''
@@ -336,7 +336,7 @@ class OptionsClass(object):
             f.close()
             f = file(filename, "r")
         written = []
-        vi = ": " 
+        vi = ": " # default; uses the one from the file where possible
         while True:
             line = f.readline()
             if not line:
@@ -413,7 +413,7 @@ class OptionsClass(object):
                     if issubclass(opt[0], Option):
                         klass = opt[0]
                         args = opt[1:]
-                except TypeError: 
+                except TypeError: # opt[0] not a class
                     pass
                 o = klass(*args)
                 self._options[section, o.name] = o
@@ -638,10 +638,10 @@ class OptionsClass(object):
         return self._display_nice(section, option, 'as_documentation_string')
 HEADER_NAME = r"[\w\.\-\*]+"
 HEADER_VALUE = r".+"
-INTEGER = r"[\d]+"              
-REAL = r"[\d]+[\.]?[\d]*"       
+INTEGER = r"[\d]+"              # actually, a *positive* integer
+REAL = r"[\d]+[\.]?[\d]*"       # likewise, a *positive* real
 BOOLEAN = (False, True)
-SERVER = r"([\w\.\-]+(:[\d]+)?)"  
+SERVER = r"([\w\.\-]+(:[\d]+)?)"  # in the form server:port
 PORT = r"[\d]+"
 EMAIL_ADDRESS = r"[\w\-\.]+@[\w\-\.]+"
 PATH = r"[\w \$\.\-~:\\/\*\@\=]+"

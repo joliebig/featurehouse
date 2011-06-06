@@ -33,17 +33,17 @@ class MAPIDriver:
     def GetMessageStores(self):
         tab = self.session.GetMsgStoresTable(0)
         rows = mapi.HrQueryAllRows(tab,
-                                   (PR_ENTRYID, PR_DISPLAY_NAME_A, PR_DEFAULT_STORE),   
-                                   None,     
-                                   None,            
-                                   0)               
+                                   (PR_ENTRYID, PR_DISPLAY_NAME_A, PR_DEFAULT_STORE),   # columns to retrieve
+                                   None,     # all rows
+                                   None,            # any sort order is fine
+                                   0)               # any # of results is fine
         for row in rows:
             (eid_tag, eid), (name_tag, name), (def_store_tag, def_store) = row
             try:
                 store = self.session.OpenMsgStore(
-                                    0,      
-                                    eid,    
-                                    None,   
+                                    0,      # no parent window
+                                    eid,    # msg store to open
+                                    None,   # IID; accept default IMsgStore
                                     mapi.MDB_WRITE |
                                         mapi.MDB_NO_MAIL |
                                         mapi.MAPI_DEFERRED_ERRORS)
@@ -107,15 +107,15 @@ class MAPIDriver:
     def GetItemsWithValue(self, folder, prop_tag, prop_val, mapi_flags = None):
         mapi_flags = self._GetMAPIFlags(mapi_flags)
         tab = folder.GetContentsTable(0)
-        restriction = (mapi.RES_CONTENT,   
-                       (mapi.FL_SUBSTRING | mapi.FL_IGNORECASE | mapi.FL_LOOSE, 
-                        prop_tag,   
-                        (prop_tag, prop_val))) 
+        restriction = (mapi.RES_CONTENT,   # a property restriction
+                       (mapi.FL_SUBSTRING | mapi.FL_IGNORECASE | mapi.FL_LOOSE, # fuzz level
+                        prop_tag,   # of the given prop
+                        (prop_tag, prop_val))) # with given val
         rows = mapi.HrQueryAllRows(tab,
-                                   (PR_ENTRYID, PR_STORE_ENTRYID),   
-                                   restriction,     
-                                   None,            
-                                   0)               
+                                   (PR_ENTRYID, PR_STORE_ENTRYID),   # columns to retrieve
+                                   restriction,     # only these rows
+                                   None,            # any sort order is fine
+                                   0)               # any # of results is fine
         for row in rows:
             (tag, eid),(tag, store_eid) = row
             store = self.session.OpenMsgStore(0, store_eid, None, mapi_flags)

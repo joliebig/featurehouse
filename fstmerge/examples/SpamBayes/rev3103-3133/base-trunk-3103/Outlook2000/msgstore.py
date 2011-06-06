@@ -23,21 +23,21 @@ from win32com.mapi.mapitags import *
 import pythoncom
 import winerror
 try:
-    PR_USERFIELDS 
+    PR_USERFIELDS # only in new win32all
 except NameError:
-    PR_USERFIELDS = 0x36E30102 
-MESSAGE_MOVE = 0x1 
-MSGFLAG_READ = 0x1 
+    PR_USERFIELDS = 0x36E30102 # PROP_TAG(PT_BINARY, 0x36e3)
+MESSAGE_MOVE = 0x1 # from MAPIdefs.h
+MSGFLAG_READ = 0x1 # from MAPIdefs.h
 MSGFLAG_UNSENT = 0x00000008
-MYPR_BODY_HTML_A = 0x1013001e 
-MYPR_BODY_HTML_W = 0x1013001f 
-MYPR_MESSAGE_ID_A = 0x1035001E 
+MYPR_BODY_HTML_A = 0x1013001e # magic <wink>
+MYPR_BODY_HTML_W = 0x1013001f # ditto
+MYPR_MESSAGE_ID_A = 0x1035001E # more magic (message id field used for Exchange)
 CLEAR_READ_FLAG = 0x00000004
 CLEAR_RN_PENDING = 0x00000020
 CLEAR_NRN_PENDING = 0x00000040
 SUPPRESS_RECEIPT = 0x1
 FOLDER_DIALOG = 0x00000002
-USE_DEFERRED_ERRORS = mapi.MAPI_DEFERRED_ERRORS 
+USE_DEFERRED_ERRORS = mapi.MAPI_DEFERRED_ERRORS # or set to zero to see what changes <wink>
 test_suite_running = False
 test_suite_failure_request = None
 test_suite_failure = None
@@ -123,7 +123,7 @@ class MAPIMsgStore:
     ObjectChangedException = ObjectChangedException
     def __init__(self, outlook = None):
         self.outlook = outlook
-        cwd = os.getcwd() 
+        cwd = os.getcwd() # remember the cwd - mapi changes it under us!
         mapi.MAPIInitialize(None)
         logonFlags = (mapi.MAPI_NO_MAIL |
                       mapi.MAPI_EXTENDED |
@@ -148,14 +148,14 @@ class MAPIMsgStore:
                                           (PR_RESOURCE_TYPE, MAPI_SUBSYSTEM))
         table = self.session.GetStatusTable(0)
         rows = mapi.HrQueryAllRows(table,
-                                    (PR_DISPLAY_NAME_A,),   
-                                    restriction,     
-                                    None,            
-                                    0)               
+                                    (PR_DISPLAY_NAME_A,),   # columns to retrieve
+                                    restriction,     # only these rows
+                                    None,            # any sort order is fine
+                                    0)               # any # of results is fine
         assert len(rows)==1, "Should be exactly one row"
         (tag, val), = rows[0]
         return val.decode("mbcs", "ignore")
-    def _GetMessageStore(self, store_eid): 
+    def _GetMessageStore(self, store_eid): # bin eid.
         try:
             return self.mapi_msg_stores[store_eid]
         except KeyError:
@@ -163,27 +163,27 @@ class MAPIMsgStore:
         given_store_eid = store_eid
         if store_eid is None:
             tab = self.session.GetMsgStoresTable(0)
-            restriction = (mapi.RES_PROPERTY,   
-                           (mapi.RELOP_EQ,      
-                            PR_DEFAULT_STORE,   
-                            (PR_DEFAULT_STORE, True))) 
+            restriction = (mapi.RES_PROPERTY,   # a property restriction
+                           (mapi.RELOP_EQ,      # check for equality
+                            PR_DEFAULT_STORE,   # of the PR_DEFAULT_STORE prop
+                            (PR_DEFAULT_STORE, True))) # with True
             rows = mapi.HrQueryAllRows(tab,
-                                       (PR_ENTRYID,),   
-                                       restriction,     
-                                       None,            
-                                       0)               
+                                       (PR_ENTRYID,),   # columns to retrieve
+                                       restriction,     # only these rows
+                                       None,            # any sort order is fine
+                                       0)               # any # of results is fine
             row = rows[0]
             eid_tag, store_eid = row[0]
             self.default_store_bin_eid = store_eid
         store = self.session.OpenMsgStore(
-                                0,      
-                                store_eid,    
-                                None,   
+                                0,      # no parent window
+                                store_eid,    # msg store to open
+                                None,   # IID; accept default IMsgStore
                                 mapi.MDB_WRITE |
                                     mapi.MDB_NO_MAIL |
                                     USE_DEFERRED_ERRORS)
         self.mapi_msg_stores[store_eid] = store
-        if given_store_eid is None: 
+        if given_store_eid is None: # The default store
             self.mapi_msg_stores[None] = store
         return store
     def GetRootFolder(self, store_id = None):
@@ -247,7 +247,7 @@ class MAPIMsgStore:
                 for f in self._GetSubFolderIter(folder):
                     yield f
     def GetFolder(self, folder_id):
-        try: 
+        try: # catch all MAPI errors
             try:
                 sid = mapi.BinFromHex(folder_id.StoreID)
                 eid = mapi.BinFromHex(folder_id.EntryID)
@@ -263,7 +263,7 @@ class MAPIMsgStore:
         except pythoncom.com_error, details:
             raise MsgStoreExceptionFromCOMException(details)
     def GetMessage(self, message_id):
-        try: 
+        try: # catch all MAPI exceptions.
             try:
                 eid = mapi.BinFromHex(message_id.EntryID)
                 sid = mapi.BinFromHex(message_id.Parent.StoreID)
@@ -278,10 +278,10 @@ class MAPIMsgStore:
     def YieldReceiveFolders(self, msg_class = "IPM.Note"):
         tab = self.session.GetMsgStoresTable(0)
         rows = mapi.HrQueryAllRows(tab,
-                                    (PR_ENTRYID,),   
-                                    None,            
-                                    None,            
-                                    0)               
+                                    (PR_ENTRYID,),   # columns to retrieve
+                                    None,            # all rows
+                                    None,            # any sort order is fine
+                                    0)               # any # of results is fine
         for row in rows:
             eid_tag, store_eid = row[0]
             try:
@@ -327,7 +327,7 @@ def GetPotentiallyLargeStringProp(mapi_object, prop_id, row):
     if PROP_TYPE(got_tag) == PT_ERROR:
         ret = ""
         if got_val == mapi.MAPI_E_NOT_FOUND:
-            pass 
+            pass # No property for this message.
         elif got_val == mapi.MAPI_E_NOT_ENOUGH_MEMORY:
             ret = GetPropFromStream(mapi_object, prop_id)
         else:
@@ -426,10 +426,10 @@ class MAPIMsgStoreFolder:
         table = folder.GetContentsTable(0)
         table.SetColumns(MAPIMsgStoreMsg.message_init_props, 0)
         if only_filter_candidates:
-            restriction = (mapi.RES_PROPERTY,   
-                           (mapi.RELOP_GE,      
-                            PR_MESSAGE_CLASS_A,   
-                            (PR_MESSAGE_CLASS_A, "IPM."))) 
+            restriction = (mapi.RES_PROPERTY,   # a property restriction
+                           (mapi.RELOP_GE,      # >=
+                            PR_MESSAGE_CLASS_A,   # of the this prop
+                            (PR_MESSAGE_CLASS_A, "IPM."))) # with this value
             table.Restrict(restriction, 0)
         while 1:
             rows = table.QueryRows(70, 0)
@@ -446,16 +446,16 @@ class MAPIMsgStoreFolder:
         resolve_ids = folder.GetIDsFromNames(resolve_props, 0)
         field_id = PROP_TAG( PT_DOUBLE, PROP_ID(resolve_ids[0]))
         table.SetColumns(MAPIMsgStoreMsg.message_init_props, 0)
-        prop_restriction = (mapi.RES_BITMASK,   
-                               (mapi.BMR_EQZ,      
+        prop_restriction = (mapi.RES_BITMASK,   # a bitmask restriction
+                               (mapi.BMR_EQZ,      # when bit is clear
                                 PR_MESSAGE_FLAGS,
                                 MSGFLAG_READ))
         exist_restriction = mapi.RES_EXIST, (field_id,)
         not_exist_restriction = mapi.RES_NOT, (exist_restriction,)
-        class_restriction = (mapi.RES_PROPERTY,   
-                             (mapi.RELOP_GE,      
-                              PR_MESSAGE_CLASS_A,   
-                              (PR_MESSAGE_CLASS_A, "IPM."))) 
+        class_restriction = (mapi.RES_PROPERTY,   # a property restriction
+                             (mapi.RELOP_GE,      # >=
+                              PR_MESSAGE_CLASS_A,   # of the this prop
+                              (PR_MESSAGE_CLASS_A, "IPM."))) # with this value
         restriction = (mapi.RES_AND, (prop_restriction,
                                       not_exist_restriction,
                                       class_restriction))
@@ -550,16 +550,16 @@ class MAPIMsgStoreFolder:
         return self.msgstore.GetMessage(msg_id)
 class MAPIMsgStoreMsg:
     message_init_props = (PR_ENTRYID, PR_STORE_ENTRYID, PR_SEARCH_KEY,
-                          PR_PARENT_ENTRYID, 
-                          PR_MESSAGE_CLASS_A, 
-                          PR_RECEIVED_BY_ENTRYID, 
+                          PR_PARENT_ENTRYID, # folder ID
+                          PR_MESSAGE_CLASS_A, # 'IPM.Note' etc
+                          PR_RECEIVED_BY_ENTRYID, # who received it
                           PR_SUBJECT_A,
                           PR_TRANSPORT_MESSAGE_HEADERS_A,
                           )
     def __init__(self, msgstore, prop_row):
         self.msgstore = msgstore
         self.mapi_object = None
-        tag, eid = prop_row[0] 
+        tag, eid = prop_row[0] # ID
         tag, store_eid = prop_row[1]
         tag, searchkey = prop_row[2]
         tag, parent_eid = prop_row[3]
@@ -645,20 +645,20 @@ class MAPIMsgStoreMsg:
                 headers = "Received: %s\n%s" % (value, headers)
         if not html and not body:
             table = self.mapi_object.GetAttachmentTable(0)
-            restriction = (mapi.RES_PROPERTY,   
-                           (mapi.RELOP_EQ,      
-                            PR_ATTACH_MIME_TAG_A,   
+            restriction = (mapi.RES_PROPERTY,   # a property restriction
+                           (mapi.RELOP_EQ,      # check for equality
+                            PR_ATTACH_MIME_TAG_A,   # of the given prop
                             (PR_ATTACH_MIME_TAG_A, "multipart/signed")))
             try:
                 rows = mapi.HrQueryAllRows(table,
-                                           (PR_ATTACH_NUM,), 
-                                           restriction,    
-                                           None,    
-                                           0)       
+                                           (PR_ATTACH_NUM,), # columns to get
+                                           restriction,    # only these rows
+                                           None,    # any sort order is fine
+                                           0)       # any # of results is fine
             except pythoncom.com_error:
                 rows = []
             if len(rows) == 0:
-                pass 
+                pass # Nothing we can fetch :(
             else:
                 if len(rows) > 1:
                     print "WARNING: Found %d rows with multipart/signed" \
@@ -778,7 +778,7 @@ class MAPIMsgStoreMsg:
         return attachments
     def GetEmailPackageObject(self, strip_mime_headers=True):
         header_text, body, html = self._GetMessageTextParts()
-        try: 
+        try: # catch all exceptions!
             attachments = self._GetAttachmentsToInclude()
             new_content_type = None
             if attachments:
@@ -796,7 +796,7 @@ class MAPIMsgStoreMsg:
             try:
                 root_msg = HeaderParser(_class=_class).parsestr(header_text)
             except email.Errors.HeaderParseError:
-                raise 
+                raise # sob
             if strip_mime_headers:
                 for h, new_val in (('content-type', new_content_type),
                                    ('content-transfer-encoding', None)):
@@ -868,7 +868,7 @@ class MAPIMsgStoreMsg:
         if type(prop) != type(0):
             props = ( (mapi.PS_PUBLIC_STRINGS, prop), )
             prop = self.mapi_object.GetIDsFromNames(props, 0)[0]
-            if PROP_TYPE(prop) == PT_ERROR: 
+            if PROP_TYPE(prop) == PT_ERROR: # No such property
                 return None
             prop = PROP_TAG( PT_UNSPECIFIED, PROP_ID(prop))
         try:

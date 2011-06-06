@@ -1,30 +1,16 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 using System.Runtime.InteropServices;
-
 namespace Eraser.Util
 {
  public static class NtfsApi
  {
-
-
-
-
-
   public static long GetMftValidSize(VolumeInfo volume)
   {
    return GetNtfsVolumeData(volume).MftValidDataLength;
   }
-
-
-
-
-
-
   public static long GetMftRecordSegmentSize(VolumeInfo volume)
   {
    return GetNtfsVolumeData(volume).BytesPerFileRecordSegment;

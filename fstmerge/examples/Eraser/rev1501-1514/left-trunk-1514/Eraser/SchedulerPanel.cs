@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-
 using Eraser.Manager;
 using Eraser.Util;
 using System.Globalization;
@@ -15,7 +12,6 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
-
 namespace Eraser
 {
  internal partial class SchedulerPanel : Eraser.BasePanel
@@ -24,47 +20,27 @@ namespace Eraser
   {
    InitializeComponent();
    UXThemeApi.UpdateControlTheme(schedulerDefaultMenu);
-
-
    ExecutorTasksCollection tasks = Program.eraserClient.Tasks;
    foreach (Task task in tasks)
     DisplayTask(task);
-
-
-
    Program.eraserClient.TaskAdded += TaskAdded;
    Program.eraserClient.TaskDeleted += TaskDeleted;
   }
-
   private void DisplayTask(Task task)
   {
-
    ListViewItem item = scheduler.Items.Add(task.UIText);
    item.SubItems.Add(string.Empty);
    item.SubItems.Add(string.Empty);
-
-
-
    item.Tag = task;
-
-
    task.TaskStarted += task_TaskStarted;
    task.ProgressChanged += task_ProgressChanged;
    task.TaskFinished += task_TaskFinished;
-
-
    UpdateTask(item);
   }
-
   private void UpdateTask(ListViewItem item)
   {
-
    Task task = (Task)item.Tag;
-
-
    item.Text = task.UIText;
-
-
    if (task.Queued)
    {
     item.SubItems[1].Text = S._("Queued for execution");
@@ -77,16 +53,12 @@ namespace Eraser
     item.SubItems[1].Text = S._("Not queued");
    else
     item.SubItems[1].Text = task.Schedule.UIText;
-
-
    CategorizeTask(task, item);
   }
-
   private void CategorizeTask(Task task)
   {
    CategorizeTask(task, GetTaskItem(task));
   }
-
   private void CategorizeTask(Task task, ListViewItem item)
   {
    if (task.Schedule == Schedule.RunNow || task.Schedule == Schedule.RunManually)
@@ -96,10 +68,6 @@ namespace Eraser
    else
     item.Group = scheduler.Groups["recurring"];
   }
-
-
-
-
   private void TaskAdded(object sender, TaskEventArgs e)
   {
    if (InvokeRequired)
@@ -107,8 +75,6 @@ namespace Eraser
     Invoke(new EventHandler<TaskEventArgs>(TaskAdded), sender, e);
     return;
    }
-
-
    MainForm parent = (MainForm)FindForm();
    if (parent != null && (parent.WindowState == FormWindowState.Minimized || !parent.Visible))
    {
@@ -116,10 +82,8 @@ namespace Eraser
      "has just been added to the list of tasks.", e.Task.UIText),
      ToolTipIcon.Info);
    }
-
    DisplayTask(e.Task);
   }
-
   private void DeleteSelectedTasks()
   {
    if (MessageBox.Show(this, S._("Are you sure you want to delete the selected tasks?"),
@@ -129,7 +93,6 @@ namespace Eraser
    {
     return;
    }
-
    foreach (ListViewItem item in scheduler.SelectedItems)
    {
     Task task = (Task)item.Tag;
@@ -137,10 +100,6 @@ namespace Eraser
      Program.eraserClient.Tasks.Remove(task);
    }
   }
-
-
-
-
   private void TaskDeleted(object sender, TaskEventArgs e)
   {
    if (InvokeRequired)
@@ -148,21 +107,14 @@ namespace Eraser
     Invoke(new EventHandler<TaskEventArgs>(TaskDeleted), sender, e);
     return;
    }
-
    foreach (ListViewItem item in scheduler.Items)
     if (((Task)item.Tag) == e.Task)
     {
      scheduler.Items.Remove(item);
      break;
     }
-
    PositionProgressBar();
   }
-
-
-
-
-
   void task_TaskStarted(object sender, TaskEventArgs e)
   {
    if (scheduler.InvokeRequired)
@@ -170,40 +122,22 @@ namespace Eraser
     Invoke(new EventHandler<TaskEventArgs>(task_TaskStarted), sender, e);
     return;
    }
-
-
    ListViewItem item = GetTaskItem(e.Task);
-
-
    item.SubItems[1].Text = S._("Running...");
-
-
    schedulerProgress.Tag = item;
    schedulerProgress.Visible = true;
    schedulerProgress.Value = 0;
    PositionProgressBar();
   }
-
-
-
-
   void task_ProgressChanged(object sender, TaskProgressEventArgs e)
   {
-
-
    if (scheduler.InvokeRequired)
    {
     Invoke(new EventHandler<TaskProgressEventArgs>(task_ProgressChanged), sender, e);
     return;
    }
-
-
    schedulerProgress.Value = (int)(e.OverallProgress * 1000.0);
   }
-
-
-
-
   void task_TaskFinished(object sender, TaskEventArgs e)
   {
    if (InvokeRequired)
@@ -211,37 +145,26 @@ namespace Eraser
     Invoke(new EventHandler<TaskEventArgs>(task_TaskFinished), sender, e);
     return;
    }
-
-
    ListViewItem item = GetTaskItem(e.Task);
    if (item == null)
     return;
-
-
    if (schedulerProgress.Tag != null && schedulerProgress.Tag == item)
    {
     schedulerProgress.Tag = null;
     schedulerProgress.Visible = false;
    }
-
-
    LogLevel highestLevel = LogLevel.Information;
    LogEntryCollection logs = e.Task.Log.LastSessionEntries;
    foreach (LogEntry log in logs)
     if (log.Level > highestLevel)
      highestLevel = log.Level;
-
-
    MainForm parent = (MainForm)FindForm();
-
-
    if (parent == null)
     throw new InvalidOperationException();
    if (parent.WindowState == FormWindowState.Minimized || !parent.Visible)
    {
     string message = null;
     ToolTipIcon icon = ToolTipIcon.None;
-
     switch (highestLevel)
     {
      case LogLevel.Warning:
@@ -261,19 +184,14 @@ namespace Eraser
       icon = ToolTipIcon.Info;
       break;
     }
-
     parent.ShowNotificationBalloon(S._("Task executed"), message,
      icon);
    }
-
-
    if (EraserSettings.Get().ClearCompletedTasks &&
     (e.Task.Schedule == Schedule.RunNow) && highestLevel < LogLevel.Warning)
    {
     Program.eraserClient.Tasks.Remove(e.Task);
    }
-
-
    else
    {
     switch (highestLevel)
@@ -291,39 +209,19 @@ namespace Eraser
       item.SubItems[2].Text = S._("Completed");
       break;
     }
-
-
-
-
     CategorizeTask(e.Task, item);
-
-
     UpdateTask(item);
    }
   }
-
-
-
-
-
-
   private void scheduler_KeyDown(object sender, KeyEventArgs e)
   {
    if (e.KeyCode == Keys.Delete)
     DeleteSelectedTasks();
   }
-
-
-
-
-
-
-
   private void scheduler_ItemActivate(object sender, EventArgs e)
   {
    if (scheduler.SelectedItems.Count == 0)
     return;
-
    ListViewItem item = scheduler.SelectedItems[0];
    if (((Task)item.Tag).Executing)
     using (ProgressForm form = new ProgressForm((Task)item.Tag))
@@ -331,10 +229,6 @@ namespace Eraser
    else
     editTaskToolStripMenuItem_Click(sender, e);
   }
-
-
-
-
   private void scheduler_DragEnter(object sender, DragEventArgs e)
   {
    string descriptionMessage = string.Empty;
@@ -362,12 +256,10 @@ namespace Eraser
        descriptionInsert += append;
       }
      }
-
      if (Path.GetExtension(file) != ".ersx")
       isTaskList = false;
     }
     descriptionInsert = descriptionInsert.Remove(descriptionInsert.Length - 2);
-
     if (isTaskList)
     {
      e.Effect = DragDropEffects.Copy;
@@ -379,24 +271,17 @@ namespace Eraser
      descriptionMessage = S._("Erase {0}", descrptionPlaceholder);
     }
    }
-
    DropTargetHelper.DragEnter(this, e.Data, new Point(e.X, e.Y), e.Effect,
     descriptionMessage, descriptionInsert);
   }
-
   private void scheduler_DragLeave(object sender, EventArgs e)
   {
    DropTargetHelper.DragLeave(this);
   }
-
   private void scheduler_DragOver(object sender, DragEventArgs e)
   {
    DropTargetHelper.DragOver(new Point(e.X, e.Y), e.Effect);
   }
-
-
-
-
   private void scheduler_DragDrop(object sender, DragEventArgs e)
   {
    if (!e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -404,9 +289,6 @@ namespace Eraser
    else
    {
     string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
-
-
     if (e.Effect == DragDropEffects.Copy)
     {
      foreach (string file in files)
@@ -429,7 +311,6 @@ namespace Eraser
     }
     else if (e.Effect == DragDropEffects.Move)
     {
-
      Task task = new Task();
      foreach (string file in files)
      {
@@ -439,34 +320,21 @@ namespace Eraser
       else
        target = new FileTarget();
       target.Path = file;
-
       task.Targets.Add(target);
      }
-
-
      Program.eraserClient.Tasks.Add(task);
     }
    }
-
    DropTargetHelper.Drop(e.Data, new Point(e.X, e.Y), e.Effect);
   }
-
-
-
-
-
-
   private void schedulerMenu_Opening(object sender, CancelEventArgs e)
   {
-
-
    if (scheduler.SelectedItems.Count == 0)
    {
     schedulerDefaultMenu.Show(schedulerMenu.Left, schedulerMenu.Top);
     e.Cancel = true;
     return;
    }
-
    bool aTaskNotQueued = false;
    bool aTaskExecuting = false;
    foreach (ListViewItem item in scheduler.SelectedItems)
@@ -475,21 +343,13 @@ namespace Eraser
     aTaskNotQueued = aTaskNotQueued || (!task.Queued && !task.Executing);
     aTaskExecuting = aTaskExecuting || task.Executing;
    }
-
    runNowToolStripMenuItem.Enabled = aTaskNotQueued;
    cancelTaskToolStripMenuItem.Enabled = aTaskExecuting;
-
    editTaskToolStripMenuItem.Enabled = scheduler.SelectedItems.Count == 1 &&
     !((Task)scheduler.SelectedItems[0].Tag).Executing &&
     !((Task)scheduler.SelectedItems[0].Tag).Queued;
    deleteTaskToolStripMenuItem.Enabled = !aTaskExecuting;
   }
-
-
-
-
-
-
   private void newTaskToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (TaskPropertiesForm form = new TaskPropertiesForm())
@@ -501,69 +361,38 @@ namespace Eraser
     }
    }
   }
-
-
-
-
-
-
   private void runNowToolStripMenuItem_Click(object sender, EventArgs e)
   {
    foreach (ListViewItem item in scheduler.SelectedItems)
    {
-
     Task task = (Task)item.Tag;
     if (!task.Executing && !task.Queued)
     {
      Program.eraserClient.QueueTask(task);
-
-
      item.SubItems[1].Text = S._("Queued for execution");
     }
    }
   }
-
-
-
-
-
-
   private void cancelTaskToolStripMenuItem_Click(object sender, EventArgs e)
   {
    foreach (ListViewItem item in scheduler.SelectedItems)
    {
-
     Task task = (Task)item.Tag;
     if (task.Executing || task.Queued)
     {
      task.Cancel();
-
-
      item.SubItems[1].Text = string.Empty;
     }
    }
   }
-
-
-
-
-
-
   private void viewTaskLogToolStripMenuItem_Click(object sender, EventArgs e)
   {
    if (scheduler.SelectedItems.Count != 1)
     return;
-
    ListViewItem item = scheduler.SelectedItems[0];
    using (LogForm form = new LogForm((Task)item.Tag))
     form.ShowDialog();
   }
-
-
-
-
-
-
   private void editTaskToolStripMenuItem_Click(object sender, EventArgs e)
   {
    if (scheduler.SelectedItems.Count != 1 ||
@@ -572,78 +401,48 @@ namespace Eraser
    {
     return;
    }
-
-
-
-
    ListViewItem item = scheduler.SelectedItems[0];
    Task task = (Task)item.Tag;
    if (task.Executing)
     return;
-
-
    using (TaskPropertiesForm form = new TaskPropertiesForm())
    {
     form.Task = task;
     if (form.ShowDialog() == DialogResult.OK)
     {
      task = form.Task;
-
-
      UpdateTask(item);
     }
    }
   }
-
-
-
-
-
-
   private void deleteTaskToolStripMenuItem_Click(object sender, EventArgs e)
   {
    DeleteSelectedTasks();
   }
-
-
-
-
-
-
-
   private ListViewItem GetTaskItem(Task task)
   {
    foreach (ListViewItem item in scheduler.Items)
     if (item.Tag == task)
      return item;
-
    return null;
   }
-
-
-
-
   private void PositionProgressBar()
   {
    if (schedulerProgress.Tag == null)
     return;
-
    Rectangle rect = ((ListViewItem)schedulerProgress.Tag).SubItems[2].Bounds;
    schedulerProgress.Location = rect.Location;
    schedulerProgress.Size = rect.Size;
   }
-
   private void scheduler_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
   {
    e.DrawDefault = true;
    if (schedulerProgress.Tag != null)
     PositionProgressBar();
   }
-
   private void scheduler_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
   {
    e.DrawDefault = true;
   }
-
  }
 }

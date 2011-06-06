@@ -79,7 +79,7 @@ def main():
             all_data = True
         elif opt in ('-o', '--option'):
             options.set_from_cmdline(arg, sys.stderr)
-    data = []   
+    data = []   # list of (time_received, dirname, basename) triples
     if loud:
         print "Scanning everything"
     now = time.time()
@@ -111,7 +111,7 @@ def main():
                   join(dirname, "-" + basename))
     if loud:
         print "Renaming second pass ..."
-    earliest = data[0][0]  
+    earliest = data[0][0]  # timestamp of earliest msg received
     i = 0
     for when_received, dirname, basename in data:
         extension = os.path.splitext(basename)[-1]

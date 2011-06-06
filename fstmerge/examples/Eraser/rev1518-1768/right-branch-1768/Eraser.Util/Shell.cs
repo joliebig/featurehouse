@@ -1,18 +1,11 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Win32;
-
 namespace Eraser.Util
 {
  public static class Shell
  {
-
-
-
-
   public static bool LowDiskSpaceNotificationsEnabled
   {
    get

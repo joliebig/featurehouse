@@ -147,30 +147,30 @@ Check the FAQ before asking: http://spambayes.sf.net/faq.html"""
 'Date': """Wed, 31 Dec 2003 15:41:46 GMT""",
 'Body': """<html>
 <head>
-<title>Firebox.com 
+<title>Firebox.com #55 - January Sale - up to 50% off!</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 </head>
-<BODY text="
-BGCOLOR="
+<BODY text="#000000" link="#ff0000" vlink="#ff0000" MARGINHEIGHT="25" MARGINWIDTH="25" LEFTMARGIN="25" TOPMARGIN="25" RIGHTMARGIN="25" BOTTOMMARGIN="25"
+BGCOLOR="#ffffff" BACKGROUND="http://www.firebox.com/i/fb_sale.gif">
 <DIV ALIGN="center">
         <TABLE BORDER="0" CELLPADDING="0" CELLSPACING="0" WIDTH="528">
                 <TR>
                         <TD COLSPAN="2" ROWSPAN="2" ALIGN="left" HEIGHT="14" WIDTH="14"><IMG src="http://www.firebox.com/i/nl_corner_tl.gif" alt=""
 border="0" height="14" width="14"></TD>
-                        <TD BGCOLOR="
+                        <TD BGCOLOR="#000000" HEIGHT="1" WIDTH="500"><IMG src="http://www.firebox.com/i/spacer.gif" alt="" border=0 height="1"
 width="500"></TD>
                         <TD COLSPAN="2" ROWSPAN="2" ALIGN="right" HEIGHT="14" WIDTH="14"><IMG src="http://www.firebox.com/i/nl_corner_tr.gif" alt=""
 border="0" height="14" width="14"></TD>
                 </TR>
                 <TR>
-                        <TD BGCOLOR="
+                        <TD BGCOLOR="#ffffff" HEIGHT="13" WIDTH="500"><IMG alt="" border=0 src="http://www.firebox.com/i/spacer.gif" height=13
 width=500></TD>
                 </TR>
                 <TR>
-                        <TD BGCOLOR="
-                        <TD BGCOLOR="
-                        <TD BGCOLOR="
-                        <table bgcolor="
+                        <TD BGCOLOR="#000000" WIDTH="1"><img alt="" border="0" width="1" src="http://www.firebox.com/i/spacer.gif"></TD>
+                        <TD BGCOLOR="#ffffff" WIDTH="13"><img alt="" border="0" width="13" src="http://www.firebox.com/i/spacer.gif"></TD>
+                        <TD BGCOLOR="#ffffff" WIDTH="500">
+                        <table bgcolor="#ffffff" width="500" border="0" cellspacing="0" cellpadding="0" align="center">
                         <tr>
                         <td>
 <!-- Content Starts Here //-->
@@ -183,7 +183,7 @@ width=500></TD>
 border=0 alt="firebox.com"></a><br>
                                 <br>
               <p><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><b>Firebox.com
-                Newsletter 
+                Newsletter #55 - January Sale! Up to 50% off!</b></font></p>
               <div align="center"><a
 href="http://www.firebox.com/aff.php?aff=678&redirect=index.html?dir=firebox&action=search&searchstring=jansale&searchfeature=1" target="_blank"><img
 src="http://www.firebox.com/i/jansale_feature.jpg" alt="January Sale - up to 50% off!" width="393" height="175" border="0"></a></div>
@@ -196,7 +196,7 @@ href="http://www.firebox.com/aff.php?aff=678&redirect=index.html?dir=firebox&act
                 Sale</a> page for the full list of bargains!</font></p>
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td bgcolor="
+                  <td bgcolor="#FF6600"><img src="http://www.firebox.com/i/tasse_jansale.gif" align="left" width="301" height="26" alt="January Sale - Save
 Up To 50%!"></td>
                 </tr>
               </table> <br clear="all">
@@ -209,8 +209,8 @@ src="http://www.firebox.com/pic/p482p.gif" alt="Atari  Classics 10-in-1" width="
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=482" target="_blank"><b>Atari
                       10-in-1</b></a> <br>
                       was &pound;24.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;19.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>20%
                       off!</b></font> </p></td>
                   <td width="33%">
                     <p><a href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=353" target="_blank"><img
@@ -220,8 +220,8 @@ href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=353" targe
                       Rover</b></a> <br>
                       was &pound;39.95<br>
                       now </font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><font
-color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+color="#FF3300"><strong>&pound;19.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>50%
                       off! </b></font></p>
                     <font face="Verdana, Arial, Helvetica, sans-serif" size="2">&nbsp;
                     </font></td>
@@ -235,8 +235,8 @@ href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=727"
 target="_blank"><b>SiPix DV Camcorder</b></a><br>
 was &pound;99.95<br>
 now </font><font face="Verdana, Arial, Helvetica, sans-serif" size="2"><font
-color="
-<font face="Verdana, Arial, Helvetica, sans-serif" color="
+color="#FF3300"><strong>&pound;49.95</strong></font></font><br>
+<font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900"
 size="1"><b>50% off! </b></font></p></td>
                 </tr>
                 <tr align="center" valign="top">
@@ -247,8 +247,8 @@ src="http://www.firebox.com/pic/p585p.jpg" alt="Mini-K MP3 Player" width="80" he
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=585" target="_blank"><b>Mini-K
                       MP3 Player</b></a> <br>
                       was &pound;59.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;49.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>save
                       &pound;10!</b></font> </p></td>
                   <td width="33%">
                     <p><a href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=501" target="_blank"><img
@@ -257,8 +257,8 @@ src="http://www.firebox.com/pic/p501p.gif" alt="Pocket DV3" width="80" height="7
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=501" target="_blank"><b>Pocket
                       DV3</b></a> <br>
                       was &pound;129.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;99.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>save
                       &pound;30!</b></font> </p>
                     <font face="Verdana, Arial, Helvetica, sans-serif" size="2">&nbsp;
                     </font></td>
@@ -269,8 +269,8 @@ src="http://www.firebox.com/pic/p689p.jpg" alt="Micro Spinster" width="80" heigh
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=689" target="_blank"><b>Micro
                       Spinster </b></a> <br>
                       was &pound;12.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;6.50</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>50%
                       off! </b></font></p></td>
                 </tr>
                 <tr align="center" valign="top">
@@ -281,8 +281,8 @@ src="http://www.firebox.com/pic/p508p.gif" alt="Storm Hopper" width="80" height=
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=508" target="_blank"><b>Storm
                       Hopper </b></a> <br>
                       was &pound;29.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;19.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>save
                       &pound;10! </b></font></p></td>
                   <td>
                     <p><a href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=645" target="_blank"><img
@@ -291,8 +291,8 @@ src="http://www.firebox.com/pic/p645p.jpg" alt="D'Zign Digital Camera" width="80
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=645" target="_blank"><b>D'Zign
                       Digital Camera</b></a> <br>
                       was &pound;129.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;99.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>save
                       &pound;30!</b></font> </p></td>
                   <td>
                     <p><a href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=510" target="_blank"><img
@@ -301,8 +301,8 @@ src="http://www.firebox.com/pic/p510p.gif" alt="Mars Detector" width="80" height
 href="http://www.firebox.com/aff.php?aff=678&redirect=product.php?pid=510" target="_blank"><b>Mars
                       Detector</b></a> <br>
                       was &pound;29.95<br>
-                      now <font color="
-                      <font face="Verdana, Arial, Helvetica, sans-serif" color="
+                      now <font color="#FF3300"><strong>&pound;19.95</strong></font></font><br>
+                      <font face="Verdana, Arial, Helvetica, sans-serif" color="#FF9900" size="1"><b>save
                       &pound;10! </b></font></p></td>
                 </tr>
               </table>
@@ -321,7 +321,7 @@ target="_blank">Check
               </div>
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td bgcolor="
+                  <td bgcolor="#FF6600"><a href="http://www.firebox.com/aff.php?aff=678&redirect=index.html?dir=competitions&action=competition55"><img
 src="http://www.firebox.com/i/tasse_comp.gif" alt="Competition Time" width="201" height="26" border="0" align="left"></a></td>
                 </tr>
               </table>
@@ -337,12 +337,12 @@ src="http://www.firebox.com/i/soy_small.gif" alt="Stuck On You" width="100" heig
                 from 2nd January 2004) we are offering the chance for you and
                 a partner to get 'stuck together' inside a huge bouncy ball and
                 launched down a 300 metre hill! Yes, it is fun, really! <a
-href="http://www.firebox.com/aff.php?aff=678&redirect=index.html?dir=competitions&action=competition55" target="_blank">enter&
+href="http://www.firebox.com/aff.php?aff=678&redirect=index.html?dir=competitions&action=competition55" target="_blank">enter&#8230;</a></font><br
 clear="all">
               </p>
               <table width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td bgcolor="
+                  <td bgcolor="#FF6600"><img src="http://www.firebox.com/i/tasse_ffwin.gif" align="left" width="210" height="26" alt="Film Festival
 Winner!"></td>
                 </tr>
               </table>
@@ -387,18 +387,18 @@ href="http://www.firebox.com/admin/newsletter.php?task=remove&address=richie@ent
                         </tr>
                 </table>
                 </TD>
-                <TD BGCOLOR="
-                <TD BGCOLOR="
+                <TD BGCOLOR="#ffffff" WIDTH="13"><img alt="" border="0" width="13" src="http://www.firebox.com/i/spacer.gif"></TD>
+                <TD BGCOLOR="#000000" WIDTH="1"><img alt="" border="0" width="1" src="http://www.firebox.com/i/spacer.gif"></TD>
         </TR>
         <TR>
                 <TD COLSPAN="2" ROWSPAN="2" ALIGN="left" HEIGHT="14" WIDTH="14"><IMG alt="" border=0 height=14
 src="http://www.firebox.com/i/nl_corner_bl.gif" width=14></TD>
-                <TD BGCOLOR="
+                <TD BGCOLOR="#ffffff" HEIGHT="13" WIDTH="500"><IMG alt="" border=0 src="http://www.firebox.com/i/spacer.gif" height=13 width=500></TD>
                 <TD COLSPAN="2" ROWSPAN="2" ALIGN="right" HEIGHT="14" WIDTH="14"><IMG alt="" border=0 height=14
 src="http://www.firebox.com/i/nl_corner_br.gif" width=14></TD>
         </TR>
         <TR>
-                <TD BGCOLOR="
+                <TD BGCOLOR="#000000" HEIGHT="1" WIDTH="500"><IMG alt="" border=0 src="http://www.firebox.com/i/spacer.gif" height=1 width=500></TD>
         </TR>
 </TABLE>
 </DIV>
@@ -414,13 +414,13 @@ spam = [ {
 'Body': """Dear nince ,
 <html>
 <body>
-<p align="center"><b><font size="4" color="
+<p align="center"><b><font size="4" color="#000000">Digital Cable DESCRAMBLER - Only $49.95<br>
 </font>
 <br>
 <font size="4">
 Gain instant access to:<br>
 <br>
-<font color="
+<font color="#FF0000">
  * PPV channels&nbsp;<br>
  * Boxing, Wrestling, &amp; any other Sports Event on PPV&nbsp;<br>
  * Adult Channels&nbsp;<br>
@@ -430,7 +430,7 @@ Gain instant access to:<br>
 <font size="4">
  This filter will allow you to receive all the channels<br>
  that you now order with your remote control!<br>
-<font color="
+<font color="#FF0000">
  PAY-PER-VIEWS, ADULT CHANNELS, MOVIE CHANNELS,<br>
  SPORTING EVENTS, and other SPECIAL EVENTS.</font>&nbsp;</font></b></p>
 <p align="center"><b><font size="4"> It also eliminates<br>
@@ -439,7 +439,7 @@ Gain instant access to:<br>
  between the wall jack and the converter box, NOTHING ELSE NEEDED!<br>
 <br>
  It Doesn't Matter What Cable System you are on or what<br>
- type and model
+ type and model# of box you are using.  All that Matters<br>
  is the Following: You Must BE A Subscriber To Your Cable<br>
  Company's Digital Service and have a Digital Cable Box.</font></b></p>
 <p align="center">&nbsp;<a href = "http://www.winningformula.bz/b/cable/index.php?149">CLICK HERE FOR MORE INFO</a>
@@ -654,14 +654,14 @@ __________________________________________________
  Because if you do, it will not work for you.
  Remember, honesty reaps the reward!!!
  1.... After you have ordered all 5 reports, take this advertisement
- and REMOVE the name & address of the person in REPORT 
+ and REMOVE the name & address of the person in REPORT #5.
  This person has made it through the cycle and is no doubt counting
  their fortune.
- 2.... Move the name & address in REPORT 
- 3.... Move the name & address in REPORT 
- 4.... Move the name & address in REPORT 
- 5.... Move the name & address in REPORT 
- 6.... Insert YOUR name & address in the REPORT 
+ 2.... Move the name & address in REPORT # 4 down TO REPORT # 5.
+ 3.... Move the name & address in REPORT # 3 down TO REPORT # 4.
+ 4.... Move the name & address in REPORT # 2 down TO REPORT # 3.
+ 5.... Move the name & address in REPORT # 1 down TO REPORT # 2
+ 6.... Insert YOUR name & address in the REPORT # 1 Position.
      -- PLEASE PRINT every name & address clearly --
  ____________________________________________________________
  -- Take this entire letter, with the modified list of names,
@@ -672,7 +672,7 @@ __________________________________________________
  information which includes how to send bulk e-mails legally,
  where to find thousands of free classified ads and much more.
  There are 2 Primary methods to get this venture going:
- METHOD 
+ METHOD # 1: BY SENDING BULK E-MAIL
  LEGALLY
  ______________________________________________________________
  Let's say that you decide to start small, just to see how it goes,
@@ -683,18 +683,18 @@ __________________________________________________
  0.2%. Also many people will send out hundreds of thousands e-mails
  instead of only 5,000 each).Continuing with this example, you send
  out only 5,000 e-mails.
- With a 0.2% response, that is only 10 orders for report 
+ With a 0.2% response, that is only 10 orders for report # 1
  Those 10 people responded by sending out 5,000 e-mail each for a
  total of 50,000.
  Out of those 50,000 e-mails only 0.2% responded with orders.
- That's=100 people responded and ordered Report 
+ That's=100 people responded and ordered Report # 2.
  Those 100 people mail out 5,000 e-mails each for a total of 500,000
- e-mails. The 0.2% response to that is 1000 orders for Report 
+ e-mails. The 0.2% response to that is 1000 orders for Report # 3.
  Those 1000 people send out 5,000 e-mails each for a total of 5
  million e-mails sent out. The 0.2% response to that is 10,000 orders
- for Report! 
+ for Report! # 4. Whose 10,000 people send out 5,000 e-mails each for
  a total of 50,000,000 (50 million) e-mails. The 0.2% response to that
- is 100,000 orders for Report 
+ is 100,000 orders for Report # 5 THAT'S 100,000 ORDERS TIMES $5
  EACH=$500,000.00 (half million).
  Your total income in this example is: 1..... $50 + 2..... $500
  + 3.....$5,000 + 4..... $50,000 + 5..... $500,000 ........ Grand
@@ -709,13 +709,13 @@ __________________________________________________
  100,000 e-mails each or more? There are over 150 million people on
  the Internet worldwide and counting. Believe me, many people will
  do just that, and more!
- METHOD 
+ METHOD # 2 : BY PLACING FREE ADS ON THE
  INTERNET
  _____________________________________________________________
  Advertising on the net is very very inexpensive and there are
  hundreds of FREE places to advertise. Placing a lot of free ads on
  the Internet will easily get a larger response. We strongly suggest
- you start with Method 
+ you start with Method # 1and add METHOD # 2 as you go along. For
  every $5 you receive, all you must do is e-mail them the Report
  they ordered.
  That's it. Always provide same day service on all orders.
@@ -731,37 +731,37 @@ __________________________________________________
  address.
  PLACE YOUR ORDER FOR THESE REPORTS NOW.
 ____________________________________________________
- REPORT 
-Order Report 
+ REPORT #1 "The Insider's Guide to Advertising for Free on the Net"
+Order Report #1 from:
 Sean Lockman
 3946 SW Pendleton St.
 Portland, OR 97221
 USA
 _______________________________________________________________
-REPORT 
-Order Report 
+REPORT #2 "The Insider's Guide to Sending Bulk e-mail on the Net"
+Order Report #2 from:
 Steve Hunter
 10314 Southport
 Houston, Texas  77089
 USA
 _________________________________________________________
-REPORT 
-Order Report 
+REPORT #3 "The Secret to Multilevel marketing on the Net"
+Order Report #3 from:
 Angela Friermuth
 6804 112th Ave East
 Puyallup, WA 98372
 USA
 _______________________________________________________________
-REPORT 
-Order Report 
+REPORT #4 "How to become a millionaire utilizing MLM & the Net"
+Order Report #4 from:
 M.W.T.
 PMB 285
 344-5 RT 9
 Lanoka Harbor, NJ  08734
 USA
 _________________________________________________
-REPORT 
-Order Report 
+REPORT #5 "HOW TO SEND 1 MILLION E-MAILS FOR FREE"
+Order Report #5 from:
 Thomas C. Makowski
 501 Harding Ave
 Bayville, NJ  08721
@@ -769,12 +769,12 @@ USA
 __________________________________________________________________
  *********** YOUR SUCCESS GUIDELINES ***********
  Follow these guidelines to guarantee your success:
- -- If you do not receive at least 10 orders for Report 
+ -- If you do not receive at least 10 orders for Report #1 within 2
  weeks, continue sending e-mails until you do.
  -- After you have received 10 orders, 2 to 3 weeks after that you
- should receive 100 orders or more for REPORT 
+ should receive 100 orders or more for REPORT # 2. If you did not,
  continue advertising or sending e-mails until you do.
- -- Once you have received 100 or more orders for Report 
+ -- Once you have received 100 or more orders for Report # 2, YOU CAN
  RELAX, because the system is already working for you, and the cash
  will continue to roll in ! THIS IS IMPORTANT TO REMEMBER: Every time
  your name is moved down on the list, you are placed in front of a
@@ -793,7 +793,7 @@ __________________________________________________________________
  have ever imagined. Follow the program EXACTLY AS INSTRUCTED.
  Do Not change it in any way. It works exceedingly well as it is now.
  Remember to e-mail a copy of this exciting report after you have put
- your name and address in Report 
+ your name and address in Report #1 and moved others to #2 thru
  to may send out 100,000 or more e-mails and your name will be on every
  one of them.
  Remember though, the more you send out the more potential customers

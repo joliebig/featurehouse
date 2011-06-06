@@ -1,29 +1,17 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-
 namespace Eraser.Util
 {
  public static class ShellApi
  {
-
-
-
-
-
   public static void EmptyRecycleBin(EmptyRecycleBinOptions options)
   {
    NativeMethods.SHEmptyRecycleBin(IntPtr.Zero, null,
     (NativeMethods.SHEmptyRecycleBinFlags)options);
   }
-
-
-
-
   internal static class NativeMethods
   {
    [DllImport("Shlwapi.dll", CharSet = CharSet.Unicode)]

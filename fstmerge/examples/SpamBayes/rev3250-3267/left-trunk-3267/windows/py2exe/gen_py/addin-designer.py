@@ -14,12 +14,12 @@ MinorVersion = 0
 LibraryFlags = 8
 LCID = 0x0
 class constants:
-	ext_cm_AfterStartup           =0x0        
-	ext_cm_CommandLine            =0x3        
-	ext_cm_External               =0x2        
-	ext_cm_Startup                =0x1        
-	ext_dm_HostShutdown           =0x0        
-	ext_dm_UserClosed             =0x1        
+	ext_cm_AfterStartup           =0x0        # from enum ext_ConnectMode
+	ext_cm_CommandLine            =0x3        # from enum ext_ConnectMode
+	ext_cm_External               =0x2        # from enum ext_ConnectMode
+	ext_cm_Startup                =0x1        # from enum ext_ConnectMode
+	ext_dm_HostShutdown           =0x0        # from enum ext_DisconnectMode
+	ext_dm_UserClosed             =0x1        # from enum ext_DisconnectMode
 from win32com.client import DispatchBaseClass
 class IAddinDesigner(DispatchBaseClass):
 	"""Add-In Designer Control"""
@@ -40,7 +40,7 @@ class IAddinInstance(DispatchBaseClass):
 class _IDTExtensibility2:
 	CLSID = CLSID_Sink = IID('{B65AD801-ABAF-11D0-BB8B-00A0C90F2744}')
 	coclass_clsid = IID('{AC0714F7-3D04-11D1-AE7D-00A0C90F26F4}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		        5 : "OnBeginShutdown",
 		        4 : "OnStartupComplete",
@@ -77,11 +77,8 @@ class _IDTExtensibility2:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 from win32com.client import CoClassBaseClass
-class AddinDesigner(CoClassBaseClass): 
-	
+class AddinDesigner(CoClassBaseClass): # A CoClass
 	CLSID = IID('{AC0714F6-3D04-11D1-AE7D-00A0C90F26F4}')
 	coclass_sources = [
 		_IDTExtensibility2,
@@ -91,8 +88,7 @@ class AddinDesigner(CoClassBaseClass):
 		IAddinDesigner,
 	]
 	default_interface = IAddinDesigner
-class AddinInstance(CoClassBaseClass): 
-	
+class AddinInstance(CoClassBaseClass): # A CoClass
 	CLSID = IID('{AC0714F7-3D04-11D1-AE7D-00A0C90F26F4}')
 	coclass_sources = [
 		_IDTExtensibility2,

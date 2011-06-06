@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,38 +5,23 @@ using System.ComponentModel;
 using System.Security.Principal;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
-
 namespace Eraser.Util
 {
  public static class Security
  {
-
-
-
-
-
-
   public static bool IsAdministrator()
   {
    WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
    return principal.IsInRole(WindowsBuiltInRole.Administrator);
   }
-
-
-
-
-
-
   public static bool VerifyAuthenticode(string pathToFile)
   {
    IntPtr unionPointer = IntPtr.Zero;
-
    try
    {
     NativeMethods.WINTRUST_FILE_INFO fileinfo = new NativeMethods.WINTRUST_FILE_INFO();
     fileinfo.cbStruct = (uint)Marshal.SizeOf(typeof(NativeMethods.WINTRUST_FILE_INFO));
     fileinfo.pcwszFilePath = pathToFile;
-
     NativeMethods.WINTRUST_DATA data = new NativeMethods.WINTRUST_DATA();
     data.cbStruct = (uint)Marshal.SizeOf(typeof(NativeMethods.WINTRUST_DATA));
     data.dwUIChoice = NativeMethods.WINTRUST_DATA.UIChoices.WTD_UI_NONE;
@@ -46,7 +29,6 @@ namespace Eraser.Util
     data.dwUnionChoice = NativeMethods.WINTRUST_DATA.UnionChoices.WTD_CHOICE_FILE;
     unionPointer = data.pUnion = Marshal.AllocHGlobal((int)fileinfo.cbStruct);
     Marshal.StructureToPtr(fileinfo, data.pUnion, false);
-
     Guid guid = NativeMethods.WINTRUST_ACTION_GENERIC_VERIFY_V2;
     return NativeMethods.WinVerifyTrust(IntPtr.Zero, ref guid, ref data) == 0;
    }

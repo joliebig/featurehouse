@@ -1,19 +1,11 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Reflection;
 using Eraser.Util;
-
 namespace Eraser.Manager
 {
-
-
-
-
-
  public abstract class ErasureMethod : IRegisterable
  {
   public override string ToString()
@@ -23,26 +15,14 @@ namespace Eraser.Manager
    return Passes == 1 ? S._("{0} (1 pass)", Name) :
     S._("{0} ({1} passes)", Name, Passes);
   }
-
-
-
-
   public abstract string Name
   {
    get;
   }
-
-
-
-
   public abstract int Passes
   {
    get;
   }
-
-
-
-
   public abstract Guid Guid
   {
    get;

@@ -69,7 +69,7 @@ class BaseSet(object):
         result = self.__class__()
         result._data.update(self._data)
         return result
-    __copy__ = copy 
+    __copy__ = copy # For the copy module
     def __deepcopy__(self, memo):
         """Return a deep copy of a set; used by copy module."""
         from copy import deepcopy
@@ -163,12 +163,12 @@ class BaseSet(object):
         except TypeError:
             transform = getattr(element, "_as_temporarily_immutable", None)
             if transform is None:
-                raise 
+                raise # re-raise the TypeError exception we caught
             return transform() in self._data
     def issubset(self, other):
         """Report whether another set contains this set."""
         self._binary_sanity_check(other)
-        if len(self) > len(other):  
+        if len(self) > len(other):  # Fast check for obvious cases
             return False
         otherdata = other._data
         for elt in self:
@@ -178,7 +178,7 @@ class BaseSet(object):
     def issuperset(self, other):
         """Report whether this set contains another set."""
         self._binary_sanity_check(other)
-        if len(self) < len(other):  
+        if len(self) < len(other):  # Fast check for obvious cases
             return False
         selfdata = self._data
         for elt in other:
@@ -219,7 +219,7 @@ class BaseSet(object):
             except TypeError:
                 transform = getattr(element, "_as_immutable", None)
                 if transform is None:
-                    raise 
+                    raise # re-raise the TypeError exception we caught
                 data[transform()] = value
 class ImmutableSet(BaseSet):
     """Immutable set class."""
@@ -301,7 +301,7 @@ class Set(BaseSet):
         except TypeError:
             transform = getattr(element, "_as_immutable", None)
             if transform is None:
-                raise 
+                raise # re-raise the TypeError exception we caught
             self._data[transform()] = True
     def remove(self, element):
         """Remove an element from a set; it must be a member.
@@ -312,7 +312,7 @@ class Set(BaseSet):
         except TypeError:
             transform = getattr(element, "_as_temporarily_immutable", None)
             if transform is None:
-                raise 
+                raise # re-raise the TypeError exception we caught
             del self._data[transform()]
     def discard(self, element):
         """Remove an element from a set if it is a member.
@@ -332,6 +332,6 @@ class Set(BaseSet):
 class _TemporarilyImmutableSet(BaseSet):
     def __init__(self, set):
         self._set = set
-        self._data = set._data  
+        self._data = set._data  # Needed by ImmutableSet.__eq__()
     def __hash__(self):
         return self._set._compute_hash()

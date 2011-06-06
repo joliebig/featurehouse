@@ -188,8 +188,8 @@ class CoreUserInterface(UserInterface.UserInterface):
                             self.state.unknownCorpus.removeMessage(
                                 self.state.unknownCorpus[id])
                         except KeyError:
-                            pass  
-                    else: 
+                            pass  # Must be a reload.
+                    else: # defer
                         targetCorpus = None
                         numDeferred += 1
                     if targetCorpus:
@@ -211,7 +211,7 @@ class CoreUserInterface(UserInterface.UserInterface):
                                 self.stats.RecordTraining(\
                                   stats_as_ham, old_class=old_class)
                             except KeyError:
-                                pass  
+                                pass  # Must be a reload.
         if numTrained > 0:
             plural = ''
             if numTrained == 1:
@@ -239,7 +239,7 @@ class CoreUserInterface(UserInterface.UserInterface):
             start = self._keyToTimestamp(params['prior'])
         elif params.get('find') is not None:
             prior = next = 0
-            keys = set()        
+            keys = set()        # so we don't end up with duplicates
             push = keys.add
             try:
                 max_results = int(params['max_results'])
@@ -353,7 +353,7 @@ class CoreUserInterface(UserInterface.UserInterface):
             else:
                 reverse = False
                 self.previous_sort = sort_order
-            page.table = ""  
+            page.table = ""  # To make way for the real rows.
             for header, label in ((options["Headers",
                                            "header_unsure_string"], 'Unsure'),
                                   (options["Headers",
@@ -383,7 +383,7 @@ class CoreUserInterface(UserInterface.UserInterface):
             page.table += self.html.trainRow
             if title == "":
                 title = _("Untrained messages received on %s") % date
-            box = self._buildBox(title, None, page)  
+            box = self._buildBox(title, None, page)  # No icon, to save space.
         else:
             page = _("<p>There are no untrained messages to display. " \
                      "Return <a href='home'>Home</a>, or " \
@@ -414,7 +414,7 @@ class CoreUserInterface(UserInterface.UserInterface):
         self._writePostamble()
     def onShowclues(self, key, subject, tokens='0'):
         """Show clues for a message - linked from the Review page."""
-        tokens = bool(int(tokens)) 
+        tokens = bool(int(tokens)) # needs the int, as bool('0') is True
         self._writePreamble(_("Message clues"),
                             parent=('review', _('Review')))
         sourceCorpus = None
@@ -578,7 +578,7 @@ class CoreState:
         the Corpuses, the Trainers and so on."""
         if self.is_test:
             self.use_db = "pickle"
-            self.db_name = '_core_server.pickle'   
+            self.db_name = '_core_server.pickle'   # This is never saved.
         if not hasattr(self, "db_name"):
             self.db_name, self.use_db = storage.database_type([])
         self.bayes = storage.open_storage(self.db_name, self.use_db)

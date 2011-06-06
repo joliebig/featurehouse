@@ -86,7 +86,7 @@ class RCParser:
     next_id = 1001
     dialogs = {}
     _dialogs = {}
-    debugEnabled = False;
+    debugEnabled = False
     token = ""
     def __init__(self):
         self.ids = {"IDOK":1, "IDCANCEL":2, "IDC_STATIC": -1}
@@ -175,9 +175,9 @@ class RCParser:
             if "BITMAP" == self.token:
                 self.getToken()
                 if self.token=="MOVEABLE":
-                    self.getToken() 
-                    self.getToken() 
-                bmf = self.token[1:-1] 
+                    self.getToken() # PURE
+                    self.getToken() # bmpname
+                bmf = self.token[1:-1] # quotes
                 self.bitmaps[possibleBitmap] = bmf
                 print("BITMAP", possibleBitmap, bmf)
     def addId(self, id_name):
@@ -204,13 +204,13 @@ class RCParser:
             self.getToken()
         dlg.x = int(self.token)
         self.getCommaToken()
-        self.getToken() 
+        self.getToken() # number
         dlg.y = int(self.token)
         self.getCommaToken()
-        self.getToken() 
+        self.getToken() # number
         dlg.w = int(self.token)
         self.getCommaToken()
-        self.getToken() 
+        self.getToken() # number
         dlg.h = int(self.token)
         self.getToken()
         while not (self.token==None or self.token=="" or self.token=="END"):
@@ -279,8 +279,8 @@ class RCParser:
             self.getToken()
         dlg.fontSize = int(self.token)
         self.getCommaToken()
-        self.getToken() 
-        dlg.font = self.token[1:-1] 
+        self.getToken() # Font name
+        dlg.font = self.token[1:-1] # it's quoted
         self.getToken()
         while "BEGIN"!=self.token:
             self.getToken()

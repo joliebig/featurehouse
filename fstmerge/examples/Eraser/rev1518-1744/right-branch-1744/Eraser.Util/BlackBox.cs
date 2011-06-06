@@ -1,92 +1,54 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Windows.Forms;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
 using Microsoft.Win32.SafeHandles;
-
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.BZip2;
 using System.Net;
 using System.Xml;
-
 namespace Eraser.Util
 {
-
-
-
-
  public class BlackBox
  {
-
-
-
-
-
   public static BlackBox Get()
   {
    if (Instance == null)
     Instance = new BlackBox();
    return Instance;
   }
-
-
-
-
-
   public void CreateReport(Exception e)
   {
    if (e == null)
     throw new ArgumentNullException("e");
-
-
    string crashName = DateTime.Now.ToUniversalTime().ToString(
     CrashReportName, CultureInfo.InvariantCulture);
    string currentCrashReport = Path.Combine(CrashReportsPath, crashName);
    Directory.CreateDirectory(currentCrashReport);
-
-
    int currentStep = 0;
-
    try
    {
-
     WriteDebugLog(currentCrashReport, e);
     ++currentStep;
-
-
     WriteScreenshot(currentCrashReport);
     ++currentStep;
-
-
     WriteMemoryDump(currentCrashReport, e);
     ++currentStep;
    }
    catch
    {
-
-
-
     if (currentStep == 0)
      Directory.Delete(currentCrashReport);
    }
   }
-
-
-
-
-
   public BlackBoxReport[] GetDumps()
   {
    DirectoryInfo dirInfo = new DirectoryInfo(CrashReportsPath);
@@ -99,66 +61,40 @@ namespace Eraser.Util
      }
      catch (InvalidDataException)
      {
-
      }
-
    return result.ToArray();
   }
-
-
-
-
   private BlackBox()
   {
    AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
    Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
   }
-
-
-
-
   private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
   {
    CreateReport(e.ExceptionObject as Exception);
   }
-
-
-
-
-
-
   private void WriteMemoryDump(string dumpFolder, Exception e)
   {
-
    using (FileStream stream = new FileStream(Path.Combine(dumpFolder, MemoryDumpFileName),
     FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
    {
-
     NativeMethods.MiniDumpExceptionInfo exception =
      new NativeMethods.MiniDumpExceptionInfo();
     exception.ClientPointers = false;
     exception.ExceptionPointers = Marshal.GetExceptionPointers();
     exception.ThreadId = (uint)AppDomain.GetCurrentThreadId();
-
     NativeMethods.MiniDumpWriteDump(Process.GetCurrentProcess().Handle,
      (uint)Process.GetCurrentProcess().Id, stream.SafeFileHandle,
      NativeMethods.MiniDumpType.MiniDumpWithFullMemory,
      ref exception, IntPtr.Zero, IntPtr.Zero);
    }
   }
-
-
-
-
-
-
   private void WriteDebugLog(string dumpFolder, Exception exception)
   {
    using (FileStream file = new FileStream(Path.Combine(dumpFolder, DebugLogFileName),
     FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
    using (StreamWriter stream = new StreamWriter(file))
    {
-
     string separator = new string('-', 76);
     string lineFormat = "{0,15}: {1}";
     stream.WriteLine("Application Information");
@@ -173,14 +109,9 @@ namespace Eraser.Util
     }
     stream.WriteLine(string.Format(lineFormat, "Command Line",
      commandLine.ToString().Trim()));
-
-
     stream.WriteLine();
     stream.WriteLine("Exception Information (Outermost to innermost)");
     stream.WriteLine(separator);
-
-
-
     using (StreamWriter stackTraceLog = new StreamWriter(
      Path.Combine(dumpFolder, BlackBoxReport.StackTraceFileName)))
     {
@@ -193,8 +124,6 @@ namespace Eraser.Util
        currentException.GetType().FullName));
       stackTraceLog.WriteLine(string.Format("Exception {0}: {1}", i,
        currentException.GetType().FullName));
-
-
       string[] stackTrace = currentException.StackTrace.Split(new char[] { '\n' });
       for (uint j = 0; j < stackTrace.Length; ++j)
       {
@@ -202,99 +131,48 @@ namespace Eraser.Util
         string.Format("Stack Trace [{0}]", j), stackTrace[j].Trim()));
        stackTraceLog.WriteLine(string.Format("{0}", stackTrace[j].Trim()));
       }
-
       uint k = 0;
       foreach (System.Collections.DictionaryEntry value in currentException.Data)
        stream.WriteLine(string.Format(lineFormat, string.Format("Data[{0}]", ++k),
         string.Format("{0} {1}", value.Key.ToString(), value.Value.ToString())));
-
-
       stream.WriteLine();
       currentException = currentException.InnerException;
      }
     }
    }
   }
-
-
-
-
-
   private void WriteScreenshot(string dumpFolder)
   {
-
    Rectangle rect = new Rectangle(int.MaxValue, int.MaxValue, int.MinValue, int.MinValue);
    foreach (Screen screen in Screen.AllScreens)
     rect = Rectangle.Union(rect, screen.Bounds);
-
-
    Bitmap screenShot = new Bitmap(rect.Width, rect.Height);
    Graphics bitmap = Graphics.FromImage(screenShot);
    bitmap.CopyFromScreen(0, 0, 0, 0, rect.Size, CopyPixelOperation.SourceCopy);
-
-
    screenShot.Save(Path.Combine(dumpFolder, ScreenshotFileName), ImageFormat.Png);
   }
-
-
-
-
   private static BlackBox Instance;
-
-
-
-
   private static readonly string CrashReportsPath = Path.Combine(Environment.GetFolderPath(
    Environment.SpecialFolder.LocalApplicationData), @"Eraser 6\Crash Reports");
-
-
-
-
   internal static readonly string CrashReportName = "yyyyMMdd HHmmss.FFF";
-
-
-
-
-
   internal static readonly string MemoryDumpFileName = "Memory.dmp";
-
-
-
-
   internal static readonly string DebugLogFileName = "Debug.log";
-
-
-
-
   internal static readonly string ScreenshotFileName = "Screenshot.png";
  }
-
-
-
-
  public class BlackBoxReport
  {
-
-
-
-
-
   internal BlackBoxReport(string path)
   {
    Path = path;
-
    string stackTracePath = System.IO.Path.Combine(Path, StackTraceFileName);
    if (!File.Exists(stackTracePath))
    {
     Delete();
     throw new InvalidDataException("The BlackBox report is corrupt.");
    }
-
    string[] stackTrace = null;
    using (StreamReader reader = new StreamReader(stackTracePath))
     stackTrace = reader.ReadToEnd().Split(new char[] { '\n' });
-
-
    StackTraceCache = new List<BlackBoxExceptionEntry>();
    List<string> currentException = new List<string>();
    string exceptionType = null;
@@ -302,15 +180,12 @@ namespace Eraser.Util
    {
     if (str.StartsWith("Exception "))
     {
-
      if (currentException.Count != 0)
      {
       StackTraceCache.Add(new BlackBoxExceptionEntry(exceptionType,
        new List<string>(currentException)));
       currentException.Clear();
      }
-
-
      exceptionType = str.Substring(str.IndexOf(':') + 1).Trim();
     }
     else if (!string.IsNullOrEmpty(str.Trim()))
@@ -318,22 +193,13 @@ namespace Eraser.Util
      currentException.Add(str.Trim());
     }
    }
-
    if (currentException.Count != 0)
     StackTraceCache.Add(new BlackBoxExceptionEntry(exceptionType, currentException));
   }
-
-
-
-
   public void Delete()
   {
    Directory.Delete(Path, true);
   }
-
-
-
-
   public string Name
   {
    get
@@ -341,10 +207,6 @@ namespace Eraser.Util
     return System.IO.Path.GetFileName(Path);
    }
   }
-
-
-
-
   public DateTime Timestamp
   {
    get
@@ -353,19 +215,11 @@ namespace Eraser.Util
      CultureInfo.InvariantCulture).ToLocalTime();
    }
   }
-
-
-
-
   public string Path
   {
    get;
    private set;
   }
-
-
-
-
   public ReadOnlyCollection<FileInfo> Files
   {
    get
@@ -375,14 +229,9 @@ namespace Eraser.Util
     foreach (FileInfo file in directory.GetFiles())
      if (!InternalFiles.Contains(file.Name))
       result.Add(file);
-
     return result.AsReadOnly();
    }
   }
-
-
-
-
   public Stream DebugLog
   {
    get
@@ -391,10 +240,6 @@ namespace Eraser.Util
      FileMode.Open, FileAccess.Read);
    }
   }
-
-
-
-
   public ReadOnlyCollection<BlackBoxExceptionEntry> StackTrace
   {
    get
@@ -402,10 +247,6 @@ namespace Eraser.Util
     return StackTraceCache.AsReadOnly();
    }
   }
-
-
-
-
   public bool Submitted
   {
    get
@@ -416,10 +257,8 @@ namespace Eraser.Util
     {
      stream.Read(buffer, 0, buffer.Length);
     }
-
     return buffer[0] == 1;
    }
-
    set
    {
     byte[] buffer = { Convert.ToByte(value) };
@@ -430,30 +269,13 @@ namespace Eraser.Util
     }
    }
   }
-
   public override string ToString()
   {
    return Name;
   }
-
-
-
-
   private List<BlackBoxExceptionEntry> StackTraceCache;
-
-
-
-
   private static readonly string StatusFileName = "Status.txt";
-
-
-
-
   internal static readonly string StackTraceFileName = "Stack Trace.log";
-
-
-
-
   private static readonly List<string> InternalFiles = new List<string>(
    new string[] {
      StackTraceFileName,
@@ -461,36 +283,18 @@ namespace Eraser.Util
    }
   );
  }
-
-
-
-
-
  public class BlackBoxExceptionEntry
  {
-
-
-
-
-
   internal BlackBoxExceptionEntry(string exceptionType, List<string> stackTrace)
   {
    ExceptionType = exceptionType;
    StackTraceCache = stackTrace;
   }
-
-
-
-
   public string ExceptionType
   {
    get;
    private set;
   }
-
-
-
-
   public ReadOnlyCollection<string> StackTrace
   {
    get
@@ -498,35 +302,17 @@ namespace Eraser.Util
     return StackTraceCache.AsReadOnly();
    }
   }
-
-
-
-
   private List<string> StackTraceCache;
  }
-
-
-
-
  public class BlackBoxReportUploader
  {
-
-
-
-
   public BlackBoxReportUploader(BlackBoxReport report)
   {
    Report = report;
    if (!Directory.Exists(UploadTempDir))
     Directory.CreateDirectory(UploadTempDir);
-
    ReportBaseName = Path.Combine(UploadTempDir, Report.Name);
   }
-
-
-
-
-
   public bool IsNew
   {
    get
@@ -534,7 +320,6 @@ namespace Eraser.Util
     PostDataBuilder builder = new PostDataBuilder();
     builder.AddPart(new PostDataField("action", "status"));
     AddStackTraceToRequest(Report.StackTrace, builder);
-
     WebRequest reportRequest = HttpWebRequest.Create(BlackBoxServer);
     reportRequest.ContentType = builder.ContentType;
     reportRequest.Method = "POST";
@@ -549,7 +334,6 @@ namespace Eraser.Util
        requestStream.Write(buffer, 0, lastRead);
      }
     }
-
     try
     {
      HttpWebResponse response = reportRequest.GetResponse() as HttpWebResponse;
@@ -563,10 +347,8 @@ namespace Eraser.Util
        case "exists":
         Report.Submitted = true;
         return false;
-
        case "new":
         return true;
-
        default:
         throw new InvalidDataException(
          "Unknown crash report server response.");
@@ -589,7 +371,6 @@ namespace Eraser.Util
       {
       }
      }
-
      throw new InvalidDataException(((HttpWebResponse)e.Response).StatusDescription);
     }
    }

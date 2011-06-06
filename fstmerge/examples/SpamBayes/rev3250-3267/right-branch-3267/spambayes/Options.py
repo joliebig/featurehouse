@@ -281,9 +281,9 @@ defaults = {
      _("""After the display of a ham+spam histogram pair, you can get a
      listing of all the cutoff values (coinciding with histogram bucket
      boundaries) that minimize:
-         best_cutoff_fp_weight * (
-         best_cutoff_fn_weight * (
-         best_cutoff_unsure_weight * (
+         best_cutoff_fp_weight * (# false positives) +
+         best_cutoff_fn_weight * (# false negatives) +
+         best_cutoff_unsure_weight * (# unsure msgs)
      This displays two cutoffs:  hamc and spamc, where
         0.0 <= hamc <= spamc <= 1.0
      The idea is that if something scores < hamc, it's called ham; if
@@ -333,7 +333,7 @@ defaults = {
      _(""""""),
      BOOLEAN, RESTORE),
     ("show_charlimit", _("Show character limit"), 3000,
-     _("""The maximum 
+     _("""The maximum # of characters to display for a msg displayed due to
      the show_xyz options above."""),
      INTEGER, RESTORE),
     ("save_trained_pickles", _("Save trained pickles"), False,
@@ -410,7 +410,7 @@ defaults = {
      of freedom.  This is the "provably most-sensitive" test the original
      scheme was monotonic with.  Getting closer to the theoretical basis
      appears to give an excellent combining method, usually very extreme in
-     its judgment, yet finding a tiny (in 
+     its judgment, yet finding a tiny (in # of msgs, spread across a huge
      range of scores) middle ground where lots of the mistakes live.  This
      is the best method so far. One systematic benefit is is immunity to
      "cancellation disease". One systematic drawback is sensitivity to

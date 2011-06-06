@@ -4,12 +4,12 @@ all k, counting elements from 0.  For the sake of comparison,
 non-existing elements are considered to be infinite.  The interesting
 property of a heap is that a[0] is always its smallest element.
 Usage:
-heap = []            
-heappush(heap, item) 
-item = heappop(heap) 
-item = heap[0]       
-heapify(x)           
-item = heapreplace(heap, item) 
+heap = []            # creates an empty heap
+heappush(heap, item) # pushes a new item on the heap
+item = heappop(heap) # pops the smallest item from the heap
+item = heap[0]       # smallest item on the heap without popping it
+heapify(x)           # transforms list into a heap, in-place, in linear time
+item = heapreplace(heap, item) # pops and returns smallest item, and adds
 Our API differs from textbook heap algorithms as follows:
 - We use 0-based indexing.  This makes the relationship between the
   index for a node and the indexes for its children slightly less
@@ -101,7 +101,7 @@ def heappush(heap, item):
     _siftdown(heap, 0, len(heap)-1)
 def heappop(heap):
     """Pop the smallest item off the heap, maintaining the heap invariant."""
-    lastelt = heap.pop()    
+    lastelt = heap.pop()    # raises appropriate IndexError if heap is empty
     if heap:
         returnitem = heap[0]
         heap[0] = lastelt
@@ -116,7 +116,7 @@ def heapreplace(heap, item):
     returned may be larger than item!  That constrains reasonable uses of
     this routine.
     """
-    returnitem = heap[0]    
+    returnitem = heap[0]    # raises appropriate IndexError if heap is empty
     heap[0] = item
     _siftup(heap, 0)
     return returnitem
@@ -139,7 +139,7 @@ def _siftup(heap, pos):
     endpos = len(heap)
     startpos = pos
     newitem = heap[pos]
-    childpos = 2*pos + 1    
+    childpos = 2*pos + 1    # leftmost child position
     while childpos < endpos:
         rightpos = childpos + 1
         if rightpos < endpos and heap[rightpos] <= heap[childpos]:

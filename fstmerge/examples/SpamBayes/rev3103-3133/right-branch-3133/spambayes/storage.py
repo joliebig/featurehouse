@@ -57,8 +57,8 @@ def binaryDefaultPickler(f, binary=1):
     return oldShelvePickler(f, binary)
 shelve.Pickler = binaryDefaultPickler
 PICKLE_TYPE = 1
-NO_UPDATEPROBS = False   
-UPDATEPROBS = True       
+NO_UPDATEPROBS = False   # Probabilities will not be autoupdated with training
+UPDATEPROBS = True       # Probabilities will be autoupdated with training
 class PickledClassifier(classifier.Classifier):
     '''Classifier object persisted in a pickle'''
     def __init__(self, db_name):
@@ -156,7 +156,7 @@ class DBDictClassifier(classifier.Classifier):
             self.nspam = 0
             self.nham = 0
         self.wordinfo = {}
-        self.changed_words = {} 
+        self.changed_words = {} # value may be one of the WORD_ constants
     def store(self):
         '''Place state into persistent store'''
         if options["globals", "verbose"]:

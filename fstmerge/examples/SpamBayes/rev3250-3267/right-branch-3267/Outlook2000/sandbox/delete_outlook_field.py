@@ -29,7 +29,7 @@ def DeleteField_MAPI(driver, folder, name):
     num_mapi = 0
     for item in driver.GetAllItems(folder):
         hr, vals = item.GetProps(propIds)
-        if hr==0: 
+        if hr==0: # We actually have it
             hr, probs = item.DeleteProps(propIds)
             if  hr == 0:
                 item.SaveChanges(mapi.MAPI_DEFERRED_ERRORS)
@@ -39,7 +39,7 @@ def DeleteField_Folder(driver, folder, name):
     propIds = folder.GetIDsFromNames(((mapi.PS_PUBLIC_STRINGS,name),), 0)
     if PROP_TYPE(propIds[0])!=PT_ERROR:
         hr, vals = folder.GetProps(propIds)
-        if hr==0: 
+        if hr==0: # We actually have it
             hr, probs = folder.DeleteProps(propIds)
             if  hr == 0:
                 folder.SaveChanges(mapi.MAPI_DEFERRED_ERRORS)
@@ -123,7 +123,7 @@ def main():
             print("Invalid arg")
             return
     if not folder_names:
-        folder_names = ["Inbox"] 
+        folder_names = ["Inbox"] # Assume this exists!
     if not args:
         print("No args specified - dumping all unique UserProperty names,")
         print("and the count of messages they appear in")

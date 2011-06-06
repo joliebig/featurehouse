@@ -8,10 +8,10 @@ MAPI_SUBSYSTEM = 39
 restriction = mapi.RES_PROPERTY, (mapi.RELOP_EQ, PR_RESOURCE_TYPE, (PR_RESOURCE_TYPE,MAPI_SUBSYSTEM))
 table = session.GetStatusTable(0)
 rows = mapi.HrQueryAllRows(table,
-                            (PR_DISPLAY_NAME_A,),   
-                            restriction,     
-                            None,            
-                            0)               
+                            (PR_DISPLAY_NAME_A,),   # columns to retrieve
+                            restriction,     # only these rows
+                            None,            # any sort order is fine
+                            0)               # any # of results is fine
 assert len(rows)==1, "Should be exactly one row"
 (tag, val), = rows[0]
 print "Profile name:", val

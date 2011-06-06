@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
@@ -15,26 +12,17 @@ using System.Diagnostics;
 using System.ComponentModel;
 using System.Security.Principal;
 using System.Security.AccessControl;
-
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser
 {
  static class Program
  {
-
-
-
   [STAThread]
   static int Main(string[] commandLine)
   {
-
    if (commandLine.Length == 0)
     GUIMain(commandLine);
-
-
-
    else if (commandLine.Length == 1)
    {
     if (commandLine[0] == "--atRestart" || commandLine[0] == "--quiet")
@@ -46,32 +34,19 @@ namespace Eraser
      return CommandMain(commandLine);
     }
    }
-
-
    else
     return CommandMain(commandLine);
-
-
    return 0;
   }
-
-
-
-
-
   private static int CommandMain(string[] commandLine)
   {
-
    bool isQuiet = false;
-
    try
    {
     CommandLineProgram program = new CommandLineProgram(commandLine);
     isQuiet = program.Arguments.Quiet;
-
     using (ManagerLibrary library = new ManagerLibrary(new Settings()))
      program.Run();
-
     return 0;
    }
    catch (UnauthorizedAccessException)
@@ -90,33 +65,21 @@ namespace Eraser
    }
    finally
    {
-
     Console.Out.Flush();
-
-
     if (!isQuiet)
     {
      Console.Write("\nPress enter to continue . . . ");
      Console.Out.Flush();
      Console.ReadLine();
     }
-
     KernelApi.FreeConsole();
    }
   }
-
-
-
-
-
   private static void GUIMain(string[] commandLine)
   {
-
    using (GUIProgram program = new GUIProgram(commandLine, "Eraser-BAD0DAC6-C9EE-4acc-" +
     "8701-C9B3C64BC65E-GUI-" +
     System.Security.Principal.WindowsIdentity.GetCurrent().User.ToString()))
-
-
    using (ManagerLibrary library = new ManagerLibrary(new Settings()))
    {
     program.InitInstance += OnGUIInitInstance;
@@ -125,24 +88,14 @@ namespace Eraser
     program.Run();
    }
   }
-
-
-
-
-
-
   private static bool OnGUIInitInstance(object sender)
   {
    GUIProgram program = (GUIProgram)sender;
    eraserClient = new RemoteExecutorServer();
-
-
    EraserSettings settings = EraserSettings.Get();
    System.Threading.Thread.CurrentThread.CurrentUICulture =
     new CultureInfo(settings.Language);
    Application.SafeTopLevelCaptionFormat = S._("Eraser");
-
-
    SettingsCompatibility.Execute();
    try
    {
@@ -164,61 +117,36 @@ namespace Eraser
      MessageBoxDefaultButton.Button1,
      S.IsRightToLeft(null) ? MessageBoxOptions.RtlReading : 0);
    }
-
-
    program.MainForm = new MainForm();
    bool showMainForm = true;
    foreach (string param in program.CommandLine)
    {
-
     switch (param)
     {
      case "--atRestart":
       eraserClient.QueueRestartTasks();
       goto case "--quiet";
-
-
-
      case "--quiet":
       showMainForm = false;
       break;
     }
    }
-
-
    eraserClient.Run();
    return showMainForm;
   }
-
-
-
-
-
-
   private static void OnGUINextInstance(object sender, string message)
   {
-
-
    GUIProgram program = (GUIProgram)sender;
-
-
    if (program.MainForm.InvokeRequired)
    {
     program.MainForm.Invoke(new GUIProgram.NextInstanceFunction(
      OnGUINextInstance), new object[] { sender, message });
     return;
    }
-
    program.MainForm.Visible = true;
   }
-
-
-
-
-
   private static void OnGUIExitInstance(object sender)
   {
-
    if (!Directory.Exists(Program.AppDataPath))
     Directory.CreateDirectory(Program.AppDataPath);
    using (FileStream stream = new FileStream(TaskListPath, FileMode.Create,
@@ -226,69 +154,34 @@ namespace Eraser
    {
     eraserClient.Tasks.SaveToStream(stream);
    }
-
-
    eraserClient.Dispose();
   }
-
-
-
-
   public static Executor eraserClient;
-
-
-
-
   public static readonly string AppDataPath = Path.Combine(Environment.GetFolderPath(
    Environment.SpecialFolder.LocalApplicationData), @"Eraser 6");
-
-
-
-
   private const string TaskListFileName = @"Task List.ersx";
-
-
-
-
   public static readonly string TaskListPath = Path.Combine(AppDataPath, TaskListFileName);
-
-
-
-
   public const string SettingsPath = @"SOFTWARE\Eraser\Eraser 6";
  }
-
  class GUIProgram : IDisposable
  {
-
-
-
-
-
-
-
   public GUIProgram(string[] commandLine, string instanceID)
   {
    Application.EnableVisualStyles();
    Application.SetCompatibleTextRenderingDefault(false);
    this.instanceID = instanceID;
    this.CommandLine = commandLine;
-
-
    globalMutex = new Mutex(true, instanceID, out isFirstInstance);
   }
-
   ~GUIProgram()
   {
    Dispose(false);
   }
-
   protected virtual void Dispose(bool disposing)
   {
    if (disposing)
     globalMutex.Close();
   }
-
   public void Dispose()
   {
    Dispose(true);

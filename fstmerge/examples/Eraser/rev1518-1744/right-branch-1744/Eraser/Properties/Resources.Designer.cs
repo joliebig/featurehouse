@@ -1,4 +1,3 @@
-
 namespace Eraser.Properties {
     using System;
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "2.0.0.0")]

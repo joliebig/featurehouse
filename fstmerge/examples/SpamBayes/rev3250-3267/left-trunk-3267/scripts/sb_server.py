@@ -106,14 +106,14 @@ class ServerLineReader(Dibbler.BrighterAsyncChat):
                 print >>sys.stderr, error
                 state.reported_errors[error] = now
             self.lineCallback('-ERR %s\r\n' % error)
-            self.lineCallback('')   
+            self.lineCallback('')   # "The socket's been closed."
             self.close()
         else:
             if ssl:
                 try:
                     self.ssl_socket = socket.ssl(self.socket)
                 except socket.sslerror, why:
-                    if why[0] == 1: 
+                    if why[0] == 1: # error:140770FC:SSL routines:SSL23_GET_SERVER_HELLO:unknown protocol'
                         print >> sys.stderr, "Can't use SSL"
                     else:
                         raise
@@ -136,10 +136,10 @@ class ServerLineReader(Dibbler.BrighterAsyncChat):
             else:
                 return data
         except socket.sslerror, why:
-            if why[0] == 6: 
+            if why[0] == 6: # 'TLS/SSL connection has been closed'
                 self.handle_close()
                 return ''
-            elif why[0] == 2: 
+            elif why[0] == 2: # 'The operation did not complete (read)'
                 return ''
             else:
                 raise
@@ -173,11 +173,11 @@ class POP3ProxyBase(Dibbler.BrighterAsyncChat):
         self.request = ''
         self.response = ''
         self.set_terminator('\r\n')
-        self.command = ''           
-        self.args = []              
-        self.isClosing = False      
-        self.seenAllHeaders = False 
-        self.startTime = 0          
+        self.command = ''           # The POP3 command being processed...
+        self.args = []              # ...and its arguments
+        self.isClosing = False      # Has the server closed the socket?
+        self.seenAllHeaders = False # For the current RETR or TOP
+        self.startTime = 0          # (ditto)
         if not self.onIncomingConnection(clientSocket):
             self.push("-ERR Connection not allowed\r\n")
             self.close_when_done()
@@ -602,7 +602,7 @@ class State:
         print "Loading database...",
         if self.isTest:
             self.useDB = "pickle"
-            self.DBName = '_pop3proxy_test.pickle'   
+            self.DBName = '_pop3proxy_test.pickle'   # This is never saved.
         if not hasattr(self, "DBName"):
             self.DBName, self.useDB = storage.database_type([])
         self.bayes = storage.open_storage(self.DBName, self.useDB)

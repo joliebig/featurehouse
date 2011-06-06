@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class MainForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    this.components = new System.ComponentModel.Container();
@@ -62,9 +45,6 @@ namespace Eraser
    this.tbHelpMenu.SuspendLayout();
    ((System.ComponentModel.ISupportInitialize)(this.eraserLogo)).BeginInit();
    this.SuspendLayout();
-
-
-
    this.contentPanel.AccessibleDescription = null;
    this.contentPanel.AccessibleName = null;
    resources.ApplyResources(this.contentPanel, "contentPanel");
@@ -72,9 +52,6 @@ namespace Eraser
    this.contentPanel.BackgroundImage = null;
    this.contentPanel.Font = null;
    this.contentPanel.Name = "contentPanel";
-
-
-
    this.tbSchedule.AccessibleDescription = null;
    this.tbSchedule.AccessibleName = null;
    resources.ApplyResources(this.tbSchedule, "tbSchedule");
@@ -84,15 +61,9 @@ namespace Eraser
    this.tbSchedule.Padding = new System.Windows.Forms.Padding(0);
    this.tbSchedule.ShortcutKeyDisplayString = null;
    this.tbSchedule.Click += new System.EventHandler(this.tbSchedule_Click);
-
-
-
    resources.ApplyResources(this.notificationIcon, "notificationIcon");
    this.notificationIcon.ContextMenuStrip = this.notificationMenu;
    this.notificationIcon.DoubleClick += new System.EventHandler(this.openToolStripMenuItem_Click);
-
-
-
    this.notificationMenu.AccessibleDescription = null;
    this.notificationMenu.AccessibleName = null;
    resources.ApplyResources(this.notificationMenu, "notificationMenu");
@@ -104,9 +75,6 @@ namespace Eraser
             this.hideWhenMinimisedToolStripMenuItem,
             this.exitToolStripMenuItem});
    this.notificationMenu.Name = "notificationMenu";
-
-
-
    this.openEraserToolStripMenuItem.AccessibleDescription = null;
    this.openEraserToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.openEraserToolStripMenuItem, "openEraserToolStripMenuItem");
@@ -114,16 +82,10 @@ namespace Eraser
    this.openEraserToolStripMenuItem.Name = "openEraserToolStripMenuItem";
    this.openEraserToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.openEraserToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-
-
-
    this.toolStripMenuItem1.AccessibleDescription = null;
    this.toolStripMenuItem1.AccessibleName = null;
    resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
    this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-
-
-
    this.hideWhenMinimisedToolStripMenuItem.AccessibleDescription = null;
    this.hideWhenMinimisedToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.hideWhenMinimisedToolStripMenuItem, "hideWhenMinimisedToolStripMenuItem");
@@ -132,9 +94,6 @@ namespace Eraser
    this.hideWhenMinimisedToolStripMenuItem.Name = "hideWhenMinimisedToolStripMenuItem";
    this.hideWhenMinimisedToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.hideWhenMinimisedToolStripMenuItem.Click += new System.EventHandler(this.hideWhenMinimiseToolStripMenuItem_Click);
-
-
-
    this.exitToolStripMenuItem.AccessibleDescription = null;
    this.exitToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
@@ -142,13 +101,7 @@ namespace Eraser
    this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
    this.exitToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-
-
-
    this.notificationIconTimer.Tick += new System.EventHandler(this.notificationIconTimer_Tick);
-
-
-
    this.ToolBar.AccessibleDescription = null;
    this.ToolBar.AccessibleName = null;
    this.ToolBar.AllowItemReorder = true;
@@ -164,9 +117,6 @@ namespace Eraser
             this.tbHelp,
             this.tbHelpDropDown});
    this.ToolBar.Name = "ToolBar";
-
-
-
    this.tbScheduleDropDown.AccessibleDescription = null;
    this.tbScheduleDropDown.AccessibleName = null;
    resources.ApplyResources(this.tbScheduleDropDown, "tbScheduleDropDown");
@@ -178,9 +128,6 @@ namespace Eraser
    this.tbScheduleDropDown.Name = "tbScheduleDropDown";
    this.tbScheduleDropDown.Padding = new System.Windows.Forms.Padding(0);
    this.tbScheduleDropDown.ShortcutKeyDisplayString = null;
-
-
-
    this.tbScheduleMenu.AccessibleDescription = null;
    this.tbScheduleMenu.AccessibleName = null;
    resources.ApplyResources(this.tbScheduleMenu, "tbScheduleMenu");
@@ -193,9 +140,6 @@ namespace Eraser
             this.importTaskListToolStripMenuItem});
    this.tbScheduleMenu.Name = "tbScheduleMenu";
    this.tbScheduleMenu.OwnerItem = this.tbScheduleDropDown;
-
-
-
    this.newTaskToolStripMenuItem.AccessibleDescription = null;
    this.newTaskToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.newTaskToolStripMenuItem, "newTaskToolStripMenuItem");
@@ -203,16 +147,10 @@ namespace Eraser
    this.newTaskToolStripMenuItem.Name = "newTaskToolStripMenuItem";
    this.newTaskToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.newTaskToolStripMenuItem.Click += new System.EventHandler(this.newTaskToolStripMenuItem_Click);
-
-
-
    this.toolStripMenuItem2.AccessibleDescription = null;
    this.toolStripMenuItem2.AccessibleName = null;
    resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
    this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-
-
-
    this.exportTaskListToolStripMenuItem.AccessibleDescription = null;
    this.exportTaskListToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.exportTaskListToolStripMenuItem, "exportTaskListToolStripMenuItem");
@@ -220,9 +158,6 @@ namespace Eraser
    this.exportTaskListToolStripMenuItem.Name = "exportTaskListToolStripMenuItem";
    this.exportTaskListToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.exportTaskListToolStripMenuItem.Click += new System.EventHandler(this.exportTaskListToolStripMenuItem_Click);
-
-
-
    this.importTaskListToolStripMenuItem.AccessibleDescription = null;
    this.importTaskListToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.importTaskListToolStripMenuItem, "importTaskListToolStripMenuItem");
@@ -230,9 +165,6 @@ namespace Eraser
    this.importTaskListToolStripMenuItem.Name = "importTaskListToolStripMenuItem";
    this.importTaskListToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.importTaskListToolStripMenuItem.Click += new System.EventHandler(this.importTaskListToolStripMenuItem_Click);
-
-
-
    this.tbSettings.AccessibleDescription = null;
    this.tbSettings.AccessibleName = null;
    resources.ApplyResources(this.tbSettings, "tbSettings");
@@ -243,9 +175,6 @@ namespace Eraser
    this.tbSettings.Padding = new System.Windows.Forms.Padding(0);
    this.tbSettings.ShortcutKeyDisplayString = null;
    this.tbSettings.Click += new System.EventHandler(this.tbSettings_Click);
-
-
-
    this.tbHelp.AccessibleDescription = null;
    this.tbHelp.AccessibleName = null;
    resources.ApplyResources(this.tbHelp, "tbHelp");
@@ -255,9 +184,6 @@ namespace Eraser
    this.tbHelp.Padding = new System.Windows.Forms.Padding(0);
    this.tbHelp.ShortcutKeyDisplayString = null;
    this.tbHelp.Click += new System.EventHandler(this.tbHelp_Click);
-
-
-
    this.tbHelpDropDown.AccessibleDescription = null;
    this.tbHelpDropDown.AccessibleName = null;
    resources.ApplyResources(this.tbHelpDropDown, "tbHelpDropDown");
@@ -268,9 +194,6 @@ namespace Eraser
    this.tbHelpDropDown.Name = "tbHelpDropDown";
    this.tbHelpDropDown.Padding = new System.Windows.Forms.Padding(0);
    this.tbHelpDropDown.ShortcutKeyDisplayString = null;
-
-
-
    this.tbHelpMenu.AccessibleDescription = null;
    this.tbHelpMenu.AccessibleName = null;
    resources.ApplyResources(this.tbHelpMenu, "tbHelpMenu");
@@ -281,9 +204,6 @@ namespace Eraser
             this.aboutEraserToolStripMenuItem});
    this.tbHelpMenu.Name = "tbHelpMenu";
    this.tbHelpMenu.OwnerItem = this.tbHelpDropDown;
-
-
-
    this.checkForUpdatesToolStripMenuItem1.AccessibleDescription = null;
    this.checkForUpdatesToolStripMenuItem1.AccessibleName = null;
    resources.ApplyResources(this.checkForUpdatesToolStripMenuItem1, "checkForUpdatesToolStripMenuItem1");
@@ -291,9 +211,6 @@ namespace Eraser
    this.checkForUpdatesToolStripMenuItem1.Name = "checkForUpdatesToolStripMenuItem1";
    this.checkForUpdatesToolStripMenuItem1.ShortcutKeyDisplayString = null;
    this.checkForUpdatesToolStripMenuItem1.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-
-
-
    this.aboutEraserToolStripMenuItem.AccessibleDescription = null;
    this.aboutEraserToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.aboutEraserToolStripMenuItem, "aboutEraserToolStripMenuItem");
@@ -301,9 +218,6 @@ namespace Eraser
    this.aboutEraserToolStripMenuItem.Name = "aboutEraserToolStripMenuItem";
    this.aboutEraserToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.aboutEraserToolStripMenuItem.Click += new System.EventHandler(this.aboutEraserToolStripMenuItem_Click);
-
-
-
    this.checkForUpdatesToolStripMenuItem.AccessibleDescription = null;
    this.checkForUpdatesToolStripMenuItem.AccessibleName = null;
    resources.ApplyResources(this.checkForUpdatesToolStripMenuItem, "checkForUpdatesToolStripMenuItem");
@@ -311,9 +225,6 @@ namespace Eraser
    this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
    this.checkForUpdatesToolStripMenuItem.ShortcutKeyDisplayString = null;
    this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-
-
-
    this.eraserLogo.AccessibleDescription = null;
    this.eraserLogo.AccessibleName = null;
    resources.ApplyResources(this.eraserLogo, "eraserLogo");
@@ -326,9 +237,6 @@ namespace Eraser
    this.eraserLogo.Name = "eraserLogo";
    this.eraserLogo.TabStop = false;
    this.eraserLogo.Click += new System.EventHandler(this.eraserLogo_Click);
-
-
-
    this.AccessibleDescription = null;
    this.AccessibleName = null;
    resources.ApplyResources(this, "$this");
@@ -353,11 +261,7 @@ namespace Eraser
    ((System.ComponentModel.ISupportInitialize)(this.eraserLogo)).EndInit();
    this.ResumeLayout(false);
    this.PerformLayout();
-
   }
-
-
-
   private System.Windows.Forms.Panel contentPanel;
   private System.Windows.Forms.NotifyIcon notificationIcon;
   private System.Windows.Forms.Timer notificationIconTimer;

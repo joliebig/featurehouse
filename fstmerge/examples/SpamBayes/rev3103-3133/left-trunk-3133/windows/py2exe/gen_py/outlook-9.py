@@ -14,257 +14,257 @@ MinorVersion = 0
 LibraryFlags = 8
 LCID = 0x0
 class constants:
-	olForward                     =0x2        
-	olReply                       =0x0        
-	olReplyAll                    =0x1        
-	olReplyFolder                 =0x3        
-	olRespond                     =0x4        
-	olEmbedOriginalItem           =0x1        
-	olIncludeOriginalText         =0x2        
-	olIndentOriginalText          =0x3        
-	olLinkOriginalItem            =0x4        
-	olOmitOriginalText            =0x0        
-	olReplyTickOriginalText       =0x3e8      
-	olUserPreference              =0x5        
-	olOpen                        =0x0        
-	olPrompt                      =0x2        
-	olSend                        =0x1        
-	olDontShow                    =0x0        
-	olMenu                        =0x1        
-	olMenuAndToolbar              =0x2        
-	olByReference                 =0x4        
-	olByValue                     =0x1        
-	olEmbeddeditem                =0x5        
-	olOLE                         =0x6        
-	olBusy                        =0x2        
-	olFree                        =0x0        
-	olOutOfOffice                 =0x3        
-	olTentative                   =0x1        
-	olFriday                      =0x20       
-	olMonday                      =0x2        
-	olSaturday                    =0x40       
-	olSunday                      =0x1        
-	olThursday                    =0x10       
-	olTuesday                     =0x4        
-	olWednesday                   =0x8        
-	olFolderCalendar              =0x9        
-	olFolderContacts              =0xa        
-	olFolderDeletedItems          =0x3        
-	olFolderDrafts                =0x10       
-	olFolderInbox                 =0x6        
-	olFolderJournal               =0xb        
-	olFolderNotes                 =0xc        
-	olFolderOutbox                =0x4        
-	olFolderSentMail              =0x5        
-	olFolderTasks                 =0xd        
-	olAgent                       =0x3        
-	olDistList                    =0x1        
-	olForum                       =0x2        
-	olOrganization                =0x4        
-	olPrivateDistList             =0x5        
-	olRemoteUser                  =0x6        
-	olUser                        =0x0        
-	olEditorHTML                  =0x2        
-	olEditorRTF                   =0x3        
-	olEditorText                  =0x1        
-	olEditorWord                  =0x4        
-	olFlagComplete                =0x1        
-	olFlagMarked                  =0x2        
-	olNoFlag                      =0x0        
-	olFolderDisplayFolderOnly     =0x1        
-	olFolderDisplayNoNavigation   =0x2        
-	olFolderDisplayNormal         =0x0        
-	olDefaultRegistry             =0x0        
-	olFolderRegistry              =0x3        
-	olOrganizationRegistry        =0x4        
-	olPersonalRegistry            =0x2        
-	olFemale                      =0x1        
-	olMale                        =0x2        
-	olUnspecified                 =0x0        
-	olImportanceHigh              =0x2        
-	olImportanceLow               =0x0        
-	olImportanceNormal            =0x1        
-	olDiscard                     =0x1        
-	olPromptForSave               =0x2        
-	olSave                        =0x0        
-	olAppointmentItem             =0x1        
-	olContactItem                 =0x2        
-	olDistributionListItem        =0x7        
-	olJournalItem                 =0x4        
-	olMailItem                    =0x0        
-	olNoteItem                    =0x5        
-	olPostItem                    =0x6        
-	olTaskItem                    =0x3        
-	olAssociatedContact           =0x1        
-	olBCC                         =0x3        
-	olCC                          =0x2        
-	olOriginator                  =0x0        
-	olTo                          =0x1        
-	olBusiness                    =0x2        
-	olHome                        =0x1        
-	olNone                        =0x0        
-	olOther                       =0x3        
-	olOptional                    =0x2        
-	olOrganizer                   =0x0        
-	olRequired                    =0x1        
-	olResource                    =0x3        
-	olMeetingAccepted             =0x3        
-	olMeetingDeclined             =0x4        
-	olMeetingTentative            =0x2        
-	olMeeting                     =0x1        
-	olMeetingCanceled             =0x5        
-	olMeetingReceived             =0x3        
-	olNonMeeting                  =0x0        
-	olChat                        =0x2        
-	olNetMeeting                  =0x0        
-	olNetShow                     =0x1        
-	olBlue                        =0x0        
-	olGreen                       =0x1        
-	olPink                        =0x2        
-	olWhite                       =0x4        
-	olYellow                      =0x3        
-	olAction                      =0x20       
-	olActions                     =0x21       
-	olAddressEntries              =0x15       
-	olAddressEntry                =0x8        
-	olAddressList                 =0x7        
-	olAddressLists                =0x14       
-	olApplication                 =0x0        
-	olAppointment                 =0x1a       
-	olAttachment                  =0x5        
-	olAttachments                 =0x12       
-	olContact                     =0x28       
-	olDistributionList            =0x45       
-	olDocument                    =0x29       
-	olException                   =0x1e       
-	olExceptions                  =0x1d       
-	olExplorer                    =0x22       
-	olExplorers                   =0x3c       
-	olFolder                      =0x2        
-	olFolders                     =0xf        
-	olFormDescription             =0x25       
-	olInspector                   =0x23       
-	olInspectors                  =0x3d       
-	olItems                       =0x10       
-	olJournal                     =0x2a       
-	olLink                        =0x4b       
-	olLinks                       =0x4c       
-	olMail                        =0x2b       
-	olMeetingCancellation         =0x36       
-	olMeetingRequest              =0x35       
-	olMeetingResponseNegative     =0x37       
-	olMeetingResponsePositive     =0x38       
-	olMeetingResponseTentative    =0x39       
-	olNamespace                   =0x1        
-	olNote                        =0x2c       
-	olOutlookBarGroup             =0x42       
-	olOutlookBarGroups            =0x41       
-	olOutlookBarPane              =0x3f       
-	olOutlookBarShortcut          =0x44       
-	olOutlookBarShortcuts         =0x43       
-	olOutlookBarStorage           =0x40       
-	olPages                       =0x24       
-	olPanes                       =0x3e       
-	olPost                        =0x2d       
-	olPropertyPageSite            =0x46       
-	olPropertyPages               =0x47       
-	olRecipient                   =0x4        
-	olRecipients                  =0x11       
-	olRecurrencePattern           =0x1c       
-	olRemote                      =0x2f       
-	olReport                      =0x2e       
-	olSelection                   =0x4a       
-	olSyncObject                  =0x48       
-	olSyncObjects                 =0x49       
-	olTask                        =0x30       
-	olTaskRequest                 =0x31       
-	olTaskRequestAccept           =0x33       
-	olTaskRequestDecline          =0x34       
-	olTaskRequestUpdate           =0x32       
-	olUserProperties              =0x26       
-	olUserProperty                =0x27       
-	olLargeIcon                   =0x0        
-	olSmallIcon                   =0x1        
-	olFolderList                  =0x2        
-	olOutlookBar                  =0x1        
-	olPreview                     =0x3        
-	olApptException               =0x3        
-	olApptMaster                  =0x1        
-	olApptNotRecurring            =0x0        
-	olApptOccurrence              =0x2        
-	olRecursDaily                 =0x0        
-	olRecursMonthNth              =0x3        
-	olRecursMonthly               =0x2        
-	olRecursWeekly                =0x1        
-	olRecursYearNth               =0x6        
-	olRecursYearly                =0x5        
-	olMarkedForCopy               =0x3        
-	olMarkedForDelete             =0x4        
-	olMarkedForDownload           =0x2        
-	olRemoteStatusNone            =0x0        
-	olUnMarked                    =0x1        
-	olResponseAccepted            =0x3        
-	olResponseDeclined            =0x4        
-	olResponseNone                =0x0        
-	olResponseNotResponded        =0x5        
-	olResponseOrganized           =0x1        
-	olResponseTentative           =0x2        
-	olDoc                         =0x4        
-	olHTML                        =0x5        
-	olMSG                         =0x3        
-	olRTF                         =0x1        
-	olTXT                         =0x0        
-	olTemplate                    =0x2        
-	olVCal                        =0x7        
-	olVCard                       =0x6        
-	olConfidential                =0x3        
-	olNormal                      =0x0        
-	olPersonal                    =0x1        
-	olPrivate                     =0x2        
-	olAscending                   =0x1        
-	olDescending                  =0x2        
-	olSortNone                    =0x0        
-	olSyncStarted                 =0x1        
-	olSyncStopped                 =0x0        
-	olTaskDelegationAccepted      =0x2        
-	olTaskDelegationDeclined      =0x3        
-	olTaskDelegationUnknown       =0x1        
-	olTaskNotDelegated            =0x0        
-	olDelegatedTask               =0x1        
-	olNewTask                     =0x0        
-	olOwnTask                     =0x2        
-	olFinalStatus                 =0x3        
-	olUpdate                      =0x2        
-	olTaskAccept                  =0x2        
-	olTaskAssign                  =0x1        
-	olTaskDecline                 =0x3        
-	olTaskSimple                  =0x0        
-	olTaskComplete                =0x2        
-	olTaskDeferred                =0x4        
-	olTaskInProgress              =0x1        
-	olTaskNotStarted              =0x0        
-	olTaskWaiting                 =0x3        
-	olTrackingDelivered           =0x1        
-	olTrackingNone                =0x0        
-	olTrackingNotDelivered        =0x2        
-	olTrackingNotRead             =0x3        
-	olTrackingRead                =0x6        
-	olTrackingRecallFailure       =0x4        
-	olTrackingRecallSuccess       =0x5        
-	olTrackingReplied             =0x7        
-	olCombination                 =0x13       
-	olCurrency                    =0xe        
-	olDateTime                    =0x5        
-	olDuration                    =0x7        
-	olFormula                     =0x12       
-	olKeywords                    =0xb        
-	olNumber                      =0x3        
-	olPercent                     =0xc        
-	olText                        =0x1        
-	olYesNo                       =0x6        
-	olMaximized                   =0x0        
-	olMinimized                   =0x1        
-	olNormalWindow                =0x2        
+	olForward                     =0x2        # from enum OlActionCopyLike
+	olReply                       =0x0        # from enum OlActionCopyLike
+	olReplyAll                    =0x1        # from enum OlActionCopyLike
+	olReplyFolder                 =0x3        # from enum OlActionCopyLike
+	olRespond                     =0x4        # from enum OlActionCopyLike
+	olEmbedOriginalItem           =0x1        # from enum OlActionReplyStyle
+	olIncludeOriginalText         =0x2        # from enum OlActionReplyStyle
+	olIndentOriginalText          =0x3        # from enum OlActionReplyStyle
+	olLinkOriginalItem            =0x4        # from enum OlActionReplyStyle
+	olOmitOriginalText            =0x0        # from enum OlActionReplyStyle
+	olReplyTickOriginalText       =0x3e8      # from enum OlActionReplyStyle
+	olUserPreference              =0x5        # from enum OlActionReplyStyle
+	olOpen                        =0x0        # from enum OlActionResponseStyle
+	olPrompt                      =0x2        # from enum OlActionResponseStyle
+	olSend                        =0x1        # from enum OlActionResponseStyle
+	olDontShow                    =0x0        # from enum OlActionShowOn
+	olMenu                        =0x1        # from enum OlActionShowOn
+	olMenuAndToolbar              =0x2        # from enum OlActionShowOn
+	olByReference                 =0x4        # from enum OlAttachmentType
+	olByValue                     =0x1        # from enum OlAttachmentType
+	olEmbeddeditem                =0x5        # from enum OlAttachmentType
+	olOLE                         =0x6        # from enum OlAttachmentType
+	olBusy                        =0x2        # from enum OlBusyStatus
+	olFree                        =0x0        # from enum OlBusyStatus
+	olOutOfOffice                 =0x3        # from enum OlBusyStatus
+	olTentative                   =0x1        # from enum OlBusyStatus
+	olFriday                      =0x20       # from enum OlDaysOfWeek
+	olMonday                      =0x2        # from enum OlDaysOfWeek
+	olSaturday                    =0x40       # from enum OlDaysOfWeek
+	olSunday                      =0x1        # from enum OlDaysOfWeek
+	olThursday                    =0x10       # from enum OlDaysOfWeek
+	olTuesday                     =0x4        # from enum OlDaysOfWeek
+	olWednesday                   =0x8        # from enum OlDaysOfWeek
+	olFolderCalendar              =0x9        # from enum OlDefaultFolders
+	olFolderContacts              =0xa        # from enum OlDefaultFolders
+	olFolderDeletedItems          =0x3        # from enum OlDefaultFolders
+	olFolderDrafts                =0x10       # from enum OlDefaultFolders
+	olFolderInbox                 =0x6        # from enum OlDefaultFolders
+	olFolderJournal               =0xb        # from enum OlDefaultFolders
+	olFolderNotes                 =0xc        # from enum OlDefaultFolders
+	olFolderOutbox                =0x4        # from enum OlDefaultFolders
+	olFolderSentMail              =0x5        # from enum OlDefaultFolders
+	olFolderTasks                 =0xd        # from enum OlDefaultFolders
+	olAgent                       =0x3        # from enum OlDisplayType
+	olDistList                    =0x1        # from enum OlDisplayType
+	olForum                       =0x2        # from enum OlDisplayType
+	olOrganization                =0x4        # from enum OlDisplayType
+	olPrivateDistList             =0x5        # from enum OlDisplayType
+	olRemoteUser                  =0x6        # from enum OlDisplayType
+	olUser                        =0x0        # from enum OlDisplayType
+	olEditorHTML                  =0x2        # from enum OlEditorType
+	olEditorRTF                   =0x3        # from enum OlEditorType
+	olEditorText                  =0x1        # from enum OlEditorType
+	olEditorWord                  =0x4        # from enum OlEditorType
+	olFlagComplete                =0x1        # from enum OlFlagStatus
+	olFlagMarked                  =0x2        # from enum OlFlagStatus
+	olNoFlag                      =0x0        # from enum OlFlagStatus
+	olFolderDisplayFolderOnly     =0x1        # from enum OlFolderDisplayMode
+	olFolderDisplayNoNavigation   =0x2        # from enum OlFolderDisplayMode
+	olFolderDisplayNormal         =0x0        # from enum OlFolderDisplayMode
+	olDefaultRegistry             =0x0        # from enum OlFormRegistry
+	olFolderRegistry              =0x3        # from enum OlFormRegistry
+	olOrganizationRegistry        =0x4        # from enum OlFormRegistry
+	olPersonalRegistry            =0x2        # from enum OlFormRegistry
+	olFemale                      =0x1        # from enum OlGender
+	olMale                        =0x2        # from enum OlGender
+	olUnspecified                 =0x0        # from enum OlGender
+	olImportanceHigh              =0x2        # from enum OlImportance
+	olImportanceLow               =0x0        # from enum OlImportance
+	olImportanceNormal            =0x1        # from enum OlImportance
+	olDiscard                     =0x1        # from enum OlInspectorClose
+	olPromptForSave               =0x2        # from enum OlInspectorClose
+	olSave                        =0x0        # from enum OlInspectorClose
+	olAppointmentItem             =0x1        # from enum OlItemType
+	olContactItem                 =0x2        # from enum OlItemType
+	olDistributionListItem        =0x7        # from enum OlItemType
+	olJournalItem                 =0x4        # from enum OlItemType
+	olMailItem                    =0x0        # from enum OlItemType
+	olNoteItem                    =0x5        # from enum OlItemType
+	olPostItem                    =0x6        # from enum OlItemType
+	olTaskItem                    =0x3        # from enum OlItemType
+	olAssociatedContact           =0x1        # from enum OlJournalRecipientType
+	olBCC                         =0x3        # from enum OlMailRecipientType
+	olCC                          =0x2        # from enum OlMailRecipientType
+	olOriginator                  =0x0        # from enum OlMailRecipientType
+	olTo                          =0x1        # from enum OlMailRecipientType
+	olBusiness                    =0x2        # from enum OlMailingAddress
+	olHome                        =0x1        # from enum OlMailingAddress
+	olNone                        =0x0        # from enum OlMailingAddress
+	olOther                       =0x3        # from enum OlMailingAddress
+	olOptional                    =0x2        # from enum OlMeetingRecipientType
+	olOrganizer                   =0x0        # from enum OlMeetingRecipientType
+	olRequired                    =0x1        # from enum OlMeetingRecipientType
+	olResource                    =0x3        # from enum OlMeetingRecipientType
+	olMeetingAccepted             =0x3        # from enum OlMeetingResponse
+	olMeetingDeclined             =0x4        # from enum OlMeetingResponse
+	olMeetingTentative            =0x2        # from enum OlMeetingResponse
+	olMeeting                     =0x1        # from enum OlMeetingStatus
+	olMeetingCanceled             =0x5        # from enum OlMeetingStatus
+	olMeetingReceived             =0x3        # from enum OlMeetingStatus
+	olNonMeeting                  =0x0        # from enum OlMeetingStatus
+	olChat                        =0x2        # from enum OlNetMeetingType
+	olNetMeeting                  =0x0        # from enum OlNetMeetingType
+	olNetShow                     =0x1        # from enum OlNetMeetingType
+	olBlue                        =0x0        # from enum OlNoteColor
+	olGreen                       =0x1        # from enum OlNoteColor
+	olPink                        =0x2        # from enum OlNoteColor
+	olWhite                       =0x4        # from enum OlNoteColor
+	olYellow                      =0x3        # from enum OlNoteColor
+	olAction                      =0x20       # from enum OlObjectClass
+	olActions                     =0x21       # from enum OlObjectClass
+	olAddressEntries              =0x15       # from enum OlObjectClass
+	olAddressEntry                =0x8        # from enum OlObjectClass
+	olAddressList                 =0x7        # from enum OlObjectClass
+	olAddressLists                =0x14       # from enum OlObjectClass
+	olApplication                 =0x0        # from enum OlObjectClass
+	olAppointment                 =0x1a       # from enum OlObjectClass
+	olAttachment                  =0x5        # from enum OlObjectClass
+	olAttachments                 =0x12       # from enum OlObjectClass
+	olContact                     =0x28       # from enum OlObjectClass
+	olDistributionList            =0x45       # from enum OlObjectClass
+	olDocument                    =0x29       # from enum OlObjectClass
+	olException                   =0x1e       # from enum OlObjectClass
+	olExceptions                  =0x1d       # from enum OlObjectClass
+	olExplorer                    =0x22       # from enum OlObjectClass
+	olExplorers                   =0x3c       # from enum OlObjectClass
+	olFolder                      =0x2        # from enum OlObjectClass
+	olFolders                     =0xf        # from enum OlObjectClass
+	olFormDescription             =0x25       # from enum OlObjectClass
+	olInspector                   =0x23       # from enum OlObjectClass
+	olInspectors                  =0x3d       # from enum OlObjectClass
+	olItems                       =0x10       # from enum OlObjectClass
+	olJournal                     =0x2a       # from enum OlObjectClass
+	olLink                        =0x4b       # from enum OlObjectClass
+	olLinks                       =0x4c       # from enum OlObjectClass
+	olMail                        =0x2b       # from enum OlObjectClass
+	olMeetingCancellation         =0x36       # from enum OlObjectClass
+	olMeetingRequest              =0x35       # from enum OlObjectClass
+	olMeetingResponseNegative     =0x37       # from enum OlObjectClass
+	olMeetingResponsePositive     =0x38       # from enum OlObjectClass
+	olMeetingResponseTentative    =0x39       # from enum OlObjectClass
+	olNamespace                   =0x1        # from enum OlObjectClass
+	olNote                        =0x2c       # from enum OlObjectClass
+	olOutlookBarGroup             =0x42       # from enum OlObjectClass
+	olOutlookBarGroups            =0x41       # from enum OlObjectClass
+	olOutlookBarPane              =0x3f       # from enum OlObjectClass
+	olOutlookBarShortcut          =0x44       # from enum OlObjectClass
+	olOutlookBarShortcuts         =0x43       # from enum OlObjectClass
+	olOutlookBarStorage           =0x40       # from enum OlObjectClass
+	olPages                       =0x24       # from enum OlObjectClass
+	olPanes                       =0x3e       # from enum OlObjectClass
+	olPost                        =0x2d       # from enum OlObjectClass
+	olPropertyPageSite            =0x46       # from enum OlObjectClass
+	olPropertyPages               =0x47       # from enum OlObjectClass
+	olRecipient                   =0x4        # from enum OlObjectClass
+	olRecipients                  =0x11       # from enum OlObjectClass
+	olRecurrencePattern           =0x1c       # from enum OlObjectClass
+	olRemote                      =0x2f       # from enum OlObjectClass
+	olReport                      =0x2e       # from enum OlObjectClass
+	olSelection                   =0x4a       # from enum OlObjectClass
+	olSyncObject                  =0x48       # from enum OlObjectClass
+	olSyncObjects                 =0x49       # from enum OlObjectClass
+	olTask                        =0x30       # from enum OlObjectClass
+	olTaskRequest                 =0x31       # from enum OlObjectClass
+	olTaskRequestAccept           =0x33       # from enum OlObjectClass
+	olTaskRequestDecline          =0x34       # from enum OlObjectClass
+	olTaskRequestUpdate           =0x32       # from enum OlObjectClass
+	olUserProperties              =0x26       # from enum OlObjectClass
+	olUserProperty                =0x27       # from enum OlObjectClass
+	olLargeIcon                   =0x0        # from enum OlOutlookBarViewType
+	olSmallIcon                   =0x1        # from enum OlOutlookBarViewType
+	olFolderList                  =0x2        # from enum OlPane
+	olOutlookBar                  =0x1        # from enum OlPane
+	olPreview                     =0x3        # from enum OlPane
+	olApptException               =0x3        # from enum OlRecurrenceState
+	olApptMaster                  =0x1        # from enum OlRecurrenceState
+	olApptNotRecurring            =0x0        # from enum OlRecurrenceState
+	olApptOccurrence              =0x2        # from enum OlRecurrenceState
+	olRecursDaily                 =0x0        # from enum OlRecurrenceType
+	olRecursMonthNth              =0x3        # from enum OlRecurrenceType
+	olRecursMonthly               =0x2        # from enum OlRecurrenceType
+	olRecursWeekly                =0x1        # from enum OlRecurrenceType
+	olRecursYearNth               =0x6        # from enum OlRecurrenceType
+	olRecursYearly                =0x5        # from enum OlRecurrenceType
+	olMarkedForCopy               =0x3        # from enum OlRemoteStatus
+	olMarkedForDelete             =0x4        # from enum OlRemoteStatus
+	olMarkedForDownload           =0x2        # from enum OlRemoteStatus
+	olRemoteStatusNone            =0x0        # from enum OlRemoteStatus
+	olUnMarked                    =0x1        # from enum OlRemoteStatus
+	olResponseAccepted            =0x3        # from enum OlResponseStatus
+	olResponseDeclined            =0x4        # from enum OlResponseStatus
+	olResponseNone                =0x0        # from enum OlResponseStatus
+	olResponseNotResponded        =0x5        # from enum OlResponseStatus
+	olResponseOrganized           =0x1        # from enum OlResponseStatus
+	olResponseTentative           =0x2        # from enum OlResponseStatus
+	olDoc                         =0x4        # from enum OlSaveAsType
+	olHTML                        =0x5        # from enum OlSaveAsType
+	olMSG                         =0x3        # from enum OlSaveAsType
+	olRTF                         =0x1        # from enum OlSaveAsType
+	olTXT                         =0x0        # from enum OlSaveAsType
+	olTemplate                    =0x2        # from enum OlSaveAsType
+	olVCal                        =0x7        # from enum OlSaveAsType
+	olVCard                       =0x6        # from enum OlSaveAsType
+	olConfidential                =0x3        # from enum OlSensitivity
+	olNormal                      =0x0        # from enum OlSensitivity
+	olPersonal                    =0x1        # from enum OlSensitivity
+	olPrivate                     =0x2        # from enum OlSensitivity
+	olAscending                   =0x1        # from enum OlSortOrder
+	olDescending                  =0x2        # from enum OlSortOrder
+	olSortNone                    =0x0        # from enum OlSortOrder
+	olSyncStarted                 =0x1        # from enum OlSyncState
+	olSyncStopped                 =0x0        # from enum OlSyncState
+	olTaskDelegationAccepted      =0x2        # from enum OlTaskDelegationState
+	olTaskDelegationDeclined      =0x3        # from enum OlTaskDelegationState
+	olTaskDelegationUnknown       =0x1        # from enum OlTaskDelegationState
+	olTaskNotDelegated            =0x0        # from enum OlTaskDelegationState
+	olDelegatedTask               =0x1        # from enum OlTaskOwnership
+	olNewTask                     =0x0        # from enum OlTaskOwnership
+	olOwnTask                     =0x2        # from enum OlTaskOwnership
+	olFinalStatus                 =0x3        # from enum OlTaskRecipientType
+	olUpdate                      =0x2        # from enum OlTaskRecipientType
+	olTaskAccept                  =0x2        # from enum OlTaskResponse
+	olTaskAssign                  =0x1        # from enum OlTaskResponse
+	olTaskDecline                 =0x3        # from enum OlTaskResponse
+	olTaskSimple                  =0x0        # from enum OlTaskResponse
+	olTaskComplete                =0x2        # from enum OlTaskStatus
+	olTaskDeferred                =0x4        # from enum OlTaskStatus
+	olTaskInProgress              =0x1        # from enum OlTaskStatus
+	olTaskNotStarted              =0x0        # from enum OlTaskStatus
+	olTaskWaiting                 =0x3        # from enum OlTaskStatus
+	olTrackingDelivered           =0x1        # from enum OlTrackingStatus
+	olTrackingNone                =0x0        # from enum OlTrackingStatus
+	olTrackingNotDelivered        =0x2        # from enum OlTrackingStatus
+	olTrackingNotRead             =0x3        # from enum OlTrackingStatus
+	olTrackingRead                =0x6        # from enum OlTrackingStatus
+	olTrackingRecallFailure       =0x4        # from enum OlTrackingStatus
+	olTrackingRecallSuccess       =0x5        # from enum OlTrackingStatus
+	olTrackingReplied             =0x7        # from enum OlTrackingStatus
+	olCombination                 =0x13       # from enum OlUserPropertyType
+	olCurrency                    =0xe        # from enum OlUserPropertyType
+	olDateTime                    =0x5        # from enum OlUserPropertyType
+	olDuration                    =0x7        # from enum OlUserPropertyType
+	olFormula                     =0x12       # from enum OlUserPropertyType
+	olKeywords                    =0xb        # from enum OlUserPropertyType
+	olNumber                      =0x3        # from enum OlUserPropertyType
+	olPercent                     =0xc        # from enum OlUserPropertyType
+	olText                        =0x1        # from enum OlUserPropertyType
+	olYesNo                       =0x6        # from enum OlUserPropertyType
+	olMaximized                   =0x0        # from enum OlWindowState
+	olMinimized                   =0x1        # from enum OlWindowState
+	olNormalWindow                =0x2        # from enum OlWindowState
 from win32com.client import DispatchBaseClass
 class Action(DispatchBaseClass):
 	CLSID = IID('{00063043-0000-0000-C000-000000000046}')
@@ -277,7 +277,6 @@ class Action(DispatchBaseClass):
 			ret = Dispatch(ret, 'Execute', None, UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"CopyLike": (100, 2, (3, 0), (), "CopyLike", None),
@@ -288,7 +287,6 @@ class Action(DispatchBaseClass):
 		"Prefix": (61, 2, (8, 0), (), "Prefix", None),
 		"ReplyStyle": (101, 2, (3, 0), (), "ReplyStyle", None),
 		"ResponseStyle": (102, 2, (3, 0), (), "ResponseStyle", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"ShowOn": (105, 2, (3, 0), (), "ShowOn", None),
 	}
@@ -305,13 +303,11 @@ class Action(DispatchBaseClass):
 class Actions(DispatchBaseClass):
 	CLSID = IID('{0006303E-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self):
 		ret = self._oleobj_.InvokeTypes(100, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063043-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -322,60 +318,49 @@ class Actions(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(82, LCID, 1, (24, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class AddressEntries(DispatchBaseClass):
 	CLSID = IID('{0006304A-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Type=defaultNamedNotOptArg, Name=defaultNamedOptArg, Address=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((8, 1), (12, 17), (12, 17)),Type
 			, Name, Address)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{0006304B-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetFirst(self):
 		ret = self._oleobj_.InvokeTypes(86, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetFirst', '{0006304B-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetLast(self):
 		ret = self._oleobj_.InvokeTypes(88, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetLast', '{0006304B-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetNext(self):
 		ret = self._oleobj_.InvokeTypes(87, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetNext', '{0006304B-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetPrevious(self):
 		ret = self._oleobj_.InvokeTypes(89, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetPrevious', '{0006304B-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -386,24 +371,19 @@ class AddressEntries(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(97, LCID, 1, (24, 0), ((12, 17), (12, 17)),Property
 			, Order)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"RawTable": (90, 2, (13, 0), (), "RawTable", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class AddressEntry(DispatchBaseClass):
@@ -415,7 +395,6 @@ class AddressEntry(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(769, LCID, 1, (24, 0), ((12, 17),),HWnd
 			)
 	def GetFreeBusy(self, Start=defaultNamedNotOptArg, MinPerChar=defaultNamedNotOptArg, CompleteFormat=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(774, LCID, 1, (8, 0), ((7, 1), (3, 1), (12, 17)),Start
 			, MinPerChar, CompleteFormat)
 	def Update(self, MakePermanent=defaultNamedOptArg, Refresh=defaultNamedOptArg):
@@ -425,19 +404,15 @@ class AddressEntry(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(775, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
 		"Address": (12291, 2, (8, 0), (), "Address", None),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"DisplayType": (14592, 2, (3, 0), (), "DisplayType", None),
 		"ID": (61470, 2, (8, 0), (), "ID", None),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
-		
 		"Manager": (771, 2, (9, 0), (), "Manager", '{0006304B-0000-0000-C000-000000000046}'),
-		
 		"Members": (772, 2, (9, 0), (), "Members", '{0006304A-0000-0000-C000-000000000046}'),
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Type": (12290, 2, (8, 0), (), "Type", None),
 	}
@@ -451,9 +426,7 @@ class AddressList(DispatchBaseClass):
 	CLSID = IID('{00063049-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"AddressEntries": (256, 2, (9, 0), (), "AddressEntries", '{0006304A-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"ID": (61470, 2, (8, 0), (), "ID", None),
@@ -461,7 +434,6 @@ class AddressList(DispatchBaseClass):
 		"IsReadOnly": (61463, 2, (11, 0), (), "IsReadOnly", None),
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -469,7 +441,6 @@ class AddressList(DispatchBaseClass):
 class AddressLists(DispatchBaseClass):
 	CLSID = IID('{00063048-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -477,29 +448,24 @@ class AddressLists(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', '{00063049-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class ApplicationEvents:
 	CLSID = CLSID_Sink = IID('{0006304E-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{0006F03A-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61447 : "OnQuit",
 		    61442 : "OnItemSend",
@@ -530,8 +496,6 @@ class ApplicationEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class Attachment(DispatchBaseClass):
 	CLSID = IID('{00063007-0000-0000-C000-000000000046}')
 	coclass_clsid = None
@@ -541,7 +505,6 @@ class Attachment(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(104, LCID, 1, (24, 0), ((8, 1),),Path
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"DisplayName": (12289, 2, (8, 0), (), "DisplayName", None),
@@ -551,7 +514,6 @@ class Attachment(DispatchBaseClass):
 		"Parent": (113, 2, (9, 0), (), "Parent", None),
 		"PathName": (14088, 2, (8, 0), (), "PathName", None),
 		"Position": (114, 2, (3, 0), (), "Position", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Type": (14085, 2, (3, 0), (), "Type", None),
 	}
@@ -562,14 +524,12 @@ class Attachment(DispatchBaseClass):
 class Attachments(DispatchBaseClass):
 	CLSID = IID('{0006303C-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Source=defaultNamedNotOptArg, Type=defaultNamedOptArg, Position=defaultNamedOptArg, DisplayName=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(101, LCID, 1, (9, 0), ((12, 1), (12, 17), (12, 17), (12, 17)),Source
 			, Type, Position, DisplayName)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063007-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -580,38 +540,30 @@ class Attachments(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Exception(DispatchBaseClass):
 	CLSID = IID('{0006304D-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"AppointmentItem": (8193, 2, (13, 0), (), "AppointmentItem", '{00061030-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Deleted": (8194, 2, (11, 0), (), "Deleted", None),
 		"OriginalDate": (8192, 2, (7, 0), (), "OriginalDate", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -619,7 +571,6 @@ class Exception(DispatchBaseClass):
 class Exceptions(DispatchBaseClass):
 	CLSID = IID('{0006304C-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -627,29 +578,24 @@ class Exceptions(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', '{0006304D-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class ExplorerEvents:
 	CLSID = CLSID_Sink = IID('{0006304F-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063050-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61445 : "OnBeforeViewSwitch",
 		    61441 : "OnActivate",
@@ -682,12 +628,10 @@ class ExplorerEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class ExplorersEvents:
 	CLSID = CLSID_Sink = IID('{00063078-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063053-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnNewExplorer",
 		}
@@ -713,12 +657,10 @@ class ExplorersEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class FoldersEvents:
 	CLSID = CLSID_Sink = IID('{00063076-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063051-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61442 : "OnFolderChange",
 		    61443 : "OnFolderRemove",
@@ -746,8 +688,6 @@ class FoldersEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class FormDescription(DispatchBaseClass):
 	CLSID = IID('{00063046-0000-0000-C000-000000000046}')
 	coclass_clsid = None
@@ -755,7 +695,6 @@ class FormDescription(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(107, LCID, 1, (24, 0), ((3, 1), (12, 17)),Registry
 			, Folder)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Category": (13060, 2, (8, 0), (), "Category", None),
 		"CategorySub": (13061, 2, (8, 0), (), "CategorySub", None),
@@ -774,7 +713,6 @@ class FormDescription(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Password": (103, 2, (8, 0), (), "Password", None),
 		"ScriptText": (109, 2, (8, 0), (), "ScriptText", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Template": (106, 2, (8, 0), (), "Template", None),
 		"UseWordMail": (105, 2, (11, 0), (), "UseWordMail", None),
@@ -801,7 +739,7 @@ class FormDescription(DispatchBaseClass):
 class InspectorEvents:
 	CLSID = CLSID_Sink = IID('{0006307D-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063058-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61446 : "OnDeactivate",
 		    61448 : "OnClose",
@@ -829,12 +767,10 @@ class InspectorEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class InspectorsEvents:
 	CLSID = CLSID_Sink = IID('{00063079-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063054-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnNewInspector",
 		}
@@ -860,12 +796,10 @@ class InspectorsEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class ItemEvents:
 	CLSID = CLSID_Sink = IID('{0006303A-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00061051-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61452 : "OnAttachmentRead",
 		    61451 : "OnAttachmentAdd",
@@ -905,12 +839,10 @@ class ItemEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class ItemsEvents:
 	CLSID = CLSID_Sink = IID('{00063077-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063052-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnItemAdd",
 		    61442 : "OnItemChange",
@@ -938,38 +870,31 @@ class ItemsEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class Link(DispatchBaseClass):
 	CLSID = IID('{00063089-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Item": (8450, 2, (9, 0), (), "Item", None),
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (109, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Type": (8449, 2, (3, 0), (), "Type", None),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(8450, LCID, 2, 1, item)), "Item")
 class Links(DispatchBaseClass):
 	CLSID = IID('{0006308A-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Item=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((9, 1),),Item
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063089-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -980,23 +905,18 @@ class Links(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((12, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class MAPIFolder(DispatchBaseClass):
@@ -1004,7 +924,6 @@ class MAPIFolder(DispatchBaseClass):
 	coclass_clsid = None
 	def AddToPFFavorites(self):
 		return self._oleobj_.InvokeTypes(12565, LCID, 1, (24, 0), (),)
-	
 	def CopyTo(self, DestinationFolder=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(61490, LCID, 1, (9, 0), ((9, 1),),DestinationFolder
 			)
@@ -1015,7 +934,6 @@ class MAPIFolder(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61509, LCID, 1, (24, 0), (),)
 	def Display(self):
 		return self._oleobj_.InvokeTypes(12548, LCID, 1, (24, 0), (),)
-	
 	def GetExplorer(self, DisplayMode=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(12545, LCID, 1, (9, 0), ((12, 17),),DisplayMode
 			)
@@ -1026,20 +944,16 @@ class MAPIFolder(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61492, LCID, 1, (24, 0), ((9, 1),),DestinationFolder
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"DefaultItemType": (12550, 2, (3, 0), (), "DefaultItemType", None),
 		"DefaultMessageClass": (12551, 2, (8, 0), (), "DefaultMessageClass", None),
 		"Description": (12292, 2, (8, 0), (), "Description", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"Folders": (8451, 2, (9, 0), (), "Folders", '{00063040-0000-0000-C000-000000000046}'),
-		
 		"Items": (12544, 2, (9, 0), (), "Items", '{00063041-0000-0000-C000-000000000046}'),
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"StoreID": (12552, 2, (8, 0), (), "StoreID", None),
 		"UnReadItemCount": (13827, 2, (3, 0), (), "UnReadItemCount", None),
@@ -1058,7 +972,7 @@ class MAPIFolder(DispatchBaseClass):
 class NameSpaceEvents:
 	CLSID = CLSID_Sink = IID('{0006308C-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{0006308B-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61445 : "OnOptionsPagesAdd",
 		}
@@ -1084,20 +998,15 @@ class NameSpaceEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class OutlookBarGroup(DispatchBaseClass):
 	CLSID = IID('{00063073-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Name": (0, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
-		
 		"Shortcuts": (8450, 2, (9, 0), (), "Shortcuts", '{00063074-0000-0000-C000-000000000046}'),
 		"ViewType": (8451, 2, (3, 0), (), "ViewType", None),
 	}
@@ -1105,10 +1014,8 @@ class OutlookBarGroup(DispatchBaseClass):
 		"Name": ((0, LCID, 4, 0),()),
 		"ViewType": ((8451, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Name", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1121,7 +1028,7 @@ class OutlookBarGroup(DispatchBaseClass):
 class OutlookBarGroupsEvents:
 	CLSID = CLSID_Sink = IID('{0006307B-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063056-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnGroupAdd",
 		    61443 : "OnBeforeGroupRemove",
@@ -1149,12 +1056,10 @@ class OutlookBarGroupsEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class OutlookBarPaneEvents:
 	CLSID = CLSID_Sink = IID('{0006307A-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063055-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnBeforeNavigate",
 		    61442 : "OnBeforeGroupSwitch",
@@ -1181,28 +1086,22 @@ class OutlookBarPaneEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class OutlookBarShortcut(DispatchBaseClass):
 	CLSID = IID('{00063075-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Name": (0, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Target": (8448, 2, (12, 0), (), "Target", None),
 	}
 	_prop_map_put_ = {
 		"Name": ((0, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Name", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1215,7 +1114,7 @@ class OutlookBarShortcut(DispatchBaseClass):
 class OutlookBarShortcutsEvents:
 	CLSID = CLSID_Sink = IID('{0006307C-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063057-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61441 : "OnShortcutAdd",
 		    61442 : "OnBeforeShortcutAdd",
@@ -1243,27 +1142,20 @@ class OutlookBarShortcutsEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class OutlookBarStorage(DispatchBaseClass):
 	CLSID = IID('{00063071-0000-0000-C000-000000000046}')
 	coclass_clsid = None
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"Groups": (0, 2, (9, 0), (), "Groups", '{00063072-0000-0000-C000-000000000046}'),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (9, 0), (), "Groups", '{00063072-0000-0000-C000-000000000046}'))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1292,23 +1184,18 @@ class Pages(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(301, LCID, 1, (24, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Panes(DispatchBaseClass):
@@ -1321,23 +1208,18 @@ class Panes(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', None, UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class PropertyPage(DispatchBaseClass):
@@ -1354,11 +1236,9 @@ class PropertyPageSite(DispatchBaseClass):
 	def OnStatusChange(self):
 		return self._oleobj_.InvokeTypes(8448, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -1379,23 +1259,18 @@ class PropertyPages(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((12, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Recipient(DispatchBaseClass):
@@ -1404,16 +1279,13 @@ class Recipient(DispatchBaseClass):
 	def Delete(self):
 		return self._oleobj_.InvokeTypes(110, LCID, 1, (24, 0), (),)
 	def FreeBusy(self, Start=defaultNamedNotOptArg, MinPerChar=defaultNamedNotOptArg, CompleteFormat=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(111, LCID, 1, (8, 0), ((7, 1), (3, 1), (12, 17)),Start
 			, MinPerChar, CompleteFormat)
 	def Resolve(self):
 		return self._oleobj_.InvokeTypes(113, LCID, 1, (11, 0), (),)
 	_prop_map_get_ = {
 		"Address": (12291, 2, (8, 0), (), "Address", None),
-		
 		"AddressEntry": (121, 2, (9, 0), (), "AddressEntry", '{0006304B-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"AutoResponse": (106, 2, (8, 0), (), "AutoResponse", None),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
@@ -1424,7 +1296,6 @@ class Recipient(DispatchBaseClass):
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (109, 2, (9, 0), (), "Parent", None),
 		"Resolved": (100, 2, (11, 0), (), "Resolved", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"TrackingStatus": (118, 2, (3, 0), (), "TrackingStatus", None),
 		"TrackingStatusTime": (119, 2, (7, 0), (), "TrackingStatusTime", None),
@@ -1440,14 +1311,12 @@ class Recipient(DispatchBaseClass):
 class Recipients(DispatchBaseClass):
 	CLSID = IID('{0006303B-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Name=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(111, LCID, 1, (9, 0), ((8, 1),),Name
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063045-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -1460,34 +1329,27 @@ class Recipients(DispatchBaseClass):
 	def ResolveAll(self):
 		return self._oleobj_.InvokeTypes(126, LCID, 1, (11, 0), (),)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class RecurrencePattern(DispatchBaseClass):
 	CLSID = IID('{00063044-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def GetOccurrence(self, StartDate=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(4111, LCID, 1, (13, 0), ((7, 1),),StartDate
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -1495,14 +1357,12 @@ class RecurrencePattern(DispatchBaseClass):
 			ret = Dispatch(ret, 'GetOccurrence', '{00061030-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"DayOfMonth": (4096, 2, (3, 0), (), "DayOfMonth", None),
 		"DayOfWeekMask": (4097, 2, (3, 0), (), "DayOfWeekMask", None),
 		"Duration": (4109, 2, (3, 0), (), "Duration", None),
 		"EndTime": (4108, 2, (7, 0), (), "EndTime", None),
-		
 		"Exceptions": (4110, 2, (9, 0), (), "Exceptions", '{0006304C-0000-0000-C000-000000000046}'),
 		"Instance": (4099, 2, (3, 0), (), "Instance", None),
 		"Interval": (4100, 2, (3, 0), (), "Interval", None),
@@ -1514,7 +1374,6 @@ class RecurrencePattern(DispatchBaseClass):
 		"PatternStartDate": (4104, 2, (7, 0), (), "PatternStartDate", None),
 		"RecurrenceType": (4103, 2, (3, 0), (), "RecurrenceType", None),
 		"Regenerate": (4106, 2, (11, 0), (), "Regenerate", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"StartTime": (4105, 2, (7, 0), (), "StartTime", None),
 	}
@@ -1544,29 +1403,24 @@ class Selection(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', None, UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class SyncObjectEvents:
 	CLSID = CLSID_Sink = IID('{00063085-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063084-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		    61443 : "OnError",
 		    61442 : "OnProgress",
@@ -1595,17 +1449,13 @@ class SyncObjectEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class SyncObjects(DispatchBaseClass):
 	CLSID = IID('{00063086-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (13, 0), ((12, 1),),Index
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -1613,43 +1463,35 @@ class SyncObjects(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', '{00063084-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class UserProperties(DispatchBaseClass):
 	CLSID = IID('{0006303D-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Name=defaultNamedNotOptArg, Type=defaultNamedNotOptArg, AddToFolderFields=defaultNamedOptArg, DisplayFormat=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(102, LCID, 1, (9, 0), ((8, 1), (3, 1), (12, 17), (12, 17)),Name
 			, Type, AddToFolderFields, DisplayFormat)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063042-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Find(self, Name=defaultNamedNotOptArg, Custom=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(103, LCID, 1, (9, 0), ((8, 1), (12, 17)),Name
 			, Custom)
 		if ret is not None:
 			ret = Dispatch(ret, 'Find', '{00063042-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -1660,23 +1502,18 @@ class UserProperties(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(82, LCID, 1, (24, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class UserProperty(DispatchBaseClass):
@@ -1685,13 +1522,11 @@ class UserProperty(DispatchBaseClass):
 	def Delete(self):
 		return self._oleobj_.InvokeTypes(108, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Formula": (103, 2, (8, 0), (), "Formula", None),
 		"Name": (112, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Type": (109, 2, (3, 0), (), "Type", None),
 		"ValidationFormula": (104, 2, (8, 0), (), "ValidationFormula", None),
@@ -1704,10 +1539,8 @@ class UserProperty(DispatchBaseClass):
 		"ValidationText": ((105, LCID, 4, 0),()),
 		"Value": ((0, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (12, 0), (), "Value", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1720,13 +1553,11 @@ class UserProperty(DispatchBaseClass):
 class _Application(DispatchBaseClass):
 	CLSID = IID('{00063001-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{0006F03A-0000-0000-C000-000000000046}')
-	
 	def ActiveExplorer(self):
 		ret = self._oleobj_.InvokeTypes(273, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'ActiveExplorer', '{00063003-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def ActiveInspector(self):
 		ret = self._oleobj_.InvokeTypes(274, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -1755,7 +1586,6 @@ class _Application(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'CreateObject', None, UnicodeToString=0)
 		return ret
-	
 	def GetNamespace(self, Type=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(272, LCID, 1, (9, 0), ((8, 1),),Type
 			)
@@ -1765,26 +1595,18 @@ class _Application(DispatchBaseClass):
 	def Quit(self):
 		return self._oleobj_.InvokeTypes(275, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"AnswerWizard": (285, 2, (9, 0), (), "AnswerWizard", '{000C0360-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Assistant": (276, 2, (9, 0), (), "Assistant", '{000C0322-0000-0000-C000-000000000046}'),
-		
 		"COMAddIns": (280, 2, (9, 0), (), "COMAddIns", '{000C0339-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"Explorers": (281, 2, (9, 0), (), "Explorers", '{0006300A-0000-0000-C000-000000000046}'),
 		"FeatureInstall": (286, 2, (3, 0), (), "FeatureInstall", None),
-		
 		"Inspectors": (282, 2, (9, 0), (), "Inspectors", '{00063008-0000-0000-C000-000000000046}'),
-		
 		"LanguageSettings": (283, 2, (9, 0), (), "LanguageSettings", '{000C0353-0000-0000-C000-000000000046}'),
 		"Name": (12289, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"ProductCode": (284, 2, (8, 0), (), "ProductCode", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Version": (278, 2, (8, 0), (), "Version", None),
 	}
@@ -1809,18 +1631,15 @@ class _AppointmentItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def ForwardAsVcal(self):
 		ret = self._oleobj_.InvokeTypes(62791, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
 				return ret
 			ret = Dispatch(ret, 'ForwardAsVcal', '{00061033-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetRecurrencePattern(self):
 		ret = self._oleobj_.InvokeTypes(61604, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -1834,12 +1653,10 @@ class _AppointmentItem(DispatchBaseClass):
 		return ret
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Respond(self, Response=defaultNamedNotOptArg, fNoUI=defaultNamedOptArg, fAdditionalTextDialog=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(62722, LCID, 1, (13, 0), ((3, 1), (12, 17), (12, 17)),Response
 			, fNoUI, fAdditionalTextDialog)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -1854,12 +1671,9 @@ class _AppointmentItem(DispatchBaseClass):
 	def Send(self):
 		return self._oleobj_.InvokeTypes(61557, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
 		"AllDayEvent": (33301, 2, (11, 0), (), "AllDayEvent", None),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -1875,15 +1689,12 @@ class _AppointmentItem(DispatchBaseClass):
 		"Duration": (33299, 2, (3, 0), (), "Duration", None),
 		"End": (33294, 2, (7, 0), (), "End", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"IsOnlineMeeting": (33344, 2, (11, 0), (), "IsOnlineMeeting", None),
 		"IsRecurring": (33315, 2, (11, 0), (), "IsRecurring", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"Location": (33288, 2, (8, 0), (), "Location", None),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
@@ -1902,7 +1713,6 @@ class _AppointmentItem(DispatchBaseClass):
 		"OutlookInternalVersion": (34130, 2, (3, 0), (), "OutlookInternalVersion", None),
 		"OutlookVersion": (34132, 2, (8, 0), (), "OutlookVersion", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Recipients": (63508, 2, (9, 0), (), "Recipients", '{0006303B-0000-0000-C000-000000000046}'),
 		"RecurrenceState": (62789, 2, (3, 0), (), "RecurrenceState", None),
 		"ReminderMinutesBeforeStart": (34049, 2, (3, 0), (), "ReminderMinutesBeforeStart", None),
@@ -1917,13 +1727,11 @@ class _AppointmentItem(DispatchBaseClass):
 		"ResponseStatus": (33304, 2, (3, 0), (), "ResponseStatus", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Start": (33293, 2, (7, 0), (), "Start", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -1981,11 +1789,9 @@ class _ContactItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def ForwardAsVcard(self):
 		ret = self._oleobj_.InvokeTypes(63649, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -2007,14 +1813,11 @@ class _ContactItem(DispatchBaseClass):
 			, Type)
 	_prop_map_get_ = {
 		"Account": (14848, 2, (8, 0), (), "Account", None),
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
 		"Anniversary": (14913, 2, (7, 0), (), "Anniversary", None),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"AssistantName": (14896, 2, (8, 0), (), "AssistantName", None),
 		"AssistantTelephoneNumber": (14894, 2, (8, 0), (), "AssistantTelephoneNumber", None),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Birthday": (14914, 2, (7, 0), (), "Birthday", None),
@@ -2063,12 +1866,10 @@ class _ContactItem(DispatchBaseClass):
 		"FTPSite": (14924, 2, (8, 0), (), "FTPSite", None),
 		"FileAs": (32773, 2, (8, 0), (), "FileAs", None),
 		"FirstName": (14854, 2, (8, 0), (), "FirstName", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
 		"FullName": (12289, 2, (8, 0), (), "FullName", None),
 		"FullNameAndCompany": (32793, 2, (8, 0), (), "FullNameAndCompany", None),
 		"Gender": (14925, 2, (3, 0), (), "Gender", None),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"GovernmentIDNumber": (14855, 2, (8, 0), (), "GovernmentIDNumber", None),
 		"Hobby": (14915, 2, (8, 0), (), "Hobby", None),
@@ -2097,7 +1898,6 @@ class _ContactItem(DispatchBaseClass):
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
 		"LastName": (14865, 2, (8, 0), (), "LastName", None),
 		"LastNameAndFirstName": (32791, 2, (8, 0), (), "LastNameAndFirstName", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MailingAddress": (14869, 2, (8, 0), (), "MailingAddress", None),
@@ -2139,7 +1939,6 @@ class _ContactItem(DispatchBaseClass):
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"SelectedMailingAddress": (32802, 2, (3, 0), (), "SelectedMailingAddress", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Spouse": (14920, 2, (8, 0), (), "Spouse", None),
@@ -2154,7 +1953,6 @@ class _ContactItem(DispatchBaseClass):
 		"User3": (32849, 2, (8, 0), (), "User3", None),
 		"User4": (32850, 2, (8, 0), (), "User4", None),
 		"UserCertificate": (32790, 2, (8, 0), (), "UserCertificate", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 		"WebPage": (32811, 2, (8, 0), (), "WebPage", None),
 		"YomiCompanyName": (32814, 2, (8, 0), (), "YomiCompanyName", None),
@@ -2285,7 +2083,7 @@ class _DDocSiteControl(DispatchBaseClass):
 class _DDocSiteControlEvents:
 	CLSID = CLSID_Sink = IID('{50BB9B50-811D-11CE-B565-00AA00608FAA}')
 	coclass_clsid = IID('{0006F024-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		}
 	def __init__(self, oobj = None):
@@ -2310,8 +2108,6 @@ class _DDocSiteControlEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class _DRecipientControl(DispatchBaseClass):
 	CLSID = IID('{0006F025-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{0006F023-0000-0000-C000-000000000046}')
@@ -2334,7 +2130,7 @@ class _DRecipientControl(DispatchBaseClass):
 class _DRecipientControlEvents:
 	CLSID = CLSID_Sink = IID('{D87E7E17-6897-11CE-A6C0-00AA00608FAA}')
 	coclass_clsid = IID('{0006F023-0000-0000-C000-000000000046}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		}
 	def __init__(self, oobj = None):
@@ -2359,8 +2155,6 @@ class _DRecipientControlEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class _DistListItem(DispatchBaseClass):
 	CLSID = IID('{00063081-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{0006103C-0000-0000-C000-000000000046}')
@@ -2380,7 +2174,6 @@ class _DistListItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetMember(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(63749, LCID, 1, (9, 0), ((3, 1),),Index
 			)
@@ -2404,11 +2197,8 @@ class _DistListItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -2421,13 +2211,10 @@ class _DistListItem(DispatchBaseClass):
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"DLName": (32851, 2, (8, 0), (), "DLName", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MemberCount": (32843, 2, (3, 0), (), "MemberCount", None),
@@ -2441,12 +2228,10 @@ class _DistListItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -2495,11 +2280,8 @@ class _DocumentItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -2510,13 +2292,10 @@ class _DocumentItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -2527,12 +2306,10 @@ class _DocumentItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -2564,23 +2341,17 @@ class _Explorer(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(8708, LCID, 1, (24, 0), ((3, 1), (11, 1)),Pane
 			, Visible)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Caption": (8465, 2, (8, 0), (), "Caption", None),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"CommandBars": (8448, 2, (13, 0), (), "CommandBars", '{55F88893-7708-11D1-ACEB-006008961DA5}'),
-		
 		"CurrentFolder": (8449, 2, (9, 0), (), "CurrentFolder", '{00063006-0000-0000-C000-000000000046}'),
 		"CurrentView": (8704, 2, (12, 0), (), "CurrentView", None),
 		"Height": (8468, 2, (3, 0), (), "Height", None),
 		"Left": (8469, 2, (3, 0), (), "Left", None),
-		
 		"Panes": (8705, 2, (9, 0), (), "Panes", '{00063009-0000-0000-C000-000000000046}'),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Selection": (8706, 2, (9, 0), (), "Selection", '{00063087-0000-0000-C000-000000000046}'),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Top": (8470, 2, (3, 0), (), "Top", None),
 		"Views": (12553, 2, (9, 0), (), "Views", None),
@@ -2599,19 +2370,16 @@ class _Explorer(DispatchBaseClass):
 class _Explorers(DispatchBaseClass):
 	CLSID = IID('{0006300A-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063053-0000-0000-C000-000000000046}')
-	
 	def Add(self, Folder=defaultNamedNotOptArg, DisplayMode=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((12, 1), (3, 17)),Folder
 			, DisplayMode)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063003-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (13, 0), ((12, 1),),Index
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -2619,60 +2387,49 @@ class _Explorers(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', '{00063050-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _Folders(DispatchBaseClass):
 	CLSID = IID('{00063040-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063051-0000-0000-C000-000000000046}')
-	
 	def Add(self, Name=defaultNamedNotOptArg, Type=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((8, 1), (12, 17)),Name
 			, Type)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetFirst(self):
 		ret = self._oleobj_.InvokeTypes(86, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetFirst', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetLast(self):
 		ret = self._oleobj_.InvokeTypes(88, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetLast', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetNext(self):
 		ret = self._oleobj_.InvokeTypes(87, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetNext', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetPrevious(self):
 		ret = self._oleobj_.InvokeTypes(89, LCID, 1, (9, 0), (),)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetPrevious', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -2683,24 +2440,19 @@ class _Folders(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"RawTable": (90, 2, (13, 0), (), "RawTable", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _IDocSiteControl(DispatchBaseClass):
@@ -2754,11 +2506,9 @@ class _Inspector(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(8457, LCID, 1, (24, 0), ((8, 1),),PageName
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Caption": (8465, 2, (8, 0), (), "Caption", None),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"CommandBars": (8448, 2, (13, 0), (), "CommandBars", '{55F88893-7708-11D1-ACEB-006008961DA5}'),
 		"CurrentItem": (8450, 2, (9, 0), (), "CurrentItem", None),
 		"EditorType": (8464, 2, (3, 0), (), "EditorType", None),
@@ -2767,7 +2517,6 @@ class _Inspector(DispatchBaseClass):
 		"Left": (8469, 2, (3, 0), (), "Left", None),
 		"ModifiedFormPages": (8454, 2, (9, 0), (), "ModifiedFormPages", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Top": (8470, 2, (3, 0), (), "Top", None),
 		"Width": (8471, 2, (3, 0), (), "Width", None),
@@ -2784,19 +2533,16 @@ class _Inspector(DispatchBaseClass):
 class _Inspectors(DispatchBaseClass):
 	CLSID = IID('{00063008-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063054-0000-0000-C000-000000000046}')
-	
 	def Add(self, Item=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((9, 1),),Item
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063005-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (13, 0), ((12, 1),),Index
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -2804,23 +2550,18 @@ class _Inspectors(DispatchBaseClass):
 			ret = Dispatch(ret, 'Item', '{00063058-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _Items(DispatchBaseClass):
@@ -2874,7 +2615,6 @@ class _Items(DispatchBaseClass):
 			)
 	def ResetColumns(self):
 		return self._oleobj_.InvokeTypes(93, LCID, 1, (24, 0), (),)
-	
 	def Restrict(self, Filter=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(100, LCID, 1, (9, 0), ((8, 1),),Filter
 			)
@@ -2888,26 +2628,21 @@ class _Items(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(97, LCID, 1, (24, 0), ((8, 1), (12, 17)),Property
 			, Descending)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"IncludeRecurrences": (206, 2, (11, 0), (), "IncludeRecurrences", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"RawTable": (90, 2, (13, 0), (), "RawTable", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 		"IncludeRecurrences": ((206, LCID, 4, 0),()),
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _JournalItem(DispatchBaseClass):
@@ -2926,11 +2661,9 @@ class _JournalItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def Forward(self):
 		ret = self._oleobj_.InvokeTypes(63507, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -2945,22 +2678,18 @@ class _JournalItem(DispatchBaseClass):
 		return ret
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Reply(self):
 		ret = self._oleobj_.InvokeTypes(63504, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
 				return ret
 			ret = Dispatch(ret, 'Reply', '{00061033-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def ReplyAll(self):
 		ret = self._oleobj_.InvokeTypes(63505, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -2977,11 +2706,8 @@ class _JournalItem(DispatchBaseClass):
 	def StopTimer(self):
 		return self._oleobj_.InvokeTypes(63270, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -2999,13 +2725,10 @@ class _JournalItem(DispatchBaseClass):
 		"Duration": (34567, 2, (3, 0), (), "Duration", None),
 		"End": (34568, 2, (7, 0), (), "End", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3014,18 +2737,15 @@ class _JournalItem(DispatchBaseClass):
 		"OutlookInternalVersion": (34130, 2, (3, 0), (), "OutlookInternalVersion", None),
 		"OutlookVersion": (34132, 2, (8, 0), (), "OutlookVersion", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Recipients": (63508, 2, (9, 0), (), "Recipients", '{0006303B-0000-0000-C000-000000000046}'),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Start": (34566, 2, (7, 0), (), "Start", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"Type": (34560, 2, (8, 0), (), "Type", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3068,11 +2788,9 @@ class _MailItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def Forward(self):
 		ret = self._oleobj_.InvokeTypes(63507, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3087,22 +2805,18 @@ class _MailItem(DispatchBaseClass):
 		return ret
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Reply(self):
 		ret = self._oleobj_.InvokeTypes(63504, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
 				return ret
 			ret = Dispatch(ret, 'Reply', '{00061033-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def ReplyAll(self):
 		ret = self._oleobj_.InvokeTypes(63505, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3117,12 +2831,9 @@ class _MailItem(DispatchBaseClass):
 	def Send(self):
 		return self._oleobj_.InvokeTypes(61557, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
 		"AlternateRecipientAllowed": (2, 2, (11, 0), (), "AlternateRecipientAllowed", None),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"AutoForwarded": (5, 2, (11, 0), (), "AutoForwarded", None),
 		"BCC": (3586, 2, (8, 0), (), "BCC", None),
@@ -3142,14 +2853,11 @@ class _MailItem(DispatchBaseClass):
 		"FlagDueBy": (48, 2, (7, 0), (), "FlagDueBy", None),
 		"FlagRequest": (34096, 2, (8, 0), (), "FlagRequest", None),
 		"FlagStatus": (4240, 2, (3, 0), (), "FlagStatus", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"HTMLBody": (62468, 2, (8, 0), (), "HTMLBody", None),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3166,7 +2874,6 @@ class _MailItem(DispatchBaseClass):
 		"ReceivedOnBehalfOfName": (68, 2, (8, 0), (), "ReceivedOnBehalfOfName", None),
 		"ReceivedTime": (3590, 2, (7, 0), (), "ReceivedTime", None),
 		"RecipientReassignmentProhibited": (43, 2, (11, 0), (), "RecipientReassignmentProhibited", None),
-		
 		"Recipients": (63508, 2, (9, 0), (), "Recipients", '{0006303B-0000-0000-C000-000000000046}'),
 		"ReminderOverrideDefault": (34076, 2, (11, 0), (), "ReminderOverrideDefault", None),
 		"ReminderPlaySound": (34078, 2, (11, 0), (), "ReminderPlaySound", None),
@@ -3175,9 +2882,7 @@ class _MailItem(DispatchBaseClass):
 		"ReminderTime": (34050, 2, (7, 0), (), "ReminderTime", None),
 		"RemoteStatus": (34065, 2, (3, 0), (), "RemoteStatus", None),
 		"ReplyRecipientNames": (80, 2, (8, 0), (), "ReplyRecipientNames", None),
-		
 		"ReplyRecipients": (61459, 2, (9, 0), (), "ReplyRecipients", '{0006303B-0000-0000-C000-000000000046}'),
-		
 		"SaveSentMessageFolder": (62465, 2, (9, 0), (), "SaveSentMessageFolder", '{00063006-0000-0000-C000-000000000046}'),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"SenderName": (3098, 2, (8, 0), (), "SenderName", None),
@@ -3185,14 +2890,12 @@ class _MailItem(DispatchBaseClass):
 		"Sent": (62466, 2, (11, 0), (), "Sent", None),
 		"SentOn": (57, 2, (7, 0), (), "SentOn", None),
 		"SentOnBehalfOfName": (66, 2, (8, 0), (), "SentOnBehalfOfName", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"Submitted": (62467, 2, (11, 0), (), "Submitted", None),
 		"To": (3588, 2, (8, 0), (), "To", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 		"VotingOptions": (61467, 2, (8, 0), (), "VotingOptions", None),
 		"VotingResponse": (34084, 2, (8, 0), (), "VotingResponse", None),
@@ -3251,23 +2954,19 @@ class _MeetingItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def Forward(self):
 		ret = self._oleobj_.InvokeTypes(63507, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
 				return ret
 			ret = Dispatch(ret, 'Forward', '{00061036-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetAssociatedAppointment(self, AddToCalendar=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(63328, LCID, 1, (13, 0), ((11, 1),),AddToCalendar
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3282,22 +2981,18 @@ class _MeetingItem(DispatchBaseClass):
 		return ret
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Reply(self):
 		ret = self._oleobj_.InvokeTypes(63504, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
 				return ret
 			ret = Dispatch(ret, 'Reply', '{00061033-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def ReplyAll(self):
 		ret = self._oleobj_.InvokeTypes(63505, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3312,11 +3007,8 @@ class _MeetingItem(DispatchBaseClass):
 	def Send(self):
 		return self._oleobj_.InvokeTypes(61557, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"AutoForwarded": (5, 2, (11, 0), (), "AutoForwarded", None),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
@@ -3334,13 +3026,10 @@ class _MeetingItem(DispatchBaseClass):
 		"FlagDueBy": (48, 2, (7, 0), (), "FlagDueBy", None),
 		"FlagRequest": (34096, 2, (8, 0), (), "FlagRequest", None),
 		"FlagStatus": (4240, 2, (3, 0), (), "FlagStatus", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3351,26 +3040,21 @@ class _MeetingItem(DispatchBaseClass):
 		"OutlookVersion": (34132, 2, (8, 0), (), "OutlookVersion", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"ReceivedTime": (3590, 2, (7, 0), (), "ReceivedTime", None),
-		
 		"Recipients": (63508, 2, (9, 0), (), "Recipients", '{0006303B-0000-0000-C000-000000000046}'),
 		"ReminderSet": (34051, 2, (11, 0), (), "ReminderSet", None),
 		"ReminderTime": (34050, 2, (7, 0), (), "ReminderTime", None),
-		
 		"ReplyRecipients": (61459, 2, (9, 0), (), "ReplyRecipients", '{0006303B-0000-0000-C000-000000000046}'),
-		
 		"SaveSentMessageFolder": (62465, 2, (9, 0), (), "SaveSentMessageFolder", '{00063006-0000-0000-C000-000000000046}'),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"SenderName": (3098, 2, (8, 0), (), "SenderName", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
 		"Sent": (62466, 2, (11, 0), (), "Sent", None),
 		"SentOn": (57, 2, (7, 0), (), "SentOn", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"Submitted": (62467, 2, (11, 0), (), "Submitted", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3404,21 +3088,18 @@ class _NameSpace(DispatchBaseClass):
 	def AddStore(self, Store=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(8473, LCID, 1, (24, 0), ((12, 1),),Store
 			)
-	
 	def CreateRecipient(self, RecipientName=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(8458, LCID, 1, (9, 0), ((8, 1),),RecipientName
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'CreateRecipient', '{00063045-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetDefaultFolder(self, FolderType=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(8459, LCID, 1, (9, 0), ((3, 1),),FolderType
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetDefaultFolder', '{00063006-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetFolderFromID(self, EntryIDFolder=defaultNamedNotOptArg, EntryIDStore=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(8456, LCID, 1, (9, 0), ((8, 1), (12, 17)),EntryIDFolder
 			, EntryIDStore)
@@ -3431,14 +3112,12 @@ class _NameSpace(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'GetItemFromID', None, UnicodeToString=0)
 		return ret
-	
 	def GetRecipientFromID(self, EntryID=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(8455, LCID, 1, (9, 0), ((8, 1),),EntryID
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'GetRecipientFromID', '{00063045-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def GetSharedDefaultFolder(self, Recipient=defaultNamedNotOptArg, FolderType=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(8460, LCID, 1, (9, 0), ((9, 1), (3, 1)),Recipient
 			, FolderType)
@@ -3450,7 +3129,6 @@ class _NameSpace(DispatchBaseClass):
 	def Logon(self, Profile=defaultNamedOptArg, Password=defaultNamedOptArg, ShowDialog=defaultNamedOptArg, NewSession=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(8453, LCID, 1, (24, 0), ((12, 17), (12, 17), (12, 17), (12, 17)),Profile
 			, Password, ShowDialog, NewSession)
-	
 	def PickFolder(self):
 		ret = self._oleobj_.InvokeTypes(8462, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3462,19 +3140,13 @@ class _NameSpace(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(8474, LCID, 1, (24, 0), ((9, 1),),Folder
 			)
 	_prop_map_get_ = {
-		
 		"AddressLists": (8461, 2, (9, 0), (), "AddressLists", '{00063048-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"CurrentUser": (8449, 2, (9, 0), (), "CurrentUser", '{00063045-0000-0000-C000-000000000046}'),
-		
 		"Folders": (8451, 2, (9, 0), (), "Folders", '{00063040-0000-0000-C000-000000000046}'),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
-		
 		"SyncObjects": (8472, 2, (9, 0), (), "SyncObjects", '{00063086-0000-0000-C000-000000000046}'),
 		"Type": (8452, 2, (8, 0), (), "Type", None),
 	}
@@ -3510,7 +3182,6 @@ class _NoteItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
 		"Categories": (36865, 2, (8, 0), (), "Categories", None),
@@ -3518,17 +3189,14 @@ class _NoteItem(DispatchBaseClass):
 		"Color": (35584, 2, (3, 0), (), "Color", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Height": (35587, 2, (3, 0), (), "Height", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
 		"Left": (35588, 2, (3, 0), (), "Left", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (63392, 2, (8, 0), (), "Subject", None),
@@ -3548,14 +3216,12 @@ class _NoteItem(DispatchBaseClass):
 class _OutlookBarGroups(DispatchBaseClass):
 	CLSID = IID('{00063072-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063056-0000-0000-C000-000000000046}')
-	
 	def Add(self, Name=defaultNamedNotOptArg, Index=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((8, 1), (12, 17)),Name
 			, Index)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063073-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3566,39 +3232,30 @@ class _OutlookBarGroups(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((12, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _OutlookBarPane(DispatchBaseClass):
 	CLSID = IID('{00063070-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063055-0000-0000-C000-000000000046}')
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
-		
 		"Contents": (8448, 2, (9, 0), (), "Contents", '{00063071-0000-0000-C000-000000000046}'),
-		
 		"CurrentGroup": (8449, 2, (9, 0), (), "CurrentGroup", '{00063073-0000-0000-C000-000000000046}'),
 		"Name": (0, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Visible": (8451, 2, (11, 0), (), "Visible", None),
 	}
@@ -3606,10 +3263,8 @@ class _OutlookBarPane(DispatchBaseClass):
 		"CurrentGroup": ((8449, LCID, 8, 0),()),
 		"Visible": ((8451, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Name", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3622,14 +3277,12 @@ class _OutlookBarPane(DispatchBaseClass):
 class _OutlookBarShortcuts(DispatchBaseClass):
 	CLSID = IID('{00063074-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00063057-0000-0000-C000-000000000046}')
-	
 	def Add(self, Target=defaultNamedNotOptArg, Name=defaultNamedNotOptArg, Index=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(95, LCID, 1, (9, 0), ((12, 1), (8, 1), (12, 17)),Target
 			, Name, Index)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{00063075-0000-0000-C000-000000000046}', UnicodeToString=0)
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(81, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3640,23 +3293,18 @@ class _OutlookBarShortcuts(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(84, LCID, 1, (24, 0), ((12, 1),),Index
 			)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Count": (80, 2, (3, 0), (), "Count", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __getitem__(self, item):
 		return self._get_good_object_(self._oleobj_.Invoke(*(81, LCID, 1, 1, item)), "Item")
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(80, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _PostItem(DispatchBaseClass):
@@ -3677,11 +3325,9 @@ class _PostItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def Forward(self):
 		ret = self._oleobj_.InvokeTypes(63507, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3698,11 +3344,9 @@ class _PostItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61557, LCID, 1, (24, 0), (),)
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Reply(self):
 		ret = self._oleobj_.InvokeTypes(63504, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3715,11 +3359,8 @@ class _PostItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -3731,14 +3372,11 @@ class _PostItem(DispatchBaseClass):
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
 		"ExpiryTime": (21, 2, (7, 0), (), "ExpiryTime", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"HTMLBody": (62468, 2, (8, 0), (), "HTMLBody", None),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3752,12 +3390,10 @@ class _PostItem(DispatchBaseClass):
 		"SenderName": (3098, 2, (8, 0), (), "SenderName", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
 		"SentOn": (57, 2, (7, 0), (), "SentOn", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3805,11 +3441,8 @@ class _RemoteItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -3820,14 +3453,11 @@ class _RemoteItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"HasAttachment": (36615, 2, (11, 0), (), "HasAttachment", None),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3839,14 +3469,12 @@ class _RemoteItem(DispatchBaseClass):
 		"RemoteMessageClass": (36610, 2, (8, 0), (), "RemoteMessageClass", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"TransferSize": (36613, 2, (3, 0), (), "TransferSize", None),
 		"TransferTime": (36612, 2, (3, 0), (), "TransferTime", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3892,11 +3520,8 @@ class _ReportItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -3907,13 +3532,10 @@ class _ReportItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -3924,12 +3546,10 @@ class _ReportItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3953,12 +3573,10 @@ class _SyncObject(DispatchBaseClass):
 	def Stop(self):
 		return self._oleobj_.InvokeTypes(8450, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
 		"Class": (61450, 2, (3, 0), (), "Class", None),
 		"Name": (8448, 2, (8, 0), (), "Name", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -3966,11 +3584,9 @@ class _SyncObject(DispatchBaseClass):
 class _TaskItem(DispatchBaseClass):
 	CLSID = IID('{00063035-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{00061032-0000-0000-C000-000000000046}')
-	
 	def Assign(self):
 		ret = self._oleobj_.InvokeTypes(63008, LCID, 1, (13, 0), (),)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -3994,7 +3610,6 @@ class _TaskItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetRecurrencePattern(self):
 		ret = self._oleobj_.InvokeTypes(61604, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -4010,12 +3625,10 @@ class _TaskItem(DispatchBaseClass):
 		return ret
 	def PrintOut(self):
 		return self._oleobj_.InvokeTypes(61491, LCID, 1, (24, 0), (),)
-	
 	def Respond(self, Response=defaultNamedNotOptArg, fNoUI=defaultNamedNotOptArg, fAdditionalTextDialog=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(63009, LCID, 1, (13, 0), ((3, 1), (12, 1), (12, 1)),Response
 			, fNoUI, fAdditionalTextDialog)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4037,12 +3650,9 @@ class _TaskItem(DispatchBaseClass):
 			ret = Dispatch(ret, 'StatusReport', None, UnicodeToString=0)
 		return ret
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
 		"ActualWork": (33040, 2, (3, 0), (), "ActualWork", None),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -4061,14 +3671,11 @@ class _TaskItem(DispatchBaseClass):
 		"Delegator": (33057, 2, (8, 0), (), "Delegator", None),
 		"DueDate": (33029, 2, (7, 0), (), "DueDate", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"IsRecurring": (62999, 2, (11, 0), (), "IsRecurring", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -4081,7 +3688,6 @@ class _TaskItem(DispatchBaseClass):
 		"Ownership": (33065, 2, (3, 0), (), "Ownership", None),
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"PercentComplete": (63007, 2, (3, 0), (), "PercentComplete", None),
-		
 		"Recipients": (63508, 2, (9, 0), (), "Recipients", '{0006303B-0000-0000-C000-000000000046}'),
 		"ReminderOverrideDefault": (34076, 2, (11, 0), (), "ReminderOverrideDefault", None),
 		"ReminderPlaySound": (34078, 2, (11, 0), (), "ReminderPlaySound", None),
@@ -4093,7 +3699,6 @@ class _TaskItem(DispatchBaseClass):
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"SchedulePlusPriority": (33071, 2, (8, 0), (), "SchedulePlusPriority", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"StartDate": (33028, 2, (7, 0), (), "StartDate", None),
@@ -4104,7 +3709,6 @@ class _TaskItem(DispatchBaseClass):
 		"TeamTask": (33027, 2, (11, 0), (), "TeamTask", None),
 		"TotalWork": (33041, 2, (3, 0), (), "TotalWork", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -4159,12 +3763,10 @@ class _TaskRequestAcceptItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetAssociatedTask(self, AddToTaskList=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(61460, LCID, 1, (13, 0), ((11, 1),),AddToTaskList
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4185,11 +3787,8 @@ class _TaskRequestAcceptItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -4200,13 +3799,10 @@ class _TaskRequestAcceptItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -4217,12 +3813,10 @@ class _TaskRequestAcceptItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -4254,12 +3848,10 @@ class _TaskRequestDeclineItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetAssociatedTask(self, AddToTaskList=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(61460, LCID, 1, (13, 0), ((11, 1),),AddToTaskList
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4280,11 +3872,8 @@ class _TaskRequestDeclineItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -4295,13 +3884,10 @@ class _TaskRequestDeclineItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -4312,12 +3898,10 @@ class _TaskRequestDeclineItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -4349,12 +3933,10 @@ class _TaskRequestItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetAssociatedTask(self, AddToTaskList=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(61460, LCID, 1, (13, 0), ((11, 1),),AddToTaskList
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4375,11 +3957,8 @@ class _TaskRequestItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -4390,13 +3969,10 @@ class _TaskRequestItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -4407,12 +3983,10 @@ class _TaskRequestItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -4444,12 +4018,10 @@ class _TaskRequestUpdateItem(DispatchBaseClass):
 	def Display(self, Modal=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(61606, LCID, 1, (24, 0), ((12, 17),),Modal
 			)
-	
 	def GetAssociatedTask(self, AddToTaskList=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(61460, LCID, 1, (13, 0), ((11, 1),),AddToTaskList
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4470,11 +4042,8 @@ class _TaskRequestUpdateItem(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(61521, LCID, 1, (24, 0), ((8, 1), (12, 17)),Path
 			, Type)
 	_prop_map_get_ = {
-		
 		"Actions": (63511, 2, (9, 0), (), "Actions", '{0006303E-0000-0000-C000-000000000046}'),
-		
 		"Application": (61440, 2, (9, 0), (), "Application", '{00063001-0000-0000-C000-000000000046}'),
-		
 		"Attachments": (63509, 2, (9, 0), (), "Attachments", '{0006303C-0000-0000-C000-000000000046}'),
 		"BillingInformation": (34101, 2, (8, 0), (), "BillingInformation", None),
 		"Body": (37120, 2, (8, 0), (), "Body", None),
@@ -4485,13 +4054,10 @@ class _TaskRequestUpdateItem(DispatchBaseClass):
 		"ConversationTopic": (112, 2, (8, 0), (), "ConversationTopic", None),
 		"CreationTime": (12295, 2, (7, 0), (), "CreationTime", None),
 		"EntryID": (61470, 2, (8, 0), (), "EntryID", None),
-		
 		"FormDescription": (61589, 2, (9, 0), (), "FormDescription", '{00063046-0000-0000-C000-000000000046}'),
-		
 		"GetInspector": (61502, 2, (9, 0), (), "GetInspector", '{00063005-0000-0000-C000-000000000046}'),
 		"Importance": (23, 2, (3, 0), (), "Importance", None),
 		"LastModificationTime": (12296, 2, (7, 0), (), "LastModificationTime", None),
-		
 		"Links": (62469, 2, (9, 0), (), "Links", '{0006308A-0000-0000-C000-000000000046}'),
 		"MAPIOBJECT": (61696, 2, (13, 0), (), "MAPIOBJECT", None),
 		"MessageClass": (26, 2, (8, 0), (), "MessageClass", None),
@@ -4502,12 +4068,10 @@ class _TaskRequestUpdateItem(DispatchBaseClass):
 		"Parent": (61441, 2, (9, 0), (), "Parent", None),
 		"Saved": (61603, 2, (11, 0), (), "Saved", None),
 		"Sensitivity": (54, 2, (3, 0), (), "Sensitivity", None),
-		
 		"Session": (61451, 2, (9, 0), (), "Session", '{00063002-0000-0000-C000-000000000046}'),
 		"Size": (3592, 2, (3, 0), (), "Size", None),
 		"Subject": (55, 2, (8, 0), (), "Subject", None),
 		"UnRead": (61468, 2, (11, 0), (), "UnRead", None),
-		
 		"UserProperties": (63510, 2, (9, 0), (), "UserProperties", '{0006303D-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
@@ -4524,7 +4088,7 @@ class _TaskRequestUpdateItem(DispatchBaseClass):
 		"UnRead": ((61468, LCID, 4, 0),()),
 	}
 from win32com.client import CoClassBaseClass
-class Application(CoClassBaseClass): 
+class Application(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006F03A-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ApplicationEvents,
@@ -4534,7 +4098,7 @@ class Application(CoClassBaseClass):
 		_Application,
 	]
 	default_interface = _Application
-class AppointmentItem(CoClassBaseClass): 
+class AppointmentItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061030-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4544,7 +4108,7 @@ class AppointmentItem(CoClassBaseClass):
 		_AppointmentItem,
 	]
 	default_interface = _AppointmentItem
-class ContactItem(CoClassBaseClass): 
+class ContactItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061031-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4554,7 +4118,7 @@ class ContactItem(CoClassBaseClass):
 		_ContactItem,
 	]
 	default_interface = _ContactItem
-class DistListItem(CoClassBaseClass): 
+class DistListItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006103C-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4564,7 +4128,7 @@ class DistListItem(CoClassBaseClass):
 		_DistListItem,
 	]
 	default_interface = _DistListItem
-class DocumentItem(CoClassBaseClass): 
+class DocumentItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061061-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4574,7 +4138,7 @@ class DocumentItem(CoClassBaseClass):
 		_DocumentItem,
 	]
 	default_interface = _DocumentItem
-class Explorer(CoClassBaseClass): 
+class Explorer(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063050-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ExplorerEvents,
@@ -4584,7 +4148,7 @@ class Explorer(CoClassBaseClass):
 		_Explorer,
 	]
 	default_interface = _Explorer
-class Explorers(CoClassBaseClass): 
+class Explorers(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063053-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ExplorersEvents,
@@ -4594,7 +4158,7 @@ class Explorers(CoClassBaseClass):
 		_Explorers,
 	]
 	default_interface = _Explorers
-class Folders(CoClassBaseClass): 
+class Folders(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063051-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		FoldersEvents,
@@ -4604,7 +4168,7 @@ class Folders(CoClassBaseClass):
 		_Folders,
 	]
 	default_interface = _Folders
-class Inspector(CoClassBaseClass): 
+class Inspector(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063058-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		InspectorEvents,
@@ -4614,7 +4178,7 @@ class Inspector(CoClassBaseClass):
 		_Inspector,
 	]
 	default_interface = _Inspector
-class Inspectors(CoClassBaseClass): 
+class Inspectors(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063054-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		InspectorsEvents,
@@ -4624,7 +4188,7 @@ class Inspectors(CoClassBaseClass):
 		_Inspectors,
 	]
 	default_interface = _Inspectors
-class Items(CoClassBaseClass): 
+class Items(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063052-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemsEvents,
@@ -4634,7 +4198,7 @@ class Items(CoClassBaseClass):
 		_Items,
 	]
 	default_interface = _Items
-class JournalItem(CoClassBaseClass): 
+class JournalItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061037-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4644,7 +4208,7 @@ class JournalItem(CoClassBaseClass):
 		_JournalItem,
 	]
 	default_interface = _JournalItem
-class MailItem(CoClassBaseClass): 
+class MailItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061033-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4654,7 +4218,7 @@ class MailItem(CoClassBaseClass):
 		_MailItem,
 	]
 	default_interface = _MailItem
-class MeetingItem(CoClassBaseClass): 
+class MeetingItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061036-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4664,7 +4228,7 @@ class MeetingItem(CoClassBaseClass):
 		_MeetingItem,
 	]
 	default_interface = _MeetingItem
-class NameSpace(CoClassBaseClass): 
+class NameSpace(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006308B-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		NameSpaceEvents,
@@ -4674,7 +4238,7 @@ class NameSpace(CoClassBaseClass):
 		_NameSpace,
 	]
 	default_interface = _NameSpace
-class NoteItem(CoClassBaseClass): 
+class NoteItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061034-0000-0000-C000-000000000046}')
 	coclass_sources = [
 	]
@@ -4682,7 +4246,7 @@ class NoteItem(CoClassBaseClass):
 		_NoteItem,
 	]
 	default_interface = _NoteItem
-class OutlookBarGroups(CoClassBaseClass): 
+class OutlookBarGroups(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063056-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		OutlookBarGroupsEvents,
@@ -4692,7 +4256,7 @@ class OutlookBarGroups(CoClassBaseClass):
 		_OutlookBarGroups,
 	]
 	default_interface = _OutlookBarGroups
-class OutlookBarPane(CoClassBaseClass): 
+class OutlookBarPane(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063055-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		OutlookBarPaneEvents,
@@ -4702,7 +4266,7 @@ class OutlookBarPane(CoClassBaseClass):
 		_OutlookBarPane,
 	]
 	default_interface = _OutlookBarPane
-class OutlookBarShortcuts(CoClassBaseClass): 
+class OutlookBarShortcuts(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063057-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		OutlookBarShortcutsEvents,
@@ -4712,7 +4276,7 @@ class OutlookBarShortcuts(CoClassBaseClass):
 		_OutlookBarShortcuts,
 	]
 	default_interface = _OutlookBarShortcuts
-class PostItem(CoClassBaseClass): 
+class PostItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006103A-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4722,7 +4286,7 @@ class PostItem(CoClassBaseClass):
 		_PostItem,
 	]
 	default_interface = _PostItem
-class RemoteItem(CoClassBaseClass): 
+class RemoteItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061060-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4732,7 +4296,7 @@ class RemoteItem(CoClassBaseClass):
 		_RemoteItem,
 	]
 	default_interface = _RemoteItem
-class ReportItem(CoClassBaseClass): 
+class ReportItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061035-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4742,7 +4306,7 @@ class ReportItem(CoClassBaseClass):
 		_ReportItem,
 	]
 	default_interface = _ReportItem
-class SyncObject(CoClassBaseClass): 
+class SyncObject(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00063084-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		SyncObjectEvents,
@@ -4752,7 +4316,7 @@ class SyncObject(CoClassBaseClass):
 		_SyncObject,
 	]
 	default_interface = _SyncObject
-class TaskItem(CoClassBaseClass): 
+class TaskItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061032-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4762,7 +4326,7 @@ class TaskItem(CoClassBaseClass):
 		_TaskItem,
 	]
 	default_interface = _TaskItem
-class TaskRequestAcceptItem(CoClassBaseClass): 
+class TaskRequestAcceptItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061052-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4772,7 +4336,7 @@ class TaskRequestAcceptItem(CoClassBaseClass):
 		_TaskRequestAcceptItem,
 	]
 	default_interface = _TaskRequestAcceptItem
-class TaskRequestDeclineItem(CoClassBaseClass): 
+class TaskRequestDeclineItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061053-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4782,7 +4346,7 @@ class TaskRequestDeclineItem(CoClassBaseClass):
 		_TaskRequestDeclineItem,
 	]
 	default_interface = _TaskRequestDeclineItem
-class TaskRequestItem(CoClassBaseClass): 
+class TaskRequestItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061050-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4792,7 +4356,7 @@ class TaskRequestItem(CoClassBaseClass):
 		_TaskRequestItem,
 	]
 	default_interface = _TaskRequestItem
-class TaskRequestUpdateItem(CoClassBaseClass): 
+class TaskRequestUpdateItem(CoClassBaseClass): # A CoClass
 	CLSID = IID('{00061051-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		ItemEvents,
@@ -4802,7 +4366,7 @@ class TaskRequestUpdateItem(CoClassBaseClass):
 		_TaskRequestUpdateItem,
 	]
 	default_interface = _TaskRequestUpdateItem
-class _DocSiteControl(CoClassBaseClass): 
+class _DocSiteControl(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006F024-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		_DDocSiteControlEvents,
@@ -4812,7 +4376,7 @@ class _DocSiteControl(CoClassBaseClass):
 		_DDocSiteControl,
 	]
 	default_interface = _DDocSiteControl
-class _RecipientControl(CoClassBaseClass): 
+class _RecipientControl(CoClassBaseClass): # A CoClass
 	CLSID = IID('{0006F023-0000-0000-C000-000000000046}')
 	coclass_sources = [
 		_DRecipientControlEvents,

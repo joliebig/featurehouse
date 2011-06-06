@@ -97,7 +97,7 @@ if not hasattr(sys, "frozen"):
             sys.path.remove(path)
             assert path not in sys.path, \
                    "Please remove multiple copies of windows\system32 in path"
-            sys.path.append(path) 
+            sys.path.append(path) # put it at the *end*
     del sys32path
     del shell
     del shellcon
@@ -112,7 +112,7 @@ from ntsecuritycon import *
 class Service(win32serviceutil.ServiceFramework):
     _svc_name_ = "pop3proxy"
     _svc_display_name_ = "SpamBayes Service"
-    _svc_deps_ =  ['tcpip'] 
+    _svc_deps_ =  ['tcpip'] # We depend on the tcpip service.
     def __init__(self, args):
         win32serviceutil.ServiceFramework.__init__(self, args)
         self.event_stopped = threading.Event()

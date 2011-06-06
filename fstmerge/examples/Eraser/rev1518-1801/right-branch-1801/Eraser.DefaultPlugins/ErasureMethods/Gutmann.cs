@@ -1,13 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
  [DefaultFileErasure(1)]
@@ -18,17 +14,14 @@ namespace Eraser.DefaultPlugins
   {
    get { return S._("Gutmann"); }
   }
-
   public override Guid Guid
   {
    get { return GetType().GUID; }
   }
-
   protected override bool RandomizePasses
   {
    get { return true; }
   }
-
   protected override ErasureMethodPass[] PassesSet
   {
    get
@@ -74,7 +67,6 @@ namespace Eraser.DefaultPlugins
    }
   }
  }
-
  [Guid("AE5EB764-41B0-4601-BDF2-326B5838D44A")]
  sealed class GutmannLite : PassBasedErasureMethod
  {
@@ -82,17 +74,14 @@ namespace Eraser.DefaultPlugins
   {
    get { return S._("Gutmann Lite"); }
   }
-
   public override Guid Guid
   {
    get { return GetType().GUID; }
   }
-
   protected override bool RandomizePasses
   {
    get { return false; }
   }
-
   protected override ErasureMethodPass[] PassesSet
   {
    get

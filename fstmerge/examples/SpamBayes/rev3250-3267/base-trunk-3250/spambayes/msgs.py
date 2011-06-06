@@ -43,10 +43,10 @@ class MsgStream(object):
             return
         for directory in self.directories:
             all = os.listdir(directory)
-            random.seed(hash(max(all)) ^ SEED) 
+            random.seed(hash(max(all)) ^ SEED) # reproducible across calls
             random.shuffle(all)
             del all[self.keep:]
-            all.sort()  
+            all.sort()  # seems to speed access on Win98!
             for fname in all:
                 yield Msg(directory, fname)
     def __iter__(self):

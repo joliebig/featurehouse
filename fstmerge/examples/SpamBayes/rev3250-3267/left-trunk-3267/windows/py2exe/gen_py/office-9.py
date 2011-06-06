@@ -14,1182 +14,1180 @@ MinorVersion = 1
 LibraryFlags = 8
 LCID = 0x0
 class constants:
-	offPropertyTypeBoolean        =0x2        
-	offPropertyTypeDate           =0x3        
-	offPropertyTypeFloat          =0x5        
-	offPropertyTypeNumber         =0x1        
-	offPropertyTypeString         =0x4        
-	msoAlignBottoms               =0x5        
-	msoAlignCenters               =0x1        
-	msoAlignLefts                 =0x0        
-	msoAlignMiddles               =0x4        
-	msoAlignRights                =0x2        
-	msoAlignTops                  =0x3        
-	msoAnimationAppear            =0x20       
-	msoAnimationBeginSpeaking     =0x4        
-	msoAnimationCharacterSuccessMajor=0x6        
-	msoAnimationCheckingSomething =0x67       
-	msoAnimationDisappear         =0x1f       
-	msoAnimationEmptyTrash        =0x74       
-	msoAnimationGestureDown       =0x71       
-	msoAnimationGestureLeft       =0x72       
-	msoAnimationGestureRight      =0x13       
-	msoAnimationGestureUp         =0x73       
-	msoAnimationGetArtsy          =0x64       
-	msoAnimationGetAttentionMajor =0xb        
-	msoAnimationGetAttentionMinor =0xc        
-	msoAnimationGetTechy          =0x65       
-	msoAnimationGetWizardy        =0x66       
-	msoAnimationGoodbye           =0x3        
-	msoAnimationGreeting          =0x2        
-	msoAnimationIdle              =0x1        
-	msoAnimationListensToComputer =0x1a       
-	msoAnimationLookDown          =0x68       
-	msoAnimationLookDownLeft      =0x69       
-	msoAnimationLookDownRight     =0x6a       
-	msoAnimationLookLeft          =0x6b       
-	msoAnimationLookRight         =0x6c       
-	msoAnimationLookUp            =0x6d       
-	msoAnimationLookUpLeft        =0x6e       
-	msoAnimationLookUpRight       =0x6f       
-	msoAnimationPrinting          =0x12       
-	msoAnimationRestPose          =0x5        
-	msoAnimationSaving            =0x70       
-	msoAnimationSearching         =0xd        
-	msoAnimationSendingMail       =0x19       
-	msoAnimationThinking          =0x18       
-	msoAnimationWorkingAtSomething=0x17       
-	msoAnimationWritingNotingSomething=0x16       
-	msoLanguageIDExeMode          =0x4        
-	msoLanguageIDHelp             =0x3        
-	msoLanguageIDInstall          =0x1        
-	msoLanguageIDUI               =0x2        
-	msoLanguageIDUIPrevious       =0x5        
-	msoArrowheadLengthMedium      =0x2        
-	msoArrowheadLengthMixed       =-2         
-	msoArrowheadLong              =0x3        
-	msoArrowheadShort             =0x1        
-	msoArrowheadDiamond           =0x5        
-	msoArrowheadNone              =0x1        
-	msoArrowheadOpen              =0x3        
-	msoArrowheadOval              =0x6        
-	msoArrowheadStealth           =0x4        
-	msoArrowheadStyleMixed        =-2         
-	msoArrowheadTriangle          =0x2        
-	msoArrowheadNarrow            =0x1        
-	msoArrowheadWide              =0x3        
-	msoArrowheadWidthMedium       =0x2        
-	msoArrowheadWidthMixed        =-2         
-	msoShape16pointStar           =0x5e       
-	msoShape24pointStar           =0x5f       
-	msoShape32pointStar           =0x60       
-	msoShape4pointStar            =0x5b       
-	msoShape5pointStar            =0x5c       
-	msoShape8pointStar            =0x5d       
-	msoShapeActionButtonBackorPrevious=0x81       
-	msoShapeActionButtonBeginning =0x83       
-	msoShapeActionButtonCustom    =0x7d       
-	msoShapeActionButtonDocument  =0x86       
-	msoShapeActionButtonEnd       =0x84       
-	msoShapeActionButtonForwardorNext=0x82       
-	msoShapeActionButtonHelp      =0x7f       
-	msoShapeActionButtonHome      =0x7e       
-	msoShapeActionButtonInformation=0x80       
-	msoShapeActionButtonMovie     =0x88       
-	msoShapeActionButtonReturn    =0x85       
-	msoShapeActionButtonSound     =0x87       
-	msoShapeArc                   =0x19       
-	msoShapeBalloon               =0x89       
-	msoShapeBentArrow             =0x29       
-	msoShapeBentUpArrow           =0x2c       
-	msoShapeBevel                 =0xf        
-	msoShapeBlockArc              =0x14       
-	msoShapeCan                   =0xd        
-	msoShapeChevron               =0x34       
-	msoShapeCircularArrow         =0x3c       
-	msoShapeCloudCallout          =0x6c       
-	msoShapeCross                 =0xb        
-	msoShapeCube                  =0xe        
-	msoShapeCurvedDownArrow       =0x30       
-	msoShapeCurvedDownRibbon      =0x64       
-	msoShapeCurvedLeftArrow       =0x2e       
-	msoShapeCurvedRightArrow      =0x2d       
-	msoShapeCurvedUpArrow         =0x2f       
-	msoShapeCurvedUpRibbon        =0x63       
-	msoShapeDiamond               =0x4        
-	msoShapeDonut                 =0x12       
-	msoShapeDoubleBrace           =0x1b       
-	msoShapeDoubleBracket         =0x1a       
-	msoShapeDoubleWave            =0x68       
-	msoShapeDownArrow             =0x24       
-	msoShapeDownArrowCallout      =0x38       
-	msoShapeDownRibbon            =0x62       
-	msoShapeExplosion1            =0x59       
-	msoShapeExplosion2            =0x5a       
-	msoShapeFlowchartAlternateProcess=0x3e       
-	msoShapeFlowchartCard         =0x4b       
-	msoShapeFlowchartCollate      =0x4f       
-	msoShapeFlowchartConnector    =0x49       
-	msoShapeFlowchartData         =0x40       
-	msoShapeFlowchartDecision     =0x3f       
-	msoShapeFlowchartDelay        =0x54       
-	msoShapeFlowchartDirectAccessStorage=0x57       
-	msoShapeFlowchartDisplay      =0x58       
-	msoShapeFlowchartDocument     =0x43       
-	msoShapeFlowchartExtract      =0x51       
-	msoShapeFlowchartInternalStorage=0x42       
-	msoShapeFlowchartMagneticDisk =0x56       
-	msoShapeFlowchartManualInput  =0x47       
-	msoShapeFlowchartManualOperation=0x48       
-	msoShapeFlowchartMerge        =0x52       
-	msoShapeFlowchartMultidocument=0x44       
-	msoShapeFlowchartOffpageConnector=0x4a       
-	msoShapeFlowchartOr           =0x4e       
-	msoShapeFlowchartPredefinedProcess=0x41       
-	msoShapeFlowchartPreparation  =0x46       
-	msoShapeFlowchartProcess      =0x3d       
-	msoShapeFlowchartPunchedTape  =0x4c       
-	msoShapeFlowchartSequentialAccessStorage=0x55       
-	msoShapeFlowchartSort         =0x50       
-	msoShapeFlowchartStoredData   =0x53       
-	msoShapeFlowchartSummingJunction=0x4d       
-	msoShapeFlowchartTerminator   =0x45       
-	msoShapeFoldedCorner          =0x10       
-	msoShapeHeart                 =0x15       
-	msoShapeHexagon               =0xa        
-	msoShapeHorizontalScroll      =0x66       
-	msoShapeIsoscelesTriangle     =0x7        
-	msoShapeLeftArrow             =0x22       
-	msoShapeLeftArrowCallout      =0x36       
-	msoShapeLeftBrace             =0x1f       
-	msoShapeLeftBracket           =0x1d       
-	msoShapeLeftRightArrow        =0x25       
-	msoShapeLeftRightArrowCallout =0x39       
-	msoShapeLeftRightUpArrow      =0x28       
-	msoShapeLeftUpArrow           =0x2b       
-	msoShapeLightningBolt         =0x16       
-	msoShapeLineCallout1          =0x6d       
-	msoShapeLineCallout1AccentBar =0x71       
-	msoShapeLineCallout1BorderandAccentBar=0x79       
-	msoShapeLineCallout1NoBorder  =0x75       
-	msoShapeLineCallout2          =0x6e       
-	msoShapeLineCallout2AccentBar =0x72       
-	msoShapeLineCallout2BorderandAccentBar=0x7a       
-	msoShapeLineCallout2NoBorder  =0x76       
-	msoShapeLineCallout3          =0x6f       
-	msoShapeLineCallout3AccentBar =0x73       
-	msoShapeLineCallout3BorderandAccentBar=0x7b       
-	msoShapeLineCallout3NoBorder  =0x77       
-	msoShapeLineCallout4          =0x70       
-	msoShapeLineCallout4AccentBar =0x74       
-	msoShapeLineCallout4BorderandAccentBar=0x7c       
-	msoShapeLineCallout4NoBorder  =0x78       
-	msoShapeMixed                 =-2         
-	msoShapeMoon                  =0x18       
-	msoShapeNoSymbol              =0x13       
-	msoShapeNotPrimitive          =0x8a       
-	msoShapeNotchedRightArrow     =0x32       
-	msoShapeOctagon               =0x6        
-	msoShapeOval                  =0x9        
-	msoShapeOvalCallout           =0x6b       
-	msoShapeParallelogram         =0x2        
-	msoShapePentagon              =0x33       
-	msoShapePlaque                =0x1c       
-	msoShapeQuadArrow             =0x27       
-	msoShapeQuadArrowCallout      =0x3b       
-	msoShapeRectangle             =0x1        
-	msoShapeRectangularCallout    =0x69       
-	msoShapeRegularPentagon       =0xc        
-	msoShapeRightArrow            =0x21       
-	msoShapeRightArrowCallout     =0x35       
-	msoShapeRightBrace            =0x20       
-	msoShapeRightBracket          =0x1e       
-	msoShapeRightTriangle         =0x8        
-	msoShapeRoundedRectangle      =0x5        
-	msoShapeRoundedRectangularCallout=0x6a       
-	msoShapeSmileyFace            =0x11       
-	msoShapeStripedRightArrow     =0x31       
-	msoShapeSun                   =0x17       
-	msoShapeTrapezoid             =0x3        
-	msoShapeUTurnArrow            =0x2a       
-	msoShapeUpArrow               =0x23       
-	msoShapeUpArrowCallout        =0x37       
-	msoShapeUpDownArrow           =0x26       
-	msoShapeUpDownArrowCallout    =0x3a       
-	msoShapeUpRibbon              =0x61       
-	msoShapeVerticalScroll        =0x65       
-	msoShapeWave                  =0x67       
-	msoBalloonButtonAbort         =-8         
-	msoBalloonButtonBack          =-5         
-	msoBalloonButtonCancel        =-2         
-	msoBalloonButtonClose         =-12        
-	msoBalloonButtonIgnore        =-9         
-	msoBalloonButtonNext          =-6         
-	msoBalloonButtonNo            =-4         
-	msoBalloonButtonNull          =0x0        
-	msoBalloonButtonOK            =-1         
-	msoBalloonButtonOptions       =-14        
-	msoBalloonButtonRetry         =-7         
-	msoBalloonButtonSearch        =-10        
-	msoBalloonButtonSnooze        =-11        
-	msoBalloonButtonTips          =-13        
-	msoBalloonButtonYes           =-3         
-	msoBalloonButtonYesToAll      =-15        
-	msoBalloonErrorBadCharacter   =0x8        
-	msoBalloonErrorBadPictureRef  =0x4        
-	msoBalloonErrorBadReference   =0x5        
-	msoBalloonErrorButtonModeless =0x7        
-	msoBalloonErrorButtonlessModal=0x6        
-	msoBalloonErrorCOMFailure     =0x9        
-	msoBalloonErrorCharNotTopmostForModal=0xa        
-	msoBalloonErrorNone           =0x0        
-	msoBalloonErrorOther          =0x1        
-	msoBalloonErrorOutOfMemory    =0x3        
-	msoBalloonErrorTooBig         =0x2        
-	msoBalloonErrorTooManyControls=0xb        
-	msoBalloonTypeBullets         =0x1        
-	msoBalloonTypeButtons         =0x0        
-	msoBalloonTypeNumbers         =0x2        
-	msoBarBottom                  =0x3        
-	msoBarFloating                =0x4        
-	msoBarLeft                    =0x0        
-	msoBarMenuBar                 =0x6        
-	msoBarPopup                   =0x5        
-	msoBarRight                   =0x2        
-	msoBarTop                     =0x1        
-	msoBarNoChangeDock            =0x10       
-	msoBarNoChangeVisible         =0x8        
-	msoBarNoCustomize             =0x1        
-	msoBarNoHorizontalDock        =0x40       
-	msoBarNoMove                  =0x4        
-	msoBarNoProtection            =0x0        
-	msoBarNoResize                =0x2        
-	msoBarNoVerticalDock          =0x20       
-	msoBarRowFirst                =0x0        
-	msoBarRowLast                 =-1         
-	msoBarTypeMenuBar             =0x1        
-	msoBarTypeNormal              =0x0        
-	msoBarTypePopup               =0x2        
-	msoBlackWhiteAutomatic        =0x1        
-	msoBlackWhiteBlack            =0x8        
-	msoBlackWhiteBlackTextAndLine =0x6        
-	msoBlackWhiteDontShow         =0xa        
-	msoBlackWhiteGrayOutline      =0x5        
-	msoBlackWhiteGrayScale        =0x2        
-	msoBlackWhiteHighContrast     =0x7        
-	msoBlackWhiteInverseGrayScale =0x4        
-	msoBlackWhiteLightGrayScale   =0x3        
-	msoBlackWhiteMixed            =-2         
-	msoBlackWhiteWhite            =0x9        
-	msoButtonSetAbortRetryIgnore  =0xa        
-	msoButtonSetBackClose         =0x6        
-	msoButtonSetBackNextClose     =0x8        
-	msoButtonSetBackNextSnooze    =0xc        
-	msoButtonSetCancel            =0x2        
-	msoButtonSetNextClose         =0x7        
-	msoButtonSetNone              =0x0        
-	msoButtonSetOK                =0x1        
-	msoButtonSetOkCancel          =0x3        
-	msoButtonSetRetryCancel       =0x9        
-	msoButtonSetSearchClose       =0xb        
-	msoButtonSetTipsOptionsClose  =0xd        
-	msoButtonSetYesAllNoCancel    =0xe        
-	msoButtonSetYesNo             =0x4        
-	msoButtonSetYesNoCancel       =0x5        
-	msoButtonDown                 =-1         
-	msoButtonMixed                =0x2        
-	msoButtonUp                   =0x0        
-	msoButtonAutomatic            =0x0        
-	msoButtonCaption              =0x2        
-	msoButtonIcon                 =0x1        
-	msoButtonIconAndCaption       =0x3        
-	msoButtonIconAndCaptionBelow  =0xb        
-	msoButtonIconAndWrapCaption   =0x7        
-	msoButtonIconAndWrapCaptionBelow=0xf        
-	msoButtonWrapCaption          =0xe        
-	msoButtonTextBelow            =0x8        
-	msoButtonWrapText             =0x4        
-	msoCalloutAngle30             =0x2        
-	msoCalloutAngle45             =0x3        
-	msoCalloutAngle60             =0x4        
-	msoCalloutAngle90             =0x5        
-	msoCalloutAngleAutomatic      =0x1        
-	msoCalloutAngleMixed          =-2         
-	msoCalloutDropBottom          =0x4        
-	msoCalloutDropCenter          =0x3        
-	msoCalloutDropCustom          =0x1        
-	msoCalloutDropMixed           =-2         
-	msoCalloutDropTop             =0x2        
-	msoCalloutFour                =0x4        
-	msoCalloutMixed               =-2         
-	msoCalloutOne                 =0x1        
-	msoCalloutThree               =0x3        
-	msoCalloutTwo                 =0x2        
-	msoCharacterSetArabic         =0x1        
-	msoCharacterSetCyrillic       =0x2        
-	msoCharacterSetEnglishWesternEuropeanOtherLatinScript=0x3        
-	msoCharacterSetGreek          =0x4        
-	msoCharacterSetHebrew         =0x5        
-	msoCharacterSetJapanese       =0x6        
-	msoCharacterSetKorean         =0x7        
-	msoCharacterSetMultilingualUnicode=0x8        
-	msoCharacterSetSimplifiedChinese=0x9        
-	msoCharacterSetThai           =0xa        
-	msoCharacterSetTraditionalChinese=0xb        
-	msoCharacterSetVietnamese     =0xc        
-	msoColorTypeMixed             =-2         
-	msoColorTypeRGB               =0x1        
-	msoColorTypeScheme            =0x2        
-	msoComboLabel                 =0x1        
-	msoComboNormal                =0x0        
-	msoCommandBarButtonHyperlinkInsertPicture=0x2        
-	msoCommandBarButtonHyperlinkNone=0x0        
-	msoCommandBarButtonHyperlinkOpen=0x1        
-	msoConditionAnyNumberBetween  =0x22       
-	msoConditionAnytime           =0x19       
-	msoConditionAnytimeBetween    =0x1a       
-	msoConditionAtLeast           =0x24       
-	msoConditionAtMost            =0x23       
-	msoConditionBeginsWith        =0xb        
-	msoConditionDoesNotEqual      =0x21       
-	msoConditionEndsWith          =0xc        
-	msoConditionEquals            =0x20       
-	msoConditionFileTypeAllFiles  =0x1        
-	msoConditionFileTypeBinders   =0x6        
-	msoConditionFileTypeDatabases =0x7        
-	msoConditionFileTypeExcelWorkbooks=0x4        
-	msoConditionFileTypeOfficeFiles=0x2        
-	msoConditionFileTypePowerPointPresentations=0x5        
-	msoConditionFileTypeTemplates =0x8        
-	msoConditionFileTypeWordDocuments=0x3        
-	msoConditionInTheLast         =0x1f       
-	msoConditionInTheNext         =0x1e       
-	msoConditionIncludes          =0x9        
-	msoConditionIncludesNearEachOther=0xd        
-	msoConditionIncludesPhrase    =0xa        
-	msoConditionIsExactly         =0xe        
-	msoConditionIsNo              =0x28       
-	msoConditionIsNot             =0xf        
-	msoConditionIsYes             =0x27       
-	msoConditionLastMonth         =0x16       
-	msoConditionLastWeek          =0x13       
-	msoConditionLessThan          =0x26       
-	msoConditionMoreThan          =0x25       
-	msoConditionNextMonth         =0x18       
-	msoConditionNextWeek          =0x15       
-	msoConditionOn                =0x1b       
-	msoConditionOnOrAfter         =0x1c       
-	msoConditionOnOrBefore        =0x1d       
-	msoConditionThisMonth         =0x17       
-	msoConditionThisWeek          =0x14       
-	msoConditionToday             =0x11       
-	msoConditionTomorrow          =0x12       
-	msoConditionYesterday         =0x10       
-	msoConnectorAnd               =0x1        
-	msoConnectorOr                =0x2        
-	msoConnectorCurve             =0x3        
-	msoConnectorElbow             =0x2        
-	msoConnectorStraight          =0x1        
-	msoConnectorTypeMixed         =-2         
-	msoControlOLEUsageBoth        =0x3        
-	msoControlOLEUsageClient      =0x2        
-	msoControlOLEUsageNeither     =0x0        
-	msoControlOLEUsageServer      =0x1        
-	msoControlActiveX             =0x16       
-	msoControlButton              =0x1        
-	msoControlButtonDropdown      =0x5        
-	msoControlButtonPopup         =0xc        
-	msoControlComboBox            =0x4        
-	msoControlCustom              =0x0        
-	msoControlDropdown            =0x3        
-	msoControlEdit                =0x2        
-	msoControlExpandingGrid       =0x10       
-	msoControlGauge               =0x13       
-	msoControlGenericDropdown     =0x8        
-	msoControlGraphicCombo        =0x14       
-	msoControlGraphicDropdown     =0x9        
-	msoControlGraphicPopup        =0xb        
-	msoControlGrid                =0x12       
-	msoControlLabel               =0xf        
-	msoControlOCXDropdown         =0x7        
-	msoControlPane                =0x15       
-	msoControlPopup               =0xa        
-	msoControlSplitButtonMRUPopup =0xe        
-	msoControlSplitButtonPopup    =0xd        
-	msoControlSplitDropdown       =0x6        
-	msoControlSplitExpandingGrid  =0x11       
-	msoDistributeHorizontally     =0x0        
-	msoDistributeVertically       =0x1        
-	msoPropertyTypeBoolean        =0x2        
-	msoPropertyTypeDate           =0x3        
-	msoPropertyTypeFloat          =0x5        
-	msoPropertyTypeNumber         =0x1        
-	msoPropertyTypeString         =0x4        
-	msoEditingAuto                =0x0        
-	msoEditingCorner              =0x1        
-	msoEditingSmooth              =0x2        
-	msoEditingSymmetric           =0x3        
-	msoEncodingArabic             =0x4e8      
-	msoEncodingArabicASMO         =0x2c4      
-	msoEncodingArabicAutoDetect   =0xc838     
-	msoEncodingArabicTransparentASMO=0x2d0      
-	msoEncodingAutoDetect         =0xc351     
-	msoEncodingBaltic             =0x4e9      
-	msoEncodingCentralEuropean    =0x4e2      
-	msoEncodingCyrillic           =0x4e3      
-	msoEncodingCyrillicAutoDetect =0xc833     
-	msoEncodingEBCDICArabic       =0x4fc4     
-	msoEncodingEBCDICDenmarkNorway=0x4f35     
-	msoEncodingEBCDICFinlandSweden=0x4f36     
-	msoEncodingEBCDICFrance       =0x4f49     
-	msoEncodingEBCDICGermany      =0x4f31     
-	msoEncodingEBCDICGreek        =0x4fc7     
-	msoEncodingEBCDICGreekModern  =0x36b      
-	msoEncodingEBCDICHebrew       =0x4fc8     
-	msoEncodingEBCDICIcelandic    =0x5187     
-	msoEncodingEBCDICInternational=0x1f4      
-	msoEncodingEBCDICItaly        =0x4f38     
-	msoEncodingEBCDICJapaneseKatakanaExtended=0x4f42     
-	msoEncodingEBCDICJapaneseKatakanaExtendedAndJapanese=0xc6f2     
-	msoEncodingEBCDICJapaneseLatinExtendedAndJapanese=0xc6fb     
-	msoEncodingEBCDICKoreanExtended=0x5161     
-	msoEncodingEBCDICKoreanExtendedAndKorean=0xc6f5     
-	msoEncodingEBCDICLatinAmericaSpain=0x4f3c     
-	msoEncodingEBCDICMultilingualROECELatin2=0x366      
-	msoEncodingEBCDICRussian      =0x5190     
-	msoEncodingEBCDICSerbianBulgarian=0x5221     
-	msoEncodingEBCDICSimplifiedChineseExtendedAndSimplifiedChinese=0xc6f7     
-	msoEncodingEBCDICThai         =0x5166     
-	msoEncodingEBCDICTurkish      =0x51a9     
-	msoEncodingEBCDICTurkishLatin5=0x402      
-	msoEncodingEBCDICUSCanada     =0x25       
-	msoEncodingEBCDICUSCanadaAndTraditionalChinese=0xc6f9     
-	msoEncodingEBCDICUSCanadaandJapanese=0xc6f3     
-	msoEncodingEBCDICUnitedKingdom=0x4f3d     
-	msoEncodingEUCChineseSimplifiedChinese=0xcae0     
-	msoEncodingEUCJapanese        =0xcadc     
-	msoEncodingEUCKorean          =0xcaed     
-	msoEncodingEUCTaiwaneseTraditionalChinese=0xcaee     
-	msoEncodingEuropa3            =0x7149     
-	msoEncodingExtAlphaLowercase  =0x5223     
-	msoEncodingGreek              =0x4e5      
-	msoEncodingGreekAutoDetect    =0xc835     
-	msoEncodingHZGBSimplifiedChinese=0xcec8     
-	msoEncodingHebrew             =0x4e7      
-	msoEncodingIA5German          =0x4e8a     
-	msoEncodingIA5IRV             =0x4e89     
-	msoEncodingIA5Norwegian       =0x4e8c     
-	msoEncodingIA5Swedish         =0x4e8b     
-	msoEncodingISO2022CNSimplifiedChinese=0xc435     
-	msoEncodingISO2022CNTraditionalChinese=0xc433     
-	msoEncodingISO2022JPJISX02011989=0xc42e     
-	msoEncodingISO2022JPJISX02021984=0xc42d     
-	msoEncodingISO2022JPNoHalfwidthKatakana=0xc42c     
-	msoEncodingISO2022KR          =0xc431     
-	msoEncodingISO6937NonSpacingAccent=0x4f2d     
-	msoEncodingISO885915Latin9    =0x6fbd     
-	msoEncodingISO88591Latin1     =0x6faf     
-	msoEncodingISO88592CentralEurope=0x6fb0     
-	msoEncodingISO88593Latin3     =0x6fb1     
-	msoEncodingISO88594Baltic     =0x6fb2     
-	msoEncodingISO88595Cyrillic   =0x6fb3     
-	msoEncodingISO88596Arabic     =0x6fb4     
-	msoEncodingISO88597Greek      =0x6fb5     
-	msoEncodingISO88598Hebrew     =0x6fb6     
-	msoEncodingISO88599Turkish    =0x6fb7     
-	msoEncodingJapaneseAutoDetect =0xc6f4     
-	msoEncodingJapaneseShiftJIS   =0x3a4      
-	msoEncodingKOI8R              =0x5182     
-	msoEncodingKOI8U              =0x556a     
-	msoEncodingKorean             =0x3b5      
-	msoEncodingKoreanAutoDetect   =0xc705     
-	msoEncodingKoreanJohab        =0x551      
-	msoEncodingMacArabic          =0x2714     
-	msoEncodingMacCroatia         =0x2762     
-	msoEncodingMacCyrillic        =0x2717     
-	msoEncodingMacGreek1          =0x2716     
-	msoEncodingMacHebrew          =0x2715     
-	msoEncodingMacIcelandic       =0x275f     
-	msoEncodingMacJapanese        =0x2711     
-	msoEncodingMacKorean          =0x2713     
-	msoEncodingMacLatin2          =0x272d     
-	msoEncodingMacRoman           =0x2710     
-	msoEncodingMacRomania         =0x271a     
-	msoEncodingMacSimplifiedChineseGB2312=0x2718     
-	msoEncodingMacTraditionalChineseBig5=0x2712     
-	msoEncodingMacTurkish         =0x2761     
-	msoEncodingMacUkraine         =0x2721     
-	msoEncodingOEMArabic          =0x360      
-	msoEncodingOEMBaltic          =0x307      
-	msoEncodingOEMCanadianFrench  =0x35f      
-	msoEncodingOEMCyrillic        =0x357      
-	msoEncodingOEMCyrillicII      =0x362      
-	msoEncodingOEMGreek437G       =0x2e1      
-	msoEncodingOEMHebrew          =0x35e      
-	msoEncodingOEMIcelandic       =0x35d      
-	msoEncodingOEMModernGreek     =0x365      
-	msoEncodingOEMMultilingualLatinI=0x352      
-	msoEncodingOEMMultilingualLatinII=0x354      
-	msoEncodingOEMNordic          =0x361      
-	msoEncodingOEMPortuguese      =0x35c      
-	msoEncodingOEMTurkish         =0x359      
-	msoEncodingOEMUnitedStates    =0x1b5      
-	msoEncodingSimplifiedChineseAutoDetect=0xc6f8     
-	msoEncodingSimplifiedChineseGBK=0x3a8      
-	msoEncodingT61                =0x4f25     
-	msoEncodingTaiwanCNS          =0x4e20     
-	msoEncodingTaiwanEten         =0x4e22     
-	msoEncodingTaiwanIBM5550      =0x4e23     
-	msoEncodingTaiwanTCA          =0x4e21     
-	msoEncodingTaiwanTeleText     =0x4e24     
-	msoEncodingTaiwanWang         =0x4e25     
-	msoEncodingThai               =0x36a      
-	msoEncodingTraditionalChineseAutoDetect=0xc706     
-	msoEncodingTraditionalChineseBig5=0x3b6      
-	msoEncodingTurkish            =0x4e6      
-	msoEncodingUSASCII            =0x4e9f     
-	msoEncodingUTF7               =0xfde8     
-	msoEncodingUTF8               =0xfde9     
-	msoEncodingUnicodeBigEndian   =0x4b1      
-	msoEncodingUnicodeLittleEndian=0x4b0      
-	msoEncodingVietnamese         =0x4ea      
-	msoEncodingWestern            =0x4e4      
-	msoMethodGet                  =0x0        
-	msoMethodPost                 =0x1        
-	msoExtrusionColorAutomatic    =0x1        
-	msoExtrusionColorCustom       =0x2        
-	msoExtrusionColorTypeMixed    =-2         
-	MsoFarEastLineBreakLanguageJapanese=0x411      
-	MsoFarEastLineBreakLanguageKorean=0x412      
-	MsoFarEastLineBreakLanguageSimplifiedChinese=0x804      
-	MsoFarEastLineBreakLanguageTraditionalChinese=0x404      
-	msoFeatureInstallNone         =0x0        
-	msoFeatureInstallOnDemand     =0x1        
-	msoFeatureInstallOnDemandWithUI=0x2        
-	msoListbyName                 =0x1        
-	msoListbyTitle                =0x2        
-	msoOptionsAdd                 =0x2        
-	msoOptionsNew                 =0x1        
-	msoOptionsWithin              =0x3        
-	msoFileFindSortbyAuthor       =0x1        
-	msoFileFindSortbyDateCreated  =0x2        
-	msoFileFindSortbyDateSaved    =0x4        
-	msoFileFindSortbyFileName     =0x5        
-	msoFileFindSortbyLastSavedBy  =0x3        
-	msoFileFindSortbySize         =0x6        
-	msoFileFindSortbyTitle        =0x7        
-	msoViewFileInfo               =0x1        
-	msoViewPreview                =0x2        
-	msoViewSummaryInfo            =0x3        
-	msoFileTypeAllFiles           =0x1        
-	msoFileTypeBinders            =0x6        
-	msoFileTypeDatabases          =0x7        
-	msoFileTypeExcelWorkbooks     =0x4        
-	msoFileTypeOfficeFiles        =0x2        
-	msoFileTypePowerPointPresentations=0x5        
-	msoFileTypeTemplates          =0x8        
-	msoFileTypeWordDocuments      =0x3        
-	msoFillBackground             =0x5        
-	msoFillGradient               =0x3        
-	msoFillMixed                  =-2         
-	msoFillPatterned              =0x2        
-	msoFillPicture                =0x6        
-	msoFillSolid                  =0x1        
-	msoFillTextured               =0x4        
-	msoFlipHorizontal             =0x0        
-	msoFlipVertical               =0x1        
-	msoGradientColorMixed         =-2         
-	msoGradientOneColor           =0x1        
-	msoGradientPresetColors       =0x3        
-	msoGradientTwoColors          =0x2        
-	msoGradientDiagonalDown       =0x4        
-	msoGradientDiagonalUp         =0x3        
-	msoGradientFromCenter         =0x7        
-	msoGradientFromCorner         =0x5        
-	msoGradientFromTitle          =0x6        
-	msoGradientHorizontal         =0x1        
-	msoGradientMixed              =-2         
-	msoGradientVertical           =0x2        
-	msoHTMLProjectOpenSourceView  =0x1        
-	msoHTMLProjectOpenTextView    =0x2        
-	msoHTMLProjectStateDocumentLocked=0x1        
-	msoHTMLProjectStateDocumentProjectUnlocked=0x3        
-	msoHTMLProjectStateProjectLocked=0x2        
-	msoAnchorCenter               =0x2        
-	msoAnchorNone                 =0x1        
-	msoHorizontalAnchorMixed      =-2         
-	msoHyperlinkInlineShape       =0x2        
-	msoHyperlinkRange             =0x0        
-	msoHyperlinkShape             =0x1        
-	msoIconAlert                  =0x2        
-	msoIconAlertCritical          =0x7        
-	msoIconAlertInfo              =0x4        
-	msoIconAlertQuery             =0x6        
-	msoIconAlertWarning           =0x5        
-	msoIconNone                   =0x0        
-	msoIconTip                    =0x3        
-	msoLanguageIDAfrikaans        =0x436      
-	msoLanguageIDAlbanian         =0x41c      
-	msoLanguageIDArabic           =0x401      
-	msoLanguageIDArabicAlgeria    =0x1401     
-	msoLanguageIDArabicBahrain    =0x3c01     
-	msoLanguageIDArabicEgypt      =0xc01      
-	msoLanguageIDArabicIraq       =0x801      
-	msoLanguageIDArabicJordan     =0x2c01     
-	msoLanguageIDArabicKuwait     =0x3401     
-	msoLanguageIDArabicLebanon    =0x3001     
-	msoLanguageIDArabicLibya      =0x1001     
-	msoLanguageIDArabicMorocco    =0x1801     
-	msoLanguageIDArabicOman       =0x2001     
-	msoLanguageIDArabicQatar      =0x4001     
-	msoLanguageIDArabicSyria      =0x2801     
-	msoLanguageIDArabicTunisia    =0x1c01     
-	msoLanguageIDArabicUAE        =0x3801     
-	msoLanguageIDArabicYemen      =0x2401     
-	msoLanguageIDArmenian         =0x42b      
-	msoLanguageIDAssamese         =0x44d      
-	msoLanguageIDAzeriCyrillic    =0x82c      
-	msoLanguageIDAzeriLatin       =0x42c      
-	msoLanguageIDBasque           =0x42d      
-	msoLanguageIDBelgianDutch     =0x813      
-	msoLanguageIDBelgianFrench    =0x80c      
-	msoLanguageIDBengali          =0x445      
-	msoLanguageIDBrazilianPortuguese=0x416      
-	msoLanguageIDBulgarian        =0x402      
-	msoLanguageIDBurmese          =0x455      
-	msoLanguageIDByelorussian     =0x423      
-	msoLanguageIDCatalan          =0x403      
-	msoLanguageIDChineseHongKong  =0xc04      
-	msoLanguageIDChineseMacao     =0x1404     
-	msoLanguageIDChineseSingapore =0x1004     
-	msoLanguageIDCroatian         =0x41a      
-	msoLanguageIDCzech            =0x405      
-	msoLanguageIDDanish           =0x406      
-	msoLanguageIDDutch            =0x413      
-	msoLanguageIDEnglishAUS       =0xc09      
-	msoLanguageIDEnglishBelize    =0x2809     
-	msoLanguageIDEnglishCanadian  =0x1009     
-	msoLanguageIDEnglishCaribbean =0x2409     
-	msoLanguageIDEnglishIreland   =0x1809     
-	msoLanguageIDEnglishJamaica   =0x2009     
-	msoLanguageIDEnglishNewZealand=0x1409     
-	msoLanguageIDEnglishPhilippines=0x3409     
-	msoLanguageIDEnglishSouthAfrica=0x1c09     
-	msoLanguageIDEnglishTrinidad  =0x2c09     
-	msoLanguageIDEnglishUK        =0x809      
-	msoLanguageIDEnglishUS        =0x409      
-	msoLanguageIDEnglishZimbabwe  =0x3009     
-	msoLanguageIDEstonian         =0x425      
-	msoLanguageIDFaeroese         =0x438      
-	msoLanguageIDFarsi            =0x429      
-	msoLanguageIDFinnish          =0x40b      
-	msoLanguageIDFrench           =0x40c      
-	msoLanguageIDFrenchCameroon   =0x2c0c     
-	msoLanguageIDFrenchCanadian   =0xc0c      
-	msoLanguageIDFrenchCotedIvoire=0x300c     
-	msoLanguageIDFrenchLuxembourg =0x140c     
-	msoLanguageIDFrenchMali       =0x340c     
-	msoLanguageIDFrenchMonaco     =0x180c     
-	msoLanguageIDFrenchReunion    =0x200c     
-	msoLanguageIDFrenchSenegal    =0x280c     
-	msoLanguageIDFrenchWestIndies =0x1c0c     
-	msoLanguageIDFrenchZaire      =0x240c     
-	msoLanguageIDFrisianNetherlands=0x462      
-	msoLanguageIDGaelicIreland    =0x83c      
-	msoLanguageIDGaelicScotland   =0x43c      
-	msoLanguageIDGalician         =0x456      
-	msoLanguageIDGeorgian         =0x437      
-	msoLanguageIDGerman           =0x407      
-	msoLanguageIDGermanAustria    =0xc07      
-	msoLanguageIDGermanLiechtenstein=0x1407     
-	msoLanguageIDGermanLuxembourg =0x1007     
-	msoLanguageIDGreek            =0x408      
-	msoLanguageIDGujarati         =0x447      
-	msoLanguageIDHebrew           =0x40d      
-	msoLanguageIDHindi            =0x439      
-	msoLanguageIDHungarian        =0x40e      
-	msoLanguageIDIcelandic        =0x40f      
-	msoLanguageIDIndonesian       =0x421      
-	msoLanguageIDItalian          =0x410      
-	msoLanguageIDJapanese         =0x411      
-	msoLanguageIDKannada          =0x44b      
-	msoLanguageIDKashmiri         =0x460      
-	msoLanguageIDKazakh           =0x43f      
-	msoLanguageIDKhmer            =0x453      
-	msoLanguageIDKirghiz          =0x440      
-	msoLanguageIDKonkani          =0x457      
-	msoLanguageIDKorean           =0x412      
-	msoLanguageIDLao              =0x454      
-	msoLanguageIDLatvian          =0x426      
-	msoLanguageIDLithuanian       =0x427      
-	msoLanguageIDMacedonian       =0x42f      
-	msoLanguageIDMalayBruneiDarussalam=0x83e      
-	msoLanguageIDMalayalam        =0x44c      
-	msoLanguageIDMalaysian        =0x43e      
-	msoLanguageIDMaltese          =0x43a      
-	msoLanguageIDManipuri         =0x458      
-	msoLanguageIDMarathi          =0x44e      
-	msoLanguageIDMexicanSpanish   =0x80a      
-	msoLanguageIDMixed            =-2         
-	msoLanguageIDMongolian        =0x450      
-	msoLanguageIDNepali           =0x461      
-	msoLanguageIDNoProofing       =0x400      
-	msoLanguageIDNone             =0x0        
-	msoLanguageIDNorwegianBokmol  =0x414      
-	msoLanguageIDNorwegianNynorsk =0x814      
-	msoLanguageIDOriya            =0x448      
-	msoLanguageIDPolish           =0x415      
-	msoLanguageIDPortuguese       =0x816      
-	msoLanguageIDPunjabi          =0x446      
-	msoLanguageIDRhaetoRomanic    =0x417      
-	msoLanguageIDRomanian         =0x418      
-	msoLanguageIDRomanianMoldova  =0x818      
-	msoLanguageIDRussian          =0x419      
-	msoLanguageIDRussianMoldova   =0x819      
-	msoLanguageIDSamiLappish      =0x43b      
-	msoLanguageIDSanskrit         =0x44f      
-	msoLanguageIDSerbianCyrillic  =0xc1a      
-	msoLanguageIDSerbianLatin     =0x81a      
-	msoLanguageIDSesotho          =0x430      
-	msoLanguageIDSimplifiedChinese=0x804      
-	msoLanguageIDSindhi           =0x459      
-	msoLanguageIDSlovak           =0x41b      
-	msoLanguageIDSlovenian        =0x424      
-	msoLanguageIDSorbian          =0x42e      
-	msoLanguageIDSpanish          =0x40a      
-	msoLanguageIDSpanishArgentina =0x2c0a     
-	msoLanguageIDSpanishBolivia   =0x400a     
-	msoLanguageIDSpanishChile     =0x340a     
-	msoLanguageIDSpanishColombia  =0x240a     
-	msoLanguageIDSpanishCostaRica =0x140a     
-	msoLanguageIDSpanishDominicanRepublic=0x1c0a     
-	msoLanguageIDSpanishEcuador   =0x300a     
-	msoLanguageIDSpanishElSalvador=0x440a     
-	msoLanguageIDSpanishGuatemala =0x100a     
-	msoLanguageIDSpanishHonduras  =0x480a     
-	msoLanguageIDSpanishModernSort=0xc0a      
-	msoLanguageIDSpanishNicaragua =0x4c0a     
-	msoLanguageIDSpanishPanama    =0x180a     
-	msoLanguageIDSpanishParaguay  =0x3c0a     
-	msoLanguageIDSpanishPeru      =0x280a     
-	msoLanguageIDSpanishPuertoRico=0x500a     
-	msoLanguageIDSpanishUruguay   =0x380a     
-	msoLanguageIDSpanishVenezuela =0x200a     
-	msoLanguageIDSutu             =0x430      
-	msoLanguageIDSwahili          =0x441      
-	msoLanguageIDSwedish          =0x41d      
-	msoLanguageIDSwedishFinland   =0x81d      
-	msoLanguageIDSwissFrench      =0x100c     
-	msoLanguageIDSwissGerman      =0x807      
-	msoLanguageIDSwissItalian     =0x810      
-	msoLanguageIDTajik            =0x428      
-	msoLanguageIDTamil            =0x449      
-	msoLanguageIDTatar            =0x444      
-	msoLanguageIDTelugu           =0x44a      
-	msoLanguageIDThai             =0x41e      
-	msoLanguageIDTibetan          =0x451      
-	msoLanguageIDTraditionalChinese=0x404      
-	msoLanguageIDTsonga           =0x431      
-	msoLanguageIDTswana           =0x432      
-	msoLanguageIDTurkish          =0x41f      
-	msoLanguageIDTurkmen          =0x442      
-	msoLanguageIDUkrainian        =0x422      
-	msoLanguageIDUrdu             =0x420      
-	msoLanguageIDUzbekCyrillic    =0x843      
-	msoLanguageIDUzbekLatin       =0x443      
-	msoLanguageIDVenda            =0x433      
-	msoLanguageIDVietnamese       =0x42a      
-	msoLanguageIDWelsh            =0x452      
-	msoLanguageIDXhosa            =0x434      
-	msoLanguageIDZulu             =0x435      
-	msoLastModifiedAnyTime        =0x7        
-	msoLastModifiedLastMonth      =0x5        
-	msoLastModifiedLastWeek       =0x3        
-	msoLastModifiedThisMonth      =0x6        
-	msoLastModifiedThisWeek       =0x4        
-	msoLastModifiedToday          =0x2        
-	msoLastModifiedYesterday      =0x1        
-	msoLineDash                   =0x4        
-	msoLineDashDot                =0x5        
-	msoLineDashDotDot             =0x6        
-	msoLineDashStyleMixed         =-2         
-	msoLineLongDash               =0x7        
-	msoLineLongDashDot            =0x8        
-	msoLineRoundDot               =0x3        
-	msoLineSolid                  =0x1        
-	msoLineSquareDot              =0x2        
-	msoLineSingle                 =0x1        
-	msoLineStyleMixed             =-2         
-	msoLineThickBetweenThin       =0x5        
-	msoLineThickThin              =0x4        
-	msoLineThinThick              =0x3        
-	msoLineThinThin               =0x2        
-	msoMenuAnimationNone          =0x0        
-	msoMenuAnimationRandom        =0x1        
-	msoMenuAnimationSlide         =0x3        
-	msoMenuAnimationUnfold        =0x2        
-	msoIntegerMixed               =0x8000     
-	msoSingleMixed                =-2147483648 
-	msoModeAutoDown               =0x1        
-	msoModeModal                  =0x0        
-	msoModeModeless               =0x2        
-	msoOLEMenuGroupContainer      =0x2        
-	msoOLEMenuGroupEdit           =0x1        
-	msoOLEMenuGroupFile           =0x0        
-	msoOLEMenuGroupHelp           =0x5        
-	msoOLEMenuGroupNone           =-1         
-	msoOLEMenuGroupObject         =0x3        
-	msoOLEMenuGroupWindow         =0x4        
-	msoOrientationHorizontal      =0x1        
-	msoOrientationMixed           =-2         
-	msoOrientationVertical        =0x2        
-	msoPattern10Percent           =0x2        
-	msoPattern20Percent           =0x3        
-	msoPattern25Percent           =0x4        
-	msoPattern30Percent           =0x5        
-	msoPattern40Percent           =0x6        
-	msoPattern50Percent           =0x7        
-	msoPattern5Percent            =0x1        
-	msoPattern60Percent           =0x8        
-	msoPattern70Percent           =0x9        
-	msoPattern75Percent           =0xa        
-	msoPattern80Percent           =0xb        
-	msoPattern90Percent           =0xc        
-	msoPatternDarkDownwardDiagonal=0xf        
-	msoPatternDarkHorizontal      =0xd        
-	msoPatternDarkUpwardDiagonal  =0x10       
-	msoPatternDarkVertical        =0xe        
-	msoPatternDashedDownwardDiagonal=0x1c       
-	msoPatternDashedHorizontal    =0x20       
-	msoPatternDashedUpwardDiagonal=0x1b       
-	msoPatternDashedVertical      =0x1f       
-	msoPatternDiagonalBrick       =0x28       
-	msoPatternDivot               =0x2e       
-	msoPatternDottedDiamond       =0x18       
-	msoPatternDottedGrid          =0x2d       
-	msoPatternHorizontalBrick     =0x23       
-	msoPatternLargeCheckerBoard   =0x24       
-	msoPatternLargeConfetti       =0x21       
-	msoPatternLargeGrid           =0x22       
-	msoPatternLightDownwardDiagonal=0x15       
-	msoPatternLightHorizontal     =0x13       
-	msoPatternLightUpwardDiagonal =0x16       
-	msoPatternLightVertical       =0x14       
-	msoPatternMixed               =-2         
-	msoPatternNarrowHorizontal    =0x1e       
-	msoPatternNarrowVertical      =0x1d       
-	msoPatternOutlinedDiamond     =0x29       
-	msoPatternPlaid               =0x2a       
-	msoPatternShingle             =0x2f       
-	msoPatternSmallCheckerBoard   =0x11       
-	msoPatternSmallConfetti       =0x25       
-	msoPatternSmallGrid           =0x17       
-	msoPatternSolidDiamond        =0x27       
-	msoPatternSphere              =0x2b       
-	msoPatternTrellis             =0x12       
-	msoPatternWave                =0x30       
-	msoPatternWeave               =0x2c       
-	msoPatternWideDownwardDiagonal=0x19       
-	msoPatternWideUpwardDiagonal  =0x1a       
-	msoPatternZigZag              =0x26       
-	msoPictureAutomatic           =0x1        
-	msoPictureBlackAndWhite       =0x3        
-	msoPictureGrayscale           =0x2        
-	msoPictureMixed               =-2         
-	msoPictureWatermark           =0x4        
-	msoExtrusionBottom            =0x2        
-	msoExtrusionBottomLeft        =0x3        
-	msoExtrusionBottomRight       =0x1        
-	msoExtrusionLeft              =0x6        
-	msoExtrusionNone              =0x5        
-	msoExtrusionRight             =0x4        
-	msoExtrusionTop               =0x8        
-	msoExtrusionTopLeft           =0x9        
-	msoExtrusionTopRight          =0x7        
-	msoPresetExtrusionDirectionMixed=-2         
-	msoGradientBrass              =0x14       
-	msoGradientCalmWater          =0x8        
-	msoGradientChrome             =0x15       
-	msoGradientChromeII           =0x16       
-	msoGradientDaybreak           =0x4        
-	msoGradientDesert             =0x6        
-	msoGradientEarlySunset        =0x1        
-	msoGradientFire               =0x9        
-	msoGradientFog                =0xa        
-	msoGradientGold               =0x12       
-	msoGradientGoldII             =0x13       
-	msoGradientHorizon            =0x5        
-	msoGradientLateSunset         =0x2        
-	msoGradientMahogany           =0xf        
-	msoGradientMoss               =0xb        
-	msoGradientNightfall          =0x3        
-	msoGradientOcean              =0x7        
-	msoGradientParchment          =0xe        
-	msoGradientPeacock            =0xc        
-	msoGradientRainbow            =0x10       
-	msoGradientRainbowII          =0x11       
-	msoGradientSapphire           =0x18       
-	msoGradientSilver             =0x17       
-	msoGradientWheat              =0xd        
-	msoPresetGradientMixed        =-2         
-	msoLightingBottom             =0x8        
-	msoLightingBottomLeft         =0x7        
-	msoLightingBottomRight        =0x9        
-	msoLightingLeft               =0x4        
-	msoLightingNone               =0x5        
-	msoLightingRight              =0x6        
-	msoLightingTop                =0x2        
-	msoLightingTopLeft            =0x1        
-	msoLightingTopRight           =0x3        
-	msoPresetLightingDirectionMixed=-2         
-	msoLightingBright             =0x3        
-	msoLightingDim                =0x1        
-	msoLightingNormal             =0x2        
-	msoPresetLightingSoftnessMixed=-2         
-	msoMaterialMatte              =0x1        
-	msoMaterialMetal              =0x3        
-	msoMaterialPlastic            =0x2        
-	msoMaterialWireFrame          =0x4        
-	msoPresetMaterialMixed        =-2         
-	msoTextEffect1                =0x0        
-	msoTextEffect10               =0x9        
-	msoTextEffect11               =0xa        
-	msoTextEffect12               =0xb        
-	msoTextEffect13               =0xc        
-	msoTextEffect14               =0xd        
-	msoTextEffect15               =0xe        
-	msoTextEffect16               =0xf        
-	msoTextEffect17               =0x10       
-	msoTextEffect18               =0x11       
-	msoTextEffect19               =0x12       
-	msoTextEffect2                =0x1        
-	msoTextEffect20               =0x13       
-	msoTextEffect21               =0x14       
-	msoTextEffect22               =0x15       
-	msoTextEffect23               =0x16       
-	msoTextEffect24               =0x17       
-	msoTextEffect25               =0x18       
-	msoTextEffect26               =0x19       
-	msoTextEffect27               =0x1a       
-	msoTextEffect28               =0x1b       
-	msoTextEffect29               =0x1c       
-	msoTextEffect3                =0x2        
-	msoTextEffect30               =0x1d       
-	msoTextEffect4                =0x3        
-	msoTextEffect5                =0x4        
-	msoTextEffect6                =0x5        
-	msoTextEffect7                =0x6        
-	msoTextEffect8                =0x7        
-	msoTextEffect9                =0x8        
-	msoTextEffectMixed            =-2         
-	msoTextEffectShapeArchDownCurve=0xa        
-	msoTextEffectShapeArchDownPour=0xe        
-	msoTextEffectShapeArchUpCurve =0x9        
-	msoTextEffectShapeArchUpPour  =0xd        
-	msoTextEffectShapeButtonCurve =0xc        
-	msoTextEffectShapeButtonPour  =0x10       
-	msoTextEffectShapeCanDown     =0x14       
-	msoTextEffectShapeCanUp       =0x13       
-	msoTextEffectShapeCascadeDown =0x28       
-	msoTextEffectShapeCascadeUp   =0x27       
-	msoTextEffectShapeChevronDown =0x6        
-	msoTextEffectShapeChevronUp   =0x5        
-	msoTextEffectShapeCircleCurve =0xb        
-	msoTextEffectShapeCirclePour  =0xf        
-	msoTextEffectShapeCurveDown   =0x12       
-	msoTextEffectShapeCurveUp     =0x11       
-	msoTextEffectShapeDeflate     =0x1a       
-	msoTextEffectShapeDeflateBottom=0x1c       
-	msoTextEffectShapeDeflateInflate=0x1f       
-	msoTextEffectShapeDeflateInflateDeflate=0x20       
-	msoTextEffectShapeDeflateTop  =0x1e       
-	msoTextEffectShapeDoubleWave1 =0x17       
-	msoTextEffectShapeDoubleWave2 =0x18       
-	msoTextEffectShapeFadeDown    =0x24       
-	msoTextEffectShapeFadeLeft    =0x22       
-	msoTextEffectShapeFadeRight   =0x21       
-	msoTextEffectShapeFadeUp      =0x23       
-	msoTextEffectShapeInflate     =0x19       
-	msoTextEffectShapeInflateBottom=0x1b       
-	msoTextEffectShapeInflateTop  =0x1d       
-	msoTextEffectShapeMixed       =-2         
-	msoTextEffectShapePlainText   =0x1        
-	msoTextEffectShapeRingInside  =0x7        
-	msoTextEffectShapeRingOutside =0x8        
-	msoTextEffectShapeSlantDown   =0x26       
-	msoTextEffectShapeSlantUp     =0x25       
-	msoTextEffectShapeStop        =0x2        
-	msoTextEffectShapeTriangleDown=0x4        
-	msoTextEffectShapeTriangleUp  =0x3        
-	msoTextEffectShapeWave1       =0x15       
-	msoTextEffectShapeWave2       =0x16       
-	msoPresetTextureMixed         =-2         
-	msoTextureBlueTissuePaper     =0x11       
-	msoTextureBouquet             =0x14       
-	msoTextureBrownMarble         =0xb        
-	msoTextureCanvas              =0x2        
-	msoTextureCork                =0x15       
-	msoTextureDenim               =0x3        
-	msoTextureFishFossil          =0x7        
-	msoTextureGranite             =0xc        
-	msoTextureGreenMarble         =0x9        
-	msoTextureMediumWood          =0x18       
-	msoTextureNewsprint           =0xd        
-	msoTextureOak                 =0x17       
-	msoTexturePaperBag            =0x6        
-	msoTexturePapyrus             =0x1        
-	msoTextureParchment           =0xf        
-	msoTexturePinkTissuePaper     =0x12       
-	msoTexturePurpleMesh          =0x13       
-	msoTextureRecycledPaper       =0xe        
-	msoTextureSand                =0x8        
-	msoTextureStationery          =0x10       
-	msoTextureWalnut              =0x16       
-	msoTextureWaterDroplets       =0x5        
-	msoTextureWhiteMarble         =0xa        
-	msoTextureWovenMat            =0x4        
-	msoPresetThreeDFormatMixed    =-2         
-	msoThreeD1                    =0x1        
-	msoThreeD10                   =0xa        
-	msoThreeD11                   =0xb        
-	msoThreeD12                   =0xc        
-	msoThreeD13                   =0xd        
-	msoThreeD14                   =0xe        
-	msoThreeD15                   =0xf        
-	msoThreeD16                   =0x10       
-	msoThreeD17                   =0x11       
-	msoThreeD18                   =0x12       
-	msoThreeD19                   =0x13       
-	msoThreeD2                    =0x2        
-	msoThreeD20                   =0x14       
-	msoThreeD3                    =0x3        
-	msoThreeD4                    =0x4        
-	msoThreeD5                    =0x5        
-	msoThreeD6                    =0x6        
-	msoThreeD7                    =0x7        
-	msoThreeD8                    =0x8        
-	msoThreeD9                    =0x9        
-	msoScaleFromBottomRight       =0x2        
-	msoScaleFromMiddle            =0x1        
-	msoScaleFromTopLeft           =0x0        
-	msoScreenSize1024x768         =0x4        
-	msoScreenSize1152x882         =0x5        
-	msoScreenSize1152x900         =0x6        
-	msoScreenSize1280x1024        =0x7        
-	msoScreenSize1600x1200        =0x8        
-	msoScreenSize1800x1440        =0x9        
-	msoScreenSize1920x1200        =0xa        
-	msoScreenSize544x376          =0x0        
-	msoScreenSize640x480          =0x1        
-	msoScreenSize720x512          =0x2        
-	msoScreenSize800x600          =0x3        
-	msoScriptLanguageASP          =0x3        
-	msoScriptLanguageJava         =0x1        
-	msoScriptLanguageOther        =0x4        
-	msoScriptLanguageVisualBasic  =0x2        
-	msoScriptLocationInBody       =0x2        
-	msoScriptLocationInHead       =0x1        
-	msoSegmentCurve               =0x1        
-	msoSegmentLine                =0x0        
-	msoShadow1                    =0x1        
-	msoShadow10                   =0xa        
-	msoShadow11                   =0xb        
-	msoShadow12                   =0xc        
-	msoShadow13                   =0xd        
-	msoShadow14                   =0xe        
-	msoShadow15                   =0xf        
-	msoShadow16                   =0x10       
-	msoShadow17                   =0x11       
-	msoShadow18                   =0x12       
-	msoShadow19                   =0x13       
-	msoShadow2                    =0x2        
-	msoShadow20                   =0x14       
-	msoShadow3                    =0x3        
-	msoShadow4                    =0x4        
-	msoShadow5                    =0x5        
-	msoShadow6                    =0x6        
-	msoShadow7                    =0x7        
-	msoShadow8                    =0x8        
-	msoShadow9                    =0x9        
-	msoShadowMixed                =-2         
-	msoAutoShape                  =0x1        
-	msoCallout                    =0x2        
-	msoChart                      =0x3        
-	msoComment                    =0x4        
-	msoEmbeddedOLEObject          =0x7        
-	msoFormControl                =0x8        
-	msoFreeform                   =0x5        
-	msoGroup                      =0x6        
-	msoLine                       =0x9        
-	msoLinkedOLEObject            =0xa        
-	msoLinkedPicture              =0xb        
-	msoMedia                      =0x10       
-	msoOLEControlObject           =0xc        
-	msoPicture                    =0xd        
-	msoPlaceholder                =0xe        
-	msoScriptAnchor               =0x12       
-	msoShapeTypeMixed             =-2         
-	msoTable                      =0x13       
-	msoTextBox                    =0x11       
-	msoTextEffect                 =0xf        
-	msoSortByFileName             =0x1        
-	msoSortByFileType             =0x3        
-	msoSortByLastModified         =0x4        
-	msoSortBySize                 =0x2        
-	msoSortOrderAscending         =0x1        
-	msoSortOrderDescending        =0x2        
-	msoTextEffectAlignmentCentered=0x2        
-	msoTextEffectAlignmentLeft    =0x1        
-	msoTextEffectAlignmentLetterJustify=0x4        
-	msoTextEffectAlignmentMixed   =-2         
-	msoTextEffectAlignmentRight   =0x3        
-	msoTextEffectAlignmentStretchJustify=0x6        
-	msoTextEffectAlignmentWordJustify=0x5        
-	msoTextOrientationDownward    =0x3        
-	msoTextOrientationHorizontal  =0x1        
-	msoTextOrientationHorizontalRotatedFarEast=0x6        
-	msoTextOrientationMixed       =-2         
-	msoTextOrientationUpward      =0x2        
-	msoTextOrientationVertical    =0x5        
-	msoTextOrientationVerticalFarEast=0x4        
-	msoTexturePreset              =0x1        
-	msoTextureTypeMixed           =-2         
-	msoTextureUserDefined         =0x2        
-	msoCTrue                      =0x1        
-	msoFalse                      =0x0        
-	msoTriStateMixed              =-2         
-	msoTriStateToggle             =-3         
-	msoTrue                       =-1         
-	msoAnchorBottom               =0x4        
-	msoAnchorBottomBaseLine       =0x5        
-	msoAnchorMiddle               =0x3        
-	msoAnchorTop                  =0x1        
-	msoAnchorTopBaseline          =0x2        
-	msoVerticalAnchorMixed        =-2         
-	msoWizardActActive            =0x1        
-	msoWizardActInactive          =0x0        
-	msoWizardActResume            =0x3        
-	msoWizardActSuspend           =0x2        
-	msoWizardMsgLocalStateOff     =0x2        
-	msoWizardMsgLocalStateOn      =0x1        
-	msoWizardMsgResuming          =0x5        
-	msoWizardMsgShowHelp          =0x3        
-	msoWizardMsgSuspending        =0x4        
-	msoBringForward               =0x2        
-	msoBringInFrontOfText         =0x4        
-	msoBringToFront               =0x0        
-	msoSendBackward               =0x3        
-	msoSendBehindText             =0x5        
-	msoSendToBack                 =0x1        
+	offPropertyTypeBoolean        =0x2        # from enum DocProperties
+	offPropertyTypeDate           =0x3        # from enum DocProperties
+	offPropertyTypeFloat          =0x5        # from enum DocProperties
+	offPropertyTypeNumber         =0x1        # from enum DocProperties
+	offPropertyTypeString         =0x4        # from enum DocProperties
+	msoAlignBottoms               =0x5        # from enum MsoAlignCmd
+	msoAlignCenters               =0x1        # from enum MsoAlignCmd
+	msoAlignLefts                 =0x0        # from enum MsoAlignCmd
+	msoAlignMiddles               =0x4        # from enum MsoAlignCmd
+	msoAlignRights                =0x2        # from enum MsoAlignCmd
+	msoAlignTops                  =0x3        # from enum MsoAlignCmd
+	msoAnimationAppear            =0x20       # from enum MsoAnimationType
+	msoAnimationBeginSpeaking     =0x4        # from enum MsoAnimationType
+	msoAnimationCharacterSuccessMajor=0x6        # from enum MsoAnimationType
+	msoAnimationCheckingSomething =0x67       # from enum MsoAnimationType
+	msoAnimationDisappear         =0x1f       # from enum MsoAnimationType
+	msoAnimationEmptyTrash        =0x74       # from enum MsoAnimationType
+	msoAnimationGestureDown       =0x71       # from enum MsoAnimationType
+	msoAnimationGestureLeft       =0x72       # from enum MsoAnimationType
+	msoAnimationGestureRight      =0x13       # from enum MsoAnimationType
+	msoAnimationGestureUp         =0x73       # from enum MsoAnimationType
+	msoAnimationGetArtsy          =0x64       # from enum MsoAnimationType
+	msoAnimationGetAttentionMajor =0xb        # from enum MsoAnimationType
+	msoAnimationGetAttentionMinor =0xc        # from enum MsoAnimationType
+	msoAnimationGetTechy          =0x65       # from enum MsoAnimationType
+	msoAnimationGetWizardy        =0x66       # from enum MsoAnimationType
+	msoAnimationGoodbye           =0x3        # from enum MsoAnimationType
+	msoAnimationGreeting          =0x2        # from enum MsoAnimationType
+	msoAnimationIdle              =0x1        # from enum MsoAnimationType
+	msoAnimationListensToComputer =0x1a       # from enum MsoAnimationType
+	msoAnimationLookDown          =0x68       # from enum MsoAnimationType
+	msoAnimationLookDownLeft      =0x69       # from enum MsoAnimationType
+	msoAnimationLookDownRight     =0x6a       # from enum MsoAnimationType
+	msoAnimationLookLeft          =0x6b       # from enum MsoAnimationType
+	msoAnimationLookRight         =0x6c       # from enum MsoAnimationType
+	msoAnimationLookUp            =0x6d       # from enum MsoAnimationType
+	msoAnimationLookUpLeft        =0x6e       # from enum MsoAnimationType
+	msoAnimationLookUpRight       =0x6f       # from enum MsoAnimationType
+	msoAnimationPrinting          =0x12       # from enum MsoAnimationType
+	msoAnimationRestPose          =0x5        # from enum MsoAnimationType
+	msoAnimationSaving            =0x70       # from enum MsoAnimationType
+	msoAnimationSearching         =0xd        # from enum MsoAnimationType
+	msoAnimationSendingMail       =0x19       # from enum MsoAnimationType
+	msoAnimationThinking          =0x18       # from enum MsoAnimationType
+	msoAnimationWorkingAtSomething=0x17       # from enum MsoAnimationType
+	msoAnimationWritingNotingSomething=0x16       # from enum MsoAnimationType
+	msoLanguageIDExeMode          =0x4        # from enum MsoAppLanguageID
+	msoLanguageIDHelp             =0x3        # from enum MsoAppLanguageID
+	msoLanguageIDInstall          =0x1        # from enum MsoAppLanguageID
+	msoLanguageIDUI               =0x2        # from enum MsoAppLanguageID
+	msoLanguageIDUIPrevious       =0x5        # from enum MsoAppLanguageID
+	msoArrowheadLengthMedium      =0x2        # from enum MsoArrowheadLength
+	msoArrowheadLengthMixed       =-2         # from enum MsoArrowheadLength
+	msoArrowheadLong              =0x3        # from enum MsoArrowheadLength
+	msoArrowheadShort             =0x1        # from enum MsoArrowheadLength
+	msoArrowheadDiamond           =0x5        # from enum MsoArrowheadStyle
+	msoArrowheadNone              =0x1        # from enum MsoArrowheadStyle
+	msoArrowheadOpen              =0x3        # from enum MsoArrowheadStyle
+	msoArrowheadOval              =0x6        # from enum MsoArrowheadStyle
+	msoArrowheadStealth           =0x4        # from enum MsoArrowheadStyle
+	msoArrowheadStyleMixed        =-2         # from enum MsoArrowheadStyle
+	msoArrowheadTriangle          =0x2        # from enum MsoArrowheadStyle
+	msoArrowheadNarrow            =0x1        # from enum MsoArrowheadWidth
+	msoArrowheadWide              =0x3        # from enum MsoArrowheadWidth
+	msoArrowheadWidthMedium       =0x2        # from enum MsoArrowheadWidth
+	msoArrowheadWidthMixed        =-2         # from enum MsoArrowheadWidth
+	msoShape16pointStar           =0x5e       # from enum MsoAutoShapeType
+	msoShape24pointStar           =0x5f       # from enum MsoAutoShapeType
+	msoShape32pointStar           =0x60       # from enum MsoAutoShapeType
+	msoShape4pointStar            =0x5b       # from enum MsoAutoShapeType
+	msoShape5pointStar            =0x5c       # from enum MsoAutoShapeType
+	msoShape8pointStar            =0x5d       # from enum MsoAutoShapeType
+	msoShapeActionButtonBackorPrevious=0x81       # from enum MsoAutoShapeType
+	msoShapeActionButtonBeginning =0x83       # from enum MsoAutoShapeType
+	msoShapeActionButtonCustom    =0x7d       # from enum MsoAutoShapeType
+	msoShapeActionButtonDocument  =0x86       # from enum MsoAutoShapeType
+	msoShapeActionButtonEnd       =0x84       # from enum MsoAutoShapeType
+	msoShapeActionButtonForwardorNext=0x82       # from enum MsoAutoShapeType
+	msoShapeActionButtonHelp      =0x7f       # from enum MsoAutoShapeType
+	msoShapeActionButtonHome      =0x7e       # from enum MsoAutoShapeType
+	msoShapeActionButtonInformation=0x80       # from enum MsoAutoShapeType
+	msoShapeActionButtonMovie     =0x88       # from enum MsoAutoShapeType
+	msoShapeActionButtonReturn    =0x85       # from enum MsoAutoShapeType
+	msoShapeActionButtonSound     =0x87       # from enum MsoAutoShapeType
+	msoShapeArc                   =0x19       # from enum MsoAutoShapeType
+	msoShapeBalloon               =0x89       # from enum MsoAutoShapeType
+	msoShapeBentArrow             =0x29       # from enum MsoAutoShapeType
+	msoShapeBentUpArrow           =0x2c       # from enum MsoAutoShapeType
+	msoShapeBevel                 =0xf        # from enum MsoAutoShapeType
+	msoShapeBlockArc              =0x14       # from enum MsoAutoShapeType
+	msoShapeCan                   =0xd        # from enum MsoAutoShapeType
+	msoShapeChevron               =0x34       # from enum MsoAutoShapeType
+	msoShapeCircularArrow         =0x3c       # from enum MsoAutoShapeType
+	msoShapeCloudCallout          =0x6c       # from enum MsoAutoShapeType
+	msoShapeCross                 =0xb        # from enum MsoAutoShapeType
+	msoShapeCube                  =0xe        # from enum MsoAutoShapeType
+	msoShapeCurvedDownArrow       =0x30       # from enum MsoAutoShapeType
+	msoShapeCurvedDownRibbon      =0x64       # from enum MsoAutoShapeType
+	msoShapeCurvedLeftArrow       =0x2e       # from enum MsoAutoShapeType
+	msoShapeCurvedRightArrow      =0x2d       # from enum MsoAutoShapeType
+	msoShapeCurvedUpArrow         =0x2f       # from enum MsoAutoShapeType
+	msoShapeCurvedUpRibbon        =0x63       # from enum MsoAutoShapeType
+	msoShapeDiamond               =0x4        # from enum MsoAutoShapeType
+	msoShapeDonut                 =0x12       # from enum MsoAutoShapeType
+	msoShapeDoubleBrace           =0x1b       # from enum MsoAutoShapeType
+	msoShapeDoubleBracket         =0x1a       # from enum MsoAutoShapeType
+	msoShapeDoubleWave            =0x68       # from enum MsoAutoShapeType
+	msoShapeDownArrow             =0x24       # from enum MsoAutoShapeType
+	msoShapeDownArrowCallout      =0x38       # from enum MsoAutoShapeType
+	msoShapeDownRibbon            =0x62       # from enum MsoAutoShapeType
+	msoShapeExplosion1            =0x59       # from enum MsoAutoShapeType
+	msoShapeExplosion2            =0x5a       # from enum MsoAutoShapeType
+	msoShapeFlowchartAlternateProcess=0x3e       # from enum MsoAutoShapeType
+	msoShapeFlowchartCard         =0x4b       # from enum MsoAutoShapeType
+	msoShapeFlowchartCollate      =0x4f       # from enum MsoAutoShapeType
+	msoShapeFlowchartConnector    =0x49       # from enum MsoAutoShapeType
+	msoShapeFlowchartData         =0x40       # from enum MsoAutoShapeType
+	msoShapeFlowchartDecision     =0x3f       # from enum MsoAutoShapeType
+	msoShapeFlowchartDelay        =0x54       # from enum MsoAutoShapeType
+	msoShapeFlowchartDirectAccessStorage=0x57       # from enum MsoAutoShapeType
+	msoShapeFlowchartDisplay      =0x58       # from enum MsoAutoShapeType
+	msoShapeFlowchartDocument     =0x43       # from enum MsoAutoShapeType
+	msoShapeFlowchartExtract      =0x51       # from enum MsoAutoShapeType
+	msoShapeFlowchartInternalStorage=0x42       # from enum MsoAutoShapeType
+	msoShapeFlowchartMagneticDisk =0x56       # from enum MsoAutoShapeType
+	msoShapeFlowchartManualInput  =0x47       # from enum MsoAutoShapeType
+	msoShapeFlowchartManualOperation=0x48       # from enum MsoAutoShapeType
+	msoShapeFlowchartMerge        =0x52       # from enum MsoAutoShapeType
+	msoShapeFlowchartMultidocument=0x44       # from enum MsoAutoShapeType
+	msoShapeFlowchartOffpageConnector=0x4a       # from enum MsoAutoShapeType
+	msoShapeFlowchartOr           =0x4e       # from enum MsoAutoShapeType
+	msoShapeFlowchartPredefinedProcess=0x41       # from enum MsoAutoShapeType
+	msoShapeFlowchartPreparation  =0x46       # from enum MsoAutoShapeType
+	msoShapeFlowchartProcess      =0x3d       # from enum MsoAutoShapeType
+	msoShapeFlowchartPunchedTape  =0x4c       # from enum MsoAutoShapeType
+	msoShapeFlowchartSequentialAccessStorage=0x55       # from enum MsoAutoShapeType
+	msoShapeFlowchartSort         =0x50       # from enum MsoAutoShapeType
+	msoShapeFlowchartStoredData   =0x53       # from enum MsoAutoShapeType
+	msoShapeFlowchartSummingJunction=0x4d       # from enum MsoAutoShapeType
+	msoShapeFlowchartTerminator   =0x45       # from enum MsoAutoShapeType
+	msoShapeFoldedCorner          =0x10       # from enum MsoAutoShapeType
+	msoShapeHeart                 =0x15       # from enum MsoAutoShapeType
+	msoShapeHexagon               =0xa        # from enum MsoAutoShapeType
+	msoShapeHorizontalScroll      =0x66       # from enum MsoAutoShapeType
+	msoShapeIsoscelesTriangle     =0x7        # from enum MsoAutoShapeType
+	msoShapeLeftArrow             =0x22       # from enum MsoAutoShapeType
+	msoShapeLeftArrowCallout      =0x36       # from enum MsoAutoShapeType
+	msoShapeLeftBrace             =0x1f       # from enum MsoAutoShapeType
+	msoShapeLeftBracket           =0x1d       # from enum MsoAutoShapeType
+	msoShapeLeftRightArrow        =0x25       # from enum MsoAutoShapeType
+	msoShapeLeftRightArrowCallout =0x39       # from enum MsoAutoShapeType
+	msoShapeLeftRightUpArrow      =0x28       # from enum MsoAutoShapeType
+	msoShapeLeftUpArrow           =0x2b       # from enum MsoAutoShapeType
+	msoShapeLightningBolt         =0x16       # from enum MsoAutoShapeType
+	msoShapeLineCallout1          =0x6d       # from enum MsoAutoShapeType
+	msoShapeLineCallout1AccentBar =0x71       # from enum MsoAutoShapeType
+	msoShapeLineCallout1BorderandAccentBar=0x79       # from enum MsoAutoShapeType
+	msoShapeLineCallout1NoBorder  =0x75       # from enum MsoAutoShapeType
+	msoShapeLineCallout2          =0x6e       # from enum MsoAutoShapeType
+	msoShapeLineCallout2AccentBar =0x72       # from enum MsoAutoShapeType
+	msoShapeLineCallout2BorderandAccentBar=0x7a       # from enum MsoAutoShapeType
+	msoShapeLineCallout2NoBorder  =0x76       # from enum MsoAutoShapeType
+	msoShapeLineCallout3          =0x6f       # from enum MsoAutoShapeType
+	msoShapeLineCallout3AccentBar =0x73       # from enum MsoAutoShapeType
+	msoShapeLineCallout3BorderandAccentBar=0x7b       # from enum MsoAutoShapeType
+	msoShapeLineCallout3NoBorder  =0x77       # from enum MsoAutoShapeType
+	msoShapeLineCallout4          =0x70       # from enum MsoAutoShapeType
+	msoShapeLineCallout4AccentBar =0x74       # from enum MsoAutoShapeType
+	msoShapeLineCallout4BorderandAccentBar=0x7c       # from enum MsoAutoShapeType
+	msoShapeLineCallout4NoBorder  =0x78       # from enum MsoAutoShapeType
+	msoShapeMixed                 =-2         # from enum MsoAutoShapeType
+	msoShapeMoon                  =0x18       # from enum MsoAutoShapeType
+	msoShapeNoSymbol              =0x13       # from enum MsoAutoShapeType
+	msoShapeNotPrimitive          =0x8a       # from enum MsoAutoShapeType
+	msoShapeNotchedRightArrow     =0x32       # from enum MsoAutoShapeType
+	msoShapeOctagon               =0x6        # from enum MsoAutoShapeType
+	msoShapeOval                  =0x9        # from enum MsoAutoShapeType
+	msoShapeOvalCallout           =0x6b       # from enum MsoAutoShapeType
+	msoShapeParallelogram         =0x2        # from enum MsoAutoShapeType
+	msoShapePentagon              =0x33       # from enum MsoAutoShapeType
+	msoShapePlaque                =0x1c       # from enum MsoAutoShapeType
+	msoShapeQuadArrow             =0x27       # from enum MsoAutoShapeType
+	msoShapeQuadArrowCallout      =0x3b       # from enum MsoAutoShapeType
+	msoShapeRectangle             =0x1        # from enum MsoAutoShapeType
+	msoShapeRectangularCallout    =0x69       # from enum MsoAutoShapeType
+	msoShapeRegularPentagon       =0xc        # from enum MsoAutoShapeType
+	msoShapeRightArrow            =0x21       # from enum MsoAutoShapeType
+	msoShapeRightArrowCallout     =0x35       # from enum MsoAutoShapeType
+	msoShapeRightBrace            =0x20       # from enum MsoAutoShapeType
+	msoShapeRightBracket          =0x1e       # from enum MsoAutoShapeType
+	msoShapeRightTriangle         =0x8        # from enum MsoAutoShapeType
+	msoShapeRoundedRectangle      =0x5        # from enum MsoAutoShapeType
+	msoShapeRoundedRectangularCallout=0x6a       # from enum MsoAutoShapeType
+	msoShapeSmileyFace            =0x11       # from enum MsoAutoShapeType
+	msoShapeStripedRightArrow     =0x31       # from enum MsoAutoShapeType
+	msoShapeSun                   =0x17       # from enum MsoAutoShapeType
+	msoShapeTrapezoid             =0x3        # from enum MsoAutoShapeType
+	msoShapeUTurnArrow            =0x2a       # from enum MsoAutoShapeType
+	msoShapeUpArrow               =0x23       # from enum MsoAutoShapeType
+	msoShapeUpArrowCallout        =0x37       # from enum MsoAutoShapeType
+	msoShapeUpDownArrow           =0x26       # from enum MsoAutoShapeType
+	msoShapeUpDownArrowCallout    =0x3a       # from enum MsoAutoShapeType
+	msoShapeUpRibbon              =0x61       # from enum MsoAutoShapeType
+	msoShapeVerticalScroll        =0x65       # from enum MsoAutoShapeType
+	msoShapeWave                  =0x67       # from enum MsoAutoShapeType
+	msoBalloonButtonAbort         =-8         # from enum MsoBalloonButtonType
+	msoBalloonButtonBack          =-5         # from enum MsoBalloonButtonType
+	msoBalloonButtonCancel        =-2         # from enum MsoBalloonButtonType
+	msoBalloonButtonClose         =-12        # from enum MsoBalloonButtonType
+	msoBalloonButtonIgnore        =-9         # from enum MsoBalloonButtonType
+	msoBalloonButtonNext          =-6         # from enum MsoBalloonButtonType
+	msoBalloonButtonNo            =-4         # from enum MsoBalloonButtonType
+	msoBalloonButtonNull          =0x0        # from enum MsoBalloonButtonType
+	msoBalloonButtonOK            =-1         # from enum MsoBalloonButtonType
+	msoBalloonButtonOptions       =-14        # from enum MsoBalloonButtonType
+	msoBalloonButtonRetry         =-7         # from enum MsoBalloonButtonType
+	msoBalloonButtonSearch        =-10        # from enum MsoBalloonButtonType
+	msoBalloonButtonSnooze        =-11        # from enum MsoBalloonButtonType
+	msoBalloonButtonTips          =-13        # from enum MsoBalloonButtonType
+	msoBalloonButtonYes           =-3         # from enum MsoBalloonButtonType
+	msoBalloonButtonYesToAll      =-15        # from enum MsoBalloonButtonType
+	msoBalloonErrorBadCharacter   =0x8        # from enum MsoBalloonErrorType
+	msoBalloonErrorBadPictureRef  =0x4        # from enum MsoBalloonErrorType
+	msoBalloonErrorBadReference   =0x5        # from enum MsoBalloonErrorType
+	msoBalloonErrorButtonModeless =0x7        # from enum MsoBalloonErrorType
+	msoBalloonErrorButtonlessModal=0x6        # from enum MsoBalloonErrorType
+	msoBalloonErrorCOMFailure     =0x9        # from enum MsoBalloonErrorType
+	msoBalloonErrorCharNotTopmostForModal=0xa        # from enum MsoBalloonErrorType
+	msoBalloonErrorNone           =0x0        # from enum MsoBalloonErrorType
+	msoBalloonErrorOther          =0x1        # from enum MsoBalloonErrorType
+	msoBalloonErrorOutOfMemory    =0x3        # from enum MsoBalloonErrorType
+	msoBalloonErrorTooBig         =0x2        # from enum MsoBalloonErrorType
+	msoBalloonErrorTooManyControls=0xb        # from enum MsoBalloonErrorType
+	msoBalloonTypeBullets         =0x1        # from enum MsoBalloonType
+	msoBalloonTypeButtons         =0x0        # from enum MsoBalloonType
+	msoBalloonTypeNumbers         =0x2        # from enum MsoBalloonType
+	msoBarBottom                  =0x3        # from enum MsoBarPosition
+	msoBarFloating                =0x4        # from enum MsoBarPosition
+	msoBarLeft                    =0x0        # from enum MsoBarPosition
+	msoBarMenuBar                 =0x6        # from enum MsoBarPosition
+	msoBarPopup                   =0x5        # from enum MsoBarPosition
+	msoBarRight                   =0x2        # from enum MsoBarPosition
+	msoBarTop                     =0x1        # from enum MsoBarPosition
+	msoBarNoChangeDock            =0x10       # from enum MsoBarProtection
+	msoBarNoChangeVisible         =0x8        # from enum MsoBarProtection
+	msoBarNoCustomize             =0x1        # from enum MsoBarProtection
+	msoBarNoHorizontalDock        =0x40       # from enum MsoBarProtection
+	msoBarNoMove                  =0x4        # from enum MsoBarProtection
+	msoBarNoProtection            =0x0        # from enum MsoBarProtection
+	msoBarNoResize                =0x2        # from enum MsoBarProtection
+	msoBarNoVerticalDock          =0x20       # from enum MsoBarProtection
+	msoBarRowFirst                =0x0        # from enum MsoBarRow
+	msoBarRowLast                 =-1         # from enum MsoBarRow
+	msoBarTypeMenuBar             =0x1        # from enum MsoBarType
+	msoBarTypeNormal              =0x0        # from enum MsoBarType
+	msoBarTypePopup               =0x2        # from enum MsoBarType
+	msoBlackWhiteAutomatic        =0x1        # from enum MsoBlackWhiteMode
+	msoBlackWhiteBlack            =0x8        # from enum MsoBlackWhiteMode
+	msoBlackWhiteBlackTextAndLine =0x6        # from enum MsoBlackWhiteMode
+	msoBlackWhiteDontShow         =0xa        # from enum MsoBlackWhiteMode
+	msoBlackWhiteGrayOutline      =0x5        # from enum MsoBlackWhiteMode
+	msoBlackWhiteGrayScale        =0x2        # from enum MsoBlackWhiteMode
+	msoBlackWhiteHighContrast     =0x7        # from enum MsoBlackWhiteMode
+	msoBlackWhiteInverseGrayScale =0x4        # from enum MsoBlackWhiteMode
+	msoBlackWhiteLightGrayScale   =0x3        # from enum MsoBlackWhiteMode
+	msoBlackWhiteMixed            =-2         # from enum MsoBlackWhiteMode
+	msoBlackWhiteWhite            =0x9        # from enum MsoBlackWhiteMode
+	msoButtonSetAbortRetryIgnore  =0xa        # from enum MsoButtonSetType
+	msoButtonSetBackClose         =0x6        # from enum MsoButtonSetType
+	msoButtonSetBackNextClose     =0x8        # from enum MsoButtonSetType
+	msoButtonSetBackNextSnooze    =0xc        # from enum MsoButtonSetType
+	msoButtonSetCancel            =0x2        # from enum MsoButtonSetType
+	msoButtonSetNextClose         =0x7        # from enum MsoButtonSetType
+	msoButtonSetNone              =0x0        # from enum MsoButtonSetType
+	msoButtonSetOK                =0x1        # from enum MsoButtonSetType
+	msoButtonSetOkCancel          =0x3        # from enum MsoButtonSetType
+	msoButtonSetRetryCancel       =0x9        # from enum MsoButtonSetType
+	msoButtonSetSearchClose       =0xb        # from enum MsoButtonSetType
+	msoButtonSetTipsOptionsClose  =0xd        # from enum MsoButtonSetType
+	msoButtonSetYesAllNoCancel    =0xe        # from enum MsoButtonSetType
+	msoButtonSetYesNo             =0x4        # from enum MsoButtonSetType
+	msoButtonSetYesNoCancel       =0x5        # from enum MsoButtonSetType
+	msoButtonDown                 =-1         # from enum MsoButtonState
+	msoButtonMixed                =0x2        # from enum MsoButtonState
+	msoButtonUp                   =0x0        # from enum MsoButtonState
+	msoButtonAutomatic            =0x0        # from enum MsoButtonStyle
+	msoButtonCaption              =0x2        # from enum MsoButtonStyle
+	msoButtonIcon                 =0x1        # from enum MsoButtonStyle
+	msoButtonIconAndCaption       =0x3        # from enum MsoButtonStyle
+	msoButtonIconAndCaptionBelow  =0xb        # from enum MsoButtonStyle
+	msoButtonIconAndWrapCaption   =0x7        # from enum MsoButtonStyle
+	msoButtonIconAndWrapCaptionBelow=0xf        # from enum MsoButtonStyle
+	msoButtonWrapCaption          =0xe        # from enum MsoButtonStyle
+	msoButtonTextBelow            =0x8        # from enum MsoButtonStyleHidden
+	msoButtonWrapText             =0x4        # from enum MsoButtonStyleHidden
+	msoCalloutAngle30             =0x2        # from enum MsoCalloutAngleType
+	msoCalloutAngle45             =0x3        # from enum MsoCalloutAngleType
+	msoCalloutAngle60             =0x4        # from enum MsoCalloutAngleType
+	msoCalloutAngle90             =0x5        # from enum MsoCalloutAngleType
+	msoCalloutAngleAutomatic      =0x1        # from enum MsoCalloutAngleType
+	msoCalloutAngleMixed          =-2         # from enum MsoCalloutAngleType
+	msoCalloutDropBottom          =0x4        # from enum MsoCalloutDropType
+	msoCalloutDropCenter          =0x3        # from enum MsoCalloutDropType
+	msoCalloutDropCustom          =0x1        # from enum MsoCalloutDropType
+	msoCalloutDropMixed           =-2         # from enum MsoCalloutDropType
+	msoCalloutDropTop             =0x2        # from enum MsoCalloutDropType
+	msoCalloutFour                =0x4        # from enum MsoCalloutType
+	msoCalloutMixed               =-2         # from enum MsoCalloutType
+	msoCalloutOne                 =0x1        # from enum MsoCalloutType
+	msoCalloutThree               =0x3        # from enum MsoCalloutType
+	msoCalloutTwo                 =0x2        # from enum MsoCalloutType
+	msoCharacterSetArabic         =0x1        # from enum MsoCharacterSet
+	msoCharacterSetCyrillic       =0x2        # from enum MsoCharacterSet
+	msoCharacterSetEnglishWesternEuropeanOtherLatinScript=0x3        # from enum MsoCharacterSet
+	msoCharacterSetGreek          =0x4        # from enum MsoCharacterSet
+	msoCharacterSetHebrew         =0x5        # from enum MsoCharacterSet
+	msoCharacterSetJapanese       =0x6        # from enum MsoCharacterSet
+	msoCharacterSetKorean         =0x7        # from enum MsoCharacterSet
+	msoCharacterSetMultilingualUnicode=0x8        # from enum MsoCharacterSet
+	msoCharacterSetSimplifiedChinese=0x9        # from enum MsoCharacterSet
+	msoCharacterSetThai           =0xa        # from enum MsoCharacterSet
+	msoCharacterSetTraditionalChinese=0xb        # from enum MsoCharacterSet
+	msoCharacterSetVietnamese     =0xc        # from enum MsoCharacterSet
+	msoColorTypeMixed             =-2         # from enum MsoColorType
+	msoColorTypeRGB               =0x1        # from enum MsoColorType
+	msoColorTypeScheme            =0x2        # from enum MsoColorType
+	msoComboLabel                 =0x1        # from enum MsoComboStyle
+	msoComboNormal                =0x0        # from enum MsoComboStyle
+	msoCommandBarButtonHyperlinkInsertPicture=0x2        # from enum MsoCommandBarButtonHyperlinkType
+	msoCommandBarButtonHyperlinkNone=0x0        # from enum MsoCommandBarButtonHyperlinkType
+	msoCommandBarButtonHyperlinkOpen=0x1        # from enum MsoCommandBarButtonHyperlinkType
+	msoConditionAnyNumberBetween  =0x22       # from enum MsoCondition
+	msoConditionAnytime           =0x19       # from enum MsoCondition
+	msoConditionAnytimeBetween    =0x1a       # from enum MsoCondition
+	msoConditionAtLeast           =0x24       # from enum MsoCondition
+	msoConditionAtMost            =0x23       # from enum MsoCondition
+	msoConditionBeginsWith        =0xb        # from enum MsoCondition
+	msoConditionDoesNotEqual      =0x21       # from enum MsoCondition
+	msoConditionEndsWith          =0xc        # from enum MsoCondition
+	msoConditionEquals            =0x20       # from enum MsoCondition
+	msoConditionFileTypeAllFiles  =0x1        # from enum MsoCondition
+	msoConditionFileTypeBinders   =0x6        # from enum MsoCondition
+	msoConditionFileTypeDatabases =0x7        # from enum MsoCondition
+	msoConditionFileTypeExcelWorkbooks=0x4        # from enum MsoCondition
+	msoConditionFileTypeOfficeFiles=0x2        # from enum MsoCondition
+	msoConditionFileTypePowerPointPresentations=0x5        # from enum MsoCondition
+	msoConditionFileTypeTemplates =0x8        # from enum MsoCondition
+	msoConditionFileTypeWordDocuments=0x3        # from enum MsoCondition
+	msoConditionInTheLast         =0x1f       # from enum MsoCondition
+	msoConditionInTheNext         =0x1e       # from enum MsoCondition
+	msoConditionIncludes          =0x9        # from enum MsoCondition
+	msoConditionIncludesNearEachOther=0xd        # from enum MsoCondition
+	msoConditionIncludesPhrase    =0xa        # from enum MsoCondition
+	msoConditionIsExactly         =0xe        # from enum MsoCondition
+	msoConditionIsNo              =0x28       # from enum MsoCondition
+	msoConditionIsNot             =0xf        # from enum MsoCondition
+	msoConditionIsYes             =0x27       # from enum MsoCondition
+	msoConditionLastMonth         =0x16       # from enum MsoCondition
+	msoConditionLastWeek          =0x13       # from enum MsoCondition
+	msoConditionLessThan          =0x26       # from enum MsoCondition
+	msoConditionMoreThan          =0x25       # from enum MsoCondition
+	msoConditionNextMonth         =0x18       # from enum MsoCondition
+	msoConditionNextWeek          =0x15       # from enum MsoCondition
+	msoConditionOn                =0x1b       # from enum MsoCondition
+	msoConditionOnOrAfter         =0x1c       # from enum MsoCondition
+	msoConditionOnOrBefore        =0x1d       # from enum MsoCondition
+	msoConditionThisMonth         =0x17       # from enum MsoCondition
+	msoConditionThisWeek          =0x14       # from enum MsoCondition
+	msoConditionToday             =0x11       # from enum MsoCondition
+	msoConditionTomorrow          =0x12       # from enum MsoCondition
+	msoConditionYesterday         =0x10       # from enum MsoCondition
+	msoConnectorAnd               =0x1        # from enum MsoConnector
+	msoConnectorOr                =0x2        # from enum MsoConnector
+	msoConnectorCurve             =0x3        # from enum MsoConnectorType
+	msoConnectorElbow             =0x2        # from enum MsoConnectorType
+	msoConnectorStraight          =0x1        # from enum MsoConnectorType
+	msoConnectorTypeMixed         =-2         # from enum MsoConnectorType
+	msoControlOLEUsageBoth        =0x3        # from enum MsoControlOLEUsage
+	msoControlOLEUsageClient      =0x2        # from enum MsoControlOLEUsage
+	msoControlOLEUsageNeither     =0x0        # from enum MsoControlOLEUsage
+	msoControlOLEUsageServer      =0x1        # from enum MsoControlOLEUsage
+	msoControlActiveX             =0x16       # from enum MsoControlType
+	msoControlButton              =0x1        # from enum MsoControlType
+	msoControlButtonDropdown      =0x5        # from enum MsoControlType
+	msoControlButtonPopup         =0xc        # from enum MsoControlType
+	msoControlComboBox            =0x4        # from enum MsoControlType
+	msoControlCustom              =0x0        # from enum MsoControlType
+	msoControlDropdown            =0x3        # from enum MsoControlType
+	msoControlEdit                =0x2        # from enum MsoControlType
+	msoControlExpandingGrid       =0x10       # from enum MsoControlType
+	msoControlGauge               =0x13       # from enum MsoControlType
+	msoControlGenericDropdown     =0x8        # from enum MsoControlType
+	msoControlGraphicCombo        =0x14       # from enum MsoControlType
+	msoControlGraphicDropdown     =0x9        # from enum MsoControlType
+	msoControlGraphicPopup        =0xb        # from enum MsoControlType
+	msoControlGrid                =0x12       # from enum MsoControlType
+	msoControlLabel               =0xf        # from enum MsoControlType
+	msoControlOCXDropdown         =0x7        # from enum MsoControlType
+	msoControlPane                =0x15       # from enum MsoControlType
+	msoControlPopup               =0xa        # from enum MsoControlType
+	msoControlSplitButtonMRUPopup =0xe        # from enum MsoControlType
+	msoControlSplitButtonPopup    =0xd        # from enum MsoControlType
+	msoControlSplitDropdown       =0x6        # from enum MsoControlType
+	msoControlSplitExpandingGrid  =0x11       # from enum MsoControlType
+	msoDistributeHorizontally     =0x0        # from enum MsoDistributeCmd
+	msoDistributeVertically       =0x1        # from enum MsoDistributeCmd
+	msoPropertyTypeBoolean        =0x2        # from enum MsoDocProperties
+	msoPropertyTypeDate           =0x3        # from enum MsoDocProperties
+	msoPropertyTypeFloat          =0x5        # from enum MsoDocProperties
+	msoPropertyTypeNumber         =0x1        # from enum MsoDocProperties
+	msoPropertyTypeString         =0x4        # from enum MsoDocProperties
+	msoEditingAuto                =0x0        # from enum MsoEditingType
+	msoEditingCorner              =0x1        # from enum MsoEditingType
+	msoEditingSmooth              =0x2        # from enum MsoEditingType
+	msoEditingSymmetric           =0x3        # from enum MsoEditingType
+	msoEncodingArabic             =0x4e8      # from enum MsoEncoding
+	msoEncodingArabicASMO         =0x2c4      # from enum MsoEncoding
+	msoEncodingArabicAutoDetect   =0xc838     # from enum MsoEncoding
+	msoEncodingArabicTransparentASMO=0x2d0      # from enum MsoEncoding
+	msoEncodingAutoDetect         =0xc351     # from enum MsoEncoding
+	msoEncodingBaltic             =0x4e9      # from enum MsoEncoding
+	msoEncodingCentralEuropean    =0x4e2      # from enum MsoEncoding
+	msoEncodingCyrillic           =0x4e3      # from enum MsoEncoding
+	msoEncodingCyrillicAutoDetect =0xc833     # from enum MsoEncoding
+	msoEncodingEBCDICArabic       =0x4fc4     # from enum MsoEncoding
+	msoEncodingEBCDICDenmarkNorway=0x4f35     # from enum MsoEncoding
+	msoEncodingEBCDICFinlandSweden=0x4f36     # from enum MsoEncoding
+	msoEncodingEBCDICFrance       =0x4f49     # from enum MsoEncoding
+	msoEncodingEBCDICGermany      =0x4f31     # from enum MsoEncoding
+	msoEncodingEBCDICGreek        =0x4fc7     # from enum MsoEncoding
+	msoEncodingEBCDICGreekModern  =0x36b      # from enum MsoEncoding
+	msoEncodingEBCDICHebrew       =0x4fc8     # from enum MsoEncoding
+	msoEncodingEBCDICIcelandic    =0x5187     # from enum MsoEncoding
+	msoEncodingEBCDICInternational=0x1f4      # from enum MsoEncoding
+	msoEncodingEBCDICItaly        =0x4f38     # from enum MsoEncoding
+	msoEncodingEBCDICJapaneseKatakanaExtended=0x4f42     # from enum MsoEncoding
+	msoEncodingEBCDICJapaneseKatakanaExtendedAndJapanese=0xc6f2     # from enum MsoEncoding
+	msoEncodingEBCDICJapaneseLatinExtendedAndJapanese=0xc6fb     # from enum MsoEncoding
+	msoEncodingEBCDICKoreanExtended=0x5161     # from enum MsoEncoding
+	msoEncodingEBCDICKoreanExtendedAndKorean=0xc6f5     # from enum MsoEncoding
+	msoEncodingEBCDICLatinAmericaSpain=0x4f3c     # from enum MsoEncoding
+	msoEncodingEBCDICMultilingualROECELatin2=0x366      # from enum MsoEncoding
+	msoEncodingEBCDICRussian      =0x5190     # from enum MsoEncoding
+	msoEncodingEBCDICSerbianBulgarian=0x5221     # from enum MsoEncoding
+	msoEncodingEBCDICSimplifiedChineseExtendedAndSimplifiedChinese=0xc6f7     # from enum MsoEncoding
+	msoEncodingEBCDICThai         =0x5166     # from enum MsoEncoding
+	msoEncodingEBCDICTurkish      =0x51a9     # from enum MsoEncoding
+	msoEncodingEBCDICTurkishLatin5=0x402      # from enum MsoEncoding
+	msoEncodingEBCDICUSCanada     =0x25       # from enum MsoEncoding
+	msoEncodingEBCDICUSCanadaAndTraditionalChinese=0xc6f9     # from enum MsoEncoding
+	msoEncodingEBCDICUSCanadaandJapanese=0xc6f3     # from enum MsoEncoding
+	msoEncodingEBCDICUnitedKingdom=0x4f3d     # from enum MsoEncoding
+	msoEncodingEUCChineseSimplifiedChinese=0xcae0     # from enum MsoEncoding
+	msoEncodingEUCJapanese        =0xcadc     # from enum MsoEncoding
+	msoEncodingEUCKorean          =0xcaed     # from enum MsoEncoding
+	msoEncodingEUCTaiwaneseTraditionalChinese=0xcaee     # from enum MsoEncoding
+	msoEncodingEuropa3            =0x7149     # from enum MsoEncoding
+	msoEncodingExtAlphaLowercase  =0x5223     # from enum MsoEncoding
+	msoEncodingGreek              =0x4e5      # from enum MsoEncoding
+	msoEncodingGreekAutoDetect    =0xc835     # from enum MsoEncoding
+	msoEncodingHZGBSimplifiedChinese=0xcec8     # from enum MsoEncoding
+	msoEncodingHebrew             =0x4e7      # from enum MsoEncoding
+	msoEncodingIA5German          =0x4e8a     # from enum MsoEncoding
+	msoEncodingIA5IRV             =0x4e89     # from enum MsoEncoding
+	msoEncodingIA5Norwegian       =0x4e8c     # from enum MsoEncoding
+	msoEncodingIA5Swedish         =0x4e8b     # from enum MsoEncoding
+	msoEncodingISO2022CNSimplifiedChinese=0xc435     # from enum MsoEncoding
+	msoEncodingISO2022CNTraditionalChinese=0xc433     # from enum MsoEncoding
+	msoEncodingISO2022JPJISX02011989=0xc42e     # from enum MsoEncoding
+	msoEncodingISO2022JPJISX02021984=0xc42d     # from enum MsoEncoding
+	msoEncodingISO2022JPNoHalfwidthKatakana=0xc42c     # from enum MsoEncoding
+	msoEncodingISO2022KR          =0xc431     # from enum MsoEncoding
+	msoEncodingISO6937NonSpacingAccent=0x4f2d     # from enum MsoEncoding
+	msoEncodingISO885915Latin9    =0x6fbd     # from enum MsoEncoding
+	msoEncodingISO88591Latin1     =0x6faf     # from enum MsoEncoding
+	msoEncodingISO88592CentralEurope=0x6fb0     # from enum MsoEncoding
+	msoEncodingISO88593Latin3     =0x6fb1     # from enum MsoEncoding
+	msoEncodingISO88594Baltic     =0x6fb2     # from enum MsoEncoding
+	msoEncodingISO88595Cyrillic   =0x6fb3     # from enum MsoEncoding
+	msoEncodingISO88596Arabic     =0x6fb4     # from enum MsoEncoding
+	msoEncodingISO88597Greek      =0x6fb5     # from enum MsoEncoding
+	msoEncodingISO88598Hebrew     =0x6fb6     # from enum MsoEncoding
+	msoEncodingISO88599Turkish    =0x6fb7     # from enum MsoEncoding
+	msoEncodingJapaneseAutoDetect =0xc6f4     # from enum MsoEncoding
+	msoEncodingJapaneseShiftJIS   =0x3a4      # from enum MsoEncoding
+	msoEncodingKOI8R              =0x5182     # from enum MsoEncoding
+	msoEncodingKOI8U              =0x556a     # from enum MsoEncoding
+	msoEncodingKorean             =0x3b5      # from enum MsoEncoding
+	msoEncodingKoreanAutoDetect   =0xc705     # from enum MsoEncoding
+	msoEncodingKoreanJohab        =0x551      # from enum MsoEncoding
+	msoEncodingMacArabic          =0x2714     # from enum MsoEncoding
+	msoEncodingMacCroatia         =0x2762     # from enum MsoEncoding
+	msoEncodingMacCyrillic        =0x2717     # from enum MsoEncoding
+	msoEncodingMacGreek1          =0x2716     # from enum MsoEncoding
+	msoEncodingMacHebrew          =0x2715     # from enum MsoEncoding
+	msoEncodingMacIcelandic       =0x275f     # from enum MsoEncoding
+	msoEncodingMacJapanese        =0x2711     # from enum MsoEncoding
+	msoEncodingMacKorean          =0x2713     # from enum MsoEncoding
+	msoEncodingMacLatin2          =0x272d     # from enum MsoEncoding
+	msoEncodingMacRoman           =0x2710     # from enum MsoEncoding
+	msoEncodingMacRomania         =0x271a     # from enum MsoEncoding
+	msoEncodingMacSimplifiedChineseGB2312=0x2718     # from enum MsoEncoding
+	msoEncodingMacTraditionalChineseBig5=0x2712     # from enum MsoEncoding
+	msoEncodingMacTurkish         =0x2761     # from enum MsoEncoding
+	msoEncodingMacUkraine         =0x2721     # from enum MsoEncoding
+	msoEncodingOEMArabic          =0x360      # from enum MsoEncoding
+	msoEncodingOEMBaltic          =0x307      # from enum MsoEncoding
+	msoEncodingOEMCanadianFrench  =0x35f      # from enum MsoEncoding
+	msoEncodingOEMCyrillic        =0x357      # from enum MsoEncoding
+	msoEncodingOEMCyrillicII      =0x362      # from enum MsoEncoding
+	msoEncodingOEMGreek437G       =0x2e1      # from enum MsoEncoding
+	msoEncodingOEMHebrew          =0x35e      # from enum MsoEncoding
+	msoEncodingOEMIcelandic       =0x35d      # from enum MsoEncoding
+	msoEncodingOEMModernGreek     =0x365      # from enum MsoEncoding
+	msoEncodingOEMMultilingualLatinI=0x352      # from enum MsoEncoding
+	msoEncodingOEMMultilingualLatinII=0x354      # from enum MsoEncoding
+	msoEncodingOEMNordic          =0x361      # from enum MsoEncoding
+	msoEncodingOEMPortuguese      =0x35c      # from enum MsoEncoding
+	msoEncodingOEMTurkish         =0x359      # from enum MsoEncoding
+	msoEncodingOEMUnitedStates    =0x1b5      # from enum MsoEncoding
+	msoEncodingSimplifiedChineseAutoDetect=0xc6f8     # from enum MsoEncoding
+	msoEncodingSimplifiedChineseGBK=0x3a8      # from enum MsoEncoding
+	msoEncodingT61                =0x4f25     # from enum MsoEncoding
+	msoEncodingTaiwanCNS          =0x4e20     # from enum MsoEncoding
+	msoEncodingTaiwanEten         =0x4e22     # from enum MsoEncoding
+	msoEncodingTaiwanIBM5550      =0x4e23     # from enum MsoEncoding
+	msoEncodingTaiwanTCA          =0x4e21     # from enum MsoEncoding
+	msoEncodingTaiwanTeleText     =0x4e24     # from enum MsoEncoding
+	msoEncodingTaiwanWang         =0x4e25     # from enum MsoEncoding
+	msoEncodingThai               =0x36a      # from enum MsoEncoding
+	msoEncodingTraditionalChineseAutoDetect=0xc706     # from enum MsoEncoding
+	msoEncodingTraditionalChineseBig5=0x3b6      # from enum MsoEncoding
+	msoEncodingTurkish            =0x4e6      # from enum MsoEncoding
+	msoEncodingUSASCII            =0x4e9f     # from enum MsoEncoding
+	msoEncodingUTF7               =0xfde8     # from enum MsoEncoding
+	msoEncodingUTF8               =0xfde9     # from enum MsoEncoding
+	msoEncodingUnicodeBigEndian   =0x4b1      # from enum MsoEncoding
+	msoEncodingUnicodeLittleEndian=0x4b0      # from enum MsoEncoding
+	msoEncodingVietnamese         =0x4ea      # from enum MsoEncoding
+	msoEncodingWestern            =0x4e4      # from enum MsoEncoding
+	msoMethodGet                  =0x0        # from enum MsoExtraInfoMethod
+	msoMethodPost                 =0x1        # from enum MsoExtraInfoMethod
+	msoExtrusionColorAutomatic    =0x1        # from enum MsoExtrusionColorType
+	msoExtrusionColorCustom       =0x2        # from enum MsoExtrusionColorType
+	msoExtrusionColorTypeMixed    =-2         # from enum MsoExtrusionColorType
+	MsoFarEastLineBreakLanguageJapanese=0x411      # from enum MsoFarEastLineBreakLanguageID
+	MsoFarEastLineBreakLanguageKorean=0x412      # from enum MsoFarEastLineBreakLanguageID
+	MsoFarEastLineBreakLanguageSimplifiedChinese=0x804      # from enum MsoFarEastLineBreakLanguageID
+	MsoFarEastLineBreakLanguageTraditionalChinese=0x404      # from enum MsoFarEastLineBreakLanguageID
+	msoFeatureInstallNone         =0x0        # from enum MsoFeatureInstall
+	msoFeatureInstallOnDemand     =0x1        # from enum MsoFeatureInstall
+	msoFeatureInstallOnDemandWithUI=0x2        # from enum MsoFeatureInstall
+	msoListbyName                 =0x1        # from enum MsoFileFindListBy
+	msoListbyTitle                =0x2        # from enum MsoFileFindListBy
+	msoOptionsAdd                 =0x2        # from enum MsoFileFindOptions
+	msoOptionsNew                 =0x1        # from enum MsoFileFindOptions
+	msoOptionsWithin              =0x3        # from enum MsoFileFindOptions
+	msoFileFindSortbyAuthor       =0x1        # from enum MsoFileFindSortBy
+	msoFileFindSortbyDateCreated  =0x2        # from enum MsoFileFindSortBy
+	msoFileFindSortbyDateSaved    =0x4        # from enum MsoFileFindSortBy
+	msoFileFindSortbyFileName     =0x5        # from enum MsoFileFindSortBy
+	msoFileFindSortbyLastSavedBy  =0x3        # from enum MsoFileFindSortBy
+	msoFileFindSortbySize         =0x6        # from enum MsoFileFindSortBy
+	msoFileFindSortbyTitle        =0x7        # from enum MsoFileFindSortBy
+	msoViewFileInfo               =0x1        # from enum MsoFileFindView
+	msoViewPreview                =0x2        # from enum MsoFileFindView
+	msoViewSummaryInfo            =0x3        # from enum MsoFileFindView
+	msoFileTypeAllFiles           =0x1        # from enum MsoFileType
+	msoFileTypeBinders            =0x6        # from enum MsoFileType
+	msoFileTypeDatabases          =0x7        # from enum MsoFileType
+	msoFileTypeExcelWorkbooks     =0x4        # from enum MsoFileType
+	msoFileTypeOfficeFiles        =0x2        # from enum MsoFileType
+	msoFileTypePowerPointPresentations=0x5        # from enum MsoFileType
+	msoFileTypeTemplates          =0x8        # from enum MsoFileType
+	msoFileTypeWordDocuments      =0x3        # from enum MsoFileType
+	msoFillBackground             =0x5        # from enum MsoFillType
+	msoFillGradient               =0x3        # from enum MsoFillType
+	msoFillMixed                  =-2         # from enum MsoFillType
+	msoFillPatterned              =0x2        # from enum MsoFillType
+	msoFillPicture                =0x6        # from enum MsoFillType
+	msoFillSolid                  =0x1        # from enum MsoFillType
+	msoFillTextured               =0x4        # from enum MsoFillType
+	msoFlipHorizontal             =0x0        # from enum MsoFlipCmd
+	msoFlipVertical               =0x1        # from enum MsoFlipCmd
+	msoGradientColorMixed         =-2         # from enum MsoGradientColorType
+	msoGradientOneColor           =0x1        # from enum MsoGradientColorType
+	msoGradientPresetColors       =0x3        # from enum MsoGradientColorType
+	msoGradientTwoColors          =0x2        # from enum MsoGradientColorType
+	msoGradientDiagonalDown       =0x4        # from enum MsoGradientStyle
+	msoGradientDiagonalUp         =0x3        # from enum MsoGradientStyle
+	msoGradientFromCenter         =0x7        # from enum MsoGradientStyle
+	msoGradientFromCorner         =0x5        # from enum MsoGradientStyle
+	msoGradientFromTitle          =0x6        # from enum MsoGradientStyle
+	msoGradientHorizontal         =0x1        # from enum MsoGradientStyle
+	msoGradientMixed              =-2         # from enum MsoGradientStyle
+	msoGradientVertical           =0x2        # from enum MsoGradientStyle
+	msoHTMLProjectOpenSourceView  =0x1        # from enum MsoHTMLProjectOpen
+	msoHTMLProjectOpenTextView    =0x2        # from enum MsoHTMLProjectOpen
+	msoHTMLProjectStateDocumentLocked=0x1        # from enum MsoHTMLProjectState
+	msoHTMLProjectStateDocumentProjectUnlocked=0x3        # from enum MsoHTMLProjectState
+	msoHTMLProjectStateProjectLocked=0x2        # from enum MsoHTMLProjectState
+	msoAnchorCenter               =0x2        # from enum MsoHorizontalAnchor
+	msoAnchorNone                 =0x1        # from enum MsoHorizontalAnchor
+	msoHorizontalAnchorMixed      =-2         # from enum MsoHorizontalAnchor
+	msoHyperlinkInlineShape       =0x2        # from enum MsoHyperlinkType
+	msoHyperlinkRange             =0x0        # from enum MsoHyperlinkType
+	msoHyperlinkShape             =0x1        # from enum MsoHyperlinkType
+	msoIconAlert                  =0x2        # from enum MsoIconType
+	msoIconAlertCritical          =0x7        # from enum MsoIconType
+	msoIconAlertInfo              =0x4        # from enum MsoIconType
+	msoIconAlertQuery             =0x6        # from enum MsoIconType
+	msoIconAlertWarning           =0x5        # from enum MsoIconType
+	msoIconNone                   =0x0        # from enum MsoIconType
+	msoIconTip                    =0x3        # from enum MsoIconType
+	msoLanguageIDAfrikaans        =0x436      # from enum MsoLanguageID
+	msoLanguageIDAlbanian         =0x41c      # from enum MsoLanguageID
+	msoLanguageIDArabic           =0x401      # from enum MsoLanguageID
+	msoLanguageIDArabicAlgeria    =0x1401     # from enum MsoLanguageID
+	msoLanguageIDArabicBahrain    =0x3c01     # from enum MsoLanguageID
+	msoLanguageIDArabicEgypt      =0xc01      # from enum MsoLanguageID
+	msoLanguageIDArabicIraq       =0x801      # from enum MsoLanguageID
+	msoLanguageIDArabicJordan     =0x2c01     # from enum MsoLanguageID
+	msoLanguageIDArabicKuwait     =0x3401     # from enum MsoLanguageID
+	msoLanguageIDArabicLebanon    =0x3001     # from enum MsoLanguageID
+	msoLanguageIDArabicLibya      =0x1001     # from enum MsoLanguageID
+	msoLanguageIDArabicMorocco    =0x1801     # from enum MsoLanguageID
+	msoLanguageIDArabicOman       =0x2001     # from enum MsoLanguageID
+	msoLanguageIDArabicQatar      =0x4001     # from enum MsoLanguageID
+	msoLanguageIDArabicSyria      =0x2801     # from enum MsoLanguageID
+	msoLanguageIDArabicTunisia    =0x1c01     # from enum MsoLanguageID
+	msoLanguageIDArabicUAE        =0x3801     # from enum MsoLanguageID
+	msoLanguageIDArabicYemen      =0x2401     # from enum MsoLanguageID
+	msoLanguageIDArmenian         =0x42b      # from enum MsoLanguageID
+	msoLanguageIDAssamese         =0x44d      # from enum MsoLanguageID
+	msoLanguageIDAzeriCyrillic    =0x82c      # from enum MsoLanguageID
+	msoLanguageIDAzeriLatin       =0x42c      # from enum MsoLanguageID
+	msoLanguageIDBasque           =0x42d      # from enum MsoLanguageID
+	msoLanguageIDBelgianDutch     =0x813      # from enum MsoLanguageID
+	msoLanguageIDBelgianFrench    =0x80c      # from enum MsoLanguageID
+	msoLanguageIDBengali          =0x445      # from enum MsoLanguageID
+	msoLanguageIDBrazilianPortuguese=0x416      # from enum MsoLanguageID
+	msoLanguageIDBulgarian        =0x402      # from enum MsoLanguageID
+	msoLanguageIDBurmese          =0x455      # from enum MsoLanguageID
+	msoLanguageIDByelorussian     =0x423      # from enum MsoLanguageID
+	msoLanguageIDCatalan          =0x403      # from enum MsoLanguageID
+	msoLanguageIDChineseHongKong  =0xc04      # from enum MsoLanguageID
+	msoLanguageIDChineseMacao     =0x1404     # from enum MsoLanguageID
+	msoLanguageIDChineseSingapore =0x1004     # from enum MsoLanguageID
+	msoLanguageIDCroatian         =0x41a      # from enum MsoLanguageID
+	msoLanguageIDCzech            =0x405      # from enum MsoLanguageID
+	msoLanguageIDDanish           =0x406      # from enum MsoLanguageID
+	msoLanguageIDDutch            =0x413      # from enum MsoLanguageID
+	msoLanguageIDEnglishAUS       =0xc09      # from enum MsoLanguageID
+	msoLanguageIDEnglishBelize    =0x2809     # from enum MsoLanguageID
+	msoLanguageIDEnglishCanadian  =0x1009     # from enum MsoLanguageID
+	msoLanguageIDEnglishCaribbean =0x2409     # from enum MsoLanguageID
+	msoLanguageIDEnglishIreland   =0x1809     # from enum MsoLanguageID
+	msoLanguageIDEnglishJamaica   =0x2009     # from enum MsoLanguageID
+	msoLanguageIDEnglishNewZealand=0x1409     # from enum MsoLanguageID
+	msoLanguageIDEnglishPhilippines=0x3409     # from enum MsoLanguageID
+	msoLanguageIDEnglishSouthAfrica=0x1c09     # from enum MsoLanguageID
+	msoLanguageIDEnglishTrinidad  =0x2c09     # from enum MsoLanguageID
+	msoLanguageIDEnglishUK        =0x809      # from enum MsoLanguageID
+	msoLanguageIDEnglishUS        =0x409      # from enum MsoLanguageID
+	msoLanguageIDEnglishZimbabwe  =0x3009     # from enum MsoLanguageID
+	msoLanguageIDEstonian         =0x425      # from enum MsoLanguageID
+	msoLanguageIDFaeroese         =0x438      # from enum MsoLanguageID
+	msoLanguageIDFarsi            =0x429      # from enum MsoLanguageID
+	msoLanguageIDFinnish          =0x40b      # from enum MsoLanguageID
+	msoLanguageIDFrench           =0x40c      # from enum MsoLanguageID
+	msoLanguageIDFrenchCameroon   =0x2c0c     # from enum MsoLanguageID
+	msoLanguageIDFrenchCanadian   =0xc0c      # from enum MsoLanguageID
+	msoLanguageIDFrenchCotedIvoire=0x300c     # from enum MsoLanguageID
+	msoLanguageIDFrenchLuxembourg =0x140c     # from enum MsoLanguageID
+	msoLanguageIDFrenchMali       =0x340c     # from enum MsoLanguageID
+	msoLanguageIDFrenchMonaco     =0x180c     # from enum MsoLanguageID
+	msoLanguageIDFrenchReunion    =0x200c     # from enum MsoLanguageID
+	msoLanguageIDFrenchSenegal    =0x280c     # from enum MsoLanguageID
+	msoLanguageIDFrenchWestIndies =0x1c0c     # from enum MsoLanguageID
+	msoLanguageIDFrenchZaire      =0x240c     # from enum MsoLanguageID
+	msoLanguageIDFrisianNetherlands=0x462      # from enum MsoLanguageID
+	msoLanguageIDGaelicIreland    =0x83c      # from enum MsoLanguageID
+	msoLanguageIDGaelicScotland   =0x43c      # from enum MsoLanguageID
+	msoLanguageIDGalician         =0x456      # from enum MsoLanguageID
+	msoLanguageIDGeorgian         =0x437      # from enum MsoLanguageID
+	msoLanguageIDGerman           =0x407      # from enum MsoLanguageID
+	msoLanguageIDGermanAustria    =0xc07      # from enum MsoLanguageID
+	msoLanguageIDGermanLiechtenstein=0x1407     # from enum MsoLanguageID
+	msoLanguageIDGermanLuxembourg =0x1007     # from enum MsoLanguageID
+	msoLanguageIDGreek            =0x408      # from enum MsoLanguageID
+	msoLanguageIDGujarati         =0x447      # from enum MsoLanguageID
+	msoLanguageIDHebrew           =0x40d      # from enum MsoLanguageID
+	msoLanguageIDHindi            =0x439      # from enum MsoLanguageID
+	msoLanguageIDHungarian        =0x40e      # from enum MsoLanguageID
+	msoLanguageIDIcelandic        =0x40f      # from enum MsoLanguageID
+	msoLanguageIDIndonesian       =0x421      # from enum MsoLanguageID
+	msoLanguageIDItalian          =0x410      # from enum MsoLanguageID
+	msoLanguageIDJapanese         =0x411      # from enum MsoLanguageID
+	msoLanguageIDKannada          =0x44b      # from enum MsoLanguageID
+	msoLanguageIDKashmiri         =0x460      # from enum MsoLanguageID
+	msoLanguageIDKazakh           =0x43f      # from enum MsoLanguageID
+	msoLanguageIDKhmer            =0x453      # from enum MsoLanguageID
+	msoLanguageIDKirghiz          =0x440      # from enum MsoLanguageID
+	msoLanguageIDKonkani          =0x457      # from enum MsoLanguageID
+	msoLanguageIDKorean           =0x412      # from enum MsoLanguageID
+	msoLanguageIDLao              =0x454      # from enum MsoLanguageID
+	msoLanguageIDLatvian          =0x426      # from enum MsoLanguageID
+	msoLanguageIDLithuanian       =0x427      # from enum MsoLanguageID
+	msoLanguageIDMacedonian       =0x42f      # from enum MsoLanguageID
+	msoLanguageIDMalayBruneiDarussalam=0x83e      # from enum MsoLanguageID
+	msoLanguageIDMalayalam        =0x44c      # from enum MsoLanguageID
+	msoLanguageIDMalaysian        =0x43e      # from enum MsoLanguageID
+	msoLanguageIDMaltese          =0x43a      # from enum MsoLanguageID
+	msoLanguageIDManipuri         =0x458      # from enum MsoLanguageID
+	msoLanguageIDMarathi          =0x44e      # from enum MsoLanguageID
+	msoLanguageIDMexicanSpanish   =0x80a      # from enum MsoLanguageID
+	msoLanguageIDMixed            =-2         # from enum MsoLanguageID
+	msoLanguageIDMongolian        =0x450      # from enum MsoLanguageID
+	msoLanguageIDNepali           =0x461      # from enum MsoLanguageID
+	msoLanguageIDNoProofing       =0x400      # from enum MsoLanguageID
+	msoLanguageIDNone             =0x0        # from enum MsoLanguageID
+	msoLanguageIDNorwegianBokmol  =0x414      # from enum MsoLanguageID
+	msoLanguageIDNorwegianNynorsk =0x814      # from enum MsoLanguageID
+	msoLanguageIDOriya            =0x448      # from enum MsoLanguageID
+	msoLanguageIDPolish           =0x415      # from enum MsoLanguageID
+	msoLanguageIDPortuguese       =0x816      # from enum MsoLanguageID
+	msoLanguageIDPunjabi          =0x446      # from enum MsoLanguageID
+	msoLanguageIDRhaetoRomanic    =0x417      # from enum MsoLanguageID
+	msoLanguageIDRomanian         =0x418      # from enum MsoLanguageID
+	msoLanguageIDRomanianMoldova  =0x818      # from enum MsoLanguageID
+	msoLanguageIDRussian          =0x419      # from enum MsoLanguageID
+	msoLanguageIDRussianMoldova   =0x819      # from enum MsoLanguageID
+	msoLanguageIDSamiLappish      =0x43b      # from enum MsoLanguageID
+	msoLanguageIDSanskrit         =0x44f      # from enum MsoLanguageID
+	msoLanguageIDSerbianCyrillic  =0xc1a      # from enum MsoLanguageID
+	msoLanguageIDSerbianLatin     =0x81a      # from enum MsoLanguageID
+	msoLanguageIDSesotho          =0x430      # from enum MsoLanguageID
+	msoLanguageIDSimplifiedChinese=0x804      # from enum MsoLanguageID
+	msoLanguageIDSindhi           =0x459      # from enum MsoLanguageID
+	msoLanguageIDSlovak           =0x41b      # from enum MsoLanguageID
+	msoLanguageIDSlovenian        =0x424      # from enum MsoLanguageID
+	msoLanguageIDSorbian          =0x42e      # from enum MsoLanguageID
+	msoLanguageIDSpanish          =0x40a      # from enum MsoLanguageID
+	msoLanguageIDSpanishArgentina =0x2c0a     # from enum MsoLanguageID
+	msoLanguageIDSpanishBolivia   =0x400a     # from enum MsoLanguageID
+	msoLanguageIDSpanishChile     =0x340a     # from enum MsoLanguageID
+	msoLanguageIDSpanishColombia  =0x240a     # from enum MsoLanguageID
+	msoLanguageIDSpanishCostaRica =0x140a     # from enum MsoLanguageID
+	msoLanguageIDSpanishDominicanRepublic=0x1c0a     # from enum MsoLanguageID
+	msoLanguageIDSpanishEcuador   =0x300a     # from enum MsoLanguageID
+	msoLanguageIDSpanishElSalvador=0x440a     # from enum MsoLanguageID
+	msoLanguageIDSpanishGuatemala =0x100a     # from enum MsoLanguageID
+	msoLanguageIDSpanishHonduras  =0x480a     # from enum MsoLanguageID
+	msoLanguageIDSpanishModernSort=0xc0a      # from enum MsoLanguageID
+	msoLanguageIDSpanishNicaragua =0x4c0a     # from enum MsoLanguageID
+	msoLanguageIDSpanishPanama    =0x180a     # from enum MsoLanguageID
+	msoLanguageIDSpanishParaguay  =0x3c0a     # from enum MsoLanguageID
+	msoLanguageIDSpanishPeru      =0x280a     # from enum MsoLanguageID
+	msoLanguageIDSpanishPuertoRico=0x500a     # from enum MsoLanguageID
+	msoLanguageIDSpanishUruguay   =0x380a     # from enum MsoLanguageID
+	msoLanguageIDSpanishVenezuela =0x200a     # from enum MsoLanguageID
+	msoLanguageIDSutu             =0x430      # from enum MsoLanguageID
+	msoLanguageIDSwahili          =0x441      # from enum MsoLanguageID
+	msoLanguageIDSwedish          =0x41d      # from enum MsoLanguageID
+	msoLanguageIDSwedishFinland   =0x81d      # from enum MsoLanguageID
+	msoLanguageIDSwissFrench      =0x100c     # from enum MsoLanguageID
+	msoLanguageIDSwissGerman      =0x807      # from enum MsoLanguageID
+	msoLanguageIDSwissItalian     =0x810      # from enum MsoLanguageID
+	msoLanguageIDTajik            =0x428      # from enum MsoLanguageID
+	msoLanguageIDTamil            =0x449      # from enum MsoLanguageID
+	msoLanguageIDTatar            =0x444      # from enum MsoLanguageID
+	msoLanguageIDTelugu           =0x44a      # from enum MsoLanguageID
+	msoLanguageIDThai             =0x41e      # from enum MsoLanguageID
+	msoLanguageIDTibetan          =0x451      # from enum MsoLanguageID
+	msoLanguageIDTraditionalChinese=0x404      # from enum MsoLanguageID
+	msoLanguageIDTsonga           =0x431      # from enum MsoLanguageID
+	msoLanguageIDTswana           =0x432      # from enum MsoLanguageID
+	msoLanguageIDTurkish          =0x41f      # from enum MsoLanguageID
+	msoLanguageIDTurkmen          =0x442      # from enum MsoLanguageID
+	msoLanguageIDUkrainian        =0x422      # from enum MsoLanguageID
+	msoLanguageIDUrdu             =0x420      # from enum MsoLanguageID
+	msoLanguageIDUzbekCyrillic    =0x843      # from enum MsoLanguageID
+	msoLanguageIDUzbekLatin       =0x443      # from enum MsoLanguageID
+	msoLanguageIDVenda            =0x433      # from enum MsoLanguageID
+	msoLanguageIDVietnamese       =0x42a      # from enum MsoLanguageID
+	msoLanguageIDWelsh            =0x452      # from enum MsoLanguageID
+	msoLanguageIDXhosa            =0x434      # from enum MsoLanguageID
+	msoLanguageIDZulu             =0x435      # from enum MsoLanguageID
+	msoLastModifiedAnyTime        =0x7        # from enum MsoLastModified
+	msoLastModifiedLastMonth      =0x5        # from enum MsoLastModified
+	msoLastModifiedLastWeek       =0x3        # from enum MsoLastModified
+	msoLastModifiedThisMonth      =0x6        # from enum MsoLastModified
+	msoLastModifiedThisWeek       =0x4        # from enum MsoLastModified
+	msoLastModifiedToday          =0x2        # from enum MsoLastModified
+	msoLastModifiedYesterday      =0x1        # from enum MsoLastModified
+	msoLineDash                   =0x4        # from enum MsoLineDashStyle
+	msoLineDashDot                =0x5        # from enum MsoLineDashStyle
+	msoLineDashDotDot             =0x6        # from enum MsoLineDashStyle
+	msoLineDashStyleMixed         =-2         # from enum MsoLineDashStyle
+	msoLineLongDash               =0x7        # from enum MsoLineDashStyle
+	msoLineLongDashDot            =0x8        # from enum MsoLineDashStyle
+	msoLineRoundDot               =0x3        # from enum MsoLineDashStyle
+	msoLineSolid                  =0x1        # from enum MsoLineDashStyle
+	msoLineSquareDot              =0x2        # from enum MsoLineDashStyle
+	msoLineSingle                 =0x1        # from enum MsoLineStyle
+	msoLineStyleMixed             =-2         # from enum MsoLineStyle
+	msoLineThickBetweenThin       =0x5        # from enum MsoLineStyle
+	msoLineThickThin              =0x4        # from enum MsoLineStyle
+	msoLineThinThick              =0x3        # from enum MsoLineStyle
+	msoLineThinThin               =0x2        # from enum MsoLineStyle
+	msoMenuAnimationNone          =0x0        # from enum MsoMenuAnimation
+	msoMenuAnimationRandom        =0x1        # from enum MsoMenuAnimation
+	msoMenuAnimationSlide         =0x3        # from enum MsoMenuAnimation
+	msoMenuAnimationUnfold        =0x2        # from enum MsoMenuAnimation
+	msoIntegerMixed               =0x8000     # from enum MsoMixedType
+	msoSingleMixed                =-2147483648 # from enum MsoMixedType
+	msoModeAutoDown               =0x1        # from enum MsoModeType
+	msoModeModal                  =0x0        # from enum MsoModeType
+	msoModeModeless               =0x2        # from enum MsoModeType
+	msoOLEMenuGroupContainer      =0x2        # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupEdit           =0x1        # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupFile           =0x0        # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupHelp           =0x5        # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupNone           =-1         # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupObject         =0x3        # from enum MsoOLEMenuGroup
+	msoOLEMenuGroupWindow         =0x4        # from enum MsoOLEMenuGroup
+	msoOrientationHorizontal      =0x1        # from enum MsoOrientation
+	msoOrientationMixed           =-2         # from enum MsoOrientation
+	msoOrientationVertical        =0x2        # from enum MsoOrientation
+	msoPattern10Percent           =0x2        # from enum MsoPatternType
+	msoPattern20Percent           =0x3        # from enum MsoPatternType
+	msoPattern25Percent           =0x4        # from enum MsoPatternType
+	msoPattern30Percent           =0x5        # from enum MsoPatternType
+	msoPattern40Percent           =0x6        # from enum MsoPatternType
+	msoPattern50Percent           =0x7        # from enum MsoPatternType
+	msoPattern5Percent            =0x1        # from enum MsoPatternType
+	msoPattern60Percent           =0x8        # from enum MsoPatternType
+	msoPattern70Percent           =0x9        # from enum MsoPatternType
+	msoPattern75Percent           =0xa        # from enum MsoPatternType
+	msoPattern80Percent           =0xb        # from enum MsoPatternType
+	msoPattern90Percent           =0xc        # from enum MsoPatternType
+	msoPatternDarkDownwardDiagonal=0xf        # from enum MsoPatternType
+	msoPatternDarkHorizontal      =0xd        # from enum MsoPatternType
+	msoPatternDarkUpwardDiagonal  =0x10       # from enum MsoPatternType
+	msoPatternDarkVertical        =0xe        # from enum MsoPatternType
+	msoPatternDashedDownwardDiagonal=0x1c       # from enum MsoPatternType
+	msoPatternDashedHorizontal    =0x20       # from enum MsoPatternType
+	msoPatternDashedUpwardDiagonal=0x1b       # from enum MsoPatternType
+	msoPatternDashedVertical      =0x1f       # from enum MsoPatternType
+	msoPatternDiagonalBrick       =0x28       # from enum MsoPatternType
+	msoPatternDivot               =0x2e       # from enum MsoPatternType
+	msoPatternDottedDiamond       =0x18       # from enum MsoPatternType
+	msoPatternDottedGrid          =0x2d       # from enum MsoPatternType
+	msoPatternHorizontalBrick     =0x23       # from enum MsoPatternType
+	msoPatternLargeCheckerBoard   =0x24       # from enum MsoPatternType
+	msoPatternLargeConfetti       =0x21       # from enum MsoPatternType
+	msoPatternLargeGrid           =0x22       # from enum MsoPatternType
+	msoPatternLightDownwardDiagonal=0x15       # from enum MsoPatternType
+	msoPatternLightHorizontal     =0x13       # from enum MsoPatternType
+	msoPatternLightUpwardDiagonal =0x16       # from enum MsoPatternType
+	msoPatternLightVertical       =0x14       # from enum MsoPatternType
+	msoPatternMixed               =-2         # from enum MsoPatternType
+	msoPatternNarrowHorizontal    =0x1e       # from enum MsoPatternType
+	msoPatternNarrowVertical      =0x1d       # from enum MsoPatternType
+	msoPatternOutlinedDiamond     =0x29       # from enum MsoPatternType
+	msoPatternPlaid               =0x2a       # from enum MsoPatternType
+	msoPatternShingle             =0x2f       # from enum MsoPatternType
+	msoPatternSmallCheckerBoard   =0x11       # from enum MsoPatternType
+	msoPatternSmallConfetti       =0x25       # from enum MsoPatternType
+	msoPatternSmallGrid           =0x17       # from enum MsoPatternType
+	msoPatternSolidDiamond        =0x27       # from enum MsoPatternType
+	msoPatternSphere              =0x2b       # from enum MsoPatternType
+	msoPatternTrellis             =0x12       # from enum MsoPatternType
+	msoPatternWave                =0x30       # from enum MsoPatternType
+	msoPatternWeave               =0x2c       # from enum MsoPatternType
+	msoPatternWideDownwardDiagonal=0x19       # from enum MsoPatternType
+	msoPatternWideUpwardDiagonal  =0x1a       # from enum MsoPatternType
+	msoPatternZigZag              =0x26       # from enum MsoPatternType
+	msoPictureAutomatic           =0x1        # from enum MsoPictureColorType
+	msoPictureBlackAndWhite       =0x3        # from enum MsoPictureColorType
+	msoPictureGrayscale           =0x2        # from enum MsoPictureColorType
+	msoPictureMixed               =-2         # from enum MsoPictureColorType
+	msoPictureWatermark           =0x4        # from enum MsoPictureColorType
+	msoExtrusionBottom            =0x2        # from enum MsoPresetExtrusionDirection
+	msoExtrusionBottomLeft        =0x3        # from enum MsoPresetExtrusionDirection
+	msoExtrusionBottomRight       =0x1        # from enum MsoPresetExtrusionDirection
+	msoExtrusionLeft              =0x6        # from enum MsoPresetExtrusionDirection
+	msoExtrusionNone              =0x5        # from enum MsoPresetExtrusionDirection
+	msoExtrusionRight             =0x4        # from enum MsoPresetExtrusionDirection
+	msoExtrusionTop               =0x8        # from enum MsoPresetExtrusionDirection
+	msoExtrusionTopLeft           =0x9        # from enum MsoPresetExtrusionDirection
+	msoExtrusionTopRight          =0x7        # from enum MsoPresetExtrusionDirection
+	msoPresetExtrusionDirectionMixed=-2         # from enum MsoPresetExtrusionDirection
+	msoGradientBrass              =0x14       # from enum MsoPresetGradientType
+	msoGradientCalmWater          =0x8        # from enum MsoPresetGradientType
+	msoGradientChrome             =0x15       # from enum MsoPresetGradientType
+	msoGradientChromeII           =0x16       # from enum MsoPresetGradientType
+	msoGradientDaybreak           =0x4        # from enum MsoPresetGradientType
+	msoGradientDesert             =0x6        # from enum MsoPresetGradientType
+	msoGradientEarlySunset        =0x1        # from enum MsoPresetGradientType
+	msoGradientFire               =0x9        # from enum MsoPresetGradientType
+	msoGradientFog                =0xa        # from enum MsoPresetGradientType
+	msoGradientGold               =0x12       # from enum MsoPresetGradientType
+	msoGradientGoldII             =0x13       # from enum MsoPresetGradientType
+	msoGradientHorizon            =0x5        # from enum MsoPresetGradientType
+	msoGradientLateSunset         =0x2        # from enum MsoPresetGradientType
+	msoGradientMahogany           =0xf        # from enum MsoPresetGradientType
+	msoGradientMoss               =0xb        # from enum MsoPresetGradientType
+	msoGradientNightfall          =0x3        # from enum MsoPresetGradientType
+	msoGradientOcean              =0x7        # from enum MsoPresetGradientType
+	msoGradientParchment          =0xe        # from enum MsoPresetGradientType
+	msoGradientPeacock            =0xc        # from enum MsoPresetGradientType
+	msoGradientRainbow            =0x10       # from enum MsoPresetGradientType
+	msoGradientRainbowII          =0x11       # from enum MsoPresetGradientType
+	msoGradientSapphire           =0x18       # from enum MsoPresetGradientType
+	msoGradientSilver             =0x17       # from enum MsoPresetGradientType
+	msoGradientWheat              =0xd        # from enum MsoPresetGradientType
+	msoPresetGradientMixed        =-2         # from enum MsoPresetGradientType
+	msoLightingBottom             =0x8        # from enum MsoPresetLightingDirection
+	msoLightingBottomLeft         =0x7        # from enum MsoPresetLightingDirection
+	msoLightingBottomRight        =0x9        # from enum MsoPresetLightingDirection
+	msoLightingLeft               =0x4        # from enum MsoPresetLightingDirection
+	msoLightingNone               =0x5        # from enum MsoPresetLightingDirection
+	msoLightingRight              =0x6        # from enum MsoPresetLightingDirection
+	msoLightingTop                =0x2        # from enum MsoPresetLightingDirection
+	msoLightingTopLeft            =0x1        # from enum MsoPresetLightingDirection
+	msoLightingTopRight           =0x3        # from enum MsoPresetLightingDirection
+	msoPresetLightingDirectionMixed=-2         # from enum MsoPresetLightingDirection
+	msoLightingBright             =0x3        # from enum MsoPresetLightingSoftness
+	msoLightingDim                =0x1        # from enum MsoPresetLightingSoftness
+	msoLightingNormal             =0x2        # from enum MsoPresetLightingSoftness
+	msoPresetLightingSoftnessMixed=-2         # from enum MsoPresetLightingSoftness
+	msoMaterialMatte              =0x1        # from enum MsoPresetMaterial
+	msoMaterialMetal              =0x3        # from enum MsoPresetMaterial
+	msoMaterialPlastic            =0x2        # from enum MsoPresetMaterial
+	msoMaterialWireFrame          =0x4        # from enum MsoPresetMaterial
+	msoPresetMaterialMixed        =-2         # from enum MsoPresetMaterial
+	msoTextEffect1                =0x0        # from enum MsoPresetTextEffect
+	msoTextEffect10               =0x9        # from enum MsoPresetTextEffect
+	msoTextEffect11               =0xa        # from enum MsoPresetTextEffect
+	msoTextEffect12               =0xb        # from enum MsoPresetTextEffect
+	msoTextEffect13               =0xc        # from enum MsoPresetTextEffect
+	msoTextEffect14               =0xd        # from enum MsoPresetTextEffect
+	msoTextEffect15               =0xe        # from enum MsoPresetTextEffect
+	msoTextEffect16               =0xf        # from enum MsoPresetTextEffect
+	msoTextEffect17               =0x10       # from enum MsoPresetTextEffect
+	msoTextEffect18               =0x11       # from enum MsoPresetTextEffect
+	msoTextEffect19               =0x12       # from enum MsoPresetTextEffect
+	msoTextEffect2                =0x1        # from enum MsoPresetTextEffect
+	msoTextEffect20               =0x13       # from enum MsoPresetTextEffect
+	msoTextEffect21               =0x14       # from enum MsoPresetTextEffect
+	msoTextEffect22               =0x15       # from enum MsoPresetTextEffect
+	msoTextEffect23               =0x16       # from enum MsoPresetTextEffect
+	msoTextEffect24               =0x17       # from enum MsoPresetTextEffect
+	msoTextEffect25               =0x18       # from enum MsoPresetTextEffect
+	msoTextEffect26               =0x19       # from enum MsoPresetTextEffect
+	msoTextEffect27               =0x1a       # from enum MsoPresetTextEffect
+	msoTextEffect28               =0x1b       # from enum MsoPresetTextEffect
+	msoTextEffect29               =0x1c       # from enum MsoPresetTextEffect
+	msoTextEffect3                =0x2        # from enum MsoPresetTextEffect
+	msoTextEffect30               =0x1d       # from enum MsoPresetTextEffect
+	msoTextEffect4                =0x3        # from enum MsoPresetTextEffect
+	msoTextEffect5                =0x4        # from enum MsoPresetTextEffect
+	msoTextEffect6                =0x5        # from enum MsoPresetTextEffect
+	msoTextEffect7                =0x6        # from enum MsoPresetTextEffect
+	msoTextEffect8                =0x7        # from enum MsoPresetTextEffect
+	msoTextEffect9                =0x8        # from enum MsoPresetTextEffect
+	msoTextEffectMixed            =-2         # from enum MsoPresetTextEffect
+	msoTextEffectShapeArchDownCurve=0xa        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeArchDownPour=0xe        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeArchUpCurve =0x9        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeArchUpPour  =0xd        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeButtonCurve =0xc        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeButtonPour  =0x10       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCanDown     =0x14       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCanUp       =0x13       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCascadeDown =0x28       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCascadeUp   =0x27       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeChevronDown =0x6        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeChevronUp   =0x5        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCircleCurve =0xb        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCirclePour  =0xf        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCurveDown   =0x12       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeCurveUp     =0x11       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDeflate     =0x1a       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDeflateBottom=0x1c       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDeflateInflate=0x1f       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDeflateInflateDeflate=0x20       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDeflateTop  =0x1e       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDoubleWave1 =0x17       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeDoubleWave2 =0x18       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeFadeDown    =0x24       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeFadeLeft    =0x22       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeFadeRight   =0x21       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeFadeUp      =0x23       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeInflate     =0x19       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeInflateBottom=0x1b       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeInflateTop  =0x1d       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeMixed       =-2         # from enum MsoPresetTextEffectShape
+	msoTextEffectShapePlainText   =0x1        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeRingInside  =0x7        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeRingOutside =0x8        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeSlantDown   =0x26       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeSlantUp     =0x25       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeStop        =0x2        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeTriangleDown=0x4        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeTriangleUp  =0x3        # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeWave1       =0x15       # from enum MsoPresetTextEffectShape
+	msoTextEffectShapeWave2       =0x16       # from enum MsoPresetTextEffectShape
+	msoPresetTextureMixed         =-2         # from enum MsoPresetTexture
+	msoTextureBlueTissuePaper     =0x11       # from enum MsoPresetTexture
+	msoTextureBouquet             =0x14       # from enum MsoPresetTexture
+	msoTextureBrownMarble         =0xb        # from enum MsoPresetTexture
+	msoTextureCanvas              =0x2        # from enum MsoPresetTexture
+	msoTextureCork                =0x15       # from enum MsoPresetTexture
+	msoTextureDenim               =0x3        # from enum MsoPresetTexture
+	msoTextureFishFossil          =0x7        # from enum MsoPresetTexture
+	msoTextureGranite             =0xc        # from enum MsoPresetTexture
+	msoTextureGreenMarble         =0x9        # from enum MsoPresetTexture
+	msoTextureMediumWood          =0x18       # from enum MsoPresetTexture
+	msoTextureNewsprint           =0xd        # from enum MsoPresetTexture
+	msoTextureOak                 =0x17       # from enum MsoPresetTexture
+	msoTexturePaperBag            =0x6        # from enum MsoPresetTexture
+	msoTexturePapyrus             =0x1        # from enum MsoPresetTexture
+	msoTextureParchment           =0xf        # from enum MsoPresetTexture
+	msoTexturePinkTissuePaper     =0x12       # from enum MsoPresetTexture
+	msoTexturePurpleMesh          =0x13       # from enum MsoPresetTexture
+	msoTextureRecycledPaper       =0xe        # from enum MsoPresetTexture
+	msoTextureSand                =0x8        # from enum MsoPresetTexture
+	msoTextureStationery          =0x10       # from enum MsoPresetTexture
+	msoTextureWalnut              =0x16       # from enum MsoPresetTexture
+	msoTextureWaterDroplets       =0x5        # from enum MsoPresetTexture
+	msoTextureWhiteMarble         =0xa        # from enum MsoPresetTexture
+	msoTextureWovenMat            =0x4        # from enum MsoPresetTexture
+	msoPresetThreeDFormatMixed    =-2         # from enum MsoPresetThreeDFormat
+	msoThreeD1                    =0x1        # from enum MsoPresetThreeDFormat
+	msoThreeD10                   =0xa        # from enum MsoPresetThreeDFormat
+	msoThreeD11                   =0xb        # from enum MsoPresetThreeDFormat
+	msoThreeD12                   =0xc        # from enum MsoPresetThreeDFormat
+	msoThreeD13                   =0xd        # from enum MsoPresetThreeDFormat
+	msoThreeD14                   =0xe        # from enum MsoPresetThreeDFormat
+	msoThreeD15                   =0xf        # from enum MsoPresetThreeDFormat
+	msoThreeD16                   =0x10       # from enum MsoPresetThreeDFormat
+	msoThreeD17                   =0x11       # from enum MsoPresetThreeDFormat
+	msoThreeD18                   =0x12       # from enum MsoPresetThreeDFormat
+	msoThreeD19                   =0x13       # from enum MsoPresetThreeDFormat
+	msoThreeD2                    =0x2        # from enum MsoPresetThreeDFormat
+	msoThreeD20                   =0x14       # from enum MsoPresetThreeDFormat
+	msoThreeD3                    =0x3        # from enum MsoPresetThreeDFormat
+	msoThreeD4                    =0x4        # from enum MsoPresetThreeDFormat
+	msoThreeD5                    =0x5        # from enum MsoPresetThreeDFormat
+	msoThreeD6                    =0x6        # from enum MsoPresetThreeDFormat
+	msoThreeD7                    =0x7        # from enum MsoPresetThreeDFormat
+	msoThreeD8                    =0x8        # from enum MsoPresetThreeDFormat
+	msoThreeD9                    =0x9        # from enum MsoPresetThreeDFormat
+	msoScaleFromBottomRight       =0x2        # from enum MsoScaleFrom
+	msoScaleFromMiddle            =0x1        # from enum MsoScaleFrom
+	msoScaleFromTopLeft           =0x0        # from enum MsoScaleFrom
+	msoScreenSize1024x768         =0x4        # from enum MsoScreenSize
+	msoScreenSize1152x882         =0x5        # from enum MsoScreenSize
+	msoScreenSize1152x900         =0x6        # from enum MsoScreenSize
+	msoScreenSize1280x1024        =0x7        # from enum MsoScreenSize
+	msoScreenSize1600x1200        =0x8        # from enum MsoScreenSize
+	msoScreenSize1800x1440        =0x9        # from enum MsoScreenSize
+	msoScreenSize1920x1200        =0xa        # from enum MsoScreenSize
+	msoScreenSize544x376          =0x0        # from enum MsoScreenSize
+	msoScreenSize640x480          =0x1        # from enum MsoScreenSize
+	msoScreenSize720x512          =0x2        # from enum MsoScreenSize
+	msoScreenSize800x600          =0x3        # from enum MsoScreenSize
+	msoScriptLanguageASP          =0x3        # from enum MsoScriptLanguage
+	msoScriptLanguageJava         =0x1        # from enum MsoScriptLanguage
+	msoScriptLanguageOther        =0x4        # from enum MsoScriptLanguage
+	msoScriptLanguageVisualBasic  =0x2        # from enum MsoScriptLanguage
+	msoScriptLocationInBody       =0x2        # from enum MsoScriptLocation
+	msoScriptLocationInHead       =0x1        # from enum MsoScriptLocation
+	msoSegmentCurve               =0x1        # from enum MsoSegmentType
+	msoSegmentLine                =0x0        # from enum MsoSegmentType
+	msoShadow1                    =0x1        # from enum MsoShadowType
+	msoShadow10                   =0xa        # from enum MsoShadowType
+	msoShadow11                   =0xb        # from enum MsoShadowType
+	msoShadow12                   =0xc        # from enum MsoShadowType
+	msoShadow13                   =0xd        # from enum MsoShadowType
+	msoShadow14                   =0xe        # from enum MsoShadowType
+	msoShadow15                   =0xf        # from enum MsoShadowType
+	msoShadow16                   =0x10       # from enum MsoShadowType
+	msoShadow17                   =0x11       # from enum MsoShadowType
+	msoShadow18                   =0x12       # from enum MsoShadowType
+	msoShadow19                   =0x13       # from enum MsoShadowType
+	msoShadow2                    =0x2        # from enum MsoShadowType
+	msoShadow20                   =0x14       # from enum MsoShadowType
+	msoShadow3                    =0x3        # from enum MsoShadowType
+	msoShadow4                    =0x4        # from enum MsoShadowType
+	msoShadow5                    =0x5        # from enum MsoShadowType
+	msoShadow6                    =0x6        # from enum MsoShadowType
+	msoShadow7                    =0x7        # from enum MsoShadowType
+	msoShadow8                    =0x8        # from enum MsoShadowType
+	msoShadow9                    =0x9        # from enum MsoShadowType
+	msoShadowMixed                =-2         # from enum MsoShadowType
+	msoAutoShape                  =0x1        # from enum MsoShapeType
+	msoCallout                    =0x2        # from enum MsoShapeType
+	msoChart                      =0x3        # from enum MsoShapeType
+	msoComment                    =0x4        # from enum MsoShapeType
+	msoEmbeddedOLEObject          =0x7        # from enum MsoShapeType
+	msoFormControl                =0x8        # from enum MsoShapeType
+	msoFreeform                   =0x5        # from enum MsoShapeType
+	msoGroup                      =0x6        # from enum MsoShapeType
+	msoLine                       =0x9        # from enum MsoShapeType
+	msoLinkedOLEObject            =0xa        # from enum MsoShapeType
+	msoLinkedPicture              =0xb        # from enum MsoShapeType
+	msoMedia                      =0x10       # from enum MsoShapeType
+	msoOLEControlObject           =0xc        # from enum MsoShapeType
+	msoPicture                    =0xd        # from enum MsoShapeType
+	msoPlaceholder                =0xe        # from enum MsoShapeType
+	msoScriptAnchor               =0x12       # from enum MsoShapeType
+	msoShapeTypeMixed             =-2         # from enum MsoShapeType
+	msoTable                      =0x13       # from enum MsoShapeType
+	msoTextBox                    =0x11       # from enum MsoShapeType
+	msoTextEffect                 =0xf        # from enum MsoShapeType
+	msoSortByFileName             =0x1        # from enum MsoSortBy
+	msoSortByFileType             =0x3        # from enum MsoSortBy
+	msoSortByLastModified         =0x4        # from enum MsoSortBy
+	msoSortBySize                 =0x2        # from enum MsoSortBy
+	msoSortOrderAscending         =0x1        # from enum MsoSortOrder
+	msoSortOrderDescending        =0x2        # from enum MsoSortOrder
+	msoTextEffectAlignmentCentered=0x2        # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentLeft    =0x1        # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentLetterJustify=0x4        # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentMixed   =-2         # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentRight   =0x3        # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentStretchJustify=0x6        # from enum MsoTextEffectAlignment
+	msoTextEffectAlignmentWordJustify=0x5        # from enum MsoTextEffectAlignment
+	msoTextOrientationDownward    =0x3        # from enum MsoTextOrientation
+	msoTextOrientationHorizontal  =0x1        # from enum MsoTextOrientation
+	msoTextOrientationHorizontalRotatedFarEast=0x6        # from enum MsoTextOrientation
+	msoTextOrientationMixed       =-2         # from enum MsoTextOrientation
+	msoTextOrientationUpward      =0x2        # from enum MsoTextOrientation
+	msoTextOrientationVertical    =0x5        # from enum MsoTextOrientation
+	msoTextOrientationVerticalFarEast=0x4        # from enum MsoTextOrientation
+	msoTexturePreset              =0x1        # from enum MsoTextureType
+	msoTextureTypeMixed           =-2         # from enum MsoTextureType
+	msoTextureUserDefined         =0x2        # from enum MsoTextureType
+	msoCTrue                      =0x1        # from enum MsoTriState
+	msoFalse                      =0x0        # from enum MsoTriState
+	msoTriStateMixed              =-2         # from enum MsoTriState
+	msoTriStateToggle             =-3         # from enum MsoTriState
+	msoTrue                       =-1         # from enum MsoTriState
+	msoAnchorBottom               =0x4        # from enum MsoVerticalAnchor
+	msoAnchorBottomBaseLine       =0x5        # from enum MsoVerticalAnchor
+	msoAnchorMiddle               =0x3        # from enum MsoVerticalAnchor
+	msoAnchorTop                  =0x1        # from enum MsoVerticalAnchor
+	msoAnchorTopBaseline          =0x2        # from enum MsoVerticalAnchor
+	msoVerticalAnchorMixed        =-2         # from enum MsoVerticalAnchor
+	msoWizardActActive            =0x1        # from enum MsoWizardActType
+	msoWizardActInactive          =0x0        # from enum MsoWizardActType
+	msoWizardActResume            =0x3        # from enum MsoWizardActType
+	msoWizardActSuspend           =0x2        # from enum MsoWizardActType
+	msoWizardMsgLocalStateOff     =0x2        # from enum MsoWizardMsgType
+	msoWizardMsgLocalStateOn      =0x1        # from enum MsoWizardMsgType
+	msoWizardMsgResuming          =0x5        # from enum MsoWizardMsgType
+	msoWizardMsgShowHelp          =0x3        # from enum MsoWizardMsgType
+	msoWizardMsgSuspending        =0x4        # from enum MsoWizardMsgType
+	msoBringForward               =0x2        # from enum MsoZOrderCmd
+	msoBringInFrontOfText         =0x4        # from enum MsoZOrderCmd
+	msoBringToFront               =0x0        # from enum MsoZOrderCmd
+	msoSendBackward               =0x3        # from enum MsoZOrderCmd
+	msoSendBehindText             =0x5        # from enum MsoZOrderCmd
+	msoSendToBack                 =0x1        # from enum MsoZOrderCmd
 from win32com.client import DispatchBaseClass
 class Adjustments(DispatchBaseClass):
 	CLSID = IID('{000C0310-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (4, 0), ((3, 1),),Index
 			)
-	
 	def SetItem(self, Index=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(0, LCID, 4, (24, 0), ((3, 1), (4, 1)),Index
 			, arg1)
@@ -1201,11 +1199,9 @@ class Adjustments(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (4, 0), ((3, 1),),Index
 			)
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1215,10 +1211,8 @@ class Adjustments(DispatchBaseClass):
 		return str(self.__unicode__(*args))
 	def __int__(self, *args):
 		return int(self.__call__(*args))
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(2, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class AnswerWizard(DispatchBaseClass):
@@ -1231,7 +1225,6 @@ class AnswerWizard(DispatchBaseClass):
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"Files": (1610809345, 2, (9, 0), (), "Files", '{000C0361-0000-0000-C000-000000000046}'),
 		"Parent": (1610809344, 2, (9, 0), (), "Parent", None),
 	}
@@ -1246,9 +1239,7 @@ class AnswerWizardFiles(DispatchBaseClass):
 	def Delete(self, FileName=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(1610809348, LCID, 1, (24, 0), ((8, 1),),FileName
 			)
-	
 	def Item(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
@@ -1259,12 +1250,9 @@ class AnswerWizardFiles(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1274,10 +1262,8 @@ class AnswerWizardFiles(DispatchBaseClass):
 		return str(self.__unicode__(*args))
 	def __int__(self, *args):
 		return int(self.__call__(*args))
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809346, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Assistant(DispatchBaseClass):
@@ -1319,7 +1305,6 @@ class Assistant(DispatchBaseClass):
 		"MouseTips": (1610809375, 2, (11, 0), (), "MouseTips", None),
 		"MoveWhenInTheWay": (1610809369, 2, (11, 0), (), "MoveWhenInTheWay", None),
 		"Name": (1610809390, 2, (8, 0), (), "Name", None),
-		
 		"NewBalloon": (1610809355, 2, (9, 0), (), "NewBalloon", '{000C0324-0000-0000-C000-000000000046}'),
 		"On": (1610809391, 2, (11, 0), (), "On", None),
 		"Parent": (1610809344, 2, (9, 0), (), "Parent", None),
@@ -1351,10 +1336,8 @@ class Assistant(DispatchBaseClass):
 		"Top": ((1610809346, LCID, 4, 0),()),
 		"Visible": ((1610809357, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Item", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1418,10 +1401,8 @@ class BalloonCheckbox(DispatchBaseClass):
 		"Checked": ((1610809347, LCID, 4, 0),()),
 		"Text": ((1610809349, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Item", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1434,7 +1415,6 @@ class BalloonCheckbox(DispatchBaseClass):
 class BalloonCheckboxes(DispatchBaseClass):
 	CLSID = IID('{000C0326-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
@@ -1451,14 +1431,12 @@ class BalloonCheckboxes(DispatchBaseClass):
 	_prop_map_put_ = {
 		"Count": ((1610809347, LCID, 4, 0),()),
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', None)
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1480,10 +1458,8 @@ class BalloonCheckboxes(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809347, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class BalloonLabel(DispatchBaseClass):
@@ -1500,10 +1476,8 @@ class BalloonLabel(DispatchBaseClass):
 	_prop_map_put_ = {
 		"Text": ((1610809347, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Item", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1516,7 +1490,6 @@ class BalloonLabel(DispatchBaseClass):
 class BalloonLabels(DispatchBaseClass):
 	CLSID = IID('{000C032E-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
@@ -1533,14 +1506,12 @@ class BalloonLabels(DispatchBaseClass):
 	_prop_map_put_ = {
 		"Count": ((1610809347, LCID, 4, 0),()),
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', None)
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1562,10 +1533,8 @@ class BalloonLabels(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809347, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class COMAddIn(DispatchBaseClass):
@@ -1586,10 +1555,8 @@ class COMAddIn(DispatchBaseClass):
 		"Description": ((0, LCID, 4, 0),()),
 		"Object": ((7, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Description", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1602,7 +1569,6 @@ class COMAddIn(DispatchBaseClass):
 class COMAddIns(DispatchBaseClass):
 	CLSID = IID('{000C0339-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((16396, 1),),Index
 			)
@@ -1622,14 +1588,12 @@ class COMAddIns(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((16396, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C033A-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1651,10 +1615,8 @@ class COMAddIns(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class CalloutFormat(DispatchBaseClass):
@@ -1709,10 +1671,8 @@ class ColorFormat(DispatchBaseClass):
 		"RGB": ((0, LCID, 4, 0),()),
 		"SchemeColor": ((100, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (3, 0), (), "RGB", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -1727,7 +1687,6 @@ class CommandBar(DispatchBaseClass):
 	coclass_clsid = None
 	def Delete(self):
 		return self._oleobj_.InvokeTypes(1610874884, LCID, 1, (24, 0), (),)
-	
 	def FindControl(self, Type=defaultNamedOptArg, Id=defaultNamedOptArg, Tag=defaultNamedOptArg, Visible=defaultNamedOptArg
 			, Recursive=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874887, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17), (12, 17)),Type
@@ -1735,62 +1694,44 @@ class CommandBar(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'FindControl', '{000C0308-0000-0000-C000-000000000046}')
 		return ret
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
 	def Reset(self):
 		return self._oleobj_.InvokeTypes(1610874905, LCID, 1, (24, 0), (),)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
 	def ShowPopup(self, x=defaultNamedOptArg, y=defaultNamedOptArg):
 		return self._oleobj_.InvokeTypes(1610874906, LCID, 1, (24, 0), ((12, 17), (12, 17)),x
 			, y)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -1818,7 +1759,6 @@ class CommandBar(DispatchBaseClass):
 		"Application": (1610809344, 2, (9, 0), (), "Application", None),
 		"BuiltIn": (1610874880, 2, (11, 0), (), "BuiltIn", None),
 		"Context": (1610874881, 2, (8, 0), (), "Context", None),
-		
 		"Controls": (1610874883, 2, (9, 0), (), "Controls", '{000C0306-0000-0000-C000-000000000046}'),
 		"Creator": (1610809345, 2, (3, 0), (), "Creator", None),
 		"Enabled": (1610874885, 2, (11, 0), (), "Enabled", None),
@@ -1870,7 +1810,6 @@ class CommandBar(DispatchBaseClass):
 class CommandBarControl(DispatchBaseClass):
 	CLSID = IID('{000C0308-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Copy(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874886, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -1882,49 +1821,33 @@ class CommandBarControl(DispatchBaseClass):
 			)
 	def Execute(self):
 		return self._oleobj_.InvokeTypes(1610874892, LCID, 1, (24, 0), (),)
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def Move(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874902, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -1949,15 +1872,12 @@ class CommandBarControl(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(1610874913, LCID, 1, (24, 0), (),)
 	def SetFocus(self):
 		return self._oleobj_.InvokeTypes(1610874914, LCID, 1, (24, 0), (),)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -2000,7 +1920,6 @@ class CommandBarControl(DispatchBaseClass):
 		"OLEUsage": (1610874904, 2, (3, 0), (), "OLEUsage", None),
 		"OnAction": (1610874906, 2, (8, 0), (), "OnAction", None),
 		"Parameter": (1610874909, 2, (8, 0), (), "Parameter", None),
-		
 		"Parent": (1610874908, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 		"Priority": (1610874911, 2, (3, 0), (), "Priority", None),
 		"Tag": (1610874915, 2, (8, 0), (), "Tag", None),
@@ -2045,7 +1964,6 @@ class CommandBarControl(DispatchBaseClass):
 class CommandBarControls(DispatchBaseClass):
 	CLSID = IID('{000C0306-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Type=defaultNamedOptArg, Id=defaultNamedOptArg, Parameter=defaultNamedOptArg, Before=defaultNamedOptArg
 			, Temporary=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610809344, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17), (12, 17)),Type
@@ -2053,8 +1971,6 @@ class CommandBarControls(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{000C0308-0000-0000-C000-000000000046}')
 		return ret
-	
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((12, 1),),Index
 			)
@@ -2065,19 +1981,16 @@ class CommandBarControls(DispatchBaseClass):
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"Count": (1610809345, 2, (3, 0), (), "Count", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"Parent": (1610809348, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0308-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2099,16 +2012,13 @@ class CommandBarControls(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809345, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class CommandBarPopup(DispatchBaseClass):
 	CLSID = IID('{000C030A-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Copy(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874886, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -2120,49 +2030,33 @@ class CommandBarPopup(DispatchBaseClass):
 			)
 	def Execute(self):
 		return self._oleobj_.InvokeTypes(1610874892, LCID, 1, (24, 0), (),)
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def Move(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874902, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -2187,15 +2081,12 @@ class CommandBarPopup(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(1610874913, LCID, 1, (24, 0), (),)
 	def SetFocus(self):
 		return self._oleobj_.InvokeTypes(1610874914, LCID, 1, (24, 0), (),)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -2223,10 +2114,8 @@ class CommandBarPopup(DispatchBaseClass):
 		"BeginGroup": (1610874880, 2, (11, 0), (), "BeginGroup", None),
 		"BuiltIn": (1610874882, 2, (11, 0), (), "BuiltIn", None),
 		"Caption": (1610874883, 2, (8, 0), (), "Caption", None),
-		
 		"CommandBar": (1610940416, 2, (9, 0), (), "CommandBar", '{000C0304-0000-0000-C000-000000000046}'),
 		"Control": (1610874885, 2, (9, 0), (), "Control", None),
-		
 		"Controls": (1610940417, 2, (9, 0), (), "Controls", '{000C0306-0000-0000-C000-000000000046}'),
 		"Creator": (1610809345, 2, (3, 0), (), "Creator", None),
 		"DescriptionText": (1610874888, 2, (8, 0), (), "DescriptionText", None),
@@ -2243,7 +2132,6 @@ class CommandBarPopup(DispatchBaseClass):
 		"OLEUsage": (1610874904, 2, (3, 0), (), "OLEUsage", None),
 		"OnAction": (1610874906, 2, (8, 0), (), "OnAction", None),
 		"Parameter": (1610874909, 2, (8, 0), (), "Parameter", None),
-		
 		"Parent": (1610874908, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 		"Priority": (1610874911, 2, (3, 0), (), "Priority", None),
 		"Tag": (1610874915, 2, (8, 0), (), "Tag", None),
@@ -2302,12 +2190,10 @@ class ConnectorFormat(DispatchBaseClass):
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"BeginConnected": (100, 2, (3, 0), (), "BeginConnected", None),
-		
 		"BeginConnectedShape": (101, 2, (9, 0), (), "BeginConnectedShape", '{000C031C-0000-0000-C000-000000000046}'),
 		"BeginConnectionSite": (102, 2, (3, 0), (), "BeginConnectionSite", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
 		"EndConnected": (103, 2, (3, 0), (), "EndConnected", None),
-		
 		"EndConnectedShape": (104, 2, (9, 0), (), "EndConnectedShape", '{000C031C-0000-0000-C000-000000000046}'),
 		"EndConnectionSite": (105, 2, (3, 0), (), "EndConnectionSite", None),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
@@ -2339,10 +2225,8 @@ class DocumentProperties(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(4, 2, (3, 0), ((16387, 10),), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class DocumentProperty(DispatchBaseClass):
@@ -2372,13 +2256,11 @@ class FileSearch(DispatchBaseClass):
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
 		"FileName": (4, 2, (8, 0), (), "FileName", None),
 		"FileType": (5, 2, (3, 0), (), "FileType", None),
-		
 		"FoundFiles": (11, 2, (9, 0), (), "FoundFiles", '{000C0331-0000-0000-C000-000000000046}'),
 		"LastModified": (6, 2, (3, 0), (), "LastModified", None),
 		"LookIn": (8, 2, (8, 0), (), "LookIn", None),
 		"MatchAllWordForms": (3, 2, (11, 0), (), "MatchAllWordForms", None),
 		"MatchTextExactly": (2, 2, (11, 0), (), "MatchTextExactly", None),
-		
 		"PropertyTests": (12, 2, (9, 0), (), "PropertyTests", '{000C0334-0000-0000-C000-000000000046}'),
 		"SearchSubFolders": (1, 2, (11, 0), (), "SearchSubFolders", None),
 		"TextOrProperty": (7, 2, (8, 0), (), "TextOrProperty", None),
@@ -2423,10 +2305,8 @@ class FillFormat(DispatchBaseClass):
 			)
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
-		
 		"BackColor": (100, 2, (9, 0), (), "BackColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"ForeColor": (101, 2, (9, 0), (), "ForeColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"GradientColorType": (102, 2, (3, 0), (), "GradientColorType", None),
 		"GradientDegree": (103, 2, (4, 0), (), "GradientDegree", None),
@@ -2451,9 +2331,7 @@ class FillFormat(DispatchBaseClass):
 class FoundFiles(DispatchBaseClass):
 	CLSID = IID('{000C0331-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
@@ -2463,12 +2341,9 @@ class FoundFiles(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2490,10 +2365,8 @@ class FoundFiles(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(4, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class FreeformBuilder(DispatchBaseClass):
@@ -2504,7 +2377,6 @@ class FreeformBuilder(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(10, LCID, 1, (24, 0), ((3, 1), (3, 1), (4, 1), (4, 1), (4, 49), (4, 49), (4, 49), (4, 49)),SegmentType
 			, EditingType, X1, Y1, X2, Y2
 			, X3, Y3)
-	
 	def ConvertToShape(self):
 		ret = self._oleobj_.InvokeTypes(11, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -2520,7 +2392,6 @@ class FreeformBuilder(DispatchBaseClass):
 class GroupShapes(DispatchBaseClass):
 	CLSID = IID('{000C0316-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -2535,14 +2406,12 @@ class GroupShapes(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2564,10 +2433,8 @@ class GroupShapes(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(2, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class HTMLProject(DispatchBaseClass):
@@ -2585,17 +2452,14 @@ class HTMLProject(DispatchBaseClass):
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"HTMLProjectItems": (3, 2, (9, 0), (), "HTMLProjectItems", '{000C0357-0000-0000-C000-000000000046}'),
 		"Parent": (4, 2, (9, 0), (), "Parent", None),
 		"State": (0, 2, (3, 0), (), "State", None),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (3, 0), (), "State", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2628,10 +2492,8 @@ class HTMLProjectItem(DispatchBaseClass):
 	_prop_map_put_ = {
 		"Text": ((8, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Name", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2644,7 +2506,6 @@ class HTMLProjectItem(DispatchBaseClass):
 class HTMLProjectItems(DispatchBaseClass):
 	CLSID = IID('{000C0357-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((16396, 1),),Index
 			)
@@ -2659,14 +2520,12 @@ class HTMLProjectItems(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((16396, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0358-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2688,66 +2547,46 @@ class HTMLProjectItems(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class IAccessible(DispatchBaseClass):
 	CLSID = IID('{618736E0-3C3D-11CF-810C-00AA00389B71}')
 	coclass_clsid = None
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -2847,7 +2686,6 @@ class IFind(DispatchBaseClass):
 		"Name": (1610743809, 2, (8, 0), (), "Name", None),
 		"Options": (1610743815, 2, (3, 0), (), "Options", None),
 		"PatternMatch": (1610743818, 2, (11, 0), (), "PatternMatch", None),
-		
 		"Results": (1610743828, 2, (9, 0), (), "Results", '{000C0338-0000-0000-C000-000000000046}'),
 		"SavedBy": (1610743821, 2, (8, 0), (), "SavedBy", None),
 		"SearchPath": (0, 2, (8, 0), (), "SearchPath", None),
@@ -2882,10 +2720,8 @@ class IFind(DispatchBaseClass):
 		"Title": ((1610743811, LCID, 4, 0),()),
 		"View": ((1610743824, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "SearchPath", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2898,9 +2734,7 @@ class IFind(DispatchBaseClass):
 class IFoundFiles(DispatchBaseClass):
 	CLSID = IID('{000C0338-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Item(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
 	_prop_map_get_ = {
@@ -2908,12 +2742,9 @@ class IFoundFiles(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(0, LCID, 2, (8, 0), ((3, 1),),Index
 			)
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -2935,10 +2766,8 @@ class IFoundFiles(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610743809, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class IMsoDispCagNotifySink(DispatchBaseClass):
@@ -2956,11 +2785,9 @@ class IMsoDispCagNotifySink(DispatchBaseClass):
 class LanguageSettings(DispatchBaseClass):
 	CLSID = IID('{000C0353-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def LanguageID(self, Id=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(1, LCID, 2, (3, 0), ((3, 1),),Id
 			)
-	
 	def LanguagePreferredForEditing(self, lid=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(2, LCID, 2, (11, 0), ((3, 1),),lid
 			)
@@ -2975,7 +2802,6 @@ class LineFormat(DispatchBaseClass):
 	coclass_clsid = None
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
-		
 		"BackColor": (100, 2, (9, 0), (), "BackColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"BeginArrowheadLength": (101, 2, (3, 0), (), "BeginArrowheadLength", None),
 		"BeginArrowheadStyle": (102, 2, (3, 0), (), "BeginArrowheadStyle", None),
@@ -2985,7 +2811,6 @@ class LineFormat(DispatchBaseClass):
 		"EndArrowheadLength": (105, 2, (3, 0), (), "EndArrowheadLength", None),
 		"EndArrowheadStyle": (106, 2, (3, 0), (), "EndArrowheadStyle", None),
 		"EndArrowheadWidth": (107, 2, (3, 0), (), "EndArrowheadWidth", None),
-		
 		"ForeColor": (108, 2, (9, 0), (), "ForeColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
 		"Pattern": (109, 2, (3, 0), (), "Pattern", None),
@@ -3069,10 +2894,8 @@ class PropertyTest(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "Name", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3089,8 +2912,6 @@ class PropertyTests(DispatchBaseClass):
 			, Connector=1):
 		return self._oleobj_.InvokeTypes(5, LCID, 1, (24, 0), ((8, 1), (3, 1), (12, 17), (12, 17), (3, 49)),Name
 			, Condition, Value, SecondValue, Connector)
-	
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
@@ -3107,14 +2928,12 @@ class PropertyTests(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0333-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3136,10 +2955,8 @@ class PropertyTests(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(4, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Script(DispatchBaseClass):
@@ -3164,10 +2981,8 @@ class Script(DispatchBaseClass):
 		"Language": ((1610809349, LCID, 4, 0),()),
 		"ScriptText": ((0, LCID, 4, 0),()),
 	}
-	
 	def __call__(self):
 		return self._ApplyTypes_(*(0, 2, (8, 0), (), "ScriptText", None))
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3180,7 +2995,6 @@ class Script(DispatchBaseClass):
 class Scripts(DispatchBaseClass):
 	CLSID = IID('{000C0340-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Add(self, Anchor=None, Location=2, Language=2, Id=''
 			, Extended='', ScriptText=''):
 		return self._ApplyTypes_(1610809348, 1, (9, 32), ((9, 49), (3, 49), (3, 49), (8, 49), (8, 49), (8, 49)), 'Add', '{000C0341-0000-0000-C000-000000000046}',Anchor
@@ -3188,7 +3002,6 @@ class Scripts(DispatchBaseClass):
 			)
 	def Delete(self):
 		return self._oleobj_.InvokeTypes(1610809349, LCID, 1, (24, 0), (),)
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3203,14 +3016,12 @@ class Scripts(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0341-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3232,10 +3043,8 @@ class Scripts(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809345, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class ShadowFormat(DispatchBaseClass):
@@ -3250,7 +3059,6 @@ class ShadowFormat(DispatchBaseClass):
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"ForeColor": (100, 2, (9, 0), (), "ForeColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"Obscured": (101, 2, (3, 0), (), "Obscured", None),
 		"OffsetX": (102, 2, (4, 0), (), "OffsetX", None),
@@ -3276,7 +3084,6 @@ class Shape(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(10, LCID, 1, (24, 0), (),)
 	def Delete(self):
 		return self._oleobj_.InvokeTypes(11, LCID, 1, (24, 0), (),)
-	
 	def Duplicate(self):
 		ret = self._oleobj_.InvokeTypes(12, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3309,7 +3116,6 @@ class Shape(DispatchBaseClass):
 			)
 	def SetShapesDefaultProperties(self):
 		return self._oleobj_.InvokeTypes(22, LCID, 1, (24, 0), (),)
-	
 	def Ungroup(self):
 		ret = self._oleobj_.InvokeTypes(23, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3319,45 +3125,32 @@ class Shape(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(24, LCID, 1, (24, 0), ((3, 1),),ZOrderCmd
 			)
 	_prop_map_get_ = {
-		
 		"Adjustments": (100, 2, (9, 0), (), "Adjustments", '{000C0310-0000-0000-C000-000000000046}'),
 		"AlternativeText": (131, 2, (8, 0), (), "AlternativeText", None),
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"AutoShapeType": (101, 2, (3, 0), (), "AutoShapeType", None),
 		"BlackWhiteMode": (102, 2, (3, 0), (), "BlackWhiteMode", None),
-		
 		"Callout": (103, 2, (9, 0), (), "Callout", '{000C0311-0000-0000-C000-000000000046}'),
 		"ConnectionSiteCount": (104, 2, (3, 0), (), "ConnectionSiteCount", None),
 		"Connector": (105, 2, (3, 0), (), "Connector", None),
-		
 		"ConnectorFormat": (106, 2, (9, 0), (), "ConnectorFormat", '{000C0313-0000-0000-C000-000000000046}'),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"Fill": (107, 2, (9, 0), (), "Fill", '{000C0314-0000-0000-C000-000000000046}'),
-		
 		"GroupItems": (108, 2, (9, 0), (), "GroupItems", '{000C0316-0000-0000-C000-000000000046}'),
 		"Height": (109, 2, (4, 0), (), "Height", None),
 		"HorizontalFlip": (110, 2, (3, 0), (), "HorizontalFlip", None),
 		"Left": (111, 2, (4, 0), (), "Left", None),
-		
 		"Line": (112, 2, (9, 0), (), "Line", '{000C0317-0000-0000-C000-000000000046}'),
 		"LockAspectRatio": (113, 2, (3, 0), (), "LockAspectRatio", None),
 		"Name": (115, 2, (8, 0), (), "Name", None),
-		
 		"Nodes": (116, 2, (9, 0), (), "Nodes", '{000C0319-0000-0000-C000-000000000046}'),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
-		
 		"PictureFormat": (118, 2, (9, 0), (), "PictureFormat", '{000C031A-0000-0000-C000-000000000046}'),
 		"Rotation": (117, 2, (4, 0), (), "Rotation", None),
-		
 		"Script": (130, 2, (9, 0), (), "Script", '{000C0341-0000-0000-C000-000000000046}'),
-		
 		"Shadow": (119, 2, (9, 0), (), "Shadow", '{000C031B-0000-0000-C000-000000000046}'),
-		
 		"TextEffect": (120, 2, (9, 0), (), "TextEffect", '{000C031F-0000-0000-C000-000000000046}'),
-		
 		"TextFrame": (121, 2, (9, 0), (), "TextFrame", '{000C0320-0000-0000-C000-000000000046}'),
-		
 		"ThreeD": (122, 2, (9, 0), (), "ThreeD", '{000C0321-0000-0000-C000-000000000046}'),
 		"Top": (123, 2, (4, 0), (), "Top", None),
 		"Type": (124, 2, (3, 0), (), "Type", None),
@@ -3404,7 +3197,6 @@ class ShapeNodes(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(12, LCID, 1, (24, 0), ((3, 1), (3, 1), (3, 1), (4, 1), (4, 1), (4, 49), (4, 49), (4, 49), (4, 49)),Index
 			, SegmentType, EditingType, X1, Y1, X2
 			, Y2, X3, Y3)
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3428,14 +3220,12 @@ class ShapeNodes(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0318-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3457,10 +3247,8 @@ class ShapeNodes(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(2, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class ShapeRange(DispatchBaseClass):
@@ -3476,7 +3264,6 @@ class ShapeRange(DispatchBaseClass):
 	def Distribute(self, DistributeCmd=defaultNamedNotOptArg, RelativeTo=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(13, LCID, 1, (24, 0), ((3, 1), (3, 1)),DistributeCmd
 			, RelativeTo)
-	
 	def Duplicate(self):
 		ret = self._oleobj_.InvokeTypes(14, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3485,7 +3272,6 @@ class ShapeRange(DispatchBaseClass):
 	def Flip(self, FlipCmd=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(15, LCID, 1, (24, 0), ((3, 1),),FlipCmd
 			)
-	
 	def Group(self):
 		ret = self._oleobj_.InvokeTypes(19, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3500,7 +3286,6 @@ class ShapeRange(DispatchBaseClass):
 	def IncrementTop(self, Increment=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(18, LCID, 1, (24, 0), ((4, 1),),Increment
 			)
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3509,7 +3294,6 @@ class ShapeRange(DispatchBaseClass):
 		return ret
 	def PickUp(self):
 		return self._oleobj_.InvokeTypes(20, LCID, 1, (24, 0), (),)
-	
 	def Regroup(self):
 		ret = self._oleobj_.InvokeTypes(21, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3528,7 +3312,6 @@ class ShapeRange(DispatchBaseClass):
 			)
 	def SetShapesDefaultProperties(self):
 		return self._oleobj_.InvokeTypes(26, LCID, 1, (24, 0), (),)
-	
 	def Ungroup(self):
 		ret = self._oleobj_.InvokeTypes(27, LCID, 1, (9, 0), (),)
 		if ret is not None:
@@ -3538,46 +3321,33 @@ class ShapeRange(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(28, LCID, 1, (24, 0), ((3, 1),),ZOrderCmd
 			)
 	_prop_map_get_ = {
-		
 		"Adjustments": (100, 2, (9, 0), (), "Adjustments", '{000C0310-0000-0000-C000-000000000046}'),
 		"AlternativeText": (131, 2, (8, 0), (), "AlternativeText", None),
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"AutoShapeType": (101, 2, (3, 0), (), "AutoShapeType", None),
 		"BlackWhiteMode": (102, 2, (3, 0), (), "BlackWhiteMode", None),
-		
 		"Callout": (103, 2, (9, 0), (), "Callout", '{000C0311-0000-0000-C000-000000000046}'),
 		"ConnectionSiteCount": (104, 2, (3, 0), (), "ConnectionSiteCount", None),
 		"Connector": (105, 2, (3, 0), (), "Connector", None),
-		
 		"ConnectorFormat": (106, 2, (9, 0), (), "ConnectorFormat", '{000C0313-0000-0000-C000-000000000046}'),
 		"Count": (2, 2, (3, 0), (), "Count", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"Fill": (107, 2, (9, 0), (), "Fill", '{000C0314-0000-0000-C000-000000000046}'),
-		
 		"GroupItems": (108, 2, (9, 0), (), "GroupItems", '{000C0316-0000-0000-C000-000000000046}'),
 		"Height": (109, 2, (4, 0), (), "Height", None),
 		"HorizontalFlip": (110, 2, (3, 0), (), "HorizontalFlip", None),
 		"Left": (111, 2, (4, 0), (), "Left", None),
-		
 		"Line": (112, 2, (9, 0), (), "Line", '{000C0317-0000-0000-C000-000000000046}'),
 		"LockAspectRatio": (113, 2, (3, 0), (), "LockAspectRatio", None),
 		"Name": (115, 2, (8, 0), (), "Name", None),
-		
 		"Nodes": (116, 2, (9, 0), (), "Nodes", '{000C0319-0000-0000-C000-000000000046}'),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
-		
 		"PictureFormat": (118, 2, (9, 0), (), "PictureFormat", '{000C031A-0000-0000-C000-000000000046}'),
 		"Rotation": (117, 2, (4, 0), (), "Rotation", None),
-		
 		"Script": (130, 2, (9, 0), (), "Script", '{000C0341-0000-0000-C000-000000000046}'),
-		
 		"Shadow": (119, 2, (9, 0), (), "Shadow", '{000C031B-0000-0000-C000-000000000046}'),
-		
 		"TextEffect": (120, 2, (9, 0), (), "TextEffect", '{000C031F-0000-0000-C000-000000000046}'),
-		
 		"TextFrame": (121, 2, (9, 0), (), "TextFrame", '{000C0320-0000-0000-C000-000000000046}'),
-		
 		"ThreeD": (122, 2, (9, 0), (), "ThreeD", '{000C0321-0000-0000-C000-000000000046}'),
 		"Top": (123, 2, (4, 0), (), "Top", None),
 		"Type": (124, 2, (3, 0), (), "Type", None),
@@ -3600,14 +3370,12 @@ class ShapeRange(DispatchBaseClass):
 		"Visible": ((127, LCID, 4, 0),()),
 		"Width": ((128, LCID, 4, 0),()),
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3629,16 +3397,13 @@ class ShapeRange(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(2, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class Shapes(DispatchBaseClass):
 	CLSID = IID('{000C031E-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def AddCallout(self, Type=defaultNamedNotOptArg, Left=defaultNamedNotOptArg, Top=defaultNamedNotOptArg, Width=defaultNamedNotOptArg
 			, Height=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(10, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1), (4, 1), (4, 1)),Type
@@ -3646,7 +3411,6 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddCallout', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddConnector(self, Type=defaultNamedNotOptArg, BeginX=defaultNamedNotOptArg, BeginY=defaultNamedNotOptArg, EndX=defaultNamedNotOptArg
 			, EndY=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(11, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1), (4, 1), (4, 1)),Type
@@ -3654,14 +3418,12 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddConnector', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddCurve(self, SafeArrayOfPoints=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(12, LCID, 1, (9, 0), ((12, 1),),SafeArrayOfPoints
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'AddCurve', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddLabel(self, Orientation=defaultNamedNotOptArg, Left=defaultNamedNotOptArg, Top=defaultNamedNotOptArg, Width=defaultNamedNotOptArg
 			, Height=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(13, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1), (4, 1), (4, 1)),Orientation
@@ -3669,14 +3431,12 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddLabel', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddLine(self, BeginX=defaultNamedNotOptArg, BeginY=defaultNamedNotOptArg, EndX=defaultNamedNotOptArg, EndY=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(14, LCID, 1, (9, 0), ((4, 1), (4, 1), (4, 1), (4, 1)),BeginX
 			, BeginY, EndX, EndY)
 		if ret is not None:
 			ret = Dispatch(ret, 'AddLine', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddPicture(self, FileName=defaultNamedNotOptArg, LinkToFile=defaultNamedNotOptArg, SaveWithDocument=defaultNamedNotOptArg, Left=defaultNamedNotOptArg
 			, Top=defaultNamedNotOptArg, Width=-1.0, Height=-1.0):
 		ret = self._oleobj_.InvokeTypes(15, LCID, 1, (9, 0), ((8, 1), (3, 1), (3, 1), (4, 1), (4, 1), (4, 49), (4, 49)),FileName
@@ -3685,14 +3445,12 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddPicture', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddPolyline(self, SafeArrayOfPoints=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(16, LCID, 1, (9, 0), ((12, 1),),SafeArrayOfPoints
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'AddPolyline', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddShape(self, Type=defaultNamedNotOptArg, Left=defaultNamedNotOptArg, Top=defaultNamedNotOptArg, Width=defaultNamedNotOptArg
 			, Height=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(17, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1), (4, 1), (4, 1)),Type
@@ -3700,7 +3458,6 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddShape', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddTextEffect(self, PresetTextEffect=defaultNamedNotOptArg, Text=defaultNamedNotOptArg, FontName=defaultNamedNotOptArg, FontSize=defaultNamedNotOptArg
 			, FontBold=defaultNamedNotOptArg, FontItalic=defaultNamedNotOptArg, Left=defaultNamedNotOptArg, Top=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(18, LCID, 1, (9, 0), ((3, 1), (8, 1), (8, 1), (4, 1), (3, 1), (3, 1), (4, 1), (4, 1)),PresetTextEffect
@@ -3709,7 +3466,6 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddTextEffect', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddTextbox(self, Orientation=defaultNamedNotOptArg, Left=defaultNamedNotOptArg, Top=defaultNamedNotOptArg, Width=defaultNamedNotOptArg
 			, Height=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(19, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1), (4, 1), (4, 1)),Orientation
@@ -3717,21 +3473,18 @@ class Shapes(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddTextbox', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def BuildFreeform(self, EditingType=defaultNamedNotOptArg, X1=defaultNamedNotOptArg, Y1=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(20, LCID, 1, (9, 0), ((3, 1), (4, 1), (4, 1)),EditingType
 			, X1, Y1)
 		if ret is not None:
 			ret = Dispatch(ret, 'BuildFreeform', '{000C0315-0000-0000-C000-000000000046}')
 		return ret
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, 'Item', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def Range(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(21, LCID, 1, (9, 0), ((12, 1),),Index
 			)
@@ -3742,24 +3495,20 @@ class Shapes(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(22, LCID, 1, (24, 0), (),)
 	_prop_map_get_ = {
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
-		
 		"Background": (100, 2, (9, 0), (), "Background", '{000C031C-0000-0000-C000-000000000046}'),
 		"Count": (2, 2, (3, 0), (), "Count", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
-		
 		"Default": (101, 2, (9, 0), (), "Default", '{000C031C-0000-0000-C000-000000000046}'),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 1, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C031C-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3781,10 +3530,8 @@ class Shapes(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(2, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class TextEffectFormat(DispatchBaseClass):
@@ -3864,7 +3611,6 @@ class ThreeDFormat(DispatchBaseClass):
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
 		"Creator": (1610743809, 2, (3, 0), (), "Creator", None),
 		"Depth": (100, 2, (4, 0), (), "Depth", None),
-		
 		"ExtrusionColor": (101, 2, (9, 0), (), "ExtrusionColor", '{000C0312-0000-0000-C000-000000000046}'),
 		"ExtrusionColorType": (102, 2, (3, 0), (), "ExtrusionColorType", None),
 		"Parent": (1, 2, (9, 0), (), "Parent", None),
@@ -3909,8 +3655,6 @@ class WebPageFont(DispatchBaseClass):
 class WebPageFonts(DispatchBaseClass):
 	CLSID = IID('{000C0914-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
@@ -3924,14 +3668,12 @@ class WebPageFonts(DispatchBaseClass):
 	}
 	_prop_map_put_ = {
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((3, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0913-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -3953,16 +3695,13 @@ class WebPageFonts(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _CommandBarActiveX(DispatchBaseClass):
 	CLSID = IID('{000C030D-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def Copy(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874886, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -3976,61 +3715,43 @@ class _CommandBarActiveX(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(1610940420, LCID, 1, (24, 0), (),)
 	def Execute(self):
 		return self._oleobj_.InvokeTypes(1610874892, LCID, 1, (24, 0), (),)
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def Move(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874902, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
 		if ret is not None:
 			ret = Dispatch(ret, 'Move', '{000C0308-0000-0000-C000-000000000046}')
 		return ret
-	
 	def QueryControlInterface(self, bstrIid=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(1610940418, LCID, 2, (13, 0), ((8, 1),),bstrIid
 			)
 		if ret is not None:
-			
 			try:
 				ret = ret.QueryInterface(pythoncom.IID_IDispatch)
 			except pythoncom.error:
@@ -4058,15 +3779,12 @@ class _CommandBarActiveX(DispatchBaseClass):
 	def SetInnerObjectFactory(self, pUnk=defaultNamedNotOptArg):
 		return self._oleobj_.InvokeTypes(1610940419, LCID, 1, (24, 0), ((13, 1),),pUnk
 			)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -4110,7 +3828,6 @@ class _CommandBarActiveX(DispatchBaseClass):
 		"OLEUsage": (1610874904, 2, (3, 0), (), "OLEUsage", None),
 		"OnAction": (1610874906, 2, (8, 0), (), "OnAction", None),
 		"Parameter": (1610874909, 2, (8, 0), (), "Parameter", None),
-		
 		"Parent": (1610874908, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 		"Priority": (1610874911, 2, (3, 0), (), "Priority", None),
 		"Tag": (1610874915, 2, (8, 0), (), "Tag", None),
@@ -4157,7 +3874,6 @@ class _CommandBarActiveX(DispatchBaseClass):
 class _CommandBarButton(DispatchBaseClass):
 	CLSID = IID('{000C030E-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88891-7708-11D1-ACEB-006008961DA5}')
-	
 	def Copy(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874886, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -4171,49 +3887,33 @@ class _CommandBarButton(DispatchBaseClass):
 			)
 	def Execute(self):
 		return self._oleobj_.InvokeTypes(1610874892, LCID, 1, (24, 0), (),)
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def Move(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874902, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -4240,15 +3940,12 @@ class _CommandBarButton(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(1610874913, LCID, 1, (24, 0), (),)
 	def SetFocus(self):
 		return self._oleobj_.InvokeTypes(1610874914, LCID, 1, (24, 0), (),)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -4294,7 +3991,6 @@ class _CommandBarButton(DispatchBaseClass):
 		"OLEUsage": (1610874904, 2, (3, 0), (), "OLEUsage", None),
 		"OnAction": (1610874906, 2, (8, 0), (), "OnAction", None),
 		"Parameter": (1610874909, 2, (8, 0), (), "Parameter", None),
-		
 		"Parent": (1610874908, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 		"Priority": (1610874911, 2, (3, 0), (), "Priority", None),
 		"ShortcutText": (1610940422, 2, (8, 0), (), "ShortcutText", None),
@@ -4348,7 +4044,7 @@ class _CommandBarButton(DispatchBaseClass):
 class _CommandBarButtonEvents:
 	CLSID = CLSID_Sink = IID('{000C0351-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88891-7708-11D1-ACEB-006008961DA5}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		1610678275 : "OnInvoke",
 		1610678273 : "OnGetTypeInfo",
@@ -4381,8 +4077,6 @@ class _CommandBarButtonEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class _CommandBarComboBox(DispatchBaseClass):
 	CLSID = IID('{000C030C-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88897-7708-11D1-ACEB-006008961DA5}')
@@ -4391,7 +4085,6 @@ class _CommandBarComboBox(DispatchBaseClass):
 			, Index)
 	def Clear(self):
 		return self._oleobj_.InvokeTypes(1610940417, LCID, 1, (24, 0), (),)
-	
 	def Copy(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874886, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -4403,54 +4096,36 @@ class _CommandBarComboBox(DispatchBaseClass):
 			)
 	def Execute(self):
 		return self._oleobj_.InvokeTypes(1610874892, LCID, 1, (24, 0), (),)
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def List(self, Index=defaultNamedNotOptArg):
-		
 		return self._oleobj_.InvokeTypes(1610940422, LCID, 2, (8, 0), ((3, 1),),Index
 			)
-	
 	def Move(self, Bar=defaultNamedOptArg, Before=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610874902, LCID, 1, (9, 0), ((12, 17), (12, 17)),Bar
 			, Before)
@@ -4478,19 +4153,15 @@ class _CommandBarComboBox(DispatchBaseClass):
 		return self._oleobj_.InvokeTypes(1610874913, LCID, 1, (24, 0), (),)
 	def SetFocus(self):
 		return self._oleobj_.InvokeTypes(1610874914, LCID, 1, (24, 0), (),)
-	
 	def SetList(self, Index=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(1610940422, LCID, 4, (24, 0), ((3, 1), (8, 1)),Index
 			, arg1)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -4538,7 +4209,6 @@ class _CommandBarComboBox(DispatchBaseClass):
 		"OLEUsage": (1610874904, 2, (3, 0), (), "OLEUsage", None),
 		"OnAction": (1610874906, 2, (8, 0), (), "OnAction", None),
 		"Parameter": (1610874909, 2, (8, 0), (), "Parameter", None),
-		
 		"Parent": (1610874908, 2, (9, 0), (), "Parent", '{000C0304-0000-0000-C000-000000000046}'),
 		"Priority": (1610874911, 2, (3, 0), (), "Priority", None),
 		"Style": (1610940430, 2, (3, 0), (), "Style", None),
@@ -4591,7 +4261,7 @@ class _CommandBarComboBox(DispatchBaseClass):
 class _CommandBarComboBoxEvents:
 	CLSID = CLSID_Sink = IID('{000C0354-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88897-7708-11D1-ACEB-006008961DA5}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		1610678275 : "OnInvoke",
 		1610678273 : "OnGetTypeInfo",
@@ -4624,19 +4294,15 @@ class _CommandBarComboBoxEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class _CommandBars(DispatchBaseClass):
 	CLSID = IID('{000C0302-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88893-7708-11D1-ACEB-006008961DA5}')
-	
 	def Add(self, Name=defaultNamedOptArg, Position=defaultNamedOptArg, MenuBar=defaultNamedOptArg, Temporary=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610809346, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17)),Name
 			, Position, MenuBar, Temporary)
 		if ret is not None:
 			ret = Dispatch(ret, 'Add', '{000C0304-0000-0000-C000-000000000046}')
 		return ret
-	
 	def AddEx(self, TbidOrName=defaultNamedOptArg, Position=defaultNamedOptArg, MenuBar=defaultNamedOptArg, Temporary=defaultNamedOptArg
 			, TbtrProtection=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610809366, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17), (12, 17)),TbidOrName
@@ -4644,26 +4310,21 @@ class _CommandBars(DispatchBaseClass):
 		if ret is not None:
 			ret = Dispatch(ret, 'AddEx', '{000C0304-0000-0000-C000-000000000046}')
 		return ret
-	
 	def FindControl(self, Type=defaultNamedOptArg, Id=defaultNamedOptArg, Tag=defaultNamedOptArg, Visible=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610809352, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17)),Type
 			, Id, Tag, Visible)
 		if ret is not None:
 			ret = Dispatch(ret, 'FindControl', '{000C0308-0000-0000-C000-000000000046}')
 		return ret
-	
 	def FindControls(self, Type=defaultNamedOptArg, Id=defaultNamedOptArg, Tag=defaultNamedOptArg, Visible=defaultNamedOptArg):
 		ret = self._oleobj_.InvokeTypes(1610809365, LCID, 1, (9, 0), ((12, 17), (12, 17), (12, 17), (12, 17)),Type
 			, Id, Tag, Visible)
 		if ret is not None:
 			ret = Dispatch(ret, 'FindControls', '{000C0306-0000-0000-C000-000000000046}')
 		return ret
-	
 	def IdsString(self, ids=defaultNamedNotOptArg, pbstrName=pythoncom.Missing):
 		return self._ApplyTypes_(1610809361, 2, (3, 0), ((3, 1), (16392, 2)), 'IdsString', None,ids
 			, pbstrName)
-	
-	
 	def Item(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((12, 1),),Index
 			)
@@ -4672,14 +4333,11 @@ class _CommandBars(DispatchBaseClass):
 		return ret
 	def ReleaseFocus(self):
 		return self._oleobj_.InvokeTypes(1610809360, LCID, 1, (24, 0), (),)
-	
 	def TmcGetName(self, tmc=defaultNamedNotOptArg, pbstrName=pythoncom.Missing):
 		return self._ApplyTypes_(1610809362, 2, (3, 0), ((3, 1), (16392, 2)), 'TmcGetName', None,tmc
 			, pbstrName)
 	_prop_map_get_ = {
-		
 		"ActionControl": (1610809344, 2, (9, 0), (), "ActionControl", '{000C0308-0000-0000-C000-000000000046}'),
-		
 		"ActiveMenuBar": (1610809345, 2, (9, 0), (), "ActiveMenuBar", '{000C0304-0000-0000-C000-000000000046}'),
 		"AdaptiveMenus": (1610809363, 2, (11, 0), (), "AdaptiveMenus", None),
 		"Application": (1610743808, 2, (9, 0), (), "Application", None),
@@ -4700,14 +4358,12 @@ class _CommandBars(DispatchBaseClass):
 		"LargeButtons": ((1610809354, LCID, 4, 0),()),
 		"MenuAnimationStyle": ((1610809356, LCID, 4, 0),()),
 	}
-	
 	def __call__(self, Index=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(0, LCID, 2, (9, 0), ((12, 1),),Index
 			)
 		if ret is not None:
 			ret = Dispatch(ret, '__call__', '{000C0304-0000-0000-C000-000000000046}')
 		return ret
-	
 	def __unicode__(self, *args):
 		try:
 			return unicode(self.__call__(*args))
@@ -4729,16 +4385,14 @@ class _CommandBars(DispatchBaseClass):
 		if not self.__dict__.has_key('_enum_'):
 			self.__dict__['_enum_'] = self._NewEnum()
 		return self._enum_.__getitem__(index)
-	
 	def __len__(self):
 		return self._ApplyTypes_(*(1610809347, 2, (3, 0), (), "Count", None))
-	
 	def __nonzero__(self):
 		return True
 class _CommandBarsEvents:
 	CLSID = CLSID_Sink = IID('{000C0352-0000-0000-C000-000000000046}')
 	coclass_clsid = IID('{55F88893-7708-11D1-ACEB-006008961DA5}')
-	_public_methods_ = [] 
+	_public_methods_ = [] # For COM Server support
 	_dispid_to_func_ = {
 		1610678275 : "OnInvoke",
 		1610678273 : "OnGetTypeInfo",
@@ -4771,8 +4425,6 @@ class _CommandBarsEvents:
 	def _query_interface_(self, iid):
 		import win32com.server.util
 		if iid==self.CLSID_Sink: return win32com.server.util.wrap(self)
-	
-	
 class _IMsoDispObj(DispatchBaseClass):
 	CLSID = IID('{000C0300-0000-0000-C000-000000000046}')
 	coclass_clsid = None
@@ -4785,57 +4437,39 @@ class _IMsoDispObj(DispatchBaseClass):
 class _IMsoOleAccDispObj(DispatchBaseClass):
 	CLSID = IID('{000C0301-0000-0000-C000-000000000046}')
 	coclass_clsid = None
-	
 	def GetaccDefaultAction(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5013, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccDescription(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5005, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelp(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5008, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccHelpTopic(self, pszHelpFile=pythoncom.Missing, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5009, 2, (3, 0), ((16392, 2), (12, 17)), 'GetaccHelpTopic', None,pszHelpFile
 			, varChild)
-	
 	def GetaccKeyboardShortcut(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5010, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccName(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5003, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def GetaccRole(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5006, 2, (12, 0), ((12, 17),), 'GetaccRole', None,varChild
 			)
-	
 	def GetaccState(self, varChild=defaultNamedOptArg):
 		return self._ApplyTypes_(-5007, 2, (12, 0), ((12, 17),), 'GetaccState', None,varChild
 			)
-	
 	def GetaccValue(self, varChild=defaultNamedOptArg):
-		
 		return self._oleobj_.InvokeTypes(-5004, LCID, 2, (8, 0), ((12, 17),),varChild
 			)
-	
 	def SetaccName(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5003, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def SetaccValue(self, varChild=defaultNamedNotOptArg, arg1=defaultUnnamedArg):
 		return self._oleobj_.InvokeTypes(-5004, LCID, 4, (24, 0), ((12, 17), (8, 1)),varChild
 			, arg1)
-	
 	def accChild(self, varChild=defaultNamedNotOptArg):
 		ret = self._oleobj_.InvokeTypes(-5002, LCID, 2, (9, 0), ((12, 1),),varChild
 			)
@@ -4880,7 +4514,7 @@ class _IMsoOleAccDispObj(DispatchBaseClass):
 		"accValue": ((-5004, LCID, 4, 0),()),
 	}
 from win32com.client import CoClassBaseClass
-class CommandBarButton(CoClassBaseClass): 
+class CommandBarButton(CoClassBaseClass): # A CoClass
 	CLSID = IID('{55F88891-7708-11D1-ACEB-006008961DA5}')
 	coclass_sources = [
 		_CommandBarButtonEvents,
@@ -4890,7 +4524,7 @@ class CommandBarButton(CoClassBaseClass):
 		_CommandBarButton,
 	]
 	default_interface = _CommandBarButton
-class CommandBarComboBox(CoClassBaseClass): 
+class CommandBarComboBox(CoClassBaseClass): # A CoClass
 	CLSID = IID('{55F88897-7708-11D1-ACEB-006008961DA5}')
 	coclass_sources = [
 		_CommandBarComboBoxEvents,
@@ -4900,7 +4534,7 @@ class CommandBarComboBox(CoClassBaseClass):
 		_CommandBarComboBox,
 	]
 	default_interface = _CommandBarComboBox
-class CommandBars(CoClassBaseClass): 
+class CommandBars(CoClassBaseClass): # A CoClass
 	CLSID = IID('{55F88893-7708-11D1-ACEB-006008961DA5}')
 	coclass_sources = [
 		_CommandBarsEvents,

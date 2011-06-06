@@ -29,15 +29,15 @@ in the same way.  A brief example is worth a thousand words:
 >>> xhtml = '''<html><body>
 ... <textarea id="message" rows="2" wrap="off">Type your message.</textarea>
 ... </body></html>'''
->>> page = Meld(xhtml)                
->>> print page.message                
+>>> page = Meld(xhtml)                # Create a Meld object from XHTML.
+>>> print page.message                # Access an element within the document.
 <textarea id="message" rows="2" wrap="off">Type your message.</textarea>
->>> print page.message.rows           
+>>> print page.message.rows           # Access an attribute of an element.
 2
->>> page.message = "New message."     
->>> page.message.rows = 4             
->>> del page.message.wrap             
->>> print page                        
+>>> page.message = "New message."     # Change the content of an element.
+>>> page.message.rows = 4             # Change an attribute value.
+>>> del page.message.wrap             # Delete an attribute.
+>>> print page                        # Print the resulting page.
 <html><body>
 <textarea id="message" rows="4">New message.</textarea>
 </body></html>
@@ -62,14 +62,14 @@ like and it would all work just the same.
 ... </table></html>
 ... '''
 >>> doc = Meld(xhtml)
->>> templateRow = doc.row.clone()  
->>> del doc.row                    
+>>> templateRow = doc.row.clone()  # Take a copy of the template row, then
+>>> del doc.row                    # delete it to make way for the real rows.
 >>> for name, age in [("Richie", 30), ("Dave", 39), ("John", 78)]:
 ...      newRow = templateRow.clone()
 ...      newRow.name = name
 ...      newRow.age = age
 ...      doc.people += newRow
->>> print re.sub(r'</tr>\s*', '</tr>\n', str(doc))  
+>>> print re.sub(r'</tr>\s*', '</tr>\n', str(doc))  # Prettify the output
 <html><table id="people">
 <tr id="header"><th>Name</th><th>Age</th></tr>
 <tr id="row"><td id="name">Richie</td><td id="age">30</td></tr>
@@ -260,7 +260,7 @@ if sys.hexversion >> 16 < 0x203:
         def __init__(self):
             xmllib.XMLParser.__init__(self,
                                       translate_attribute_references=False)
-            self.entitydefs = {}    
+            self.entitydefs = {}    # This is an xmllib.XMLParser attribute.
             self._tree = _RootNode()
             self._currentNode = self._tree
             self._pendingText = []
@@ -423,7 +423,7 @@ class Meld:
         self._readonly = readonly
         if isinstance(source, str):
             self._tree = _generateTree(source)
-        elif isinstance(source, _Node): 
+        elif isinstance(source, _Node): # For internal use only.
             self._tree = source
         else:
             raise TypeError, "Melds must be constructed from ASCII strings"
@@ -530,7 +530,7 @@ class Meld:
             raise ReadOnlyError, READ_ONLY_MESSAGE
         node = self._findByID(self._tree, name)
         if hasattr(value, '_tree') and value._tree is node:
-            return   
+            return   # x.y = x.y
         if not node and name == '_content':
             node = self._tree.getElementNode()
         if node:
@@ -596,7 +596,7 @@ class Meld:
             raise ReadOnlyError, READ_ONLY_MESSAGE
         node = self._findByID(self._tree, name)
         if hasattr(value, '_tree') and value._tree is node:
-            return   
+            return   # x["y"] = x.y
         if node:
             self._replaceNodeContent(node, value)
             return
@@ -757,14 +757,14 @@ __test__ = {
 'DOCTYPE (full)': """
 >>> print Meld('''<!DOCTYPE name [
 ...     <!ELEMENT terms (hhItem1, hhItem2)>
-...     <!ELEMENT hhItem1 (
-...     <!ELEMENT hhItem2 (
+...     <!ELEMENT hhItem1 (#PCDATA)>
+...     <!ELEMENT hhItem2 (#PCDATA)>
 ... ]>
 ... <name>Stuff</name>''')
 <!DOCTYPE name [
     <!ELEMENT terms (hhItem1, hhItem2)>
-    <!ELEMENT hhItem1 (
-    <!ELEMENT hhItem2 (
+    <!ELEMENT hhItem1 (#PCDATA)>
+    <!ELEMENT hhItem2 (#PCDATA)>
 ]>
 <name>Stuff</name>
 """,
@@ -795,7 +795,7 @@ __test__ = {
 <x><!-- Comment --></x>
 """,
 'entities and charrefs': """
->>> page = Meld('''<html><body>&bull; This "and&
+>>> page = Meld('''<html><body>&bull; This "and&#160;that"...
 ... <span id="s" title="&quot;Quoted&quot; &amp; Not">x</span></body></html>''')
 >>> print page.s.title
 "Quoted" & Not
@@ -810,7 +810,7 @@ __test__ = {
 >>> page.spam = ""
 >>> print page
 <span id="spam"/>
->>> page = Meld('''<textarea name="spam"/>''')  
+>>> page = Meld('''<textarea name="spam"/>''')  # nonSelfClose special case
 >>> print page
 <textarea name="spam"></textarea>
 """,
@@ -891,7 +891,7 @@ ReadOnlyError: You can't modify this read-only Meld object
 >>> print a
 <html><span id="one"><span id="two">Two</span></span></html>
 >>> b.two = "New"
->>> print a  
+>>> print a  # Checking for side-effects
 <html><span id="one"><span id="two">Two</span></span></html>
 """,
 'mixed-type add, radd and iadd': """
@@ -932,10 +932,10 @@ AttributeError: _private
 'bad XML characters': """
 >>> page = Meld('''<x>
 ... Valentines Day Special \x96 2 bikinis for the price of one \x01
-... </x>''')    
+... </x>''')    # No exception.
 >>> print page
 <x>
-Valentines Day Special &
+Valentines Day Special &#150; 2 bikinis for the price of one ?
 </x>
 """
 }
@@ -957,5 +957,5 @@ def test():
     return result
 if __name__ == '__main__':
     failed, total = test()
-    if failed == 0:     
+    if failed == 0:     # Else `doctest.testmod` prints the failures.
         print "All %d tests passed." % total

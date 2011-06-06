@@ -1,4 +1,4 @@
-import DNS 
+import DNS # From http://sourceforge.net/projects/pydns/
 import sys
 import os
 import operator
@@ -11,8 +11,8 @@ except ImportError:
     import pickle
 from spambayes.Options import options
 kCheckForPruneEvery=20
-kMaxTTL=60 * 60 * 24 * 7 
-kPruneThreshold=1500 
+kMaxTTL=60 * 60 * 24 * 7 # One week
+kPruneThreshold=1500 # May go over slightly; numbers chosen at random
 kPruneDownTo=1000
 class lookupResult(object):
     def __init__(self,qType,answer,question,expiresAt,now):
@@ -53,7 +53,7 @@ class cache:
                 print >> sys.stderr, "PTR records"
             else:
                 print >> sys.stderr, "opened new cache"
-        self.hits=0 
+        self.hits=0 # These two for statistics
         self.misses=0
         self.pruneTicker=0
         if dnsServer==None:
@@ -161,7 +161,7 @@ class cache:
                 print "Origianal question was",question
                 print "Type was",qType
             objs=[ lookupResult(qType,None,question,self.cacheErrorSecs+now,now) ]
-            cacheToLookIn[question]=objs 
+            cacheToLookIn[question]=objs # Add to format for return?
             return self.formatForReturn(objs)
         except socket.gaierror,detail:
             print "DNS connection failure:", self.queryObj.ns, detail

@@ -35,10 +35,10 @@ except (IOError, ImportError):
 else:
     import atexit
     atexit.register(cache.close)
-from encodings.aliases import aliases 
+from encodings.aliases import aliases # The aliases dictionary
 if not aliases.has_key('ansi_x3_4_1968'):
     aliases['ansi_x3_4_1968'] = 'ascii'
-del aliases 
+del aliases # Not needed any more
 def textparts(msg):
     """Return a set of all msg parts with content maintype 'text'."""
     return Set(filter(lambda part: part.get_content_maintype() == 'text',
@@ -56,8 +56,8 @@ def imageparts(msg):
 has_highbit_char = re.compile(r"[\x80-\xff]").search
 html_re = re.compile(r"""
     <
-    (?![\s<>])  
-    [^>]{0,256} 
+    (?![\s<>])  # e.g., don't match 'a < b' or '<<<' or 'i<<5' or 'a<>b'
+    [^>]{0,256} # search for the end '>', but don't run wild
     >
 """, re.VERBOSE | re.DOTALL)
 received_host_re = re.compile(r'from ([a-z0-9._-]+[a-z])[)\s]')
@@ -124,7 +124,7 @@ def crack_content_xyz(msg):
                 yield 'filename:' + x
     except TypeError:
         yield "filename:<bogus>"
-    if 0:   
+    if 0:   # disabled; see comment before function
         x = msg.get('content-transfer-encoding')
         if x is not None:
             yield 'content-transfer-encoding:' + x.lower()
@@ -164,7 +164,7 @@ def breakdown_ipaddr(ipaddr):
 def log2(n, log=math.log, c=math.log(2)):
     return log(n)/c
 class Stripper(object):
-    separator = ''  
+    separator = ''  # a subclass can override if this isn't appropriate
     def __init__(self, find_start, find_end):
         self.find_start = find_start
         self.find_end = find_end
@@ -191,8 +191,8 @@ class Stripper(object):
         return []
 uuencode_begin_re = re.compile(r"""
     ^begin \s+
-    (\S+) \s+   
-    (\S+) \s*   
+    (\S+) \s+   # capture mode
+    (\S+) \s*   # capture filename
     $
 """, re.VERBOSE | re.MULTILINE)
 uuencode_end_re = re.compile(r"^end\s*\n", re.MULTILINE)
@@ -206,22 +206,22 @@ class UUencodeStripper(Stripper):
                 ['uuencode:%s' % x for x in crack_filename(fname)])
 crack_uuencode = UUencodeStripper().analyze
 url_fancy_re = re.compile(r""" 
-    \b                      
+    \b                      # the preceeding character must not be alphanumeric
     (?: 
         (?:
-            (https? | ftp)  
-            ://             
+            (https? | ftp)  # capture the protocol
+            ://             # skip the boilerplate
         )|
-        (?= ftp\.[^\.\s<>"'\x7f-\xff] )|  
-        (?= www\.[^\.\s<>"'\x7f-\xff] )   
+        (?= ftp\.[^\.\s<>"'\x7f-\xff] )|  # allow the protocol to be missing, but only if
+        (?= www\.[^\.\s<>"'\x7f-\xff] )   # the rest of the url starts "www.x" or "ftp.x" 
     )
-    ([^\s<>"'\x7f-\xff]+)  
-""", re.VERBOSE)                        
+    ([^\s<>"'\x7f-\xff]+)  # capture the guts
+""", re.VERBOSE)                        # '
 url_re = re.compile(r"""
-    (https? | ftp)  
-    ://             
-    ([^\s<>"'\x7f-\xff]+)  
-""", re.VERBOSE)                        
+    (https? | ftp)  # capture the protocol
+    ://             # skip the boilerplate
+    ([^\s<>"'\x7f-\xff]+)  # capture the guts
+""", re.VERBOSE)                        # '
 urlsep_re = re.compile(r"[;?:@&=+,$.]")
 class URLStripper(Stripper):
     def __init__(self):
@@ -255,7 +255,7 @@ class URLStripper(Stripper):
                 if not ips:
                     pushclue("url-ip:lookup error")
                 else:
-                    for ip in ips: 
+                    for ip in ips: # Should we limit to one A record?
                         pushclue("url-ip:%s/32" % ip)
                         dottedQuadList=ip.split(".")
                         pushclue("url-ip:%s/8" % dottedQuadList[0])
@@ -328,7 +328,7 @@ virus_re = re.compile(r"""
     < /? \s* (?: script | iframe) \b
 |   \b src= ['"]? cid:
 |   \b (?: height | width) = ['"]? 0
-""", re.VERBOSE)                        
+""", re.VERBOSE)                        # '
 def find_html_virus_clues(text):
     for bingo in virus_re.findall(text):
         yield bingo
@@ -383,7 +383,7 @@ class Tokenizer:
                 k = k.lower()
                 for rx in self.basic_skip:
                     if rx.match(k):
-                        break   
+                        break   # do nothing -- we're supposed to skip this
                 else:
                     for w in subject_word_re.findall(v):
                         for t in tokenize_word(w):

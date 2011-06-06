@@ -166,7 +166,7 @@ class BrighterAsyncChat(asynchat.async_chat):
 class Context:
     """See the main documentation for details of `Dibbler.Context`."""
     def __init__(self, asyncMap=asyncore.socket_map):
-        self._HTTPPort = None  
+        self._HTTPPort = None  # Stores the port for `run(launchBrowser=True)`
         self._map = asyncMap
     def pop(self, key):
         return self._map.pop(key)

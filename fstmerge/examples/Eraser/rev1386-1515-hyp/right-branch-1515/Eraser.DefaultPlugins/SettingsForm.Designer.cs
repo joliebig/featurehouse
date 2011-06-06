@@ -1,18 +1,8 @@
-
-
 namespace Eraser.DefaultPlugins
 {
  partial class SettingsForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser.DefaultPlugins
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    this.components = new System.ComponentModel.Container();
@@ -54,92 +37,50 @@ namespace Eraser.DefaultPlugins
    this.containerTabGeneralPnl.SuspendLayout();
    this.containerTabEraseMethodsPnl.SuspendLayout();
    this.SuspendLayout();
-
-
-
    this.customMethodContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.deleteMethodToolStripMenuItem});
    this.customMethodContextMenuStrip.Name = "customMethodContextMenuStrip";
    resources.ApplyResources(this.customMethodContextMenuStrip, "customMethodContextMenuStrip");
    this.customMethodContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.customMethodContextMenuStrip_Opening);
-
-
-
    this.deleteMethodToolStripMenuItem.Name = "deleteMethodToolStripMenuItem";
    resources.ApplyResources(this.deleteMethodToolStripMenuItem, "deleteMethodToolStripMenuItem");
    this.deleteMethodToolStripMenuItem.Click += new System.EventHandler(this.deleteMethodToolStripMenuItem_Click);
-
-
-
    resources.ApplyResources(this.okBtn, "okBtn");
    this.okBtn.Name = "okBtn";
    this.okBtn.UseVisualStyleBackColor = true;
    this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
-
-
-
    resources.ApplyResources(this.cancelBtn, "cancelBtn");
    this.cancelBtn.DialogResult = System.Windows.Forms.DialogResult.Cancel;
    this.cancelBtn.Name = "cancelBtn";
    this.cancelBtn.UseVisualStyleBackColor = true;
-
-
-
    this.errorProvider.ContainerControl = this;
-
-
-
    resources.ApplyResources(this.customPassName, "customPassName");
-
-
-
    resources.ApplyResources(this.customPassPassCount, "customPassPassCount");
-
-
-
    this.containerTab.Controls.Add(this.containerTabGeneralPnl);
    this.containerTab.Controls.Add(this.containerTabEraseMethodsPnl);
    resources.ApplyResources(this.containerTab, "containerTab");
    this.containerTab.Name = "containerTab";
    this.containerTab.SelectedIndex = 0;
-
-
-
    this.containerTabGeneralPnl.Controls.Add(this.fl16MethodCmb);
    this.containerTabGeneralPnl.Controls.Add(this.fl16MethodLbl);
    resources.ApplyResources(this.containerTabGeneralPnl, "containerTabGeneralPnl");
    this.containerTabGeneralPnl.Name = "containerTabGeneralPnl";
    this.containerTabGeneralPnl.UseVisualStyleBackColor = true;
-
-
-
    resources.ApplyResources(this.fl16MethodCmb, "fl16MethodCmb");
    this.fl16MethodCmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
    this.fl16MethodCmb.FormattingEnabled = true;
    this.fl16MethodCmb.Name = "fl16MethodCmb";
-
-
-
    resources.ApplyResources(this.fl16MethodLbl, "fl16MethodLbl");
    this.fl16MethodLbl.Name = "fl16MethodLbl";
-
-
-
    this.containerTabEraseMethodsPnl.Controls.Add(this.customMethodAdd);
    this.containerTabEraseMethodsPnl.Controls.Add(this.customMethod);
    resources.ApplyResources(this.containerTabEraseMethodsPnl, "containerTabEraseMethodsPnl");
    this.containerTabEraseMethodsPnl.Name = "containerTabEraseMethodsPnl";
    this.containerTabEraseMethodsPnl.UseVisualStyleBackColor = true;
-
-
-
    resources.ApplyResources(this.customMethodAdd, "customMethodAdd");
    this.customMethodAdd.Name = "customMethodAdd";
    this.customMethodAdd.UseVisualStyleBackColor = true;
    this.customMethodAdd.Click += new System.EventHandler(this.customMethodAdd_Click);
-
-
-
    resources.ApplyResources(this.customMethod, "customMethod");
    this.customMethod.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
@@ -152,17 +93,8 @@ namespace Eraser.DefaultPlugins
    this.customMethod.UseCompatibleStateImageBehavior = false;
    this.customMethod.View = System.Windows.Forms.View.Details;
    this.customMethod.ItemActivate += new System.EventHandler(this.customMethod_ItemActivate);
-
-
-
    resources.ApplyResources(this.columnHeader1, "columnHeader1");
-
-
-
    resources.ApplyResources(this.columnHeader2, "columnHeader2");
-
-
-
    this.AcceptButton = this.okBtn;
    resources.ApplyResources(this, "$this");
    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
@@ -182,11 +114,7 @@ namespace Eraser.DefaultPlugins
    this.containerTabGeneralPnl.PerformLayout();
    this.containerTabEraseMethodsPnl.ResumeLayout(false);
    this.ResumeLayout(false);
-
   }
-
-
-
   private System.Windows.Forms.Button okBtn;
   private System.Windows.Forms.Button cancelBtn;
   private System.Windows.Forms.ErrorProvider errorProvider;

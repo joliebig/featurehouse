@@ -13,7 +13,7 @@ from win32com.client import gencache, DispatchWithEvents, Dispatch
 import win32api
 import pythoncom
 from win32com.client import constants, getevents
-import win32gui, win32con, win32clipboard 
+import win32gui, win32con, win32clipboard # for button images!
 import timer, thread
 from dialogs.dlgutils import SetWaitCursor
 toolbar_name = "SpamBayes"
@@ -38,9 +38,9 @@ except win32api.error:
         import win32traceutil
 bValidateGencache = not hasattr(sys, "frozen")
 gencache.EnsureModule('{00062FFF-0000-0000-C000-000000000046}', 0, 9, 0,
-                        bForDemand=True, bValidateFile=bValidateGencache) 
+                        bForDemand=True, bValidateFile=bValidateGencache) # Outlook 9
 gencache.EnsureModule('{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}', 0, 2, 1,
-                        bForDemand=True, bValidateFile=bValidateGencache) 
+                        bForDemand=True, bValidateFile=bValidateGencache) # Office 9
 gencache.EnsureModule('{AC0714F2-3D04-11D1-AE7D-00A0C90F26F4}', 0, 1, 0,
                         bForDemand=True, bValidateFile=bValidateGencache)
 universal.RegisterInterfaces('{AC0714F2-3D04-11D1-AE7D-00A0C90F26F4}', 0, 1, 0,
@@ -142,11 +142,11 @@ class ButtonEvent:
     def Close(self):
         self.handler = self.args = None
     def OnClick(self, button, cancel):
-        locale.setlocale(locale.LC_NUMERIC, "C") 
+        locale.setlocale(locale.LC_NUMERIC, "C") # see locale comments above
         self.handler(*self.args)
 class _BaseItemsEvent:
     def Init(self, target, application, manager):
-        self.owner_thread_ident = thread.get_ident() 
+        self.owner_thread_ident = thread.get_ident() # check we arent multi-threaded
         self.application = application
         self.manager = manager
         self.target = target
@@ -155,7 +155,7 @@ class _BaseItemsEvent:
         pass
     def Close(self):
         self.application = self.manager = self.target = None
-        self.close() 
+        self.close() # the events
 class HamFolderItemsEvent(_BaseItemsEvent):
     def Init(self, *args):
         _BaseItemsEvent.Init(self, *args)
@@ -212,7 +212,7 @@ class HamFolderItemsEvent(_BaseItemsEvent):
         assert self.timer_id is None, "Shouldn't start a timer when already have one"
         assert isinstance(delay, types.FloatType), "Timer values are float seconds"
         assert delay, "No delay means no timer!"
-        delay = int(delay*1000) 
+        delay = int(delay*1000) # convert to ms.
         self.timer_id = timer.set_timer(delay, self._TimerFunc)
         self.manager.LogDebug(1, "New message timer started - id=%d, delay=%d" % (self.timer_id, delay))
     def _StartTimer(self):
@@ -232,7 +232,7 @@ class HamFolderItemsEvent(_BaseItemsEvent):
         self.manager.LogDebug(1, "The timer with id=%s fired" % self.timer_id)
         self._KillTimer()
         assert self.timer_generator, "Can't have a timer with no generator"
-        locale.setlocale(locale.LC_NUMERIC, "C") 
+        locale.setlocale(locale.LC_NUMERIC, "C") # see locale comments above
         try:
             while 1:
                 item = self.timer_generator.next()
@@ -251,7 +251,7 @@ class HamFolderItemsEvent(_BaseItemsEvent):
                 delay = self.manager.config.filter.timer_interval
                 self._DoStartTimer(delay)
     def OnItemAdd(self, item):
-        locale.setlocale(locale.LC_NUMERIC, "C") 
+        locale.setlocale(locale.LC_NUMERIC, "C") # see locale comments above
         self.manager.LogDebug(2, "OnItemAdd event for folder", self,
                               "with item", item.Subject.encode("mbcs", "ignore"))
         if not self.use_timer or not item.UnRead:
@@ -350,7 +350,7 @@ def GetClues(mgr, msgstore_message):
     push(escape(msg.as_string(), True))
     push("</PRE>\n")
     from spambayes.tokenizer import tokenize
-    from spambayes.classifier import Set 
+    from spambayes.classifier import Set # whatever classifier uses
     push("<h2>All Message Tokens</h2>\n")
     toks = Set(tokenize(
         msgstore_message.GetEmailPackageObject(strip_mime_headers=True)))
@@ -727,10 +727,10 @@ class ExplorerWithEvents:
                         Visible=True,
                         Tag=tag)
     def _AddControl(self,
-                    parent, 
-                    control_type, 
-                    events_class, events_init_args, 
-                    **item_attrs): 
+                    parent, # who the control is added to
+                    control_type, # type of control to add.
+                    events_class, events_init_args, # class/Init() args
+                    **item_attrs): # extra control attributes.
         assert item_attrs.has_key('Tag'), "Need a 'Tag' attribute!"
         image_fname = None
         if 'image' in item_attrs:
@@ -819,7 +819,7 @@ class ExplorerWithEvents:
         self.explorers_collection._DoDeadExplorer(self)
         self.explorers_collection = None
         self.toolbar = None
-        self.close() 
+        self.close() # disconnect events.
     def OnBeforeFolderSwitch(self, new_folder, cancel):
         self.manager.LogDebug(3, "OnBeforeFolderSwitch", self)
     def OnFolderSwitch(self):
@@ -903,11 +903,11 @@ class OutlookAddin:
         self.folder_hooks = {}
         self.application = None
     def OnConnection(self, application, connectMode, addin, custom):
-        locale.setlocale(locale.LC_NUMERIC, "C") 
+        locale.setlocale(locale.LC_NUMERIC, "C") # see locale comments above
         import manager
         try:
             self.application = application
-            self.manager = None 
+            self.manager = None # if we die while creating it!
             self.manager = manager.GetManager(application)
             assert self.manager.addin is None, "Should not already have an addin"
             self.manager.addin = self
@@ -922,7 +922,7 @@ class OutlookAddin:
             print "using Python", sys.version
             from time import asctime, localtime
             print "Log created", asctime(localtime())
-            self.explorers_events = None 
+            self.explorers_events = None # create at OnStartupComplete
             if connectMode == constants.ext_cm_AfterStartup:
                 self.OnStartupComplete(None)
         except:
@@ -951,7 +951,7 @@ class OutlookAddin:
             self.manager.LogDebug(0, _("*** SpamBayes is NOT enabled, so " \
                                        "will not filter incoming mail. ***"))
         explorers = self.application.Explorers
-        if self.manager is not None: 
+        if self.manager is not None: # If we successfully started up.
             self.explorers_events = WithEvents(explorers, ExplorersEvent)
             self.explorers_events.Init(self.manager)
             for i in range(explorers.Count):
@@ -996,7 +996,7 @@ class OutlookAddin:
             except:
                 print "Error adding field to 'Unsure' folder %r" % (unsure_id,)
                 etype, value, tb = sys.exc_info()
-                tb = None 
+                tb = None # dont want it, and nuke circular ref
                 traceback.print_exception(etype, value, tb)
     def UpdateFolderHooks(self):
         config = self.manager.config.filter
@@ -1021,7 +1021,7 @@ class OutlookAddin:
         self.folder_hooks = new_hooks
     def _GetHookForFolder(self, folder):
         ret = self.folder_hooks.get(folder.id)
-        if ret is None: 
+        if ret is None: # we were unable to hook events for this folder.
             return None
         assert ret.target == folder
         return ret
@@ -1045,7 +1045,7 @@ class OutlookAddin:
                     print "ERROR: Failed to check folder '%s' for " \
                           "Spam field" % name
                     etype, value, tb = sys.exc_info()
-                    tb = None 
+                    tb = None # dont want it, and nuke circular ref
                     traceback.print_exception(etype, value, tb)
                 try:
                     new_hook = DispatchWithEvents(folder.Items, HandlerClass)
@@ -1096,7 +1096,7 @@ class OutlookAddin:
         print "Addin terminating: %d COM client and %d COM servers exist." \
               % (pythoncom._GetInterfaceCount(), pythoncom._GetGatewayCount())
         try:
-            total_refs = sys.gettotalrefcount() 
+            total_refs = sys.gettotalrefcount() # debug Python builds only
             print "%d Python references exist" % (total_refs,)
         except AttributeError:
             pass

@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,14 +5,10 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.ComponentModel;
-
 namespace Eraser.Util
 {
  public static class SystemInfo
  {
-
-
-
   public static long PerformanceCounter
   {
    get
@@ -25,18 +19,12 @@ namespace Eraser.Util
     return 0;
    }
   }
-
-
-
-
-
   public static ProcessorArchitecture ProcessorArchitecture
   {
    get
    {
     NativeMethods.SYSTEM_INFO info = new NativeMethods.SYSTEM_INFO();
     NativeMethods.GetSystemInfo(out info);
-
     switch (info.processorArchitecture)
     {
      case NativeMethods.SYSTEM_INFO.ProcessorArchitecture.PROCESSOR_ARCHITECTURE_AMD64:

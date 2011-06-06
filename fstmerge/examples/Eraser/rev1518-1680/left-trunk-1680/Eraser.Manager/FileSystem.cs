@@ -1,16 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Eraser.Util;
 using System.IO;
-
 namespace Eraser.Manager
 {
-
-
-
  public abstract class FileSystem
  {
   public static string GenerateRandomFileName(DirectoryInfo info, int length)

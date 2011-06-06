@@ -1,27 +1,16 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-
 namespace Eraser.Util
 {
  public class StreamInfo
  {
-
-
-
-
-
-
   public StreamInfo(string path)
   {
-
    if (path.IndexOf(':') != path.LastIndexOf(':'))
    {
     int streamNameColon = path.IndexOf(':', path.IndexOf(':') + 1);
@@ -33,10 +22,6 @@ namespace Eraser.Util
     fileName = path;
    }
   }
-
-
-
-
   public DirectoryInfo Directory
   {
    get
@@ -44,10 +29,6 @@ namespace Eraser.Util
     return new DirectoryInfo(DirectoryName);
    }
   }
-
-
-
-
   public string DirectoryName
   {
    get
@@ -55,10 +36,6 @@ namespace Eraser.Util
     return fileName.Substring(0, fileName.LastIndexOf(Path.DirectorySeparatorChar) + 1);
    }
   }
-
-
-
-
   public string FullName
   {
    get
@@ -68,19 +45,10 @@ namespace Eraser.Util
     return fileName;
    }
   }
-
-
-
-
   public string Name
   {
    get { return fileName; }
   }
-
-
-
-
-
   public FileInfo File
   {
    get
@@ -90,19 +58,11 @@ namespace Eraser.Util
     return null;
    }
   }
-
-
-
-
   public FileAttributes Attributes
   {
    get { return (FileAttributes)KernelApi.NativeMethods.GetFileAttributes(FullName); }
    set { KernelApi.NativeMethods.SetFileAttributes(FullName, (uint)value); }
   }
-
-
-
-
   public bool Exists
   {
    get
@@ -120,7 +80,6 @@ namespace Eraser.Util
        case 5:
        case 32:
         return true;
-
        case 2:
        case 3:
        default:
@@ -129,17 +88,12 @@ namespace Eraser.Util
     }
    }
   }
-
-
-
-
   public bool IsReadOnly
   {
    get
    {
     return (Attributes & FileAttributes.ReadOnly) != 0;
    }
-
    set
    {
     if (value)
@@ -148,10 +102,6 @@ namespace Eraser.Util
      Attributes &= ~FileAttributes.ReadOnly;
    }
   }
-
-
-
-
   public long Length
   {
    get
@@ -160,11 +110,9 @@ namespace Eraser.Util
     using (SafeFileHandle handle = fileHandle)
      if (KernelApi.NativeMethods.GetFileSizeEx(handle, out fileSize))
       return fileSize;
-
     return 0;
    }
   }
-
   public DateTime LastAccessTime
   {
    get
@@ -178,7 +126,6 @@ namespace Eraser.Util
     SetFileTime(DateTime.MinValue, value, DateTime.MinValue);
    }
   }
-
   public DateTime LastWriteTime
   {
    get
@@ -192,7 +139,6 @@ namespace Eraser.Util
     SetFileTime(DateTime.MinValue, DateTime.MinValue, value);
    }
   }
-
   public DateTime CreationTime
   {
    get
@@ -206,7 +152,6 @@ namespace Eraser.Util
     SetFileTime(value, DateTime.MinValue, DateTime.MinValue);
    }
   }
-
   private void GetFileTime(out DateTime creationTime, out DateTime lastAccess,
    out DateTime lastWrite)
   {
@@ -225,7 +170,6 @@ namespace Eraser.Util
     handle = fileHandle;
     ownsHandle = true;
    }
-
    try
    {
     KernelApi.GetFileTime(handle, out creationTime, out lastAccess, out lastWrite);
@@ -236,7 +180,6 @@ namespace Eraser.Util
      handle.Close();
    }
   }
-
   private void SetFileTime(DateTime creationTime, DateTime lastAccess, DateTime lastWrite)
   {
    SafeFileHandle handle = exclusiveHandle;
@@ -254,7 +197,6 @@ namespace Eraser.Util
     handle = fileHandle;
     ownsHandle = true;
    }
-
    try
    {
     KernelApi.SetFileTime(handle, creationTime, lastAccess, lastWrite);
@@ -265,10 +207,6 @@ namespace Eraser.Util
      handle.Close();
    }
   }
-
-
-
-
   public void Delete()
   {
    if (streamName == null)

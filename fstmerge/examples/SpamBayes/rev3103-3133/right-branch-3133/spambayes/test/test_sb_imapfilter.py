@@ -130,7 +130,7 @@ class TestIMAP4Server(Dibbler.BrighterAsyncChat):
                 raise SystemExit()
         else:
             handler = self.handlers.get(command, self.onUnknown)
-            self.push(handler(id, command, args, False))  
+            self.push(handler(id, command, args, False))  # Or push_slowly for testing
         self.request = ''
     def push_slowly(self, response):
         """Useful for testing."""
@@ -509,7 +509,7 @@ class IMAPMessageTest(BaseIMAPFilterTest):
         self.msg.id = "unittest"
         self.msg.imap_server.login(IMAP_USERNAME, IMAP_PASSWORD)
         self.msg.imap_server.select()
-        self.msg.uid = 103 
+        self.msg.uid = 103 # id of malformed message in dummy server
         self.msg.folder = IMAPFolder("Inbox", self.msg.imap_server, None)
         print "\nWith email package versions less than 3.0, you should " \
               "see an error parsing the message."

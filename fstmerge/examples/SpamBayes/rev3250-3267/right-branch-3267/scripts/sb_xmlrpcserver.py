@@ -22,7 +22,7 @@ from spambayes import hammie, Options
 from spambayes import storage
 class ReusableSimpleXMLRPCServer(xmlrpc.server.SimpleXMLRPCServer):
     allow_reuse_address = True
-program = sys.argv[0] 
+program = sys.argv[0] # For usage(); referenced by docstring above
 class XMLHammie(hammie.Hammie):
     def score(self, msg, *extra):
         try:

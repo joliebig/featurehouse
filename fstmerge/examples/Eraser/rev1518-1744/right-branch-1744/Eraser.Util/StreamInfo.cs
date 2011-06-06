@@ -1,56 +1,31 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using Microsoft.Win32.SafeHandles;
 using System.IO;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-
 namespace Eraser.Util
 {
-
-
-
-
  public class StreamInfo : FileSystemInfo
  {
-
-
-
-
   public StreamInfo(string filename)
    : this(filename, null)
   {
   }
-
-
-
-
-
-
-
   public StreamInfo(string filename, string streamName)
   {
    OriginalPath = filename;
    FullPath = Path.GetFullPath(filename);
    FileName = FullPath;
    StreamName = streamName;
-
    if (!string.IsNullOrEmpty(streamName))
    {
     OriginalPath += ":" + streamName;
     FullPath += ":" + streamName;
    }
-
    Refresh();
   }
-
-
-
-
   public override string FullName
   {
    get
@@ -58,10 +33,6 @@ namespace Eraser.Util
     return FullPath;
    }
   }
-
-
-
-
   public override bool Exists
   {
    get
@@ -71,10 +42,6 @@ namespace Eraser.Util
      (string.IsNullOrEmpty(StreamName) || true);
    }
   }
-
-
-
-
   public String DirectoryName
   {
    get
@@ -82,10 +49,6 @@ namespace Eraser.Util
     return Path.GetDirectoryName(FullPath);
    }
   }
-
-
-
-
   public DirectoryInfo Directory
   {
    get
@@ -93,10 +56,6 @@ namespace Eraser.Util
     return new DirectoryInfo(DirectoryName);
    }
   }
-
-
-
-
   public FileInfo File
   {
    get
@@ -104,27 +63,15 @@ namespace Eraser.Util
     return new FileInfo(FileName);
    }
   }
-
-
-
-
   public string FileName
   {
    get;
    private set;
   }
-
-
-
-
   public override string Name
   {
    get { return StreamName; }
   }
-
-
-
-
   public bool IsReadOnly
   {
    get { return (Attributes & FileAttributes.ReadOnly) != 0; }
@@ -135,10 +82,6 @@ namespace Eraser.Util
      (Attributes & ~FileAttributes.ReadOnly);
    }
   }
-
-
-
-
   public long Length
   {
    get
@@ -150,24 +93,13 @@ namespace Eraser.Util
      if (NativeMethods.GetFileSizeEx(handle, out fileSize))
       return fileSize;
     }
-
     return 0;
    }
   }
-
-
-
-
-
   public FileStream Create()
   {
    return Open(FileMode.Create, FileAccess.ReadWrite, FileShare.None, FileOptions.None);
   }
-
-
-
-
-
   public override void Delete()
   {
    if (!NativeMethods.DeleteFile(FullName))

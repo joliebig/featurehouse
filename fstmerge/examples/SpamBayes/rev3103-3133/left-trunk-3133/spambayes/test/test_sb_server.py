@@ -88,7 +88,7 @@ class TestPOP3Server(Dibbler.BrighterAsyncChat):
                          'TOP': self.onTop}
         self.push("+OK ready\r\n")
         self.request = ''
-        self.push_delay = 0.0 
+        self.push_delay = 0.0 # 0.02 is a useful value for testing.
     def collect_incoming_data(self, data):
         """Asynchat override."""
         self.request = self.request + data
@@ -292,7 +292,7 @@ def run():
         print "\nRunning self-test...\n"
         state.buildServerStrings()
         test()
-        print "Self-test passed."   
+        print "Self-test passed."   # ...else it would have asserted.
     elif state.runTestServer:
         print "Running a test POP3 server on port 8110..."
         TestListener()

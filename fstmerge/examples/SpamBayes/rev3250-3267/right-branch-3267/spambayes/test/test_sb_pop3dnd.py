@@ -77,7 +77,7 @@ class IMAPMessageTest(unittest.TestCase):
                          len(correct_msg.as_string().replace('\n', '\r\n')))
     def testGetUID(self):
         msg = IMAPMessage()
-        msg.id = "fake id" 
+        msg.id = "fake id" # Heh
         self.assertEqual(msg.getUID(), "fake id")
     def testIsMultipart(self):
         msg = IMAPMessage()

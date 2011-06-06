@@ -1,41 +1,16 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
 namespace Eraser.Manager
 {
-
-
-
  public enum LogLevel
  {
-
-
-
   Information,
-
-
-
-
   Notice,
-
-
-
-
   Warning,
-
-
-
-
   Error,
-
-
-
-
   Fatal
  }
  [Serializable]

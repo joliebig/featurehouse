@@ -12,7 +12,7 @@ URL_KEY_RE = re.compile(r"[\W]")
 from spambayes.Options import options
 from spambayes.chi2 import chi2Q
 from spambayes.safepickle import pickle_read, pickle_write
-LN2 = math.log(2)       
+LN2 = math.log(2)       # used frequently by chi-combining
 slurp_wordstream = None
 PICKLE_VERSION = 5
 class WordInfo(object):
@@ -53,10 +53,10 @@ class Classifier:
         for prob, word, record in clues:
             S *= 1.0 - prob
             H *= prob
-            if S < 1e-200:  
+            if S < 1e-200:  # prevent underflow
                 S, e = frexp(S)
                 Sexp += e
-            if H < 1e-200:  
+            if H < 1e-200:  # prevent underflow
                 H, e = frexp(H)
                 Hexp += e
         S = ln(S) + Sexp * LN2
@@ -151,7 +151,7 @@ class Classifier:
             self.probcache[spamcount] = {hamcount: prob}
         return prob
     def _add_msg(self, wordstream, is_spam):
-        self.probcache = {}    
+        self.probcache = {}    # nuke the prob cache
         if is_spam:
             self.nspam += 1
         else:
@@ -167,7 +167,7 @@ class Classifier:
             self._wordinfoset(word, record)
         self._post_training()
     def _remove_msg(self, wordstream, is_spam):
-        self.probcache = {}    
+        self.probcache = {}    # nuke the prob cache
         if is_spam:
             if self.nspam <= 0:
                 raise ValueError("spam count would go negative!")
@@ -201,13 +201,13 @@ class Classifier:
             raw = []
             push = raw.append
             pair = None
-            seen = {pair: 1} 
+            seen = {pair: 1} # so the bigram token is skipped on 1st loop trip
             for i, token in enumerate(wordstream):
-                if i:   
+                if i:   # not the 1st loop trip, so there is a preceding token
                     pair = "bi:%s %s" % (last_token, token)
                 last_token = token
                 for clue, indices in (token, (i,)), (pair, (i-1, i)):
-                    if clue not in seen:    
+                    if clue not in seen:    # as always, skip duplicates
                         seen[clue] = 1
                         tup = self._worddistanceget(clue)
                         if tup[0] >= mindist:
@@ -219,7 +219,7 @@ class Classifier:
             seen = {}
             for tup, indices in raw:
                 overlap = [i for i in indices if i in seen]
-                if not overlap: 
+                if not overlap: # no overlap with anything already in clues
                     for i in indices:
                         seen[i] = 1
                     push(tup)

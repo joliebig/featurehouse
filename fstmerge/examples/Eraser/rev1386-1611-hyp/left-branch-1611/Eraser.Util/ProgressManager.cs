@@ -1,131 +1,74 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 namespace Eraser.Util
 {
-
-
-
  public abstract class ProgressManagerBase
  {
-
-
-
-
-
-
-
   protected ProgressManagerBase()
   {
    StartTime = DateTime.Now;
   }
-
-
-
-
-
   public void Restart()
   {
    StartTime = DateTime.Now;
   }
-
-
-
-
   public abstract float Progress
   {
    get;
   }
-
-
-
-
-
   public abstract int Speed
   {
    get;
   }
-
-
-
-
-
   public abstract TimeSpan TimeLeft
   {
    get;
   }
-
-
-
-
   public DateTime StartTime
   {
    get;
    private set;
   }
  }
-
-
-
-
-
  public class ProgressManager : ProgressManagerBase
  {
-
-
-
   public long Completed
   {
    get;
    set;
   }
-
-
-
-
   public long Total
   {
    get;
    set;
   }
-
   public override float Progress
   {
    get
    {
     if (Total == 0)
      return 0.0f;
-
     return (float)((double)Completed / Total);
    }
   }
-
   public override int Speed
   {
    get
    {
     if (DateTime.Now == StartTime)
      return 0;
-
     if ((DateTime.Now - lastSpeedCalc).Seconds < 5 && lastSpeed != 0)
      return lastSpeed;
-
-
     double timeElapsed = (DateTime.Now - lastSpeedCalc).TotalSeconds;
     if (timeElapsed == 0.0)
      return 0;
-
-
     lastSpeed = (int)((Completed - lastCompleted) / timeElapsed);
     lastSpeedCalc = DateTime.Now;
     lastCompleted = Completed;
     return lastSpeed;
    }
   }
-
   public override TimeSpan TimeLeft
   {
    get
@@ -135,27 +78,10 @@ namespace Eraser.Util
     return new TimeSpan(0, 0, (int)((Total - Completed) / Speed));
    }
   }
-
-
-
-
-
   private DateTime lastSpeedCalc;
-
-
-
-
   private long lastCompleted;
-
-
-
-
   private int lastSpeed;
  }
-
-
-
-
  public abstract class ChainedProgressManager : ProgressManagerBase
  {
  }

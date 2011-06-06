@@ -28,9 +28,9 @@ versions = {
 def get_version(app = None,
                 version_dict = None):
     """Get SBVersion object based on the version info in the supplied dict."""
-    ver = SBVersion()  
+    ver = SBVersion()  # get default version
     if version_dict is not None:
-        dict = version_dict  
+        dict = version_dict  # default to top level dictionary
         if app is not None:
             try:
                 dict = version_dict["Apps"][app]
@@ -53,7 +53,7 @@ def get_version(app = None,
 def get_download_page(app = None,
                       version_dict = None):
     if version_dict is None: version_dict = versions
-    dict = version_dict  
+    dict = version_dict  # default to top level dictionary
     if app is not None:
         try:
             dict = version_dict["Apps"][app]
@@ -158,8 +158,8 @@ try:
     import ConfigParser
     class MySafeConfigParser(ConfigParser.SafeConfigParser):
         def optionxform(self, optionstr):
-            return optionstr 
-except AttributeError: 
+            return optionstr # no lower!
+except AttributeError: # No SafeConfigParser!
     MySafeConfigParser = None
 def fetch_latest_dict(url=LATEST_VERSION_HOME):
     if MySafeConfigParser is None:
@@ -190,7 +190,8 @@ def fetch_latest_dict(url=LATEST_VERSION_HOME):
     cfg = MySafeConfigParser()
     cfg.readfp(stream)
     ret_dict = {}
-    apps_dict = ret_dict["Apps"] = {}
+    ret_dict["Apps"] = {}
+    apps_dict = ret_dict["Apps"]
     for sect in cfg.sections():
         if sect=="SpamBayes":
             target_dict = ret_dict
@@ -218,7 +219,7 @@ def _write_cfg_opts(stream, this_dict):
         elif type(val)==type(0.0):
             val_str = str(val)
         elif type(val)==type({}):
-            val_str = None 
+            val_str = None # sub-dict
         else:
             print "Skipping unknown value type: %r" % val
             val_str = None

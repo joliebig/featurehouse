@@ -42,7 +42,7 @@ class _Progress:
     def set_max_ticks(self, m):
         self._next_stage()
         self.current_stage_max = m
-        self.current_stage_tick = -1 
+        self.current_stage_tick = -1 # ready to go to zero!
         self.tick()
     def tick(self):
         if self.current_stage_tick < self.current_stage_max:
@@ -84,7 +84,8 @@ class AsyncCommandProcessor(processors.CommandButtonProcessor):
         self.statustext_id = control_ids[2]
         self.process_start_text = start_text
         self.process_stop_text = stop_text
-        dids = self.disable_while_running_ids = []
+        self.disable_while_running_ids = []
+        dids = self.disable_while_running_ids
         for id in disable_ids.split():
             dids.append(window.manager.dialog_parser.ids[id])
     def Init(self):
@@ -186,7 +187,7 @@ class AsyncCommandProcessor(processors.CommandButtonProcessor):
 if __name__=='__main__':
     verbose = 1
     class HackProgress(_Progress):
-        def __init__(self): 
+        def __init__(self): # dont use dlg
             self.hprogress = self.hdlg = 0
             self.dlg = None
             self.stopping = False
@@ -213,7 +214,7 @@ if __name__=='__main__':
     stages = ("Stage 1", 0.9), ("Stage 2", 0.1)
     p.set_stages(stages)
     p.set_max_ticks(10)
-    for i in range(7): 
+    for i in range(7): # do a few less just to check
         p.tick()
     p.set_max_ticks(2)
     for i in range(2):
@@ -223,7 +224,7 @@ if __name__=='__main__':
     stages = ("Stage 1", 0.9), ("Stage 2", 0.1)
     p.set_stages(stages)
     p.set_max_ticks(300)
-    for i in range(313): 
+    for i in range(313): # do a few more just to check
         p.tick()
     p.set_max_ticks(2)
     for i in range(2):

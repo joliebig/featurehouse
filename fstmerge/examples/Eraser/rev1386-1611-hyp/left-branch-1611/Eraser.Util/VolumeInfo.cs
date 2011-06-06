@@ -1,29 +1,18 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Collections.ObjectModel;
-
 namespace Eraser.Util
 {
  public class VolumeInfo
  {
-
-
-
-
   public VolumeInfo(string volumeId)
   {
-
    VolumeId = volumeId;
-
-
    string pathNames;
    {
     uint returnLength = 0;
@@ -42,34 +31,22 @@ namespace Eraser.Util
        throw Win32ErrorCode.GetExceptionForWin32Error(errorCode);
      }
     }
-
     if (pathNamesBuffer.Length < returnLength)
      pathNamesBuffer.Length = (int)returnLength;
     pathNames = pathNamesBuffer.ToString().Substring(0, (int)returnLength);
    }
-
-
-
-
-
    for (int lastIndex = 0, i = 0; i != pathNames.Length; ++i)
    {
     if (pathNames[i] == '\0')
     {
-
-
      if (i - lastIndex == 0)
       break;
-
      mountPoints.Add(pathNames.Substring(lastIndex, i - lastIndex));
-
      lastIndex = i + 1;
      if (pathNames[lastIndex] == '\0')
       break;
     }
    }
-
-
    StringBuilder volumeName = new StringBuilder(NativeMethods.MaxPath * sizeof(char)),
     fileSystemName = new StringBuilder(NativeMethods.MaxPath * sizeof(char));
    uint serialNumber, maxComponentLength, filesystemFlags;
@@ -85,7 +62,6 @@ namespace Eraser.Util
      case Win32ErrorCode.InvalidParameter:
      case Win32ErrorCode.UnrecognizedVolume:
       break;
-
      default:
       throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
     }
@@ -95,8 +71,6 @@ namespace Eraser.Util
     IsReady = true;
     VolumeLabel = volumeName.ToString();
     VolumeFormat = fileSystemName.ToString();
-
-
     if (VolumeFormat == "FAT")
     {
      uint clusterSize, sectorSize, freeClusters, totalClusters;
@@ -111,12 +85,6 @@ namespace Eraser.Util
     }
    }
   }
-
-
-
-
-
-
   public static IList<VolumeInfo> Volumes
   {
    get
@@ -126,35 +94,23 @@ namespace Eraser.Util
     SafeHandle handle = NativeMethods.FindFirstVolume(nextVolume, NativeMethods.LongPath);
     if (handle.IsInvalid)
      return result;
-
     try
     {
-
      do
       result.Add(new VolumeInfo(nextVolume.ToString()));
      while (NativeMethods.FindNextVolume(handle, nextVolume, NativeMethods.LongPath));
     }
     finally
     {
-
      NativeMethods.FindVolumeClose(handle);
     }
-
     return result.AsReadOnly();
    }
   }
-
-
-
-
-
-
-
   public static VolumeInfo FromMountPoint(string mountPoint)
   {
    DirectoryInfo mountpointDir = new DirectoryInfo(mountPoint);
    StringBuilder volumeID = new StringBuilder(50 * sizeof(char));
-
    do
    {
     string currentDir = mountpointDir.FullName;
@@ -163,7 +119,6 @@ namespace Eraser.Util
     if (!NativeMethods.GetVolumeNameForVolumeMountPoint(currentDir, volumeID, 50))
     {
      int errorCode = Marshal.GetLastWin32Error();
-
      switch (errorCode)
      {
       case Win32ErrorCode.InvalidFunction:
@@ -179,32 +134,14 @@ namespace Eraser.Util
     {
      return new VolumeInfo(volumeID.ToString());
     }
-
     mountpointDir = mountpointDir.Parent;
    }
    while (mountpointDir != null);
-
    throw Win32ErrorCode.GetExceptionForWin32Error(Win32ErrorCode.NotAReparsePoint);
   }
-
-
-
-
   public string VolumeId { get; private set; }
-
-
-
-
   public string VolumeLabel { get; private set; }
-
-
-
-
   public string VolumeFormat { get; private set; }
-
-
-
-
   public DriveType VolumeType
   {
    get
@@ -212,10 +149,6 @@ namespace Eraser.Util
     return (DriveType)NativeMethods.GetDriveType(VolumeId);
    }
   }
-
-
-
-
   public int ClusterSize
   {
    get
@@ -226,14 +159,9 @@ namespace Eraser.Util
     {
      return (int)(clusterSize * sectorSize);
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
   public int SectorSize
   {
    get
@@ -244,14 +172,9 @@ namespace Eraser.Util
     {
      return (int)sectorSize;
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
   public bool HasQuota
   {
    get
@@ -264,22 +187,12 @@ namespace Eraser.Util
     }
     else if (Marshal.GetLastWin32Error() == Win32ErrorCode.NotReady)
     {
-
      return false;
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
   public bool IsReady { get; private set; }
-
-
-
-
   public long TotalFreeSpace
   {
    get
@@ -289,14 +202,9 @@ namespace Eraser.Util
     {
      return (long)result;
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
   public long TotalSize
   {
    get
@@ -306,14 +214,9 @@ namespace Eraser.Util
     {
      return (long)result;
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
   public long AvailableFreeSpace
   {
    get
@@ -323,30 +226,21 @@ namespace Eraser.Util
     {
      return (long)result;
     }
-
     throw Marshal.GetExceptionForHR(Marshal.GetHRForLastWin32Error());
    }
   }
-
-
-
-
-
   public IList<VolumeInfo> MountedVolumes
   {
    get
    {
     List<VolumeInfo> result = new List<VolumeInfo>();
     StringBuilder nextMountpoint = new StringBuilder(NativeMethods.LongPath * sizeof(char));
-
     SafeHandle handle = NativeMethods.FindFirstVolumeMountPoint(VolumeId,
      nextMountpoint, NativeMethods.LongPath);
     if (handle.IsInvalid)
      return result;
-
     try
     {
-
      while (NativeMethods.FindNextVolumeMountPoint(handle, nextMountpoint,
       NativeMethods.LongPath))
      {
@@ -355,19 +249,11 @@ namespace Eraser.Util
     }
     finally
     {
-
      NativeMethods.FindVolumeMountPointClose(handle);
     }
-
     return result.AsReadOnly();
    }
   }
-
-
-
-
-
-
   public ReadOnlyCollection<string> MountPoints
   {
    get
@@ -375,10 +261,6 @@ namespace Eraser.Util
     return mountPoints.AsReadOnly();
    }
   }
-
-
-
-
   public bool IsMounted
   {
    get { return MountPoints.Count != 0; }

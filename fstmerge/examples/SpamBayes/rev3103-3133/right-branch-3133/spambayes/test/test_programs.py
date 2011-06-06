@@ -8,7 +8,7 @@ import sb_test_support
 sb_test_support.fix_sys_path()
 try:
     True;False
-except NameError: 
+except NameError: # 2.2 compat
     True=(None is None);
     False=not True
 import sb_server
@@ -38,7 +38,7 @@ class Spawner:
         if self.pid is None:
             return False
         if sys.platform.startswith("win32"):
-            import win32process 
+            import win32process # sorry, ya gotta have win32all to run tests
             import win32con
             try:
                 rc = win32process.GetExitCodeProcess(self.pid)
@@ -145,7 +145,7 @@ class TestServer(unittest.TestCase):
         call_web_function('http://localhost:%d/restoredefaults' % port, how='')
         self._stop_spawner(s)
 if sys.platform.startswith("win"):
-    import win32service 
+    import win32service # You need win32all to run the tests!
     import win32serviceutil
     import winerror
     service_name = "pop3proxy"

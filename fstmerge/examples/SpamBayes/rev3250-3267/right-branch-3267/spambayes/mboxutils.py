@@ -197,7 +197,7 @@ def extract_headers(text):
     colon, in which case an empty string is returned.
     >>> extract_headers("abc")
     ''
-    >>> extract_headers("abc\\n\\n\\n")  
+    >>> extract_headers("abc\\n\\n\\n")  # no colon
     ''
     >>> extract_headers("abc: xyz\\n\\n\\n")
     'abc: xyz\\n'

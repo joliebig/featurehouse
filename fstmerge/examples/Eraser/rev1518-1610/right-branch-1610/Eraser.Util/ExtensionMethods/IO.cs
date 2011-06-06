@@ -1,16 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
-
 namespace Eraser.Util.ExtensionMethods
 {
-
-
-
  public static class IO
  {
   public static DirectoryInfo GetParent(this FileSystemInfo info)

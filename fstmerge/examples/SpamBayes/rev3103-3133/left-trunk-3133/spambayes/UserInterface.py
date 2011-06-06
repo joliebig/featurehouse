@@ -201,12 +201,12 @@ class UserInterface(BaseUserInterface):
         self.parm_ini_map = config_parms
         self.advanced_options_map = adv_parms
         self.stats = stats
-        self.app_for_version = None 
+        self.app_for_version = None # subclasses must fill this in
     def onClassify(self, file, text, which):
         """Classify an uploaded or pasted message."""
         self._writePreamble(_("Classify"))
         message = file or text
-        message = message.replace('\r\n', '\n').replace('\r', '\n') 
+        message = message.replace('\r\n', '\n').replace('\r', '\n') # For Macs
         results = self._buildCluesTable(message)
         results.classifyAnother = self._buildClassifyBox()
         self.write(results)
@@ -221,7 +221,7 @@ class UserInterface(BaseUserInterface):
         accuracy = 6
         cluesTable = self.html.cluesTable.clone()
         cluesRow = cluesTable.cluesRow.clone()
-        del cluesTable.cluesRow   
+        del cluesTable.cluesRow   # Delete dummy row to make way for real ones
         fetchword = self.classifier._wordinfoget
         for word, wordProb in clues:
             record = fetchword(word)
@@ -364,7 +364,7 @@ class UserInterface(BaseUserInterface):
             self.write(row)
         else:
             page = self.html.multiStats.clone()
-            page.multiTable = "" 
+            page.multiTable = "" # make way for the real rows
             page.multiTable += self.html.multiHeader.clone()
             stripe = 0
             for stat in stats:
@@ -758,7 +758,7 @@ class UserInterface(BaseUserInterface):
                     errmsg += _('. Valid values are: ')
                     for valid in valid_input:
                         errmsg += str(valid) + ','
-                    errmsg = errmsg[:-1] 
+                    errmsg = errmsg[:-1] # cut last ','
                 errmsg += '</li>'
             parms[html_key] = value
         return errmsg
@@ -952,8 +952,8 @@ class UserInterface(BaseUserInterface):
         def fill(text, width):
             if len(text) <= width:
                 return text
-            wordsep_re = re.compile(r'(-*\w{2,}-(?=\w{2,})|'   
-                                    r'(?<=\S)-{2,}(?=\w))')    
+            wordsep_re = re.compile(r'(-*\w{2,}-(?=\w{2,})|'   # hyphenated words
+                                    r'(?<=\S)-{2,}(?=\w))')    # em-dash
             chunks = wordsep_re.split(text)
             chunks = filter(None, chunks)
             return '\n'.join(self._wrap_chunks(chunks, width))

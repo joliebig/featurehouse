@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Globalization;
 using System.Threading;
 using System.Security.Cryptography;
@@ -11,68 +8,28 @@ using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
 using System.IO;
-
 using System.Windows.Forms;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.Win32.SafeHandles;
 using Eraser.Util;
-
 namespace Eraser.Manager
 {
-
-
-
-
  public abstract class EntropySource
  {
-
-
-
   protected EntropySource()
   {
   }
-
-
-
-
   public abstract string Name
   {
    get;
   }
-
-
-
-
   public abstract Guid Guid
   {
    get;
   }
-
-
-
-
-
-
   public abstract byte[] GetPrimer();
-
-
-
-
-
-
   public abstract byte[] GetSlowEntropy();
-
-
-
-
-
-
   public abstract byte[] GetFastEntropy();
-
-
-
-
-
   public abstract byte[] GetEntropy();
   protected static byte[] StructToBuffer<T>(T entropy) where T : struct
   {

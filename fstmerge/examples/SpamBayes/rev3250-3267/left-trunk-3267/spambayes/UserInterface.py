@@ -199,13 +199,13 @@ class UserInterface(BaseUserInterface):
         self.parm_ini_map = config_parms
         self.advanced_options_map = adv_parms
         self.stats = stats
-        self.app_for_version = None 
+        self.app_for_version = None # subclasses must fill this in
         self.previous_sort = None
     def onClassify(self, file, text, which):
         """Classify an uploaded or pasted message."""
         self._writePreamble(_("Classify"))
         message = file or text
-        message = message.replace('\r\n', '\n').replace('\r', '\n') 
+        message = message.replace('\r\n', '\n').replace('\r', '\n') # For Macs
         results = self._buildCluesTable(message)
         results.classifyAnother = self._buildClassifyBox()
         self.write(results)
@@ -220,7 +220,7 @@ class UserInterface(BaseUserInterface):
         accuracy = 6
         cluesTable = self.html.cluesTable.clone()
         cluesRow = cluesTable.cluesRow.clone()
-        del cluesTable.cluesRow   
+        del cluesTable.cluesRow   # Delete dummy row to make way for real ones
         fetchword = self.classifier._wordinfoget
         for word, wordProb in clues:
             record = fetchword(word)
@@ -363,7 +363,7 @@ class UserInterface(BaseUserInterface):
             self.write(row)
         else:
             page = self.html.multiStats.clone()
-            page.multiTable = "" 
+            page.multiTable = "" # make way for the real rows
             page.multiTable += self.html.multiHeader.clone()
             stripe = 0
             for stat in stats:
@@ -759,7 +759,7 @@ class UserInterface(BaseUserInterface):
                     errmsg += _('. Valid values are: ')
                     for valid in valid_input:
                         errmsg += str(valid) + ','
-                    errmsg = errmsg[:-1] 
+                    errmsg = errmsg[:-1] # cut last ','
                 errmsg += '</li>'
             parms[html_key] = value
         return errmsg
@@ -1030,7 +1030,7 @@ class UserInterface(BaseUserInterface):
                 r_att = getattr(row, options["html_ui",
                                            "default_unsure_action"])
             setattr(r_att, "checked", 1)
-            row.optionalHeadersValues = '' 
+            row.optionalHeadersValues = '' # make way for real list
             for header in options["html_ui", "display_headers"]:
                 header = header.lower()
                 text = getattr(messageInfo, "%sHeader" % (header,))
@@ -1060,7 +1060,7 @@ class UserInterface(BaseUserInterface):
             row.classify.href = "showclues?key=%s&subject=%s" % (key, subj)
             row.tokens.href = ("showclues?key=%s&subject=%s&tokens=1" %
                                (key, subj))
-            setattr(row, 'class', ['stripe_on', 'stripe_off'][stripe]) 
+            setattr(row, 'class', ['stripe_on', 'stripe_off'][stripe]) # Grr!
             setattr(row, 'onMouseOut',
                     ["this.className='stripe_on';",
                      "this.className='stripe_off';"][stripe])
@@ -1094,7 +1094,7 @@ class UserInterface(BaseUserInterface):
             try:
                 score = float(score) * 100
             except ValueError:
-                score = "Err"  
+                score = "Err"  # Let the user know something is wrong.
         else:
             score = "?"
         try:
@@ -1110,13 +1110,13 @@ class UserInterface(BaseUserInterface):
                 text = _('(this message only has an HTML body)\n') + text
             except StopIteration:
                 text = _('(this message has no text body)')
-        if type(text) == type([]):  
+        if type(text) == type([]):  # gotta be a 'right' way to do this
             text = _("(this message is a digest of %s messages)") % (len(text))
         elif text is None:
             text = _("(this message has no body)")
         else:
-            text = text.replace('&nbsp;', ' ')      
-            text = re.sub(r'(\s)\s+', r'\1', text)  
+            text = text.replace('&nbsp;', ' ')      # Else they'll be quoted
+            text = re.sub(r'(\s)\s+', r'\1', text)  # Eg. multiple blank lines
             text = text.strip()
         class _MessageInfo:
             pass

@@ -1,21 +1,14 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.Globalization;
 using System.Windows.Forms;
-
 namespace Eraser.Util.ExtensionMethods
 {
-
-
-
  public static class IO
  {
   public static DirectoryInfo GetParent(this FileSystemInfo info)

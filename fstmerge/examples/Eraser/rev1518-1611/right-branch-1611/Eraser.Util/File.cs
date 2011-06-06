@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -11,17 +8,10 @@ using System.Drawing;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Globalization;
-
 namespace Eraser.Util
 {
  public static class File
  {
-
-
-
-
-
-
   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters")]
   public static IList<string> GetADSes(FileInfo info)
   {
@@ -30,49 +20,38 @@ namespace Eraser.Util
     FileAccess.Read, FileShare.ReadWrite))
    using (SafeFileHandle streamHandle = stream.SafeFileHandle)
    {
-
     NativeMethods.FILE_STREAM_INFORMATION[] streams = GetADSes(streamHandle);
-
     foreach (NativeMethods.FILE_STREAM_INFORMATION streamInfo in streams)
     {
-
      string streamName = streamInfo.StreamName.Substring(1,
       streamInfo.StreamName.LastIndexOf(':') - 1);
-
      if (streamName.Length != 0)
       result.Add(streamName);
     }
    }
-
    return result.AsReadOnly();
   }
-
   private static NativeMethods.FILE_STREAM_INFORMATION[] GetADSes(SafeFileHandle FileHandle)
   {
    NativeMethods.IO_STATUS_BLOCK status = new NativeMethods.IO_STATUS_BLOCK();
    IntPtr fileInfoPtr = IntPtr.Zero;
-
    try
    {
     NativeMethods.FILE_STREAM_INFORMATION streamInfo =
      new NativeMethods.FILE_STREAM_INFORMATION();
     int fileInfoPtrLength = (Marshal.SizeOf(streamInfo) + 32768) / 2;
     uint ntStatus = 0;
-
     do
     {
      fileInfoPtrLength *= 2;
      if (fileInfoPtr != IntPtr.Zero)
       Marshal.FreeHGlobal(fileInfoPtr);
      fileInfoPtr = Marshal.AllocHGlobal(fileInfoPtrLength);
-
      ntStatus = NativeMethods.NtQueryInformationFile(FileHandle, ref status,
       fileInfoPtr, (uint)fileInfoPtrLength,
       NativeMethods.FILE_INFORMATION_CLASS.FileStreamInformation);
     }
     while (ntStatus != 0 && ntStatus == 0x80000005 );
-
-
     List<NativeMethods.FILE_STREAM_INFORMATION> result =
      new List<NativeMethods.FILE_STREAM_INFORMATION>();
     unsafe
@@ -83,22 +62,17 @@ namespace Eraser.Util
       byte* currStreamPtr = i;
       streamInfo.NextEntryOffset = *(uint*)currStreamPtr;
       currStreamPtr += sizeof(uint);
-
       streamInfo.StreamNameLength = *(uint*)currStreamPtr;
       currStreamPtr += sizeof(uint);
-
       streamInfo.StreamSize = *(long*)currStreamPtr;
       currStreamPtr += sizeof(long);
-
       streamInfo.StreamAllocationSize = *(long*)currStreamPtr;
       currStreamPtr += sizeof(long);
-
       streamInfo.StreamName = Marshal.PtrToStringUni((IntPtr)currStreamPtr,
        (int)streamInfo.StreamNameLength / 2);
       result.Add(streamInfo);
      }
     }
-
     return result.ToArray();
    }
    finally

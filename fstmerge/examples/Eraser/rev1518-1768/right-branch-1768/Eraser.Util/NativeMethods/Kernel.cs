@@ -1,16 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
-
 namespace Eraser.Util
 {
-
-
-
  internal static partial class NativeMethods
  {
   [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]

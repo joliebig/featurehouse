@@ -1,18 +1,11 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
-
-
-
  public class NtfsFileSystem : WindowsFileSystem
  {
   public override bool Supports(string fileSystemName)
@@ -21,19 +14,15 @@ namespace Eraser.DefaultPlugins
     return true;
    return false;
   }
-
   public override void EraseOldFileSystemResidentFiles(VolumeInfo volume,
    DirectoryInfo tempDirectory, ErasureMethod method,
    FileSystemEntriesEraseProgress callback)
   {
    try
    {
-
     long oldMFTSize = NtfsApi.GetMftValidSize(volume);
-
     for (; ; )
     {
-
      using (FileStream strm = new FileStream(
       GenerateRandomFileName(tempDirectory, 18), FileMode.CreateNew,
       FileAccess.Write, FileShare.None, 8, FileOptions.WriteThrough))
@@ -43,10 +32,7 @@ namespace Eraser.DefaultPlugins
       {
        while (true)
        {
-
         strm.SetLength(++streamSize);
-
-
         method.Erase(strm, long.MaxValue,
          PrngManager.GetInstance(ManagerLibrary.Settings.ActivePrng),
          null);
@@ -58,36 +44,28 @@ namespace Eraser.DefaultPlugins
         return;
       }
      }
-
-
      if (NtfsApi.GetMftValidSize(volume) > oldMFTSize)
       break;
     }
    }
    catch (IOException)
    {
-
    }
   }
-
   public override void EraseDirectoryStructures(VolumeInfo info,
    FileSystemEntriesEraseProgress callback)
   {
-
    DirectoryInfo tempDir = new DirectoryInfo(FileSystem.GenerateRandomFileName(
     new DirectoryInfo(info.MountPoints[0]), 32));
    tempDir.Create();
-
    try
    {
-
     long mftSize = NtfsApi.GetMftValidSize(info);
     long mftRecordSegmentSize = NtfsApi.GetMftRecordSegmentSize(info);
     int pollingInterval = (int)Math.Max(1, (mftSize / info.ClusterSize / 20));
     int totalFiles = (int)Math.Max(1L, mftSize / mftRecordSegmentSize) *
      (FileNameErasePasses + 1);
     int filesCreated = 0;
-
     while (true)
     {
      ++filesCreated;
@@ -95,13 +73,10 @@ namespace Eraser.DefaultPlugins
       tempDir, 220), FileMode.CreateNew, FileAccess.Write))
      {
      }
-
      if (filesCreated % pollingInterval == 0)
      {
       if (callback != null)
        callback(filesCreated, totalFiles);
-
-
       if (mftSize < NtfsApi.GetMftValidSize(info))
        break;
      }
@@ -112,7 +87,6 @@ namespace Eraser.DefaultPlugins
    }
    finally
    {
-
     FileInfo[] files = tempDir.GetFiles("*", SearchOption.AllDirectories);
     int totalFiles = files.Length * (FileNameErasePasses + 1);
     for (int i = 0; i < files.Length; ++i)
@@ -121,20 +95,15 @@ namespace Eraser.DefaultPlugins
       callback(files.Length + i * FileNameErasePasses, totalFiles);
      DeleteFile(files[i]);
     }
-
     DeleteFolder(tempDir);
    }
   }
-
   public override void EraseFileSystemObject(StreamInfo info, ErasureMethod method,
    ErasureMethodProgressFunction callback)
   {
-
-
    VolumeInfo volume = VolumeInfo.FromMountpoint(info.DirectoryName);
    if (info.Length < Math.Max(volume.ClusterSize, 1024))
    {
-
     using (FileStream strm = info.Open(FileMode.Open, FileAccess.Write,
      FileShare.None))
     {
@@ -142,34 +111,21 @@ namespace Eraser.DefaultPlugins
       PrngManager.GetInstance(ManagerLibrary.Settings.ActivePrng), null);
     }
    }
-
-
-
    long fileArea = GetFileArea(info.FullName);
-
-
-
    if (fileArea == 0)
     return;
-
    using (FileStream strm = info.Open(FileMode.Open, FileAccess.Write,
     FileShare.None, FileOptions.WriteThrough))
    {
-
     strm.SetLength(fileArea);
-
-
     method.Erase(strm, long.MaxValue,
      PrngManager.GetInstance(ManagerLibrary.Settings.ActivePrng),
      callback
     );
-
-
     strm.Seek(0, SeekOrigin.Begin);
     strm.SetLength(0);
    }
   }
-
   protected override DateTime MinTimestamp
   {
    get

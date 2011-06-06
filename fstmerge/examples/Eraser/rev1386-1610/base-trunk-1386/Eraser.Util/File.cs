@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -11,17 +8,10 @@ using System.Drawing;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using System.Globalization;
-
 namespace Eraser.Util
 {
  public static class File
  {
-
-
-
-
-
-
   public static ICollection<string> GetADSes(FileInfo info)
   {
    List<string> result = new List<string>();
@@ -29,21 +19,16 @@ namespace Eraser.Util
     FileAccess.Read, FileShare.ReadWrite))
    using (SafeFileHandle streamHandle = stream.SafeFileHandle)
    {
-
     NTApi.NativeMethods.FILE_STREAM_INFORMATION[] streams =
      NTApi.NativeMethods.NtQueryInformationFile(streamHandle);
-
     foreach (NTApi.NativeMethods.FILE_STREAM_INFORMATION streamInfo in streams)
     {
-
      string streamName = streamInfo.StreamName.Substring(1,
       streamInfo.StreamName.LastIndexOf(':') - 1);
-
      if (streamName.Length != 0)
       result.Add(streamName);
     }
    }
-
    return result;
   }
   public static string GetFileDescription(string path)

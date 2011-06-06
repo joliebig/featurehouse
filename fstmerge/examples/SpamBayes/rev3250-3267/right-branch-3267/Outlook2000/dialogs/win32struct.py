@@ -25,7 +25,7 @@ class cStruct(object):
             raise AttributeError
     def __str__(self):
         return self.data
-    def dump(self): 
+    def dump(self): # use this to see the data
         t = struct.unpack(self.fs, self.data)
         ii = 0
         for i in self.nlst:
@@ -35,23 +35,23 @@ class cStruct(object):
         return
 class OPENFILENAME(cStruct):
     _struct_def = ( \
-        ('lStructSize', 'L', 0),    
+        ('lStructSize', 'L', 0),    # size of struct (filled in by __init__)
         ('hwndOwner', 'P', 0),
         ('hInstance', 'P', 0),
-        ('lpstrFilter', 'P', 0),    
+        ('lpstrFilter', 'P', 0),    # File type filter
         ('lpstrCustomFilter', 'P', 0), 
         ('nMaxCustFilter', 'L', 0),
         ('nFilterIndex', 'L', 0),
-        ('lpstrFile', 'P', 0),      
-        ('nMaxFile', 'L', 0),       
-        ('lpstrFileTitle', 'P', 0),  
-        ('nMaxFileTitle', 'L', 0),  
-        ('lpstrInitialDir', 'P', 0), 
-        ('lpstrTitle', 'P', 0),     
+        ('lpstrFile', 'P', 0),      # Initial filename and filename buffer
+        ('nMaxFile', 'L', 0),       # Size of filename string (should be >= 256)
+        ('lpstrFileTitle', 'P', 0),  # (optional) base name receiving buffer
+        ('nMaxFileTitle', 'L', 0),  # max size of above
+        ('lpstrInitialDir', 'P', 0), # (optional) initial directory
+        ('lpstrTitle', 'P', 0),     # Title of dialog
         ('Flags', 'L', 0),
         ('nFileOffset', 'H', 0),
         ('nFileExtension', 'H', 0),
-        ('lpstrDefExt', 'P', 0),    
+        ('lpstrDefExt', 'P', 0),    # default extension
         ('lCustData', 'l', 0),
         ('lpfnHook', 'P', 0),
         ('lpTemplateName', 'P', 0)

@@ -1,67 +1,27 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-
 namespace Eraser.Manager
 {
-
-
-
-
-
  public abstract class Executor : IDisposable
  {
-
   ~Executor()
   {
    Dispose(false);
   }
-
   protected virtual void Dispose(bool disposing)
   {
   }
-
   public void Dispose()
   {
    Dispose(true);
    GC.SuppressFinalize(this);
   }
-
-
-
-
-
   public abstract void Run();
-
-
-
-
-
   public abstract void QueueTask(Task task);
-
-
-
-
-
   public abstract void ScheduleTask(Task task);
-
-
-
-
-
-
-
   public abstract void UnqueueTask(Task task);
-
-
-
-
-
-
-
   internal abstract bool IsTaskQueued(Task task);
   public abstract void QueueRestartTasks();
   public abstract ExecutorTasksCollection Tasks { get; }

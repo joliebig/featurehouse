@@ -43,7 +43,7 @@ def find_program(prog):
     path = os.environ.get("PATH", "").split(os.pathsep)
     if sys.platform == "win32":
         prog = "%s.exe" % prog
-        if hasattr(sys, "frozen"): 
+        if hasattr(sys, "frozen"): # a binary (py2exe) build..
             if sys.frozen=="dll":
                 import win32api
                 sentinal = win32api.GetModuleFileName(sys.frozendllhandle)
@@ -81,7 +81,7 @@ def PIL_decode_parts(parts):
     max_image_size = options["Tokenizer", "max_image_size"]
     for part in parts:
         nbytes = getattr(part, image_large_size_attribute, None)
-        if nbytes is None: 
+        if nbytes is None: # no optimization - process normally...
             try:
                 bytes = part.get_payload(decode=True)
                 nbytes = len(bytes)
@@ -92,7 +92,7 @@ def PIL_decode_parts(parts):
             assert nbytes > max_image_size, (len(bytes), max_image_size)
         if nbytes > max_image_size:
             tokens.add("image:big")
-            continue                
+            continue                # assume it's just a picture for now
         try:
             image = Image.open(StringIO.StringIO(bytes))
             image.load()
@@ -101,7 +101,7 @@ def PIL_decode_parts(parts):
             continue
         else:
             if "duration" in image.info:
-                bgpix = 1e17           
+                bgpix = 1e17           # ridiculously large number of pixels
                 try:
                     for frame in ImageSequence.Iterator(image):
                         bg = max(frame.histogram())
@@ -135,7 +135,7 @@ class OCREngine(object):
        requirements), but all currently supported ones deal with the PNM
        formats (ppm/pgm/pbm)
     """
-    engine_name = None 
+    engine_name = None # sub-classes should override.
     def __init__(self):
         pass
     def is_enabled(self):

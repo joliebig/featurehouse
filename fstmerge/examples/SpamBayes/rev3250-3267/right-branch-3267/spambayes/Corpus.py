@@ -58,7 +58,7 @@ To Do:
 '''
 __author__ = "Tim Stone <tim@fourstonesExpressions.com>"
 __credits__ = "Richie Hindle, Tim Peters, all the spambayes contributors."
-import sys           
+import sys           # for output of docstring
 import time
 from spambayes.Options import options
 SPAM = True
@@ -67,11 +67,11 @@ class Corpus:
     '''An observable dictionary of Messages'''
     def __init__(self, factory, cacheSize=-1):
         '''Constructor(MessageFactory)'''
-        self.msgs = {}            
-        self.keysInMemory = []    
-        self.cacheSize = cacheSize  
-        self.observers = []       
-        self.factory = factory    
+        self.msgs = {}            # dict of all messages in corpus
+        self.keysInMemory = []    # keys of messages currently loaded
+        self.cacheSize = cacheSize  # max number of messages in memory
+        self.observers = []       # observers of this corpus
+        self.factory = factory    # factory for the correct Message subclass
     def addObserver(self, observer):
         '''Register an observer, which should implement
         onAddMessage, onRemoveMessage'''
@@ -101,7 +101,7 @@ class Corpus:
             print('placing %s in corpus cache' % (key,))
         self.msgs[key] = message
         self.keysInMemory.append(key)
-        if self.cacheSize > 0:       
+        if self.cacheSize > 0:       # performance optimization
             if len(self.keysInMemory) > self.cacheSize:
                 keyToFlush = self.keysInMemory[0]
                 self.unCacheMessage(keyToFlush)
@@ -119,7 +119,7 @@ class Corpus:
     def takeMessage(self, key, fromcorpus, fromCache=False):
         '''Move a Message from another corpus to this corpus'''
         msg = fromcorpus[key]
-        msg.load() 
+        msg.load() # ensure that the substance has been loaded
         fromcorpus.removeMessage(msg)
         self.addMessage(msg)
     def get(self, key, default=None):
@@ -133,7 +133,7 @@ class Corpus:
         if amsg == "":
             raise KeyError(key)
         if amsg is None:
-            amsg = self.makeMessage(key)     
+            amsg = self.makeMessage(key)     # lazy init, saves memory
             self.cacheMessage(amsg)
         return amsg
     def keys(self):

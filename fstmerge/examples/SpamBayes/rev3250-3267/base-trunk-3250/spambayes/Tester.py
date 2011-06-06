@@ -12,9 +12,9 @@ class Test:
         self.nspam_right = 0
         self.nspam_wrong = 0
         self.nspam_unsure = 0
-        self.ham_wrong_examples = []    
-        self.spam_wrong_examples = []   
-        self.unsure_examples = []       
+        self.ham_wrong_examples = []    # False positives:  ham called spam.
+        self.spam_wrong_examples = []   # False negatives:  spam called ham.
+        self.unsure_examples = []       # ham and spam in middle ground
     def train(self, hamstream=None, spamstream=None):
         self.reset_test_results()
         learn = self.classifier.learn
@@ -97,12 +97,12 @@ _easy_test = """
     >>> t.set_classifier(Bayes())
     >>> t.train([good1, good2], [bad1])
     >>> t.predict([_Example('goodham', ['a', 'b']),
-    ...            _Example('badham', ['d'])    
+    ...            _Example('badham', ['d'])    # FP
     ...           ], False)
     >>> t.predict([_Example('goodspam', ['d']),
-    ...            _Example('badspam1', ['a']), 
-    ...            _Example('badspam2', ['a', 'b']),    
-    ...            _Example('badspam3', ['d', 'a', 'b'])    
+    ...            _Example('badspam1', ['a']), # FN
+    ...            _Example('badspam2', ['a', 'b']),    # FN
+    ...            _Example('badspam3', ['d', 'a', 'b'])    # FN
     ...           ], True)
     >>> t.nham_tested
     2

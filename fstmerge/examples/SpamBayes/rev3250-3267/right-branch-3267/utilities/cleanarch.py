@@ -13,7 +13,7 @@ Usage: cleanarch [options] < inputfile > outputfile
 Options:
     -s n
     --status=n
-        Print a 
+        Print a # character every n lines processed
     -q / --quiet
         Don't print changed line information to standard error.
     -n / --dry-run

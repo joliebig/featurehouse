@@ -3,7 +3,7 @@ import commctrl
 import struct, array
 from .dlgutils import *
 from . import processors
-verbose = 0 
+verbose = 0 # set to 1 to see option values fetched and set.
 class OptionControlProcessor(processors.ControlProcessor):
     def __init__(self, window, control_ids, option):
         processors.ControlProcessor.__init__(self, window, control_ids)
@@ -66,7 +66,7 @@ class BoolButtonProcessor(OptionControlProcessor):
         self.UpdateEnabledStates(value)
     def UpdateValue_FromControl(self):
         check = win32gui.SendMessage(self.GetControl(), win32con.BM_GETCHECK)
-        check = not not check 
+        check = not not check # force bool!
         self.SetOptionValue(check)
         self.UpdateEnabledStates(check)
 class RadioButtonProcessor(OptionControlProcessor):
@@ -271,7 +271,7 @@ class FolderIDProcessor(OptionControlProcessor):
         if self.option_include_sub:
             cb_state = self.option_include_sub.get()
         else:
-            cb_state = None 
+            cb_state = None # don't show it.
         d = FolderSelector.FolderSelector(self.window.hwnd,
                                             mgr,
                                             ids,

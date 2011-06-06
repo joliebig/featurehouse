@@ -121,7 +121,7 @@ class SmarterHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
             return self.extensions_map['']
     extensions_map = mimetypes.types_map.copy()
     extensions_map.update({
-        '': 'application/octet-stream', 
+        '': 'application/octet-stream', # Default
         '.py': 'text/plain',
         '.c': 'text/plain',
         '.h': 'text/plain',

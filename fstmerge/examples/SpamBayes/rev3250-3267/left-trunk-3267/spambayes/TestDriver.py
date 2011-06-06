@@ -26,8 +26,8 @@ def printhist(tag, ham, spam, nbuckets=options["TestDriver", "nbuckets"]):
         stotal[i] = stotal[i-1] + spam.buckets[i-1]
     assert htotal[-1] == ham.n
     assert stotal[-1] == spam.n
-    best_cost = 1e200   
-    bests = []          
+    best_cost = 1e200   # infinity
+    bests = []          # best h and s cutoffs
     for h in range(n+1):
         num_fn = stotal[h]
         fn_cost = num_fn * FNW

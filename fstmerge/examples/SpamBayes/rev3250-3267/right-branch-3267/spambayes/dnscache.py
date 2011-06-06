@@ -8,9 +8,9 @@ import socket
 from spambayes.Options import options
 from spambayes.safepickle import pickle_read, pickle_write
 kCheckForPruneEvery = 20
-kMaxTTL = 60 * 60 * 24 * 7                
-kMinTTL = 24 * 60 * 60 * 1                
-kPruneThreshold = 5000 
+kMaxTTL = 60 * 60 * 24 * 7                # One week
+kMinTTL = 24 * 60 * 60 * 1                # one day
+kPruneThreshold = 5000 # May go over slightly; numbers chosen at random
 kPruneDownTo = 2500
 class lookupResult(object):
     def __init__(self, qType, answer, question, expiresAt, now):
@@ -54,7 +54,7 @@ class cache:
                 print("PTR records", file=sys.stderr)
             else:
                 print("opened new cache", file=sys.stderr)
-        self.hits=0 
+        self.hits=0 # These two for statistics
         self.misses=0
         self.pruneTicker=0
         if dnsServer == None:
@@ -167,7 +167,7 @@ class cache:
                 print("Type was", qType, file=sys.stderr)
             objs = [lookupResult(qType, None, question,
                                  self.cacheErrorSecs+now, now)]
-            cacheToLookIn[question] = objs 
+            cacheToLookIn[question] = objs # Add to format for return?
             return self.formatForReturn(objs)
         except socket.gaierror as detail:
             print("DNS connection failure:", self.queryObj.ns, detail, file=sys.stderr)

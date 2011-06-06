@@ -336,10 +336,10 @@ def main():
     error_count = 0
     cumulative_log = {SPAM: 0, VIRUS: 0}
     initial_log = None
-    start_time = None  
+    start_time = None  # init'ed only after initial_log is created
     while 1:
         error_flag = False
-        duplicate.unique.clear()  
+        duplicate.unique.clear()  # Hack!
         for server, user, pwd in server_configs:
             try:
                 log = filter_server( (server, user, pwd), filters)
@@ -371,7 +371,7 @@ def main():
         else:
             if VERBOSE_LEVEL:
                 delta_t = time.time() - start_time
-                delta_t = max(delta_t, 1)  
+                delta_t = max(delta_t, 1)  #
                 print "Stats: %d spams (%.2f/hr), %d virus (%.2f/hr)" % (
                     cumulative_log[SPAM],
                     (cumulative_log[SPAM] - initial_log[SPAM]) /

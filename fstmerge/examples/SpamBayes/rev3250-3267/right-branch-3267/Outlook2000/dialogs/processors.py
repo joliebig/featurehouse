@@ -10,9 +10,9 @@ class ControlProcessor:
         self.window = window
     def Init(self):
         pass
-    def Done(self): 
+    def Done(self): # done with 'ok' - ie, save options.  May return false.
         return True
-    def Term(self): 
+    def Term(self): # closing - can't fail.
         pass
     def GetControl(self, control_id = None):
         control_id = control_id or self.control_id

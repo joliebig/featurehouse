@@ -6,9 +6,9 @@ import win32gui
 import winerror
 import struct, array
 from . import dlgutils
-from pprint import pprint 
+from pprint import pprint # debugging only
 verbose = 0
-def INDEXTOSTATEIMAGEMASK(i): 
+def INDEXTOSTATEIMAGEMASK(i): # from new commctrl.h
     return i << 12
 IIL_UNCHECKED = 1
 IIL_CHECKED = 2
@@ -54,7 +54,7 @@ def _BuildFoldersMAPI(manager, folder_spec):
             if table.GetRowCount(0) == 0:
                 spec.children = []
             else:
-                spec.children = None 
+                spec.children = None # Flag as "not yet built"
             children.append(spec)
         except (pythoncom.com_error, manager.message_store.MsgStoreException) as details:
             print("** Unable to open child folder - ignoring")
@@ -108,7 +108,7 @@ def PackTVINSERTSTRUCT(parent, insertAfter, tvitem):
     format = "ii%ds" % len(tvitem_buf)
     return struct.pack(format, parent, insertAfter, tvitem_buf), extra
 def PackTVITEM(hitem, state, stateMask, text, image, selimage, citems, param):
-    extra = [] 
+    extra = [] # objects we must keep references to
     mask = 0
     mask, hitem = _GetMaskAndVal(hitem, 0, mask, commctrl.TVIF_HANDLE)
     mask, state = _GetMaskAndVal(state, 0, mask, commctrl.TVIF_STATE)
@@ -129,12 +129,12 @@ def PackTVITEM(hitem, state, stateMask, text, image, selimage, citems, param):
     buf = struct.pack(format,
                       mask, hitem,
                       state, stateMask,
-                      text_addr, text_len, 
+                      text_addr, text_len, # text
                       image, selimage,
                       citems, param)
     return array.array("c", buf), extra
 def EmptyTVITEM(hitem, mask = None, text_buf_size=512):
-    extra = [] 
+    extra = [] # objects we must keep references to
     if mask is None:
         mask = commctrl.TVIF_HANDLE | commctrl.TVIF_STATE | commctrl.TVIF_TEXT | \
                commctrl.TVIF_IMAGE | commctrl.TVIF_SELECTEDIMAGE | \
@@ -149,7 +149,7 @@ def EmptyTVITEM(hitem, mask = None, text_buf_size=512):
     buf = struct.pack(format,
                       mask, hitem,
                       0, 0,
-                      text_addr, text_len, 
+                      text_addr, text_len, # text
                       0, 0,
                       0, 0)
     return array.array("c", buf), extra
@@ -232,14 +232,14 @@ class FolderSelector(FolderSelector_Parent):
         return item_id
     def _InsertFolder(self, hParent, child, selected_ids = None, insert_after=0):
         text = child.name
-        if child.children is None: 
-            cItems = 1 
+        if child.children is None: # Need to build them!
+            cItems = 1 # Anything > 0 will do
         else:
             cItems = len(child.children)
         if cItems==0:
-            bitmapCol = bitmapSel = 5 
+            bitmapCol = bitmapSel = 5 # blank doc
         else:
-            bitmapCol = bitmapSel = 0 
+            bitmapCol = bitmapSel = 0 # folder
         if self.single_select:
             mask = state = 0
         else:
@@ -330,12 +330,12 @@ class FolderSelector(FolderSelector_Parent):
                                          commctrl.TVGN_CARET, 0)
             except win32gui.error:
                 h = 0
-            if not h: 
+            if not h: # nothing selected.
                 return
             info = self._GetTVItem(h)
             spec = self.item_map[info[7]]
             yield info, spec
-            return 
+            return # single-hit yield.
         for info, spec in self._YieldAllChildren():
             checked = (info[1] >> 12) - 1
             if checked:
@@ -343,7 +343,7 @@ class FolderSelector(FolderSelector_Parent):
     def GetSelectedIDs(self):
         try:
             self.GetDlgItem("IDC_LIST_FOLDERS")
-        except win32gui.error: 
+        except win32gui.error: # dialog dead!
             return self.selected_ids, self.checkbox_state
         ret = []
         for info, spec in self._YieldCheckedChildren():
@@ -389,7 +389,7 @@ class FolderSelector(FolderSelector_Parent):
                         if hr == winerror.E_ACCESSDENIED:
                             valid = parent is not None
                         else:
-                            raise 
+                            raise # but only down a couple of lines...
                     else:
                         valid = parent is not None and grandparent is not None
                 except self.manager.message_store.MsgStoreException as details:
@@ -397,7 +397,7 @@ class FolderSelector(FolderSelector_Parent):
                           "valid:", details)
                     valid = False
                 if not valid:
-                    if result_valid: 
+                    if result_valid: # are we the first invalid?
                         self.manager.ReportInformation(
                             "Please select a child folder - top-level folders " \
                             "can not be used.")
@@ -444,8 +444,8 @@ class FolderSelector(FolderSelector_Parent):
         self.expand_ids = self._DetermineFoldersToExpand()
         tree = BuildFolderTreeMAPI(self.manager.message_store.session, self.exclude_prop_ids)
         self._InsertSubFolders(0, tree)
-        self.selected_ids = [] 
-        self.expand_ids = [] 
+        self.selected_ids = [] # Only use this while creating dialog.
+        self.expand_ids = [] # Only use this while creating dialog.
         self._UpdateStatus()
         dlgutils.SetWaitCursor(0)
     def OnDestroy(self, hwnd, msg, wparam, lparam):
@@ -526,7 +526,7 @@ class FolderSelector(FolderSelector_Parent):
         format = "iii"
         buf = win32gui.PyMakeBuffer(struct.calcsize(format), lparam)
         hwndFrom, id, code = struct.unpack(format, buf)
-        code += commctrl.PY_0U 
+        code += commctrl.PY_0U # work around silly old pywin32 bug
         id_name = self._GetIDName(id)
         if id_name == "IDC_LIST_FOLDERS":
             if code == commctrl.NM_CLICK:
@@ -536,7 +536,7 @@ class FolderSelector(FolderSelector_Parent):
             elif code == commctrl.TVN_ITEMEXPANDING:
                 ignore, ignore, ignore, action, itemOld, itemNew = \
                                             UnpackTVNOTIFY(lparam)
-                if action == 1: return 0 
+                if action == 1: return 0 # contracting, not expanding
                 itemHandle = itemNew[0]
                 info = itemNew
                 folderSpec = self.item_map[info[7]]
@@ -594,7 +594,7 @@ def Test():
     if mgr.dialog_parser is None:
         import dialogs
         mgr.dialog_parser = dialogs.LoadDialogs()
-    ids = [("0000","0000"),] 
+    ids = [("0000","0000"),] # invalid ID for testing.
     d=FolderSelector(0, mgr, ids, single_select = single_select)
     if d.DoModal() != win32con.IDOK:
         print("Cancelled")

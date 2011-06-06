@@ -88,7 +88,7 @@ def main():
             print "Invalid arg"
             return
     if not folder_name:
-        folder_name = "Inbox" 
+        folder_name = "Inbox" # Assume this exists!
     subject = " ".join(args)
     if not subject:
         print "You must specify a subject"

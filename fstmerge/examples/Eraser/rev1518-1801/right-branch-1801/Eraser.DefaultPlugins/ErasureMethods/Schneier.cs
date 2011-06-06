@@ -1,13 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
  [Guid("B1BFAB4A-31D3-43a5-914C-E9892C78AFD8")]
@@ -17,17 +13,14 @@ namespace Eraser.DefaultPlugins
   {
    get { return S._("Schneier 7 pass"); }
   }
-
   public override Guid Guid
   {
    get { return GetType().GUID; }
   }
-
   protected override bool RandomizePasses
   {
    get { return false; }
   }
-
   protected override ErasureMethodPass[] PassesSet
   {
    get

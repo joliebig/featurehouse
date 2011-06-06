@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +5,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 using System.ComponentModel;
-
 namespace Eraser.Util
 {
  public static class KernelApi

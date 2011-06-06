@@ -2,15 +2,7 @@ namespace Eraser
 {
  partial class BlackBoxMainForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -19,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlackBoxMainForm));
@@ -38,17 +23,11 @@ namespace Eraser
             this.ReportsLvErrorColumn = new System.Windows.Forms.ColumnHeader();
             ((System.ComponentModel.ISupportInitialize)(this.BlackBoxPic)).BeginInit();
             this.SuspendLayout();
-
-
-
             this.MainLbl.AccessibleDescription = null;
             this.MainLbl.AccessibleName = null;
             resources.ApplyResources(this.MainLbl, "MainLbl");
             this.MainLbl.Font = null;
             this.MainLbl.Name = "MainLbl";
-
-
-
             this.SubmitBtn.AccessibleDescription = null;
             this.SubmitBtn.AccessibleName = null;
             resources.ApplyResources(this.SubmitBtn, "SubmitBtn");
@@ -57,9 +36,6 @@ namespace Eraser
             this.SubmitBtn.Name = "SubmitBtn";
             this.SubmitBtn.UseVisualStyleBackColor = true;
             this.SubmitBtn.Click += new System.EventHandler(this.SubmitBtn_Click);
-
-
-
             this.PostponeBtn.AccessibleDescription = null;
             this.PostponeBtn.AccessibleName = null;
             resources.ApplyResources(this.PostponeBtn, "PostponeBtn");
@@ -68,9 +44,6 @@ namespace Eraser
             this.PostponeBtn.Name = "PostponeBtn";
             this.PostponeBtn.UseVisualStyleBackColor = true;
             this.PostponeBtn.Click += new System.EventHandler(this.PostponeBtn_Click);
-
-
-
             this.BlackBoxPic.AccessibleDescription = null;
             this.BlackBoxPic.AccessibleName = null;
             resources.ApplyResources(this.BlackBoxPic, "BlackBoxPic");
@@ -80,9 +53,6 @@ namespace Eraser
             this.BlackBoxPic.ImageLocation = null;
             this.BlackBoxPic.Name = "BlackBoxPic";
             this.BlackBoxPic.TabStop = false;
-
-
-
             this.ReportsLv.AccessibleDescription = null;
             this.ReportsLv.AccessibleName = null;
             resources.ApplyResources(this.ReportsLv, "ReportsLv");
@@ -98,17 +68,8 @@ namespace Eraser
             this.ReportsLv.UseCompatibleStateImageBehavior = false;
             this.ReportsLv.View = System.Windows.Forms.View.Details;
             this.ReportsLv.ItemActivate += new System.EventHandler(this.ReportsLv_ItemActivate);
-
-
-
             resources.ApplyResources(this.ReportsLvTimestampColumn, "ReportsLvTimestampColumn");
-
-
-
             resources.ApplyResources(this.ReportsLvErrorColumn, "ReportsLvErrorColumn");
-
-
-
             this.AccessibleDescription = null;
             this.AccessibleName = null;
             resources.ApplyResources(this, "$this");
@@ -127,11 +88,7 @@ namespace Eraser
             this.TopMost = true;
             ((System.ComponentModel.ISupportInitialize)(this.BlackBoxPic)).EndInit();
             this.ResumeLayout(false);
-
   }
-
-
-
   private System.Windows.Forms.Label MainLbl;
   private System.Windows.Forms.Button SubmitBtn;
   private System.Windows.Forms.Button PostponeBtn;

@@ -1,45 +1,29 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.IO;
-
 namespace Eraser.Util
 {
  public static class Win32ErrorCode
  {
-
-
-
-
-
   private static int GetHRForWin32Error(int errorCode)
   {
    const uint FACILITY_WIN32 = 7;
    return errorCode <= 0 ? errorCode :
     (int)((((uint)errorCode) & 0x0000FFFF) | (FACILITY_WIN32 << 16) | 0x80000000);
   }
-
-
-
-
-
-
   internal static Exception GetExceptionForWin32Error(int errorCode)
   {
    switch (errorCode)
    {
     case NoError: return null;
     case SharingViolation: return new IOException();
-
     default:
      int HR = GetHRForWin32Error(errorCode);
      return Marshal.GetExceptionForHR(HR);
    }
   }
-
   public const int NoError = Success;
   public const int Success = 0;
   public const int InvalidFunction = 1;

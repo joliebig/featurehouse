@@ -41,7 +41,7 @@ todo = """
       password method that we are using at the moment.  Neither of the
       servers I have access to offer any alternative method, however.  If
       someone's does, then it would be nice to offer this.
-      Thanks to 
+      Thanks to #1169939 we now support CRAM_MD5 if available.  It'd still
       be good to support others, though.
     o Usernames should be able to be literals as well as quoted strings.
       This might help if the username/password has special characters like
@@ -125,7 +125,7 @@ class BadIMAPResponseError(Exception):
                (self.command, self.response)
 class IMAPSession(BaseIMAP):
     '''A class extending the IMAP4 class, with a few optimizations'''
-    timeout = 60 
+    timeout = 60 # seconds
     def __init__(self, server, debug=0, do_expunge = options["imap", "expunge"] ):
         if ":" in server:
             server, port = server.split(':', 1)
@@ -191,7 +191,7 @@ class IMAPSession(BaseIMAP):
             args = (username, pwd)
             description = "MD5"
         else:
-            login_func = BaseIMAP.login 
+            login_func = BaseIMAP.login # superclass login
             args = (self, username, pwd)
             description = "plain-text"
         try:
@@ -218,7 +218,7 @@ class IMAPSession(BaseIMAP):
                 for fol in options["imap", fol_list]:
                     self.select(fol)
                     self.expunge()
-        BaseIMAP.logout(self)  
+        BaseIMAP.logout(self)  # superclass logout
     def check_response(self, command, IMAP_response):
         """A utility function to check the response from IMAP commands.
         Raises BadIMAPResponseError if the response is not OK.  Returns

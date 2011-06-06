@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class MainForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    this.components = new System.ComponentModel.Container();
@@ -62,29 +45,17 @@ namespace Eraser
    this.tbHelpMenu.SuspendLayout();
    ((System.ComponentModel.ISupportInitialize)(this.eraserLogo)).BeginInit();
    this.SuspendLayout();
-
-
-
    resources.ApplyResources(this.contentPanel, "contentPanel");
    this.contentPanel.BackColor = System.Drawing.Color.White;
    this.contentPanel.Name = "contentPanel";
-
-
-
    this.tbSchedule.Image = global::Eraser.Properties.Resources.ToolbarSchedule;
    this.tbSchedule.Name = "tbSchedule";
    this.tbSchedule.Padding = new System.Windows.Forms.Padding(0);
    resources.ApplyResources(this.tbSchedule, "tbSchedule");
    this.tbSchedule.Click += new System.EventHandler(this.tbSchedule_Click);
-
-
-
    this.notificationIcon.ContextMenuStrip = this.notificationMenu;
    resources.ApplyResources(this.notificationIcon, "notificationIcon");
    this.notificationIcon.DoubleClick += new System.EventHandler(this.openToolStripMenuItem_Click);
-
-
-
    this.notificationMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openEraserToolStripMenuItem,
             this.toolStripMenuItem1,
@@ -92,37 +63,19 @@ namespace Eraser
             this.exitToolStripMenuItem});
    this.notificationMenu.Name = "notificationMenu";
    resources.ApplyResources(this.notificationMenu, "notificationMenu");
-
-
-
    resources.ApplyResources(this.openEraserToolStripMenuItem, "openEraserToolStripMenuItem");
    this.openEraserToolStripMenuItem.Name = "openEraserToolStripMenuItem";
    this.openEraserToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
-
-
-
    this.toolStripMenuItem1.Name = "toolStripMenuItem1";
    resources.ApplyResources(this.toolStripMenuItem1, "toolStripMenuItem1");
-
-
-
    this.hideWhenMinimisedToolStripMenuItem.CheckOnClick = true;
    this.hideWhenMinimisedToolStripMenuItem.Name = "hideWhenMinimisedToolStripMenuItem";
    resources.ApplyResources(this.hideWhenMinimisedToolStripMenuItem, "hideWhenMinimisedToolStripMenuItem");
    this.hideWhenMinimisedToolStripMenuItem.Click += new System.EventHandler(this.hideWhenMinimiseToolStripMenuItem_Click);
-
-
-
    this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
    resources.ApplyResources(this.exitToolStripMenuItem, "exitToolStripMenuItem");
    this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-
-
-
    this.notificationIconTimer.Tick += new System.EventHandler(this.notificationIconTimer_Tick);
-
-
-
    this.ToolBar.AllowItemReorder = true;
    this.ToolBar.BackColor = System.Drawing.Color.Transparent;
    resources.ApplyResources(this.ToolBar, "ToolBar");
@@ -134,9 +87,6 @@ namespace Eraser
             this.tbHelp,
             this.tbHelpDropDown});
    this.ToolBar.Name = "ToolBar";
-
-
-
    this.tbScheduleDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
    this.tbScheduleDropDown.DropDown = this.tbScheduleMenu;
    this.tbScheduleDropDown.Image = global::Eraser.Properties.Resources.ToolbarArrow;
@@ -144,9 +94,6 @@ namespace Eraser
    this.tbScheduleDropDown.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
    this.tbScheduleDropDown.Name = "tbScheduleDropDown";
    this.tbScheduleDropDown.Padding = new System.Windows.Forms.Padding(0);
-
-
-
    this.tbScheduleMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newTaskToolStripMenuItem,
             this.toolStripMenuItem2,
@@ -155,84 +102,48 @@ namespace Eraser
    this.tbScheduleMenu.Name = "tbScheduleMenu";
    this.tbScheduleMenu.OwnerItem = this.tbScheduleDropDown;
    resources.ApplyResources(this.tbScheduleMenu, "tbScheduleMenu");
-
-
-
    this.newTaskToolStripMenuItem.Name = "newTaskToolStripMenuItem";
    resources.ApplyResources(this.newTaskToolStripMenuItem, "newTaskToolStripMenuItem");
    this.newTaskToolStripMenuItem.Click += new System.EventHandler(this.newTaskToolStripMenuItem_Click);
-
-
-
    this.toolStripMenuItem2.Name = "toolStripMenuItem2";
    resources.ApplyResources(this.toolStripMenuItem2, "toolStripMenuItem2");
-
-
-
    this.exportTaskListToolStripMenuItem.Name = "exportTaskListToolStripMenuItem";
    resources.ApplyResources(this.exportTaskListToolStripMenuItem, "exportTaskListToolStripMenuItem");
    this.exportTaskListToolStripMenuItem.Click += new System.EventHandler(this.exportTaskListToolStripMenuItem_Click);
-
-
-
    this.importTaskListToolStripMenuItem.Name = "importTaskListToolStripMenuItem";
    resources.ApplyResources(this.importTaskListToolStripMenuItem, "importTaskListToolStripMenuItem");
    this.importTaskListToolStripMenuItem.Click += new System.EventHandler(this.importTaskListToolStripMenuItem_Click);
-
-
-
    this.tbSettings.Image = global::Eraser.Properties.Resources.ToolbarSettings;
    this.tbSettings.Margin = new System.Windows.Forms.Padding(0, 0, 10, 0);
    this.tbSettings.Name = "tbSettings";
    this.tbSettings.Padding = new System.Windows.Forms.Padding(0);
    resources.ApplyResources(this.tbSettings, "tbSettings");
    this.tbSettings.Click += new System.EventHandler(this.tbSettings_Click);
-
-
-
    this.tbHelp.Image = global::Eraser.Properties.Resources.ToolbarHelp;
    this.tbHelp.Name = "tbHelp";
    this.tbHelp.Padding = new System.Windows.Forms.Padding(0);
    resources.ApplyResources(this.tbHelp, "tbHelp");
    this.tbHelp.Click += new System.EventHandler(this.tbHelp_Click);
-
-
-
    this.tbHelpDropDown.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
    this.tbHelpDropDown.DropDown = this.tbHelpMenu;
    this.tbHelpDropDown.Image = global::Eraser.Properties.Resources.ToolbarArrow;
    resources.ApplyResources(this.tbHelpDropDown, "tbHelpDropDown");
    this.tbHelpDropDown.Name = "tbHelpDropDown";
    this.tbHelpDropDown.Padding = new System.Windows.Forms.Padding(0);
-
-
-
    this.tbHelpMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.checkForUpdatesToolStripMenuItem1,
             this.aboutEraserToolStripMenuItem});
    this.tbHelpMenu.Name = "tbHelpMenu";
    resources.ApplyResources(this.tbHelpMenu, "tbHelpMenu");
-
-
-
    this.checkForUpdatesToolStripMenuItem1.Name = "checkForUpdatesToolStripMenuItem1";
    resources.ApplyResources(this.checkForUpdatesToolStripMenuItem1, "checkForUpdatesToolStripMenuItem1");
    this.checkForUpdatesToolStripMenuItem1.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-
-
-
    this.aboutEraserToolStripMenuItem.Name = "aboutEraserToolStripMenuItem";
    resources.ApplyResources(this.aboutEraserToolStripMenuItem, "aboutEraserToolStripMenuItem");
    this.aboutEraserToolStripMenuItem.Click += new System.EventHandler(this.aboutEraserToolStripMenuItem_Click);
-
-
-
    this.checkForUpdatesToolStripMenuItem.Name = "checkForUpdatesToolStripMenuItem";
    resources.ApplyResources(this.checkForUpdatesToolStripMenuItem, "checkForUpdatesToolStripMenuItem");
    this.checkForUpdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForUpdatesToolStripMenuItem_Click);
-
-
-
    resources.ApplyResources(this.eraserLogo, "eraserLogo");
    this.eraserLogo.BackColor = System.Drawing.Color.Transparent;
    this.eraserLogo.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -240,9 +151,6 @@ namespace Eraser
    this.eraserLogo.Name = "eraserLogo";
    this.eraserLogo.TabStop = false;
    this.eraserLogo.Click += new System.EventHandler(this.eraserLogo_Click);
-
-
-
    resources.ApplyResources(this, "$this");
    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
    this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(41)))), ((int)(((byte)(41)))));
@@ -264,11 +172,7 @@ namespace Eraser
    ((System.ComponentModel.ISupportInitialize)(this.eraserLogo)).EndInit();
    this.ResumeLayout(false);
    this.PerformLayout();
-
   }
-
-
-
   private System.Windows.Forms.Panel contentPanel;
   private System.Windows.Forms.NotifyIcon notificationIcon;
   private System.Windows.Forms.Timer notificationIconTimer;

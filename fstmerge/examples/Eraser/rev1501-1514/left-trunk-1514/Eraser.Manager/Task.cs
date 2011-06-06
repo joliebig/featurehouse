@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,16 +8,11 @@ using System.ComponentModel;
 using Eraser.Util;
 using System.Security.Permissions;
 using System.Threading;
-
 namespace Eraser.Manager
 {
-
-
-
  [Serializable]
  public class Task : ISerializable
  {
-
   protected Task(SerializationInfo info, StreamingContext context)
   {
    Name = (string)info.GetValue("Name", typeof(string));
@@ -28,7 +21,6 @@ namespace Eraser.Manager
    Targets.Owner = this;
    Log = (Logger)info.GetValue("Log", typeof(Logger));
    Canceled = false;
-
    Schedule schedule = (Schedule)info.GetValue("Schedule", typeof(Schedule));
    if (schedule.GetType() == Schedule.RunManually.GetType())
     Schedule = Schedule.RunManually;
@@ -42,7 +34,6 @@ namespace Eraser.Manager
     throw new InvalidDataException(S._("An invalid type was found when loading " +
      "the task schedule"));
   }
-
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
   {
@@ -51,11 +42,6 @@ namespace Eraser.Manager
    info.AddValue("Targets", Targets);
    info.AddValue("Log", Log);
   }
-
-
-
-
-
   public Task()
   {
    Name = string.Empty;
@@ -64,70 +50,36 @@ namespace Eraser.Manager
    Canceled = false;
    Log = new Logger();
   }
-
-
-
-
-
   public void Cancel()
   {
    Executor.UnqueueTask(this);
    Canceled = true;
   }
-
-
-
-
   public Executor Executor { get; internal set; }
-
-
-
-
-
   public string Name { get; set; }
-
-
-
-
   public string UIText
   {
    get
    {
-
     if (Name.Length != 0)
      return Name;
-
     string result = string.Empty;
     if (Targets.Count < 5)
     {
-
      foreach (ErasureTarget tgt in Targets)
       result += tgt.UIText + ", ";
-
      return result.Remove(result.Length - 2);
     }
     else
     {
-
      result = Targets[0].UIText + ", ";
      result += Targets[Targets.Count / 2].UIText + ", ";
      result += Targets[Targets.Count - 1].UIText;
-
      return S._("{0} and {1} other targets", result, Targets.Count - 3);
     }
    }
   }
-
-
-
-
   public bool Executing { get; private set; }
-
-
-
-
-
-
   public bool Queued
   {
    get
@@ -135,31 +87,18 @@ namespace Eraser.Manager
     return Executor.IsTaskQueued(this);
    }
   }
-
-
-
-
   public bool Canceled
   {
    get
    {
     return canceled;
    }
-
    internal set
    {
     canceled = value;
    }
   }
-
-
-
-
   public ErasureTargetsCollection Targets { get; private set; }
-
-
-
-
   public Schedule Schedule
   {
    get
@@ -171,7 +110,6 @@ namespace Eraser.Manager
     if (value.Owner != null)
      throw new ArgumentException(S._("The schedule provided can only " +
       "belong to one task at a time"));
-
     if (schedule is RecurringSchedule)
      ((RecurringSchedule)schedule).Owner = null;
     schedule = value;
@@ -180,88 +118,39 @@ namespace Eraser.Manager
     OnTaskEdited();
    }
   }
-
-
-
-
   public Logger Log { get; private set; }
-
   private Schedule schedule;
-
-
   private volatile bool canceled;
-
-
-
-
-
   public EventHandler<TaskEventArgs> TaskEdited { get; set; }
-
-
-
-
   public EventHandler<TaskEventArgs> TaskStarted { get; set; }
-
-
-
-
   public EventHandler<TaskProgressEventArgs> ProgressChanged { get; set; }
-
-
-
-
   public EventHandler<TaskEventArgs> TaskFinished { get; set; }
-
-
-
-
   internal void OnTaskEdited()
   {
    if (TaskEdited != null)
     TaskEdited(this, new TaskEventArgs(this));
   }
-
-
-
-
-
   internal void OnTaskStarted(TaskEventArgs e)
   {
    if (TaskStarted != null)
     TaskStarted(this, e);
    Executing = true;
   }
-
-
-
-
-
   internal void OnProgressChanged(TaskProgressEventArgs e)
   {
    if (ProgressChanged != null)
     ProgressChanged(this, e);
   }
-
-
-
-
-
   internal void OnTaskFinished(TaskEventArgs e)
   {
    if (TaskFinished != null)
     TaskFinished(this, e);
    Executing = false;
   }
-
  }
-
-
-
-
  [Serializable]
  public abstract class ErasureTarget : ISerializable
  {
-
   protected ErasureTarget(SerializationInfo info, StreamingContext context)
   {
    Guid methodGuid = (Guid)info.GetValue("Method", typeof(Guid));
@@ -270,17 +159,11 @@ namespace Eraser.Manager
    else
     method = ErasureMethodManager.GetInstance(methodGuid);
   }
-
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
   {
    info.AddValue("Method", method.Guid);
   }
-
-
-
-
-
   protected ErasureTarget()
   {
   }

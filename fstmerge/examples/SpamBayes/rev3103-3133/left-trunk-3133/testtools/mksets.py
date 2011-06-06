@@ -20,9 +20,9 @@ import shutil
 from spambayes.Options import options
 program = sys.argv[0]
 loud = True
-nsets = 5               
-ngroups = None          
-nmess = None            
+nsets = 5               # -n
+ngroups = None          # -g
+nmess = None            # -m
 def usage(code, msg=''):
     """Print usage message and sys.exit(code)."""
     if msg:

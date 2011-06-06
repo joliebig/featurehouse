@@ -65,7 +65,7 @@ def FindTopWords(bayes, num, get_spam):
     if not get_spam and _top_ham: return _top_ham
     items = []
     try:
-        bayes.db 
+        bayes.db # bsddb style
         extractor = DBExtractor
     except AttributeError:
         extractor = DictExtractor
@@ -144,7 +144,7 @@ class Driver:
             self._CleanTestMessageFromFolder(of)
     def CreateTestMessageInFolder(self, spam_status, folder):
         msg, words = self.CreateTestMessage(spam_status)
-        msg.Save() 
+        msg.Save() # Put into "Drafts".
         assert self.FindTestMessage(self.folder_drafts) is not None
         msg.Move(folder)
         return self.FindTestMessage(folder), words
@@ -319,7 +319,7 @@ def TestUnsureFilter(driver):
 def run_tests(manager):
     "Filtering tests"
     driver = Driver(manager)
-    manager.Save() 
+    manager.Save() # necessary after a full retrain
     assert driver.manager.config.filter.enabled, "Filtering must be enabled for these tests"
     assert driver.manager.config.training.train_recovered_spam and \
            driver.manager.config.training.train_manual_spam, "Incremental training must be enabled for these tests"
@@ -357,7 +357,7 @@ def apply_with_new_config(manager, new_config_dict, func, *args):
         old_config[sect_name, opt_name] = manager.options.get(sect_name, opt_name)
         manager.options.set(sect_name, opt_name, val)
         friendly_opts.append("%s=%s" % (name, val))
-    manager.addin.FiltersChanged() 
+    manager.addin.FiltersChanged() # to ensure correct filtler in place
     try:
         test_name = getattr(func, "__doc__", None)
         if not test_name: test_name = func.__name__
@@ -402,8 +402,8 @@ def run_nonfilter_tests(manager):
         msgstore.test_suite_running = True
 def run_invalid_id_tests(manager):
     print("Doing some 'invalid ID' tests - you should see a couple of warning, but no errors or tracebacks")
-    id_no_item = ('0000','0000') 
-    id_invalid = ('xxxx','xxxx') 
+    id_no_item = ('0000','0000') # this ID is 'valid' - but there will be no such item
+    id_invalid = ('xxxx','xxxx') # this ID is 'invalid' in that the hex-bin conversion fails
     id_empty1 = ('','')
     id_empty2 = ()
     bad_ids = id_no_item, id_invalid, id_empty1, id_empty2
@@ -488,7 +488,7 @@ def filter_message_with_event(msg, mgr, all_actions=True):
     import filter
     ret = filter._original_filter_message(msg, mgr, all_actions)
     if ret != "Failed":
-        filter_event.set() 
+        filter_event.set() # only set if it works
     return ret
 def test(manager):
     from dialogs import SetWaitCursor
@@ -497,7 +497,7 @@ def test(manager):
     if "_original_filter_message" not in filter.__dict__:
         filter._original_filter_message = filter.filter_message
         filter.filter_message = filter_message_with_event
-    try: 
+    try: # restore the plugin config at exit.
         assert not msgstore.test_suite_running, "already running??"
         msgstore.test_suite_running = True
         assert not manager.test_suite_running, "already running??"
@@ -516,7 +516,7 @@ def test(manager):
         msgstore.test_suite_running = False
         manager.test_suite_running = False
         manager.LoadConfig()
-        manager.addin.FiltersChanged() 
+        manager.addin.FiltersChanged() # restore original filters.
         manager.addin.ProcessMissedMessages()
         SetWaitCursor(0)
 if __name__=='__main__':

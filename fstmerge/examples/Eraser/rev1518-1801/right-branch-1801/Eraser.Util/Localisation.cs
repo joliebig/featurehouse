@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using System.Reflection;
 using System.Globalization;
@@ -11,16 +8,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Resources;
 using System.Threading;
-
 namespace Eraser.Util
 {
  public static class Localisation
  {
-
-
-
-
-
   public static bool IsRightToLeft(Control control)
   {
    while (control != null)
@@ -36,7 +27,6 @@ namespace Eraser.Util
       break;
     }
    }
-
    if (Application.OpenForms.Count > 0)
    {
     return IsRightToLeft(Application.OpenForms[0]);

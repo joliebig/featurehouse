@@ -37,7 +37,7 @@ class TooltipManager:
             self.tooltip_tools[control_id] = 1
         control = win32gui.GetDlgItem(hwnd_dialog, control_id)
         child_rect = win32gui.GetWindowRect(control)
-        xOff = yOff = 15 
+        xOff = yOff = 15 # just below and right of the control
         win32gui.SendMessage(self.hwnd_tooltip,
                              commctrl.TTM_TRACKPOSITION,
                              0,
@@ -137,7 +137,7 @@ class ProcessorDialog(TooltipDialog):
         self.manager = manager
         self.config = config
         self.command_processors = {}
-        self.processor_message_map = {} 
+        self.processor_message_map = {} # WM_MESSAGE : [processors_who_want_it]
         self.all_processors = []
         for data in option_handlers:
             klass = data[0]
@@ -161,7 +161,7 @@ class ProcessorDialog(TooltipDialog):
         return ret
     def OnInitDialog(self, hwnd, msg, wparam, lparam):
         TooltipDialog.OnInitDialog(self, hwnd, msg, wparam, lparam)
-        if __debug__: 
+        if __debug__: # this is just a debugging aid
             for int_id in self.command_processors:
                 try:
                     self.GetDlgItem(int_id)
@@ -220,7 +220,7 @@ class ProcessorDialog(TooltipDialog):
         format = "iii"
         buf = win32gui.PyMakeBuffer(struct.calcsize(format), lparam)
         hwndFrom, idFrom, code = struct.unpack(format, buf)
-        code += 0x4f0000 
+        code += 0x4f0000 # hrm - wtf - commctrl uses this, and it works with mfc.  *sigh*
         handler = self.command_processors.get(idFrom)
         if handler is None:
             print("Ignoring OnNotify for", self._GetIDName(idFrom))

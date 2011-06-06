@@ -2,15 +2,7 @@ namespace Eraser.DefaultPlugins
 {
  partial class CustomMethodPassEditor
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -19,13 +11,6 @@ namespace Eraser.DefaultPlugins
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    this.components = new System.ComponentModel.Container();
@@ -38,9 +23,6 @@ namespace Eraser.DefaultPlugins
    this.passTypeGrp.SuspendLayout();
    ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
    this.SuspendLayout();
-
-
-
    this.passTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
       | System.Windows.Forms.AnchorStyles.Left)
       | System.Windows.Forms.AnchorStyles.Right)));
@@ -50,9 +32,6 @@ namespace Eraser.DefaultPlugins
    this.passTxt.Size = new System.Drawing.Size(456, 188);
    this.passTxt.TabIndex = 6;
    this.passTxt.Validating += new System.ComponentModel.CancelEventHandler(this.passText_Validating);
-
-
-
    this.passTypeGrp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
       | System.Windows.Forms.AnchorStyles.Right)));
    this.passTypeGrp.Controls.Add(this.passTypeText);
@@ -62,9 +41,6 @@ namespace Eraser.DefaultPlugins
    this.passTypeGrp.Name = "passTypeGrp";
    this.passTypeGrp.Size = new System.Drawing.Size(456, 27);
    this.passTypeGrp.TabIndex = 5;
-
-
-
    this.passTypeText.AutoSize = true;
    this.passTypeText.Checked = true;
    this.passTypeText.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -77,9 +53,6 @@ namespace Eraser.DefaultPlugins
    this.passTypeText.UseVisualStyleBackColor = true;
    this.passTypeText.Validating += new System.ComponentModel.CancelEventHandler(this.passText_Validating);
    this.passTypeText.CheckedChanged += new System.EventHandler(this.passType_CheckedChanged);
-
-
-
    this.passTypeHex.AutoSize = true;
    this.passTypeHex.ImeMode = System.Windows.Forms.ImeMode.NoControl;
    this.passTypeHex.Location = new System.Drawing.Point(55, 3);
@@ -90,9 +63,6 @@ namespace Eraser.DefaultPlugins
    this.passTypeHex.UseVisualStyleBackColor = true;
    this.passTypeHex.Validating += new System.ComponentModel.CancelEventHandler(this.passText_Validating);
    this.passTypeHex.CheckedChanged += new System.EventHandler(this.passType_CheckedChanged);
-
-
-
    this.passTypeRandom.AutoSize = true;
    this.passTypeRandom.ImeMode = System.Windows.Forms.ImeMode.NoControl;
    this.passTypeRandom.Location = new System.Drawing.Point(147, 3);
@@ -102,13 +72,7 @@ namespace Eraser.DefaultPlugins
    this.passTypeRandom.Text = "Random";
    this.passTypeRandom.UseVisualStyleBackColor = true;
    this.passTypeRandom.CheckedChanged += new System.EventHandler(this.passType_CheckedChanged);
-
-
-
    this.errorProvider.ContainerControl = this;
-
-
-
    this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
    this.Controls.Add(this.passTxt);
@@ -120,11 +84,7 @@ namespace Eraser.DefaultPlugins
    ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
    this.ResumeLayout(false);
    this.PerformLayout();
-
   }
-
-
-
   private System.Windows.Forms.TextBox passTxt;
   private System.Windows.Forms.FlowLayoutPanel passTypeGrp;
   private System.Windows.Forms.RadioButton passTypeText;

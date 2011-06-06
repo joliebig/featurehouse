@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,11 +5,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-
 using System.Globalization;
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser
 {
  public partial class TaskPropertiesForm : Form
@@ -21,30 +17,17 @@ namespace Eraser
    InitializeComponent();
    UXThemeApi.UpdateControlTheme(this);
    scheduleTime.CustomFormat = DateTimeFormatInfo.CurrentInfo.ShortTimePattern;
-
-
    typeManual.Checked = true;
    scheduleDaily.Checked = true;
   }
-
-
-
-
   public Task Task
   {
    get { UpdateTaskFromUI(); return task; }
    set { task = value; UpdateUIFromTask(); }
   }
-
-
-
-
   private void UpdateTaskFromUI()
   {
-
    task.Name = name.Text;
-
-
    if (typeManual.Checked)
    {
     task.Schedule = Schedule.RunManually;
@@ -63,7 +46,6 @@ namespace Eraser
     task.Schedule = schedule;
     schedule.ExecutionTime = new DateTime(1, 1, 1, scheduleTime.Value.Hour,
      scheduleTime.Value.Minute, scheduleTime.Value.Second);
-
     if (scheduleDaily.Checked)
     {
      if (scheduleDailyByDay.Checked)
@@ -107,24 +89,15 @@ namespace Eraser
      throw new ArgumentException("No such scheduling method.");
    }
   }
-
-
-
-
   private void UpdateUIFromTask()
   {
-
    name.Text = task.Name;
-
-
    foreach (ErasureTarget target in task.Targets)
    {
     ListViewItem item = data.Items.Add(target.UIText);
     item.SubItems.Add(target.MethodDefined ? target.Method.Name : S._("(default)"));
     item.Tag = target;
    }
-
-
    if (task.Schedule == Schedule.RunManually)
    {
     typeManual.Checked = true;
@@ -142,7 +115,6 @@ namespace Eraser
     typeRecurring.Checked = true;
     RecurringSchedule schedule = (RecurringSchedule)task.Schedule;
     scheduleTime.Value = scheduleTime.MinDate.Add(schedule.ExecutionTime.TimeOfDay);
-
     switch (schedule.ScheduleType)
     {
      case RecurringScheduleUnit.Daily:
@@ -180,12 +152,6 @@ namespace Eraser
     }
    }
   }
-
-
-
-
-
-
   private void dataAdd_Click(object sender, EventArgs e)
   {
    using (TaskDataSelectionForm form = new TaskDataSelectionForm())
@@ -196,25 +162,17 @@ namespace Eraser
      ListViewItem item = data.Items.Add(target.UIText);
      item.SubItems.Add(target.MethodDefined ? target.Method.Name : S._("(default)"));
      item.Tag = target;
-
      task.Targets.Add(target);
      errorProvider.Clear();
     }
    }
   }
-
-
-
-
-
-
   private void data_ItemActivate(object sender, EventArgs e)
   {
    using (TaskDataSelectionForm form = new TaskDataSelectionForm())
    {
     ListViewItem item = data.SelectedItems[0];
     form.Target = task.Targets[item.Index];
-
     if (form.ShowDialog() == DialogResult.OK)
     {
      ErasureTarget target = form.Target;
@@ -224,12 +182,6 @@ namespace Eraser
     }
    }
   }
-
-
-
-
-
-
   private void dataContextMenuStrip_Opening(object sender, CancelEventArgs e)
   {
    if (data.SelectedIndices.Count == 0)
@@ -238,45 +190,24 @@ namespace Eraser
     return;
    }
   }
-
-
-
-
-
-
-
   private void deleteDataToolStripMenuItem_Click(object sender, EventArgs e)
   {
    if (data.SelectedIndices.Count == 0)
     return;
-
    foreach (ListViewItem obj in data.SelectedItems)
    {
     task.Targets.Remove((ErasureTarget)obj.Tag);
     data.Items.Remove(obj);
    }
   }
-
-
-
-
-
-
   private void taskType_CheckedChanged(object sender, EventArgs e)
   {
    scheduleTimeLbl.Enabled = scheduleTime.Enabled = schedulePattern.Enabled =
     scheduleDaily.Enabled = scheduleWeekly.Enabled =
     scheduleMonthly.Enabled = typeRecurring.Checked;
    nonRecurringPanel.Visible = !typeRecurring.Checked;
-
    scheduleSpan_CheckedChanged(sender, e);
   }
-
-
-
-
-
-
   private void scheduleSpan_CheckedChanged(object sender, EventArgs e)
   {
    scheduleDailyByDay.Enabled = scheduleDailyByDayLbl.Enabled =
@@ -292,26 +223,13 @@ namespace Eraser
     scheduleMonthlyEveryLbl.Enabled = scheduleMonthlyFreq.Enabled =
     scheduleMonthlyMonthLbl.Enabled = scheduleMonthly.Checked &&
     typeRecurring.Checked;
-
    scheduleDailySpan_CheckedChanged(sender, e);
   }
-
-
-
-
-
-
   private void scheduleDailySpan_CheckedChanged(object sender, EventArgs e)
   {
    scheduleDailyByDayFreq.Enabled = scheduleDailyByDay.Checked &&
     scheduleDaily.Checked && typeRecurring.Checked;
   }
-
-
-
-
-
-
   private void ok_Click(object sender, EventArgs e)
   {
    if (data.Items.Count == 0)
@@ -336,17 +254,10 @@ namespace Eraser
      return;
     }
    }
-
    errorProvider.Clear();
-
-
    DialogResult = DialogResult.OK;
    Close();
   }
-
-
-
-
   private Task task = new Task();
  }
 }

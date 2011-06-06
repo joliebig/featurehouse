@@ -32,13 +32,13 @@ py2exe_options = dict(
                "spambayes.languages.es_AR.DIALOGS," \
                "spambayes.languages.fr.DIALOGS," \
                "PIL,email",
-    excludes = "Tkinter," 
-                "win32ui,pywin,pywin.debugger," 
+    excludes = "Tkinter," # side-effect of PIL and markh doesn't have it :)
+                "win32ui,pywin,pywin.debugger," # *sob* - these still appear
                "ZODB,ZEO,zope,persistent,BTrees",
-    includes = "dialogs.resources.dialogs,weakref," 
-               "BmpImagePlugin,JpegImagePlugin", 
+    includes = "dialogs.resources.dialogs,weakref," # Outlook dynamic dialogs
+               "BmpImagePlugin,JpegImagePlugin", # PIL modules not auto found
     dll_excludes = "dapi.dll,mapi32.dll,powrprof.dll,"
-                   "tk84.dll,tcl84.dll", 
+                   "tk84.dll,tcl84.dll", # No Tkinter == no tk/tcl dlls
     typelibs = [
         ('{00062FFF-0000-0000-C000-000000000046}', 0, 9, 0, 'gen_py/outlook-9.py'),
         ('{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}', 0, 2, 1, 'gen_py/office-9.py'),

@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,19 +5,11 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Eraser.Util;
 using System.Globalization;
-
 namespace Eraser.Manager
 {
  public abstract class SettingsManager
  {
-
-
-
   public abstract void Save();
-
-
-
-
   public Settings ModuleSettings
   {
    get
@@ -28,53 +18,23 @@ namespace Eraser.Manager
      GetCustomAttributes(typeof(GuidAttribute), false)[0]).Value));
    }
   }
-
-
-
-
-
-
   protected abstract Settings GetSettings(Guid value);
  }
-
-
-
-
  public abstract class Settings
  {
-
-
-
-
-
   public abstract object this[string setting]
   {
    get;
    set;
   }
  }
-
-
-
-
-
-
  [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
  public abstract class DefaultAttribute : Attribute
  {
-
-
-
-
-
   protected DefaultAttribute(int priority)
   {
    Priority = priority;
   }
-
-
-
-
   public int Priority
   {
    get
@@ -86,91 +46,42 @@ namespace Eraser.Manager
     priority = value;
    }
   }
-
   private int priority;
  }
-
-
-
-
-
  [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
  public sealed class DefaultFileErasureAttribute : DefaultAttribute
  {
-
-
-
-
-
   public DefaultFileErasureAttribute(int priority)
    : base(priority)
   {
   }
  }
-
-
-
-
-
  [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
  public sealed class DefaultUnusedSpaceErasureAttribute : DefaultAttribute
  {
-
-
-
-
-
   public DefaultUnusedSpaceErasureAttribute(int priority)
    : base(priority)
   {
   }
  }
-
-
-
-
  [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
  public sealed class DefaultPrngAttribute : DefaultAttribute
  {
-
-
-
-
-
   public DefaultPrngAttribute(int priority)
    : base(priority)
   {
   }
  }
-
-
-
-
-
  public class ManagerSettings
  {
-
-
-
-
-
   public ManagerSettings()
   {
    settings = ManagerLibrary.Instance.SettingsManager.ModuleSettings;
   }
-
-
-
-
-
-
   public Guid DefaultFileErasureMethod
   {
    get
    {
-
-
-
     if (settings["DefaultFileErasureMethod"] == null)
     {
      Guid result = FindHighestPriorityDefault(typeof(ErasureMethod),
@@ -186,12 +97,6 @@ namespace Eraser.Manager
     settings["DefaultFileErasureMethod"] = value;
    }
   }
-
-
-
-
-
-
   public Guid DefaultUnusedSpaceErasureMethod
   {
    get
@@ -211,11 +116,6 @@ namespace Eraser.Manager
     settings["DefaultUnusedSpaceErasureMethod"] = value;
    }
   }
-
-
-
-
-
   public Guid ActivePrng
   {
    get
@@ -235,11 +135,6 @@ namespace Eraser.Manager
     settings["ActivePRNG"] = value;
    }
   }
-
-
-
-
-
   public bool ForceUnlockLockedFiles
   {
    get
@@ -253,10 +148,6 @@ namespace Eraser.Manager
     settings["ForceUnlockLockedFiles"] = value;
    }
   }
-
-
-
-
   public bool ExecuteMissedTasksImmediately
   {
    get
@@ -270,13 +161,6 @@ namespace Eraser.Manager
     settings["ExecuteMissedTasksImmediately"] = value;
    }
   }
-
-
-
-
-
-
-
   public bool PlausibleDeniability
   {
    get
@@ -290,10 +174,6 @@ namespace Eraser.Manager
     settings["PlausibleDeniability"] = value;
    }
   }
-
-
-
-
   public IList<string> PlausibleDeniabilityFiles
   {
    get

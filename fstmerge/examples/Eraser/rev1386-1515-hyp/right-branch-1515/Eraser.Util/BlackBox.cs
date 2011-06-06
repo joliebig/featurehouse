@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,18 +12,10 @@ using System.Drawing.Imaging;
 using System.Reflection;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
 namespace Eraser.Util
 {
-
-
-
-
  public class BlackBox
  {
-
-
-
   private static class NativeMethods
   {
    [DllImport("dbghelp.dll", SetLastError = true)]

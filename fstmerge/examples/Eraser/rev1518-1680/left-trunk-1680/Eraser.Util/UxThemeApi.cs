@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,15 +5,10 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
-
 namespace Eraser.Util
 {
  public static class UXThemeApi
  {
-
-
-
-
   public static void UpdateControlTheme(Control control)
   {
    if (control is ContainerControl)
@@ -23,35 +16,22 @@ namespace Eraser.Util
    else if (control.Font != SystemFonts.MessageBoxFont)
     control.Font = new Font(SystemFonts.MessageBoxFont.FontFamily,
      control.Font.Size, control.Font.Style);
-
    if (control is ButtonBase)
     UpdateControlTheme((ButtonBase)control);
    else if (control is ListView)
     UpdateControlTheme((ListView)control);
    else if (control is ToolStrip)
     UpdateControlTheme((ToolStrip)control);
-
    if (control.ContextMenuStrip != null)
     UpdateControlTheme(control.ContextMenuStrip);
-
    foreach (Control child in control.Controls)
     UpdateControlTheme(child);
   }
-
-
-
-
-
   public static void UpdateControlTheme(ButtonBase button)
   {
    if (button.FlatStyle == FlatStyle.Standard)
     button.FlatStyle = FlatStyle.System;
   }
-
-
-
-
-
   public static void UpdateControlTheme(ListView lv)
   {
    try
@@ -66,23 +46,15 @@ namespace Eraser.Util
    {
    }
   }
-
-
-
-
-
   public static void UpdateControlTheme(ToolStrip menu)
   {
-
    if (ThemeMessageFilter.Instance == null)
    {
     ThemeMessageFilter filter = new ThemeMessageFilter();
     ThemeMessageFilter.Instance.ThemeChanged += OnThemeChanged;
    }
-
    if (Environment.OSVersion.Version.Major >= 6)
    {
-
     UXThemeMenuRenderer renderer = new UXThemeMenuRenderer();
     if (menu.Renderer is ToolStripProfessionalRenderer)
     {
@@ -92,7 +64,6 @@ namespace Eraser.Util
       menu.Renderer = renderer;
     }
    }
-
    foreach (ToolStripItem item in menu.Items)
    {
     ToolStripMenuItem toolStripItem = item as ToolStripMenuItem;
@@ -100,23 +71,12 @@ namespace Eraser.Util
      UpdateControlTheme(toolStripItem);
    }
   }
-
-
-
-
-
   public static void UpdateControlTheme(ToolStripDropDownItem menuItem)
   {
    if (menuItem.Font != SystemFonts.MenuFont)
     menuItem.Font = new Font(SystemFonts.MenuFont, menuItem.Font.Style);
-
    UpdateControlTheme(menuItem.DropDown);
   }
-
-
-
-
-
   private static void OnThemeChanged(object sender, EventArgs e)
   {
    bool themesActive = NativeMethods.ThemesActive;
@@ -128,28 +88,12 @@ namespace Eraser.Util
      value.Key.RenderMode = ToolStripRenderMode.ManagerRenderMode;
    }
   }
-
-
-
-
-
   private static void OnThemedMenuDisposed(object sender, EventArgs e)
   {
    ThemedMenus.Remove(sender as ToolStrip);
   }
-
-
-
-
-
-
   private static Dictionary<ToolStrip, UXThemeMenuRenderer> ThemedMenus =
    new Dictionary<ToolStrip,UXThemeMenuRenderer>();
-
-
-
-
-
   private class ThemeMessageFilter : IMessageFilter
   {
    public ThemeMessageFilter()
@@ -161,8 +105,6 @@ namespace Eraser.Util
     ThemesActive = NativeMethods.ThemesActive;
     Application.AddMessageFilter(this);
    }
-
-
    public bool PreFilterMessage(ref Message m)
    {
     if (m.Msg == WM_THEMECHANGED)
@@ -178,43 +120,27 @@ namespace Eraser.Util
       ThemeChanged(null, EventArgs.Empty);
      }
     }
-
     return false;
    }
-
-
-
-
-
    public static ThemeMessageFilter Instance
    {
     get;
     private set;
    }
-
-
-
-
    public EventHandler<EventArgs> ThemeChanged
    {
     get;
     set;
    }
-
    private const int WM_THEMECHANGED = 0x031A;
    private const int WM_DWMCOMPOSITIONCHANGED = 0x031E;
    private bool ThemesActive;
   }
-
-
-
-
   internal static class NativeMethods
   {
    [DllImport("UxTheme.dll", CharSet = CharSet.Unicode)]
    [return: MarshalAs(UnmanagedType.Bool)]
    private static extern bool IsThemeActive();
-
    public static bool ThemesActive
    {
     get

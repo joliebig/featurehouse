@@ -8,9 +8,9 @@ import win32clipboard
 import mapi_driver
 try:
     TBL_ALL_COLUMNS = mapi.TBL_ALL_COLUMNS
-except AttributeError: 
+except AttributeError: # missing in early versions
     TBL_ALL_COLUMNS = 1
-PR_USERFIELDS = 0x36E30102 
+PR_USERFIELDS = 0x36E30102 # PROP_TAG(PT_BINARY, 0x36e3)
 def GetPropTagName(obj, prop_tag):
     hr, tags, array = obj.GetNamesFromIDs( (prop_tag,) )
     if type(array[0][1])==type(u''):
@@ -64,7 +64,7 @@ def FormatPropertyValue(prop_tag, prop_val, item, shorten, get_large_props):
     return prop_repr
 def DumpItemProps(item, shorten, get_large_props, stream=None):
     all_props = GetAllProperties(item)
-    all_props.sort() 
+    all_props.sort() # sort by first tuple item, which is name :)
     for prop_name, prop_tag, prop_val in all_props:
         if shorten and PROP_TYPE(prop_tag)==PT_ERROR \
            and prop_val == mapi.MAPI_E_NOT_FOUND:
@@ -194,7 +194,7 @@ def main():
         stream_name = tempfile.mktemp("spambayes")
         stream = open(stream_name, "w")
     if not folder_name:
-        folder_name = "Inbox" 
+        folder_name = "Inbox" # Assume this exists!
     subject = " ".join(args)
     is_table_dump = dump_folder_assoc_contents or \
                     dump_folder or dump_folder_user_props

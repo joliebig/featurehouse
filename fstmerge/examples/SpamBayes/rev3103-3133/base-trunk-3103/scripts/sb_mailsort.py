@@ -7,7 +7,7 @@ To print the score and top evidence for a message or messages:
     %(program)s -s message [message ...]
 """
 SPAM_CUTOFF = 0.57
-SIZE_LIMIT = 5000000 
+SIZE_LIMIT = 5000000 # messages larger are not analyzed
 BLOCK_SIZE = 10000
 RC_DIR = "~/.spambayes"
 DB_FILE = RC_DIR + "/wordprobs.cdb"
@@ -32,7 +32,7 @@ try:
     True, False
 except NameError:
     True, False = 1, 0
-program = sys.argv[0] 
+program = sys.argv[0] # For usage(); referenced by docstring above
 def usage(code, msg=''):
     """Print usage message and sys.exit(code)."""
     if msg:
@@ -84,7 +84,7 @@ def filter_message(hamdir, spamdir):
     signal.alarm(24 * 60 * 60)
     tmpfile, pathname, filename = maketmp(hamdir)
     try:
-        tmpfile.write(os.environ.get("DTLINE", "")) 
+        tmpfile.write(os.environ.get("DTLINE", "")) # delivered-to line
         bytes = 0
         blocks = []
         while 1:

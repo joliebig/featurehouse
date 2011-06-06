@@ -120,7 +120,7 @@ def make_socket(server_options, filename):
                 elif refused_count > 6:
                     raise
             else:
-                raise 
+                raise # some other problem
             time.sleep(0.2 * 2.0**no_server_count * 2.0**refused_count)
         else:
             return s

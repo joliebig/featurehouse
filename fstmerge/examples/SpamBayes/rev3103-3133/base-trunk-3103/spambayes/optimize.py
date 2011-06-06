@@ -1,4 +1,4 @@
-__version__ = '$Id: optimize.py,v 1.1 2010-07-27 11:48:34 joliebig Exp $'
+__version__ = '$Id: optimize.py 680 2003-01-14 05:38:20Z anthonybaxter $'
 import copy
 import Numeric
 def SimplexMaximize(var, err, func, convcrit = 0.001, minerr = 0.001):

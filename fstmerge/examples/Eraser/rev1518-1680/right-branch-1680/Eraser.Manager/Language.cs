@@ -1,29 +1,17 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Reflection;
 using System.IO;
-
 namespace Eraser.Manager
 {
-
-
-
  public class Language
  {
-
-
-
-
-
   public Language(CultureInfo info)
   {
    culture = info;
   }
-
   public override string ToString()
   {
    return culture.DisplayName;

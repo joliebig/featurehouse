@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +12,6 @@ using Eraser.Properties;
 using System.IO;
 using System.Diagnostics;
 using System.Reflection;
-
 namespace Eraser
 {
  public partial class MainForm : Form
@@ -22,7 +19,6 @@ namespace Eraser
   private BasePanel CurrPage;
   private SchedulerPanel SchedulerPage = new SchedulerPanel();
   private SettingsPanel SettingsPage = new SettingsPanel();
-
   public MainForm()
   {
    InitializeComponent();
@@ -30,34 +26,17 @@ namespace Eraser
    contentPanel.Controls.Add(SettingsPage);
    if (!IsHandleCreated)
     CreateHandle();
-
    Theming.ApplyTheme(this);
    Theming.ApplyTheme(notificationMenu);
-
-
-
    foreach (Task task in Program.eraserClient.Tasks)
     OnTaskAdded(this, new TaskEventArgs(task));
    Program.eraserClient.TaskAdded += OnTaskAdded;
    Program.eraserClient.TaskDeleted += OnTaskDeleted;
-
-
    hideWhenMinimisedToolStripMenuItem.Checked = EraserSettings.Get().HideWhenMinimised;
-
-
    SchedulerPage.Dock = DockStyle.Fill;
    SettingsPage.Visible = false;
-
-
    ChangePage(MainFormPage.Scheduler);
   }
-
-
-
-
-
-
-
   public void ShowNotificationBalloon(string title, string message, ToolTipIcon icon)
   {
    notificationIcon.BalloonTipTitle = title;
@@ -65,12 +44,6 @@ namespace Eraser
    notificationIcon.BalloonTipIcon = icon;
    notificationIcon.ShowBalloonTip(0);
   }
-
-
-
-
-
-
   public void ChangePage(MainFormPage page)
   {
    BasePanel oldPage = CurrPage;
@@ -83,17 +56,11 @@ namespace Eraser
      CurrPage = SettingsPage;
      break;
    }
-
    if (oldPage != CurrPage)
    {
     contentPanel.SuspendLayout();
-
-
     if (oldPage != null)
      oldPage.Visible = false;
-
-
-
     if (CurrPage.Dock == DockStyle.None)
     {
      CurrPage.Anchor = AnchorStyles.Left | AnchorStyles.Right |
@@ -102,76 +69,45 @@ namespace Eraser
      CurrPage.Top = 0;
      CurrPage.Width = contentPanel.Width;
     }
-
-
     CurrPage.Visible = true;
     CurrPage.BringToFront();
     contentPanel.ResumeLayout();
    }
   }
-
   private static GraphicsPath CreateRoundRect(float X, float Y, float width,
    float height, float radius)
   {
    GraphicsPath result = new GraphicsPath();
-
-
    result.AddLine(X + radius, Y, X + width - 2 * radius, Y);
-
-
    result.AddArc(X + width - 2 * radius, Y, 2 * radius, 2 * radius, 270, 90);
-
-
    result.AddLine(X + width, Y + radius, X + width, Y + height - 2 * radius);
-
-
    result.AddArc(X + width - 2 * radius, Y + height - 2 * radius, 2 * radius, 2 * radius, 0, 90);
-
-
    result.AddLine(X + width - 2 * radius, Y + height, X + radius, Y + height);
-
-
    result.AddArc(X, Y + height - 2 *radius, 2 * radius, 2 * radius, 90, 90);
-
-
    result.AddLine(X, Y + height - 2 * radius, X, Y + radius);
-
-
    result.AddArc(X, Y, 2 * radius, 2 * radius, 180, 90);
    result.CloseFigure();
-
    return result;
   }
-
   private void DrawBackground(Graphics dc)
   {
-
    dc.FillRectangle(new SolidBrush(Color.FromArgb(unchecked((int)0xFF292929))),
     new Rectangle(new Point(0, 0), Size));
-
-
    dc.FillRectangle(new LinearGradientBrush(new Rectangle(0, 0, 338, Math.Max(1, ClientSize.Height)),
      Color.FromArgb(unchecked((int)0xFF363636)),
      Color.FromArgb(unchecked((int)0xFF292929)), 0.0),
     0, 0, 338, ClientSize.Height);
-
-
    dc.FillRectangle(new SolidBrush(Color.FromArgb(unchecked((int)0xFF414141))),
     new Rectangle(0, 0, ClientSize.Width, 32));
-
-
    dc.DrawImage(Properties.Resources.BackgroundGradient, new Point(0, 0));
-
    dc.SmoothingMode = SmoothingMode.AntiAlias;
    dc.FillPath(Brushes.White, CreateRoundRect(11, 74, contentPanel.Width + 8, ClientSize.Height - 85, 3));
   }
-
   private void MainForm_Paint(object sender, PaintEventArgs e)
   {
    e.Graphics.SetClip(new Rectangle(0, 0, Width, Height), CombineMode.Intersect);
    DrawBackground(e.Graphics);
   }
-
   private void MainForm_Resize(object sender, EventArgs e)
   {
    if (WindowState != FormWindowState.Minimized)
@@ -179,7 +115,6 @@ namespace Eraser
     Bitmap bmp = new Bitmap(Width, Height);
     Graphics dc = Graphics.FromImage(bmp);
     DrawBackground(dc);
-
     CreateGraphics().DrawImage(bmp, new Point(0, 0));
    }
    else if (EraserSettings.Get().HideWhenMinimised)
@@ -187,17 +122,14 @@ namespace Eraser
     Visible = false;
    }
   }
-
   private void tbSchedule_Click(object sender, EventArgs e)
   {
    ChangePage(MainFormPage.Scheduler);
   }
-
   private void tbSettings_Click(object sender, EventArgs e)
   {
    ChangePage(MainFormPage.Settings);
   }
-
   private void newTaskToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (TaskPropertiesForm form = new TaskPropertiesForm())
@@ -209,7 +141,6 @@ namespace Eraser
     }
    }
   }
-
   private void exportTaskListToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (SaveFileDialog dialog = new SaveFileDialog())
@@ -217,7 +148,6 @@ namespace Eraser
     dialog.Filter = "Eraser 6 task lists (*.ersx)|*.ersx";
     dialog.DefaultExt = "ersx";
     dialog.OverwritePrompt = true;
-
     if (dialog.ShowDialog() == DialogResult.OK)
     {
      using (FileStream stream = new FileStream(dialog.FileName,
@@ -228,14 +158,12 @@ namespace Eraser
     }
    }
   }
-
   private void importTaskListToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (OpenFileDialog dialog = new OpenFileDialog())
    {
     dialog.Filter = "Eraser 6 task lists (*.ersx)|*.ersx";
     dialog.DefaultExt = "ersx";
-
     if (dialog.ShowDialog() == DialogResult.OK)
     {
      using (FileStream stream = new FileStream(dialog.FileName,
@@ -246,7 +174,6 @@ namespace Eraser
     }
    }
   }
-
   private void tbHelp_Click(object sender, EventArgs e)
   {
    try
@@ -265,7 +192,6 @@ namespace Eraser
       MessageBoxOptions.RtlReading | MessageBoxOptions.RightAlign : 0);
    }
   }
-
   private void checkForUpdatesToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (UpdateForm form = new UpdateForm())
@@ -273,7 +199,6 @@ namespace Eraser
     form.ShowDialog();
    }
   }
-
   private void aboutEraserToolStripMenuItem_Click(object sender, EventArgs e)
   {
    using (AboutForm form = new AboutForm(this))
@@ -281,25 +206,20 @@ namespace Eraser
     form.ShowDialog();
    }
   }
-
   private void eraserLogo_Click(object sender, EventArgs e)
   {
    Process.Start("http://eraser.heidi.ie/");
   }
-
-
   void OnTaskAdded(object sender, TaskEventArgs e)
   {
    e.Task.TaskStarted += OnTaskProcessing;
    e.Task.TaskFinished += OnTaskProcessed;
   }
-
   void OnTaskDeleted(object sender, TaskEventArgs e)
   {
    e.Task.TaskStarted -= OnTaskProcessing;
    e.Task.TaskFinished -= OnTaskProcessed;
   }
-
   void OnTaskProcessing(object sender, EventArgs e)
   {
    if (InvokeRequired)
@@ -307,17 +227,14 @@ namespace Eraser
     Invoke((EventHandler)OnTaskProcessing, sender, e);
     return;
    }
-
    Task task = (Task)sender;
    string iconText = S._("Eraser") + " - " + S._("Processing:") + ' ' + task.UIText;
    if (iconText.Length >= 64)
     iconText = iconText.Remove(60) + "...";
-
    ProcessingAnimationFrame = 0;
    notificationIcon.Text = iconText;
    notificationIconTimer.Enabled = true;
   }
-
   void OnTaskProcessed(object sender, EventArgs e)
   {
    if (InvokeRequired)
@@ -325,8 +242,6 @@ namespace Eraser
     Invoke((EventHandler)OnTaskProcessed, sender, e);
     return;
    }
-
-
    notificationIconTimer.Enabled = false;
    if (notificationIcon.Icon != null)
    {
@@ -334,14 +249,12 @@ namespace Eraser
     resources.ApplyResources(notificationIcon, "notificationIcon");
    }
   }
-
   private void notificationIconTimer_Tick(object sender, EventArgs e)
   {
    notificationIcon.Icon = ProcessingAnimationFrames[ProcessingAnimationFrame++];
    if (ProcessingAnimationFrame == ProcessingAnimationFrames.Length)
     ProcessingAnimationFrame = 0;
   }
-
   private int ProcessingAnimationFrame;
   private Icon[] ProcessingAnimationFrames = new Icon[] {
    Resources.NotifyBusy1,
@@ -354,9 +267,6 @@ namespace Eraser
    Resources.NotifyBusy2,
    Resources.NotifyBusy1
   };
-
-
-
   private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
   {
    if (EraserSettings.Get().HideWhenMinimised && e.CloseReason == CloseReason.UserClosing)
@@ -365,7 +275,6 @@ namespace Eraser
     Visible = false;
    }
   }
-
   private void MainForm_VisibleChanged(object sender, EventArgs e)
   {
    if (Visible)
@@ -374,25 +283,20 @@ namespace Eraser
     Activate();
    }
   }
-
   private void openToolStripMenuItem_Click(object sender, EventArgs e)
   {
    Visible = true;
   }
-
   private void exitToolStripMenuItem_Click(object sender, EventArgs e)
   {
    Application.Exit();
   }
-
   private void hideWhenMinimiseToolStripMenuItem_Click(object sender, EventArgs e)
   {
    EraserSettings.Get().HideWhenMinimised =
     hideWhenMinimisedToolStripMenuItem.Checked;
   }
-
  }
-
  public enum MainFormPage
  {
   Scheduler = 0,

@@ -112,7 +112,7 @@ class TestSMTPServer(Dibbler.BrighterAsyncChat):
                           (self.request,))
         self.request = ''
     def onKill(self, args):
-        self.push("221 Goodbye\n") 
+        self.push("221 Goodbye\n") # Why not be polite <wink>
         self.socket.shutdown(2)
         self.close()
         raise SystemExit

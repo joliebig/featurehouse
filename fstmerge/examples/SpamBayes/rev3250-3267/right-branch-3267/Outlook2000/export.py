@@ -5,7 +5,7 @@ DEFAULT_DIRECTORY = "..\\testtools\\Data"
 import re
 mime_header_re = re.compile(r"""
     ^ content- (type | transfer-encoding) : [^\n]* \n
-    ([ \t] [^\n]* \n)*  
+    ([ \t] [^\n]* \n)*  # suck up adjacent continuation lines
 """, re.VERBOSE | re.MULTILINE | re.IGNORECASE)
 def count_messages(folder):
     result = 0
@@ -35,11 +35,11 @@ def get_text(msg, old_style):
         pass
     email_object = msg.GetEmailPackageObject(strip_mime_headers=False)
     text = email_object.as_string()
-    i = text.find('\n\n')  
+    i = text.find('\n\n')  # boundary between headers and body
     if i < 0:
         i = len(text) - 2
     headers, body = text[:i+2], text[i+2:]
-    headers = mime_header_re.sub('', headers) 
+    headers = mime_header_re.sub('', headers) # remove troublesome headers
     text = headers + body
     import email
     email.message_from_string(text)

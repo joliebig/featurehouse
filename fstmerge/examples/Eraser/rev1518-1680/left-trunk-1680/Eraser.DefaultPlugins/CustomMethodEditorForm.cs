@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,7 +8,6 @@ using System.Windows.Forms;
 using System.Globalization;
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
  public partial class CustomMethodEditorForm : Form
@@ -20,11 +17,6 @@ namespace Eraser.DefaultPlugins
    InitializeComponent();
    UXThemeApi.UpdateControlTheme(this);
   }
-
-
-
-
-
   public CustomErasureMethod Method
   {
    get
@@ -34,42 +26,23 @@ namespace Eraser.DefaultPlugins
      method = new CustomErasureMethod();
      method.Guid = Guid.NewGuid();
     }
-
-
     method.Name = nameTxt.Text;
-
-
     method.RandomizePasses = randomizeChk.Checked;
-
-
     ErasureMethodPass[] passes = new ErasureMethodPass[passesLv.Items.Count];
     for (int i = 0; i < passesLv.Items.Count; ++i)
      passes[i] = (ErasureMethodPass)passesLv.Items[i].Tag;
     method.Passes = passes;
-
     return method;
    }
    set
    {
     method = value;
-
-
     nameTxt.Text = method.Name;
-
-
     randomizeChk.Checked = method.RandomizePasses;
-
-
     foreach (ErasureMethodPass pass in method.Passes)
      AddPass(pass);
    }
   }
-
-
-
-
-
-
   private ListViewItem AddPass(ErasureMethodPass pass)
   {
    ListViewItem item = new ListViewItem((passesLv.Items.Count + 1).ToString(
@@ -79,14 +52,9 @@ namespace Eraser.DefaultPlugins
     item.SubItems.Add(S._("Random Data"));
    else
     item.SubItems.Add(S._("Constant ({0} bytes)", ((byte[])pass.OpaqueValue).Length));
-
    passesLv.Items.Add(item);
    return item;
   }
-
-
-
-
   private void SavePass(ListViewItem item)
   {
    ErasureMethodPass pass = (ErasureMethodPass)item.Tag;
@@ -103,11 +71,6 @@ namespace Eraser.DefaultPlugins
     item.SubItems[1].Text = S._("Constant ({0} bytes)", passEditor.PassData.Length);
    }
   }
-
-
-
-
-
   private void DisplayPass(ListViewItem item)
   {
    currentPass = item;
@@ -117,36 +80,22 @@ namespace Eraser.DefaultPlugins
     CustomMethodPassEditorPassType.Random :
     CustomMethodPassEditorPassType.Text;
   }
-
-
-
-
   private void RenumberPasses()
   {
    foreach (ListViewItem item in passesLv.Items)
     item.Text = (item.Index + 1).ToString(CultureInfo.CurrentCulture);
   }
-
-
-
-
   private void EnableButtons()
   {
    passesRemoveBtn.Enabled = passesDuplicateBtn.Enabled = passesLv.SelectedItems.Count >= 1;
    passGrp.Enabled = passEditor.Enabled = passesLv.SelectedItems.Count == 1;
   }
-
   private void passesAddBtn_Click(object sender, EventArgs e)
   {
-
    if (currentPass != null)
     SavePass(currentPass);
-
-
    ErasureMethodPass pass = new ErasureMethodPass(ErasureMethod.WriteRandom, null);
    ListViewItem item = AddPass(pass);
-
-
    if (passesLv.SelectedIndices.Count > 0)
    {
     item.Remove();
@@ -155,20 +104,15 @@ namespace Eraser.DefaultPlugins
     RenumberPasses();
    }
   }
-
   private void passesRemoveBtn_Click(object sender, EventArgs e)
   {
    foreach (ListViewItem item in passesLv.SelectedItems)
     passesLv.Items.Remove(item);
-
    RenumberPasses();
   }
-
   private void passesDuplicateBtn_Click(object sender, EventArgs e)
   {
-
    SavePass(currentPass);
-
    foreach (ListViewItem item in passesLv.SelectedItems)
    {
     ErasureMethodPass oldPass = (ErasureMethodPass)item.Tag;
@@ -177,16 +121,11 @@ namespace Eraser.DefaultPlugins
     AddPass(pass);
    }
   }
-
   private void passesLv_ItemDrag(object sender, ItemDragEventArgs e)
   {
-
    SavePass(currentPass);
-
-
    passesLv.DoDragDrop(passesLv.SelectedItems, DragDropEffects.All);
   }
-
   private void passesLv_DragEnter(object sender, DragEventArgs e)
   {
    ListView.SelectedListViewItemCollection items =
@@ -194,26 +133,20 @@ namespace Eraser.DefaultPlugins
      ListView.SelectedListViewItemCollection;
    if (items == null)
     return;
-
    e.Effect = DragDropEffects.Move;
   }
-
   ListViewItem lastInsertionPoint = null;
   private void passesLv_GiveFeedback(object sender, GiveFeedbackEventArgs e)
   {
    e.UseDefaultCursors = true;
    Point mousePoint = passesLv.PointToClient(Cursor.Position);
    ListViewItem insertionPoint = GetInsertionPoint(mousePoint);
-
    if (insertionPoint != lastInsertionPoint)
    {
     passesLv.Invalidate();
     passesLv.Update();
-
     using (Graphics g = passesLv.CreateGraphics())
     {
-
-
      if (insertionPoint == null)
      {
       if (passesLv.Items.Count > 0)
@@ -234,17 +167,12 @@ namespace Eraser.DefaultPlugins
        insertionPoint.Bounds.Left, insertionPoint.Bounds.Top - 1, passesLv.Width, 2);
      }
     }
-
     lastInsertionPoint = insertionPoint;
    }
   }
-
   private void passesLv_DragDrop(object sender, DragEventArgs e)
   {
-
    lastInsertionPoint = null;
-
-
    ListView.SelectedListViewItemCollection draggedItems =
     e.Data.GetData(typeof(ListView.SelectedListViewItemCollection)) as
      ListView.SelectedListViewItemCollection;
@@ -253,24 +181,14 @@ namespace Eraser.DefaultPlugins
     items.Add(item);
    Point mousePoint = passesLv.PointToClient(Cursor.Position);
    ListViewItem dropItem = GetInsertionPoint(mousePoint);
-
-
    if (items == null || items.Count == 0)
     return;
-
-
    if (items.IndexOf(dropItem) != -1)
     return;
-
-
    passesLv.BeginUpdate();
    passesLv.Invalidate();
-
-
    foreach (ListViewItem item in items)
     item.Remove();
-
-
    if (dropItem == null)
    {
     foreach (ListViewItem item in items)
@@ -281,18 +199,13 @@ namespace Eraser.DefaultPlugins
     foreach (ListViewItem item in items)
      passesLv.Items.Insert(dropItem.Index, item);
    }
-
-
    RenumberPasses();
    EnableButtons();
    passesLv.EndUpdate();
   }
-
   private void passesLv_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
   {
    EnableButtons();
-
-
    if (!e.Item.Selected)
    {
     if (e.Item == currentPass)

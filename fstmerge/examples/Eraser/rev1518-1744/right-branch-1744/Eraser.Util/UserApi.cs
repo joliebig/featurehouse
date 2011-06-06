@@ -1,18 +1,12 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Drawing;
-
 namespace Eraser.Util
 {
  public static class UserApi
  {
-
-
-
   public static Point CaretPos
   {
    get
@@ -23,10 +17,6 @@ namespace Eraser.Util
     return Point.Empty;
    }
   }
-
-
-
-
   public static uint MessagePos
   {
    get
@@ -34,10 +24,6 @@ namespace Eraser.Util
     return NativeMethods.GetMessagePos();
    }
   }
-
-
-
-
   public static int MessageTime
   {
    get

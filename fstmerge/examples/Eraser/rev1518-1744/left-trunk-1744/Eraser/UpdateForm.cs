@@ -1,5 +1,3 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,29 +13,18 @@ using Eraser.Util;
 using System.Net.Cache;
 using System.Net.Mime;
 using System.Globalization;
-
 namespace Eraser
 {
  public partial class UpdateForm : Form
  {
-
-
-
   public UpdateForm()
   {
    InitializeComponent();
    UXThemeApi.UpdateControlTheme(this);
    updateListDownloader.RunWorkerAsync();
   }
-
-
-
-
-
-
   private void UpdateForm_FormClosing(object sender, FormClosingEventArgs e)
   {
-
    if (updateListDownloader.IsBusy || downloader.IsBusy || installer.IsBusy)
    {
     updateListDownloader.CancelAsync();
@@ -46,23 +33,10 @@ namespace Eraser
     e.Cancel = true;
    }
   }
-
-
-
-
-
-
   private void cancelBtn_Click(object sender, EventArgs e)
   {
    Close();
   }
-
-
-
-
-
-
-
   private void updateListDownloader_DoWork(object sender, DoWorkEventArgs e)
   {
    try
@@ -75,73 +49,45 @@ namespace Eraser
     updates.OnProgressEvent -= updateListDownloader_ProgressChanged;
    }
   }
-
-
-
-
-
-
   private void updateListDownloader_ProgressChanged(object sender, ProgressEventArgs e)
   {
    if (InvokeRequired)
    {
     if (updateListDownloader.CancellationPending)
      throw new OperationCanceledException();
-
     Invoke(new EventHandler<ProgressEventArgs>(
      updateListDownloader_ProgressChanged), sender, e);
     return;
    }
-
    progressPb.Style = ProgressBarStyle.Continuous;
    progressPb.Value = (int)(e.OverallProgressPercentage * 100);
    progressProgressLbl.Text = e.Message;
-
    if (progressPb.Value == 100)
     progressProgressLbl.Text = S._("Processing update list...");
   }
-
-
-
-
-
-
-
   private void updateListDownloader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
   {
-
    if (e.Error != null)
    {
     if (!(e.Error is OperationCanceledException))
      MessageBox.Show(this, e.Error.Message, S._("Eraser"), MessageBoxButtons.OK,
       MessageBoxIcon.Error, MessageBoxDefaultButton.Button1,
       S.IsRightToLeft(this) ? MessageBoxOptions.RtlReading : 0);
-
     Close();
     return;
    }
-
    progressPanel.Visible = false;
    updatesPanel.Visible = true;
-
-
    Dictionary<string, Mirror>.Enumerator iter = updates.Mirrors.GetEnumerator();
    while (iter.MoveNext())
     updatesMirrorCmb.Items.Add(iter.Current.Value);
    updatesMirrorCmb.SelectedIndex = 0;
-
-
-
    Dictionary<string, string> updateCategories = new Dictionary<string, string>();
    updateCategories.Add("update", S._("Updates"));
    updateCategories.Add("plugin", S._("Plugins"));
-
-
    List<string> compatibleArchs = new List<string>();
    {
-
     compatibleArchs.Add("any");
-
     switch (KernelApi.ProcessorArchitecture)
     {
      case ProcessorArchitecture.Amd64:
@@ -155,36 +101,27 @@ namespace Eraser
       break;
     }
    }
-
    foreach (string key in updates.Categories)
    {
     ListViewGroup group = new ListViewGroup(updateCategories.ContainsKey(key) ?
      updateCategories[key] : key);
     updatesLv.Groups.Add(group);
-
     foreach (UpdateInfo update in updates.Updates[key])
     {
-
      if (compatibleArchs.IndexOf(update.Architecture) == -1)
       continue;
-
      ListViewItem item = new ListViewItem(update.Name);
      item.SubItems.Add(update.Version.ToString());
      item.SubItems.Add(update.Publisher);
      item.SubItems.Add(Util.File.GetHumanReadableFilesize(update.FileSize));
-
      item.Tag = update;
      item.Group = group;
      item.Checked = true;
-
      updatesLv.Items.Add(item);
      uiUpdates.Add(update, new UpdateData(update, item));
     }
    }
-
    updatesBtn.Enabled = updatesLv.Items.Count > 0;
-
-
    if (updatesLv.Items.Count == 0)
    {
     MessageBox.Show(this, S._("There are no new updates or plugins available for " +

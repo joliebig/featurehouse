@@ -52,7 +52,7 @@ try:
             this_filename = os.path.abspath(sys.argv[0])
     else:
         this_filename = os.path.abspath(__file__)
-except NameError: 
+except NameError: # no __file__
     this_filename = os.path.abspath(sys.argv[0])
 this_dir = os.path.dirname(this_filename)
 if not hasattr(sys, "frozen"):
@@ -405,7 +405,7 @@ class MainWindow(object):
     def ShowHTML(self, url):
         """Displays the main SpamBayes documentation in your Web browser"""
         import sys, os, urllib
-        if urllib.splittype(url)[0] is None: 
+        if urllib.splittype(url)[0] is None: # just a file spec
             if hasattr(sys, "frozen"):
                 fname = os.path.join(os.path.dirname(sys.argv[0]),
                                      "..", "docs", "sb_server", url)

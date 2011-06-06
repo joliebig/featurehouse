@@ -37,9 +37,9 @@ def main():
         server = BNServer(args[0], BNRequest)
     except socket.error,e:
         if e[0] == errno.EADDRINUSE:
-            pass   
+            pass   # in use, no need
         else:
-            raise  
+            raise  # a real error
     else:
         try:
             from spambayes import Options, storage

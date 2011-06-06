@@ -20,24 +20,24 @@ Abstract:
 Usage:
     A typical classification usage pattern would be something like:
     >>> import email
-    >>> 
+    >>> # substance comes from somewhere else
     >>> msg = email.message_from_string(substance, _class=SBHeaderMessage)
     >>> id = msg.setIdFromPayload()
     >>> if id is None:
-    >>>     msg.setId(time())   
-    >>> msg.delSBHeaders()      
-    >>> 
+    >>>     msg.setId(time())   # or some unique identifier
+    >>> msg.delSBHeaders()      # never include sb headers in a classification
+    >>> # bayes object is your responsibility
     >>> (prob, clues) = bayes.spamprob(msg.asTokens(), evidence=True)
     >>> msg.addSBHeaders(prob, clues)
     A typical usage pattern to train as spam would be something like:
     >>> import email
-    >>> 
+    >>> # substance comes from somewhere else
     >>> msg = email.message_from_string(substance, _class=SBHeaderMessage)
-    >>> id = msg.setId(msgid)     
-    >>> msg.delSBHeaders()        
-    >>> if msg.getTraining() == False:   
-    >>>     bayes.unlearn(msg.asTokens(), False)  
-    >>> bayes.learn(msg.asTokens(), True) 
+    >>> id = msg.setId(msgid)     # id is a fname, outlook msg id, something...
+    >>> msg.delSBHeaders()        # never include sb headers in a train
+    >>> if msg.getTraining() == False:   # could be None, can't do boolean test
+    >>>     bayes.unlearn(msg.asTokens(), False)  # untrain the ham
+    >>> bayes.learn(msg.asTokens(), True) # train as spam
     >>> msg.rememberTraining(True)
 To Do:
     o Suggestions?
@@ -197,7 +197,7 @@ class _PersistentMessageInfo(MessageInfoBase, Persistent):
 class MessageInfoZODB(storage.ZODBClassifier):
     ClassifierClass = _PersistentMessageInfo
     def __init__(self, db_name, mode='c'):
-        self.nham = self.nspam = 0 
+        self.nham = self.nspam = 0 # Only used for debugging prints
         storage.ZODBClassifier.__init__(self, db_name, mode)
         self.classifier.store = self.store
         self.db = self.classifier
@@ -299,7 +299,7 @@ class Message(object, email.Message.Message):
                 parts.append(email.Message.Message.as_string(part, unixfrom))
             return self._force_CRLF("\n".join(parts))
     def modified(self):
-        if self.id:    
+        if self.id:    # only persist if key is present
             self.message_info_db.store_msg(self)
     def GetClassification(self):
         if self.c == PERSISTENT_SPAM_STRING:
@@ -489,7 +489,7 @@ class SBHeaderMessage(Message):
     def delSBHeaders(self):
         del self[options['Headers', 'classification_header_name']]
         del self[options['Headers', 'mailid_header_name']]
-        del self[options['Headers', 'classification_header_name'] + "-ID"]  
+        del self[options['Headers', 'classification_header_name'] + "-ID"]  # test mode header
         del self[options['Headers', 'thermostat_header_name']]
         del self[options['Headers', 'evidence_header_name']]
         del self[options['Headers', 'score_header_name']]

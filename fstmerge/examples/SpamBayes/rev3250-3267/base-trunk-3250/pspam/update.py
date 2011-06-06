@@ -15,7 +15,8 @@ def main(rebuild=False):
     r = db.open().root()
     profile = r.get("profile")
     if profile is None or rebuild:
-        profile = r["profile"] = Profile(options["ZODB", "folder_dir"])
+        r["profile"] = Profile(options["ZODB", "folder_dir"])
+        profile = r["profile"]
         get_transaction().commit()
     for ham in options["ZODB", "ham_folders"].split(os.pathsep):
         p = os.path.join(options["ZODB", "folder_dir"], ham)

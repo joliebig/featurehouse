@@ -215,7 +215,7 @@ class SBHeaderMessageTest(unittest.TestCase):
                                           'thermostat_header_name']], "")
     def test_evidence_header(self):
         options['Headers', 'include_evidence'] = True
-        options['Headers', 'clue_mailheader_cutoff'] = 0.5 
+        options['Headers', 'clue_mailheader_cutoff'] = 0.5 # all
         self.msg.addSBHeaders(self.g_prob, self.clues)
         header = self.msg[options['Headers', 'evidence_header_name']]
         header_clues = [s.split(':') for s in \

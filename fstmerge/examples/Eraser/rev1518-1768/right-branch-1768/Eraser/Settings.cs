@@ -1,67 +1,43 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
-
 using System.IO;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Win32;
-
 using Eraser.Util;
-
 namespace Eraser
 {
  internal class Settings : Manager.SettingsManager
  {
-
-
-
   private class RegistrySettings : Manager.Settings, IDisposable
   {
-
-
-
-
-
    public RegistrySettings(Guid pluginId, RegistryKey key)
    {
     this.pluginID = pluginId;
     this.key = key;
    }
-
-
-
    ~RegistrySettings()
    {
     Dispose(false);
    }
-
    public void Dispose()
    {
     Dispose(true);
     GC.SuppressFinalize(this);
    }
-
    private void Dispose(bool disposing)
    {
     if (disposing)
      key.Close();
    }
-
-
-
    public override object this[string setting]
    {
     get
     {
-
      object rawResult = key.GetValue(setting, null);
-
-
      byte[] resultArray = rawResult as byte[];
      if (resultArray != null)
      {
@@ -86,7 +62,6 @@ namespace Eraser
      {
       return rawResult;
      }
-
      return null;
     }
     set
@@ -114,38 +89,23 @@ namespace Eraser
      }
     }
    }
-
-
-
-
    private Guid pluginID;
-
-
-
-
    private RegistryKey key;
   }
-
   public override void Save()
   {
   }
-
   protected override Manager.Settings GetSettings(Guid guid)
   {
    RegistryKey eraserKey = null;
-
    try
    {
-
     eraserKey = Registry.CurrentUser.OpenSubKey(Program.SettingsPath, true);
     if (eraserKey == null)
      eraserKey = Registry.CurrentUser.CreateSubKey(Program.SettingsPath);
-
     RegistryKey pluginsKey = eraserKey.OpenSubKey(guid.ToString(), true);
     if (pluginsKey == null)
      pluginsKey = eraserKey.CreateSubKey(guid.ToString());
-
-
     return new RegistrySettings(guid, pluginsKey);
    }
    finally
@@ -155,31 +115,18 @@ namespace Eraser
    }
   }
  }
-
  internal class EraserSettings
  {
-
-
-
   private EraserSettings()
   {
    settings = Manager.ManagerLibrary.Instance.SettingsManager.ModuleSettings;
   }
-
-
-
-
-
   public static EraserSettings Get()
   {
    if (instance == null)
     instance = new EraserSettings();
    return instance;
   }
-
-
-
-
   public string Language
   {
    get
@@ -193,10 +140,6 @@ namespace Eraser
     settings["Language"] = value;
    }
   }
-
-
-
-
   public bool IntegrateWithShell
   {
    get
@@ -210,11 +153,6 @@ namespace Eraser
     settings["IntegrateWithShell"] = value;
    }
   }
-
-
-
-
-
   public bool HideWhenMinimised
   {
    get
@@ -228,11 +166,6 @@ namespace Eraser
     settings["HideWhenMinimised"] = value;
    }
   }
-
-
-
-
-
   public bool ClearCompletedTasks
   {
    get
@@ -246,12 +179,6 @@ namespace Eraser
     settings["ClearCompletedTasks"] = value;
    }
   }
-
-
-
-
-
-
   private static CultureInfo GetCurrentCulture()
   {
    System.Reflection.Assembly entryAssembly = System.Reflection.Assembly.GetEntryAssembly();
@@ -261,22 +188,11 @@ namespace Eraser
    {
     culture = culture.Parent;
    }
-
-
    if (!S.LocalisationExists(culture, entryAssembly))
     culture = new CultureInfo("en");
-
    return culture;
   }
-
-
-
-
   private Manager.Settings settings;
-
-
-
-
   private static EraserSettings instance;
  }
 }

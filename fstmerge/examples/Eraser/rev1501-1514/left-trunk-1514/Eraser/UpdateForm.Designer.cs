@@ -1,18 +1,8 @@
-
-
 namespace Eraser
 {
  partial class UpdateForm
  {
-
-
-
   private System.ComponentModel.IContainer components = null;
-
-
-
-
-
   protected override void Dispose(bool disposing)
   {
    if (disposing && (components != null))
@@ -21,13 +11,6 @@ namespace Eraser
    }
    base.Dispose(disposing);
   }
-
-
-
-
-
-
-
   private void InitializeComponent()
   {
    this.components = new System.ComponentModel.Container();
@@ -72,15 +55,9 @@ namespace Eraser
    this.downloadingPnl.SuspendLayout();
    this.installingPnl.SuspendLayout();
    this.SuspendLayout();
-
-
-
    this.updateListDownloader.WorkerSupportsCancellation = true;
    this.updateListDownloader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.updateListDownloader_DoWork);
    this.updateListDownloader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.updateListDownloader_RunWorkerCompleted);
-
-
-
    this.updatesPanel.BackColor = System.Drawing.SystemColors.Control;
    this.updatesPanel.Controls.Add(this.updatesMirrorCmb);
    this.updatesPanel.Controls.Add(this.updatesMirrorLbl);
@@ -89,21 +66,12 @@ namespace Eraser
    this.updatesPanel.Controls.Add(this.updatesLbl);
    resources.ApplyResources(this.updatesPanel, "updatesPanel");
    this.updatesPanel.Name = "updatesPanel";
-
-
-
    resources.ApplyResources(this.updatesMirrorCmb, "updatesMirrorCmb");
    this.updatesMirrorCmb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
    this.updatesMirrorCmb.Name = "updatesMirrorCmb";
-
-
-
    resources.ApplyResources(this.updatesMirrorLbl, "updatesMirrorLbl");
    this.updatesMirrorLbl.ForeColor = System.Drawing.SystemColors.ControlText;
    this.updatesMirrorLbl.Name = "updatesMirrorLbl";
-
-
-
    resources.ApplyResources(this.updatesLv, "updatesLv");
    this.updatesLv.CheckBoxes = true;
    this.updatesLv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -116,38 +84,17 @@ namespace Eraser
    this.updatesLv.UseCompatibleStateImageBehavior = false;
    this.updatesLv.View = System.Windows.Forms.View.Details;
    this.updatesLv.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.updatesLv_ItemChecked);
-
-
-
    resources.ApplyResources(this.updatesLvNameCol, "updatesLvNameCol");
-
-
-
    resources.ApplyResources(this.updatesLvVersionCol, "updatesLvVersionCol");
-
-
-
    resources.ApplyResources(this.updatesLvPublisherCol, "updatesLvPublisherCol");
-
-
-
    resources.ApplyResources(this.updatesLvFilesizeCol, "updatesLvFilesizeCol");
-
-
-
    resources.ApplyResources(this.updatesBtn, "updatesBtn");
    this.updatesBtn.Name = "updatesBtn";
    this.updatesBtn.UseVisualStyleBackColor = true;
    this.updatesBtn.Click += new System.EventHandler(this.updatesBtn_Click);
-
-
-
    resources.ApplyResources(this.updatesLbl, "updatesLbl");
    this.updatesLbl.ForeColor = System.Drawing.SystemColors.ControlText;
    this.updatesLbl.Name = "updatesLbl";
-
-
-
    this.progressPanel.Controls.Add(this.progressCancelBtn);
    this.progressPanel.Controls.Add(this.progressExplainLbl);
    this.progressPanel.Controls.Add(this.progressProgressLbl);
@@ -156,49 +103,28 @@ namespace Eraser
    resources.ApplyResources(this.progressPanel, "progressPanel");
    this.progressPanel.Name = "progressPanel";
    this.progressPanel.UseWaitCursor = true;
-
-
-
    resources.ApplyResources(this.progressCancelBtn, "progressCancelBtn");
    this.progressCancelBtn.Name = "progressCancelBtn";
    this.progressCancelBtn.UseVisualStyleBackColor = true;
    this.progressCancelBtn.UseWaitCursor = true;
    this.progressCancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-
-
-
    resources.ApplyResources(this.progressExplainLbl, "progressExplainLbl");
    this.progressExplainLbl.Name = "progressExplainLbl";
    this.progressExplainLbl.UseWaitCursor = true;
-
-
-
    resources.ApplyResources(this.progressProgressLbl, "progressProgressLbl");
    this.progressProgressLbl.Name = "progressProgressLbl";
    this.progressProgressLbl.UseWaitCursor = true;
-
-
-
    resources.ApplyResources(this.progressPb, "progressPb");
    this.progressPb.Name = "progressPb";
    this.progressPb.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
    this.progressPb.UseWaitCursor = true;
-
-
-
    resources.ApplyResources(this.progressLbl, "progressLbl");
    this.progressLbl.ForeColor = System.Drawing.SystemColors.ControlText;
    this.progressLbl.Name = "progressLbl";
    this.progressLbl.UseWaitCursor = true;
-
-
-
    this.downloader.WorkerSupportsCancellation = true;
    this.downloader.DoWork += new System.ComponentModel.DoWorkEventHandler(this.downloader_DoWork);
    this.downloader.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.downloader_RunWorkerCompleted);
-
-
-
    this.downloadingPnl.Controls.Add(this.downloadingCancelBtn);
    this.downloadingPnl.Controls.Add(this.downloadingOverallPb);
    this.downloadingPnl.Controls.Add(this.downloadingOverallLbl);
@@ -208,39 +134,21 @@ namespace Eraser
    this.downloadingPnl.Controls.Add(this.downloadingLbl);
    resources.ApplyResources(this.downloadingPnl, "downloadingPnl");
    this.downloadingPnl.Name = "downloadingPnl";
-
-
-
    resources.ApplyResources(this.downloadingCancelBtn, "downloadingCancelBtn");
    this.downloadingCancelBtn.Name = "downloadingCancelBtn";
    this.downloadingCancelBtn.UseVisualStyleBackColor = true;
    this.downloadingCancelBtn.UseWaitCursor = true;
    this.downloadingCancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
-
-
-
    resources.ApplyResources(this.downloadingOverallPb, "downloadingOverallPb");
    this.downloadingOverallPb.Name = "downloadingOverallPb";
    this.downloadingOverallPb.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-
-
-
    resources.ApplyResources(this.downloadingOverallLbl, "downloadingOverallLbl");
    this.downloadingOverallLbl.Name = "downloadingOverallLbl";
-
-
-
    resources.ApplyResources(this.downloadingItemPb, "downloadingItemPb");
    this.downloadingItemPb.Name = "downloadingItemPb";
    this.downloadingItemPb.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-
-
-
    resources.ApplyResources(this.downloadingItemLbl, "downloadingItemLbl");
    this.downloadingItemLbl.Name = "downloadingItemLbl";
-
-
-
    resources.ApplyResources(this.downloadingLv, "downloadingLv");
    this.downloadingLv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.downloadingLvColName,
@@ -251,39 +159,21 @@ namespace Eraser
    this.downloadingLv.SmallImageList = this.updatesImageList;
    this.downloadingLv.UseCompatibleStateImageBehavior = false;
    this.downloadingLv.View = System.Windows.Forms.View.Details;
-
-
-
    resources.ApplyResources(this.downloadingLvColName, "downloadingLvColName");
-
-
-
    resources.ApplyResources(this.downloadingLvColAmount, "downloadingLvColAmount");
-
-
-
    this.updatesImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("updatesImageList.ImageStream")));
    this.updatesImageList.TransparentColor = System.Drawing.Color.Transparent;
    this.updatesImageList.Images.SetKeyName(0, "Downloading.png");
    this.updatesImageList.Images.SetKeyName(1, "Installing.png");
    this.updatesImageList.Images.SetKeyName(2, "Installed.png");
    this.updatesImageList.Images.SetKeyName(3, "Error.png");
-
-
-
    resources.ApplyResources(this.downloadingLbl, "downloadingLbl");
    this.downloadingLbl.Name = "downloadingLbl";
-
-
-
    this.installingPnl.Controls.Add(this.installingLv);
    this.installingPnl.Controls.Add(this.installingLbl);
    resources.ApplyResources(this.installingPnl, "installingPnl");
    this.installingPnl.Name = "installingPnl";
    this.installingPnl.UseWaitCursor = true;
-
-
-
    this.installingLv.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.installingLvNameCol,
             this.installingLvStatusCol});
@@ -295,29 +185,14 @@ namespace Eraser
    this.installingLv.UseCompatibleStateImageBehavior = false;
    this.installingLv.UseWaitCursor = true;
    this.installingLv.View = System.Windows.Forms.View.Details;
-
-
-
    resources.ApplyResources(this.installingLvNameCol, "installingLvNameCol");
-
-
-
    resources.ApplyResources(this.installingLvStatusCol, "installingLvStatusCol");
-
-
-
    resources.ApplyResources(this.installingLbl, "installingLbl");
    this.installingLbl.Name = "installingLbl";
    this.installingLbl.UseWaitCursor = true;
-
-
-
    this.installer.WorkerSupportsCancellation = true;
    this.installer.DoWork += new System.ComponentModel.DoWorkEventHandler(this.installer_DoWork);
    this.installer.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.installer_RunWorkerCompleted);
-
-
-
    resources.ApplyResources(this, "$this");
    this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
    this.Controls.Add(this.updatesPanel);
@@ -339,11 +214,7 @@ namespace Eraser
    this.installingPnl.ResumeLayout(false);
    this.installingPnl.PerformLayout();
    this.ResumeLayout(false);
-
   }
-
-
-
   private System.ComponentModel.BackgroundWorker updateListDownloader;
   private System.Windows.Forms.Panel updatesPanel;
   private System.Windows.Forms.ListView updatesLv;

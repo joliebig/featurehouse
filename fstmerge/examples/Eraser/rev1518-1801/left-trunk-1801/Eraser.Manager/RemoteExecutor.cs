@@ -1,183 +1,105 @@
-
-
 using System;
 using System.Text;
 using System.IO;
 using System.IO.Pipes;
 using System.Threading;
 using System.Collections.Generic;
-
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Principal;
 using System.Security.AccessControl;
-
 namespace Eraser.Manager
 {
-
-
-
  [Serializable]
  internal class RemoteExecutorRequest
  {
-
-
-
-
-
-
   public RemoteExecutorRequest(RemoteExecutorFunction func, params object[] data)
   {
    Func = func;
    Data = data;
   }
-
-
-
-
   public RemoteExecutorFunction Func { get; set; }
-
-
-
-
   public object[] Data { get; private set; }
  };
-
-
-
-
  public enum RemoteExecutorFunction
  {
   QueueTask,
   ScheduleTask,
   UnqueueTask,
-
   AddTask,
   DeleteTask,
-
   GetTaskCount,
   GetTask
  }
-
-
-
-
-
  public class RemoteExecutorServer : DirectExecutor
  {
-
-
-
   public static readonly string ServerName =
    "Eraser-FB6C5A7D-E47F-475f-ABA4-58F4D24BB67E-RemoteExecutor-" +
    WindowsIdentity.GetCurrent().User.ToString();
-
-
-
-
   public RemoteExecutorServer()
   {
    thread = new Thread(Main);
    serverLock = new Semaphore(maxServerInstances, maxServerInstances);
   }
-
   protected override void Dispose(bool disposing)
   {
    if (disposing)
    {
-
     thread.Abort();
-
-
     lock (servers)
      foreach (NamedPipeServerStream server in servers)
       server.Close();
-
-
-
     for (int i = 0; i < maxServerInstances; ++i)
      serverLock.WaitOne();
     serverLock.Close();
    }
-
    base.Dispose(disposing);
   }
-
   public override void Run()
   {
    thread.Start();
    Thread.Sleep(0);
    base.Run();
   }
-
-
-
-
   private void Main()
   {
    while (Thread.CurrentThread.ThreadState != ThreadState.AbortRequested)
    {
-
     if (!serverLock.WaitOne())
      continue;
-
     PipeSecurity security = new PipeSecurity();
     security.AddAccessRule(new PipeAccessRule(
      WindowsIdentity.GetCurrent().User,
      PipeAccessRights.FullControl, AccessControlType.Allow));
-
-
     NamedPipeServerStream server = new NamedPipeServerStream(ServerName,
      PipeDirection.InOut, maxServerInstances, PipeTransmissionMode.Message,
      PipeOptions.Asynchronous, 128, 128, security);
     server.BeginWaitForConnection(EndWaitForConnection, server);
-
     lock (servers)
      servers.Add(server);
    }
   }
-
-
-
-
-
-
   private delegate object RequestHandler(object[] arguments);
-
-
-
-
-
-
   private void EndWaitForConnection(IAsyncResult result)
   {
    NamedPipeServerStream server = (NamedPipeServerStream)result.AsyncState;
-
    try
    {
-
     server.EndWaitForConnection(result);
-
     while (server.IsConnected)
     {
-
      RemoteExecutorRequest request = null;
      using (MemoryStream mstream = new MemoryStream())
      {
       byte[] buffer = new byte[65536];
-
       do
       {
        int lastRead = server.Read(buffer, 0, buffer.Length);
        mstream.Write(buffer, 0, lastRead);
       }
       while (!server.IsMessageComplete);
-
-
       if (!server.IsConnected)
        return;
-
-
       mstream.Position = 0;
       try
       {
@@ -186,12 +108,9 @@ namespace Eraser.Manager
       }
       catch (SerializationException)
       {
-
        return;
       }
      }
-
-
      Dictionary<RemoteExecutorFunction, RequestHandler> functionMap =
       new Dictionary<RemoteExecutorFunction, RequestHandler>();
      functionMap.Add(RemoteExecutorFunction.QueueTask,
@@ -200,7 +119,6 @@ namespace Eraser.Manager
       delegate(object[] args) { ScheduleTask((Task)args[0]); return null; });
      functionMap.Add(RemoteExecutorFunction.UnqueueTask,
       delegate(object[] args) { UnqueueTask((Task)args[0]); return null; });
-
      functionMap.Add(RemoteExecutorFunction.AddTask,
       delegate(object[] args)
       {
@@ -217,11 +135,7 @@ namespace Eraser.Manager
       delegate(object[] args) { return Tasks.Count; });
      functionMap.Add(RemoteExecutorFunction.GetTask,
       delegate(object[] args) { return Tasks[(int)args[0]]; });
-
-
      object returnValue = functionMap[request.Func](request.Data);
-
-
      using (MemoryStream mStream = new MemoryStream())
      {
       if (returnValue != null)
@@ -229,7 +143,6 @@ namespace Eraser.Manager
        byte[] header = BitConverter.GetBytes((Int32)1);
        byte[] buffer = null;
        new BinaryFormatter().Serialize(mStream, returnValue);
-
        server.Write(header, 0, header.Length);
        server.Write(buffer, 0, buffer.Length);
       }
@@ -239,7 +152,6 @@ namespace Eraser.Manager
        server.Write(header, 0, header.Length);
       }
      }
-
      server.WaitForPipeDrain();
     }
    }
@@ -257,32 +169,11 @@ namespace Eraser.Manager
     serverLock.Release();
    }
   }
-
-
-
-
   private Thread thread;
-
-
-
-
   private Semaphore serverLock;
-
-
-
-
   private List<NamedPipeServerStream> servers = new List<NamedPipeServerStream>();
-
-
-
-
   private const int maxServerInstances = 4;
  }
-
-
-
-
-
  public class RemoteExecutorClient : Executor
  {
   public RemoteExecutorClient()
@@ -291,17 +182,14 @@ namespace Eraser.Manager
     PipeDirection.InOut);
    tasks = new RemoteExecutorClientTasksCollection(this);
   }
-
   protected override void Dispose(bool disposing)
   {
    if (disposing)
    {
     client.Close();
    }
-
    base.Dispose(disposing);
   }
-
   public override void Run()
   {
    try

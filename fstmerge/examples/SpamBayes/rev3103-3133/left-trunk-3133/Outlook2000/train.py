@@ -18,7 +18,7 @@ def train_message(msg, is_spam, cdata):
     cdata.message_db.load_msg(msg)
     was_spam = msg.t
     if was_spam == is_spam:
-        return False    
+        return False    # already correctly classified
     stream = msg.GetEmailPackageObject()
     if was_spam is not None:
         cdata.bayes.unlearn(tokenize(stream), was_spam)

@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
@@ -12,50 +9,32 @@ using System.Globalization;
 using System.ComponentModel;
 using System.Security.Principal;
 using System.Security.AccessControl;
-
 using Eraser.Util;
-
 namespace Eraser
 {
  internal static partial class Program
  {
-
-
-
   class GuiProgram : IDisposable
   {
-
-
-
-
-
-
-
    public GuiProgram(string[] commandLine, string instanceID)
    {
     Application.EnableVisualStyles();
     Application.SetCompatibleTextRenderingDefault(false);
     InstanceID = instanceID;
     CommandLine = commandLine;
-
-
     bool isFirstInstance = false;
     GlobalMutex = new Mutex(true, instanceID, out isFirstInstance);
     IsFirstInstance = isFirstInstance;
    }
-
-
    ~GuiProgram()
    {
     Dispose(false);
    }
-
    protected virtual void Dispose(bool disposing)
    {
     if (disposing)
      GlobalMutex.Close();
    }
-
    public void Dispose()
    {
     Dispose(true);

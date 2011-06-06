@@ -1,55 +1,24 @@
-
-
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
-
 namespace Eraser.Util
 {
-
-
-
  public enum LogLevel
  {
-
-
-
   Information,
-
-
-
-
   Notice,
-
-
-
-
   Warning,
-
-
-
-
   Error,
-
-
-
-
   Fatal
  }
-
-
-
-
  [Serializable]
  public struct LogEntry : ISerializable
  {
-
   private LogEntry(SerializationInfo info, StreamingContext context)
    : this()
   {
@@ -57,7 +26,6 @@ namespace Eraser.Util
    Timestamp = (DateTime)info.GetValue("Timestamp", typeof(DateTime));
    Message = (string)info.GetValue("Message", typeof(string));
   }
-
   [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
   public void GetObjectData(SerializationInfo info, StreamingContext context)
   {
@@ -65,13 +33,6 @@ namespace Eraser.Util
    info.AddValue("Timestamp", Timestamp);
    info.AddValue("Message", Message);
   }
-
-
-
-
-
-
-
   public LogEntry(string message, LogLevel level)
    : this()
   {
@@ -79,117 +40,58 @@ namespace Eraser.Util
    Level = level;
    Timestamp = DateTime.Now;
   }
-
-
-
-
   public LogLevel Level { get; private set; }
-
-
-
-
   public DateTime Timestamp { get; private set; }
-
-
-
-
   public string Message { get; private set; }
  }
-
-
-
-
  public class LogEventArgs : EventArgs
  {
-
-
-
-
   public LogEventArgs(LogEntry entry)
   {
    LogEntry = entry;
   }
-
-
-
-
   public LogEntry LogEntry { get; private set; }
  }
-
-
-
-
  public static class Logger
  {
   static Logger()
   {
    Listeners = new LogThreadDictionary();
   }
-
-
-
-
-
   public static void Log(string message)
   {
    Log(new LogEntry(message, LogLevel.Information));
   }
-
-
-
-
-
-
   public static void Log(string message, LogLevel level)
   {
    Log(new LogEntry(message, level));
   }
-
-
-
-
-
   public static void Log(LogEntry entry)
   {
    Thread currentThread = Thread.CurrentThread;
    List<ILogTarget> targets = new List<ILogTarget>();
-
    if (Listeners.ContainsKey(currentThread))
    {
     LogThreadTargets threadTargets = Listeners[currentThread];
     if (threadTargets != null)
      targets.AddRange(threadTargets);
    }
-
    targets.ForEach(
     target => target.OnEventLogged(currentThread, new LogEventArgs(entry)));
   }
-
-
-
-
   public static LogThreadDictionary Listeners { get; private set; }
  }
-
-
-
-
-
  public class LogThreadDictionary : IDictionary<Thread, LogThreadTargets>
  {
-
-
   public void Add(Thread key, LogThreadTargets value)
   {
    lock (Dictionary)
     Dictionary.Add(key, value);
   }
-
   public bool ContainsKey(Thread key)
   {
    return Dictionary.ContainsKey(key);
   }
-
   public ICollection<Thread> Keys
   {
    get
@@ -198,24 +100,20 @@ namespace Eraser.Util
     {
      Thread[] result = new Thread[Dictionary.Keys.Count];
      Dictionary.Keys.CopyTo(result, 0);
-
      return new ReadOnlyCollection<Thread>(result);
     }
    }
   }
-
   public bool Remove(Thread key)
   {
    lock (Dictionary)
     return Dictionary.Remove(key);
   }
-
   public bool TryGetValue(Thread key, out LogThreadTargets value)
   {
    lock (Dictionary)
     return Dictionary.TryGetValue(key, out value);
   }
-
   public ICollection<LogThreadTargets> Values
   {
    get
@@ -225,12 +123,10 @@ namespace Eraser.Util
      LogThreadTargets[] result =
       new LogThreadTargets[Dictionary.Values.Count];
      Dictionary.Values.CopyTo(result, 0);
-
      return new ReadOnlyCollection<LogThreadTargets>(result);
     }
    }
   }
-
   public LogThreadTargets this[Thread key]
   {
    get
@@ -244,34 +140,25 @@ namespace Eraser.Util
      Dictionary[key] = value;
    }
   }
-
-
-
-
-
   public void Add(KeyValuePair<Thread, LogThreadTargets> item)
   {
    lock (Dictionary)
     Dictionary.Add(item.Key, item.Value);
   }
-
   public void Clear()
   {
    lock (Dictionary)
     Dictionary.Clear();
   }
-
   public bool Contains(KeyValuePair<Thread, LogThreadTargets> item)
   {
    lock (Dictionary)
     return Dictionary.ContainsKey(item.Key) && Dictionary[item.Key] == item.Value;
   }
-
   public void CopyTo(KeyValuePair<Thread, LogThreadTargets>[] array, int arrayIndex)
   {
    throw new NotImplementedException();
   }
-
   public int Count
   {
    get
@@ -280,67 +167,43 @@ namespace Eraser.Util
      return Dictionary.Count;
    }
   }
-
   public bool IsReadOnly
   {
    get { return false; }
   }
-
   public bool Remove(KeyValuePair<Thread, LogThreadTargets> item)
   {
    lock (Dictionary)
     return Dictionary.Remove(item.Key);
   }
-
-
-
-
-
   public IEnumerator<KeyValuePair<Thread, LogThreadTargets> > GetEnumerator()
   {
    return Dictionary.GetEnumerator();
   }
-
-
-
-
-
   System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
   {
    return Dictionary.GetEnumerator();
   }
-
-
-
-
-
-
   private Dictionary<Thread, LogThreadTargets> Dictionary =
    new Dictionary<Thread, LogThreadTargets>();
  }
-
  public class LogThreadTargets : IList<ILogTarget>
  {
-
-
   public int IndexOf(ILogTarget item)
   {
    lock (List)
     return List.IndexOf(item);
   }
-
   public void Insert(int index, ILogTarget item)
   {
    lock (List)
     List.Insert(index, item);
   }
-
   public void RemoveAt(int index)
   {
    lock (List)
     List.RemoveAt(index);
   }
-
   public ILogTarget this[int index]
   {
    get
@@ -354,35 +217,26 @@ namespace Eraser.Util
      List[index] = value;
    }
   }
-
-
-
-
-
   public void Add(ILogTarget item)
   {
    lock (List)
     List.Add(item);
   }
-
   public void Clear()
   {
    lock (List)
     List.Clear();
   }
-
   public bool Contains(ILogTarget item)
   {
    lock (List)
     return List.Contains(item);
   }
-
   public void CopyTo(ILogTarget[] array, int arrayIndex)
   {
    lock (List)
     List.CopyTo(array, arrayIndex);
   }
-
   public int Count
   {
    get
@@ -391,55 +245,27 @@ namespace Eraser.Util
      return List.Count;
    }
   }
-
   public bool IsReadOnly
   {
    get { return false; }
   }
-
   public bool Remove(ILogTarget item)
   {
    lock (List)
     return List.Remove(item);
   }
-
-
-
-
-
   public IEnumerator<ILogTarget> GetEnumerator()
   {
    return List.GetEnumerator();
   }
-
-
-
-
-
   System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
   {
    return List.GetEnumerator();
   }
-
-
-
-
-
-
   private List<ILogTarget> List = new List<ILogTarget>();
  }
-
-
-
-
-
  public interface ILogTarget
  {
-
-
-
-
-
   void OnEventLogged(object sender, LogEventArgs e);
   void Chain(ILogTarget target);
   void Unchain(ILogTarget target);

@@ -7,7 +7,7 @@ class Hist:
         self.lo, self.hi = lo, hi
         self.nbuckets = nbuckets
         self.buckets = [0] * nbuckets
-        self.data = []  
+        self.data = []  # the raw data points
         self.stats_uptodate = False
     def add(self, x):
         self.data.append(x)
@@ -17,7 +17,8 @@ class Hist:
             return
         self.stats_uptodate = True
         data = self.data
-        n = self.n = len(data)
+        n = len(data)
+        n = self.n
         if n == 0:
             return
         data.sort()
@@ -35,14 +36,16 @@ class Hist:
         sum = 0.0
         for x in data:
             sum += x
-        mean = self.mean = sum / n
+        self.mean = sum / n
+        mean = self.mean
         var = 0.0
         for x in data:
             d = x - mean
             var += d*d
         self.var = var / n
         self.sdev = math.sqrt(self.var)
-        self.pct = pct = []
+        pct = []
+        self.pct = pct
         for p in options["TestDriver", "percentiles"]:
             assert 0.0 <= p <= 100.0
             i = (n-1)*p/1e2
@@ -77,7 +80,8 @@ class Hist:
         if nbuckets <= 0:
             raise ValueError("nbuckets %g > 0 required" % nbuckets)
         self.nbuckets = nbuckets
-        self.buckets = buckets = [0] * nbuckets
+        buckets = [0] * nbuckets
+        self.buckets = buckets
         lo, hi = self.get_lo_hi()
         bucketwidth = self.get_bucketwidth()
         for x in self.data:

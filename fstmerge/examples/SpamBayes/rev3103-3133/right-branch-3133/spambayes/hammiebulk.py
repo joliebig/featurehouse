@@ -45,7 +45,7 @@ import getopt
 from spambayes.Options import options, get_pathname_option
 from spambayes import classifier, mboxutils, hammie, Corpus, storage
 Corpus.Verbose = True
-program = sys.argv[0] 
+program = sys.argv[0] # For usage(); referenced by docstring above
 if options["Storage", "persistent_storage_file"] == \
    options.default("Storage", "persistent_storage_file"):
     options["Storage", "persistent_storage_file"] = \

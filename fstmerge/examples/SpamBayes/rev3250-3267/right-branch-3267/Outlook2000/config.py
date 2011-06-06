@@ -346,13 +346,13 @@ if __name__=='__main__':
         print(i, type(i))
     try:
         c.filter.oops = "Foo"
-    except (AttributeError,KeyError): 
+    except (AttributeError,KeyError): # whatever :)
         pass
     else:
         print("ERROR: I was able to set an invalid sub-property!")
     try:
         c.oops = "Foo"
-    except (AttributeError,KeyError): 
+    except (AttributeError,KeyError): # whatever :)
         pass
     else:
         print("ERROR: I was able to set an invalid top-level property!")
@@ -361,7 +361,8 @@ if __name__=='__main__':
         c.filter.unsure_folder_id = None
     unsure_id = c.filter.unsure_folder_id
     if unsure_id is not None: raise ValueError("unsure_id wrong (%r)" % (c.filter.unsure_folder_id,))
-    unsure_id = c.filter.unsure_folder_id = ('12345', 'abcdef')
+    c.filter.unsure_folder_id = ('12345', 'abcdef')
+    unsure_id = c.filter.unsure_folder_id
     if unsure_id != c.filter.unsure_folder_id: raise ValueError("unsure_id wrong (%r)" % (c.filter.unsure_folder_id,))
     c.filter.unsure_folder_id = None
     if c.filter.unsure_folder_id is not None: raise ValueError("unsure_id wrong (%r)" % (c.filter.unsure_folder_id,))

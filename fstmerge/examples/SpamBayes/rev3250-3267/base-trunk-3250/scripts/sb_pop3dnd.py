@@ -418,7 +418,7 @@ class SpambayesMailbox(IMAPMailbox):
                 value = False
             elif mode == 1:
                 value = True
-            for flag in flags or (): 
+            for flag in flags or (): # flags might be None
                 if flag == '(' or flag == ')':
                     continue
                 if flag == "SEEN" and value == True and msg.seen == False:

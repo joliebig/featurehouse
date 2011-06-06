@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using System.Reflection;
 using System.Globalization;
@@ -11,21 +8,11 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Resources;
 using System.Threading;
-
 namespace Eraser.Util
 {
-
-
-
-
  [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "S")]
  public static class S
  {
-
-
-
-
-
   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
   [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "_")]
   public static string _(string text)

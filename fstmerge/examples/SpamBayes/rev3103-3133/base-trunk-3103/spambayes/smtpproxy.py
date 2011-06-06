@@ -125,9 +125,9 @@ class SMTPProxyBase(Dibbler.BrighterAsyncChat):
         Dibbler.BrighterAsyncChat.__init__(self, clientSocket)
         self.request = ''
         self.set_terminator('\r\n')
-        self.command = ''           
-        self.args = ''              
-        self.isClosing = False      
+        self.command = ''           # The SMTP command being processed...
+        self.args = ''              # ...and its arguments
+        self.isClosing = False      # Has the server closed the socket?
         self.inData = False
         self.data = []
         self.blockData = False

@@ -41,7 +41,7 @@ def filter_message(msg, mgr, all_actions=True):
                         mgr.LogDebug(1, "Got ObjectChanged changed - " \
                                         "trying again...")
                         msg.dirty = False
-                        msg.mapi_object = None 
+                        msg.mapi_object = None # cause it to be re-fetched.
                 else:
                     mgr.LogDebug(0, "Got ObjectChanged 3 times in a row - " \
                                     "giving up!")

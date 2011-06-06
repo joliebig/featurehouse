@@ -125,11 +125,11 @@ class ConfigureWizardProcessor(WizardButtonProcessor):
         config = self.window.config
         print("GetNextPage with current", index, id)
         if id == 'IDD_WIZARD_WELCOME':
-            if config.wizard.preparation == 0: 
+            if config.wizard.preparation == 0: # unprepared
                 return "IDD_WIZARD_TRAINING_IS_IMPORTANT"
-            elif config.wizard.preparation == 1: 
+            elif config.wizard.preparation == 1: # pre-prepared.
                 return "IDD_WIZARD_FOLDERS_TRAIN"
-            elif config.wizard.preparation == 2: 
+            elif config.wizard.preparation == 2: # configure manually
                 return "IDD_WIZARD_FINISHED_UNCONFIGURED"
             else:
                 assert 0, "oops"

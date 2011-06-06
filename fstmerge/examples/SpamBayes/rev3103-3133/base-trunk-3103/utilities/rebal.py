@@ -117,7 +117,7 @@ def main(args):
         print >> sys.stderr, "no directories starting with", setprefix, "exist."
         return 1
     stuff = []
-    n = len(res)    
+    n = len(res)    # total number of all files
     for d in dirs:
         fs = os.listdir(d)
         n += len(fs)

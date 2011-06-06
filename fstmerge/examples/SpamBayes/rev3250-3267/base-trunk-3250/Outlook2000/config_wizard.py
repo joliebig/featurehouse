@@ -22,7 +22,7 @@ wizard_defaults = {
     ),
 }
 def InitWizardConfig(manager, new_config, from_existing):
-    manager.wizard_classifier_data = None 
+    manager.wizard_classifier_data = None # this is hacky
     new_config.filter.watch_folder_ids = []
     new_config.filter.watch_include_sub = False
     wc = new_config.wizard
@@ -59,7 +59,7 @@ def InitWizardConfig(manager, new_config, from_existing):
         if tc.spam_folder_ids:
             new_config.training.spam_folder_ids = tc.spam_folder_ids
     if new_config.training.ham_folder_ids or new_config.training.spam_folder_ids:
-        wc.preparation = 1 
+        wc.preparation = 1 # "already prepared"
 def _CreateFolder(manager, name, comment):
     try:
         root = manager.message_store.GetRootFolder()
@@ -71,7 +71,7 @@ def _CreateFolder(manager, name, comment):
         manager.ReportError(msg)
         return None
 def CommitWizardConfig(manager, wc):
-    if wc.wizard.preparation == 2: 
+    if wc.wizard.preparation == 2: # manually configure
         import dialogs
         dialogs.ShowDialog(0, manager, manager.config, "IDD_MANAGER")
         manager.SaveConfig()

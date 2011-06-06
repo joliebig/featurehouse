@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.IO;
 using System.Reflection;
 using System.Globalization;
@@ -11,20 +8,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Resources;
 using System.Threading;
-
 namespace Eraser.Util
 {
-
-
-
-
  public static class S
  {
-
-
-
-
-
   public static string _(string str)
   {
    return TranslateText(str, Assembly.GetCallingAssembly());

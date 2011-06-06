@@ -1,16 +1,10 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
-
 namespace Eraser.Util
 {
-
-
-
  public static class MsCorEEApi
  {
   public static bool VerifyStrongName(string assemblyPath)

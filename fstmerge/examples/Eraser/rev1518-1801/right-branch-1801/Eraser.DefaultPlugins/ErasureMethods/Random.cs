@@ -1,13 +1,9 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-
 using Eraser.Manager;
 using Eraser.Util;
-
 namespace Eraser.DefaultPlugins
 {
  [DefaultUnusedSpaceErasure(1)]
@@ -18,17 +14,14 @@ namespace Eraser.DefaultPlugins
   {
    get { return S._("Pseudorandom Data"); }
   }
-
   public override Guid Guid
   {
    get { return GetType().GUID; }
   }
-
   protected override bool RandomizePasses
   {
    get { return false; }
   }
-
   protected override ErasureMethodPass[] PassesSet
   {
    get

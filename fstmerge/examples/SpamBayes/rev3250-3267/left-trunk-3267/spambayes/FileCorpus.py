@@ -109,7 +109,7 @@ class FileMessage(object):
             return
         raise TypeError()
     def as_string(self, unixfrom=False):
-        self.load() 
+        self.load() # ensure that the substance is loaded
         return self._msg.as_string(unixfrom)
     def pathname(self):
         '''Derive the pathname of the message file'''

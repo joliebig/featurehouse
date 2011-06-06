@@ -47,7 +47,7 @@ def Score(driver, manager, mapi_folder, subject, options, stream=None):
                 image_text, image_toks = crack_images(imageparts(eob))
                 print >> stream, "Image text:", repr(image_text)
                 print >> stream, "Image tokens:", repr(image_toks)
-            print >> stream 
+            print >> stream # blank lines between messages
         except:
             print >> sys.stderr, "FAILED to convert message:", sub
             raise

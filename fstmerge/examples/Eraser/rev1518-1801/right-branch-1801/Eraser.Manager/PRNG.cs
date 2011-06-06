@@ -1,9 +1,6 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Threading;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
@@ -12,31 +9,18 @@ using System.Reflection;
 using System.IO;
 using Microsoft.Win32.SafeHandles;
 using Eraser.Util;
-
 namespace Eraser.Manager
 {
-
-
-
-
  public abstract class Prng : IRegisterable
  {
   public override string ToString()
   {
    return Name;
   }
-
-
-
-
   public abstract string Name
   {
    get;
   }
-
-
-
-
   public abstract Guid Guid
   {
    get;

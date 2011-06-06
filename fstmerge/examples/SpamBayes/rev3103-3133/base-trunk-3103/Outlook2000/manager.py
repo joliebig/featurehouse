@@ -52,7 +52,7 @@ if hasattr(sys, "frozen"):
 else:
     try:
         this_filename = os.path.abspath(__file__)
-    except NameError: 
+    except NameError: # no __file__ - means Py2.2 and __name__=='__main__'
         this_filename = os.path.abspath(sys.argv[0])
 if hasattr(sys, "frozen"):
     try:
@@ -117,7 +117,7 @@ def SavePickle(what, filename):
         pass
     os.rename(temp_filename, filename)
 class BasicStorageManager:
-    db_extension = None 
+    db_extension = None # for pychecker - overwritten by subclass
     def __init__(self, bayes_base_name, mdb_base_name):
         self.bayes_filename = bayes_base_name.encode(filesystem_encoding) + \
                               self.db_extension
@@ -149,7 +149,7 @@ class PickleStorageManager(BasicStorageManager):
     def new_mdb(self):
         return {}
     def is_incremental(self):
-        return False 
+        return False # False means we always save the entire DB
 class DBStorageManager(BasicStorageManager):
     db_extension = ".db"
     klass = "dbm"
@@ -160,7 +160,7 @@ class DBStorageManager(BasicStorageManager):
             if e.errno != errno.ENOENT: raise
         return self.open_mdb()
     def is_incremental(self):
-        return True 
+        return True # True means only changed records get actually written
 class ZODBStorageManager(DBStorageManager):
     db_extension = ".fs"
     klass = "zodb"
@@ -170,7 +170,7 @@ class ClassifierData:
         self.bayes = None
         self.message_db = None
         self.dirty = False
-        self.logger = logger 
+        self.logger = logger # currently the manager, but needed only for logging
     def Load(self):
         import time
         start = time.clock()
@@ -247,7 +247,7 @@ def GetStorageManagerClass():
     return available[use_db]
 class BayesManager:
     def __init__(self, config_base="default", outlook=None, verbose=0):
-        self.owner_thread_ident = thread.get_ident() 
+        self.owner_thread_ident = thread.get_ident() # check we aren't multi-threaded
         self.never_configured = True
         self.reported_error_map = {}
         self.reported_startup_error = False
@@ -269,7 +269,7 @@ class BayesManager:
         if value:
             try:
                 value = value.decode(filesystem_encoding)
-            except AttributeError: 
+            except AttributeError: # May already be Unicode
                 pass
             assert isinstance(value, types.UnicodeType), "%r should be a unicode" % value
             try:
@@ -422,7 +422,7 @@ class BayesManager:
                 format = 1
                 ups.Add(field_name,
                        win32com.client.constants.olPercent,
-                       True, 
+                       True, # Add to folder
                        format)
                 outlook_message.Save()
             except pythoncom.com_error, details:
@@ -467,7 +467,7 @@ class BayesManager:
             print "*** NOTE: It appears you are running the source-code version of"
             print "* SpamBayes, and running a win32all version pre 154."
             print "* If you work with multiple Outlook profiles, it is recommended"
-            print "* you upgrade - see http://starship.python.net/crew/mhammond"
+            print "* you upgrade - see http://starship.python.net/crew/mhammond"""
         return profile_name
     def LoadConfig(self):
         import locale; locale.setlocale(locale.LC_NUMERIC, "C")
@@ -588,7 +588,7 @@ class BayesManager:
             return _("You must define the folder to receive your certain spam.  " \
                      "Select the 'Filtering' tab to define this folder.")
         ms = self.message_store
-        unsure_folder = None 
+        unsure_folder = None # unsure need not be specified.
         if config.unsure_folder_id:
             try:
                 unsure_folder = ms.GetFolder(config.unsure_folder_id)
@@ -632,7 +632,7 @@ class BayesManager:
     def ShowHtml(self,url):
         """Displays the main SpamBayes documentation in your Web browser"""
         import sys, os, urllib
-        if urllib.splittype(url)[0] is None: 
+        if urllib.splittype(url)[0] is None: # just a file spec
             if hasattr(sys, "frozen"):
                 fname = os.path.join(os.path.dirname(sys.argv[0]),
                                      "../docs/outlook",
@@ -670,7 +670,7 @@ class BayesManager:
         assert self.notify_timer_id is None, "Shouldn't start a timer when already have one"
         assert isinstance(delay, types.FloatType), "Timer values are float seconds"
         assert delay, "No delay means no timer!"
-        delay = int(delay*1000) 
+        delay = int(delay*1000) # convert to ms.
         self.notify_timer_id = timer.set_timer(delay, self._NotifyTimerFunc)
         self.LogDebug(1, "Notify timer started - id=%d, delay=%d" % (self.notify_timer_id, delay))
     def _KillNotifyTimer(self):

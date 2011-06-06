@@ -129,7 +129,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
                                              proxy_state.lang_manager,
                                              proxy_state.stats)
         state = proxy_state
-        self.state_recreator = state_recreator 
+        self.state_recreator = state_recreator # ugly
         self.app_for_version = "SpamBayes Proxy"
         self.previous_sort = None
         if not proxy_state.can_stop:
@@ -258,7 +258,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
                 r_att = getattr(row, options["html_ui",
                                            "default_unsure_action"])
             setattr(r_att, "checked", 1)
-            row.optionalHeadersValues = '' 
+            row.optionalHeadersValues = '' # make way for real list
             for header in options["html_ui", "display_headers"]:
                 header = header.lower()
                 text = getattr(messageInfo, "%sHeader" % (header,))
@@ -287,7 +287,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
             subj = "".join(subj_list)
             row.classify.href="showclues?key=%s&subject=%s" % (key, subj)
             row.tokens.href="showclues?key=%s&subject=%s&tokens=1" % (key, subj)
-            setattr(row, 'class', ['stripe_on', 'stripe_off'][stripe]) 
+            setattr(row, 'class', ['stripe_on', 'stripe_off'][stripe]) # Grr!
             setattr(row, 'onMouseOut',
                     ["this.className='stripe_on';",
                      "this.className='stripe_off';"][stripe])
@@ -316,8 +316,8 @@ class ProxyUserInterface(UserInterface.UserInterface):
                             state.unknownCorpus.removeMessage(\
                                 state.unknownCorpus[id])
                         except KeyError:
-                            pass  
-                    else: 
+                            pass  # Must be a reload.
+                    else: # defer
                         targetCorpus = None
                         numDeferred += 1
                     if targetCorpus:
@@ -339,7 +339,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
                                 self.stats.RecordTraining(\
                                   stats_as_ham, old_class=old_class)
                             except KeyError:
-                                pass  
+                                pass  # Must be a reload.
         if numTrained > 0:
             plural = ''
             if numTrained == 1:
@@ -367,7 +367,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
             start = self._keyToTimestamp(params['prior'])
         elif params.get('find') is not None:
             prior = next = 0
-            keys = Set()        
+            keys = Set()        # so we don't end up with duplicates
             push = keys.add
             try:
                 max_results = int(params['max_results'])
@@ -480,7 +480,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
             else:
                 reverse = False
                 self.previous_sort = sort_order
-            page.table = ""  
+            page.table = ""  # To make way for the real rows.
             for header, label in ((options["Headers",
                                            "header_unsure_string"], 'Unsure'),
                                   (options["Headers",
@@ -510,7 +510,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
             page.table += self.html.trainRow
             if title == "":
                 title = _("Untrained messages received on %s") % date
-            box = self._buildBox(title, None, page)  
+            box = self._buildBox(title, None, page)  # No icon, to save space.
         else:
             page = _("<p>There are no untrained messages to display. " \
                      "Return <a href='home'>Home</a>, or " \
@@ -548,7 +548,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
         self._writePostamble()
     def onShowclues(self, key, subject, tokens='0'):
         """Show clues for a message - linked from the Review page."""
-        tokens = bool(int(tokens)) 
+        tokens = bool(int(tokens)) # needs the int, as bool('0') is True
         self._writePreamble(_("Message clues"),
                             parent=('review', _('Review')))
         sourceCorpus = None
@@ -562,7 +562,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
         if sourceCorpus is not None:
             message = sourceCorpus.get(key).as_string()
         if message is not None:
-            message = message.replace('\r\n', '\n').replace('\r', '\n') 
+            message = message.replace('\r\n', '\n').replace('\r', '\n') # For Macs
             results = self._buildCluesTable(message, subject, tokens)
             del results.classifyAnother
             self.write(results)
@@ -588,7 +588,7 @@ class ProxyUserInterface(UserInterface.UserInterface):
             try:
                 score = float(score) * 100
             except ValueError:
-                score = "Err"  
+                score = "Err"  # Let the user know something is wrong.
         else:
             score = "?"
         try:
@@ -604,13 +604,13 @@ class ProxyUserInterface(UserInterface.UserInterface):
                 text = _('(this message only has an HTML body)\n') + text
             except StopIteration:
                 text = _('(this message has no text body)')
-        if type(text) == type([]):  
+        if type(text) == type([]):  # gotta be a 'right' way to do this
             text = _("(this message is a digest of %s messages)") % (len(text))
         elif text is None:
             text = _("(this message has no body)")
         else:
-            text = text.replace('&nbsp;', ' ')      
-            text = re.sub(r'(\s)\s+', r'\1', text)  
+            text = text.replace('&nbsp;', ' ')      # Else they'll be quoted
+            text = re.sub(r'(\s)\s+', r'\1', text)  # Eg. multiple blank lines
             text = text.strip()
         class _MessageInfo:
             pass

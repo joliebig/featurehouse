@@ -47,19 +47,19 @@ class dbxFileHeader:
        indexes are static attributes of the class and their names begin with
        "fh". You can access their values through the method getEntry().
     """
-    HEADER_SIZE    = 0x24bc              
-    HEADER_ENTRIES = HEADER_SIZE >> 2    
-    MAGIC_NUMBER   = 0xfe12adcfL         
-    OFFLINE        = 0x26fe9d30L         
-    FOLDERS        = 0x6f74fdc6L         
-    POP3UIDL       = 0x6f74fdc7L         
-    FH_FILE_INFO_LENGTH       = 0x07     
-    FH_FIRST_FOLDER_LIST_NODE = 0x1b     
-    FH_LAST_FOLDER_LIST_NODE  = 0x1c     
-    FH_MESSAGE_CONDITIONS_PTR = 0x22     
-    FH_FOLDER_CONDITIONS_PTR  = 0x23     
-    FH_ENTRIES                = 0x31     
-    FH_TREE_ROOT_NODE_PTR     = 0x39     
+    HEADER_SIZE    = 0x24bc              # total header size
+    HEADER_ENTRIES = HEADER_SIZE >> 2    # total of entries in the header
+    MAGIC_NUMBER   = 0xfe12adcfL         # specific to DBX files
+    OFFLINE        = 0x26fe9d30L         # specific to offline.dbx
+    FOLDERS        = 0x6f74fdc6L         # specific to folders.dbx
+    POP3UIDL       = 0x6f74fdc7L         # specific to pop3uidl.dbx
+    FH_FILE_INFO_LENGTH       = 0x07     # file info length
+    FH_FIRST_FOLDER_LIST_NODE = 0x1b     # pointer to the first folder list node
+    FH_LAST_FOLDER_LIST_NODE  = 0x1c     # pointer to the last folder list node
+    FH_MESSAGE_CONDITIONS_PTR = 0x22     # pointer to the message conditions object
+    FH_FOLDER_CONDITIONS_PTR  = 0x23     # pointer to the folder conditions object
+    FH_ENTRIES                = 0x31     # entries in tree
+    FH_TREE_ROOT_NODE_PTR     = 0x39     # pointer to the root node of a tree
     FILE_HEADER_ENTRIES = \
     [ ( 0x07,  "file info length"                                ),
       ( 0x09,  "pointer to the last variable segment"            ),
@@ -153,7 +153,7 @@ class dbxFileInfo:
             return None
 class dbxTree:
     """Stands for the tree which stores the messages in a given folder."""
-    TREE_NODE_SIZE = 0x27c          
+    TREE_NODE_SIZE = 0x27c          # size of a tree node
     def __init__(self, dbxStream, dbxAddress, dbxValues):
         """Reads the addresses of the stored messages."""
         self.dbxValues = [i for i in range(dbxValues)]
@@ -190,8 +190,8 @@ class dbxIndexedInfo:
       info" entities.
       These entities are indexed info sequences. This is their base class.
     """
-    MAX_INDEX = 0x20        
-    DT_NONE   = 0           
+    MAX_INDEX = 0x20        # max index
+    DT_NONE   = 0           # data type none
     def __init__(self, dbxStream, dbxAddress):
         """Reads the indexed infos from the passed stream."""
         self.dbxBodyLength   = 0L
@@ -211,10 +211,10 @@ class dbxIndexedInfo:
         self.dbxObjectLength =  self.__getEntry(temp, 2) & 0xffff
         self.dbxEntries      = (self.__getEntry(temp, 2) >> 16) & 0xff
         self.dbxCounter      = (self.__getEntry(temp, 1) >> 24) & 0xff
-        self.dbxBuffer       =  dbxStream.read(self.dbxBodyLength) 
-        isIndirect           = bool(0)                             
+        self.dbxBuffer       =  dbxStream.read(self.dbxBodyLength) # bytes array
+        isIndirect           = bool(0)                             # boolean
         lastIndirect         = 0
-        data                 = self.dbxEntries << 2                
+        data                 = self.dbxEntries << 2                # index within dbxBuffer
         for i in range(self.dbxEntries):
             value      = self.__getEntry(self.dbxBuffer, i)
             isDirect   = value & 0x80
@@ -283,10 +283,10 @@ class dbxMessageInfo(dbxIndexedInfo):
       The message info structure inherits from the index info one. It just
       defines extra constants which allow to access pertinent info.
     """
-    MI_INDEX           = 0x0                   
-    MI_FLAGS           = 0x1                   
-    MI_MESSAGE_ADDRESS = 0x4                   
-    MI_SUBJECT         = 0x8                   
+    MI_INDEX           = 0x0                   # index of the message
+    MI_FLAGS           = 0x1                   # the message flags
+    MI_MESSAGE_ADDRESS = 0x4                   # the address of the message
+    MI_SUBJECT         = 0x8                   # the subject of the message
     INDEX_LABEL = \
     [ "message index"                , "flags"                          ,
       "time message created/send"    , "body lines"                     ,
@@ -304,11 +304,11 @@ class dbxMessageInfo(dbxIndexedInfo):
       "OE account name"              , "OE account registry key"        ,
       "message text structure"       , "id 1d"                          ,
       "id 1e"                        , "id 1f"                           ]
-    DT_NONE      = 0                    
-    DT_INT4      = 1                    
-    DT_STRING    = 2                    
-    DT_DATE_TIME = 3                    
-    DT_DATA      = 4                    
+    DT_NONE      = 0                    # index is none
+    DT_INT4      = 1                    # index is a long integer (32 bits)
+    DT_STRING    = 2                    # index is a string
+    DT_DATE_TIME = 3                    # index is date/time
+    DT_DATA      = 4                    # index is data
     INDEX_DATA_TYPE = \
     [ DT_INT4  , DT_INT4  , DT_DATE_TIME, DT_INT4  , DT_INT4  , DT_STRING, DT_DATE_TIME, DT_STRING,
       DT_STRING, DT_STRING, DT_STRING   , DT_STRING, DT_STRING, DT_STRING, DT_STRING   , DT_NONE  ,
@@ -493,7 +493,7 @@ class OEMsgStream(msgs.MsgStream):
         if self.keep is None:
             for dbx in self.directories:
                 folder = convertToMbox(file(dbx))
-                all = folder.split("\nFrom ") 
+                all = folder.split("\nFrom ") # XXX Is this right?
                 count = 0
                 for msg in all:
                     id = "%s::%s" % (dbx, count)
@@ -502,11 +502,11 @@ class OEMsgStream(msgs.MsgStream):
             return
         for directory in self.directories:
             folder = convertToMbox(file(dbx))
-            all = folder.split("\nFrom ") 
-            random.seed(hash(max(all)) ^ SEED) 
+            all = folder.split("\nFrom ") # XXX Is this right?
+            random.seed(hash(max(all)) ^ SEED) # reproducible across calls
             random.shuffle(all)
             del all[self.keep:]
-            all.sort()  
+            all.sort()  # for consistency with MsgStream
             count = 0
             for msg in all:
                 id = "%s::%s" % (dbx, count)
