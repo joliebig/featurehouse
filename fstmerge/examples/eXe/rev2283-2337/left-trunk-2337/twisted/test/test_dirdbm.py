@@ -1,0 +1,106 @@
+"""
+Test cases for dirdbm module.
+"""
+from twisted.trial import unittest
+from twisted.persisted import dirdbm
+import os, shutil, glob
+class DirDbmTestCase(unittest.TestCase):
+    def setUp(self):
+        self.path = self.mktemp()
+        self.dbm = dirdbm.open(self.path)
+        self.items = (('abc', 'foo'), ('/lalal', '\000\001'), ('\000\012', 'baz'))
+    def tearDown(self):
+        shutil.rmtree(self.path)
+    def testAll(self):
+        k = "//==".decode("base64")
+        self.dbm[k] = "a"
+        self.dbm[k] = "a"
+        self.assertEquals(self.dbm[k], "a")
+    def testRebuildInteraction(self):
+        from twisted.persisted import dirdbm
+        from twisted.python import rebuild
+        s = dirdbm.Shelf('dirdbm.rebuild.test')
+        s['key'] = 'value'
+        rebuild.rebuild(dirdbm)
+    def testDbm(self):
+        d = self.dbm
+        keys = []
+        values = []
+        for k, v in self.items:
+            d[k] = v
+            keys.append(k)
+            values.append(v)
+        keys.sort()
+        values.sort()
+        for k, v in self.items:
+            assert d.has_key(k), "has_key() failed"
+            assert d[k] == v, "database has wrong value"
+        try:
+            d["XXX"]
+        except KeyError:
+            pass
+        else:
+            assert 0, "didn't raise KeyError on non-existent key"
+        dbkeys = list(d.keys())
+        dbvalues = list(d.values())
+        dbitems = list(d.items())
+        dbkeys.sort()
+        dbvalues.sort()
+        dbitems.sort()
+        items = list(self.items)
+        items.sort()
+        assert keys == dbkeys, ".keys() output didn't match: %s != %s" % (repr(keys), repr(dbkeys))
+        assert values == dbvalues, ".values() output didn't match: %s != %s" % (repr(values), repr(dbvalues))
+        assert items == dbitems, "items() didn't match: %s != %s" % (repr(items), repr(dbitems))
+        copyPath = self.mktemp()
+        d2 = d.copyTo(copyPath)
+        copykeys = list(d.keys())
+        copyvalues = list(d.values())
+        copyitems = list(d.items())
+        copykeys.sort()
+        copyvalues.sort()
+        copyitems.sort()
+        assert dbkeys == copykeys, ".copyTo().keys() didn't match: %s != %s" % (repr(dbkeys), repr(copykeys))
+        assert dbvalues == copyvalues, ".copyTo().values() didn't match: %s != %s" % (repr(dbvalues), repr(copyvalues))
+        assert dbitems == copyitems, ".copyTo().items() didn't match: %s != %s" % (repr(dbkeys), repr(copyitems))
+        d2.clear()
+        assert len(d2.keys()) == len(d2.values()) == len(d2.items()) == 0, ".clear() failed"
+        shutil.rmtree(copyPath)
+        for k, v in self.items:
+            del d[k]
+            assert not d.has_key(k), "has_key() even though we deleted it"
+        assert len(d.keys()) == 0, "database has keys"
+        assert len(d.values()) == 0, "database has values"
+        assert len(d.items()) == 0, "database has items"
+    def testModificationTime(self):
+        import time
+        self.dbm["k"] = "v"
+        self.assert_(abs(time.time() - self.dbm.getModificationTime("k")) <= 3)
+    def testRecovery(self):
+        """DirDBM: test recovery from directory after a faked crash""" 
+        k = self.dbm._encode("key1")
+        f = open(os.path.join(self.path, k + ".rpl"), "wb")
+        f.write("value")
+        f.close()
+        k2 = self.dbm._encode("key2")
+        f = open(os.path.join(self.path, k2), "wb")
+        f.write("correct")
+        f.close()
+        f = open(os.path.join(self.path, k2 + ".rpl"), "wb")
+        f.write("wrong")
+        f.close()
+        f = open(os.path.join(self.path, "aa.new"), "wb")
+        f.write("deleted")
+        f.close()
+        dbm = dirdbm.DirDBM(self.path)
+        assert dbm["key1"] == "value"
+        assert dbm["key2"] == "correct"
+        assert not glob.glob(os.path.join(self.path, "*.new"))
+        assert not glob.glob(os.path.join(self.path, "*.rpl"))
+class ShelfTestCase(DirDbmTestCase):
+    def setUp(self):
+        self.path = self.mktemp()
+        self.dbm = dirdbm.Shelf(self.path)
+        self.items = (('abc', 'foo'), ('/lalal', '\000\001'), ('\000\012', 'baz'),
+                      ('int', 12), ('float', 12.0), ('tuple', (None, 12)))
+testCases = [DirDbmTestCase, ShelfTestCase]

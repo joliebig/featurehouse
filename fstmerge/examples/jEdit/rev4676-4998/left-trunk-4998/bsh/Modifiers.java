@@ -1,0 +1,81 @@
+package bsh;
+
+import java.util.Hashtable;
+
+
+
+public class Modifiers implements java.io.Serializable
+{
+	public static final int CLASS=0, METHOD=1, FIELD=2;
+	Hashtable modifiers;
+
+	
+	public void addModifier( int context, String name ) 
+	{
+		if ( modifiers == null )
+			modifiers = new Hashtable();
+		Object got = modifiers.put( name, Void.TYPE );
+		if ( got != null )
+			throw new IllegalStateException("Duplicate modifier: "+ name );
+
+		int count = 0;
+		if ( hasModifier("private") ) ++count;
+		if ( hasModifier("protected") ) ++count;
+		if ( hasModifier("public") ) ++count;
+		if ( count > 1 )
+			throw new IllegalStateException(
+				"public/private/protected cannot be used in combination." );
+
+		switch( context ) 
+		{
+		case CLASS:
+			validateForClass();
+			break;
+		case METHOD:
+			validateForMethod();
+			break;
+		case FIELD:
+			validateForField();
+			break;
+		}
+	}
+
+	public boolean hasModifier( String name ) 
+	{
+		if ( modifiers == null )
+			modifiers = new Hashtable();
+		return modifiers.get(name) != null;
+	}
+
+	
+	private void validateForMethod() 
+	{ 
+		insureNo("volatile", "Method");
+		insureNo("transient", "Method");
+	}
+	private void validateForField() 
+	{ 
+		insureNo("synchronized", "Variable");
+		insureNo("native", "Variable");
+		insureNo("abstract", "Variable");
+	}
+	private void validateForClass() 
+	{ 
+		validateForMethod(); 
+		insureNo("native", "Class");
+		insureNo("synchronized", "Class");
+	}
+
+	private void insureNo( String modifier, String context )
+	{
+		if ( hasModifier( modifier ) )
+			throw new IllegalStateException(
+				context + " cannot be declared '"+modifier+"'");
+	}
+
+	public String toString()
+	{
+		return "Modifiers: "+modifiers;
+	}
+
+}
