@@ -7,6 +7,12 @@ Explorer (CIDE_generateAST, CIDE2_ast, fstcomp, fstgen, and
 fstmerge). Each project comes with all necessary libraries and
 all dependencies between the projects are allready set.
 
+requirements:
+  - openjdk jre
+  - rcs (ubuntu: aptitude install rcs)
+  - R (for evaluation of fstmerge results;
+    ubuntu: aptitude install r-recommended)
+
 fstcomp:
 fstgen:
   - project that creates the parsers from annotated grammars
