@@ -496,6 +496,18 @@ FSTInfo Term(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	n=PreTerm(true){ replaceName(n);} "{^" n=PreTerm(true){ replaceName(n);} "}" {return productionEndTerminal("Term3","-","-","Replacement","Default",first,token);}
  |
 	n=Var(true){ replaceName(n);} "@" n=Term(true){ replaceName(n);} {return productionEndTerminal("Term4","-","-","Replacement","Default",first,token);}
+ |
+	"_" n=Term(true){ replaceName(n);} {return productionEndTerminal("Term5","-","-","Replacement","Default",first,token);}
+ |
+	n=PreTerm(true){ replaceName(n);} "{" (n=Term(true){ replaceName(n);} ",")* "}" {return productionEndTerminal("Term6","-","-","Replacement","Default",first,token);}
+ |
+	n=PreTerm(true){ replaceName(n);} {return productionEndTerminal("Term7","-","-","Replacement","Default",first,token);}
+ |
+	n=StrategyAngle(true){ replaceName(n);} n=Term(true){ replaceName(n);} {return productionEndTerminal("Term8","-","-","Replacement","Default",first,token);}
+ |
+	n=StrategyAngle(true){ replaceName(n);} {return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
+ |
+	n=Var(true){ replaceName(n);} "@" n=Term(true){ replaceName(n);} {return productionEndTerminal("Term10","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -517,7 +529,17 @@ FSTInfo PreTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=String(true){ replaceName(n);} "(" (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("PreTerm8","-","-","Replacement","Default",first,token);}
  |
-	n=Term(true){ replaceName(n);} "#" "(" n=Term(true){ replaceName(n);} ")" {return productionEndTerminal("PreTerm9","-","-","Replacement","Default",first,token);}
+	"_" n=PreTerm(true){ replaceName(n);} {return productionEndTerminal("PreTerm9","-","-","Replacement","Default",first,token);}
+ |
+	n=StrategyAngle(true){ replaceName(n);} n=Term(true){ replaceName(n);} {return productionEndTerminal("PreTerm10","-","-","Replacement","Default",first,token);}
+ |
+	n=StrategyAngle(true){ replaceName(n);} {return productionEndTerminal("PreTerm11","-","-","Replacement","Default",first,token);}
+ |
+	"(" (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("PreTerm12","-","-","Replacement","Default",first,token);}
+ |
+	"[" (n=Term(true){ replaceName(n);} ",")* "]" {return productionEndTerminal("PreTerm13","-","-","Replacement","Default",first,token);}
+ |
+	"[" (n=Term(true){ replaceName(n);} ",")* "|" n=Term(true){ replaceName(n);} "]" {return productionEndTerminal("PreTerm14","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -663,93 +685,73 @@ FSTInfo Strategy(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"{" (n=ID(true){ replaceName(n);} ",")* ":" n=Strategy(true){ replaceName(n);} "}" {return productionEndTerminal("Strategy10","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} ";" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy11","-","-","Replacement","Default",first,token);}
+	"prim" "(" n=String(true){ replaceName(n);} "," (n=Strategy(true){ replaceName(n);} ",")* "|" (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy11","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} "<" n=StrategyMid(true){ replaceName(n);} "+" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
+	"some" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
  |
-	"prim" "(" n=String(true){ replaceName(n);} "," (n=Strategy(true){ replaceName(n);} ",")* "|" (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy13","-","-","Replacement","Default",first,token);}
+	"one" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy13","-","-","Replacement","Default",first,token);}
  |
-	"some" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy14","-","-","Replacement","Default",first,token);}
+	"all" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy14","-","-","Replacement","Default",first,token);}
  |
-	"one" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy15","-","-","Replacement","Default",first,token);}
+	"import-term" "(" n=ModName(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy15","-","-","Replacement","Default",first,token);}
  |
-	"all" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy16","-","-","Replacement","Default",first,token);}
+	n=SVar(true){ replaceName(n);} "(" (n=Strategy(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy16","-","-","Replacement","Default",first,token);}
  |
-	"import-term" "(" n=ModName(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy17","-","-","Replacement","Default",first,token);}
+	"{" n=Strategy(true){ replaceName(n);} "}" {return productionEndTerminal("Strategy17","-","-","Replacement","Default",first,token);}
  |
-	n=SVar(true){ replaceName(n);} "(" (n=Strategy(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy18","-","-","Replacement","Default",first,token);}
+	n=StrategyAngle(true){ replaceName(n);} n=Term(true){ replaceName(n);} {return productionEndTerminal("Strategy18","-","-","Replacement","Default",first,token);}
  |
-	"{" n=Strategy(true){ replaceName(n);} "}" {return productionEndTerminal("Strategy19","-","-","Replacement","Default",first,token);}
+	"rec" n=Id(true){ replaceName(n);} "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy19","-","-","Replacement","Default",first,token);}
  |
-	n=StrategyAngle(true){ replaceName(n);} n=Term(true){ replaceName(n);} {return productionEndTerminal("Strategy20","-","-","Replacement","Default",first,token);}
+	"not" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy20","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} "<+" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy21","-","-","Replacement","Default",first,token);}
+	"where" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy21","-","-","Replacement","Default",first,token);}
  |
-	"rec" n=Id(true){ replaceName(n);} "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy22","-","-","Replacement","Default",first,token);}
+	"with" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy22","-","-","Replacement","Default",first,token);}
  |
-	"not" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy23","-","-","Replacement","Default",first,token);}
+	"test" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy23","-","-","Replacement","Default",first,token);}
  |
-	"where" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy24","-","-","Replacement","Default",first,token);}
+	"prim" "(" n=String(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy24","-","-","Replacement","Default",first,token);}
  |
-	"with" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy25","-","-","Replacement","Default",first,token);}
+	"prim" "(" n=String(true){ replaceName(n);} "," (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy25","-","-","Replacement","Default",first,token);}
  |
-	"test" "(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy26","-","-","Replacement","Default",first,token);}
+	n=String(true){ replaceName(n);} {return productionEndTerminal("Strategy26","-","-","Replacement","Default",first,token);}
  |
-	"prim" "(" n=String(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy27","-","-","Replacement","Default",first,token);}
+	n=Int(true){ replaceName(n);} {return productionEndTerminal("Strategy27","-","-","Replacement","Default",first,token);}
  |
-	"prim" "(" n=String(true){ replaceName(n);} "," (n=Term(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy28","-","-","Replacement","Default",first,token);}
+	n=Real(true){ replaceName(n);} {return productionEndTerminal("Strategy28","-","-","Replacement","Default",first,token);}
  |
-	n=String(true){ replaceName(n);} {return productionEndTerminal("Strategy29","-","-","Replacement","Default",first,token);}
+	n=String(true){ replaceName(n);} "(" (n=Strategy(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy29","-","-","Replacement","Default",first,token);}
  |
-	n=Int(true){ replaceName(n);} {return productionEndTerminal("Strategy30","-","-","Replacement","Default",first,token);}
+	"(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy30","-","-","Replacement","Default",first,token);}
  |
-	n=Real(true){ replaceName(n);} {return productionEndTerminal("Strategy31","-","-","Replacement","Default",first,token);}
+	"(" n=Strategy(true){ replaceName(n);} "," (n=Strategy(true){ replaceName(n);} ",")+ ")" {return productionEndTerminal("Strategy31","-","-","Replacement","Default",first,token);}
  |
-	n=String(true){ replaceName(n);} "(" (n=Strategy(true){ replaceName(n);} ",")* ")" {return productionEndTerminal("Strategy32","-","-","Replacement","Default",first,token);}
+	"[" (n=Strategy(true){ replaceName(n);} ",")* "]" {return productionEndTerminal("Strategy32","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} n=StrategyCurly(true){ replaceName(n);} {return productionEndTerminal("Strategy33","-","-","Replacement","Default",first,token);}
+	"[" (n=Strategy(true){ replaceName(n);} ",")* "|" n=Strategy(true){ replaceName(n);} "]" {return productionEndTerminal("Strategy33","-","-","Replacement","Default",first,token);}
  |
-	"(" n=Strategy(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy34","-","-","Replacement","Default",first,token);}
+	n=SVar(true){ replaceName(n);} {return productionEndTerminal("Strategy34","-","-","Replacement","Default",first,token);}
  |
-	"(" n=Strategy(true){ replaceName(n);} "," (n=Strategy(true){ replaceName(n);} ",")+ ")" {return productionEndTerminal("Strategy35","-","-","Replacement","Default",first,token);}
+	"\\" n=Rule(true){ replaceName(n);} "\\" {return productionEndTerminal("Strategy35","-","-","Replacement","Default",first,token);}
  |
-	"[" (n=Strategy(true){ replaceName(n);} ",")* "]" {return productionEndTerminal("Strategy36","-","-","Replacement","Default",first,token);}
+	"(" n=Rule(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy36","-","-","Replacement","Default",first,token);}
  |
-	"[" (n=Strategy(true){ replaceName(n);} ",")* "|" n=Strategy(true){ replaceName(n);} "]" {return productionEndTerminal("Strategy37","-","-","Replacement","Default",first,token);}
+	"proceed" "(" (n=Strategy(true){ replaceName(n);} ",")+ ")" {return productionEndTerminal("Strategy37","-","-","Replacement","Default",first,token);}
  |
-	n=SVar(true){ replaceName(n);} {return productionEndTerminal("Strategy38","-","-","Replacement","Default",first,token);}
+	"if" n=Strategy(true){ replaceName(n);} "then" n=Strategy(true){ replaceName(n);} "else" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy38","-","-","Replacement","Default",first,token);}
  |
-	"\\" n=Rule(true){ replaceName(n);} "\\" {return productionEndTerminal("Strategy39","-","-","Replacement","Default",first,token);}
+	"if" n=Strategy(true){ replaceName(n);} "then" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy39","-","-","Replacement","Default",first,token);}
  |
-	"(" n=Rule(true){ replaceName(n);} ")" {return productionEndTerminal("Strategy40","-","-","Replacement","Default",first,token);}
+	"switch" n=Strategy(true){ replaceName(n);} (n=SwitchCase(true){ replaceName(n);})* "end" {return productionEndTerminal("Strategy40","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} "+" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy41","-","-","Replacement","Default",first,token);}
+	"switch" n=Strategy(true){ replaceName(n);} (n=SwitchCase(true){ replaceName(n);})* "otherwise" ":" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy41","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} ";" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy42","-","-","Replacement","Default",first,token);}
+	n=Term(true){ replaceName(n);} ":=" n=Term(true){ replaceName(n);} {return productionEndTerminal("Strategy42","-","-","Replacement","Default",first,token);}
  |
-	n=Strategy(true){ replaceName(n);} "+>" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy43","-","-","Replacement","Default",first,token);}
+	"{|" n=ScopeLabels(true){ replaceName(n);} ":" n=Strategy(true){ replaceName(n);} "|}" {return productionEndTerminal("Strategy43","-","-","Replacement","Default",first,token);}
  |
-	"proceed" "(" (n=Strategy(true){ replaceName(n);} ",")+ ")" {return productionEndTerminal("Strategy44","-","-","Replacement","Default",first,token);}
- |
-	"if" n=Strategy(true){ replaceName(n);} "then" n=Strategy(true){ replaceName(n);} "else" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy45","-","-","Replacement","Default",first,token);}
- |
-	"if" n=Strategy(true){ replaceName(n);} "then" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy46","-","-","Replacement","Default",first,token);}
- |
-	"switch" n=Strategy(true){ replaceName(n);} (n=SwitchCase(true){ replaceName(n);})* "end" {return productionEndTerminal("Strategy47","-","-","Replacement","Default",first,token);}
- |
-	"switch" n=Strategy(true){ replaceName(n);} (n=SwitchCase(true){ replaceName(n);})* "otherwise" ":" n=Strategy(true){ replaceName(n);} "end" {return productionEndTerminal("Strategy48","-","-","Replacement","Default",first,token);}
- |
-	n=Strategy(true){ replaceName(n);} "=>" n=Term(true){ replaceName(n);} {return productionEndTerminal("Strategy49","-","-","Replacement","Default",first,token);}
- |
-	n=Term(true){ replaceName(n);} ":=" n=Term(true){ replaceName(n);} {return productionEndTerminal("Strategy50","-","-","Replacement","Default",first,token);}
- |
-	"{|" n=ScopeLabels(true){ replaceName(n);} ":" n=Strategy(true){ replaceName(n);} "|}" {return productionEndTerminal("Strategy51","-","-","Replacement","Default",first,token);}
- |
-	"rules" "(" (n=DynRuleDef(true){ replaceName(n);})* ")" "/" n=RuleNames(true){ replaceName(n);} "\\*" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy52","-","-","Replacement","Default",first,token);}
- |
-	n=Strategy(true){ replaceName(n);} "/" n=RuleNames(true){ replaceName(n);} "\\" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy53","-","-","Replacement","Default",first,token);}
- |
-	n=Strategy(true){ replaceName(n);} "\\" n=RuleNames(true){ replaceName(n);} "/" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy54","-","-","Replacement","Default",first,token);}
+	"rules" "(" (n=DynRuleDef(true){ replaceName(n);})* ")" "/" n=RuleNames(true){ replaceName(n);} "\\*" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("Strategy44","-","-","Replacement","Default",first,token);}
 
  )  }
 

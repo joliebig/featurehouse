@@ -265,13 +265,13 @@ Wld : "_" ;
 Term : Var |
        Wld |
 	   PreTerm "{^" PreTerm "}" |
-	   Var "@" Term ; 
-	   /* "_" Term |
+	   Var "@" Term | 
+	   "_" Term |
        PreTerm "{" (Term ",")* "}" |
 	   PreTerm |
-	   "<" Strategy ">" Term |
+	   StrategyAngle Term |
 	   StrategyAngle |
-	   Var "@" Term ; */
+	   Var "@" Term ;
 
 PreTerm : Var | 
           Wld | 
@@ -280,15 +280,14 @@ PreTerm : Var |
 		  String | 
 		  Var "@" PreTerm | 
 		  Id "(" (Term ",")* ")" |
-		  String "(" (Term ",")* ")" |
-		  Term "#" "(" Term ")" ; 
-		  /* "_" PreTerm |
-		  "<" Strategy ">" Term |
+		  String "(" (Term ",")* ")" |		   
+		  "_" PreTerm |
+		  StrategyAngle Term |
 		  StrategyAngle |
 		  "(" (Term ",")* ")" |
 		  "[" (Term ",")* "]" |
-		  "[" (Term ",")* "|" Term "]" |
-		  Term "#" "(" Term ")" ; */
+		  "[" (Term ",")* "|" Term "]" ;
+		  /*Term "#" "(" Term ")" */ 
 
 /* Stratego-Core-Signatures */
 Sort : LCID |
@@ -344,17 +343,26 @@ Strategy : "let" ( Def )* "in" Strategy "end" |
 		   "?" Term |
 		   "!" Term |
 		   "{" (ID ",")* ":" Strategy "}" |
+		   
+		   /* Linksrekursion (muss irgendwie umgeschrieben werden!) 
 		   Strategy ";" Strategy |
 		   Strategy "<" StrategyMid "+" Strategy |
+		   Strategy "<+" Strategy |
+		   Strategy StrategyCurly |
+		   Strategy "+" Strategy |
+		   Strategy "+>" Strategy |
+		   Strategy "=>" Term |
+		   Strategy "/" RuleNames "\\" Strategy |
+		   Strategy "\\" RuleNames "/" Strategy */
+		   
 		   "prim" "(" String "," (Strategy ",")* "|" (Term ",")* ")" |
 		   "some" "(" Strategy ")" |
 		   "one" "(" Strategy ")" |
 		   "all" "(" Strategy ")" |
-		   "import-term" "(" ModName ")" |
+		   "import-term" "(" ModName ")" |		   
 		   SVar "(" (Strategy ",")* ")" |
 		   "{" Strategy "}" |
-		   StrategyAngle Term |
-		   Strategy "<+" Strategy |
+		   StrategyAngle Term |		   
 		   "rec" Id "(" Strategy ")" |
 		   "not" "(" Strategy ")" |
 		   "where" "(" Strategy ")" |
@@ -362,9 +370,8 @@ Strategy : "let" ( Def )* "in" Strategy "end" |
 		   "test" "(" Strategy ")" |
 		   "prim" "(" String ")" |
 		   "prim" "(" String "," (Term ",")* ")" |
-		   String | Int | Real | /*Char |*/
+		   String | Int | Real | 
 		   String "(" (Strategy ",")* ")" |
-		   Strategy StrategyCurly |
 		   "(" Strategy ")" |
 		   "(" Strategy "," (Strategy ",")+ ")" |
 		   "[" (Strategy ",")* "]" |
@@ -372,21 +379,15 @@ Strategy : "let" ( Def )* "in" Strategy "end" |
 		   SVar |
 		   "\\" Rule "\\" |
 		   "(" Rule ")" |
-		   Strategy "+" Strategy |
-		   Strategy ";" Strategy |
-		   Strategy "+>" Strategy |
 		   "proceed" "(" (Strategy ",")+ ")" |
 		   "if" Strategy "then" Strategy "else" Strategy "end" |
 		   "if" Strategy "then" Strategy "end" |
 		   "switch" Strategy ( SwitchCase )* "end" |
 		   "switch" Strategy ( SwitchCase )* "otherwise" ":" Strategy "end" |
-		   Strategy "=>" Term |
 		   Term ":=" Term |
 		   "{|" ScopeLabels ":" Strategy "|}" |
            "rules" "(" ( DynRuleDef )* ")" 
-		   "/" RuleNames "\\*"  Strategy | 
-		   Strategy "/" RuleNames "\\" Strategy |
-		   Strategy "\\" RuleNames "/" Strategy ;
+		   "/" RuleNames "\\*"  Strategy ;		   
 		   
 StrategyMid : Strategy ;		   
 		   
