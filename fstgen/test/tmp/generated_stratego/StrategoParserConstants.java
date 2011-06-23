@@ -16,57 +16,68 @@ public interface StrategoParserConstants {
   int MODULE = 19;
   int NOT = 20;
   int ONE = 21;
-  int OVERLAYS = 22;
-  int PRIM = 23;
-  int RULES = 24;
-  int SCRIPT = 25;
-  int SIGNATURE = 26;
-  int SOME = 27;
-  int SORTS = 28;
-  int STRATEGIES = 29;
-  int STRATEGO = 30;
-  int TEST = 31;
-  int WHERE = 32;
-  int IMPORTTERM = 33;
-  int IMPORTS = 34;
-  int CASE = 35;
-  int ELSE = 36;
-  int END = 37;
-  int EXTERNAL = 38;
-  int IF = 39;
-  int OTHERWISE = 40;
-  int REC = 41;
-  int SWITCH = 42;
-  int THEN = 43;
-  int EXTEND = 44;
-  int OVERRIDE = 45;
-  int INTERNAL = 46;
-  int SEALED = 47;
-  int EXTENSIBLE = 48;
-  int OVERRIDABLE = 49;
-  int INTEGER_LITERAL = 50;
-  int DECIMAL_LITERAL = 51;
-  int HEX_LITERAL = 52;
-  int OCTAL_LITERAL = 53;
-  int FLOATING_POINT_LITERAL = 54;
-  int EXPONENT = 55;
-  int CHARACTER_LITERAL = 56;
-  int STRING_LITERAL = 57;
-  int IDENTIFIER = 58;
-  int LETTER = 59;
-  int DIGIT = 60;
-  int LPAREN = 61;
-  int RPAREN = 62;
-  int LBRACE = 63;
-  int RBRACE = 64;
-  int LBRACKET = 65;
-  int RBRACKET = 66;
-  int COMMA = 67;
-  int DOT = 68;
-  int PLUS = 69;
-  int MINUS = 70;
-  int STAR = 71;
-  int SLASH = 72;
+  int ON = 22;
+  int CALL = 23;
+  int PROCEED = 24;
+  int SIGNATURES = 25;
+  int SPECIFICATION = 26;
+  int WITH = 27;
+  int OVERLAYS = 28;
+  int PRIM = 29;
+  int RULES = 30;
+  int SCRIPT = 31;
+  int SIGNATURE = 32;
+  int SOME = 33;
+  int SORTS = 34;
+  int STRATEGIES = 35;
+  int STRATEGO = 36;
+  int TEST = 37;
+  int WHERE = 38;
+  int IMPORTTERM = 39;
+  int IMPORTS = 40;
+  int EXPORTS = 41;
+  int CASE = 42;
+  int ELSE = 43;
+  int END = 44;
+  int EXTERNAL = 45;
+  int IF = 46;
+  int OTHERWISE = 47;
+  int REC = 48;
+  int SWITCH = 49;
+  int THEN = 50;
+  int EXTEND = 51;
+  int OVERRIDE = 52;
+  int INTERNAL = 53;
+  int SEALED = 54;
+  int EXTENSIBLE = 55;
+  int OVERRIDABLE = 56;
+  int INTEGER_LITERAL = 57;
+  int DECIMAL_LITERAL = 58;
+  int HEX_LITERAL = 59;
+  int OCTAL_LITERAL = 60;
+  int FLOATING_POINT_LITERAL = 61;
+  int EXPONENT = 62;
+  int CHARACTER_LITERAL = 63;
+  int STRING_LITERAL = 64;
+  int IDENTIFIER = 65;
+  int LETTER = 66;
+  int LCCHAR = 67;
+  int UCCHAR = 68;
+  int APOSTROPHE = 69;
+  int DOT = 70;
+  int LOWLINE = 71;
+  int MINUS = 72;
+  int DIGIT = 73;
+  int LPAREN = 74;
+  int RPAREN = 75;
+  int LBRACE = 76;
+  int RBRACE = 77;
+  int LBRACKET = 78;
+  int RBRACKET = 79;
+  int COMMA = 80;
+  int PLUS = 81;
+  int STAR = 82;
+  int SLASH = 83;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -96,6 +107,12 @@ public interface StrategoParserConstants {
     "\"module\"",
     "\"not\"",
     "\"one\"",
+    "\"on\"",
+    "\"call\"",
+    "\"proceed\"",
+    "\"signatures\"",
+    "\"specification\"",
+    "\"with\"",
     "\"overlays\"",
     "\"prim\"",
     "\"rules\"",
@@ -109,6 +126,7 @@ public interface StrategoParserConstants {
     "\"where\"",
     "\"import-term\"",
     "\"imports\"",
+    "\"exports\"",
     "\"case\"",
     "\"else\"",
     "\"end\"",
@@ -134,6 +152,12 @@ public interface StrategoParserConstants {
     "<STRING_LITERAL>",
     "<IDENTIFIER>",
     "<LETTER>",
+    "<LCCHAR>",
+    "<UCCHAR>",
+    "<APOSTROPHE>",
+    "<DOT>",
+    "<LOWLINE>",
+    "<MINUS>",
     "<DIGIT>",
     "\"(\"",
     "\")\"",
@@ -142,102 +166,29 @@ public interface StrategoParserConstants {
     "\"[\"",
     "\"]\"",
     "\",\"",
-    "\".\"",
     "\"+\"",
-    "\"-\"",
     "\"*\"",
     "\"/\"",
-    "\"0\"",
-    "\"1\"",
-    "\"2\"",
-    "\"3\"",
-    "\"4\"",
-    "\"5\"",
-    "\"6\"",
-    "\"7\"",
-    "\"8\"",
-    "\"9\"",
-    "\"a\"",
-    "\"b\"",
-    "\"c\"",
-    "\"d\"",
-    "\"e\"",
-    "\"f\"",
-    "\"g\"",
-    "\"h\"",
-    "\"i\"",
-    "\"j\"",
-    "\"k\"",
-    "\"l\"",
-    "\"m\"",
-    "\"n\"",
-    "\"o\"",
-    "\"p\"",
-    "\"q\"",
-    "\"r\"",
-    "\"s\"",
-    "\"t\"",
-    "\"u\"",
-    "\"v\"",
-    "\"w\"",
-    "\"x\"",
-    "\"y\"",
-    "\"z\"",
-    "\"A\"",
-    "\"B\"",
-    "\"C\"",
-    "\"D\"",
-    "\"E\"",
-    "\"F\"",
-    "\"G\"",
-    "\"H\"",
-    "\"I\"",
-    "\"J\"",
-    "\"K\"",
-    "\"L\"",
-    "\"M\"",
-    "\"N\"",
-    "\"O\"",
-    "\"P\"",
-    "\"Q\"",
-    "\"R\"",
-    "\"S\"",
-    "\"T\"",
-    "\"U\"",
-    "\"V\"",
-    "\"W\"",
-    "\"X\"",
-    "\"Y\"",
-    "\"Z\"",
-    "\"_\"",
-    "\"\\\'\"",
-    "\"{^\"",
-    "\"@\"",
-    "\"|\"",
+    "\"=\"",
     "\":\"",
+    "\"|\"",
     "\"->\"",
-    "\"specification\"",
-    "\"signatures\"",
-    "\"call\"",
-    "\"proceed\"",
     "\"?\"",
     "\"!\"",
-    "\"with\"",
+    "\"<\"",
+    "\">\"",
     "\"\\\\\"",
     "\":=\"",
     "\"{|\"",
     "\"|}\"",
     "\"\\\\*\"",
-    "\"=\"",
-    "\"**\"",
-    "\"<\"",
-    "\">\"",
     "\"~\"",
     "\":-\"",
     "\":+\"",
     "\":+=\"",
     "\"depends \"",
-    "\"on\"",
+    "\"{^\"",
+    "\"@\"",
   };
 
 }

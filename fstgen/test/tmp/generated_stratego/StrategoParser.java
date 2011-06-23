@@ -13,55 +13,109 @@ import de.ovgu.cide.fstgen.ast.*;
 public class StrategoParser extends AbstractFSTParser implements StrategoParserConstants {
         public StrategoParser(){}
 
-  final public FSTInfo Digit(boolean inTerminal) throws ParseException {
-                                      Token first=null,t;FSTInfo n;
+  final public FSTInfo Module(boolean inTerminal) throws ParseException {
+                                       Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = ModuleContent(true);
+                               replaceName(n);
+    jj_consume_token(0);
+                                                       {if (true) return productionEndTerminal("Module","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ModuleContent(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 73:
-      jj_consume_token(73);
-              {if (true) return productionEndTerminal("Digit1","-","-","Replacement","Default",first,token);}
+    case MODULE:
+      jj_consume_token(MODULE);
+      n = ModName(true);
+                                  replaceName(n);
+      label_1:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SIGNATURES:
+        case OVERLAYS:
+        case RULES:
+        case STRATEGIES:
+        case IMPORTS:
+        case EXPORTS:
+          ;
+          break;
+        default:
+          jj_la1[0] = jj_gen;
+          break label_1;
+        }
+        n = Decl(true);
+                                                                  replaceName(n);
+      }
+                                                                                      {if (true) return productionEndTerminal("ModuleContent1","-","-","Replacement","Default",first,token);}
       break;
-    case 74:
-      jj_consume_token(74);
-              {if (true) return productionEndTerminal("Digit2","-","-","Replacement","Default",first,token);}
-      break;
-    case 75:
-      jj_consume_token(75);
-              {if (true) return productionEndTerminal("Digit3","-","-","Replacement","Default",first,token);}
-      break;
-    case 76:
-      jj_consume_token(76);
-              {if (true) return productionEndTerminal("Digit4","-","-","Replacement","Default",first,token);}
-      break;
-    case 77:
-      jj_consume_token(77);
-              {if (true) return productionEndTerminal("Digit5","-","-","Replacement","Default",first,token);}
-      break;
-    case 78:
-      jj_consume_token(78);
-              {if (true) return productionEndTerminal("Digit6","-","-","Replacement","Default",first,token);}
-      break;
-    case 79:
-      jj_consume_token(79);
-              {if (true) return productionEndTerminal("Digit7","-","-","Replacement","Default",first,token);}
-      break;
-    case 80:
-      jj_consume_token(80);
-              {if (true) return productionEndTerminal("Digit8","-","-","Replacement","Default",first,token);}
-      break;
-    case 81:
-      jj_consume_token(81);
-              {if (true) return productionEndTerminal("Digit9","-","-","Replacement","Default",first,token);}
-      break;
-    case 82:
-      jj_consume_token(82);
-              {if (true) return productionEndTerminal("Digit10","-","-","Replacement","Default",first,token);}
+    case SPECIFICATION:
+      jj_consume_token(SPECIFICATION);
+      label_2:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SIGNATURES:
+        case OVERLAYS:
+        case RULES:
+        case STRATEGIES:
+        case IMPORTS:
+        case EXPORTS:
+          ;
+          break;
+        default:
+          jj_la1[1] = jj_gen;
+          break label_2;
+        }
+        n = Decl(true);
+                                       replaceName(n);
+      }
+                                                           {if (true) return productionEndTerminal("ModuleContent2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[0] = jj_gen;
+      jj_la1[2] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ModName(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = ModNamePart(true);
+                             replaceName(n);
+    label_3:
+    while (true) {
+      if (jj_2_1(2)) {
+        ;
+      } else {
+        break label_3;
+      }
+      jj_consume_token(SLASH);
+      n = ModNamePart(true);
+                                                                                     replaceName(n);
+    }
+                                                                                                         {if (true) return productionEndTerminal("ModName","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ModNamePart(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Id(true);
+                    replaceName(n);
+                                      {if (true) return productionEndTerminal("ModNamePart","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ImportModName(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = ModName(true);
+                         replaceName(n);
+                                           {if (true) return productionEndTerminal("ImportModName","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -89,20 +143,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case MINUS:
       jj_consume_token(MINUS);
-      n = NatInteger(true);
-                                replaceName(n);
-                                                  {if (true) return productionEndTerminal("Int1","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-      n = NatInteger(true);
-                            replaceName(n);
-                                              {if (true) return productionEndTerminal("Int2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[1] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+      jj_la1[3] = jj_gen;
+      ;
     }
+    n = NatInteger(true);
+                                      replaceName(n);
+                                                        {if (true) return productionEndTerminal("Int","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -112,20 +160,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case MINUS:
       jj_consume_token(MINUS);
-      n = RealDigit(true);
-                               replaceName(n);
-                                                 {if (true) return productionEndTerminal("Real1","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-      n = RealDigit(true);
-                           replaceName(n);
-                                             {if (true) return productionEndTerminal("Real2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[2] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+      jj_la1[4] = jj_gen;
+      ;
     }
+    n = RealDigit(true);
+                                     replaceName(n);
+                                                       {if (true) return productionEndTerminal("Real","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -137,2541 +179,395 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo lowerLetter(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
+  final public FSTInfo Char(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(CHARACTER_LITERAL);
+                             {if (true) return productionEndTerminal("Char","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Decl(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-      jj_consume_token(83);
-              {if (true) return productionEndTerminal("lowerLetter1","-","-","Replacement","Default",first,token);}
-      break;
-    case 84:
-      jj_consume_token(84);
-              {if (true) return productionEndTerminal("lowerLetter2","-","-","Replacement","Default",first,token);}
-      break;
-    case 85:
-      jj_consume_token(85);
-              {if (true) return productionEndTerminal("lowerLetter3","-","-","Replacement","Default",first,token);}
-      break;
-    case 86:
-      jj_consume_token(86);
-              {if (true) return productionEndTerminal("lowerLetter4","-","-","Replacement","Default",first,token);}
-      break;
-    case 87:
-      jj_consume_token(87);
-              {if (true) return productionEndTerminal("lowerLetter5","-","-","Replacement","Default",first,token);}
-      break;
-    case 88:
-      jj_consume_token(88);
-              {if (true) return productionEndTerminal("lowerLetter6","-","-","Replacement","Default",first,token);}
-      break;
-    case 89:
-      jj_consume_token(89);
-              {if (true) return productionEndTerminal("lowerLetter7","-","-","Replacement","Default",first,token);}
-      break;
-    case 90:
-      jj_consume_token(90);
-              {if (true) return productionEndTerminal("lowerLetter8","-","-","Replacement","Default",first,token);}
-      break;
-    case 91:
-      jj_consume_token(91);
-              {if (true) return productionEndTerminal("lowerLetter9","-","-","Replacement","Default",first,token);}
-      break;
-    case 92:
-      jj_consume_token(92);
-              {if (true) return productionEndTerminal("lowerLetter10","-","-","Replacement","Default",first,token);}
-      break;
-    case 93:
-      jj_consume_token(93);
-              {if (true) return productionEndTerminal("lowerLetter11","-","-","Replacement","Default",first,token);}
-      break;
-    case 94:
-      jj_consume_token(94);
-              {if (true) return productionEndTerminal("lowerLetter12","-","-","Replacement","Default",first,token);}
-      break;
-    case 95:
-      jj_consume_token(95);
-              {if (true) return productionEndTerminal("lowerLetter13","-","-","Replacement","Default",first,token);}
-      break;
-    case 96:
-      jj_consume_token(96);
-              {if (true) return productionEndTerminal("lowerLetter14","-","-","Replacement","Default",first,token);}
-      break;
-    case 97:
-      jj_consume_token(97);
-              {if (true) return productionEndTerminal("lowerLetter15","-","-","Replacement","Default",first,token);}
-      break;
-    case 98:
-      jj_consume_token(98);
-              {if (true) return productionEndTerminal("lowerLetter16","-","-","Replacement","Default",first,token);}
-      break;
-    case 99:
-      jj_consume_token(99);
-              {if (true) return productionEndTerminal("lowerLetter17","-","-","Replacement","Default",first,token);}
-      break;
-    case 100:
-      jj_consume_token(100);
-              {if (true) return productionEndTerminal("lowerLetter18","-","-","Replacement","Default",first,token);}
-      break;
-    case 101:
-      jj_consume_token(101);
-              {if (true) return productionEndTerminal("lowerLetter19","-","-","Replacement","Default",first,token);}
-      break;
-    case 102:
-      jj_consume_token(102);
-              {if (true) return productionEndTerminal("lowerLetter20","-","-","Replacement","Default",first,token);}
-      break;
-    case 103:
-      jj_consume_token(103);
-              {if (true) return productionEndTerminal("lowerLetter21","-","-","Replacement","Default",first,token);}
-      break;
-    case 104:
-      jj_consume_token(104);
-              {if (true) return productionEndTerminal("lowerLetter22","-","-","Replacement","Default",first,token);}
-      break;
-    case 105:
-      jj_consume_token(105);
-              {if (true) return productionEndTerminal("lowerLetter23","-","-","Replacement","Default",first,token);}
-      break;
-    case 106:
-      jj_consume_token(106);
-              {if (true) return productionEndTerminal("lowerLetter24","-","-","Replacement","Default",first,token);}
-      break;
-    case 107:
-      jj_consume_token(107);
-              {if (true) return productionEndTerminal("lowerLetter25","-","-","Replacement","Default",first,token);}
-      break;
-    case 108:
-      jj_consume_token(108);
-              {if (true) return productionEndTerminal("lowerLetter26","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[3] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo upperLetter(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 109:
-      jj_consume_token(109);
-              {if (true) return productionEndTerminal("upperLetter1","-","-","Replacement","Default",first,token);}
-      break;
-    case 110:
-      jj_consume_token(110);
-              {if (true) return productionEndTerminal("upperLetter2","-","-","Replacement","Default",first,token);}
-      break;
-    case 111:
-      jj_consume_token(111);
-              {if (true) return productionEndTerminal("upperLetter3","-","-","Replacement","Default",first,token);}
-      break;
-    case 112:
-      jj_consume_token(112);
-              {if (true) return productionEndTerminal("upperLetter4","-","-","Replacement","Default",first,token);}
-      break;
-    case 113:
-      jj_consume_token(113);
-              {if (true) return productionEndTerminal("upperLetter5","-","-","Replacement","Default",first,token);}
-      break;
-    case 114:
-      jj_consume_token(114);
-              {if (true) return productionEndTerminal("upperLetter6","-","-","Replacement","Default",first,token);}
-      break;
-    case 115:
-      jj_consume_token(115);
-              {if (true) return productionEndTerminal("upperLetter7","-","-","Replacement","Default",first,token);}
-      break;
-    case 116:
-      jj_consume_token(116);
-              {if (true) return productionEndTerminal("upperLetter8","-","-","Replacement","Default",first,token);}
-      break;
-    case 117:
-      jj_consume_token(117);
-              {if (true) return productionEndTerminal("upperLetter9","-","-","Replacement","Default",first,token);}
-      break;
-    case 118:
-      jj_consume_token(118);
-              {if (true) return productionEndTerminal("upperLetter10","-","-","Replacement","Default",first,token);}
-      break;
-    case 119:
-      jj_consume_token(119);
-              {if (true) return productionEndTerminal("upperLetter11","-","-","Replacement","Default",first,token);}
-      break;
-    case 120:
-      jj_consume_token(120);
-              {if (true) return productionEndTerminal("upperLetter12","-","-","Replacement","Default",first,token);}
-      break;
-    case 121:
-      jj_consume_token(121);
-              {if (true) return productionEndTerminal("upperLetter13","-","-","Replacement","Default",first,token);}
-      break;
-    case 122:
-      jj_consume_token(122);
-              {if (true) return productionEndTerminal("upperLetter14","-","-","Replacement","Default",first,token);}
-      break;
-    case 123:
-      jj_consume_token(123);
-              {if (true) return productionEndTerminal("upperLetter15","-","-","Replacement","Default",first,token);}
-      break;
-    case 124:
-      jj_consume_token(124);
-              {if (true) return productionEndTerminal("upperLetter16","-","-","Replacement","Default",first,token);}
-      break;
-    case 125:
-      jj_consume_token(125);
-              {if (true) return productionEndTerminal("upperLetter17","-","-","Replacement","Default",first,token);}
-      break;
-    case 126:
-      jj_consume_token(126);
-              {if (true) return productionEndTerminal("upperLetter18","-","-","Replacement","Default",first,token);}
-      break;
-    case 127:
-      jj_consume_token(127);
-              {if (true) return productionEndTerminal("upperLetter19","-","-","Replacement","Default",first,token);}
-      break;
-    case 128:
-      jj_consume_token(128);
-              {if (true) return productionEndTerminal("upperLetter20","-","-","Replacement","Default",first,token);}
-      break;
-    case 129:
-      jj_consume_token(129);
-              {if (true) return productionEndTerminal("upperLetter21","-","-","Replacement","Default",first,token);}
-      break;
-    case 130:
-      jj_consume_token(130);
-              {if (true) return productionEndTerminal("upperLetter22","-","-","Replacement","Default",first,token);}
-      break;
-    case 131:
-      jj_consume_token(131);
-              {if (true) return productionEndTerminal("upperLetter23","-","-","Replacement","Default",first,token);}
-      break;
-    case 132:
-      jj_consume_token(132);
-              {if (true) return productionEndTerminal("upperLetter24","-","-","Replacement","Default",first,token);}
-      break;
-    case 133:
-      jj_consume_token(133);
-              {if (true) return productionEndTerminal("upperLetter25","-","-","Replacement","Default",first,token);}
-      break;
-    case 134:
-      jj_consume_token(134);
-              {if (true) return productionEndTerminal("upperLetter26","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[4] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CharClass1(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-      n = lowerLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass11","-","-","Replacement","Default",first,token);}
-      break;
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-      n = upperLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass12","-","-","Replacement","Default",first,token);}
-      break;
-    case DOT:
-      jj_consume_token(DOT);
-              {if (true) return productionEndTerminal("CharClass13","-","-","Replacement","Default",first,token);}
-      break;
-    case 135:
-      jj_consume_token(135);
-              {if (true) return productionEndTerminal("CharClass14","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[5] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CharClass2(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-      n = lowerLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass21","-","-","Replacement","Default",first,token);}
-      break;
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-      n = upperLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass22","-","-","Replacement","Default",first,token);}
-      break;
-    case 73:
-    case 74:
-    case 75:
-    case 76:
-    case 77:
-    case 78:
-    case 79:
-    case 80:
-    case 81:
-    case 82:
-      n = Digit(true);
-                       replaceName(n);
-                                         {if (true) return productionEndTerminal("CharClass23","-","-","Replacement","Default",first,token);}
-      break;
-    case 136:
-      jj_consume_token(136);
-              {if (true) return productionEndTerminal("CharClass24","-","-","Replacement","Default",first,token);}
-      break;
-    case DOT:
-      jj_consume_token(DOT);
-              {if (true) return productionEndTerminal("CharClass25","-","-","Replacement","Default",first,token);}
-      break;
-    case MINUS:
-      jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("CharClass26","-","-","Replacement","Default",first,token);}
-      break;
-    case 135:
-      jj_consume_token(135);
-              {if (true) return productionEndTerminal("CharClass27","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[6] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CharClass3(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-      n = lowerLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass31","-","-","Replacement","Default",first,token);}
-      break;
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-      n = upperLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass32","-","-","Replacement","Default",first,token);}
-      break;
-    case 135:
-      jj_consume_token(135);
-              {if (true) return productionEndTerminal("CharClass33","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[7] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CharClass4(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-      n = lowerLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass41","-","-","Replacement","Default",first,token);}
-      break;
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-      n = upperLetter(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("CharClass42","-","-","Replacement","Default",first,token);}
-      break;
-    case 73:
-    case 74:
-    case 75:
-    case 76:
-    case 77:
-    case 78:
-    case 79:
-    case 80:
-    case 81:
-    case 82:
-      n = Digit(true);
-                       replaceName(n);
-                                         {if (true) return productionEndTerminal("CharClass43","-","-","Replacement","Default",first,token);}
-      break;
-    case 136:
-      jj_consume_token(136);
-              {if (true) return productionEndTerminal("CharClass44","-","-","Replacement","Default",first,token);}
-      break;
-    case MINUS:
-      jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("CharClass45","-","-","Replacement","Default",first,token);}
-      break;
-    case 135:
-      jj_consume_token(135);
-              {if (true) return productionEndTerminal("CharClass46","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[8] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ModNamePart(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = CharClass1(true);
-                            replaceName(n);
-    label_1:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case DOT:
-      case MINUS:
-      case 73:
-      case 74:
-      case 75:
-      case 76:
-      case 77:
-      case 78:
-      case 79:
-      case 80:
-      case 81:
-      case 82:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[9] = jj_gen;
-        break label_1;
-      }
-      n = CharClass2(true);
-                                                                  replaceName(n);
-    }
-                                                                                      {if (true) return productionEndTerminal("ModNamePart","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ModName(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    label_2:
-    while (true) {
-      n = ModNamePart(true);
-                              replaceName(n);
-      jj_consume_token(SLASH);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case DOT:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-        ;
-        break;
-      default:
-        jj_la1[10] = jj_gen;
-        break label_2;
-      }
-    }
-                                                      {if (true) return productionEndTerminal("ModName","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Id(boolean inTerminal) throws ParseException {
-                                   Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-      n = CharClass3(true);
-                            replaceName(n);
-      label_3:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case MINUS:
-        case 73:
-        case 74:
-        case 75:
-        case 76:
-        case 77:
-        case 78:
-        case 79:
-        case 80:
-        case 81:
-        case 82:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[11] = jj_gen;
-          break label_3;
-        }
-        n = CharClass4(true);
-                                                                  replaceName(n);
-      }
-                                                                                      {if (true) return productionEndTerminal("Id1","-","-","Replacement","Default",first,token);}
-      break;
-    case 136:
-      jj_consume_token(136);
+    case IMPORTS:
+      jj_consume_token(IMPORTS);
       label_4:
       while (true) {
-        n = lowerLetter(true);
-                                  replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
+        case IDENTIFIER:
           ;
           break;
         default:
-          jj_la1[12] = jj_gen;
+          jj_la1[5] = jj_gen;
           break label_4;
         }
+        n = ImportModName(true);
+                                          replaceName(n);
       }
-                                                      {if (true) return productionEndTerminal("Id2","-","-","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndTerminal("Decl1","-","-","Replacement","Default",first,token);}
       break;
-    default:
-      jj_la1[13] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo LId(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = CharClass3(true);
-                            replaceName(n);
-    label_5:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MINUS:
-      case 73:
-      case 74:
-      case 75:
-      case 76:
-      case 77:
-      case 78:
-      case 79:
-      case 80:
-      case 81:
-      case 82:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[14] = jj_gen;
-        break label_5;
+    case STRATEGIES:
+      jj_consume_token(STRATEGIES);
+      label_5:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case EXTERNAL:
+        case EXTEND:
+        case OVERRIDE:
+        case INTERNAL:
+        case IDENTIFIER:
+        case 86:
+          ;
+          break;
+        default:
+          jj_la1[6] = jj_gen;
+          break label_5;
+        }
+        n = Def(true);
+                                   replaceName(n);
       }
-      n = CharClass4(true);
-                                                                  replaceName(n);
-    }
-    jj_consume_token(STAR);
-                                                                                          {if (true) return productionEndTerminal("LId","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo LCID(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = lowerLetter(true);
-                             replaceName(n);
-    label_6:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MINUS:
-      case 73:
-      case 74:
-      case 75:
-      case 76:
-      case 77:
-      case 78:
-      case 79:
-      case 80:
-      case 81:
-      case 82:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[15] = jj_gen;
-        break label_6;
+                                                       {if (true) return productionEndTerminal("Decl2","-","-","Replacement","Default",first,token);}
+      break;
+    case EXPORTS:
+      jj_consume_token(EXPORTS);
+      label_6:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTRUCTORS:
+        case SORTS:
+          ;
+          break;
+        default:
+          jj_la1[7] = jj_gen;
+          break label_6;
+        }
+        n = Sdecl(true);
+                                  replaceName(n);
       }
-      n = CharClass4(true);
-                                                                   replaceName(n);
-    }
-                                                                                       {if (true) return productionEndTerminal("LCID","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo UCID(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = upperLetter(true);
-                             replaceName(n);
-    label_7:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MINUS:
-      case 73:
-      case 74:
-      case 75:
-      case 76:
-      case 77:
-      case 78:
-      case 79:
-      case 80:
-      case 81:
-      case 82:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[16] = jj_gen;
-        break label_7;
+                                                      {if (true) return productionEndTerminal("Decl3","-","-","Replacement","Default",first,token);}
+      break;
+    case SIGNATURES:
+      jj_consume_token(SIGNATURES);
+      label_7:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONSTRUCTORS:
+        case SORTS:
+          ;
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          break label_7;
+        }
+        n = Sdecl(true);
+                                     replaceName(n);
       }
-      n = CharClass4(true);
-                                                                   replaceName(n);
-    }
-                                                                                       {if (true) return productionEndTerminal("UCID","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Var(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-                                      {if (true) return productionEndTerminal("Var1","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("Decl4","-","-","Replacement","Default",first,token);}
       break;
-      n = LId(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("Var2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[17] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ID(boolean inTerminal) throws ParseException {
-                                   Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-                                      {if (true) return productionEndTerminal("ID1","-","-","Replacement","Default",first,token);}
-      break;
-      n = LId(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("ID2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[18] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Wld(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(135);
-              {if (true) return productionEndTerminal("Wld","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Term(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Var(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("Term1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Wld(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("Term2","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-    case STRING_LITERAL:
-    case LPAREN:
-    case LBRACKET:
-    case MINUS:
-    case 156:
-      n = PreTerm(true);
-                         replaceName(n);
-      jj_consume_token(137);
-      n = PreTerm(true);
-                                                                replaceName(n);
-      jj_consume_token(RBRACE);
-                                                                                      {if (true) return productionEndTerminal("Term3","-","-","Replacement","Default",first,token);}
-      break;
-      n = Var(true);
-                     replaceName(n);
-      jj_consume_token(138);
-      n = Term(true);
-                                                        replaceName(n);
-                                                                          {if (true) return productionEndTerminal("Term4","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(135);
-      n = Term(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Term5","-","-","Replacement","Default",first,token);}
-      break;
-      n = PreTerm(true);
-                         replaceName(n);
-      jj_consume_token(LBRACE);
+    case RULES:
+      jj_consume_token(RULES);
       label_8:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
+        case EXTERNAL:
+        case EXTEND:
+        case OVERRIDE:
+        case INTERNAL:
+        case IDENTIFIER:
         case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
           ;
           break;
         default:
-          jj_la1[19] = jj_gen;
+          jj_la1[9] = jj_gen;
           break label_8;
         }
-        n = Term(true);
-                                                             replaceName(n);
-        jj_consume_token(COMMA);
+        n = Def(true);
+                              replaceName(n);
       }
-      jj_consume_token(RBRACE);
-                                                                                         {if (true) return productionEndTerminal("Term6","-","-","Replacement","Default",first,token);}
+                                                  {if (true) return productionEndTerminal("Decl5","-","-","Replacement","Default",first,token);}
       break;
-      n = PreTerm(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("Term7","-","-","Replacement","Default",first,token);}
-      break;
-      n = StrategyAngle(true);
-                               replaceName(n);
-      n = Term(true);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndTerminal("Term8","-","-","Replacement","Default",first,token);}
-      break;
-      n = StrategyAngle(true);
-                               replaceName(n);
-                                                 {if (true) return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
-      break;
-      n = Var(true);
-                     replaceName(n);
-      jj_consume_token(138);
-      n = Term(true);
-                                                        replaceName(n);
-                                                                          {if (true) return productionEndTerminal("Term10","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[20] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo PreTerm(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Var(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("PreTerm1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Wld(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("PreTerm2","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-    case MINUS:
-      n = Int(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("PreTerm3","-","-","Replacement","Default",first,token);}
-      break;
-      n = Real(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("PreTerm4","-","-","Replacement","Default",first,token);}
-      break;
-    case STRING_LITERAL:
-      n = String(true);
-                        replaceName(n);
-                                          {if (true) return productionEndTerminal("PreTerm5","-","-","Replacement","Default",first,token);}
-      break;
-      n = Var(true);
-                     replaceName(n);
-      jj_consume_token(138);
-      n = PreTerm(true);
-                                                           replaceName(n);
-                                                                             {if (true) return productionEndTerminal("PreTerm6","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
+    case OVERLAYS:
+      jj_consume_token(OVERLAYS);
       label_9:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
+        case IDENTIFIER:
           ;
           break;
         default:
-          jj_la1[21] = jj_gen;
+          jj_la1[10] = jj_gen;
           break label_9;
         }
-        n = Term(true);
-                                                        replaceName(n);
-        jj_consume_token(COMMA);
+        n = Overlay(true);
+                                     replaceName(n);
       }
-      jj_consume_token(RPAREN);
-                                                                                    {if (true) return productionEndTerminal("PreTerm7","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndTerminal("Decl6","-","-","Replacement","Default",first,token);}
       break;
-      n = String(true);
-                        replaceName(n);
-      jj_consume_token(LPAREN);
-      label_10:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[22] = jj_gen;
-          break label_10;
-        }
-        n = Term(true);
-                                                            replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                        {if (true) return productionEndTerminal("PreTerm8","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(135);
-      n = PreTerm(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("PreTerm9","-","-","Replacement","Default",first,token);}
-      break;
-    case 156:
-      n = StrategyAngle(true);
-                               replaceName(n);
+    default:
+      jj_la1[11] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Overlay(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_2(2)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(84);
       n = Term(true);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndTerminal("PreTerm10","-","-","Replacement","Default",first,token);}
-      break;
-      n = StrategyAngle(true);
-                               replaceName(n);
-                                                 {if (true) return productionEndTerminal("PreTerm11","-","-","Replacement","Default",first,token);}
-      break;
-    case LPAREN:
-      jj_consume_token(LPAREN);
+                                                                    replaceName(n);
+                                                                                      {if (true) return productionEndTerminal("Overlay1","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
+                    replaceName(n);
+        jj_consume_token(LPAREN);
+        label_10:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[12] = jj_gen;
+            break label_10;
+          }
+          n = Id(true);
+                                                      replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+        jj_consume_token(84);
+        n = Term(true);
+                                                                                                   replaceName(n);
+                                                                                                                     {if (true) return productionEndTerminal("Overlay2","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[13] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Def(boolean inTerminal) throws ParseException {
+                                    Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_3(2)) {
+      n = StrategyDef(true);
+                                          replaceName(n);
+                                                            {if (true) return productionEndTerminal("Def1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_4(3)) {
       label_11:
       while (true) {
+        n = Anno(true);
+                                    replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
+        case EXTEND:
+        case OVERRIDE:
+        case INTERNAL:
           ;
           break;
         default:
-          jj_la1[23] = jj_gen;
+          jj_la1[14] = jj_gen;
           break label_11;
         }
-        n = Term(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
       }
-      jj_consume_token(RPAREN);
-                                                       {if (true) return productionEndTerminal("PreTerm12","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACKET:
-      jj_consume_token(LBRACKET);
-      label_12:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[24] = jj_gen;
-          break label_12;
+      n = StrategyDef(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("Def2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case EXTEND:
+      case OVERRIDE:
+      case INTERNAL:
+        label_12:
+        while (true) {
+          n = Anno(true);
+                       replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case EXTEND:
+          case OVERRIDE:
+          case INTERNAL:
+            ;
+            break;
+          default:
+            jj_la1[15] = jj_gen;
+            break label_12;
+          }
         }
-        n = Term(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
+        n = RuleDef(true);
+                                                           replaceName(n);
+                                                                             {if (true) return productionEndTerminal("Def3","-","-","Replacement","Default",first,token);}
+        break;
+      case IDENTIFIER:
+      case 86:
+        n = RuleDef(true);
+                         replaceName(n);
+                                           {if (true) return productionEndTerminal("Def4","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[16] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-      jj_consume_token(RBRACKET);
-                                                       {if (true) return productionEndTerminal("PreTerm13","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LBRACKET);
-      label_13:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[25] = jj_gen;
-          break label_13;
-        }
-        n = Term(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      n = Term(true);
-                                                                    replaceName(n);
-      jj_consume_token(RBRACKET);
-                                                                                          {if (true) return productionEndTerminal("PreTerm14","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[26] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Sort(boolean inTerminal) throws ParseException {
+  final public FSTInfo RuleDef(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_5(2)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(85);
+      n = Rule(true);
+                                                                    replaceName(n);
+                                                                                      {if (true) return productionEndTerminal("RuleDef1","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
+                    replaceName(n);
+        jj_consume_token(LPAREN);
+        label_13:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[17] = jj_gen;
+            break label_13;
+          }
+          n = Typedid(true);
+                                                           replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+        jj_consume_token(85);
+        n = Rule(true);
+                                                                                                        replaceName(n);
+                                                                                                                          {if (true) return productionEndTerminal("RuleDef2","-","-","Replacement","Default",first,token);}
+        break;
+      case 86:
+        jj_consume_token(86);
+        label_14:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[18] = jj_gen;
+            break label_14;
+          }
+          n = Typedid(true);
+                              replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+        jj_consume_token(85);
+        n = Rule(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("RuleDef3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[19] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Rule(boolean inTerminal) throws ParseException {
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-      n = LCID(true);
+    if (jj_2_6(3)) {
+      n = Term(true);
+                                   replaceName(n);
+      jj_consume_token(87);
+      n = Term(true);
+                                                                       replaceName(n);
+                                                                                         {if (true) return productionEndTerminal("Rule1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_7(3)) {
+      n = Term(true);
+                                   replaceName(n);
+      jj_consume_token(87);
+      n = Term(true);
+                                                                       replaceName(n);
+      jj_consume_token(WHERE);
+      n = Strategy(true);
+                                                                                                                  replaceName(n);
+                                                                                                                                    {if (true) return productionEndTerminal("Rule2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case INTEGER_LITERAL:
+      case STRING_LITERAL:
+      case IDENTIFIER:
+      case LOWLINE:
+      case MINUS:
+      case LPAREN:
+      case LBRACKET:
+      case 90:
+        n = Term(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("Sort1","-","-","Replacement","Default",first,token);}
-      break;
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-      n = UCID(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("Sort2","-","-","Replacement","Default",first,token);}
-      break;
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_14:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-        case LBRACKET:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[27] = jj_gen;
-          break label_14;
+        jj_consume_token(87);
+        n = Term(true);
+                                                          replaceName(n);
+        label_15:
+        while (true) {
+          n = RuleCond(true);
+                                                                                              replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case WITH:
+          case WHERE:
+            ;
+            break;
+          default:
+            jj_la1[20] = jj_gen;
+            break label_15;
+          }
         }
-        n = Sort(true);
-                                                        replaceName(n);
-        jj_consume_token(COMMA);
+                                                                                                                  {if (true) return productionEndTerminal("Rule3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[21] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-      jj_consume_token(RPAREN);
-                                                                                    {if (true) return productionEndTerminal("Sort3","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACKET:
-      jj_consume_token(LBRACKET);
-      label_15:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-        case LBRACKET:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[28] = jj_gen;
-          break label_15;
-        }
-        n = Sort(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RBRACKET);
-                                                       {if (true) return productionEndTerminal("Sort4","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LBRACKET);
-      label_16:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-        case LBRACKET:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[29] = jj_gen;
-          break label_16;
-        }
-        n = Sort(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      n = Sort(true);
-                                                                    replaceName(n);
-      jj_consume_token(RBRACKET);
-                                                                                          {if (true) return productionEndTerminal("Sort5","-","-","Replacement","Default",first,token);}
-      break;
-    case LPAREN:
-      jj_consume_token(LPAREN);
-      label_17:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-        case LBRACKET:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[30] = jj_gen;
-          break label_17;
-        }
-        n = Sort(true);
-                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                       {if (true) return productionEndTerminal("Sort6","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[31] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Opdecl(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;FSTInfo n;
+  final public FSTInfo RuleCond(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(140);
-      n = Type(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("Opdecl1","-","-","Replacement","Default",first,token);}
+    case WHERE:
+      jj_consume_token(WHERE);
+      n = Strategy(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("RuleCond1","-","-","Replacement","Default",first,token);}
       break;
-    case STRING_LITERAL:
-      n = String(true);
-                        replaceName(n);
-      jj_consume_token(140);
-      n = Type(true);
-                                                           replaceName(n);
-                                                                             {if (true) return productionEndTerminal("Opdecl2","-","-","Replacement","Default",first,token);}
-      break;
-    case 140:
-      jj_consume_token(140);
-      n = Type(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Opdecl3","-","-","Replacement","Default",first,token);}
-      break;
-    case EXTERNAL:
-      jj_consume_token(EXTERNAL);
-      n = Id(true);
-                               replaceName(n);
-      jj_consume_token(140);
-      n = Type(true);
-                                                                  replaceName(n);
-                                                                                    {if (true) return productionEndTerminal("Opdecl4","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(EXTERNAL);
-      n = String(true);
-                                   replaceName(n);
-      jj_consume_token(140);
-      n = Type(true);
-                                                                      replaceName(n);
-                                                                                        {if (true) return productionEndTerminal("Opdecl5","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(EXTERNAL);
-      jj_consume_token(140);
-      n = Type(true);
-                                     replaceName(n);
-                                                       {if (true) return productionEndTerminal("Opdecl6","-","-","Replacement","Default",first,token);}
+    case WITH:
+      jj_consume_token(WITH);
+      n = Strategy(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("RuleCond2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[22] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2684,70 +580,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SORTS:
       jj_consume_token(SORTS);
-      label_18:
+      label_16:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case LPAREN:
-        case LBRACKET:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
+        case IDENTIFIER:
           ;
           break;
         default:
-          jj_la1[33] = jj_gen;
-          break label_18;
+          jj_la1[23] = jj_gen;
+          break label_16;
         }
         n = Sort(true);
                                replaceName(n);
@@ -2756,71 +597,18 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       break;
     case CONSTRUCTORS:
       jj_consume_token(CONSTRUCTORS);
-      label_19:
+      label_17:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case EXTERNAL:
         case STRING_LITERAL:
-        case 83:
-        case 84:
+        case IDENTIFIER:
         case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 140:
           ;
           break;
         default:
-          jj_la1[34] = jj_gen;
-          break label_19;
+          jj_la1[24] = jj_gen;
+          break label_17;
         }
         n = Opdecl(true);
                                         replaceName(n);
@@ -2828,760 +616,88 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                             {if (true) return productionEndTerminal("Sdecl2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Type(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LPAREN:
-    case LBRACKET:
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = FunType(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("Type1","-","-","Replacement","Default",first,token);}
-      break;
-      n = ConstType(true);
-                           replaceName(n);
-                                             {if (true) return productionEndTerminal("Type2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[36] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ConstType(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = Sort(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("ConstType","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ArgType(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LPAREN:
-      jj_consume_token(LPAREN);
-      n = Type(true);
-                          replaceName(n);
-      jj_consume_token(RPAREN);
-                                                {if (true) return productionEndTerminal("ArgType1","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACKET:
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = ConstType(true);
-                           replaceName(n);
-                                             {if (true) return productionEndTerminal("ArgType2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[37] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo RetType(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = Type(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("RetType","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo FunType(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    label_20:
-    while (true) {
-      n = ArgType(true);
-                          replaceName(n);
-      jj_consume_token(STAR);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case LPAREN:
-      case LBRACKET:
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[38] = jj_gen;
-        break label_20;
-      }
-    }
-    jj_consume_token(141);
-    n = RetType(true);
-                                                                       replaceName(n);
-                                                                                         {if (true) return productionEndTerminal("FunType","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Module(boolean inTerminal) throws ParseException {
+  final public FSTInfo Opdecl(boolean inTerminal) throws ParseException {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MODULE:
-      jj_consume_token(MODULE);
-      n = ModName(true);
-                                  replaceName(n);
-      label_21:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OVERLAYS:
-        case RULES:
-        case STRATEGIES:
-        case IMPORTS:
-        case 143:
-          ;
-          break;
-        default:
-          jj_la1[39] = jj_gen;
-          break label_21;
-        }
-        n = Decl(true);
-                                                                  replaceName(n);
+    if (jj_2_8(2)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case EXTERNAL:
+        n = External(true);
+                                        replaceName(n);
+        break;
+      default:
+        jj_la1[26] = jj_gen;
+        ;
       }
-                                                                                      {if (true) return productionEndTerminal("Module1","-","-","Replacement","Default",first,token);}
-      break;
-    case 142:
-      jj_consume_token(142);
-      label_22:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case OVERLAYS:
-        case RULES:
-        case STRATEGIES:
-        case IMPORTS:
-        case 143:
-          ;
-          break;
-        default:
-          jj_la1[40] = jj_gen;
-          break label_22;
-        }
-        n = Decl(true);
-                                       replaceName(n);
+      n = Id(true);
+                                                                      replaceName(n);
+      jj_consume_token(85);
+      n = Type(true);
+                                                                                                         replaceName(n);
+                                                                                                                           {if (true) return productionEndTerminal("Opdecl1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_9(2)) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case EXTERNAL:
+        n = External(true);
+                                        replaceName(n);
+        break;
+      default:
+        jj_la1[27] = jj_gen;
+        ;
       }
-                                                           {if (true) return productionEndTerminal("Module2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[41] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ImportModName(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = ModName(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("ImportModName","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Decl(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case IMPORTS:
-      jj_consume_token(IMPORTS);
-      label_23:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case DOT:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-          ;
-          break;
-        default:
-          jj_la1[42] = jj_gen;
-          break label_23;
-        }
-        n = ImportModName(true);
-                                          replaceName(n);
-      }
-                                                              {if (true) return productionEndTerminal("Decl1","-","-","Replacement","Default",first,token);}
-      break;
-    case STRATEGIES:
-      jj_consume_token(STRATEGIES);
-      label_24:
-      while (true) {
+      n = String(true);
+                                                                          replaceName(n);
+      jj_consume_token(85);
+      n = Type(true);
+                                                                                                             replaceName(n);
+                                                                                                                               {if (true) return productionEndTerminal("Opdecl2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case EXTERNAL:
+      case 85:
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case EXTERNAL:
-        case EXTEND:
-        case OVERRIDE:
-        case INTERNAL:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
+          n = External(true);
+                           replaceName(n);
           break;
         default:
-          jj_la1[43] = jj_gen;
-          break label_24;
-        }
-        n = Def(true);
-                                   replaceName(n);
-      }
-                                                       {if (true) return productionEndTerminal("Decl2","-","-","Replacement","Default",first,token);}
-      break;
-    case 143:
-      jj_consume_token(143);
-      label_25:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case CONSTRUCTORS:
-        case SORTS:
+          jj_la1[28] = jj_gen;
           ;
-          break;
-        default:
-          jj_la1[44] = jj_gen;
-          break label_25;
         }
-        n = Sdecl(true);
-                                     replaceName(n);
-      }
-                                                         {if (true) return productionEndTerminal("Decl3","-","-","Replacement","Default",first,token);}
-      break;
-    case RULES:
-      jj_consume_token(RULES);
-      label_26:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case EXTERNAL:
-        case EXTEND:
-        case OVERRIDE:
-        case INTERNAL:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[45] = jj_gen;
-          break label_26;
-        }
-        n = Def(true);
-                              replaceName(n);
-      }
-                                                  {if (true) return productionEndTerminal("Decl4","-","-","Replacement","Default",first,token);}
-      break;
-    case OVERLAYS:
-      jj_consume_token(OVERLAYS);
-      label_27:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[46] = jj_gen;
-          break label_27;
-        }
-        n = Overlay(true);
-                                     replaceName(n);
-      }
-                                                         {if (true) return productionEndTerminal("Decl5","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[47] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Def(boolean inTerminal) throws ParseException {
-                                    Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case EXTERNAL:
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = StrategyDef(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("Def1","-","-","Replacement","Default",first,token);}
-      break;
-    case EXTEND:
-    case OVERRIDE:
-    case INTERNAL:
-      label_28:
-      while (true) {
-        n = Anno(true);
-                       replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case EXTEND:
-        case OVERRIDE:
-        case INTERNAL:
-          ;
-          break;
-        default:
-          jj_la1[48] = jj_gen;
-          break label_28;
-        }
-      }
-      n = StrategyDef(true);
+        jj_consume_token(85);
+        n = Type(true);
                                                                replaceName(n);
-                                                                                 {if (true) return productionEndTerminal("Def2","-","-","Replacement","Default",first,token);}
-      break;
-      n = RuleDef(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("Def3","-","-","Replacement","Default",first,token);}
-      break;
-      label_29:
-      while (true) {
-        n = Anno(true);
-                       replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case EXTEND:
-        case OVERRIDE:
-        case INTERNAL:
-          ;
-          break;
-        default:
-          jj_la1[49] = jj_gen;
-          break label_29;
-        }
+                                                                                 {if (true) return productionEndTerminal("Opdecl3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[29] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
       }
-      n = RuleDef(true);
-                                                           replaceName(n);
-                                                                             {if (true) return productionEndTerminal("Def4","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[50] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo External(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(EXTERNAL);
+                     {if (true) return productionEndTerminal("External","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Id(boolean inTerminal) throws ParseException {
+                                   Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(IDENTIFIER);
+                      {if (true) return productionEndTerminal("Id","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -3594,2672 +710,107 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Strategy(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;FSTInfo n;
+  final public FSTInfo Var(boolean inTerminal) throws ParseException {
+                                    Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Id(true);
+                    replaceName(n);
+                                      {if (true) return productionEndTerminal("Var","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Sort(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Id(true);
+                    replaceName(n);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LPAREN:
+    case LBRACKET:
+      n = Sorts(true);
+                                                     replaceName(n);
+      break;
+    default:
+      jj_la1[30] = jj_gen;
+      ;
+    }
+                                                                        {if (true) return productionEndTerminal("Sort","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Sorts(boolean inTerminal) throws ParseException {
+                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LET:
-      jj_consume_token(LET);
-      label_30:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case EXTERNAL:
-        case EXTEND:
-        case OVERRIDE:
-        case INTERNAL:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[51] = jj_gen;
-          break label_30;
-        }
-        n = Def(true);
-                            replaceName(n);
-      }
-      jj_consume_token(IN);
-      n = Strategy(true);
-                                                                      replaceName(n);
-      jj_consume_token(END);
-                                                                                              {if (true) return productionEndTerminal("Strategy1","-","-","Replacement","Default",first,token);}
-      break;
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = SVar(true);
-                      replaceName(n);
-      jj_consume_token(LPAREN);
-      label_31:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[52] = jj_gen;
-          break label_31;
-        }
-        n = Strategy(true);
-                                                              replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_32:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[53] = jj_gen;
-          break label_32;
-        }
-        n = Term(true);
-                                                                                                        replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                    {if (true) return productionEndTerminal("Strategy2","-","-","Replacement","Default",first,token);}
-      break;
-    case 144:
-      jj_consume_token(144);
-      jj_consume_token(LPAREN);
-      n = Term(true);
-                                 replaceName(n);
-      jj_consume_token(139);
-      label_33:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[54] = jj_gen;
-          break label_33;
-        }
-        n = Strategy(true);
-                                                                         replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_34:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[55] = jj_gen;
-          break label_34;
-        }
-        n = Term(true);
-                                                                                                                   replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                               {if (true) return productionEndTerminal("Strategy3","-","-","Replacement","Default",first,token);}
-      break;
-    case FAIL:
-      jj_consume_token(FAIL);
-                 {if (true) return productionEndTerminal("Strategy4","-","-","Replacement","Default",first,token);}
-      break;
-    case ID:
-      jj_consume_token(ID);
-               {if (true) return productionEndTerminal("Strategy5","-","-","Replacement","Default",first,token);}
-      break;
-    case 145:
-      jj_consume_token(145);
-      jj_consume_token(LPAREN);
-      label_35:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[56] = jj_gen;
-          break label_35;
-        }
-        n = Strategy(true);
-                                         replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_36:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[57] = jj_gen;
-          break label_36;
-        }
-        n = Term(true);
-                                                                                   replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                               {if (true) return productionEndTerminal("Strategy6","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(145);
-                    {if (true) return productionEndTerminal("Strategy7","-","-","Replacement","Default",first,token);}
-      break;
-    case 146:
-      jj_consume_token(146);
-      n = Term(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Strategy8","-","-","Replacement","Default",first,token);}
-      break;
-    case 147:
-      jj_consume_token(147);
-      n = Term(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("Strategy9","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACE:
-      jj_consume_token(LBRACE);
-      label_37:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[58] = jj_gen;
-          break label_37;
-        }
-        n = ID(true);
-                         replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(140);
-      n = Strategy(true);
-                                                                      replaceName(n);
-      jj_consume_token(RBRACE);
-                                                                                            {if (true) return productionEndTerminal("Strategy10","-","-","Replacement","Default",first,token);}
-      break;
-    case PRIM:
-      jj_consume_token(PRIM);
-      jj_consume_token(LPAREN);
-      n = String(true);
-                                   replaceName(n);
-      jj_consume_token(COMMA);
-      label_38:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[59] = jj_gen;
-          break label_38;
-        }
-        n = Strategy(true);
-                                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_39:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[60] = jj_gen;
-          break label_39;
-        }
-        n = Term(true);
-                                                                                                                     replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                                 {if (true) return productionEndTerminal("Strategy11","-","-","Replacement","Default",first,token);}
-      break;
-    case SOME:
-      jj_consume_token(SOME);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                     replaceName(n);
-      jj_consume_token(RPAREN);
-                                                           {if (true) return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
-      break;
-    case ONE:
-      jj_consume_token(ONE);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                    replaceName(n);
-      jj_consume_token(RPAREN);
-                                                          {if (true) return productionEndTerminal("Strategy13","-","-","Replacement","Default",first,token);}
-      break;
-    case ALL:
-      jj_consume_token(ALL);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                    replaceName(n);
-      jj_consume_token(RPAREN);
-                                                          {if (true) return productionEndTerminal("Strategy14","-","-","Replacement","Default",first,token);}
-      break;
-    case IMPORTTERM:
-      jj_consume_token(IMPORTTERM);
-      jj_consume_token(LPAREN);
-      n = ModName(true);
-                                           replaceName(n);
-      jj_consume_token(RPAREN);
-                                                                 {if (true) return productionEndTerminal("Strategy15","-","-","Replacement","Default",first,token);}
-      break;
-      n = SVar(true);
-                      replaceName(n);
-      jj_consume_token(LPAREN);
-      label_40:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[61] = jj_gen;
-          break label_40;
-        }
-        n = Strategy(true);
-                                                              replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                          {if (true) return productionEndTerminal("Strategy16","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LBRACE);
-      n = Strategy(true);
-                              replaceName(n);
-      jj_consume_token(RBRACE);
-                                                    {if (true) return productionEndTerminal("Strategy17","-","-","Replacement","Default",first,token);}
-      break;
-    case 156:
-      n = StrategyAngle(true);
-                               replaceName(n);
-      n = Term(true);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndTerminal("Strategy18","-","-","Replacement","Default",first,token);}
-      break;
-    case REC:
-      jj_consume_token(REC);
-      n = Id(true);
-                          replaceName(n);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                                                 replaceName(n);
-      jj_consume_token(RPAREN);
-                                                                                       {if (true) return productionEndTerminal("Strategy19","-","-","Replacement","Default",first,token);}
-      break;
-    case NOT:
-      jj_consume_token(NOT);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                    replaceName(n);
-      jj_consume_token(RPAREN);
-                                                          {if (true) return productionEndTerminal("Strategy20","-","-","Replacement","Default",first,token);}
-      break;
-    case WHERE:
-      jj_consume_token(WHERE);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                      replaceName(n);
-      jj_consume_token(RPAREN);
-                                                            {if (true) return productionEndTerminal("Strategy21","-","-","Replacement","Default",first,token);}
-      break;
-    case 148:
-      jj_consume_token(148);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                     replaceName(n);
-      jj_consume_token(RPAREN);
-                                                           {if (true) return productionEndTerminal("Strategy22","-","-","Replacement","Default",first,token);}
-      break;
-    case TEST:
-      jj_consume_token(TEST);
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                                     replaceName(n);
-      jj_consume_token(RPAREN);
-                                                           {if (true) return productionEndTerminal("Strategy23","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(PRIM);
-      jj_consume_token(LPAREN);
-      n = String(true);
-                                   replaceName(n);
-      jj_consume_token(RPAREN);
-                                                         {if (true) return productionEndTerminal("Strategy24","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(PRIM);
-      jj_consume_token(LPAREN);
-      n = String(true);
-                                   replaceName(n);
-      jj_consume_token(COMMA);
-      label_41:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[62] = jj_gen;
-          break label_41;
-        }
-        n = Term(true);
-                                                                       replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                   {if (true) return productionEndTerminal("Strategy25","-","-","Replacement","Default",first,token);}
-      break;
-    case STRING_LITERAL:
-      n = String(true);
-                        replaceName(n);
-                                          {if (true) return productionEndTerminal("Strategy26","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-    case MINUS:
-      n = Int(true);
-                     replaceName(n);
-                                       {if (true) return productionEndTerminal("Strategy27","-","-","Replacement","Default",first,token);}
-      break;
-      n = Real(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("Strategy28","-","-","Replacement","Default",first,token);}
-      break;
-      n = String(true);
-                        replaceName(n);
-      jj_consume_token(LPAREN);
-      label_42:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[63] = jj_gen;
-          break label_42;
-        }
-        n = Strategy(true);
-                                                                replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                            {if (true) return productionEndTerminal("Strategy29","-","-","Replacement","Default",first,token);}
-      break;
     case LPAREN:
       jj_consume_token(LPAREN);
-      n = Strategy(true);
-                              replaceName(n);
-      jj_consume_token(RPAREN);
-                                                    {if (true) return productionEndTerminal("Strategy30","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LPAREN);
-      n = Strategy(true);
-                              replaceName(n);
-      jj_consume_token(COMMA);
-      label_43:
+      label_18:
       while (true) {
-        n = Strategy(true);
-                                                                      replaceName(n);
-        jj_consume_token(COMMA);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
+        case IDENTIFIER:
           ;
           break;
         default:
-          jj_la1[64] = jj_gen;
-          break label_43;
+          jj_la1[31] = jj_gen;
+          break label_18;
         }
-      }
-      jj_consume_token(RPAREN);
-                                                                                                  {if (true) return productionEndTerminal("Strategy31","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACKET:
-      jj_consume_token(LBRACKET);
-      label_44:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[65] = jj_gen;
-          break label_44;
-        }
-        n = Strategy(true);
-                               replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RBRACKET);
-                                                           {if (true) return productionEndTerminal("Strategy32","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LBRACKET);
-      label_45:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
-          break;
-        default:
-          jj_la1[66] = jj_gen;
-          break label_45;
-        }
-        n = Strategy(true);
-                               replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      n = Strategy(true);
-                                                                            replaceName(n);
-      jj_consume_token(RBRACKET);
-                                                                                                  {if (true) return productionEndTerminal("Strategy33","-","-","Replacement","Default",first,token);}
-      break;
-      n = SVar(true);
-                      replaceName(n);
-                                        {if (true) return productionEndTerminal("Strategy34","-","-","Replacement","Default",first,token);}
-      break;
-    case 149:
-      jj_consume_token(149);
-      n = Rule(true);
+        n = Sort(true);
                            replaceName(n);
-      jj_consume_token(149);
-                                                  {if (true) return productionEndTerminal("Strategy35","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(LPAREN);
-      n = Rule(true);
-                          replaceName(n);
-      jj_consume_token(RPAREN);
-                                                {if (true) return productionEndTerminal("Strategy36","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(145);
-      jj_consume_token(LPAREN);
-      label_46:
-      while (true) {
-        n = Strategy(true);
-                                         replaceName(n);
         jj_consume_token(COMMA);
+      }
+      jj_consume_token(RPAREN);
+                                                       {if (true) return productionEndTerminal("Sorts1","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[34] = jj_gen;
+      if (jj_2_10(3)) {
+        jj_consume_token(LBRACKET);
+        label_19:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[32] = jj_gen;
+            break label_19;
+          }
+          n = Sort(true);
+                                        replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RBRACKET);
+                                                                    {if (true) return productionEndTerminal("Sorts2","-","-","Replacement","Default",first,token);}
+      } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case ALL:
-        case FAIL:
-        case ID:
-        case LET:
-        case NOT:
-        case ONE:
-        case PRIM:
-        case RULES:
-        case SOME:
-        case TEST:
-        case WHERE:
-        case IMPORTTERM:
-        case IF:
-        case REC:
-        case SWITCH:
-        case INTEGER_LITERAL:
-        case STRING_LITERAL:
-        case LPAREN:
-        case LBRACE:
         case LBRACKET:
-        case MINUS:
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-        case 144:
-        case 145:
-        case 146:
-        case 147:
-        case 148:
-        case 149:
-        case 151:
-        case 156:
-          ;
+          jj_consume_token(LBRACKET);
+          label_20:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IDENTIFIER:
+              ;
+              break;
+            default:
+              jj_la1[33] = jj_gen;
+              break label_20;
+            }
+            n = Sort(true);
+                           replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(86);
+          n = Sort(true);
+                                                                    replaceName(n);
+          jj_consume_token(RBRACKET);
+                                                                                          {if (true) return productionEndTerminal("Sorts3","-","-","Replacement","Default",first,token);}
           break;
         default:
-          jj_la1[67] = jj_gen;
-          break label_46;
+          jj_la1[35] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
         }
       }
-      jj_consume_token(RPAREN);
-                                                                     {if (true) return productionEndTerminal("Strategy37","-","-","Replacement","Default",first,token);}
-      break;
-    case IF:
-      jj_consume_token(IF);
-      n = Strategy(true);
-                               replaceName(n);
-      jj_consume_token(THEN);
-      n = Strategy(true);
-                                                                         replaceName(n);
-      jj_consume_token(ELSE);
-      n = Strategy(true);
-                                                                                                                   replaceName(n);
-      jj_consume_token(END);
-                                                                                                                                           {if (true) return productionEndTerminal("Strategy38","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(IF);
-      n = Strategy(true);
-                               replaceName(n);
-      jj_consume_token(THEN);
-      n = Strategy(true);
-                                                                         replaceName(n);
-      jj_consume_token(END);
-                                                                                                 {if (true) return productionEndTerminal("Strategy39","-","-","Replacement","Default",first,token);}
-      break;
-    case SWITCH:
-      jj_consume_token(SWITCH);
-      n = Strategy(true);
-                                   replaceName(n);
-      label_47:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case CASE:
-          ;
-          break;
-        default:
-          jj_la1[68] = jj_gen;
-          break label_47;
-        }
-        n = SwitchCase(true);
-                                                                         replaceName(n);
-      }
-      jj_consume_token(END);
-                                                                                                   {if (true) return productionEndTerminal("Strategy40","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(SWITCH);
-      n = Strategy(true);
-                                   replaceName(n);
-      label_48:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case CASE:
-          ;
-          break;
-        default:
-          jj_la1[69] = jj_gen;
-          break label_48;
-        }
-        n = SwitchCase(true);
-                                                                         replaceName(n);
-      }
-      jj_consume_token(OTHERWISE);
-      jj_consume_token(140);
-      n = Strategy(true);
-                                                                                                                              replaceName(n);
-      jj_consume_token(END);
-                                                                                                                                                      {if (true) return productionEndTerminal("Strategy41","-","-","Replacement","Default",first,token);}
-      break;
-      n = Term(true);
-                      replaceName(n);
-      jj_consume_token(150);
-      n = Term(true);
-                                                          replaceName(n);
-                                                                            {if (true) return productionEndTerminal("Strategy42","-","-","Replacement","Default",first,token);}
-      break;
-    case 151:
-      jj_consume_token(151);
-      n = ScopeLabels(true);
-                                  replaceName(n);
-      jj_consume_token(140);
-      n = Strategy(true);
-                                                                         replaceName(n);
-      jj_consume_token(152);
-                                                                                                {if (true) return productionEndTerminal("Strategy43","-","-","Replacement","Default",first,token);}
-      break;
-    case RULES:
-      jj_consume_token(RULES);
-      jj_consume_token(LPAREN);
-      label_49:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[70] = jj_gen;
-          break label_49;
-        }
-        n = DynRuleDef(true);
-                                         replaceName(n);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(SLASH);
-      n = RuleNames(true);
-                                                                                       replaceName(n);
-      jj_consume_token(153);
-      n = Strategy(true);
-                                                                                                                                replaceName(n);
-                                                                                                                                                  {if (true) return productionEndTerminal("Strategy44","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[71] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo StrategyMid(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    n = Strategy(true);
-                          replaceName(n);
-                                            {if (true) return productionEndTerminal("StrategyMid","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo StrategyDef(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_50:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[72] = jj_gen;
-          break label_50;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_51:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[73] = jj_gen;
-          break label_51;
-        }
-        n = Typedid(true);
-                                                                                                        replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(154);
-      n = Strategy(true);
-                                                                                                                                                         replaceName(n);
-                                                                                                                                                                           {if (true) return productionEndTerminal("StrategyDef1","-","-","Replacement","Default",first,token);}
-      break;
-    case EXTERNAL:
-      jj_consume_token(EXTERNAL);
-      n = Id(true);
-                               replaceName(n);
-      jj_consume_token(LPAREN);
-      label_52:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[74] = jj_gen;
-          break label_52;
-        }
-        n = Typedid(true);
-                                                                      replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_53:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[75] = jj_gen;
-          break label_53;
-        }
-        n = Typedid(true);
-                                                                                                                   replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(154);
-      n = Strategy(true);
-                                                                                                                                                                    replaceName(n);
-                                                                                                                                                                                      {if (true) return productionEndTerminal("StrategyDef2","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(EXTERNAL);
-      n = Id(true);
-                               replaceName(n);
-      jj_consume_token(LPAREN);
-      label_54:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[76] = jj_gen;
-          break label_54;
-        }
-        n = Typedid(true);
-                                                                      replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_55:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[77] = jj_gen;
-          break label_55;
-        }
-        n = Typedid(true);
-                                                                                                                   replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                               {if (true) return productionEndTerminal("StrategyDef3","-","-","Replacement","Default",first,token);}
-      break;
-      jj_consume_token(EXTERNAL);
-      n = EmptyId(true);
-                                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_56:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[78] = jj_gen;
-          break label_56;
-        }
-        n = Typedid(true);
-                                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_57:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[79] = jj_gen;
-          break label_57;
-        }
-        n = Typedid(true);
-                                                                                                                        replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                                    {if (true) return productionEndTerminal("StrategyDef4","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(154);
-      n = Strategy(true);
-                                                           replaceName(n);
-                                                                             {if (true) return productionEndTerminal("StrategyDef5","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_58:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[80] = jj_gen;
-          break label_58;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(154);
-      n = Strategy(true);
-                                                                                                            replaceName(n);
-                                                                                                                              {if (true) return productionEndTerminal("StrategyDef6","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[81] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
@@ -6271,79 +822,203 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Typedid(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
+  final public FSTInfo StrategyDef(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = ID(true);
+    if (jj_2_11(2)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(84);
+      n = Strategy(true);
+                                                                        replaceName(n);
+                                                                                          {if (true) return productionEndTerminal("StrategyDef1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_12(3)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(LPAREN);
+      label_21:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ;
+          break;
+        default:
+          jj_la1[36] = jj_gen;
+          break label_21;
+        }
+        n = Typedid(true);
+                                                                        replaceName(n);
+        jj_consume_token(COMMA);
+      }
+      jj_consume_token(RPAREN);
+      jj_consume_token(84);
+      n = Strategy(true);
+                                                                                                                         replaceName(n);
+                                                                                                                                           {if (true) return productionEndTerminal("StrategyDef2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
                     replaceName(n);
-      jj_consume_token(140);
-      n = Type(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("Typedid1","-","-","Replacement","Default",first,token);}
-      break;
-      n = ID(true);
-                    replaceName(n);
-                                      {if (true) return productionEndTerminal("Typedid2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[82] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+        jj_consume_token(LPAREN);
+        label_22:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[37] = jj_gen;
+            break label_22;
+          }
+          n = Typedid(true);
+                                                           replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(86);
+        label_23:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[38] = jj_gen;
+            break label_23;
+          }
+          n = Typedid(true);
+                                                                                                        replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+        jj_consume_token(84);
+        n = Strategy(true);
+                                                                                                                                                         replaceName(n);
+                                                                                                                                                                           {if (true) return productionEndTerminal("StrategyDef3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[45] = jj_gen;
+        if (jj_2_13(3)) {
+          jj_consume_token(EXTERNAL);
+          n = Id(true);
+                                            replaceName(n);
+          jj_consume_token(LPAREN);
+          label_24:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IDENTIFIER:
+              ;
+              break;
+            default:
+              jj_la1[39] = jj_gen;
+              break label_24;
+            }
+            n = Typedid(true);
+                                                                                   replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(86);
+          label_25:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IDENTIFIER:
+              ;
+              break;
+            default:
+              jj_la1[40] = jj_gen;
+              break label_25;
+            }
+            n = Typedid(true);
+                                                                                                                                replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(RPAREN);
+          jj_consume_token(84);
+          n = Strategy(true);
+                                                                                                                                                                                 replaceName(n);
+                                                                                                                                                                                                   {if (true) return productionEndTerminal("StrategyDef4","-","-","Replacement","Default",first,token);}
+        } else if (jj_2_14(2)) {
+          jj_consume_token(EXTERNAL);
+          n = Id(true);
+                                            replaceName(n);
+          jj_consume_token(LPAREN);
+          label_26:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IDENTIFIER:
+              ;
+              break;
+            default:
+              jj_la1[41] = jj_gen;
+              break label_26;
+            }
+            n = Typedid(true);
+                                                                                   replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(86);
+          label_27:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case IDENTIFIER:
+              ;
+              break;
+            default:
+              jj_la1[42] = jj_gen;
+              break label_27;
+            }
+            n = Typedid(true);
+                                                                                                                                replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(RPAREN);
+                                                                                                                                                            {if (true) return productionEndTerminal("StrategyDef5","-","-","Replacement","Default",first,token);}
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case EXTERNAL:
+            jj_consume_token(EXTERNAL);
+            n = EmptyId(true);
+                                    replaceName(n);
+            jj_consume_token(LPAREN);
+            label_28:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case IDENTIFIER:
+                ;
+                break;
+              default:
+                jj_la1[43] = jj_gen;
+                break label_28;
+              }
+              n = Typedid(true);
+                                                                           replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(86);
+            label_29:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case IDENTIFIER:
+                ;
+                break;
+              default:
+                jj_la1[44] = jj_gen;
+                break label_29;
+              }
+              n = Typedid(true);
+                                                                                                                        replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(RPAREN);
+                                                                                                                                                    {if (true) return productionEndTerminal("StrategyDef6","-","-","Replacement","Default",first,token);}
+            break;
+          default:
+            jj_la1[46] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        }
+      }
     }
     throw new Error("Missing return statement in function");
   }
@@ -6365,10 +1040,1727 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                      {if (true) return productionEndTerminal("Anno3","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[83] = jj_gen;
+      jj_la1[47] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Typedid(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Id(true);
+                    replaceName(n);
+    jj_consume_token(85);
+    n = Type(true);
+                                                       replaceName(n);
+                                                                         {if (true) return productionEndTerminal("Typedid","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Type(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_15(3)) {
+      n = FunType(true);
+                                      replaceName(n);
+                                                        {if (true) return productionEndTerminal("Type1","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = ConstType(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("Type2","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[48] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo FunType(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    label_30:
+    while (true) {
+      n = ArgType(true);
+                          replaceName(n);
+      jj_consume_token(STAR);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+      case LPAREN:
+        ;
+        break;
+      default:
+        jj_la1[49] = jj_gen;
+        break label_30;
+      }
+    }
+    jj_consume_token(87);
+    n = RetType(true);
+                                                                       replaceName(n);
+                                                                                         {if (true) return productionEndTerminal("FunType","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ArgType(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LPAREN:
+      jj_consume_token(LPAREN);
+      n = Type(true);
+                          replaceName(n);
+      jj_consume_token(RPAREN);
+                                                {if (true) return productionEndTerminal("ArgType1","-","-","Replacement","Default",first,token);}
+      break;
+    case IDENTIFIER:
+      n = ConstType(true);
+                           replaceName(n);
+                                             {if (true) return productionEndTerminal("ArgType2","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[50] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo RetType(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Type(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("RetType","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ConstType(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Sort(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("ConstType","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Strategy(boolean inTerminal) throws ParseException {
+                                         Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LET:
+      jj_consume_token(LET);
+      label_31:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case EXTERNAL:
+        case EXTEND:
+        case OVERRIDE:
+        case INTERNAL:
+        case IDENTIFIER:
+        case 86:
+          ;
+          break;
+        default:
+          jj_la1[51] = jj_gen;
+          break label_31;
+        }
+        n = Def(true);
+                            replaceName(n);
+      }
+      jj_consume_token(IN);
+      n = Strategy(true);
+                                                                      replaceName(n);
+      jj_consume_token(END);
+                                                                                              {if (true) return productionEndTerminal("Strategy1","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[71] = jj_gen;
+      if (jj_2_16(3)) {
+        n = SVar(true);
+                                   replaceName(n);
+        jj_consume_token(LPAREN);
+        label_32:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case ALL:
+          case FAIL:
+          case ID:
+          case LET:
+          case NOT:
+          case ONE:
+          case CALL:
+          case PROCEED:
+          case WITH:
+          case PRIM:
+          case RULES:
+          case SOME:
+          case TEST:
+          case WHERE:
+          case IMPORTTERM:
+          case IF:
+          case REC:
+          case SWITCH:
+          case INTEGER_LITERAL:
+          case CHARACTER_LITERAL:
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LOWLINE:
+          case MINUS:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case SLASH:
+          case 88:
+          case 89:
+          case 90:
+          case 92:
+          case 94:
+            ;
+            break;
+          default:
+            jj_la1[52] = jj_gen;
+            break label_32;
+          }
+          n = Strategy(true);
+                                                                           replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(86);
+        label_33:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case INTEGER_LITERAL:
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LOWLINE:
+          case MINUS:
+          case LPAREN:
+          case LBRACKET:
+          case 90:
+            ;
+            break;
+          default:
+            jj_la1[53] = jj_gen;
+            break label_33;
+          }
+          n = Term(true);
+                                                                                                                     replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+                                                                                                                                                 {if (true) return productionEndTerminal("Strategy2","-","-","Replacement","Default",first,token);}
+      } else if (jj_2_17(2)) {
+        n = SVar(true);
+                                   replaceName(n);
+        jj_consume_token(LPAREN);
+        label_34:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case ALL:
+          case FAIL:
+          case ID:
+          case LET:
+          case NOT:
+          case ONE:
+          case CALL:
+          case PROCEED:
+          case WITH:
+          case PRIM:
+          case RULES:
+          case SOME:
+          case TEST:
+          case WHERE:
+          case IMPORTTERM:
+          case IF:
+          case REC:
+          case SWITCH:
+          case INTEGER_LITERAL:
+          case CHARACTER_LITERAL:
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LOWLINE:
+          case MINUS:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case SLASH:
+          case 88:
+          case 89:
+          case 90:
+          case 92:
+          case 94:
+            ;
+            break;
+          default:
+            jj_la1[54] = jj_gen;
+            break label_34;
+          }
+          n = Strategy(true);
+                                                                           replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+                                                                                                       {if (true) return productionEndTerminal("Strategy3","-","-","Replacement","Default",first,token);}
+      } else {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CALL:
+          jj_consume_token(CALL);
+          jj_consume_token(LPAREN);
+          n = Term(true);
+                                 replaceName(n);
+          jj_consume_token(86);
+          label_35:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case ALL:
+            case FAIL:
+            case ID:
+            case LET:
+            case NOT:
+            case ONE:
+            case CALL:
+            case PROCEED:
+            case WITH:
+            case PRIM:
+            case RULES:
+            case SOME:
+            case TEST:
+            case WHERE:
+            case IMPORTTERM:
+            case IF:
+            case REC:
+            case SWITCH:
+            case INTEGER_LITERAL:
+            case CHARACTER_LITERAL:
+            case STRING_LITERAL:
+            case IDENTIFIER:
+            case LOWLINE:
+            case MINUS:
+            case LPAREN:
+            case LBRACE:
+            case LBRACKET:
+            case SLASH:
+            case 88:
+            case 89:
+            case 90:
+            case 92:
+            case 94:
+              ;
+              break;
+            default:
+              jj_la1[55] = jj_gen;
+              break label_35;
+            }
+            n = Strategy(true);
+                                                                         replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(86);
+          label_36:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case INTEGER_LITERAL:
+            case STRING_LITERAL:
+            case IDENTIFIER:
+            case LOWLINE:
+            case MINUS:
+            case LPAREN:
+            case LBRACKET:
+            case 90:
+              ;
+              break;
+            default:
+              jj_la1[56] = jj_gen;
+              break label_36;
+            }
+            n = Term(true);
+                                                                                                                   replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(RPAREN);
+                                                                                                                                               {if (true) return productionEndTerminal("Strategy4","-","-","Replacement","Default",first,token);}
+          break;
+        default:
+          jj_la1[72] = jj_gen;
+          if (jj_2_18(2)) {
+            jj_consume_token(PROCEED);
+            jj_consume_token(LPAREN);
+            label_37:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case ALL:
+              case FAIL:
+              case ID:
+              case LET:
+              case NOT:
+              case ONE:
+              case CALL:
+              case PROCEED:
+              case WITH:
+              case PRIM:
+              case RULES:
+              case SOME:
+              case TEST:
+              case WHERE:
+              case IMPORTTERM:
+              case IF:
+              case REC:
+              case SWITCH:
+              case INTEGER_LITERAL:
+              case CHARACTER_LITERAL:
+              case STRING_LITERAL:
+              case IDENTIFIER:
+              case LOWLINE:
+              case MINUS:
+              case LPAREN:
+              case LBRACE:
+              case LBRACKET:
+              case SLASH:
+              case 88:
+              case 89:
+              case 90:
+              case 92:
+              case 94:
+                ;
+                break;
+              default:
+                jj_la1[57] = jj_gen;
+                break label_37;
+              }
+              n = Strategy(true);
+                                                      replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(86);
+            label_38:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case INTEGER_LITERAL:
+              case STRING_LITERAL:
+              case IDENTIFIER:
+              case LOWLINE:
+              case MINUS:
+              case LPAREN:
+              case LBRACKET:
+              case 90:
+                ;
+                break;
+              default:
+                jj_la1[58] = jj_gen;
+                break label_38;
+              }
+              n = Term(true);
+                                                                                                replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(RPAREN);
+                                                                                                                            {if (true) return productionEndTerminal("Strategy5","-","-","Replacement","Default",first,token);}
+          } else if (jj_2_19(2)) {
+            jj_consume_token(PROCEED);
+            jj_consume_token(LPAREN);
+            label_39:
+            while (true) {
+              n = Strategy(true);
+                                                      replaceName(n);
+              jj_consume_token(COMMA);
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case ALL:
+              case FAIL:
+              case ID:
+              case LET:
+              case NOT:
+              case ONE:
+              case CALL:
+              case PROCEED:
+              case WITH:
+              case PRIM:
+              case RULES:
+              case SOME:
+              case TEST:
+              case WHERE:
+              case IMPORTTERM:
+              case IF:
+              case REC:
+              case SWITCH:
+              case INTEGER_LITERAL:
+              case CHARACTER_LITERAL:
+              case STRING_LITERAL:
+              case IDENTIFIER:
+              case LOWLINE:
+              case MINUS:
+              case LPAREN:
+              case LBRACE:
+              case LBRACKET:
+              case SLASH:
+              case 88:
+              case 89:
+              case 90:
+              case 92:
+              case 94:
+                ;
+                break;
+              default:
+                jj_la1[59] = jj_gen;
+                break label_39;
+              }
+            }
+            jj_consume_token(RPAREN);
+                                                                                  {if (true) return productionEndTerminal("Strategy6","-","-","Replacement","Default",first,token);}
+          } else {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case FAIL:
+              jj_consume_token(FAIL);
+                 {if (true) return productionEndTerminal("Strategy7","-","-","Replacement","Default",first,token);}
+              break;
+            case ID:
+              jj_consume_token(ID);
+               {if (true) return productionEndTerminal("Strategy8","-","-","Replacement","Default",first,token);}
+              break;
+            case PROCEED:
+              jj_consume_token(PROCEED);
+                    {if (true) return productionEndTerminal("Strategy9","-","-","Replacement","Default",first,token);}
+              break;
+            case 88:
+              jj_consume_token(88);
+              n = Term(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("Strategy10","-","-","Replacement","Default",first,token);}
+              break;
+            case 89:
+              jj_consume_token(89);
+              n = Term(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("Strategy11","-","-","Replacement","Default",first,token);}
+              break;
+            default:
+              jj_la1[73] = jj_gen;
+              if (jj_2_20(3)) {
+                jj_consume_token(LBRACE);
+                label_40:
+                while (true) {
+                  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                  case IDENTIFIER:
+                    ;
+                    break;
+                  default:
+                    jj_la1[60] = jj_gen;
+                    break label_40;
+                  }
+                  n = Id(true);
+                                      replaceName(n);
+                  jj_consume_token(COMMA);
+                }
+                jj_consume_token(85);
+                n = Strategy(true);
+                                                                                   replaceName(n);
+                jj_consume_token(RBRACE);
+                                                                                                         {if (true) return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
+              } else if (jj_2_21(2)) {
+                jj_consume_token(LPAREN);
+                n = Strategy(true);
+                                           replaceName(n);
+                jj_consume_token(RPAREN);
+                                                                 {if (true) return productionEndTerminal("Strategy13","-","-","Replacement","Default",first,token);}
+              } else if (jj_2_22(2)) {
+                jj_consume_token(LPAREN);
+                n = Strategy(true);
+                                           replaceName(n);
+                jj_consume_token(COMMA);
+                label_41:
+                while (true) {
+                  n = Strategy(true);
+                                                                                   replaceName(n);
+                  jj_consume_token(COMMA);
+                  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                  case ALL:
+                  case FAIL:
+                  case ID:
+                  case LET:
+                  case NOT:
+                  case ONE:
+                  case CALL:
+                  case PROCEED:
+                  case WITH:
+                  case PRIM:
+                  case RULES:
+                  case SOME:
+                  case TEST:
+                  case WHERE:
+                  case IMPORTTERM:
+                  case IF:
+                  case REC:
+                  case SWITCH:
+                  case INTEGER_LITERAL:
+                  case CHARACTER_LITERAL:
+                  case STRING_LITERAL:
+                  case IDENTIFIER:
+                  case LOWLINE:
+                  case MINUS:
+                  case LPAREN:
+                  case LBRACE:
+                  case LBRACKET:
+                  case SLASH:
+                  case 88:
+                  case 89:
+                  case 90:
+                  case 92:
+                  case 94:
+                    ;
+                    break;
+                  default:
+                    jj_la1[61] = jj_gen;
+                    break label_41;
+                  }
+                }
+                jj_consume_token(RPAREN);
+                                                                                                               {if (true) return productionEndTerminal("Strategy14","-","-","Replacement","Default",first,token);}
+              } else if (jj_2_23(2)) {
+                jj_consume_token(LPAREN);
+                jj_consume_token(RPAREN);
+                               {if (true) return productionEndTerminal("Strategy15","-","-","Replacement","Default",first,token);}
+              } else {
+                switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                case LBRACE:
+                  jj_consume_token(LBRACE);
+                  n = Strategy(true);
+                              replaceName(n);
+                  jj_consume_token(RBRACE);
+                                                    {if (true) return productionEndTerminal("Strategy16","-","-","Replacement","Default",first,token);}
+                  break;
+                default:
+                  jj_la1[74] = jj_gen;
+                  if (jj_2_24(3)) {
+                    jj_consume_token(LBRACKET);
+                    label_42:
+                    while (true) {
+                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                      case ALL:
+                      case FAIL:
+                      case ID:
+                      case LET:
+                      case NOT:
+                      case ONE:
+                      case CALL:
+                      case PROCEED:
+                      case WITH:
+                      case PRIM:
+                      case RULES:
+                      case SOME:
+                      case TEST:
+                      case WHERE:
+                      case IMPORTTERM:
+                      case IF:
+                      case REC:
+                      case SWITCH:
+                      case INTEGER_LITERAL:
+                      case CHARACTER_LITERAL:
+                      case STRING_LITERAL:
+                      case IDENTIFIER:
+                      case LOWLINE:
+                      case MINUS:
+                      case LPAREN:
+                      case LBRACE:
+                      case LBRACKET:
+                      case SLASH:
+                      case 88:
+                      case 89:
+                      case 90:
+                      case 92:
+                      case 94:
+                        ;
+                        break;
+                      default:
+                        jj_la1[62] = jj_gen;
+                        break label_42;
+                      }
+                      n = Strategy(true);
+                                            replaceName(n);
+                      jj_consume_token(COMMA);
+                    }
+                    jj_consume_token(RBRACKET);
+                                                                        {if (true) return productionEndTerminal("Strategy17","-","-","Replacement","Default",first,token);}
+                  } else if (jj_2_25(3)) {
+                    jj_consume_token(LBRACKET);
+                    label_43:
+                    while (true) {
+                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                      case ALL:
+                      case FAIL:
+                      case ID:
+                      case LET:
+                      case NOT:
+                      case ONE:
+                      case CALL:
+                      case PROCEED:
+                      case WITH:
+                      case PRIM:
+                      case RULES:
+                      case SOME:
+                      case TEST:
+                      case WHERE:
+                      case IMPORTTERM:
+                      case IF:
+                      case REC:
+                      case SWITCH:
+                      case INTEGER_LITERAL:
+                      case CHARACTER_LITERAL:
+                      case STRING_LITERAL:
+                      case IDENTIFIER:
+                      case LOWLINE:
+                      case MINUS:
+                      case LPAREN:
+                      case LBRACE:
+                      case LBRACKET:
+                      case SLASH:
+                      case 88:
+                      case 89:
+                      case 90:
+                      case 92:
+                      case 94:
+                        ;
+                        break;
+                      default:
+                        jj_la1[63] = jj_gen;
+                        break label_43;
+                      }
+                      n = Strategy(true);
+                                            replaceName(n);
+                      jj_consume_token(COMMA);
+                    }
+                    jj_consume_token(86);
+                    n = Strategy(true);
+                                                                                         replaceName(n);
+                    jj_consume_token(RBRACKET);
+                                                                                                               {if (true) return productionEndTerminal("Strategy18","-","-","Replacement","Default",first,token);}
+                  } else if (jj_2_26(3)) {
+                    jj_consume_token(90);
+                    n = Strategy(true);
+                                           replaceName(n);
+                    jj_consume_token(91);
+                                                                 {if (true) return productionEndTerminal("Strategy19","-","-","Replacement","Default",first,token);}
+                  } else if (jj_2_27(3)) {
+                    jj_consume_token(90);
+                    n = Strategy(true);
+                                           replaceName(n);
+                    jj_consume_token(91);
+                    n = Term(true);
+                                                                              replaceName(n);
+                                                                                                {if (true) return productionEndTerminal("Strategy20","-","-","Replacement","Default",first,token);}
+                  } else if (jj_2_28(3)) {
+                    jj_consume_token(PRIM);
+                    jj_consume_token(LPAREN);
+                    n = String(true);
+                                                replaceName(n);
+                    jj_consume_token(COMMA);
+                    label_44:
+                    while (true) {
+                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                      case ALL:
+                      case FAIL:
+                      case ID:
+                      case LET:
+                      case NOT:
+                      case ONE:
+                      case CALL:
+                      case PROCEED:
+                      case WITH:
+                      case PRIM:
+                      case RULES:
+                      case SOME:
+                      case TEST:
+                      case WHERE:
+                      case IMPORTTERM:
+                      case IF:
+                      case REC:
+                      case SWITCH:
+                      case INTEGER_LITERAL:
+                      case CHARACTER_LITERAL:
+                      case STRING_LITERAL:
+                      case IDENTIFIER:
+                      case LOWLINE:
+                      case MINUS:
+                      case LPAREN:
+                      case LBRACE:
+                      case LBRACKET:
+                      case SLASH:
+                      case 88:
+                      case 89:
+                      case 90:
+                      case 92:
+                      case 94:
+                        ;
+                        break;
+                      default:
+                        jj_la1[64] = jj_gen;
+                        break label_44;
+                      }
+                      n = Strategy(true);
+                                                                                        replaceName(n);
+                      jj_consume_token(COMMA);
+                    }
+                    jj_consume_token(86);
+                    label_45:
+                    while (true) {
+                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                      case INTEGER_LITERAL:
+                      case STRING_LITERAL:
+                      case IDENTIFIER:
+                      case LOWLINE:
+                      case MINUS:
+                      case LPAREN:
+                      case LBRACKET:
+                      case 90:
+                        ;
+                        break;
+                      default:
+                        jj_la1[65] = jj_gen;
+                        break label_45;
+                      }
+                      n = Term(true);
+                                                                                                                                  replaceName(n);
+                      jj_consume_token(COMMA);
+                    }
+                    jj_consume_token(RPAREN);
+                                                                                                                                                              {if (true) return productionEndTerminal("Strategy21","-","-","Replacement","Default",first,token);}
+                  } else if (jj_2_29(3)) {
+                    jj_consume_token(PRIM);
+                    jj_consume_token(LPAREN);
+                    n = String(true);
+                                                replaceName(n);
+                    jj_consume_token(COMMA);
+                    label_46:
+                    while (true) {
+                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                      case INTEGER_LITERAL:
+                      case STRING_LITERAL:
+                      case IDENTIFIER:
+                      case LOWLINE:
+                      case MINUS:
+                      case LPAREN:
+                      case LBRACKET:
+                      case 90:
+                        ;
+                        break;
+                      default:
+                        jj_la1[66] = jj_gen;
+                        break label_46;
+                      }
+                      n = Term(true);
+                                                                                    replaceName(n);
+                      jj_consume_token(COMMA);
+                    }
+                    jj_consume_token(RPAREN);
+                                                                                                                {if (true) return productionEndTerminal("Strategy22","-","-","Replacement","Default",first,token);}
+                  } else {
+                    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                    case SOME:
+                      jj_consume_token(SOME);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                     replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                           {if (true) return productionEndTerminal("Strategy23","-","-","Replacement","Default",first,token);}
+                      break;
+                    case ONE:
+                      jj_consume_token(ONE);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                    replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                          {if (true) return productionEndTerminal("Strategy24","-","-","Replacement","Default",first,token);}
+                      break;
+                    case ALL:
+                      jj_consume_token(ALL);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                    replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                          {if (true) return productionEndTerminal("Strategy25","-","-","Replacement","Default",first,token);}
+                      break;
+                    case REC:
+                      jj_consume_token(REC);
+                      n = Id(true);
+                          replaceName(n);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                                                 replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                                                       {if (true) return productionEndTerminal("Strategy26","-","-","Replacement","Default",first,token);}
+                      break;
+                    case NOT:
+                      jj_consume_token(NOT);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                    replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                          {if (true) return productionEndTerminal("Strategy27","-","-","Replacement","Default",first,token);}
+                      break;
+                    case WHERE:
+                      jj_consume_token(WHERE);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                      replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                            {if (true) return productionEndTerminal("Strategy28","-","-","Replacement","Default",first,token);}
+                      break;
+                    case WITH:
+                      jj_consume_token(WITH);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                     replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                           {if (true) return productionEndTerminal("Strategy29","-","-","Replacement","Default",first,token);}
+                      break;
+                    case TEST:
+                      jj_consume_token(TEST);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                     replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                           {if (true) return productionEndTerminal("Strategy30","-","-","Replacement","Default",first,token);}
+                      break;
+                    case PRIM:
+                      jj_consume_token(PRIM);
+                      jj_consume_token(LPAREN);
+                      n = Strategy(true);
+                                     replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                           {if (true) return productionEndTerminal("Strategy31","-","-","Replacement","Default",first,token);}
+                      break;
+                    case IMPORTTERM:
+                      jj_consume_token(IMPORTTERM);
+                      jj_consume_token(LPAREN);
+                      n = ModName(true);
+                                           replaceName(n);
+                      jj_consume_token(RPAREN);
+                                                                 {if (true) return productionEndTerminal("Strategy32","-","-","Replacement","Default",first,token);}
+                      break;
+                    default:
+                      jj_la1[75] = jj_gen;
+                      if (jj_2_30(2)) {
+                        n = String(true);
+                                     replaceName(n);
+                                                       {if (true) return productionEndTerminal("Strategy33","-","-","Replacement","Default",first,token);}
+                      } else if (jj_2_31(3)) {
+                        n = Int(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("Strategy34","-","-","Replacement","Default",first,token);}
+                      } else if (jj_2_32(3)) {
+                        n = Real(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("Strategy35","-","-","Replacement","Default",first,token);}
+                      } else {
+                        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                        case CHARACTER_LITERAL:
+                          n = Char(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("Strategy36","-","-","Replacement","Default",first,token);}
+                          break;
+                        default:
+                          jj_la1[76] = jj_gen;
+                          if (jj_2_33(2)) {
+                            n = SVar(true);
+                                   replaceName(n);
+                                                     {if (true) return productionEndTerminal("Strategy37","-","-","Replacement","Default",first,token);}
+                          } else {
+                            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                            case 92:
+                              jj_consume_token(92);
+                              n = Rule(true);
+                           replaceName(n);
+                              jj_consume_token(92);
+                                                  {if (true) return productionEndTerminal("Strategy38","-","-","Replacement","Default",first,token);}
+                              break;
+                            default:
+                              jj_la1[77] = jj_gen;
+                              if (jj_2_34(3)) {
+                                jj_consume_token(LPAREN);
+                                n = Rule(true);
+                                       replaceName(n);
+                                jj_consume_token(RPAREN);
+                                                             {if (true) return productionEndTerminal("Strategy39","-","-","Replacement","Default",first,token);}
+                              } else if (jj_2_35(3)) {
+                                n = String(true);
+                                     replaceName(n);
+                                jj_consume_token(LPAREN);
+                                label_47:
+                                while (true) {
+                                  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                  case ALL:
+                                  case FAIL:
+                                  case ID:
+                                  case LET:
+                                  case NOT:
+                                  case ONE:
+                                  case CALL:
+                                  case PROCEED:
+                                  case WITH:
+                                  case PRIM:
+                                  case RULES:
+                                  case SOME:
+                                  case TEST:
+                                  case WHERE:
+                                  case IMPORTTERM:
+                                  case IF:
+                                  case REC:
+                                  case SWITCH:
+                                  case INTEGER_LITERAL:
+                                  case CHARACTER_LITERAL:
+                                  case STRING_LITERAL:
+                                  case IDENTIFIER:
+                                  case LOWLINE:
+                                  case MINUS:
+                                  case LPAREN:
+                                  case LBRACE:
+                                  case LBRACKET:
+                                  case SLASH:
+                                  case 88:
+                                  case 89:
+                                  case 90:
+                                  case 92:
+                                  case 94:
+                                    ;
+                                    break;
+                                  default:
+                                    jj_la1[67] = jj_gen;
+                                    break label_47;
+                                  }
+                                  n = Strategy(true);
+                                                                             replaceName(n);
+                                  jj_consume_token(COMMA);
+                                }
+                                jj_consume_token(RPAREN);
+                                                                                                         {if (true) return productionEndTerminal("Strategy40","-","-","Replacement","Default",first,token);}
+                              } else if (jj_2_36(3)) {
+                                jj_consume_token(IF);
+                                n = Strategy(true);
+                                            replaceName(n);
+                                jj_consume_token(THEN);
+                                n = Strategy(true);
+                                                                                      replaceName(n);
+                                jj_consume_token(ELSE);
+                                n = Strategy(true);
+                                                                                                                                replaceName(n);
+                                jj_consume_token(END);
+                                                                                                                                                        {if (true) return productionEndTerminal("Strategy41","-","-","Replacement","Default",first,token);}
+                              } else {
+                                switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                case IF:
+                                  jj_consume_token(IF);
+                                  n = Strategy(true);
+                               replaceName(n);
+                                  jj_consume_token(THEN);
+                                  n = Strategy(true);
+                                                                         replaceName(n);
+                                  jj_consume_token(END);
+                                                                                                 {if (true) return productionEndTerminal("Strategy42","-","-","Replacement","Default",first,token);}
+                                  break;
+                                default:
+                                  jj_la1[78] = jj_gen;
+                                  if (jj_2_37(3)) {
+                                    jj_consume_token(SWITCH);
+                                    n = Strategy(true);
+                                                replaceName(n);
+                                    label_48:
+                                    while (true) {
+                                      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                      case CASE:
+                                        ;
+                                        break;
+                                      default:
+                                        jj_la1[68] = jj_gen;
+                                        break label_48;
+                                      }
+                                      n = SwitchCase(true);
+                                                                                      replaceName(n);
+                                    }
+                                    jj_consume_token(END);
+                                                                                                                {if (true) return productionEndTerminal("Strategy43","-","-","Replacement","Default",first,token);}
+                                  } else {
+                                    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                    case SWITCH:
+                                      jj_consume_token(SWITCH);
+                                      n = Strategy(true);
+                                   replaceName(n);
+                                      label_49:
+                                      while (true) {
+                                        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                        case CASE:
+                                          ;
+                                          break;
+                                        default:
+                                          jj_la1[69] = jj_gen;
+                                          break label_49;
+                                        }
+                                        n = SwitchCase(true);
+                                                                         replaceName(n);
+                                      }
+                                      jj_consume_token(OTHERWISE);
+                                      jj_consume_token(85);
+                                      n = Strategy(true);
+                                                                                                                              replaceName(n);
+                                      jj_consume_token(END);
+                                                                                                                                                      {if (true) return productionEndTerminal("Strategy44","-","-","Replacement","Default",first,token);}
+                                      break;
+                                    case INTEGER_LITERAL:
+                                    case STRING_LITERAL:
+                                    case IDENTIFIER:
+                                    case LOWLINE:
+                                    case MINUS:
+                                    case LPAREN:
+                                    case LBRACKET:
+                                    case 90:
+                                      n = Term(true);
+                      replaceName(n);
+                                      jj_consume_token(93);
+                                      n = Term(true);
+                                                          replaceName(n);
+                                                                            {if (true) return productionEndTerminal("Strategy45","-","-","Replacement","Default",first,token);}
+                                      break;
+                                    case 94:
+                                      jj_consume_token(94);
+                                      n = ScopeLabels(true);
+                                  replaceName(n);
+                                      jj_consume_token(85);
+                                      n = Strategy(true);
+                                                                         replaceName(n);
+                                      jj_consume_token(95);
+                                                                                                {if (true) return productionEndTerminal("Strategy46","-","-","Replacement","Default",first,token);}
+                                      break;
+                                    case RULES:
+                                      jj_consume_token(RULES);
+                                      jj_consume_token(LPAREN);
+                                      label_50:
+                                      while (true) {
+                                        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                                        case IDENTIFIER:
+                                          ;
+                                          break;
+                                        default:
+                                          jj_la1[70] = jj_gen;
+                                          break label_50;
+                                        }
+                                        n = DynRuleDef(true);
+                                         replaceName(n);
+                                      }
+                                      jj_consume_token(RPAREN);
+                                                                 {if (true) return productionEndTerminal("Strategy47","-","-","Replacement","Default",first,token);}
+                                      break;
+                                    case SLASH:
+                                      jj_consume_token(SLASH);
+                                      n = RuleNames(true);
+                               replaceName(n);
+                                      jj_consume_token(96);
+                                      n = Strategy(true);
+                                                                        replaceName(n);
+                                                                                          {if (true) return productionEndTerminal("Strategy48","-","-","Replacement","Default",first,token);}
+                                      break;
+                                    default:
+                                      jj_la1[79] = jj_gen;
+                                      jj_consume_token(-1);
+                                      throw new ParseException();
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo RuleNames(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFIER:
+      label_51:
+      while (true) {
+        n = Id(true);
+                     replaceName(n);
+        jj_consume_token(COMMA);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ;
+          break;
+        default:
+          jj_la1[80] = jj_gen;
+          break label_51;
+        }
+      }
+                                             {if (true) return productionEndTerminal("RuleNames1","-","-","Replacement","Default",first,token);}
+      break;
+    case 97:
+      jj_consume_token(97);
+      n = Term(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("RuleNames2","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[81] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo DynRuleDef(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_38(3)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(PLUS);
+      n = Term(true);
+                                                                    replaceName(n);
+                                                                                      {if (true) return productionEndTerminal("DynRuleDef1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_39(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(98);
+      n = Term(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("DynRuleDef2","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_40(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(85);
+      n = Rule(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("DynRuleDef3","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_41(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(99);
+      n = Rule(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("DynRuleDef4","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_42(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(85);
+      n = Term(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("DynRuleDef5","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_43(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(93);
+      n = Term(true);
+                                                                            replaceName(n);
+                                                                                              {if (true) return productionEndTerminal("DynRuleDef6","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_44(3)) {
+      n = DynRuleId(true);
+                                        replaceName(n);
+      jj_consume_token(100);
+      n = Term(true);
+                                                                             replaceName(n);
+                                                                                               {if (true) return productionEndTerminal("DynRuleDef7","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = DynRuleId(true);
+                           replaceName(n);
+        jj_consume_token(85);
+        n = Rule(true);
+                                                              replaceName(n);
+        jj_consume_token(101);
+        jj_consume_token(ON);
+        n = Term(true);
+                                                                                                             replaceName(n);
+                                                                                                                               {if (true) return productionEndTerminal("DynRuleDef8","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[82] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo DynRuleId(boolean inTerminal) throws ParseException {
+                                          Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_45(3)) {
+      n = RuleDec(true);
+                                      replaceName(n);
+      jj_consume_token(DOT);
+      n = Term(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("DynRuleId1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_46(3)) {
+      n = RuleDec(true);
+                                      replaceName(n);
+      jj_consume_token(PLUS);
+      n = Term(true);
+                                                                         replaceName(n);
+                                                                                           {if (true) return productionEndTerminal("DynRuleId2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = RuleDec(true);
+                         replaceName(n);
+                                           {if (true) return productionEndTerminal("DynRuleId3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[83] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo RuleDec(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_47(3)) {
+      n = Id(true);
+                                 replaceName(n);
+                                                   {if (true) return productionEndTerminal("RuleDec1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_48(3)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(LPAREN);
+      label_52:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ;
+          break;
+        default:
+          jj_la1[84] = jj_gen;
+          break label_52;
+        }
+        n = Typedid(true);
+                                                                        replaceName(n);
+        jj_consume_token(COMMA);
+      }
+      jj_consume_token(RPAREN);
+                                                                                                    {if (true) return productionEndTerminal("RuleDec2","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
+                    replaceName(n);
+        jj_consume_token(LPAREN);
+        label_53:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[85] = jj_gen;
+            break label_53;
+          }
+          n = Typedid(true);
+                                                           replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(86);
+        label_54:
+        while (true) {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+            ;
+            break;
+          default:
+            jj_la1[86] = jj_gen;
+            break label_54;
+          }
+          n = Typedid(true);
+                                                                                                        replaceName(n);
+          jj_consume_token(COMMA);
+        }
+        jj_consume_token(RPAREN);
+                                                                                                                                    {if (true) return productionEndTerminal("RuleDec3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[87] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo ScopeLabels(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFIER:
+      label_55:
+      while (true) {
+        n = DynRuleScopeId(true);
+                                 replaceName(n);
+        jj_consume_token(COMMA);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ;
+          break;
+        default:
+          jj_la1[88] = jj_gen;
+          break label_55;
+        }
+      }
+                                                         {if (true) return productionEndTerminal("ScopeLabels1","-","-","Replacement","Default",first,token);}
+      break;
+    case 97:
+      jj_consume_token(97);
+      n = Term(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("ScopeLabels2","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[89] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo DynRuleScopeId(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_49(2)) {
+      n = Id(true);
+                                 replaceName(n);
+      jj_consume_token(DOT);
+      n = Term(true);
+                                                                      replaceName(n);
+                                                                                        {if (true) return productionEndTerminal("DynRuleScopeId1","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
+                    replaceName(n);
+                                      {if (true) return productionEndTerminal("DynRuleScopeId2","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[90] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo SwitchCase(boolean inTerminal) throws ParseException {
+                                           Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(CASE);
+    n = Strategy(true);
+                                 replaceName(n);
+    jj_consume_token(85);
+    n = Strategy(true);
+                                                                        replaceName(n);
+                                                                                          {if (true) return productionEndTerminal("SwitchCase","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo StrategyMid(boolean inTerminal) throws ParseException {
+                                            Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = Strategy(true);
+                          replaceName(n);
+                                            {if (true) return productionEndTerminal("StrategyMid","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Term(boolean inTerminal) throws ParseException {
+                                     Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_50(2)) {
+      n = Var(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("Term1","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_51(2)) {
+      n = Wld(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("Term2","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_52(2)) {
+      n = PreTerm(true);
+                                      replaceName(n);
+      jj_consume_token(102);
+      n = PreTerm(true);
+                                                                             replaceName(n);
+      jj_consume_token(RBRACE);
+                                                                                                   {if (true) return productionEndTerminal("Term3","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_53(3)) {
+      n = PreTerm(true);
+                                      replaceName(n);
+      jj_consume_token(LBRACE);
+      label_56:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case INTEGER_LITERAL:
+        case STRING_LITERAL:
+        case IDENTIFIER:
+        case LOWLINE:
+        case MINUS:
+        case LPAREN:
+        case LBRACKET:
+        case 90:
+          ;
+          break;
+        default:
+          jj_la1[91] = jj_gen;
+          break label_56;
+        }
+        n = Term(true);
+                                                                          replaceName(n);
+        jj_consume_token(COMMA);
+      }
+      jj_consume_token(RBRACE);
+                                                                                                      {if (true) return productionEndTerminal("Term4","-","-","Replacement","Default",first,token);}
+    } else if (jj_2_54(2)) {
+      n = PreTerm(true);
+                                      replaceName(n);
+                                                        {if (true) return productionEndTerminal("Term5","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Var(true);
+                     replaceName(n);
+        jj_consume_token(103);
+        n = Term(true);
+                                                        replaceName(n);
+                                                                          {if (true) return productionEndTerminal("Term6","-","-","Replacement","Default",first,token);}
+        break;
+      case LOWLINE:
+        jj_consume_token(LOWLINE);
+        n = Term(true);
+                                replaceName(n);
+                                                  {if (true) return productionEndTerminal("Term7","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[92] = jj_gen;
+        if (jj_2_55(3)) {
+          jj_consume_token(90);
+          n = Strategy(true);
+                                           replaceName(n);
+          jj_consume_token(91);
+          n = Term(true);
+                                                                              replaceName(n);
+                                                                                                {if (true) return productionEndTerminal("Term8","-","-","Replacement","Default",first,token);}
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case 90:
+            jj_consume_token(90);
+            n = Strategy(true);
+                              replaceName(n);
+            jj_consume_token(91);
+                                                    {if (true) return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
+            break;
+          default:
+            jj_la1[93] = jj_gen;
+            jj_consume_token(-1);
+            throw new ParseException();
+          }
+        }
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo PreTerm(boolean inTerminal) throws ParseException {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    if (jj_2_56(3)) {
+      n = Int(true);
+                                  replaceName(n);
+                                                    {if (true) return productionEndTerminal("PreTerm1","-","-","Replacement","Default",first,token);}
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case INTEGER_LITERAL:
+      case MINUS:
+        n = Real(true);
+                      replaceName(n);
+                                        {if (true) return productionEndTerminal("PreTerm2","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[99] = jj_gen;
+        if (jj_2_57(2)) {
+          n = String(true);
+                                     replaceName(n);
+                                                       {if (true) return productionEndTerminal("PreTerm3","-","-","Replacement","Default",first,token);}
+        } else if (jj_2_58(2)) {
+          n = Id(true);
+                                 replaceName(n);
+          jj_consume_token(LPAREN);
+          label_57:
+          while (true) {
+            switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+            case INTEGER_LITERAL:
+            case STRING_LITERAL:
+            case IDENTIFIER:
+            case LOWLINE:
+            case MINUS:
+            case LPAREN:
+            case LBRACKET:
+            case 90:
+              ;
+              break;
+            default:
+              jj_la1[94] = jj_gen;
+              break label_57;
+            }
+            n = Term(true);
+                                                                     replaceName(n);
+            jj_consume_token(COMMA);
+          }
+          jj_consume_token(RPAREN);
+                                                                                                 {if (true) return productionEndTerminal("PreTerm4","-","-","Replacement","Default",first,token);}
+        } else {
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRING_LITERAL:
+            n = String(true);
+                        replaceName(n);
+            jj_consume_token(LPAREN);
+            label_58:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case INTEGER_LITERAL:
+              case STRING_LITERAL:
+              case IDENTIFIER:
+              case LOWLINE:
+              case MINUS:
+              case LPAREN:
+              case LBRACKET:
+              case 90:
+                ;
+                break;
+              default:
+                jj_la1[95] = jj_gen;
+                break label_58;
+              }
+              n = Term(true);
+                                                            replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(RPAREN);
+                                                                                        {if (true) return productionEndTerminal("PreTerm5","-","-","Replacement","Default",first,token);}
+            break;
+          case LPAREN:
+            jj_consume_token(LPAREN);
+            label_59:
+            while (true) {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case INTEGER_LITERAL:
+              case STRING_LITERAL:
+              case IDENTIFIER:
+              case LOWLINE:
+              case MINUS:
+              case LPAREN:
+              case LBRACKET:
+              case 90:
+                ;
+                break;
+              default:
+                jj_la1[96] = jj_gen;
+                break label_59;
+              }
+              n = Term(true);
+                           replaceName(n);
+              jj_consume_token(COMMA);
+            }
+            jj_consume_token(RPAREN);
+                                                       {if (true) return productionEndTerminal("PreTerm6","-","-","Replacement","Default",first,token);}
+            break;
+          default:
+            jj_la1[100] = jj_gen;
+            if (jj_2_59(3)) {
+              jj_consume_token(LBRACKET);
+              label_60:
+              while (true) {
+                switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                case INTEGER_LITERAL:
+                case STRING_LITERAL:
+                case IDENTIFIER:
+                case LOWLINE:
+                case MINUS:
+                case LPAREN:
+                case LBRACKET:
+                case 90:
+                  ;
+                  break;
+                default:
+                  jj_la1[97] = jj_gen;
+                  break label_60;
+                }
+                n = Term(true);
+                                        replaceName(n);
+                jj_consume_token(COMMA);
+              }
+              jj_consume_token(RBRACKET);
+                                                                    {if (true) return productionEndTerminal("PreTerm7","-","-","Replacement","Default",first,token);}
+            } else {
+              switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+              case LBRACKET:
+                jj_consume_token(LBRACKET);
+                label_61:
+                while (true) {
+                  switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+                  case INTEGER_LITERAL:
+                  case STRING_LITERAL:
+                  case IDENTIFIER:
+                  case LOWLINE:
+                  case MINUS:
+                  case LPAREN:
+                  case LBRACKET:
+                  case 90:
+                    ;
+                    break;
+                  default:
+                    jj_la1[98] = jj_gen;
+                    break label_61;
+                  }
+                  n = Term(true);
+                           replaceName(n);
+                  jj_consume_token(COMMA);
+                }
+                jj_consume_token(86);
+                n = Term(true);
+                                                                    replaceName(n);
+                jj_consume_token(RBRACKET);
+                                                                                          {if (true) return productionEndTerminal("PreTerm8","-","-","Replacement","Default",first,token);}
+                break;
+              default:
+                jj_la1[101] = jj_gen;
+                jj_consume_token(-1);
+                throw new ParseException();
+              }
+            }
+          }
+        }
+      }
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo Wld(boolean inTerminal) throws ParseException {
+                                    Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(LOWLINE);
+                   {if (true) return productionEndTerminal("Wld","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -6378,68 +2770,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     n = Id(true);
                     replaceName(n);
     jj_consume_token(LPAREN);
-    label_59:
+    label_62:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
+      case IDENTIFIER:
         ;
         break;
       default:
-        jj_la1[84] = jj_gen;
-        break label_59;
+        jj_la1[102] = jj_gen;
+        break label_62;
       }
       n = Strat(true);
                                                          replaceName(n);
@@ -6450,1400 +2789,1891 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Overlay(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(154);
-      n = Term(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("Overlay1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_60:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[85] = jj_gen;
-          break label_60;
-        }
-        n = Id(true);
-                                                      replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(154);
-      n = Term(true);
-                                                                                                   replaceName(n);
-                                                                                                                     {if (true) return productionEndTerminal("Overlay2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[86] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+  final private boolean jj_2_1(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_1(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(0, xla); }
+  }
+
+  final private boolean jj_2_2(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_2(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  final private boolean jj_2_3(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_3(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(2, xla); }
+  }
+
+  final private boolean jj_2_4(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_4(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(3, xla); }
+  }
+
+  final private boolean jj_2_5(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_5(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(4, xla); }
+  }
+
+  final private boolean jj_2_6(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_6(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(5, xla); }
+  }
+
+  final private boolean jj_2_7(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_7(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(6, xla); }
+  }
+
+  final private boolean jj_2_8(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_8(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(7, xla); }
+  }
+
+  final private boolean jj_2_9(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_9(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
+  }
+
+  final private boolean jj_2_10(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_10(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(9, xla); }
+  }
+
+  final private boolean jj_2_11(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_11(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(10, xla); }
+  }
+
+  final private boolean jj_2_12(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_12(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(11, xla); }
+  }
+
+  final private boolean jj_2_13(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_13(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(12, xla); }
+  }
+
+  final private boolean jj_2_14(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_14(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(13, xla); }
+  }
+
+  final private boolean jj_2_15(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_15(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(14, xla); }
+  }
+
+  final private boolean jj_2_16(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_16(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(15, xla); }
+  }
+
+  final private boolean jj_2_17(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_17(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(16, xla); }
+  }
+
+  final private boolean jj_2_18(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_18(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(17, xla); }
+  }
+
+  final private boolean jj_2_19(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_19(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(18, xla); }
+  }
+
+  final private boolean jj_2_20(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_20(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(19, xla); }
+  }
+
+  final private boolean jj_2_21(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_21(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(20, xla); }
+  }
+
+  final private boolean jj_2_22(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_22(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(21, xla); }
+  }
+
+  final private boolean jj_2_23(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_23(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(22, xla); }
+  }
+
+  final private boolean jj_2_24(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_24(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(23, xla); }
+  }
+
+  final private boolean jj_2_25(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_25(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(24, xla); }
+  }
+
+  final private boolean jj_2_26(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_26(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(25, xla); }
+  }
+
+  final private boolean jj_2_27(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_27(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(26, xla); }
+  }
+
+  final private boolean jj_2_28(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_28(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(27, xla); }
+  }
+
+  final private boolean jj_2_29(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_29(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(28, xla); }
+  }
+
+  final private boolean jj_2_30(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_30(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(29, xla); }
+  }
+
+  final private boolean jj_2_31(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_31(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(30, xla); }
+  }
+
+  final private boolean jj_2_32(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_32(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(31, xla); }
+  }
+
+  final private boolean jj_2_33(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_33(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(32, xla); }
+  }
+
+  final private boolean jj_2_34(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_34(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(33, xla); }
+  }
+
+  final private boolean jj_2_35(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_35(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(34, xla); }
+  }
+
+  final private boolean jj_2_36(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_36(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(35, xla); }
+  }
+
+  final private boolean jj_2_37(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_37(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(36, xla); }
+  }
+
+  final private boolean jj_2_38(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_38(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(37, xla); }
+  }
+
+  final private boolean jj_2_39(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_39(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(38, xla); }
+  }
+
+  final private boolean jj_2_40(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_40(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(39, xla); }
+  }
+
+  final private boolean jj_2_41(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_41(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(40, xla); }
+  }
+
+  final private boolean jj_2_42(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_42(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(41, xla); }
+  }
+
+  final private boolean jj_2_43(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_43(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(42, xla); }
+  }
+
+  final private boolean jj_2_44(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_44(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(43, xla); }
+  }
+
+  final private boolean jj_2_45(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_45(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(44, xla); }
+  }
+
+  final private boolean jj_2_46(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_46(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(45, xla); }
+  }
+
+  final private boolean jj_2_47(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_47(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(46, xla); }
+  }
+
+  final private boolean jj_2_48(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_48(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(47, xla); }
+  }
+
+  final private boolean jj_2_49(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_49(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(48, xla); }
+  }
+
+  final private boolean jj_2_50(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_50(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(49, xla); }
+  }
+
+  final private boolean jj_2_51(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_51(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(50, xla); }
+  }
+
+  final private boolean jj_2_52(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_52(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(51, xla); }
+  }
+
+  final private boolean jj_2_53(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_53(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(52, xla); }
+  }
+
+  final private boolean jj_2_54(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_54(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(53, xla); }
+  }
+
+  final private boolean jj_2_55(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_55(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(54, xla); }
+  }
+
+  final private boolean jj_2_56(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_56(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(55, xla); }
+  }
+
+  final private boolean jj_2_57(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_57(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(56, xla); }
+  }
+
+  final private boolean jj_2_58(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_58(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(57, xla); }
+  }
+
+  final private boolean jj_2_59(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_59(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(58, xla); }
+  }
+
+  final private boolean jj_3R_65() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_11()) {
+    jj_scanpos = xsp;
+    if (jj_3_12()) {
+    jj_scanpos = xsp;
+    if (jj_3R_93()) {
+    jj_scanpos = xsp;
+    if (jj_3_13()) {
+    jj_scanpos = xsp;
+    if (jj_3_14()) {
+    jj_scanpos = xsp;
+    if (jj_3R_94()) return true;
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo RuleDef(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(140);
-      n = Rule(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("RuleDef1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_61:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[87] = jj_gen;
-          break label_61;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(140);
-      n = Rule(true);
-                                                                                                        replaceName(n);
-                                                                                                                          {if (true) return productionEndTerminal("RuleDef2","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_62:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[88] = jj_gen;
-          break label_62;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_63:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[89] = jj_gen;
-          break label_63;
-        }
-        n = Typedid(true);
-                                                                                                        replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-      jj_consume_token(140);
-      n = Rule(true);
-                                                                                                                                                     replaceName(n);
-                                                                                                                                                                       {if (true) return productionEndTerminal("RuleDef3","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[90] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Rule(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case INTEGER_LITERAL:
-    case STRING_LITERAL:
-    case LPAREN:
-    case LBRACKET:
-    case MINUS:
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-    case 156:
-      n = Term(true);
-                      replaceName(n);
-      jj_consume_token(141);
-      n = Term(true);
-                                                          replaceName(n);
-                                                                            {if (true) return productionEndTerminal("Rule1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Term(true);
-                      replaceName(n);
-      jj_consume_token(141);
-      n = Term(true);
-                                                          replaceName(n);
-      jj_consume_token(WHERE);
-      n = Strategy(true);
-                                                                                                     replaceName(n);
-                                                                                                                       {if (true) return productionEndTerminal("Rule2","-","-","Replacement","Default",first,token);}
-      break;
-      n = Term(true);
-                      replaceName(n);
-      jj_consume_token(141);
-      n = Term(true);
-                                                          replaceName(n);
-      label_64:
-      while (true) {
-        n = RuleCond(true);
-                                                                                              replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case WHERE:
-        case 148:
-          ;
-          break;
-        default:
-          jj_la1[91] = jj_gen;
-          break label_64;
-        }
-      }
-                                                                                                                  {if (true) return productionEndTerminal("Rule3","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[92] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo RuleCond(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case WHERE:
-      jj_consume_token(WHERE);
-      n = Strategy(true);
-                                  replaceName(n);
-                                                    {if (true) return productionEndTerminal("RuleCond1","-","-","Replacement","Default",first,token);}
-      break;
-    case 148:
-      jj_consume_token(148);
-      n = Strategy(true);
-                                 replaceName(n);
-                                                   {if (true) return productionEndTerminal("RuleCond2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[93] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Kind(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case STAR:
-      jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("Kind1","-","-","Replacement","Default",first,token);}
-      break;
-    case 155:
-      jj_consume_token(155);
-               {if (true) return productionEndTerminal("Kind2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[94] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
     }
-    throw new Error("Missing return statement in function");
+    return false;
   }
 
-  final public FSTInfo StrategyAngle(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(156);
-    n = Strategy(true);
-                              replaceName(n);
-    jj_consume_token(157);
-                                                    {if (true) return productionEndTerminal("StrategyAngle","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
+  final private boolean jj_3R_178() {
+    if (jj_3R_100()) return true;
+    return false;
   }
 
-  final public FSTInfo StrategyCurly(boolean inTerminal) throws ParseException {
-                                              Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(LBRACE);
-    n = Strategy(true);
-                              replaceName(n);
-    jj_consume_token(RBRACE);
-                                                    {if (true) return productionEndTerminal("StrategyCurly","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
+  final private boolean jj_3R_177() {
+    if (jj_3R_100()) return true;
+    return false;
   }
 
-  final public FSTInfo SwitchCase(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(CASE);
-    n = Strategy(true);
-                                 replaceName(n);
-    jj_consume_token(140);
-    n = Strategy(true);
-                                                                        replaceName(n);
-                                                                                          {if (true) return productionEndTerminal("SwitchCase","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
+  final private boolean jj_3R_139() {
+    return false;
   }
 
-  final public FSTInfo ScopeLabels(boolean inTerminal) throws ParseException {
-                                            Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    label_65:
+  final private boolean jj_3R_163() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
     while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[95] = jj_gen;
-        break label_65;
-      }
-      n = DynRuleScopeId(true);
-                                 replaceName(n);
-      jj_consume_token(COMMA);
+      xsp = jj_scanpos;
+      if (jj_3R_178()) { jj_scanpos = xsp; break; }
     }
-                                                         {if (true) return productionEndTerminal("ScopeLabels1","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
+    if (jj_scan_token(86)) return true;
+    return false;
   }
 
-  final public FSTInfo DynRuleScopeId(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(DOT);
-      n = Term(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("DynRuleScopeId1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-                                      {if (true) return productionEndTerminal("DynRuleScopeId2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[96] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo RuleNames(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    label_66:
+  final private boolean jj_3_10() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
     while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 83:
-      case 84:
-      case 85:
-      case 86:
-      case 87:
-      case 88:
-      case 89:
-      case 90:
-      case 91:
-      case 92:
-      case 93:
-      case 94:
-      case 95:
-      case 96:
-      case 97:
-      case 98:
-      case 99:
-      case 100:
-      case 101:
-      case 102:
-      case 103:
-      case 104:
-      case 105:
-      case 106:
-      case 107:
-      case 108:
-      case 109:
-      case 110:
-      case 111:
-      case 112:
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 124:
-      case 125:
-      case 126:
-      case 127:
-      case 128:
-      case 129:
-      case 130:
-      case 131:
-      case 132:
-      case 133:
-      case 134:
-      case 135:
-      case 136:
-        ;
-        break;
-      default:
-        jj_la1[97] = jj_gen;
-        break label_66;
-      }
-      n = Id(true);
-                     replaceName(n);
-      jj_consume_token(COMMA);
+      xsp = jj_scanpos;
+      if (jj_3R_71()) { jj_scanpos = xsp; break; }
     }
-                                             {if (true) return productionEndTerminal("RuleNames1","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
   }
 
-  final public FSTInfo RuleDec(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-                                      {if (true) return productionEndTerminal("RuleDec1","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_67:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[98] = jj_gen;
-          break label_67;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                       {if (true) return productionEndTerminal("RuleDec2","-","-","Replacement","Default",first,token);}
-      break;
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(LPAREN);
-      label_68:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[99] = jj_gen;
-          break label_68;
-        }
-        n = Typedid(true);
-                                                           replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(139);
-      label_69:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case 83:
-        case 84:
-        case 85:
-        case 86:
-        case 87:
-        case 88:
-        case 89:
-        case 90:
-        case 91:
-        case 92:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-        case 99:
-        case 100:
-        case 101:
-        case 102:
-        case 103:
-        case 104:
-        case 105:
-        case 106:
-        case 107:
-        case 108:
-        case 109:
-        case 110:
-        case 111:
-        case 112:
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 124:
-        case 125:
-        case 126:
-        case 127:
-        case 128:
-        case 129:
-        case 130:
-        case 131:
-        case 132:
-        case 133:
-        case 134:
-        case 135:
-        case 136:
-          ;
-          break;
-        default:
-          jj_la1[100] = jj_gen;
-          break label_69;
-        }
-        n = Typedid(true);
-                                                                                                        replaceName(n);
-        jj_consume_token(COMMA);
-      }
-      jj_consume_token(RPAREN);
-                                                                                                                                    {if (true) return productionEndTerminal("RuleDec3","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[101] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+  final private boolean jj_3R_162() {
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_177()) { jj_scanpos = xsp; break; }
     }
-    throw new Error("Missing return statement in function");
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
   }
 
-  final public FSTInfo DynRuleId(boolean inTerminal) throws ParseException {
-                                          Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = RuleDec(true);
-                         replaceName(n);
-      jj_consume_token(DOT);
-      n = Term(true);
-                                                            replaceName(n);
-                                                                              {if (true) return productionEndTerminal("DynRuleId1","-","-","Replacement","Default",first,token);}
-      break;
-      n = RuleDec(true);
-                         replaceName(n);
-      jj_consume_token(PLUS);
-      n = Term(true);
-                                                            replaceName(n);
-                                                                              {if (true) return productionEndTerminal("DynRuleId2","-","-","Replacement","Default",first,token);}
-      break;
-      n = RuleDec(true);
-                         replaceName(n);
-                                           {if (true) return productionEndTerminal("DynRuleId3","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[102] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+  final private boolean jj_3R_154() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_162()) {
+    jj_scanpos = xsp;
+    if (jj_3_10()) {
+    jj_scanpos = xsp;
+    if (jj_3R_163()) return true;
     }
-    throw new Error("Missing return statement in function");
+    }
+    return false;
   }
 
-  final public FSTInfo DynRuleDef(boolean inTerminal) throws ParseException {
-                                           Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case 83:
-    case 84:
-    case 85:
-    case 86:
-    case 87:
-    case 88:
-    case 89:
-    case 90:
-    case 91:
-    case 92:
-    case 93:
-    case 94:
-    case 95:
-    case 96:
-    case 97:
-    case 98:
-    case 99:
-    case 100:
-    case 101:
-    case 102:
-    case 103:
-    case 104:
-    case 105:
-    case 106:
-    case 107:
-    case 108:
-    case 109:
-    case 110:
-    case 111:
-    case 112:
-    case 113:
-    case 114:
-    case 115:
-    case 116:
-    case 117:
-    case 118:
-    case 119:
-    case 120:
-    case 121:
-    case 122:
-    case 123:
-    case 124:
-    case 125:
-    case 126:
-    case 127:
-    case 128:
-    case 129:
-    case 130:
-    case 131:
-    case 132:
-    case 133:
-    case 134:
-    case 135:
-    case 136:
-      n = Id(true);
-                    replaceName(n);
-      jj_consume_token(PLUS);
-      n = Term(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("DynRuleDef1","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(159);
-      n = Term(true);
-                                                               replaceName(n);
-                                                                                 {if (true) return productionEndTerminal("DynRuleDef2","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(140);
-      n = Rule(true);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndTerminal("DynRuleDef3","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(160);
-      n = Rule(true);
-                                                               replaceName(n);
-                                                                                 {if (true) return productionEndTerminal("DynRuleDef4","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(140);
-      n = Term(true);
-                                                              replaceName(n);
-                                                                                {if (true) return productionEndTerminal("DynRuleDef5","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(150);
-      n = Term(true);
-                                                               replaceName(n);
-                                                                                 {if (true) return productionEndTerminal("DynRuleDef6","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(161);
-      n = Term(true);
-                                                                replaceName(n);
-                                                                                  {if (true) return productionEndTerminal("DynRuleDef7","-","-","Replacement","Default",first,token);}
-      break;
-      n = DynRuleId(true);
-                           replaceName(n);
-      jj_consume_token(140);
-      n = Rule(true);
-                                                              replaceName(n);
-      jj_consume_token(162);
-      jj_consume_token(163);
-      n = Term(true);
-                                                                                                             replaceName(n);
-                                                                                                                               {if (true) return productionEndTerminal("DynRuleDef8","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[103] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
+  final private boolean jj_3R_100() {
+    if (jj_3R_64()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_143()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_88() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_74() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_69() {
+    if (jj_3R_99()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_68() {
+    if (jj_3R_99()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_64() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_99() {
+    if (jj_scan_token(EXTERNAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_9() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_69()) jj_scanpos = xsp;
+    if (jj_3R_70()) return true;
+    if (jj_scan_token(85)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_8() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_68()) jj_scanpos = xsp;
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(85)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_152() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_153() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_131() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(87)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_7() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(87)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(87)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_91() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_82() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_6()) {
+    jj_scanpos = xsp;
+    if (jj_3_7()) {
+    jj_scanpos = xsp;
+    if (jj_3R_131()) return true;
     }
-    throw new Error("Missing return statement in function");
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_175() {
+    if (jj_scan_token(86)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_66() {
+    if (jj_3R_95()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_92() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_174() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_5() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(85)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_172() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_5()) {
+    jj_scanpos = xsp;
+    if (jj_3R_174()) {
+    jj_scanpos = xsp;
+    if (jj_3R_175()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_167() {
+    if (jj_3R_172()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_171() {
+    if (jj_3R_95()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_166() {
+    Token xsp;
+    if (jj_3R_171()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_171()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_151() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_4() {
+    Token xsp;
+    if (jj_3R_66()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_66()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_150() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_89() {
+    if (jj_scan_token(LOWLINE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_138() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_151()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(86)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_59() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_92()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_157() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_3()) {
+    jj_scanpos = xsp;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3R_166()) {
+    jj_scanpos = xsp;
+    if (jj_3R_167()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_137() {
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_150()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_136() {
+    if (jj_3R_70()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_153()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(84)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_58() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_152()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_57() {
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_135() {
+    if (jj_3R_81()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_56() {
+    if (jj_3R_80()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_90() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_56()) {
+    jj_scanpos = xsp;
+    if (jj_3R_135()) {
+    jj_scanpos = xsp;
+    if (jj_3_57()) {
+    jj_scanpos = xsp;
+    if (jj_3_58()) {
+    jj_scanpos = xsp;
+    if (jj_3R_136()) {
+    jj_scanpos = xsp;
+    if (jj_3R_137()) {
+    jj_scanpos = xsp;
+    if (jj_3_59()) {
+    jj_scanpos = xsp;
+    if (jj_3R_138()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_98() {
+    if (jj_scan_token(90)) return true;
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(91)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_55() {
+    if (jj_scan_token(90)) return true;
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(91)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_97() {
+    if (jj_scan_token(LOWLINE)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_87() {
+    if (jj_3R_101()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_96() {
+    if (jj_3R_88()) return true;
+    if (jj_scan_token(103)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_54() {
+    if (jj_3R_90()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_53() {
+    if (jj_3R_90()) return true;
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_91()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_52() {
+    if (jj_3R_90()) return true;
+    if (jj_scan_token(102)) return true;
+    if (jj_3R_90()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_145() {
+    if (jj_scan_token(CHARACTER_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_51() {
+    if (jj_3R_89()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_149() {
+    if (jj_3R_101()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_50() {
+    if (jj_3R_88()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_1() {
+    if (jj_scan_token(SLASH)) return true;
+    if (jj_3R_63()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_70() {
+    if (jj_scan_token(STRING_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_67() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_50()) {
+    jj_scanpos = xsp;
+    if (jj_3_51()) {
+    jj_scanpos = xsp;
+    if (jj_3_52()) {
+    jj_scanpos = xsp;
+    if (jj_3_53()) {
+    jj_scanpos = xsp;
+    if (jj_3_54()) {
+    jj_scanpos = xsp;
+    if (jj_3R_96()) {
+    jj_scanpos = xsp;
+    if (jj_3R_97()) {
+    jj_scanpos = xsp;
+    if (jj_3_55()) {
+    jj_scanpos = xsp;
+    if (jj_3R_98()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_81() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(72)) jj_scanpos = xsp;
+    if (jj_3R_130()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_80() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_scan_token(72)) jj_scanpos = xsp;
+    if (jj_3R_129()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_132() {
+    if (jj_scan_token(CASE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_176() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_49() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(DOT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_130() {
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
+    if (jj_scan_token(DOT)) return true;
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_173() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_49()) {
+    jj_scanpos = xsp;
+    if (jj_3R_176()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_159() {
+    if (jj_scan_token(97)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_168() {
+    if (jj_3R_173()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_158() {
+    Token xsp;
+    if (jj_3R_168()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_168()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_129() {
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_147() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_158()) {
+    jj_scanpos = xsp;
+    if (jj_3R_159()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_84() {
+    if (jj_3R_132()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_134() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_149()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(86)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_48() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_87()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_47() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_63() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_86() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_47()) {
+    jj_scanpos = xsp;
+    if (jj_3_48()) {
+    jj_scanpos = xsp;
+    if (jj_3R_134()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_133() {
+    if (jj_3R_86()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_46() {
+    if (jj_3R_86()) return true;
+    if (jj_scan_token(PLUS)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_83() {
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_45() {
+    if (jj_3R_86()) return true;
+    if (jj_scan_token(DOT)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_85() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_45()) {
+    jj_scanpos = xsp;
+    if (jj_3_46()) {
+    jj_scanpos = xsp;
+    if (jj_3R_133()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3_44() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(100)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_43() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(93)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_42() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(85)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_41() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(99)) return true;
+    if (jj_3R_82()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_40() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(85)) return true;
+    if (jj_3R_82()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_39() {
+    if (jj_3R_85()) return true;
+    if (jj_scan_token(98)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_38() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(PLUS)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_161() {
+    if (jj_scan_token(97)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_169() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_160() {
+    Token xsp;
+    if (jj_3R_169()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_169()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_148() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_160()) {
+    jj_scanpos = xsp;
+    if (jj_3R_161()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_128() {
+    if (jj_scan_token(SLASH)) return true;
+    if (jj_3R_148()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_127() {
+    if (jj_scan_token(RULES)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_126() {
+    if (jj_scan_token(94)) return true;
+    if (jj_3R_147()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_125() {
+    if (jj_3R_67()) return true;
+    if (jj_scan_token(93)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_124() {
+    if (jj_scan_token(SWITCH)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_37() {
+    if (jj_scan_token(SWITCH)) return true;
+    if (jj_3R_77()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_84()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(END)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_123() {
+    if (jj_scan_token(IF)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_36() {
+    if (jj_scan_token(IF)) return true;
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(THEN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_35() {
+    if (jj_3R_70()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_83()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_34() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_82()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_122() {
+    if (jj_scan_token(92)) return true;
+    if (jj_3R_82()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_33() {
+    if (jj_3R_74()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_121() {
+    if (jj_3R_145()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_32() {
+    if (jj_3R_81()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_31() {
+    if (jj_3R_80()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_30() {
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_120() {
+    if (jj_scan_token(IMPORTTERM)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_119() {
+    if (jj_scan_token(PRIM)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_118() {
+    if (jj_scan_token(TEST)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_117() {
+    if (jj_scan_token(WITH)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_116() {
+    if (jj_scan_token(WHERE)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_79() {
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_115() {
+    if (jj_scan_token(NOT)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_75() {
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_78() {
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_114() {
+    if (jj_scan_token(REC)) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_113() {
+    if (jj_scan_token(ALL)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_112() {
+    if (jj_scan_token(ONE)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_111() {
+    if (jj_scan_token(SOME)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_29() {
+    if (jj_scan_token(PRIM)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_28() {
+    if (jj_scan_token(PRIM)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_76() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_27() {
+    if (jj_scan_token(90)) return true;
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(91)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_26() {
+    if (jj_scan_token(90)) return true;
+    if (jj_3R_77()) return true;
+    if (jj_scan_token(91)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_25() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_79()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(86)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_24() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_78()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_110() {
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_23() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_22() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_21() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_20() {
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_76()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(85)) return true;
+    if (jj_3R_77()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_109() {
+    if (jj_scan_token(89)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_108() {
+    if (jj_scan_token(88)) return true;
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_107() {
+    if (jj_scan_token(PROCEED)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_106() {
+    if (jj_scan_token(ID)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_105() {
+    if (jj_scan_token(FAIL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_19() {
+    if (jj_scan_token(PROCEED)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_18() {
+    if (jj_scan_token(PROCEED)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_146() {
+    if (jj_3R_157()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_104() {
+    if (jj_scan_token(CALL)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_17() {
+    if (jj_3R_74()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_16() {
+    if (jj_3R_74()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_75()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(86)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_103() {
+    if (jj_scan_token(LET)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_146()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(IN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_77() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_103()) {
+    jj_scanpos = xsp;
+    if (jj_3_16()) {
+    jj_scanpos = xsp;
+    if (jj_3_17()) {
+    jj_scanpos = xsp;
+    if (jj_3R_104()) {
+    jj_scanpos = xsp;
+    if (jj_3_18()) {
+    jj_scanpos = xsp;
+    if (jj_3_19()) {
+    jj_scanpos = xsp;
+    if (jj_3R_105()) {
+    jj_scanpos = xsp;
+    if (jj_3R_106()) {
+    jj_scanpos = xsp;
+    if (jj_3R_107()) {
+    jj_scanpos = xsp;
+    if (jj_3R_108()) {
+    jj_scanpos = xsp;
+    if (jj_3R_109()) {
+    jj_scanpos = xsp;
+    if (jj_3_20()) {
+    jj_scanpos = xsp;
+    if (jj_3_21()) {
+    jj_scanpos = xsp;
+    if (jj_3_22()) {
+    jj_scanpos = xsp;
+    if (jj_3_23()) {
+    jj_scanpos = xsp;
+    if (jj_3R_110()) {
+    jj_scanpos = xsp;
+    if (jj_3_24()) {
+    jj_scanpos = xsp;
+    if (jj_3_25()) {
+    jj_scanpos = xsp;
+    if (jj_3_26()) {
+    jj_scanpos = xsp;
+    if (jj_3_27()) {
+    jj_scanpos = xsp;
+    if (jj_3_28()) {
+    jj_scanpos = xsp;
+    if (jj_3_29()) {
+    jj_scanpos = xsp;
+    if (jj_3R_111()) {
+    jj_scanpos = xsp;
+    if (jj_3R_112()) {
+    jj_scanpos = xsp;
+    if (jj_3R_113()) {
+    jj_scanpos = xsp;
+    if (jj_3R_114()) {
+    jj_scanpos = xsp;
+    if (jj_3R_115()) {
+    jj_scanpos = xsp;
+    if (jj_3R_116()) {
+    jj_scanpos = xsp;
+    if (jj_3R_117()) {
+    jj_scanpos = xsp;
+    if (jj_3R_118()) {
+    jj_scanpos = xsp;
+    if (jj_3R_119()) {
+    jj_scanpos = xsp;
+    if (jj_3R_120()) {
+    jj_scanpos = xsp;
+    if (jj_3_30()) {
+    jj_scanpos = xsp;
+    if (jj_3_31()) {
+    jj_scanpos = xsp;
+    if (jj_3_32()) {
+    jj_scanpos = xsp;
+    if (jj_3R_121()) {
+    jj_scanpos = xsp;
+    if (jj_3_33()) {
+    jj_scanpos = xsp;
+    if (jj_3R_122()) {
+    jj_scanpos = xsp;
+    if (jj_3_34()) {
+    jj_scanpos = xsp;
+    if (jj_3_35()) {
+    jj_scanpos = xsp;
+    if (jj_3_36()) {
+    jj_scanpos = xsp;
+    if (jj_3R_123()) {
+    jj_scanpos = xsp;
+    if (jj_3_37()) {
+    jj_scanpos = xsp;
+    if (jj_3R_124()) {
+    jj_scanpos = xsp;
+    if (jj_3R_125()) {
+    jj_scanpos = xsp;
+    if (jj_3R_126()) {
+    jj_scanpos = xsp;
+    if (jj_3R_127()) {
+    jj_scanpos = xsp;
+    if (jj_3R_128()) return true;
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_165() {
+    if (jj_3R_100()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_72() {
+    if (jj_3R_101()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_156() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_155() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_164()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_102() {
+    if (jj_3R_144()) return true;
+    if (jj_scan_token(STAR)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_144() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_155()) {
+    jj_scanpos = xsp;
+    if (jj_3R_156()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_73() {
+    Token xsp;
+    if (jj_3R_102()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_102()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(87)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_170() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_15() {
+    if (jj_3R_73()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_164() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_15()) {
+    jj_scanpos = xsp;
+    if (jj_3R_170()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_101() {
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_142() {
+    if (jj_scan_token(INTERNAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_141() {
+    if (jj_scan_token(OVERRIDE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_140() {
+    if (jj_scan_token(EXTEND)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_95() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_140()) {
+    jj_scanpos = xsp;
+    if (jj_3R_141()) {
+    jj_scanpos = xsp;
+    if (jj_3R_142()) return true;
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_94() {
+    if (jj_scan_token(EXTERNAL)) return true;
+    if (jj_3R_139()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_14() {
+    if (jj_scan_token(EXTERNAL)) return true;
+    if (jj_3R_64()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_143() {
+    if (jj_3R_154()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_13() {
+    if (jj_scan_token(EXTERNAL)) return true;
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_71() {
+    if (jj_3R_100()) return true;
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_93() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_12() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_72()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_11() {
+    if (jj_3R_64()) return true;
+    if (jj_scan_token(84)) return true;
+    return false;
   }
 
   public StrategoParserTokenManager token_source;
   public Token token, jj_nt;
   private int jj_ntk;
+  private Token jj_scanpos, jj_lastpos;
+  private int jj_la;
+  public boolean lookingAhead = false;
+  private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[104];
+  final private int[] jj_la1 = new int[103];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
   static private int[] jj_la1_3;
-  static private int[] jj_la1_4;
-  static private int[] jj_la1_5;
   static {
       jj_la1_0();
       jj_la1_1();
       jj_la1_2();
       jj_la1_3();
-      jj_la1_4();
-      jj_la1_5();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x10004000,0x0,0x0,0x0,0x21400000,0x21400000,0x80000,0x0,0x0,0x10004000,0x0,0x0,0x21400000,0x0,0x0,0x0,0x0,0x89b5a000,0x0,0x89b5a000,0x0,0x89b5a000,0x0,0x0,0x89b5a000,0x0,0x89b5a000,0x0,0x89b5a000,0x89b5a000,0x89b5a000,0x89b5a000,0x89b5a000,0x0,0x0,0x0,0x89b5a000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x52000000,0x52000000,0x4080000,0x0,0x0,0x0,0x0,0x4000,0x4000,0x0,0x0,0x52000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000000,0x0,0x8000000,0x0,0x0,0x4000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x69b5a000,0x0,0x69b5a000,0x69b5a000,0x0,0x69b5a000,0x0,0x69b5a000,0x0,0x69b5a000,0x69b5a000,0x69b5a000,0x69b5a000,0x0,0x0,0x69b5a000,0x0,0x0,0x0,0x40000,0x800000,0x1018000,0x0,0x28302000,0x0,0x0,0x0,0x40000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x40000,0x40000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x22040000,0x22040000,0x22040000,0x22040000,0x22040000,0x22040000,0x22040000,0x22040000,0x20000000,0x20000000,0x20000000,0x20000000,0x20000000,0x2000040,0x20000000,0x2000040,0x0,0x20000000,0x20000000,0x20000000,0x4,0x4,0x0,0x0,0x7040,0x0,0x7040,0x0,0x4,0x7000,0x7000,0x7040,0x7040,0xa2040683,0x22040000,0xa2040683,0x22040000,0xa2040683,0x22040000,0x0,0xa2040683,0x22040000,0xa2040683,0x22040000,0xa2040683,0xa2040683,0xa2040683,0xa2040683,0xa2040683,0x8,0x8,0x0,0xa2040683,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x40,0x0,0x7000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x22040000,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x308,0x308,0x0,0x0,0x0,0x0,0x382000,0x4,0x4,0x382000,0x0,0x308,0x0,0x0,0x380000,0x380000,0x380000,0x0,0x0,0x0,0x40,0x2000000,0x40,0x0,0x2000,0x4,0x2000,0x2000,0x2000,0x2000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2000,0x380000,0x0,0x0,0x0,0x382000,0x820340e2,0x2000000,0x820340e2,0x820340e2,0x2000000,0x820340e2,0x2000000,0x820340e2,0x0,0x820340e2,0x820340e2,0x820340e2,0x820340e2,0x2000000,0x2000000,0x820340e2,0x400,0x400,0x0,0x0,0x0,0x0,0x0,0x100e2,0x80000000,0x0,0x4000,0x2020000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2000000,0x0,0x0,0x2000000,0x2000000,0x2000000,0x2000000,0x2000000,0x2000000,0x0,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x7fe00,0x40,0x40,0xfff80000,0x0,0xfff80010,0xfffffe50,0xfff80000,0xfffffe40,0xfffffe50,0xfff80010,0xfffffe40,0xfff80000,0xfff80000,0xfffffe40,0xfffffe40,0xfffffe40,0xfff80000,0xfff80000,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80002,0xfff80002,0xfff80002,0xfff80002,0xfff80002,0xfff80000,0xfff80002,0xfff80000,0x0,0xfff80002,0xfff80002,0xfff80002,0x0,0x0,0x0,0xfff80010,0xfff80000,0x0,0xfff80000,0xfff80000,0x0,0x0,0x0,0xfff80000,0xfff80000,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80000,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0xfff80042,0x0,0x0,0xfff80000,0xfff80042,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0x0,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0x0,0xfff80042,0x0,0x80,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,0xfff80000,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x100,0x100,0x2,0x400002,0x0,0x0,0x400002,0x2,0x0,0x2,0x2,0x0,0x0,0x400002,0x2,0x2,0x400002,0x0,0x4004583,0x0,0x2,0x200003,0x0,0x0,0x0,0x0,0x200000,0x4400,0x2,0x2,0x2,0x400,0x4000,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x0,0x0,0x2,0x402,0x402,0x400002,0x57085583,0x4004583,0x57085583,0x57085583,0x4004583,0x57085583,0x4004583,0x57085583,0x2,0x57085583,0x57085583,0x57085583,0x57085583,0x4004583,0x4004583,0x57085583,0x0,0x0,0x2,0x0,0x0,0x3000000,0x1000,0x0,0x0,0x10000000,0x0,0x44084583,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x2,0x4004583,0x82,0x4000000,0x4004583,0x4004583,0x4004583,0x4004583,0x4004583,0x100,0x401,0x4000,0x2,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x1fff,0xffffe000,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0x1fff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0x0,0xffffffff,0xffffffff,0xffffffff,0x0,0x0,0x0,0xffffffff,0xffffffff,0x0,0xffffffff,0xffffffff,0x0,0x0,0x0,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0x0,0x0,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0x0,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0x0,0xffffffff,0x0,0x0,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,0xffffffff,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
-   private static void jj_la1_4() {
-      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x7f,0xff,0x1ff,0xff,0x1ff,0x1ff,0xff,0x1ff,0x0,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x100001ff,0x100001ff,0x100001ff,0x100001ff,0x100001ff,0x100001ff,0x100001ff,0x100001ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x11ff,0x1ff,0x11ff,0x0,0x1ff,0x1ff,0x1ff,0x8000,0x8000,0x4000,0xff,0x1ff,0x0,0x1ff,0x1ff,0x8000,0x0,0x0,0x1ff,0x1ff,0x10bf01ff,0x100001ff,0x10bf01ff,0x100001ff,0x10bf01ff,0x100001ff,0x1ff,0x10bf01ff,0x100001ff,0x10bf01ff,0x100001ff,0x10bf01ff,0x10bf01ff,0x10bf01ff,0x10bf01ff,0x10bf01ff,0x0,0x0,0x1ff,0x10bf01ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x0,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x100000,0x100001ff,0x100000,0x8000000,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,0x1ff,};
-   }
-   private static void jj_la1_5() {
-      jj_la1_5 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
-   }
+  final private JJCalls[] jj_2_rtns = new JJCalls[59];
+  private boolean jj_rescan = false;
+  private int jj_gc = 0;
 
   public StrategoParser(CharStream stream) {
     token_source = new StrategoParserTokenManager(stream);
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 104; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   public void ReInit(CharStream stream) {
@@ -7851,7 +4681,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 104; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   public StrategoParser(StrategoParserTokenManager tm) {
@@ -7859,7 +4690,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 104; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   public void ReInit(StrategoParserTokenManager tm) {
@@ -7867,7 +4699,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 104; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 103; i++) jj_la1[i] = -1;
+    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   final private Token jj_consume_token(int kind) throws ParseException {
@@ -7877,11 +4710,44 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_ntk = -1;
     if (token.kind == kind) {
       jj_gen++;
+      if (++jj_gc > 100) {
+        jj_gc = 0;
+        for (int i = 0; i < jj_2_rtns.length; i++) {
+          JJCalls c = jj_2_rtns[i];
+          while (c != null) {
+            if (c.gen < jj_gen) c.first = null;
+            c = c.next;
+          }
+        }
+      }
       return token;
     }
     token = oldToken;
     jj_kind = kind;
     throw generateParseException();
+  }
+
+  static private final class LookaheadSuccess extends java.lang.Error { }
+  final private LookaheadSuccess jj_ls = new LookaheadSuccess();
+  final private boolean jj_scan_token(int kind) {
+    if (jj_scanpos == jj_lastpos) {
+      jj_la--;
+      if (jj_scanpos.next == null) {
+        jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
+      } else {
+        jj_lastpos = jj_scanpos = jj_scanpos.next;
+      }
+    } else {
+      jj_scanpos = jj_scanpos.next;
+    }
+    if (jj_rescan) {
+      int i = 0; Token tok = token;
+      while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
+      if (tok != null) jj_add_error_token(kind, i);
+    }
+    if (jj_scanpos.kind != kind) return true;
+    if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+    return false;
   }
 
   final public Token getNextToken() {
@@ -7893,7 +4759,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final public Token getToken(int index) {
-    Token t = token;
+    Token t = lookingAhead ? jj_scanpos : token;
     for (int i = 0; i < index; i++) {
       if (t.next != null) t = t.next;
       else t = t.next = token_source.getNextToken();
@@ -7911,18 +4777,48 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   private java.util.Vector jj_expentries = new java.util.Vector();
   private int[] jj_expentry;
   private int jj_kind = -1;
+  private int[] jj_lasttokens = new int[100];
+  private int jj_endpos;
+
+  private void jj_add_error_token(int kind, int pos) {
+    if (pos >= 100) return;
+    if (pos == jj_endpos + 1) {
+      jj_lasttokens[jj_endpos++] = kind;
+    } else if (jj_endpos != 0) {
+      jj_expentry = new int[jj_endpos];
+      for (int i = 0; i < jj_endpos; i++) {
+        jj_expentry[i] = jj_lasttokens[i];
+      }
+      boolean exists = false;
+      for (java.util.Enumeration e = jj_expentries.elements(); e.hasMoreElements();) {
+        int[] oldentry = (int[])(e.nextElement());
+        if (oldentry.length == jj_expentry.length) {
+          exists = true;
+          for (int i = 0; i < jj_expentry.length; i++) {
+            if (oldentry[i] != jj_expentry[i]) {
+              exists = false;
+              break;
+            }
+          }
+          if (exists) break;
+        }
+      }
+      if (!exists) jj_expentries.addElement(jj_expentry);
+      if (pos != 0) jj_lasttokens[(jj_endpos = pos) - 1] = kind;
+    }
+  }
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[164];
-    for (int i = 0; i < 164; i++) {
+    boolean[] la1tokens = new boolean[104];
+    for (int i = 0; i < 104; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 104; i++) {
+    for (int i = 0; i < 103; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -7937,22 +4833,19 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           if ((jj_la1_3[i] & (1<<j)) != 0) {
             la1tokens[96+j] = true;
           }
-          if ((jj_la1_4[i] & (1<<j)) != 0) {
-            la1tokens[128+j] = true;
-          }
-          if ((jj_la1_5[i] & (1<<j)) != 0) {
-            la1tokens[160+j] = true;
-          }
         }
       }
     }
-    for (int i = 0; i < 164; i++) {
+    for (int i = 0; i < 104; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
         jj_expentries.addElement(jj_expentry);
       }
     }
+    jj_endpos = 0;
+    jj_rescan_token();
+    jj_add_error_token(0, 0);
     int[][] exptokseq = new int[jj_expentries.size()][];
     for (int i = 0; i < jj_expentries.size(); i++) {
       exptokseq[i] = (int[])jj_expentries.elementAt(i);
@@ -7964,6 +4857,99 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final public void disable_tracing() {
+  }
+
+  final private void jj_rescan_token() {
+    jj_rescan = true;
+    for (int i = 0; i < 59; i++) {
+    try {
+      JJCalls p = jj_2_rtns[i];
+      do {
+        if (p.gen > jj_gen) {
+          jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
+          switch (i) {
+            case 0: jj_3_1(); break;
+            case 1: jj_3_2(); break;
+            case 2: jj_3_3(); break;
+            case 3: jj_3_4(); break;
+            case 4: jj_3_5(); break;
+            case 5: jj_3_6(); break;
+            case 6: jj_3_7(); break;
+            case 7: jj_3_8(); break;
+            case 8: jj_3_9(); break;
+            case 9: jj_3_10(); break;
+            case 10: jj_3_11(); break;
+            case 11: jj_3_12(); break;
+            case 12: jj_3_13(); break;
+            case 13: jj_3_14(); break;
+            case 14: jj_3_15(); break;
+            case 15: jj_3_16(); break;
+            case 16: jj_3_17(); break;
+            case 17: jj_3_18(); break;
+            case 18: jj_3_19(); break;
+            case 19: jj_3_20(); break;
+            case 20: jj_3_21(); break;
+            case 21: jj_3_22(); break;
+            case 22: jj_3_23(); break;
+            case 23: jj_3_24(); break;
+            case 24: jj_3_25(); break;
+            case 25: jj_3_26(); break;
+            case 26: jj_3_27(); break;
+            case 27: jj_3_28(); break;
+            case 28: jj_3_29(); break;
+            case 29: jj_3_30(); break;
+            case 30: jj_3_31(); break;
+            case 31: jj_3_32(); break;
+            case 32: jj_3_33(); break;
+            case 33: jj_3_34(); break;
+            case 34: jj_3_35(); break;
+            case 35: jj_3_36(); break;
+            case 36: jj_3_37(); break;
+            case 37: jj_3_38(); break;
+            case 38: jj_3_39(); break;
+            case 39: jj_3_40(); break;
+            case 40: jj_3_41(); break;
+            case 41: jj_3_42(); break;
+            case 42: jj_3_43(); break;
+            case 43: jj_3_44(); break;
+            case 44: jj_3_45(); break;
+            case 45: jj_3_46(); break;
+            case 46: jj_3_47(); break;
+            case 47: jj_3_48(); break;
+            case 48: jj_3_49(); break;
+            case 49: jj_3_50(); break;
+            case 50: jj_3_51(); break;
+            case 51: jj_3_52(); break;
+            case 52: jj_3_53(); break;
+            case 53: jj_3_54(); break;
+            case 54: jj_3_55(); break;
+            case 55: jj_3_56(); break;
+            case 56: jj_3_57(); break;
+            case 57: jj_3_58(); break;
+            case 58: jj_3_59(); break;
+          }
+        }
+        p = p.next;
+      } while (p != null);
+      } catch(LookaheadSuccess ls) { }
+    }
+    jj_rescan = false;
+  }
+
+  final private void jj_save(int index, int xla) {
+    JJCalls p = jj_2_rtns[index];
+    while (p.gen > jj_gen) {
+      if (p.next == null) { p = p.next = new JJCalls(); break; }
+      p = p.next;
+    }
+    p.gen = jj_gen + xla - jj_la; p.first = token; p.arg = xla;
+  }
+
+  static final class JJCalls {
+    int gen;
+    Token first;
+    int arg;
+    JJCalls next;
   }
 
 }

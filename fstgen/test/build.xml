@@ -155,7 +155,7 @@
 		<antcall target="testGrammar">
 			<param name="language" value="stratego" />
 			<param name="parserClass" value="StrategoParser" />
-			<param name="mainProduction" value="module" />
+			<param name="mainProduction" value="Module" />
 			<param name="directory" value="${fstgen_dir}/test" />
 			<param name="testFile" value="Test.sdf" />
 		</antcall>

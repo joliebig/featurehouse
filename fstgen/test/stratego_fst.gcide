@@ -21,7 +21,9 @@ public class StrategoParser extends AbstractFSTParser
 
 PARSER_END(StrategoParser)
 
-/* WHITE SPACE */
+/*****************************************************************************
+ * WHITE SPACE                                                               *
+ *****************************************************************************/
 SPECIAL_TOKEN : 
 	{ " " | 
       "\t" | 
@@ -30,7 +32,9 @@ SPECIAL_TOKEN :
       "\f" 
     }
 
-/* COMMENTS */
+/*****************************************************************************
+ * COMMENTS                                                                  *
+ *****************************************************************************/
 MORE : 
 	{ "//" : IN_SINGLE_LINE_COMMENT |
       <"/**" ~["/"]> 
@@ -54,7 +58,9 @@ MORE :
 	MORE :
 	{ < ~[] > }
 
-/* Reserved words and literals*/
+/*****************************************************************************
+ * RESERVED KEYWORDS AND LITERALS                                            *
+ *****************************************************************************/
 TOKEN:
 	{ < ALL: "all" > | 
 	  < CONSTRUCTORS: "constructors" > | 
@@ -64,7 +70,13 @@ TOKEN:
 	  < LET: "let" > |
 	  < MODULE: "module" > |
 	  < NOT: "not" > | 
-	  < ONE: "one" > | 
+	  < ONE: "one" > |
+	  < ON: "on" > |
+	  < CALL: "call" > |
+	  < PROCEED: "proceed" > |
+	  < SIGNATURES: "signatures" > |
+	  < SPECIFICATION: "specification" > |
+	  < WITH: "with" > |
 	  < OVERLAYS: "overlays" > | 
 	  < PRIM: "prim" > |
 	  < RULES: "rules" > | 
@@ -76,9 +88,10 @@ TOKEN:
 	  < STRATEGO: "stratego" > | 
 	  < TEST: "test" > | 
 	  < WHERE: "where" > | 
-      < IMPORTTERM: "import-term" > | 
-      < IMPORTS: "imports" > | 
-      < CASE: "case" > |
+	  < IMPORTTERM: "import-term" > | 
+	  < IMPORTS: "imports" > | 
+	  < EXPORTS: "exports" > |
+	  < CASE: "case" > |
 	  < ELSE: "else" > | 
 	  < END: "end" > | 
 	  < EXTERNAL: "external" > | 
@@ -95,7 +108,9 @@ TOKEN:
 	  < OVERRIDABLE: "overrideable" >
 	}
 
-/* LITERALS */
+/*****************************************************************************
+ * LITERALS                                                                  *
+ *****************************************************************************/
 TOKEN :
 	{ < INTEGER_LITERAL:
 		<DECIMAL_LITERAL> (["l","L"])? | 
@@ -111,68 +126,37 @@ TOKEN :
     	(["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"] > |
 	  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ > |
 	  < CHARACTER_LITERAL:
-	  	"'" ( 
-	  		(~["'","\\","\n","\r"]) | 
-				("\\"
-					( ["n","t","b","r","f","u","\\","'","\""] | 
-					  ["0"-"7"] ( ["0"-"7"] )? | 
-			          ["0"-"3"] ["0"-"7"] ["0"-"7"]
-					)
-				)
-    		)
-    	"'" > |
+	  	"'" ( (~["'","\\","\n","\r"]) | 
+			("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] | 
+				  ["0"-"7"] ( ["0"-"7"] )? | 
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) ) "'" > |
 	  < STRING_LITERAL:
-    	"\"" (
-    		(~["\"","\\","\n","\r"]) | 
-				("\\"
-					( ["n","t","b","r","f","u","\\","'","\""] | 
-					  ["0"-"7"] ( ["0"-"7"] )? | 
-					  ["0"-"3"] ["0"-"7"] ["0"-"7"]
-            		)
-        		)
-    		)*
-    	"\"" >
+    	"\"" ( (~["\"","\\","\n","\r"]) | 
+			("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] | 
+				  ["0"-"7"] ( ["0"-"7"] )? | 
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
 
-/* IDENTIFIERS */
+/*****************************************************************************
+ * IDENTIFIERS                                                               *
+ *****************************************************************************/
 TOKEN :
 	{ < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* > |
-	  < #LETTER:
-	  	[ "\u0024",
-	  	  "\u0027",
-    	  "\u0041"-"\u005a",
-    	  "\u005f",
-    	  "\u0061"-"\u007a",
-    	  "\u00c0"-"\u00d6",
-    	  "\u00d8"-"\u00f6",
-    	  "\u00f8"-"\u00ff",
-    	  "\u0100"-"\u1fff",
-    	  "\u3040"-"\u318f",
-    	  "\u3300"-"\u337f",
-    	  "\u3400"-"\u3d2d",
-    	  "\u4e00"-"\u9fff",
-    	  "\uf900"-"\ufaff"
-    	] > |
-	  < #DIGIT:
-    	[ "\u0030"-"\u0039",
-		  "\u0660"-"\u0669",
-    	  "\u06f0"-"\u06f9",
-    	  "\u0966"-"\u096f",
-    	  "\u09e6"-"\u09ef",
-    	  "\u0a66"-"\u0a6f",
-    	  "\u0ae6"-"\u0aef",
-    	  "\u0b66"-"\u0b6f",
-    	  "\u0be7"-"\u0bef",
-    	  "\u0c66"-"\u0c6f",
-    	  "\u0ce6"-"\u0cef",
-    	  "\u0d66"-"\u0d6f",
-    	  "\u0e50"-"\u0e59",
-    	  "\u0ed0"-"\u0ed9",
-    	  "\u1040"-"\u1049"
-    	] >
+	  < LETTER: <LCCHAR>|<UCCHAR>|<APOSTROPHE>|<DOT>|<LOWLINE>|<MINUS> > |
+	  < LCCHAR: [ "\u0061"-"\u007a" ] > |
+	  < UCCHAR: [ "\u0041"-"\u005a" ] > |
+	  < APOSTROPHE: [ "\u0027" ] > |
+	  < DOT: [ "\u002e" ] > |
+	  < LOWLINE: [ "\u005f" ] > |
+	  < MINUS: [ "\u002d" ] > |
+	  < DIGIT: [ "\u0030"-"\u0039" ] >
 	}
 
-/* SEPARATORS */
+/*****************************************************************************
+ * SEPARATORS                                                                *
+ *****************************************************************************/
 TOKEN :
 	{ < LPAREN: "(" > | 
 	  < RPAREN: ")" > | 
@@ -180,284 +164,342 @@ TOKEN :
 	  < RBRACE: "}" > | 
 	  < LBRACKET: "[" > | 
 	  < RBRACKET: "]" > | 
-	  < COMMA: "," > | 
-	  < DOT: "." >
+	  < COMMA: "," > 
 	}
 
-/* OPERATORS */
+/*****************************************************************************
+ * OPERATORS                                                                *
+ *****************************************************************************/
 TOKEN :
-	{ < PLUS: "+" > | 
-	  < MINUS: "-" > | 
-	  < STAR : "*" > | 
+	{ < PLUS: "+" > |
+	  < STAR : "*" > |
 	  < SLASH: "/" >
 	}
 
-GRAMMARSTART
 /*****************************************************************************
  * THE STRATEGO LANGUAGE GRAMMAR STARTS HERE                                 *
  *****************************************************************************/
-   
-/* Stratego-Core-Constants */
-Digit : "0" | "1" | "2"| "3"| "4"| "5"| "6"| "7"| "8" | "9";
-NatInteger : <INTEGER_LITERAL> ;
-RealDigit: <INTEGER_LITERAL> "." <INTEGER_LITERAL> ;
+GRAMMARSTART
+ 
+/*****************************************************************************
+ * MAIN PRODUCTION                                                           *
+ *****************************************************************************/
+Module : 
+	ModuleContent 
+	<EOF> ;
 
-Int : "-" NatInteger | NatInteger ;
-Real : "-" RealDigit | RealDigit ;
-String : <STRING_LITERAL> ;
 
-/* Stratego-Core-Identifiers */
-lowerLetter : "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | 
-              "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | 
-              "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
-upperLetter : "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | 
-              "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | 
-              "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" ;
+ModuleContent : 
+	"module" ModName ( Decl )* |
+	"specification" ( Decl )* ;
 
-CharClass1 : lowerLetter | 
-			 upperLetter | 
-			 "." | 
-			 "_" ;
+ModName :
+	ModNamePart ( LOOK_AHEAD(2) "/" ModNamePart )* ;
 
-CharClass2 : lowerLetter |
-			 upperLetter |
-			 Digit |
-			 "'" |
-			 "." |
-			 "-" |
-			 "_" ;
-			 
-CharClass3 : lowerLetter | 
-			 upperLetter | 
-			 "_" ;			 
-			 
-CharClass4 : lowerLetter |
-			 upperLetter |
-			 Digit |
-			 "'" |
-			 "-" |
-			 "_" ;			 
-				 
-/* ModNamePart : CharClass1 CharClass2* ; */				 
-ModNamePart : CharClass1 ( CharClass2 )* ;
+ModNamePart : 
+	Id ;
 
-ModName : (ModNamePart "/")+ ;
+ImportModName : 
+	ModName ;
 
-Id : CharClass3 ( CharClass4 )* |
-     "'" ( lowerLetter )+ ;	
-	 
-LId : CharClass3 ( CharClass4 )* "*" ;
+NatInteger : 
+	<INTEGER_LITERAL> ;
 
-LCID : lowerLetter ( CharClass4 )* ;
-UCID : upperLetter ( CharClass4 )* ;
+RealDigit: 
+	<INTEGER_LITERAL> <DOT> <INTEGER_LITERAL> ;
 
-/* Stratego-Core-Terms */
-Var : Id | LId ;
-ID : Id | LId ;
-Wld : "_" ;
+Int : 
+	[<MINUS>] NatInteger ;
 
-Term : Var |
-       Wld |
-	   PreTerm "{^" PreTerm "}" |
-	   Var "@" Term | 
-	   "_" Term |
-       PreTerm "{" (Term ",")* "}" |
-	   PreTerm |
-	   StrategyAngle Term |
-	   StrategyAngle |
-	   Var "@" Term ;
+Real : 
+	[<MINUS>] RealDigit ;
 
-PreTerm : Var | 
-          Wld | 
-		  Int | 
-		  Real | 
-		  String | 
-		  Var "@" PreTerm | 
-		  Id "(" (Term ",")* ")" |
-		  String "(" (Term ",")* ")" |		   
-		  "_" PreTerm |
-		  StrategyAngle Term |
-		  StrategyAngle |
-		  "(" (Term ",")* ")" |
-		  "[" (Term ",")* "]" |
-		  "[" (Term ",")* "|" Term "]" ;
-		  /*Term "#" "(" Term ")" */ 
+String : 
+	<STRING_LITERAL> ;
 
-/* Stratego-Core-Signatures */
-Sort : LCID |
-       UCID |
-	   Id "(" (Sort ",")* ")" | 
-	   "[" (Sort ",")* "]" |
-	   "[" (Sort ",")* "|" Sort "]" |
-	   "(" (Sort ",")* ")";
-	   
-Opdecl : Id ":" Type |
-         String ":" Type |
-		 ":" Type |
-		 "external" Id ":" Type |
-		 "external" String ":" Type |
-		 "external" ":" Type ;	   
-		 
-Sdecl : "sorts" ( Sort )* |
-		"constructors" ( Opdecl )* ;
-		
-Type : FunType | ConstType ;		
-ConstType : Sort ;
-ArgType : "(" Type ")" |
-		  ConstType ;
-RetType : Type ;		  
-FunType : (ArgType "*")+ "->" RetType ;		
+Char :
+	<CHARACTER_LITERAL> ;
 
-/* Stratego-Core-Modules */
-Module : "module" ModName ( Decl )* |
-         "specification" ( Decl )* ;
-		 
-ImportModName : ModName ;		 
-		 
-Decl : "imports" ( ImportModName )* |
-       "strategies" ( Def )* |
-	   "signatures" ( Sdecl )* |
-	   "rules" ( Def )* |
-	   "overlays" ( Overlay )* ;		 
+Decl : 
+	"imports" ( ImportModName )* |
+	"strategies" ( Def )* |
+	"exports" ( Sdecl )* |
+	"signatures" ( Sdecl )* |
+	"rules" ( Def )* |
+	"overlays" ( Overlay )* ;
 
-/* Stratego-Core-Strategies */
-Def : StrategyDef |
-      ( Anno )+ StrategyDef |
-      RuleDef | 
-      ( Anno )+ RuleDef ; 
-SVar : Id ;
+Overlay :
+	LOOK_AHEAD(2)
+	Id "=" Term |
+	Id "(" (Id ",")* ")" "=" Term ;
 
-Strategy : "let" ( Def )* "in" Strategy "end" |
-		   SVar "(" (Strategy ",")* "|" (Term ",")* ")" |
-		   "call" "(" Term "|" (Strategy ",")* "|" (Term ",")* ")" |
-		   "fail" |
-		   "id" |
-		   "proceed" "(" (Strategy ",")* "|" (Term ",")* ")" |
-		   "proceed" |
-		   "?" Term |
-		   "!" Term |
-		   "{" (ID ",")* ":" Strategy "}" |
-		   
-		   /* Linksrekursion (muss irgendwie umgeschrieben werden!) 
-		   Strategy ";" Strategy |
-		   Strategy "<" StrategyMid "+" Strategy |
-		   Strategy "<+" Strategy |
-		   Strategy StrategyCurly |
-		   Strategy "+" Strategy |
-		   Strategy "+>" Strategy |
-		   Strategy "=>" Term |
-		   Strategy "/" RuleNames "\\" Strategy |
-		   Strategy "\\" RuleNames "/" Strategy */
-		   
-		   "prim" "(" String "," (Strategy ",")* "|" (Term ",")* ")" |
-		   "some" "(" Strategy ")" |
-		   "one" "(" Strategy ")" |
-		   "all" "(" Strategy ")" |
-		   "import-term" "(" ModName ")" |		   
-		   SVar "(" (Strategy ",")* ")" |
-		   "{" Strategy "}" |
-		   StrategyAngle Term |		   
-		   "rec" Id "(" Strategy ")" |
-		   "not" "(" Strategy ")" |
-		   "where" "(" Strategy ")" |
-		   "with" "(" Strategy ")" |
-		   "test" "(" Strategy ")" |
-		   "prim" "(" String ")" |
-		   "prim" "(" String "," (Term ",")* ")" |
-		   String | Int | Real | 
-		   String "(" (Strategy ",")* ")" |
-		   "(" Strategy ")" |
-		   "(" Strategy "," (Strategy ",")+ ")" |
-		   "[" (Strategy ",")* "]" |
-		   "[" (Strategy ",")* "|" Strategy "]" |
-		   SVar |
-		   "\\" Rule "\\" |
-		   "(" Rule ")" |
-		   "proceed" "(" (Strategy ",")+ ")" |
-		   "if" Strategy "then" Strategy "else" Strategy "end" |
-		   "if" Strategy "then" Strategy "end" |
-		   "switch" Strategy ( SwitchCase )* "end" |
-		   "switch" Strategy ( SwitchCase )* "otherwise" ":" Strategy "end" |
-		   Term ":=" Term |
-		   "{|" ScopeLabels ":" Strategy "|}" |
-           "rules" "(" ( DynRuleDef )* ")" 
-		   "/" RuleNames "\\*"  Strategy ;		   
-		   
-StrategyMid : Strategy ;		   
-		   
-StrategyDef : Id "(" (Typedid ",")* "|" (Typedid ",")* ")" "=" Strategy |
-              "external" Id "(" (Typedid ",")* "|" (Typedid ",")* ")" "=" Strategy |
-			  "external" Id "(" (Typedid ",")* "|" (Typedid ",")* ")" |
-			  "external" EmptyId "(" (Typedid ",")* "|" (Typedid ",")* ")" | 
-			  Id "=" Strategy |
-			  Id "(" (Typedid ",")* ")" "=" Strategy ;  
+Def :
+	LOOK_AHEAD(2)
+	StrategyDef |
+	LOOK_AHEAD(3)
+	( Anno )+ StrategyDef |
+	( Anno )+ RuleDef |
+	RuleDef ;
 
-EmptyId : <NONE> ;
-Typedid : ID ":" Type | ID ;
-Anno : "extend" | 
-       "override" |
-       "internal" ;	   
+RuleDef :
+	LOOK_AHEAD(2)
+	Id ":" Rule |
+	Id "(" (Typedid ",")* ")" ":" Rule |
+	"|" (Typedid ",")* ")" ":" Rule ;
 
-/* Stratego-Amb */
-Strat : Id "(" (Strat ",")* ")" ;
+Rule :
+	LOOK_AHEAD(3)
+	Term "->" Term |
+	LOOK_AHEAD(3)
+	Term "->" Term "where" Strategy |
+	Term "->" Term ( RuleCond )+ ;
 
-/* Stratego-Sugar-Constants */
-/* Char : "'" CharChar "'" ;
-CharChar : "\" "'" |
-           "\" "n" |
-		   "\" "t" |
-		   "\" "r" |
-		   "\" " " ; */
-		     
-/* Stratego-Sugar-Overlays */
-Overlay : Id "=" Term |
-          Id "(" (Id ",")* ")" "=" Term ;
+RuleCond :
+	"where" Strategy |
+	"with" Strategy ;
 
-/* Stratego-Sugar-Rules */
-RuleDef : Id ":" Rule |
-	      Id "(" (Typedid ",")* ")" ":" Rule |
-		  Id "(" (Typedid ",")* "|" (Typedid ",")* ")" ":" Rule ;		  
+Sdecl : 
+	"sorts" ( Sort )* |
+	"constructors" ( Opdecl )* ;
 
-/* Def : ( Anno )+ RuleDef ;*/
+Opdecl : 
+	LOOK_AHEAD(2)
+	[External] Id ":" Type |
+	LOOK_AHEAD(2)
+	[External] String ":" Type |
+	[External] ":" Type ;
 
-Rule : Term "->" Term |
-	   Term "->" Term "where" Strategy |
-	   Term "->" Term ( RuleCond )+ ;
-	   
-RuleCond : "where" Strategy |
-		   "with" Strategy ;
-		   
-/* Stratego-Sugar-Signatures */
-Kind : "*" | "**" ;
+External:
+	"external" ;
 
-/* Stratego-Sugar-Strategies */
-StrategyAngle :  "<" Strategy ">" ;
+Id :
+	<IDENTIFIER> ;
 
-StrategyCurly :  "{" Strategy "}" ;
+SVar : 
+	Id ;
 
-SwitchCase : "case" Strategy ":" Strategy ;
-		   
-/* Stratego-Sugar-DynamicRules */		   
-ScopeLabels : (DynRuleScopeId ",")* | "~" Term ;
-			  
-DynRuleScopeId : Id "." Term | Id ;
+Var : 
+	Id ;
 
-RuleNames : (Id ",")* | "~" Term ;
+Sort :
+	Id [Sorts] ;
 
-RuleDec : Id |
-		  Id "(" (Typedid ",")* ")" |
-		  Id "(" (Typedid ",")* "|" (Typedid ",")* ")" ;
-		  
-DynRuleId : RuleDec "." Term |
-			RuleDec "+" Term |
-			RuleDec ;
-			
-DynRuleDef : Id "+" Term |
-			 DynRuleId ":-" Term |
-			 DynRuleId ":" Rule |
-			 DynRuleId ":+" Rule |
-			 DynRuleId ":" Term |
-			 DynRuleId ":=" Term |
-			 DynRuleId ":+=" Term |
-			 DynRuleId ":" Rule "depends " "on" Term ;		   
+Sorts :
+	"(" (Sort ",")* ")" |
+	LOOK_AHEAD(3)
+	"[" (Sort ",")* "]" |
+	"[" (Sort ",")* "|" Sort "]";
 
+EmptyId :
+	<NONE> ;
+
+StrategyDef : 
+	LOOK_AHEAD(2)
+	Id "=" Strategy |
+	LOOK_AHEAD(3)
+	Id "(" (Typedid ",")* ")" "=" Strategy |
+	Id "(" (Typedid ",")* "|" (Typedid ",")* ")" "=" Strategy |
+	LOOK_AHEAD(3)
+	"external" Id "(" (Typedid ",")* "|" (Typedid ",")* ")" "=" Strategy |
+	LOOK_AHEAD(2)
+	"external" Id "(" (Typedid ",")* "|" (Typedid ",")* ")" |
+	"external" EmptyId "(" (Typedid ",")* "|" (Typedid ",")* ")" ;
+
+Anno : 
+	"extend" | 
+	"override" |
+	"internal" ;
+
+Typedid :
+	Id ":" Type ;
+
+Type :
+	LOOK_AHEAD(3)
+	FunType | 
+	ConstType ;
+
+FunType :
+	(ArgType "*")+ "->" RetType ;
+
+ArgType :
+	"(" Type ")" |
+	ConstType ;
+
+RetType :
+	Type ;
+
+ConstType :
+	Sort ;
+
+Strategy :
+	"let" ( Def )* "in" Strategy "end" |
+	LOOK_AHEAD(3)
+	SVar "(" (Strategy ",")* "|" (Term ",")* ")" |
+	LOOK_AHEAD(2)
+	SVar "(" (Strategy ",")* ")" |
+	"call" "(" Term "|" (Strategy ",")* "|" (Term ",")* ")" |
+	LOOK_AHEAD(2)
+	"proceed" "(" (Strategy ",")* "|" (Term ",")* ")" |
+	LOOK_AHEAD(2)
+	"proceed" "(" (Strategy ",")+ ")" |
+	"fail" |
+	"id" |
+	"proceed" |
+	"?" Term |
+	"!" Term |
+	LOOK_AHEAD(3)
+	"{" (Id ",")* ":" Strategy "}" |
+	LOOK_AHEAD(2)
+	"(" Strategy ")" |
+	LOOK_AHEAD(2)
+	"(" Strategy "," (Strategy ",")+ ")" |
+	LOOK_AHEAD(2)
+	"(" <NONE> ")" |
+	"{" Strategy "}" |
+	LOOK_AHEAD(3)
+	"[" (Strategy ",")* "]" |
+	LOOK_AHEAD(3)
+	"[" (Strategy ",")* "|" Strategy "]" |
+	LOOK_AHEAD(3)
+	"<" Strategy ">" |
+	LOOK_AHEAD(3)
+	"<" Strategy ">" Term |
+	LOOK_AHEAD(3)
+	"prim" "(" String "," (Strategy ",")* "|" (Term ",")* ")" |
+	LOOK_AHEAD(3)
+	"prim" "(" String "," (Term ",")* ")" |
+	"some" "(" Strategy ")" |
+	"one" "(" Strategy ")" |
+	"all" "(" Strategy ")" |
+	"rec" Id "(" Strategy ")" |
+	"not" "(" Strategy ")" |
+	"where" "(" Strategy ")" |
+	"with" "(" Strategy ")" |
+	"test" "(" Strategy ")" |
+	"prim" "(" Strategy ")" |
+	"import-term" "(" ModName ")" |
+	LOOK_AHEAD(2)
+	String |
+	LOOK_AHEAD(3)
+	Int |
+	LOOK_AHEAD(3)
+	Real |
+	Char |
+	LOOK_AHEAD(2)
+	SVar |
+	"\\" Rule "\\" |
+	LOOK_AHEAD(3)
+	"(" Rule ")" |
+	LOOK_AHEAD(3)
+	String "(" (Strategy ",")* ")" |
+	LOOK_AHEAD(3)
+	"if" Strategy "then" Strategy "else" Strategy "end" |
+	"if" Strategy "then" Strategy "end" |
+	LOOK_AHEAD(3)
+	"switch" Strategy ( SwitchCase )* "end" |
+	"switch" Strategy ( SwitchCase )* "otherwise" ":" Strategy "end" |
+	Term ":=" Term |
+	"{|" ScopeLabels ":" Strategy "|}" |
+	"rules" "(" ( DynRuleDef )* ")" |
+	"/" RuleNames "\\*"  Strategy ;
+	/* Linksrekursion: muss umgeschrieben werden!
+	Strategy ";" Strategy |
+	Strategy "<" StrategyMid "+" Strategy |
+	Strategy "{" Strategy "}" |
+	Strategy "#" "(" Strategy ")" |
+	Strategy "+" Strategy |
+	Strategy "+>" Strategy |
+	Strategy "=>" Term |
+	Strategy "<+" Strategy |
+	Strategy "/" RuleNames "\\" Strategy |
+	Strategy "\\" RuleNames "/" Strategy |
+	Strategy "/" RuleNames "\\" RuleNames "/" Strategy ;*/
+
+RuleNames : 
+	(Id ",")+ | 
+	"~" Term ;
+
+DynRuleDef : 
+	LOOK_AHEAD(3)
+	Id "+" Term |
+	LOOK_AHEAD(3)
+	DynRuleId ":-" Term |
+	LOOK_AHEAD(3)
+	DynRuleId ":" Rule |
+	LOOK_AHEAD(3)
+	DynRuleId ":+" Rule |
+	LOOK_AHEAD(3)
+	DynRuleId ":" Term |
+	LOOK_AHEAD(3)
+	DynRuleId ":=" Term |
+	LOOK_AHEAD(3)
+	DynRuleId ":+=" Term |
+	DynRuleId ":" Rule "depends " "on" Term ;
+
+DynRuleId : 
+	LOOK_AHEAD(3)
+	RuleDec <DOT> Term |
+	LOOK_AHEAD(3)
+	RuleDec "+" Term |
+	RuleDec ;
+
+RuleDec : 
+	LOOK_AHEAD(3)
+	Id |
+	LOOK_AHEAD(3)
+	Id "(" (Typedid ",")* ")" |
+	Id "(" (Typedid ",")* "|" (Typedid ",")* ")" ;
+
+ScopeLabels : 
+	(DynRuleScopeId ",")+ | 
+	"~" Term ;
+
+DynRuleScopeId :
+	LOOK_AHEAD(2)
+	Id <DOT> Term | 
+	Id ;
+
+SwitchCase : 
+	"case" Strategy ":" Strategy ;
+
+StrategyMid :
+	Strategy ;
+
+Term :
+	LOOK_AHEAD(2)
+	Var |
+	LOOK_AHEAD(2)
+	Wld |
+	LOOK_AHEAD(2)
+	PreTerm "{^" PreTerm "}" |
+	LOOK_AHEAD(3)
+	PreTerm "{" (Term ",")* "}" |
+	LOOK_AHEAD(2)
+	PreTerm |
+	Var "@" Term |
+	<LOWLINE> Term |
+	LOOK_AHEAD(3)
+	"<" Strategy ">" Term |
+	"<" Strategy ">" ;
+
+PreTerm :
+	LOOK_AHEAD(3)
+	Int |
+	Real |
+	LOOK_AHEAD(2)
+	String |
+	LOOK_AHEAD(2)
+	Id "(" (Term ",")* ")" |
+	String "(" (Term ",")* ")" |
+	"(" (Term ",")* ")" |
+	LOOK_AHEAD(3)
+	"[" (Term ",")* "]" |
+	"[" (Term ",")* "|" Term "]" ;
+	/* Linksrekursion: muss umgeschrieben werden!
+	Term "#" "(" Term ")" ;*/
+
+Wld :
+	<LOWLINE> ;
+
+Strat : 
+	Id "(" (Strat ",")* ")" ;
