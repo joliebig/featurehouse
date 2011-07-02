@@ -1,5 +1,8 @@
 package merger;
 
+import jargs.gnu.CmdLineParser;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,7 +35,6 @@ public class FSTGenMerger extends FSTGenProcessor {
 	
 	static final String MERGE_SEPARATOR = "##FSTMerge##";
 	static final String SEMANTIC_MERGE_MARKER = "~~FSTMerge~~";
-	private CmdLineInterpreter cmd = new CmdLineInterpreter();
 	private static LinkedList<FSTNode> baseNodes = new LinkedList<FSTNode>();
 	
 	private MergeVisitor mergeVisitor = new MergeVisitor();
@@ -80,30 +82,66 @@ public class FSTGenMerger extends FSTGenProcessor {
 
 	}
 	
+	public void printUsage() {
+		System.err.println(
+"Usage: FSTGenMerger [-h, --help] [-o, --output-directory] " +
+"                    [-b, --base-directory] [-p, --preprocess-files] " +
+"                    <-e, --expression>|<-f, --filemerge> myfile parentfile yourfile");
+	}
+	
 	public void run(String[] args) {
-		cmd.parseCmdLineArguments(args);
+		// configuration options
+		CmdLineParser cmdparser = new CmdLineParser();
+		CmdLineParser.Option outputdir = cmdparser.addStringOption('o',	"output-directory");
+		CmdLineParser.Option expression = cmdparser.addStringOption('e', "expression");
+		CmdLineParser.Option basedir = cmdparser.addStringOption('b', "base-directory");
+		@SuppressWarnings("unused")
+		CmdLineParser.Option help = cmdparser.addStringOption('h', "help");
+		CmdLineParser.Option preprocessfiles = cmdparser.addBooleanOption('p', "preprocess-files");
+		CmdLineParser.Option quiet = cmdparser.addBooleanOption('q', "quiet");
+		CmdLineParser.Option filemerge = cmdparser.addBooleanOption('f', "filemerge");
+		
+		try {
+			cmdparser.parse(args);
+		} catch (CmdLineParser.OptionException e) {
+			System.out.println(e.getMessage());
+			printUsage();
+			System.exit(2);
+		}
+		
+		Boolean preprocessfilesval = (Boolean)cmdparser.getOptionValue(preprocessfiles, Boolean.FALSE);
+		fileLoader.setPreprocessFiles(preprocessfilesval);
+		Boolean filemergeval = (Boolean)cmdparser.getOptionValue(filemerge);
+		String expressionval = (String)cmdparser.getOptionValue(expression);
+		if (null == expressionval && filemergeval) {
+			printUsage();
+			System.exit(2);
+		}
+		String basedirval = (String)cmdparser.getOptionValue(basedir);
+		if (null == basedirval) {
+			basedirval = (new File(expressionval)).getAbsoluteFile().getParentFile().getPath();
+		}
+		String outputdirval = (String)cmdparser.getOptionValue(outputdir);
+		Boolean quietval = (Boolean)cmdparser.getOptionValue(quiet, Boolean.FALSE);
+		
 		try {
 			try {
-				if (cmd.preprocessFiles)
-					fileLoader.setPreprocessFiles(true);
-
-				fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, false);
+				fileLoader.loadFiles(expressionval, basedirval, false);
 			} catch (cide.gparser.ParseException e1) {
 				fireParseErrorOccured(e1);
 				e1.printStackTrace();
 			}
-			String outputDir = cmd.equationBaseDirectoryName;
-			if (cmd.outputDirectoryName != null)
-				outputDir = cmd.outputDirectoryName;
 
-			featureVisitor.setWorkingDir(outputDir);
-			featureVisitor.setExpressionName(cmd.equationFileName);
+			if (null != outputdirval) featureVisitor.setWorkingDir(outputdirval);
+			else featureVisitor.setWorkingDir(basedirval);
+			featureVisitor.setExpressionName(expressionval);
 
 			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
-				for(FSTNonTerminal feature : features)
-					System.out.println(feature.toString());
+				if (!quietval)
+					for(FSTNonTerminal feature : features)
+						System.out.println(feature.toString());
 				
 				FSTNode merged;
 				
@@ -112,7 +150,8 @@ public class FSTGenMerger extends FSTGenProcessor {
 					
 					mergeVisitor.visit(merged);
 					
-					System.err.println(merged.toString());
+					if (!quietval)
+						System.err.println(merged.toString());
 					
 					try {
 						featureVisitor.visit((FSTNonTerminal) merged);
