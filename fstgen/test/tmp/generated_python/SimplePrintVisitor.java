@@ -87,6 +87,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			printToken(":");
 			hintNewLine();
+			hintIncIndent();
 			for (FSTNode v : getChildren(nonTerminal,"classdef_End")) {
 				v.accept(this);
 			}
