@@ -1,0 +1,17 @@
+//Class.super.method
+left/plugins/postgres/src/net/sourceforge/squirrel_sql/plugins/postgres/gui/AbstractPostgresDialog.java
+cide.gparser.ParseException: Encountered ". super" (85) at line 96, column 39.
+
+//@TestExecutionListeners({})
+left/test/src/net/sourceforge/squirrel_sql/client/update/gui/installer/ArtifactInstallerImplIntegrationTest.java
+cide.gparser.ParseException: Encountered "}" (80) at line 15, column 26.
+
+//Unglücklich platzierte Annotation
+left/plugins/mysql/src/net/sourceforge/squirrel_sql/plugins/mysql/action/CopyTableCommand.java
+cide.gparser.ParseException: Encountered "@" (86) at line 208, column 17.
+
+//Unglücke Enumdefinition
+left/app/src/net/sourceforge/squirrel_sql/client/gui/desktopcontainer/DesktopStyle.java
+cide.gparser.ParseException: Encountered ";" (83) at line 53, column 34.
+
+
