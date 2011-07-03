@@ -4,85 +4,128 @@ package tmp.generated_stratego;
 public interface StrategoParserConstants {
 
   int EOF = 0;
-  int SINGLE_LINE_COMMENT = 9;
-  int FORMAL_COMMENT = 10;
-  int MULTI_LINE_COMMENT = 11;
-  int ALL = 13;
-  int CONSTRUCTORS = 14;
-  int FAIL = 15;
-  int ID = 16;
-  int IN = 17;
-  int LET = 18;
-  int MODULE = 19;
-  int NOT = 20;
-  int ONE = 21;
-  int ON = 22;
-  int CALL = 23;
-  int PROCEED = 24;
-  int SIGNATURES = 25;
-  int SPECIFICATION = 26;
-  int WITH = 27;
-  int OVERLAYS = 28;
-  int PRIM = 29;
-  int RULES = 30;
-  int SCRIPT = 31;
-  int SIGNATURE = 32;
-  int SOME = 33;
-  int SORTS = 34;
-  int STRATEGIES = 35;
-  int STRATEGO = 36;
-  int TEST = 37;
-  int WHERE = 38;
-  int IMPORTTERM = 39;
-  int IMPORTS = 40;
-  int EXPORTS = 41;
-  int CASE = 42;
-  int ELSE = 43;
-  int END = 44;
-  int EXTERNAL = 45;
-  int IF = 46;
-  int OTHERWISE = 47;
-  int REC = 48;
-  int SWITCH = 49;
-  int THEN = 50;
-  int EXTEND = 51;
-  int OVERRIDE = 52;
-  int INTERNAL = 53;
-  int SEALED = 54;
-  int EXTENSIBLE = 55;
-  int OVERRIDABLE = 56;
-  int INTEGER_LITERAL = 57;
-  int DECIMAL_LITERAL = 58;
-  int HEX_LITERAL = 59;
-  int OCTAL_LITERAL = 60;
-  int FLOATING_POINT_LITERAL = 61;
-  int EXPONENT = 62;
-  int CHARACTER_LITERAL = 63;
-  int STRING_LITERAL = 64;
-  int IDENTIFIER = 65;
-  int LETTER = 66;
-  int LCCHAR = 67;
-  int UCCHAR = 68;
-  int APOSTROPHE = 69;
-  int DOT = 70;
-  int LOWLINE = 71;
-  int MINUS = 72;
-  int DIGIT = 73;
-  int LPAREN = 74;
-  int RPAREN = 75;
-  int LBRACE = 76;
-  int RBRACE = 77;
-  int LBRACKET = 78;
-  int RBRACKET = 79;
-  int COMMA = 80;
-  int PLUS = 81;
-  int STAR = 82;
-  int SLASH = 83;
+  int SINGLE_LINE_COMMENT = 10;
+  int SINGLE_LINE_COMMENT_SDF = 11;
+  int FORMAL_COMMENT = 12;
+  int MULTI_LINE_COMMENT = 13;
+  int ALL = 15;
+  int CONSTRUCTORS = 16;
+  int FAIL = 17;
+  int ID = 18;
+  int IN = 19;
+  int LET = 20;
+  int MODULE = 21;
+  int NOT = 22;
+  int ONE = 23;
+  int ON = 24;
+  int CALL = 25;
+  int PROCEED = 26;
+  int SIGNATURES = 27;
+  int SPECIFICATION = 28;
+  int WITH = 29;
+  int OVERLAYS = 30;
+  int PRIM = 31;
+  int RULES = 32;
+  int SCRIPT = 33;
+  int SIGNATURE = 34;
+  int SOME = 35;
+  int SORTS = 36;
+  int STRATEGIES = 37;
+  int STRATEGO = 38;
+  int TEST = 39;
+  int WHERE = 40;
+  int IMPORTTERM = 41;
+  int IMPORTS = 42;
+  int EXPORTS = 43;
+  int HIDDENS = 44;
+  int CASE = 45;
+  int ELSE = 46;
+  int END = 47;
+  int EXTERNAL = 48;
+  int IF = 49;
+  int OTHERWISE = 50;
+  int REC = 51;
+  int SWITCH = 52;
+  int THEN = 53;
+  int EXTEND = 54;
+  int OVERRIDE = 55;
+  int INTERNAL = 56;
+  int SEALED = 57;
+  int EXTENSIBLE = 58;
+  int SYNTAX = 59;
+  int VARIABLES = 60;
+  int PRIORITIES = 61;
+  int OVERRIDABLE = 62;
+  int LEFT = 63;
+  int ASSOC = 64;
+  int AVOID = 65;
+  int RIGHT = 66;
+  int PREFER = 67;
+  int BRACKET = 68;
+  int REJECT = 69;
+  int NONASSOC = 70;
+  int RECOVER = 71;
+  int INDENTPADDING = 72;
+  int STARTSYMBOL = 73;
+  int LEXICALSYNTAX = 74;
+  int CFREESYNTAX = 75;
+  int LEXICALVARS = 76;
+  int CFREEPRIORITIES = 77;
+  int LEXICALRESTRICTIONS = 78;
+  int CFREERESTRICTIONS = 79;
+  int CONS = 80;
+  int DEPRECATED = 81;
+  int INTEGER_LITERAL = 82;
+  int DECIMAL_LITERAL = 83;
+  int HEX_LITERAL = 84;
+  int OCTAL_LITERAL = 85;
+  int FLOATING_POINT_LITERAL = 86;
+  int EXPONENT = 87;
+  int CHARACTER_LITERAL = 88;
+  int STRING_LITERAL = 89;
+  int IDENTIFIER = 90;
+  int LETTER = 91;
+  int LCCHAR = 92;
+  int UCCHAR = 93;
+  int DIGIT = 94;
+  int LPAREN = 95;
+  int RPAREN = 96;
+  int LBRACE = 97;
+  int RBRACE = 98;
+  int LBRACKET = 99;
+  int DLBRACKET = 100;
+  int RBRACKET = 101;
+  int DRBRACKET = 102;
+  int COMMA = 103;
+  int ARROW = 104;
+  int LT = 105;
+  int GT = 106;
+  int NOTALLOWED = 107;
+  int DDOT = 108;
+  int DOT = 109;
+  int QUESTIONMARK = 110;
+  int EXCLAMATIONMARK = 111;
+  int APOSTROPHE = 112;
+  int PERCENTAGE = 113;
+  int LOWLINE = 114;
+  int DOLLAR = 115;
+  int AT = 116;
+  int TILDE = 117;
+  int QUOTATIONMARK = 118;
+  int SLASH = 119;
+  int BACKSLASH = 120;
+  int NUMBERSIGN = 121;
+  int VERTICALLINE = 122;
+  int PLUS = 123;
+  int MINUS = 124;
+  int STAR = 125;
+  int SPECIALSIGN = 126;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
-  int IN_FORMAL_COMMENT = 2;
-  int IN_MULTI_LINE_COMMENT = 3;
+  int IN_SINGLE_LINE_COMMENT_SDF = 2;
+  int IN_FORMAL_COMMENT = 3;
+  int IN_MULTI_LINE_COMMENT = 4;
 
   String[] tokenImage = {
     "<EOF>",
@@ -92,12 +135,14 @@ public interface StrategoParserConstants {
     "\"\\r\"",
     "\"\\f\"",
     "\"//\"",
-    "<token of kind 7>",
+    "\"%%\"",
+    "<token of kind 8>",
     "\"/*\"",
     "<SINGLE_LINE_COMMENT>",
+    "<SINGLE_LINE_COMMENT_SDF>",
     "\"*/\"",
     "\"*/\"",
-    "<token of kind 12>",
+    "<token of kind 14>",
     "\"all\"",
     "\"constructors\"",
     "\"fail\"",
@@ -127,6 +172,7 @@ public interface StrategoParserConstants {
     "\"import-term\"",
     "\"imports\"",
     "\"exports\"",
+    "\"hiddens\"",
     "\"case\"",
     "\"else\"",
     "\"end\"",
@@ -141,7 +187,29 @@ public interface StrategoParserConstants {
     "\"internal\"",
     "\"sealed\"",
     "\"extensible\"",
+    "\"syntax\"",
+    "\"variables\"",
+    "\"priorities\"",
     "\"overrideable\"",
+    "\"left\"",
+    "\"assoc\"",
+    "\"avoid\"",
+    "\"right\"",
+    "\"prefer\"",
+    "\"bracket\"",
+    "\"reject\"",
+    "\"non-assoc\"",
+    "\"recover\"",
+    "\"indentpadding\"",
+    "\"context-free start-symbols\"",
+    "\"lexical syntax\"",
+    "\"context-free syntax\"",
+    "\"lexical variables\"",
+    "\"context-free priorities\"",
+    "\"lexical restrictions\"",
+    "\"context-free restrictions\"",
+    "\"cons\"",
+    "\"deprecated\"",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
     "<HEX_LITERAL>",
@@ -154,41 +222,39 @@ public interface StrategoParserConstants {
     "<LETTER>",
     "<LCCHAR>",
     "<UCCHAR>",
-    "<APOSTROPHE>",
-    "<DOT>",
-    "<LOWLINE>",
-    "<MINUS>",
     "<DIGIT>",
     "\"(\"",
     "\")\"",
     "\"{\"",
     "\"}\"",
     "\"[\"",
+    "\"[[\"",
     "\"]\"",
+    "\"]]\"",
     "\",\"",
-    "\"+\"",
-    "\"*\"",
-    "\"/\"",
-    "\"=\"",
-    "\":\"",
-    "\"|\"",
     "\"->\"",
-    "\"?\"",
-    "\"!\"",
     "\"<\"",
     "\">\"",
-    "\"\\\\\"",
-    "\":=\"",
-    "\"{|\"",
-    "\"|}\"",
-    "\"\\\\*\"",
-    "\"~\"",
-    "\":-\"",
-    "\":+\"",
-    "\":+=\"",
-    "\"depends \"",
-    "\"{^\"",
+    "\"-/-\"",
+    "\":\"",
+    "\".\"",
+    "\"?\"",
+    "\"!\"",
+    "\"\\\'\"",
+    "\"%\"",
+    "\"_\"",
+    "\"$\"",
     "\"@\"",
+    "\"~\"",
+    "\"\\\"\"",
+    "\"/\"",
+    "\"\\\\\"",
+    "\"#\"",
+    "\"|\"",
+    "\"+\"",
+    "\"-\"",
+    "\"*\"",
+    "<SPECIALSIGN>",
   };
 
 }

@@ -1,0 +1,24 @@
+module analyze
+
+imports
+  libstratego-lib
+  include/MoBL
+  lib/editor-common
+  declare
+  lookup
+  type
+  rename
+  normalize
+  desugar
+  mobl
+  resolve
+  generation/compile
+  generation/server
+  generation/css
+  sync-analysis
+  util
+  
+rules
+
+  ensure-mobl-import :
+    Module(qid, def*) -> Module(qid, def2*)
