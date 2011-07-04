@@ -27,6 +27,8 @@ public class PythonParserTokenManager implements PythonParserConstants
 
         public boolean generator_allowed = true;
 
+        private static boolean DEBUG = false;
+
         static Token addDedent(Token previous) {
                 Token t = new Token();
                 t.kind = DEDENT;

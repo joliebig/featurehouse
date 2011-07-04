@@ -43,6 +43,8 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
+	
+	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
 		Token t = new Token();
@@ -403,13 +405,6 @@ MORE : /* Strings */ {
 	|  <"\\" ~["\n","\r"]>
 }
 
-
-
-
-
-
-
-
 GRAMMARSTART
 
 @FSTNonTerminal
@@ -451,7 +446,7 @@ fplist
 	;
 
 stmt
-	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt

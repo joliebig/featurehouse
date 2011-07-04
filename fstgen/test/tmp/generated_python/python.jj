@@ -43,6 +43,8 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
+	
+	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
 		Token t = new Token();
