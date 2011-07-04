@@ -496,7 +496,15 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     jj_consume_token(EQUAL);
     n = SmartTestList(true);
                                                                                           replaceName(n);
-                                                                                                            {if (true) return productionEndTerminal("assignment_stmt","-","{<NAME>}","Replacement","Default",first,token);}
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case NEWLINE:
+      jj_consume_token(NEWLINE);
+      break;
+    default:
+      jj_la1[13] = jj_gen;
+      ;
+    }
+                                                                                                                        {if (true) return productionEndTerminal("assignment_stmt","-","{<NAME>}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -589,7 +597,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                            {if (true) return productionEndTerminal("expr_stmtEnd12","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[15] = jj_gen;
       label_5:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -597,7 +605,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[13] = jj_gen;
+          jj_la1[14] = jj_gen;
           break label_5;
         }
         jj_consume_token(EQUAL);
@@ -623,7 +631,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                               replaceName(n);
         break;
       default:
-        jj_la1[15] = jj_gen;
+        jj_la1[16] = jj_gen;
         ;
       }
                                                                                                                  {if (true) return productionEndTerminal("print_stmt1","-","-","Replacement","Default",first,token);}
@@ -639,7 +647,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                  {if (true) return productionEndTerminal("print_stmt3","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[17] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -666,7 +674,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[17] = jj_gen;
+      jj_la1[18] = jj_gen;
       ;
     }
                                                                    {if (true) return productionEndTerminal("print_stmtEndP","-","-","Replacement","Default",first,token);}
@@ -694,7 +702,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[18] = jj_gen;
+      jj_la1[19] = jj_gen;
       ;
     }
                                                                                                   {if (true) return productionEndTerminal("print_stmtEndA","-","-","Replacement","Default",first,token);}
@@ -747,7 +755,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                               {if (true) return productionEndTerminal("flow_stmt5","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[19] = jj_gen;
+      jj_la1[20] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -787,7 +795,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          replaceName(n);
       break;
     default:
-      jj_la1[20] = jj_gen;
+      jj_la1[21] = jj_gen;
       ;
     }
                                                             {if (true) return productionEndTerminal("return_stmt","-","-","Replacement","Default",first,token);}
@@ -837,7 +845,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          replaceName(n);
       break;
     default:
-      jj_la1[21] = jj_gen;
+      jj_la1[22] = jj_gen;
       ;
     }
                                                             {if (true) return productionEndTerminal("raise_stmt","-","-","Replacement","Default",first,token);}
@@ -856,7 +864,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                    replaceName(n);
       break;
     default:
-      jj_la1[22] = jj_gen;
+      jj_la1[23] = jj_gen;
       ;
     }
                                                                                       {if (true) return productionEndTerminal("raise_stmt_end","-","-","Replacement","Default",first,token);}
@@ -875,7 +883,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                           replaceName(n);
       break;
     default:
-      jj_la1[23] = jj_gen;
+      jj_la1[24] = jj_gen;
       ;
     }
                                                                              {if (true) return productionEndTerminal("testcommatest","-","-","Replacement","Default",first,token);}
@@ -899,7 +907,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                      {if (true) return productionEndTerminal("import_stmt2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[24] = jj_gen;
+      jj_la1[25] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -918,7 +926,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[25] = jj_gen;
+        jj_la1[26] = jj_gen;
         break label_8;
       }
       jj_consume_token(COMMA);
@@ -980,7 +988,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[26] = jj_gen;
+          jj_la1[27] = jj_gen;
           break label_9;
         }
       }
@@ -989,7 +997,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                           {if (true) return productionEndTerminal("ImportFrom2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[27] = jj_gen;
+      jj_la1[28] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1044,7 +1052,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                 {if (true) return productionEndTerminal("ImportFrom_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[28] = jj_gen;
+      jj_la1[29] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1096,7 +1104,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_consume_token(LPAREN);
         break;
       default:
-        jj_la1[29] = jj_gen;
+        jj_la1[30] = jj_gen;
         ;
       }
       n = import_as_name(true);
@@ -1108,7 +1116,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[30] = jj_gen;
+          jj_la1[31] = jj_gen;
           break label_10;
         }
         jj_consume_token(COMMA);
@@ -1120,13 +1128,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_consume_token(RPAREN);
         break;
       default:
-        jj_la1[31] = jj_gen;
+        jj_la1[32] = jj_gen;
         ;
       }
                                                                                                                 {if (true) return productionEndTerminal("ImportFromEnd2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[32] = jj_gen;
+      jj_la1[33] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1145,7 +1153,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                   replaceName(n);
       break;
     default:
-      jj_la1[33] = jj_gen;
+      jj_la1[34] = jj_gen;
       ;
     }
                                                                                      {if (true) return productionEndTerminal("dotted_as_name","-","-","Replacement","Default",first,token);}
@@ -1164,7 +1172,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[34] = jj_gen;
+        jj_la1[35] = jj_gen;
         break label_11;
       }
       jj_consume_token(DOT);
@@ -1187,7 +1195,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                               replaceName(n);
       break;
     default:
-      jj_la1[35] = jj_gen;
+      jj_la1[36] = jj_gen;
       ;
     }
                                                                                  {if (true) return productionEndTerminal("import_as_name","-","-","Replacement","Default",first,token);}
@@ -1207,7 +1215,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[36] = jj_gen;
+        jj_la1[37] = jj_gen;
         break label_12;
       }
       jj_consume_token(COMMA);
@@ -1231,7 +1239,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                            replaceName(n);
       break;
     default:
-      jj_la1[37] = jj_gen;
+      jj_la1[38] = jj_gen;
       ;
     }
                                                                                               {if (true) return productionEndTerminal("exec_stmt","-","-","Replacement","Default",first,token);}
@@ -1250,7 +1258,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                           replaceName(n);
       break;
     default:
-      jj_la1[38] = jj_gen;
+      jj_la1[39] = jj_gen;
       ;
     }
                                                                              {if (true) return productionEndTerminal("exec_stmt_end","-","-","Replacement","Default",first,token);}
@@ -1270,7 +1278,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                    replaceName(n);
       break;
     default:
-      jj_la1[39] = jj_gen;
+      jj_la1[40] = jj_gen;
       ;
     }
                                                                                       {if (true) return productionEndTerminal("assert_stmt","-","-","Replacement","Default",first,token);}
@@ -1341,7 +1349,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[40] = jj_gen;
+          jj_la1[41] = jj_gen;
           break label_13;
         }
         n = elif_stmt(true);
@@ -1353,7 +1361,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                                   replaceName(n);
         break;
       default:
-        jj_la1[41] = jj_gen;
+        jj_la1[42] = jj_gen;
         ;
       }
                                                                                                                                      {if (true) return productionEndTerminal("if_stmt_End1","-","-","Replacement","Default",first,token);}
@@ -1368,7 +1376,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[42] = jj_gen;
+          jj_la1[43] = jj_gen;
           break label_14;
         }
         n = elif_stmt(true);
@@ -1380,13 +1388,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                    replaceName(n);
         break;
       default:
-        jj_la1[43] = jj_gen;
+        jj_la1[44] = jj_gen;
         ;
       }
                                                                                                                       {if (true) return productionEndTerminal("if_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[44] = jj_gen;
+      jj_la1[45] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1458,7 +1466,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("elif_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[45] = jj_gen;
+      jj_la1[46] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1528,7 +1536,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("else_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[46] = jj_gen;
+      jj_la1[47] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1603,13 +1611,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                             replaceName(n);
         break;
       default:
-        jj_la1[47] = jj_gen;
+        jj_la1[48] = jj_gen;
         ;
       }
                                                                                {if (true) return productionEndTerminal("while_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[48] = jj_gen;
+      jj_la1[49] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1687,13 +1695,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                             replaceName(n);
         break;
       default:
-        jj_la1[49] = jj_gen;
+        jj_la1[50] = jj_gen;
         ;
       }
                                                                                {if (true) return productionEndTerminal("for_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[50] = jj_gen;
+      jj_la1[51] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1714,7 +1722,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[51] = jj_gen;
+        jj_la1[52] = jj_gen;
         break label_15;
       }
       n = except_clause(true);
@@ -1726,7 +1734,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                                            replaceName(n);
       break;
     default:
-      jj_la1[52] = jj_gen;
+      jj_la1[53] = jj_gen;
       ;
     }
                                                                                                                                               {if (true) return productionEndTerminal("try_stmt","-","-","Replacement","Default",first,token);}
@@ -1785,7 +1793,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("try_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[53] = jj_gen;
+      jj_la1[54] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1825,7 +1833,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                               replaceName(n);
       break;
     default:
-      jj_la1[54] = jj_gen;
+      jj_la1[55] = jj_gen;
       ;
     }
     jj_consume_token(COLON);
@@ -1837,7 +1845,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                                                     replaceName(n);
       break;
     default:
-      jj_la1[55] = jj_gen;
+      jj_la1[56] = jj_gen;
       ;
     }
                                                                                                                                                        {if (true) return productionEndTerminal("except_clause","-","-","Replacement","Default",first,token);}
@@ -1856,7 +1864,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                         replaceName(n);
       break;
     default:
-      jj_la1[56] = jj_gen;
+      jj_la1[57] = jj_gen;
       ;
     }
                                                                                            {if (true) return productionEndTerminal("except_clause_test","-","-","Replacement","Default",first,token);}
@@ -1880,7 +1888,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                              {if (true) return productionEndTerminal("except_clause_test_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[57] = jj_gen;
+      jj_la1[58] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1939,7 +1947,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("except_clause_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[58] = jj_gen;
+      jj_la1[59] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2009,7 +2017,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("finally_stmt_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[59] = jj_gen;
+      jj_la1[60] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2029,7 +2037,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[60] = jj_gen;
+        jj_la1[61] = jj_gen;
         break label_16;
       }
       jj_consume_token(COMMA);
@@ -2055,7 +2063,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                            replaceName(n);
       break;
     default:
-      jj_la1[61] = jj_gen;
+      jj_la1[62] = jj_gen;
       ;
     }
                                                                               {if (true) return productionEndTerminal("with_item","-","-","Replacement","Default",first,token);}
@@ -2103,7 +2111,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[62] = jj_gen;
+          jj_la1[63] = jj_gen;
           break label_17;
         }
         jj_consume_token(OR_BOOL);
@@ -2113,7 +2121,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                        {if (true) return productionEndTerminal("test2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[63] = jj_gen;
+      jj_la1[64] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2132,7 +2140,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[64] = jj_gen;
+        jj_la1[65] = jj_gen;
         break label_18;
       }
       jj_consume_token(AND_BOOL);
@@ -2180,7 +2188,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                               {if (true) return productionEndTerminal("not_test2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[65] = jj_gen;
+      jj_la1[66] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2208,7 +2216,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[66] = jj_gen;
+        jj_la1[67] = jj_gen;
         break label_19;
       }
       n = compEnd(true);
@@ -2271,7 +2279,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                     {if (true) return productionEndTerminal("comp_op9","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[67] = jj_gen;
+      jj_la1[68] = jj_gen;
       if (jj_2_12(2)) {
         jj_consume_token(IS);
         jj_consume_token(NOT_BOOL);
@@ -2283,7 +2291,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
               {if (true) return productionEndTerminal("comp_op11","-","-","Replacement","Default",first,token);}
           break;
         default:
-          jj_la1[68] = jj_gen;
+          jj_la1[69] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -2304,7 +2312,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[69] = jj_gen;
+        jj_la1[70] = jj_gen;
         break label_20;
       }
       jj_consume_token(OR);
@@ -2327,7 +2335,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[70] = jj_gen;
+        jj_la1[71] = jj_gen;
         break label_21;
       }
       jj_consume_token(XOR);
@@ -2350,7 +2358,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[71] = jj_gen;
+        jj_la1[72] = jj_gen;
         break label_22;
       }
       jj_consume_token(AND);
@@ -2374,7 +2382,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[72] = jj_gen;
+        jj_la1[73] = jj_gen;
         break label_23;
       }
       n = shift_exprEnd(true);
@@ -2401,7 +2409,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                    {if (true) return productionEndTerminal("shift_exprEnd2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[73] = jj_gen;
+      jj_la1[74] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2421,7 +2429,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[74] = jj_gen;
+        jj_la1[75] = jj_gen;
         break label_24;
       }
       n = arith_exprEnd(true);
@@ -2448,7 +2456,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                 {if (true) return productionEndTerminal("arith_exprEnd2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[75] = jj_gen;
+      jj_la1[76] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2470,7 +2478,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[76] = jj_gen;
+        jj_la1[77] = jj_gen;
         break label_25;
       }
       n = termEnd(true);
@@ -2509,7 +2517,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                    {if (true) return productionEndTerminal("termEnd4","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[77] = jj_gen;
+      jj_la1[78] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2562,7 +2570,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                {if (true) return productionEndTerminal("factor4","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[78] = jj_gen;
+      jj_la1[79] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2603,7 +2611,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[79] = jj_gen;
+        jj_la1[80] = jj_gen;
         break label_27;
       }
       n = atomtrailerEnd(true);
@@ -2643,7 +2651,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                  {if (true) return productionEndTerminal("atomtrailerEnd4","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[80] = jj_gen;
+        jj_la1[81] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -2698,7 +2706,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                     replaceName(n);
           break;
         default:
-          jj_la1[81] = jj_gen;
+          jj_la1[82] = jj_gen;
           ;
         }
         jj_consume_token(RPAREN);
@@ -2735,7 +2743,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                        replaceName(n);
           break;
         default:
-          jj_la1[82] = jj_gen;
+          jj_la1[83] = jj_gen;
           ;
         }
         jj_consume_token(RBRACKET);
@@ -2772,7 +2780,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                 replaceName(n);
           break;
         default:
-          jj_la1[83] = jj_gen;
+          jj_la1[84] = jj_gen;
           ;
         }
         jj_consume_token(RBRACE);
@@ -2824,7 +2832,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
             ;
             break;
           default:
-            jj_la1[84] = jj_gen;
+            jj_la1[85] = jj_gen;
             break label_28;
           }
           n = StringNode(true);
@@ -2833,7 +2841,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                       {if (true) return productionEndTerminal("atom9","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[85] = jj_gen;
+        jj_la1[86] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -2855,7 +2863,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                        replaceName(n);
       break;
     default:
-      jj_la1[86] = jj_gen;
+      jj_la1[87] = jj_gen;
       ;
     }
     jj_consume_token(COLON);
@@ -2886,7 +2894,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[87] = jj_gen;
+      jj_la1[88] = jj_gen;
       ;
     }
                                                                                                             {if (true) return productionEndTerminal("subscriptlist","-","-","Replacement","Default",first,token);}
@@ -2935,7 +2943,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                        replaceName(n);
         break;
       default:
-        jj_la1[88] = jj_gen;
+        jj_la1[89] = jj_gen;
         ;
       }
                                                                           {if (true) return productionEndTerminal("subscript2","-","-","Replacement","Default",first,token);}
@@ -2946,7 +2954,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("subscript3","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[89] = jj_gen;
+      jj_la1[90] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -2964,7 +2972,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                   replaceName(n);
       break;
     default:
-      jj_la1[90] = jj_gen;
+      jj_la1[91] = jj_gen;
       ;
     }
                                                                      {if (true) return productionEndTerminal("slice","-","-","Replacement","Default",first,token);}
@@ -3004,7 +3012,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                            replaceName(n);
       break;
     default:
-      jj_la1[91] = jj_gen;
+      jj_la1[92] = jj_gen;
       ;
     }
                                               {if (true) return productionEndTerminal("ct","-","-","Replacement","Default",first,token);}
@@ -3032,7 +3040,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[92] = jj_gen;
+      jj_la1[93] = jj_gen;
       ;
     }
                                                                                                   {if (true) return productionEndTerminal("exprlist","-","-","Replacement","Default",first,token);}
@@ -3060,7 +3068,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[93] = jj_gen;
+      jj_la1[94] = jj_gen;
       ;
     }
                                                                                                   {if (true) return productionEndTerminal("SmartTestList","-","{TOSTRING}","Replacement","Default",first,token);}
@@ -3088,7 +3096,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[94] = jj_gen;
+      jj_la1[95] = jj_gen;
       ;
     }
                                                                                                   {if (true) return productionEndTerminal("testlist","-","-","Replacement","Default",first,token);}
@@ -3118,7 +3126,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(COMMA);
       break;
     default:
-      jj_la1[95] = jj_gen;
+      jj_la1[96] = jj_gen;
       ;
     }
                                                                                                                                     {if (true) return productionEndTerminal("dictmaker","-","-","Replacement","Default",first,token);}
@@ -3163,14 +3171,14 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[96] = jj_gen;
+          jj_la1[97] = jj_gen;
           break label_34;
         }
       }
                                                {if (true) return productionEndTerminal("listmakerEnd1","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[98] = jj_gen;
+      jj_la1[99] = jj_gen;
       label_35:
       while (true) {
         if (jj_2_22(2)) {
@@ -3187,7 +3195,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         jj_consume_token(COMMA);
         break;
       default:
-        jj_la1[97] = jj_gen;
+        jj_la1[98] = jj_gen;
         ;
       }
                                                                    {if (true) return productionEndTerminal("listmakerEnd2","-","-","Replacement","Default",first,token);}
@@ -3211,7 +3219,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[99] = jj_gen;
+        jj_la1[100] = jj_gen;
         break label_36;
       }
       n = list_if(true);
@@ -3243,7 +3251,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[100] = jj_gen;
+        jj_la1[101] = jj_gen;
         break label_37;
       }
     }
@@ -3278,7 +3286,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("decorator_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[101] = jj_gen;
+      jj_la1[102] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3354,7 +3362,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("decorator_End_Par2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[102] = jj_gen;
+      jj_la1[103] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3370,7 +3378,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                              replaceName(n);
       break;
     default:
-      jj_la1[103] = jj_gen;
+      jj_la1[104] = jj_gen;
       ;
     }
     jj_consume_token(DEF);
@@ -3438,7 +3446,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                          {if (true) return productionEndTerminal("funcdef_End2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[104] = jj_gen;
+      jj_la1[105] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3454,7 +3462,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                    replaceName(n);
       break;
     default:
-      jj_la1[105] = jj_gen;
+      jj_la1[106] = jj_gen;
       ;
     }
     jj_consume_token(CLASS);
@@ -3470,7 +3478,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(RPAREN);
       break;
     default:
-      jj_la1[106] = jj_gen;
+      jj_la1[107] = jj_gen;
       ;
     }
     jj_consume_token(COLON);
@@ -3520,7 +3528,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[107] = jj_gen;
+        jj_la1[108] = jj_gen;
         break label_38;
       }
     }
@@ -3638,7 +3646,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
           ;
           break;
         default:
-          jj_la1[108] = jj_gen;
+          jj_la1[109] = jj_gen;
           break label_39;
         }
       }
@@ -3646,7 +3654,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                          {if (true) return productionEndNonTerminal("classdef_End2","-","-");}
       break;
     default:
-      jj_la1[109] = jj_gen;
+      jj_la1[110] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -3709,7 +3717,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[110] = jj_gen;
+        jj_la1[111] = jj_gen;
         break label_40;
       }
     }
@@ -3729,7 +3737,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_consume_token(NEWLINE);
       break;
     default:
-      jj_la1[111] = jj_gen;
+      jj_la1[112] = jj_gen;
       ;
     }
                                                                                                           {if (true) return productionEndNonTerminal("classsimple_stmt","{classsmall_stmt}","{classsmall_stmt}");}
@@ -3754,7 +3762,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                 {if (true) return productionEndNonTerminal("classsmall_stmt2","{classdef}","{classdef}");}
       break;
     default:
-      jj_la1[112] = jj_gen;
+      jj_la1[113] = jj_gen;
       if (jj_2_23(2147483647)) {
         n = FieldDeclaration(true);
                                                         replaceName("FieldDeclaration", n);
@@ -3851,7 +3859,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                            {if (true) return productionEndTerminal("classsmall_stmt15","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
           break;
         default:
-          jj_la1[113] = jj_gen;
+          jj_la1[114] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -3873,7 +3881,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[114] = jj_gen;
+        jj_la1[115] = jj_gen;
         break label_41;
       }
       jj_consume_token(SEMICOLON);
@@ -3955,7 +3963,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
         ;
         break;
       default:
-        jj_la1[115] = jj_gen;
+        jj_la1[116] = jj_gen;
         break label_42;
       }
     }
@@ -4027,13 +4035,13 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                    replaceName(n);
         break;
       default:
-        jj_la1[116] = jj_gen;
+        jj_la1[117] = jj_gen;
         ;
       }
                                                                                       {if (true) return productionEndTerminal("arglist1","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[117] = jj_gen;
+      jj_la1[118] = jj_gen;
       if (jj_2_24(2)) {
         n = arglist1EndEnd(true);
                                               replaceName(n);
@@ -4072,7 +4080,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                                                                      replaceName(n);
         break;
       default:
-        jj_la1[118] = jj_gen;
+        jj_la1[119] = jj_gen;
         ;
       }
                                                                                                                         {if (true) return productionEndTerminal("arglist1EndEnd1","-","-","Replacement","Default",first,token);}
@@ -4085,7 +4093,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                                                          {if (true) return productionEndTerminal("arglist1EndEnd2","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[119] = jj_gen;
+        jj_la1[120] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -4148,7 +4156,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                   {if (true) return productionEndTerminal("power2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[120] = jj_gen;
+      jj_la1[121] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4196,7 +4204,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                    {if (true) return productionEndTerminal("Number5","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[121] = jj_gen;
+      jj_la1[122] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4224,7 +4232,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
               {if (true) return productionEndTerminal("Name2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[122] = jj_gen;
+      jj_la1[123] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4268,7 +4276,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
                            {if (true) return productionEndTerminal("StringNode8","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[123] = jj_gen;
+      jj_la1[124] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -4404,7 +4412,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
               {if (true) return productionEndTerminal("AnyName31","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[124] = jj_gen;
+      jj_la1[125] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -5721,7 +5729,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[125];
+  final private int[] jj_la1 = new int[126];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -5735,19 +5743,19 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       jj_la1_4();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x30540000,0x40040000,0x2000000,0x2000000,0x40000,0x40000000,0x0,0x40000,0x2000000,0x30540000,0x1000000,0x40,0x30540000,0x0,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x30540000,0x30540000,0x2000000,0x2000000,0x0,0x2000000,0x4000000,0x4000000,0x0,0x40000,0x2000000,0x80000,0x40040000,0x0,0x4000000,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x30540040,0x30540040,0x30540040,0x0,0x30540040,0x0,0x30540040,0x0,0x0,0x30540040,0x30540000,0x0,0x2000000,0x2000000,0x30540040,0x30540040,0x2000000,0x0,0x0,0x30540000,0x0,0x30540000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x30000000,0x30000000,0xc0000000,0xc0000000,0x30540000,0x4440000,0x4440000,0x30540000,0x30540000,0x30540000,0x0,0x540000,0x40040000,0x2000000,0x8000000,0x3c540000,0x8000000,0x30540000,0x2000000,0x2000000,0x2000000,0x2000000,0x0,0x2000000,0x0,0x0,0x0,0x40040,0x705c0000,0x0,0x30540040,0x0,0x40000,0x30540040,0x30540000,0x30540040,0x30540000,0x40,0x0,0x30540000,0x1000000,0x30540000,0x2000000,0x30540000,0x2000000,0x40000000,0x40000000,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x30540000,0x40040000,0x2000000,0x2000000,0x40000,0x40000000,0x0,0x40000,0x2000000,0x30540000,0x1000000,0x40,0x30540000,0x40,0x0,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x30540000,0x30540000,0x2000000,0x2000000,0x0,0x2000000,0x4000000,0x4000000,0x0,0x40000,0x2000000,0x80000,0x40040000,0x0,0x4000000,0x0,0x2000000,0x0,0x2000000,0x2000000,0x0,0x0,0x0,0x0,0x30540040,0x30540040,0x30540040,0x0,0x30540040,0x0,0x30540040,0x0,0x0,0x30540040,0x30540000,0x0,0x2000000,0x2000000,0x30540040,0x30540040,0x2000000,0x0,0x0,0x30540000,0x0,0x30540000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x30000000,0x30000000,0xc0000000,0xc0000000,0x30540000,0x4440000,0x4440000,0x30540000,0x30540000,0x30540000,0x0,0x540000,0x40040000,0x2000000,0x8000000,0x3c540000,0x8000000,0x30540000,0x2000000,0x2000000,0x2000000,0x2000000,0x0,0x2000000,0x0,0x0,0x0,0x40040,0x705c0000,0x0,0x30540040,0x0,0x40000,0x30540040,0x30540000,0x30540040,0x30540000,0x40,0x0,0x30540000,0x1000000,0x30540000,0x2000000,0x30540000,0x2000000,0x40000000,0x40000000,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x80000020,0x2,0x0,0x0,0x0,0x2,0x200,0x0,0x0,0x80000020,0x0,0x0,0x80000020,0x200,0x1ffe0000,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x0,0x0,0xe0000000,0xe0000000,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x20000000,0x80000020,0x40000000,0x80000020,0x8001fc00,0x8001fc00,0x0,0x80,0x40,0x100,0xc,0xc,0x0,0x0,0x11,0x11,0x20,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x0,0x2,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe0000022,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x80000020,0x80000020,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0xe0000020,0x0,0x2,0x2,0x0,0x0,0x0,0xe0000000,};
+      jj_la1_1 = new int[] {0x80000020,0x2,0x0,0x0,0x0,0x2,0x200,0x0,0x0,0x80000020,0x0,0x0,0x80000020,0x0,0x200,0x1ffe0000,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x0,0x0,0xe0000000,0xe0000000,0x0,0x0,0x0,0xe0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x0,0x80000020,0x80000020,0x0,0x0,0x20000000,0x80000020,0x40000000,0x80000020,0x8001fc00,0x8001fc00,0x0,0x80,0x40,0x100,0xc,0xc,0x0,0x0,0x11,0x11,0x20,0x0,0x0,0x80000020,0x80000020,0x80000020,0x0,0x0,0x2,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xe0000022,0x0,0x80000020,0x0,0x0,0x80000020,0x80000020,0x80000020,0x80000020,0x0,0x0,0x80000020,0x0,0x80000020,0x0,0xe0000020,0x0,0x2,0x2,0x0,0x0,0x0,0xe0000000,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0xdfffedcc,0x14000000,0x0,0x0,0x14000000,0x0,0x0,0x14000000,0x0,0xdfffedcc,0x0,0x0,0xd7ffe004,0x0,0x0,0x0,0x2000,0x0,0x0,0x478000,0xd4000004,0xd4000004,0x0,0x0,0x180000,0x0,0x0,0x17ffffff,0x17ffffff,0x0,0x0,0x0,0x17ffffff,0x4000000,0x0,0x4000000,0x0,0x2,0x0,0x0,0x20,0x10,0x20,0x10,0xd7ffe004,0xd7ffe004,0xd7ffe004,0x10,0xd7ffe004,0x10,0xd7ffe004,0x200,0x1000,0xd7ffe004,0xd4000004,0x10,0x4000000,0x4000000,0xd7ffe004,0xd7ffe004,0x0,0x4000000,0x0,0xd4000004,0x0,0xd4000000,0x3,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd4000000,0x0,0x0,0xd4000004,0xd4000004,0xd4000004,0x0,0xd4000000,0x14000000,0x0,0x0,0xd4000004,0x0,0xd4000004,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x8,0x0,0x0,0xd7ffffff,0x0,0xd7ffe004,0x0,0x0,0xd7ffe004,0xd7ffed8c,0xd7ffe004,0xd7ffed8c,0x0,0xc00,0xd7ffe18c,0x0,0xdfffedcc,0x0,0xd7ffffff,0x0,0x0,0x0,0xc0000000,0x14000000,0x0,0x17ffffff,};
+      jj_la1_2 = new int[] {0xdfffedcc,0x14000000,0x0,0x0,0x14000000,0x0,0x0,0x14000000,0x0,0xdfffedcc,0x0,0x0,0xd7ffe004,0x0,0x0,0x0,0x0,0x2000,0x0,0x0,0x478000,0xd4000004,0xd4000004,0x0,0x0,0x180000,0x0,0x0,0x17ffffff,0x17ffffff,0x0,0x0,0x0,0x17ffffff,0x4000000,0x0,0x4000000,0x0,0x2,0x0,0x0,0x20,0x10,0x20,0x10,0xd7ffe004,0xd7ffe004,0xd7ffe004,0x10,0xd7ffe004,0x10,0xd7ffe004,0x200,0x1000,0xd7ffe004,0xd4000004,0x10,0x4000000,0x4000000,0xd7ffe004,0xd7ffe004,0x0,0x4000000,0x0,0xd4000004,0x0,0xd4000000,0x3,0x2,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd4000000,0x0,0x0,0xd4000004,0xd4000004,0xd4000004,0x0,0xd4000000,0x14000000,0x0,0x0,0xd4000004,0x0,0xd4000004,0x0,0x0,0x0,0x0,0x80,0x0,0x80,0x8,0x0,0x0,0xd7ffffff,0x0,0xd7ffe004,0x0,0x0,0xd7ffe004,0xd7ffed8c,0xd7ffe004,0xd7ffed8c,0x0,0xc00,0xd7ffe18c,0x0,0xdfffedcc,0x0,0xd7ffffff,0x0,0x0,0x0,0xc0000000,0x14000000,0x0,0x17ffffff,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe000,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe007,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x7,0x0,0x1fe000,0x0,};
+      jj_la1_3 = new int[] {0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe000,0x1fe007,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x1fe007,0x1fe007,0x1fe007,0x1fe007,0x0,0x0,0x1fe007,0x0,0x1fe007,0x0,0x1fe007,0x0,0x0,0x0,0x7,0x0,0x1fe000,0x0,};
    }
    private static void jj_la1_4() {
-      jj_la1_4 = new int[] {0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x300,0x0,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x100,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x100,0x200,0x100,0x200,0x0,0x100,0x300,0x100,0x300,0x0,0x200,0x100,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_4 = new int[] {0x300,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x300,0x0,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x100,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x100,0x0,0x0,0x100,0x100,0x100,0x0,0x100,0x0,0x0,0x0,0x100,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x100,0x200,0x100,0x200,0x0,0x100,0x300,0x100,0x300,0x0,0x200,0x100,0x0,0x300,0x0,0x100,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[28];
   private boolean jj_rescan = false;
@@ -5758,7 +5766,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 126; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5767,7 +5775,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 126; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5776,7 +5784,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 126; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5785,7 +5793,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 125; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 126; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -5904,7 +5912,7 @@ public class PythonParser extends AbstractFSTParser implements PythonParserConst
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 125; i++) {
+    for (int i = 0; i < 126; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

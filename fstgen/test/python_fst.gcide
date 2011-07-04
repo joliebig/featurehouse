@@ -110,7 +110,10 @@ SPECIAL_TOKEN : {
 	|  "\t"
 	|  "\014"
 	|  <CONTINUATION: ("\\") ("\n"|"\r")>
-	|  <NEWLINE1: ("\n"|"\r")> {
+}
+
+SKIP: {
+	<NEWLINE1: ("\n"|"\r")> {
 		if (parens == 0) {
 			indent = 0;
 			input_stream.backup(1);
@@ -435,7 +438,7 @@ fplist
 	;
 
 stmt
-	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
+	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
@@ -465,7 +468,7 @@ small_stmt
 
 @FSTExportName("{<NAME>}")
 assignment_stmt
-	:  <NAME> "=" SmartTestList
+	:  <NAME> "=" SmartTestList (<NEWLINE>)?
 	;
 
 @FSTExportName("{SmartTestList}")
