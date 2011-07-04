@@ -150,18 +150,6 @@
 		</antcall>
 	</target>
 	
-<!-- Stratego - Start -->	
-	<target name="testStratego">
-		<antcall target="testGrammar">
-			<param name="language" value="stratego" />
-			<param name="parserClass" value="StrategoParser" />
-			<param name="mainProduction" value="module" />
-			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.sdf" />
-		</antcall>
-	</target>	
-<!-- Stratego - Ende -->	
-	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
 
