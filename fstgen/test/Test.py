@@ -8,6 +8,9 @@ def test(cool):
 class Test:
     @dbus.service.method
     def getVersion(self):
+        k = True
+        l = False
+        if k and l: output = Foo()
         try:
             pass
         except IOError:

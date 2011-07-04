@@ -12,6 +12,8 @@ options {
 PARSER_BEGIN(PythonParser)
 
 package tmp.generated_python;
+import java.io.*;
+import java.util.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
@@ -27,9 +29,11 @@ TOKEN_MGR_DECLS: {
 	int dedents = 0;
 	int parens = 0;
 	int indent;
-	
+
 	boolean expect_indent = false;
+
 	boolean compound = false;
+
 	public boolean single_input = false;
 
 	// parsing of partial sentence (interactive) mode
@@ -39,10 +43,8 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
-	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
-        if (DEBUG) System.out.println("adding dedent ");
 		Token t = new Token();
 		t.kind = DEDENT;
 		t.beginLine = previous.beginLine;
@@ -51,7 +53,7 @@ TOKEN_MGR_DECLS: {
 		t.endColumn = previous.endColumn;
 		t.offset=previous.offset;
 		t.length=0;
-		t.image="";
+		t.image = "";
 		t.specialToken = null;
 		t.next = null;
 		previous.next = t;
@@ -110,26 +112,28 @@ SPECIAL_TOKEN : {
 	<SPACE: " ">
 	|  "\t"
 	|  "\014"
-	|  <CONTINUATION: ("\\") ("\n"|"\r")>
+	|  <CONTINUATION: ("\\") ("\r\n"|"\n"|"\r")>
 }
 
 SKIP: {
-	<NEWLINE1: ("\n"|"\r")> {
+    <NEWLINE1: ("\r\n"|"\n"|"\r")> {
 		if (parens == 0) {
 			indent = 0;
 			input_stream.backup(1);
-			if (level == 0) SwitchTo(FORCE_NEWLINE1);
-			else SwitchTo(FORCE_NEWLINE2);
+			if (level == 0)
+				SwitchTo(FORCE_NEWLINE1);
+			else
+				SwitchTo(FORCE_NEWLINE2);
 		}
 	}
 }
 
 <FORCE_NEWLINE1> TOKEN : {
-	<NEWLINE: ("\n" | "\r")> { if (DEBUG) System.out.println("Force newline1 ");} : INDENTATION_UNCHANGED
+	<NEWLINE: ("\n" | "\r")> : INDENTATION_UNCHANGED
 }
 
 <FORCE_NEWLINE2> TOKEN : {
-	<NEWLINE2: ("\n" | "\r")> { if (DEBUG) System.out.println("Force newline2 "); matchedToken.kind = NEWLINE; } : INDENTING
+	<NEWLINE2: ("\n" | "\r")> { matchedToken.kind = NEWLINE; } : INDENTING
 }
 
 // causes expected warning
@@ -142,13 +146,14 @@ SKIP: {
 	|  " " { indenting(indent+1); }
 	|  "\014" { indenting(0); }
 	|  <CRLF1: ("\r\n" | "\n" | "\r")> {
-		if (DEBUG) System.out.println("empty line");
+		//System.out.println("empty line");
 		// if partial single_input (interactive) mode,
 		// empty line (indent==0), and no parens open
 		// or indentetion expected (if stdprompt == true, ovveride last cond)
 		// consider forcing sentence closing NEWLINE if EOF
-		if (partial && single_input && indent == 0 && parens == 0  && (stdprompt || !expect_indent)) {
-			if (DEBUG) System.out.println("force newline");
+		if (partial && single_input && indent == 0 &&
+				parens == 0  && (stdprompt || !expect_indent)) {
+			//System.out.println("force newline");
 			//backup a character!
 			// - input_stream.backup(1); -
 			SwitchTo(MAYBE_FORCE_NEWLINE_IF_EOF);
@@ -164,7 +169,6 @@ SKIP: {
 <INDENTING> TOKEN : {
 	<DEDENT: ""> {
 		if (indent > indentation[level]) {
-			if (DEBUG) System.out.println("indending with " + indent + " " + level);
 			level++;
 			indentation[level] = indent;
 			matchedToken.kind=INDENT;
@@ -201,6 +205,7 @@ SKIP: {
 		indenting(0);
 	}
 }
+
 
 TOKEN : /* SEPARATORS */ {
 	< LPAREN: "(" > {parens++;}
@@ -398,11 +403,18 @@ MORE : /* Strings */ {
 	|  <"\\" ~["\n","\r"]>
 }
 
+
+
+
+
+
+
+
 GRAMMARSTART
 
 @FSTNonTerminal
 file_input
-	:  (stmt @!)* <EOF>
+	:  (<NEWLINE>)? (stmt @!)* <EOF>
 	;
 
 @FSTExportName("{varargslist}")
@@ -439,7 +451,7 @@ fplist
 	;
 
 stmt
-	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt
+	:  @FSTNonTerminal(name="{simple_stmt}") simple_stmt @!
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") if_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") while_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
@@ -451,7 +463,7 @@ stmt
 
 @FSTNonTerminal(name="{small_stmt}")
 simple_stmt
-	:  &LI small_stmt (LL(2) ";" &LI small_stmt)* [";" <NONE>] (<NEWLINE>)?
+	:  &LI small_stmt (LL(2) ";" &LI small_stmt)* [";" <NONE>] <NEWLINE>
 	;
 
 small_stmt
@@ -469,7 +481,7 @@ small_stmt
 
 @FSTExportName("{<NAME>}")
 assignment_stmt
-	:  <NAME> "=" SmartTestList (<NEWLINE>)?
+	:  <NAME> "=" SmartTestList
 	;
 
 @FSTExportName("{SmartTestList}")
