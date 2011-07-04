@@ -8,123 +8,127 @@ public interface PythonParserConstants {
   int CONTINUATION = 4;
   int NEWLINE1 = 5;
   int NEWLINE = 6;
-  int NEWLINE2 = 7;
-  int CRLF1 = 12;
-  int DEDENT = 14;
-  int INDENT = 15;
-  int TRAILING_COMMENT = 16;
-  int SINGLE_LINE_COMMENT = 17;
-  int LPAREN = 18;
-  int RPAREN = 19;
-  int LBRACE = 20;
-  int RBRACE = 21;
-  int LBRACKET = 22;
-  int RBRACKET = 23;
-  int SEMICOLON = 24;
-  int COMMA = 25;
-  int DOT = 26;
-  int COLON = 27;
-  int PLUS = 28;
-  int MINUS = 29;
-  int MULTIPLY = 30;
-  int DIVIDE = 31;
-  int FLOORDIVIDE = 32;
-  int POWER = 33;
-  int LSHIFT = 34;
-  int RSHIFT = 35;
-  int MODULO = 36;
-  int NOT = 37;
-  int XOR = 38;
-  int OR = 39;
-  int AND = 40;
-  int EQUAL = 41;
-  int GREATER = 42;
-  int LESS = 43;
-  int EQEQUAL = 44;
-  int EQLESS = 45;
-  int EQGREATER = 46;
-  int LESSGREATER = 47;
-  int NOTEQUAL = 48;
-  int PLUSEQ = 49;
-  int MINUSEQ = 50;
-  int MULTIPLYEQ = 51;
-  int DIVIDEEQ = 52;
-  int FLOORDIVIDEEQ = 53;
-  int MODULOEQ = 54;
-  int ANDEQ = 55;
-  int OREQ = 56;
-  int XOREQ = 57;
-  int LSHIFTEQ = 58;
-  int RSHIFTEQ = 59;
-  int POWEREQ = 60;
-  int OR_BOOL = 61;
-  int AND_BOOL = 62;
-  int NOT_BOOL = 63;
-  int IS = 64;
-  int IN = 65;
-  int LAMBDA = 66;
-  int IF = 67;
-  int ELSE = 68;
-  int ELIF = 69;
-  int WHILE = 70;
-  int FOR = 71;
-  int TRY = 72;
-  int EXCEPT = 73;
-  int DEF = 74;
-  int CLASS = 75;
-  int FINALLY = 76;
-  int PRINT = 77;
-  int PASS = 78;
-  int BREAK = 79;
-  int CONTINUE = 80;
-  int RETURN = 81;
-  int YIELD = 82;
-  int IMPORT = 83;
-  int FROM = 84;
-  int DEL = 85;
-  int RAISE = 86;
-  int GLOBAL = 87;
-  int EXEC = 88;
-  int ASSERT = 89;
-  int AS = 90;
-  int WITH = 91;
-  int NAME = 92;
-  int LETTER = 93;
-  int DECNUMBER = 94;
-  int HEXNUMBER = 95;
-  int OCTNUMBER = 96;
-  int FLOAT = 97;
-  int COMPLEX = 98;
-  int EXPONENT = 99;
-  int DIGIT = 100;
-  int SINGLE_STRING = 109;
-  int SINGLE_STRING2 = 110;
-  int TRIPLE_STRING = 111;
-  int TRIPLE_STRING2 = 112;
-  int SINGLE_USTRING = 113;
-  int SINGLE_USTRING2 = 114;
-  int TRIPLE_USTRING = 115;
-  int TRIPLE_USTRING2 = 116;
+  int NEWLINE3 = 7;
+  int CRLF3 = 10;
+  int NEWLINE2 = 11;
+  int CRLF1 = 16;
+  int DEDENT = 18;
+  int INDENT = 19;
+  int TRAILING_COMMENT = 20;
+  int SINGLE_LINE_COMMENT = 21;
+  int LPAREN = 22;
+  int RPAREN = 23;
+  int LBRACE = 24;
+  int RBRACE = 25;
+  int LBRACKET = 26;
+  int RBRACKET = 27;
+  int SEMICOLON = 28;
+  int COMMA = 29;
+  int DOT = 30;
+  int COLON = 31;
+  int PLUS = 32;
+  int MINUS = 33;
+  int MULTIPLY = 34;
+  int DIVIDE = 35;
+  int FLOORDIVIDE = 36;
+  int POWER = 37;
+  int LSHIFT = 38;
+  int RSHIFT = 39;
+  int MODULO = 40;
+  int NOT = 41;
+  int XOR = 42;
+  int OR = 43;
+  int AND = 44;
+  int EQUAL = 45;
+  int GREATER = 46;
+  int LESS = 47;
+  int EQEQUAL = 48;
+  int EQLESS = 49;
+  int EQGREATER = 50;
+  int LESSGREATER = 51;
+  int NOTEQUAL = 52;
+  int PLUSEQ = 53;
+  int MINUSEQ = 54;
+  int MULTIPLYEQ = 55;
+  int DIVIDEEQ = 56;
+  int FLOORDIVIDEEQ = 57;
+  int MODULOEQ = 58;
+  int ANDEQ = 59;
+  int OREQ = 60;
+  int XOREQ = 61;
+  int LSHIFTEQ = 62;
+  int RSHIFTEQ = 63;
+  int POWEREQ = 64;
+  int OR_BOOL = 65;
+  int AND_BOOL = 66;
+  int NOT_BOOL = 67;
+  int IS = 68;
+  int IN = 69;
+  int LAMBDA = 70;
+  int IF = 71;
+  int ELSE = 72;
+  int ELIF = 73;
+  int WHILE = 74;
+  int FOR = 75;
+  int TRY = 76;
+  int EXCEPT = 77;
+  int DEF = 78;
+  int CLASS = 79;
+  int FINALLY = 80;
+  int PRINT = 81;
+  int PASS = 82;
+  int BREAK = 83;
+  int CONTINUE = 84;
+  int RETURN = 85;
+  int YIELD = 86;
+  int IMPORT = 87;
+  int FROM = 88;
+  int DEL = 89;
+  int RAISE = 90;
+  int GLOBAL = 91;
+  int EXEC = 92;
+  int ASSERT = 93;
+  int AS = 94;
+  int WITH = 95;
+  int NAME = 96;
+  int LETTER = 97;
+  int DECNUMBER = 98;
+  int HEXNUMBER = 99;
+  int OCTNUMBER = 100;
+  int FLOAT = 101;
+  int COMPLEX = 102;
+  int EXPONENT = 103;
+  int DIGIT = 104;
+  int SINGLE_STRING = 113;
+  int SINGLE_STRING2 = 114;
+  int TRIPLE_STRING = 115;
+  int TRIPLE_STRING2 = 116;
+  int SINGLE_USTRING = 117;
+  int SINGLE_USTRING2 = 118;
+  int TRIPLE_USTRING = 119;
+  int TRIPLE_USTRING2 = 120;
 
   int DEFAULT = 0;
   int FORCE_NEWLINE1 = 1;
-  int FORCE_NEWLINE2 = 2;
-  int MAYBE_FORCE_NEWLINE_IF_EOF = 3;
-  int INDENTING = 4;
-  int INDENTATION_UNCHANGED = 5;
-  int UNREACHABLE = 6;
-  int IN_STRING11 = 7;
-  int IN_STRING21 = 8;
-  int IN_STRING13 = 9;
-  int IN_STRING23 = 10;
-  int IN_USTRING11 = 11;
-  int IN_USTRING21 = 12;
-  int IN_USTRING13 = 13;
-  int IN_USTRING23 = 14;
-  int IN_STRING1NLC = 15;
-  int IN_STRING2NLC = 16;
-  int IN_USTRING1NLC = 17;
-  int IN_USTRING2NLC = 18;
+  int FORCE_NEWLINE3 = 2;
+  int INDENTION_DELETE = 3;
+  int FORCE_NEWLINE2 = 4;
+  int MAYBE_FORCE_NEWLINE_IF_EOF = 5;
+  int INDENTING = 6;
+  int INDENTATION_UNCHANGED = 7;
+  int UNREACHABLE = 8;
+  int IN_STRING11 = 9;
+  int IN_STRING21 = 10;
+  int IN_STRING13 = 11;
+  int IN_STRING23 = 12;
+  int IN_USTRING11 = 13;
+  int IN_USTRING21 = 14;
+  int IN_USTRING13 = 15;
+  int IN_USTRING23 = 16;
+  int IN_STRING1NLC = 17;
+  int IN_STRING2NLC = 18;
+  int IN_USTRING1NLC = 19;
+  int IN_USTRING2NLC = 20;
 
   String[] tokenImage = {
     "<EOF>",
@@ -134,6 +138,10 @@ public interface PythonParserConstants {
     "<CONTINUATION>",
     "<NEWLINE1>",
     "<NEWLINE>",
+    "<NEWLINE3>",
+    "\"\\t\"",
+    "\" \"",
+    "<CRLF3>",
     "<NEWLINE2>",
     "\"\"",
     "\"\\t\"",
@@ -228,14 +236,14 @@ public interface PythonParserConstants {
     "<COMPLEX>",
     "<EXPONENT>",
     "<DIGIT>",
-    "<token of kind 101>",
-    "<token of kind 102>",
-    "<token of kind 103>",
-    "<token of kind 104>",
     "<token of kind 105>",
     "<token of kind 106>",
     "<token of kind 107>",
     "<token of kind 108>",
+    "<token of kind 109>",
+    "<token of kind 110>",
+    "<token of kind 111>",
+    "<token of kind 112>",
     "\"\\\'\"",
     "\"\\\"\"",
     "\"\\\'\\\'\\\'\"",
@@ -244,25 +252,25 @@ public interface PythonParserConstants {
     "\"\\\"\"",
     "\"\\\'\\\'\\\'\"",
     "\"\\\"\\\"\\\"\"",
-    "\"\\\\\\r\\n\"",
-    "<token of kind 118>",
-    "\"\\\\\\r\\n\"",
-    "<token of kind 120>",
     "\"\\\\\\r\\n\"",
     "<token of kind 122>",
     "\"\\\\\\r\\n\"",
     "<token of kind 124>",
+    "\"\\\\\\r\\n\"",
+    "<token of kind 126>",
+    "\"\\\\\\r\\n\"",
+    "<token of kind 128>",
     "\"\"",
     "\"\"",
     "\"\"",
     "\"\"",
-    "<token of kind 129>",
-    "<token of kind 130>",
+    "<token of kind 133>",
+    "<token of kind 134>",
     "\"\\r\\n\"",
     "\"\\n\"",
     "\"\\r\"",
-    "<token of kind 134>",
-    "<token of kind 135>",
+    "<token of kind 138>",
+    "<token of kind 139>",
     "\"`\"",
     "\"@\"",
   };

@@ -1,21 +1,32 @@
+import os
+import sys
+import re
+
+gfoo = False
+
 class Stack:
-<<<<<<< /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309537130867/fstmerge_var1_1276309913671386314
+<<<<<<< /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309795885897/fstmerge_var1_3753621415647563471
 	items = llist()
-   
 =======
-	items = xlist()
-	
->>>>>>> /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309537130867/fstmerge_var2_1545644095465597523
+	import foo
+	try:
+		a = b
+	except:
+		pass
+	items = llist()
+	import bar
+>>>>>>> /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309795885897/fstmerge_var2_8685901052683957103
+	check = first
+	check2 = second
+
 	def push(self, item):
 		self.items.append(item)
 
 	serialVersionUID = 42
-	
+
 	def pop(self):
-		if len(self.items) > 0:
-			return self.items.pop()
-		else:
-			return None
+		if len(self.items) > 0: return self.items.pop()
+		else: return None
 
 	def flush(self):
 		pass
