@@ -22,9 +22,10 @@ public class PythonParserTokenManager implements PythonParserConstants
         public boolean stdprompt = false;
 
         public boolean generator_allowed = true;
+        private static boolean DEBUG = false;
 
         static Token addDedent(Token previous) {
-                System.out.println("adding dedent ");
+        if (DEBUG) System.out.println("adding dedent ");
                 Token t = new Token();
                 t.kind = DEDENT;
                 t.beginLine = previous.beginLine;
@@ -3652,13 +3653,13 @@ void SkipLexicalActions(Token matchedToken)
          if (image == null)
             image = new StringBuffer();
          image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
-                System.out.println("empty line");
+                if (DEBUG) System.out.println("empty line");
                 // if partial single_input (interactive) mode,
                 // empty line (indent==0), and no parens open
                 // or indentetion expected (if stdprompt == true, ovveride last cond)
                 // consider forcing sentence closing NEWLINE if EOF
                 if (partial && single_input && indent == 0 && parens == 0  && (stdprompt || !expect_indent)) {
-                        System.out.println("force newline");
+                        if (DEBUG) System.out.println("force newline");
                         //backup a character!
                         // - input_stream.backup(1); -
                         SwitchTo(MAYBE_FORCE_NEWLINE_IF_EOF);
@@ -3764,20 +3765,20 @@ void TokenLexicalActions(Token matchedToken)
         if (image == null)
             image = new StringBuffer();
             image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
-                                  System.out.println("Force newline1 ");
+                                   if (DEBUG) System.out.println("Force newline1 ");
          break;
       case 7 :
         if (image == null)
             image = new StringBuffer();
             image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
-                                    System.out.println("Force newline2 "); matchedToken.kind = NEWLINE;
+                                    if (DEBUG) System.out.println("Force newline2 "); matchedToken.kind = NEWLINE;
          break;
       case 14 :
         if (image == null)
             image = new StringBuffer();
             image.append(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));
                 if (indent > indentation[level]) {
-                        System.out.println("indending with " + indent + " " + level);
+                        if (DEBUG) System.out.println("indending with " + indent + " " + level);
                         level++;
                         indentation[level] = indent;
                         matchedToken.kind=INDENT;
