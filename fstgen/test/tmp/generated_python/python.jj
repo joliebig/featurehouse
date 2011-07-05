@@ -43,7 +43,7 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
-	
+
 	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
@@ -112,20 +112,18 @@ TOKEN_MGR_DECLS: {
 
 SPECIAL_TOKEN : {
 	<SPACE: " ">
-	|  "\t"
-	|  "\014"
+	| "\014"
 	|  <CONTINUATION: ("\\") ("\r\n"|"\n"|"\r")>
 }
 
 SKIP: {
-<NEWLINE1: ("\r\n"|"\n"|"\r")> {
+	"\t" |
+	<NEWLINE1: ("\r\n"|"\n"|"\r")> {
 		if (parens == 0) {
-			indent = 1;
+			indent = 0;
 			input_stream.backup(1);
 			if (level == 0)
 				SwitchTo(FORCE_NEWLINE1);
-			else if (level == 1)
-			    SwitchTo(FORCE_NEWLINE3);
 			else
 				SwitchTo(FORCE_NEWLINE2);
 		}
@@ -134,30 +132,6 @@ SKIP: {
 
 <FORCE_NEWLINE1> TOKEN : {
 	<NEWLINE: ("\n" | "\r")> : INDENTATION_UNCHANGED
-}
-
-<FORCE_NEWLINE3> TOKEN : {
-    <NEWLINE3: ("\n" | "\r")> : INDENTION_DELETE
-}
-
-<INDENTION_DELETE> SPECIAL_TOKEN: {
-    "\t" { indenting((indent/8-1)*8); }
-    | " " { indenting(indent-1); }
-    |  <CRLF3: ("\r\n" | "\n" | "\r")> {
-        //System.out.println("empty line");
-        // if partial single_input (interactive) mode,
-        // empty line (indent==0), and no parens open
-        // or indentetion expected (if stdprompt == true, ovveride last cond)
-        // consider forcing sentence closing NEWLINE if EOF
-        if (partial && single_input && indent == 0 &&
-                parens == 0  && (stdprompt || !expect_indent)) {
-            //System.out.println("force newline");
-            //backup a character!
-            // - input_stream.backup(1); -
-            SwitchTo(MAYBE_FORCE_NEWLINE_IF_EOF);
-        } else
-            indenting(0);
-    }
 }
 
 <FORCE_NEWLINE2> TOKEN : {

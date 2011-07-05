@@ -5,13 +5,7 @@ import re
 gfoo = False
 
 class Stack:
-	import foo
-	try:
-		a = b
-	except:
-		pass
 	items = llist()
-	import bar
 	check = first
 	check2 = second
 

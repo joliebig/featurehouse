@@ -5,17 +5,7 @@ import re
 gfoo = False
 
 class Stack:
-<<<<<<< /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309795885897/fstmerge_var1_3753621415647563471
 	items = llist()
-=======
-	import foo
-	try:
-		a = b
-	except:
-		pass
-	items = llist()
-	import bar
->>>>>>> /work/joliebig/workspace_sple/featurehouse/fstmerge/fstmerge_tmp1309795885897/fstmerge_var2_8685901052683957103
 	check = first
 	check2 = second
 

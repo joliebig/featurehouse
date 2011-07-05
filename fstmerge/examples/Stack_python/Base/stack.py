@@ -5,7 +5,7 @@ import re
 gfoo = False
 
 class Stack:
-	items = list()
+	items = llist()
 	check = first
 	check2 = second
 

@@ -43,7 +43,7 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
-	
+
 	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
@@ -112,20 +112,18 @@ TOKEN_MGR_DECLS: {
 
 SPECIAL_TOKEN : {
 	<SPACE: " ">
-	|  "\t"
-	|  "\014"
+	| "\014"
 	|  <CONTINUATION: ("\\") ("\r\n"|"\n"|"\r")>
 }
 
 SKIP: {
-<NEWLINE1: ("\r\n"|"\n"|"\r")> {
+	"\t" |
+	<NEWLINE1: ("\r\n"|"\n"|"\r")> {
 		if (parens == 0) {
-			indent = 1;
+			indent = 0;
 			input_stream.backup(1);
 			if (level == 0)
 				SwitchTo(FORCE_NEWLINE1);
-			else if (level == 1)
-			    SwitchTo(FORCE_NEWLINE3);
 			else
 				SwitchTo(FORCE_NEWLINE2);
 		}
@@ -134,30 +132,6 @@ SKIP: {
 
 <FORCE_NEWLINE1> TOKEN : {
 	<NEWLINE: ("\n" | "\r")> : INDENTATION_UNCHANGED
-}
-
-<FORCE_NEWLINE3> TOKEN : {
-    <NEWLINE3: ("\n" | "\r")> : INDENTION_DELETE
-}
-
-<INDENTION_DELETE> SPECIAL_TOKEN: {
-    "\t" { indenting((indent/8-1)*8); }
-    | " " { indenting(indent-1); }
-    |  <CRLF3: ("\r\n" | "\n" | "\r")> {
-        //System.out.println("empty line");
-        // if partial single_input (interactive) mode,
-        // empty line (indent==0), and no parens open
-        // or indentetion expected (if stdprompt == true, ovveride last cond)
-        // consider forcing sentence closing NEWLINE if EOF
-        if (partial && single_input && indent == 0 &&
-                parens == 0  && (stdprompt || !expect_indent)) {
-            //System.out.println("force newline");
-            //backup a character!
-            // - input_stream.backup(1); -
-            SwitchTo(MAYBE_FORCE_NEWLINE_IF_EOF);
-        } else
-            indenting(0);
-    }
 }
 
 <FORCE_NEWLINE2> TOKEN : {
@@ -478,7 +452,7 @@ stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
-	|  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef :: FunctionDefinition
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef :: FunctionDefinition
 	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
 	;
 
@@ -511,23 +485,23 @@ expr_stmt
 	;
 
 expr_stmtEnd
-	:  <PLUSEQ> SmartTestList 
-	|  <MINUSEQ> SmartTestList 
-	|  <MULTIPLYEQ> SmartTestList 
-	|  <DIVIDEEQ> SmartTestList 
-	|  <FLOORDIVIDEEQ> SmartTestList 
+	:  <PLUSEQ> SmartTestList
+	|  <MINUSEQ> SmartTestList
+	|  <MULTIPLYEQ> SmartTestList
+	|  <DIVIDEEQ> SmartTestList
+	|  <FLOORDIVIDEEQ> SmartTestList
 	|  <MODULOEQ> SmartTestList
 	|  <ANDEQ> SmartTestList
-	|  <OREQ> SmartTestList 
-	|  <XOREQ> SmartTestList 
-	|  <LSHIFTEQ> SmartTestList 
-	|  <RSHIFTEQ> SmartTestList 
-	|  <POWEREQ> SmartTestList 
+	|  <OREQ> SmartTestList
+	|  <XOREQ> SmartTestList
+	|  <LSHIFTEQ> SmartTestList
+	|  <RSHIFTEQ> SmartTestList
+	|  <POWEREQ> SmartTestList
 	|  ("=" SmartTestList)*
 	;
 
 print_stmt
-	:  LL(2) <PRINT> <RSHIFT> test [print_stmtEndP]        
+	:  LL(2) <PRINT> <RSHIFT> test [print_stmtEndP]
 	|  LL(2) <PRINT> print_stmtEndA
 	|  <PRINT>
 	;
@@ -549,7 +523,7 @@ pass_stmt
 	;
 
 flow_stmt
-	:  <BREAK> 
+	:  <BREAK>
 	|  <CONTINUE>
 	|  return_stmt
 	|  yield_stmt
@@ -740,16 +714,16 @@ compEnd
 	;
 
 comp_op
-	:  <LESS> 
-	|  <GREATER> 
-	|  <EQEQUAL> 
-	|  <EQGREATER> 
-	|  <EQLESS> 
-	|  <LESSGREATER> 
+	:  <LESS>
+	|  <GREATER>
+	|  <EQEQUAL>
+	|  <EQGREATER>
+	|  <EQLESS>
+	|  <LESSGREATER>
 	|  <NOTEQUAL>
-	|  <IN> 
+	|  <IN>
 	|  "not" <IN>
-	|  LL(2) <IS> "not" 
+	|  LL(2) <IS> "not"
 	|  <IS>
 	;
 
@@ -781,23 +755,23 @@ arith_expr
 arith_exprEnd
 	:  <PLUS> term
 	| <MINUS> term
-	; 
+	;
 
 term
 	:  factor (termEnd)*
 	;
 
 termEnd
-	:  "*" factor 
-	|  <DIVIDE> factor 
-	|  <FLOORDIVIDE> factor 
+	:  "*" factor
+	|  <DIVIDE> factor
+	|  <FLOORDIVIDE> factor
 	|  <MODULO> factor
 	;
 
 factor
 	:  <PLUS> factor
-	|  <MINUS> factor 
-	|  <NOT> factor 
+	|  <MINUS> factor
+	|  <NOT> factor
 	|  powerfactor
 	;
 
@@ -808,21 +782,21 @@ powerfactor
 atomtrailer
 	:  atom (atomtrailerEnd)*
 	;
-    
+
 atomtrailerEnd
 	:  LL(2) "(" ")" <NONE>
-	|  "(" arglist ")" 
-	|  "[" subscriptlist "]" 
+	|  "(" arglist ")"
+	|  "[" subscriptlist "]"
 	|  <DOT> AnyName
 	;
 
 atom
 	:  LL(2) "(" ")" <NONE>
 	|  LL(2) Name "=" test
-	|  "(" [SmartTestList] ")" 
-	|  <LBRACKET> [listmaker] "]" 
+	|  "(" [SmartTestList] ")"
+	|  <LBRACKET> [listmaker] "]"
 	|  "{" [dictmaker] "}"
-	|  "`" SmartTestList "`" 
+	|  "`" SmartTestList "`"
 	|  Name
 	|  Number
 	|  StringNode (StringNode)*
@@ -837,7 +811,7 @@ subscriptlist
 	;
 
 subscript
-	:  <DOT> <DOT> <DOT> 
+	:  <DOT> <DOT> <DOT>
 	|  test (slice)?
 	|  slice
 	;
@@ -874,13 +848,13 @@ dictInt
 listmaker
 	:  test listmakerEnd
 	;
- 
+
 listmakerEnd
 	:  (list_for)+
 	|  (LL(2) "," test)* [","<NONE>]
-	; 
+	;
 
-list_for: 
+list_for:
  	"for" exprlist "in" SmartTestList (list_if)* ;
 
 list_if
@@ -899,10 +873,10 @@ decorator_End
 	:  <NEWLINE>
 	|  "(" decorator_End_Par
 	;
-	
+
 decorator_End_Par
 	:  ")"<NONE> <NEWLINE>
-	|  arglist ")" <NEWLINE>  
+	|  arglist ")" <NEWLINE>
 	;
 
 @FSTExportName("{<NAME>}({parameters})")
@@ -926,8 +900,8 @@ ClassName
 	;
 
 classdef_End
-	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") small_stmt <NEWLINE>
-	|  @FSTNonTerminal() classsuite
+	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") @+ small_stmt <NEWLINE>
+	|  @FSTNonTerminal() @+ classsuite
 	;
 
 @FSTInline
@@ -941,9 +915,9 @@ classsimple_stmt
 	;
 
 classsmall_stmt
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") funcdef
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef
 	|  @FSTNonTerminal(name="{classdef}") classdef
-	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") LOOK_AHEAD("Name() \"=\"") FieldDeclaration
+	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
 	|  @FSTTerminal(name="{AUTO}") expr_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{TOSTRING}",merge="SemanticConflict") print_stmt
@@ -970,7 +944,7 @@ Field
 
 @FSTInline
 suite
-	:  <NEWLINE> <INDENT> (stmt)+ <DEDENT>
+	:  <NEWLINE> <INDENT> @+ (stmt)+ @- <DEDENT>
 	;
 
 arglist
@@ -981,7 +955,7 @@ arglist
 arglist1End
 	:  ","  [LL(2) arglist1EndEnd]
 	;
-  
+
 arglist1EndEnd
 	:  LL(2) ExtraArgValueList ["," ExtraKeywordValueList]
 	|  ExtraKeywordValueList
@@ -998,7 +972,7 @@ ExtraArgValueList
 ExtraKeywordValueList
 	:  power test
 	;
- 
+
 power
 	:  "**"<NONE>
 	|  "*" "*" <NONE>
@@ -1015,7 +989,7 @@ Number
 	|  <FLOAT>
 	|  <COMPLEX>
 	;
-        
+
 Complex
 	:  <FLOAT>
 	;
@@ -1038,34 +1012,34 @@ StringNode
 
 AnyName
 	:  <NAME>
-	|  "or" 
-	|  "and" 
-	|  "not" 
-	|  <IS> 
-	|  <IN> 
-	|  <LAMBDA> 
-	|  <IF> 
-	|  <ELSE> 
-	|  <ELIF> 
-	|  <WHILE> 
-	|  <FOR> 
-	|  <TRY> 
-	|  <EXCEPT> 
-	|  <DEF> 
-	|  <CLASS> 
-	|  <FINALLY> 
-	|  <PRINT> 
-	|  <PASS> 
-	|  <BREAK> 
-	|  <CONTINUE> 
-	|  <RETURN> 
-	|  <YIELD> 
-	|  <IMPORT> 
-	|  <FROM> 
-	|  <DEL> 
-	|  <RAISE> 
-	|  <GLOBAL> 
-	|  <EXEC> 
-	|  <ASSERT> 
+	|  "or"
+	|  "and"
+	|  "not"
+	|  <IS>
+	|  <IN>
+	|  <LAMBDA>
+	|  <IF>
+	|  <ELSE>
+	|  <ELIF>
+	|  <WHILE>
+	|  <FOR>
+	|  <TRY>
+	|  <EXCEPT>
+	|  <DEF>
+	|  <CLASS>
+	|  <FINALLY>
+	|  <PRINT>
+	|  <PASS>
+	|  <BREAK>
+	|  <CONTINUE>
+	|  <RETURN>
+	|  <YIELD>
+	|  <IMPORT>
+	|  <FROM>
+	|  <DEL>
+	|  <RAISE>
+	|  <GLOBAL>
+	|  <EXEC>
+	|  <ASSERT>
 	|  <AS>
 	;
