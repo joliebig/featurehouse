@@ -25,7 +25,6 @@ SPECIAL_TOKEN :
       "\r" | 
       "\f" 
     }
-
 /*****************************************************************************
  * COMMENTS                                                                  *
  *****************************************************************************/
@@ -51,9 +50,59 @@ MORE :
 	 IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
 			{ < ~[] > }
-
 /*****************************************************************************
  * RESERVED KEYWORDS AND LITERALS                                            *
+ *****************************************************************************/
+/*****************************************************************************
+ * MODULE DECLARATION                                                        *
+ *****************************************************************************/
+ TOKEN :
+ 	{ < MODULE: "module" > |
+ 	  < SPECIFICATION: "specification" > |
+ 	  < IMPORTS: "imports" > | 
+	  < EXPORTS: "exports" > |
+	  < HIDDENS: "hiddens" >
+ 	}
+/*****************************************************************************
+ * GRAMMAR DECLARATION                                                       *
+ *****************************************************************************/
+ TOKEN :
+ 	{ < SORTS: "sorts" > |
+ 	  < STARTSYMBOL: "context-free start-symbols" >
+ 	}
+/*****************************************************************************
+ * PRODUCTION DECLARATION                                                    *
+ *****************************************************************************/
+ TOKEN :
+ 	{ < SYNTAX: "syntax" > |
+	  < VARIABLES: "variables" > |
+	  < LEXICALSYNTAX: "lexical syntax" > |
+	  < CFREESYNTAX: "context-free syntax"> |
+	  < LEXICALVARS: "lexical variables" > |
+	  < CONS: "cons" > 
+ 	}
+/*****************************************************************************
+ * DISAMBIGUATION DECLARATION                                                *
+ *****************************************************************************/
+ TOKEN :
+ 	{ < LEFT: "left" > |
+	  < ASSOC: "assoc" > |
+	  < AVOID: "avoid" > |
+	  < RIGHT: "right" > |
+	  < PREFER: "prefer" > |
+	  < BRACKET: "bracket" > |
+	  < REJECT: "reject" > |
+	  < NONASSOC: "non-assoc" > |
+	  < RECOVER: "recover" > |
+	  < DEPRECATED: "deprecated" > | 
+	  < INDENTPADDING: "indentpadding" > |
+	  < PRIORITIES: "priorities" > |
+	  < CFREEPRIORITIES: "context-free priorities" > |
+	  < LEXICALRESTRICTIONS: "lexical restrictions" > |
+	  < CFREERESTRICTIONS: "context-free restrictions" > 
+ 	}
+/*****************************************************************************
+ * TRANSFORMATION DECLARATION                                                *
  *****************************************************************************/
 TOKEN :
 	{ < ALL: "all" > | 
@@ -62,30 +111,24 @@ TOKEN :
 	  < ID: "id" > | 
 	  < IN: "in" > | 
 	  < LET: "let" > |
-	  < MODULE: "module" > |
 	  < NOT: "not" > | 
 	  < ONE: "one" > |
 	  < ON: "on" > |
 	  < CALL: "call" > |
 	  < PROCEED: "proceed" > |
 	  < SIGNATURES: "signatures" > |
-	  < SPECIFICATION: "specification" > |
 	  < WITH: "with" > |
 	  < OVERLAYS: "overlays" > | 
 	  < PRIM: "prim" > |
 	  < RULES: "rules" > | 
 	  < SCRIPT: "script" > | 
 	  < SIGNATURE: "signature" > | 
-	  < SOME: "some" > | 
-	  < SORTS: "sorts" > | 
+	  < SOME: "some" > |
 	  < STRATEGIES: "strategies" > | 
 	  < STRATEGO: "stratego" > | 
 	  < TEST: "test" > | 
 	  < WHERE: "where" > | 
 	  < IMPORTTERM: "import-term" > | 
-	  < IMPORTS: "imports" > | 
-	  < EXPORTS: "exports" > |
-	  < HIDDENS: "hiddens" > |
 	  < CASE: "case" > |
 	  < ELSE: "else" > | 
 	  < END: "end" > | 
@@ -100,31 +143,8 @@ TOKEN :
 	  < INTERNAL: "internal" > | 
 	  < SEALED: "sealed" > | 
 	  < EXTENSIBLE: "extensible" > |
-	  < SYNTAX: "syntax" > |
-	  < VARIABLES: "variables" > |
-	  < PRIORITIES: "priorities" > |
-	  < OVERRIDABLE: "overrideable" > |
-	  < LEFT: "left" > |
-	  < ASSOC: "assoc" > |
-	  < AVOID: "avoid" > |
-	  < RIGHT: "right" > |
-	  < PREFER: "prefer" > |
-	  < BRACKET: "bracket" > |
-	  < REJECT: "reject" > |
-	  < NONASSOC: "non-assoc" > |
-	  < RECOVER: "recover" > |
-	  < INDENTPADDING: "indentpadding" > |
-	  < STARTSYMBOL: "context-free start-symbols" > |
-	  < LEXICALSYNTAX: "lexical syntax" > |
-	  < CFREESYNTAX: "context-free syntax"> |
-	  < LEXICALVARS: "lexical variables" > |
-	  < CFREEPRIORITIES: "context-free priorities" > |
-	  < LEXICALRESTRICTIONS: "lexical restrictions" > |
-	  < CFREERESTRICTIONS: "context-free restrictions" > |
-	  < CONS: "cons" > |
-	  < DEPRECATED: "deprecated" >
+	  < OVERRIDABLE: "overrideable" > 
 	}
-
 /*****************************************************************************
  * LITERALS                                                                  *
  *****************************************************************************/
@@ -155,21 +175,18 @@ TOKEN :
 				  ["0"-"7"] ( ["0"-"7"] )? | 
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
-
 /*****************************************************************************
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<SPECIALSIGN>) 
-					(<LETTER>|<DIGIT>|<SPECIALSIGN>)* > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>) (<LETTER>|<DIGIT>)* > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "\u0061"-"\u007a" ] > |
 	  < UCCHAR: [ "\u0041"-"\u005a" ] > |
 	  < DIGIT: [ "\u0030"-"\u0039" ] >
 	}
-
 /*****************************************************************************
- * SEPARATORS                                                                *
+ * PARENTHESIS                                                               *
  *****************************************************************************/
 TOKEN :
 	{ < LPAREN: "(" > | 
@@ -177,36 +194,52 @@ TOKEN :
 	  < LBRACE: "{" > | 
 	  < RBRACE: "}" > | 
 	  < LBRACKET: "[" > |
-	  < DLBRACKET: "[[" > |
 	  < RBRACKET: "]" > |
-	  < DRBRACKET: "]]" > | 
-	  < COMMA: "," > |
-	  < ARROW: "->" > |
+	  < DLBRACKET: "[[" > | 
+	  < DRBRACKET: "]]" > |
 	  < LT: "<" > |
-	  < GT: ">" > |
-	  < NOTALLOWED: "-/-" > |
+	  < GT: ">" >
+	}
+/*****************************************************************************
+ * OPERATORS                                                                 *
+ *****************************************************************************/
+TOKEN :
+	{ < PLUS: "+" > |
+	  < MINUS: "-" > |
+	  < STAR: "*" > |
+	  < SLASH: "/" >
+	}
+/*****************************************************************************
+ * SEPARATORS                                                                *
+ *****************************************************************************/
+TOKEN :
+	{ < COMMA: "," > |
+	  < SEMICOLON: ";" > |
 	  < DDOT: ":" > |
 	  < DOT: "." > |
 	  < QUESTIONMARK: "?" > |
-	  < EXCLAMATIONMARK: "!" > |
-	  < APOSTROPHE: "'" > |
-	  < PERCENTAGE: "%" > |
-	  < LOWLINE: "_" > |
-	  < DOLLAR: "$" > |
+	  < EXCLAMATIONMARK: "!" >
+	}
+/*****************************************************************************
+ * SPECIAL SIGNS                                                             *
+ *****************************************************************************/
+TOKEN :
+	{ < NUMBERSIGN: "#" > |
 	  < AT: "@" > |
-	  < TILDE: "~" > |
-	  < QUOTATIONMARK: "\"" > |
-	  < SLASH: "/" > |
-	  < BACKSLASH: "\\" > |
-	  < NUMBERSIGN: "#" > |
+	  < DOLLAR: "$" > |
 	  < VERTICALLINE: "|" > |
-	  < PLUS: "+" > |
-	  < MINUS: "-" > |
-	  < STAR: "*" > |
-	  < SPECIALSIGN: (<DOT>|<QUESTIONMARK>|<APOSTROPHE>|<PERCENTAGE>|<LOWLINE>|
-	  				  <DOLLAR>|<AT>|<TILDE>|<QUOTATIONMARK>|<SLASH>|<BACKSLASH>|
-	  				  <NUMBERSIGN>|<VERTICALLINE>|<MINUS>|<PLUS>|<STAR>|<DDOT>|
-	  				  <EXCLAMATIONMARK>) > 
+	  < TILDE: "~" > |
+	  < AMPERSAND: "&" > |
+	  < PERCENTAGE: "%" > |
+	  < CIRCUMFLEXACCENT: "^" > |
+	  < GRAVEACCENT: "`" > |
+	  < APOSTROPHE: "'" > |
+	  < ARROW: "->" > |
+	  < ASSIGN: "=" > |
+	  < NOTALLOWED: "-/-" > |
+	  < LOWLINE: "_" > |
+	  < QUOTATIONMARK: "\"" > |
+	  < BACKSLASH: "\\" >
 	}
 FSTInfo NatInteger(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
@@ -278,13 +311,13 @@ FSTInfo ModuleSort(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ModName(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=ModNamePart(true){ replaceName(n);} (LOOKAHEAD(2) "/" n=ModNamePart(true){ replaceName(n);})* {return productionEndTerminal("ModName","-","-","Replacement","Default",first,token);}
+	n=ModNamePart(true){ replaceName(n);} ("/" n=ModNamePart(true){ replaceName(n);})* {return productionEndTerminal("ModName","-","-","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo ModNamePart(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Id(true){ replaceName(n);} {return productionEndTerminal("ModNamePart","-","-","Replacement","Default",first,token);}
+	n=Id(true){ replaceName(n);} ("-" n=Id(true){ replaceName(n);})* {return productionEndTerminal("ModNamePart","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -296,7 +329,7 @@ FSTInfo ImportModName(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"imports" (n=ImportModName(true){ replaceName(n);})* {return productionEndTerminal("ImportDeclaration","{ModName}{ImportModule}","{ModName}{ImportModule}","Replacement","Default",first,token);}
+	"imports" (n=ImportModName(true){ replaceName(n);})+ {return productionEndTerminal("ImportDeclaration","{ModName}{ImportModule}","{ModName}{ImportModule}","Replacement","Default",first,token);}
 
  )  }
 
@@ -346,11 +379,7 @@ FSTInfo ProdPart(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Disambiguations(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"context-free priorities" (n=Priority(true){ replaceName(n);})* {return productionEndTerminal("Disambiguations1","-","-","Replacement","Default",first,token);}
- |
-	"lexical restrictions" (n=Restriction(true){ replaceName(n);})* {return productionEndTerminal("Disambiguations2","-","-","Replacement","Default",first,token);}
- |
-	"context-free restrictions" (n=Restriction(true){ replaceName(n);})* {return productionEndTerminal("Disambiguations3","-","-","Replacement","Default",first,token);}
+	"context-free priorities" (n=Priority(true){ replaceName(n);})* {return productionEndTerminal("Disambiguations","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -414,7 +443,7 @@ FSTInfo CharacterClass(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo OptAttributes(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"{" n=Attribute(true){ replaceName(n);} (LOOKAHEAD(2) "," n=Attribute(true){ replaceName(n);})* "}" {return productionEndTerminal("OptAttributes","-","-","Replacement","Default",first,token);}
+	"{" n=Attribute(true){ replaceName(n);} ("," n=Attribute(true){ replaceName(n);})* "}" {return productionEndTerminal("OptAttributes","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -454,19 +483,11 @@ FSTInfo Constructor(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Priority(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(3) n=Production(true){ replaceName(n);} (LOOKAHEAD(2) ">" n=Production(true){ replaceName(n);})* {return productionEndTerminal("Priority1","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(3) n=Production(true){ replaceName(n);} (">" n=Production(true){ replaceName(n);})* {return productionEndTerminal("Priority1","-","-","Replacement","Default",first,token);}
  |
 	LOOKAHEAD(3) "{" [n=Attribute(true){ replaceName(n);} ":"] (n=Production(true){ replaceName(n);})+ "}" ">" n=Production(true){ replaceName(n);} {return productionEndTerminal("Priority2","-","-","Replacement","Default",first,token);}
  |
 	n=Production(true){ replaceName(n);} ">" "{" [n=Attribute(true){ replaceName(n);} ":"] (n=Production(true){ replaceName(n);})+ "}" {return productionEndTerminal("Priority3","-","-","Replacement","Default",first,token);}
-
- )  }
-
-FSTInfo Restriction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(3) n=Symbol(true){ replaceName(n);} n=Id(true){ replaceName(n);} n=CharacterClass(true){ replaceName(n);} {return productionEndTerminal("Restriction1","-","-","Replacement","Default",first,token);}
- |
-	n=Symbol(true){ replaceName(n);} n=Id(true){ replaceName(n);} n=CharacterClass(true){ replaceName(n);} "." n=CharacterClass(true){ replaceName(n);} {return productionEndTerminal("Restriction2","-","-","Replacement","Default",first,token);}
 
  )  }
 

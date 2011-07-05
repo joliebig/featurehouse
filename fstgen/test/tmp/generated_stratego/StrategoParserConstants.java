@@ -8,73 +8,73 @@ public interface StrategoParserConstants {
   int SINGLE_LINE_COMMENT_SDF = 11;
   int FORMAL_COMMENT = 12;
   int MULTI_LINE_COMMENT = 13;
-  int ALL = 15;
-  int CONSTRUCTORS = 16;
-  int FAIL = 17;
-  int ID = 18;
-  int IN = 19;
-  int LET = 20;
-  int MODULE = 21;
-  int NOT = 22;
-  int ONE = 23;
-  int ON = 24;
-  int CALL = 25;
-  int PROCEED = 26;
-  int SIGNATURES = 27;
-  int SPECIFICATION = 28;
-  int WITH = 29;
-  int OVERLAYS = 30;
-  int PRIM = 31;
-  int RULES = 32;
-  int SCRIPT = 33;
-  int SIGNATURE = 34;
-  int SOME = 35;
-  int SORTS = 36;
-  int STRATEGIES = 37;
-  int STRATEGO = 38;
-  int TEST = 39;
-  int WHERE = 40;
-  int IMPORTTERM = 41;
-  int IMPORTS = 42;
-  int EXPORTS = 43;
-  int HIDDENS = 44;
-  int CASE = 45;
-  int ELSE = 46;
-  int END = 47;
-  int EXTERNAL = 48;
-  int IF = 49;
-  int OTHERWISE = 50;
-  int REC = 51;
-  int SWITCH = 52;
-  int THEN = 53;
-  int EXTEND = 54;
-  int OVERRIDE = 55;
-  int INTERNAL = 56;
-  int SEALED = 57;
-  int EXTENSIBLE = 58;
-  int SYNTAX = 59;
-  int VARIABLES = 60;
-  int PRIORITIES = 61;
-  int OVERRIDABLE = 62;
-  int LEFT = 63;
-  int ASSOC = 64;
-  int AVOID = 65;
-  int RIGHT = 66;
-  int PREFER = 67;
-  int BRACKET = 68;
-  int REJECT = 69;
-  int NONASSOC = 70;
-  int RECOVER = 71;
-  int INDENTPADDING = 72;
-  int STARTSYMBOL = 73;
-  int LEXICALSYNTAX = 74;
-  int CFREESYNTAX = 75;
-  int LEXICALVARS = 76;
-  int CFREEPRIORITIES = 77;
-  int LEXICALRESTRICTIONS = 78;
-  int CFREERESTRICTIONS = 79;
-  int CONS = 80;
-  int DEPRECATED = 81;
+  int MODULE = 15;
+  int SPECIFICATION = 16;
+  int IMPORTS = 17;
+  int EXPORTS = 18;
+  int HIDDENS = 19;
+  int SORTS = 20;
+  int STARTSYMBOL = 21;
+  int SYNTAX = 22;
+  int VARIABLES = 23;
+  int LEXICALSYNTAX = 24;
+  int CFREESYNTAX = 25;
+  int LEXICALVARS = 26;
+  int CONS = 27;
+  int LEFT = 28;
+  int ASSOC = 29;
+  int AVOID = 30;
+  int RIGHT = 31;
+  int PREFER = 32;
+  int BRACKET = 33;
+  int REJECT = 34;
+  int NONASSOC = 35;
+  int RECOVER = 36;
+  int DEPRECATED = 37;
+  int INDENTPADDING = 38;
+  int PRIORITIES = 39;
+  int CFREEPRIORITIES = 40;
+  int LEXICALRESTRICTIONS = 41;
+  int CFREERESTRICTIONS = 42;
+  int ALL = 43;
+  int CONSTRUCTORS = 44;
+  int FAIL = 45;
+  int ID = 46;
+  int IN = 47;
+  int LET = 48;
+  int NOT = 49;
+  int ONE = 50;
+  int ON = 51;
+  int CALL = 52;
+  int PROCEED = 53;
+  int SIGNATURES = 54;
+  int WITH = 55;
+  int OVERLAYS = 56;
+  int PRIM = 57;
+  int RULES = 58;
+  int SCRIPT = 59;
+  int SIGNATURE = 60;
+  int SOME = 61;
+  int STRATEGIES = 62;
+  int STRATEGO = 63;
+  int TEST = 64;
+  int WHERE = 65;
+  int IMPORTTERM = 66;
+  int CASE = 67;
+  int ELSE = 68;
+  int END = 69;
+  int EXTERNAL = 70;
+  int IF = 71;
+  int OTHERWISE = 72;
+  int REC = 73;
+  int SWITCH = 74;
+  int THEN = 75;
+  int EXTEND = 76;
+  int OVERRIDE = 77;
+  int INTERNAL = 78;
+  int SEALED = 79;
+  int EXTENSIBLE = 80;
+  int OVERRIDABLE = 81;
   int INTEGER_LITERAL = 82;
   int DECIMAL_LITERAL = 83;
   int HEX_LITERAL = 84;
@@ -93,33 +93,37 @@ public interface StrategoParserConstants {
   int LBRACE = 97;
   int RBRACE = 98;
   int LBRACKET = 99;
-  int DLBRACKET = 100;
-  int RBRACKET = 101;
+  int RBRACKET = 100;
+  int DLBRACKET = 101;
   int DRBRACKET = 102;
-  int COMMA = 103;
-  int ARROW = 104;
-  int LT = 105;
-  int GT = 106;
-  int NOTALLOWED = 107;
-  int DDOT = 108;
-  int DOT = 109;
-  int QUESTIONMARK = 110;
-  int EXCLAMATIONMARK = 111;
-  int APOSTROPHE = 112;
-  int PERCENTAGE = 113;
-  int LOWLINE = 114;
-  int DOLLAR = 115;
+  int LT = 103;
+  int GT = 104;
+  int PLUS = 105;
+  int MINUS = 106;
+  int STAR = 107;
+  int SLASH = 108;
+  int COMMA = 109;
+  int SEMICOLON = 110;
+  int DDOT = 111;
+  int DOT = 112;
+  int QUESTIONMARK = 113;
+  int EXCLAMATIONMARK = 114;
+  int NUMBERSIGN = 115;
   int AT = 116;
-  int TILDE = 117;
-  int QUOTATIONMARK = 118;
-  int SLASH = 119;
-  int BACKSLASH = 120;
-  int NUMBERSIGN = 121;
-  int VERTICALLINE = 122;
-  int PLUS = 123;
-  int MINUS = 124;
-  int STAR = 125;
-  int SPECIALSIGN = 126;
+  int DOLLAR = 117;
+  int VERTICALLINE = 118;
+  int TILDE = 119;
+  int AMPERSAND = 120;
+  int PERCENTAGE = 121;
+  int CIRCUMFLEXACCENT = 122;
+  int GRAVEACCENT = 123;
+  int APOSTROPHE = 124;
+  int ARROW = 125;
+  int ASSIGN = 126;
+  int NOTALLOWED = 127;
+  int LOWLINE = 128;
+  int QUOTATIONMARK = 129;
+  int BACKSLASH = 130;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -143,20 +147,46 @@ public interface StrategoParserConstants {
     "\"*/\"",
     "\"*/\"",
     "<token of kind 14>",
+    "\"module\"",
+    "\"specification\"",
+    "\"imports\"",
+    "\"exports\"",
+    "\"hiddens\"",
+    "\"sorts\"",
+    "\"context-free start-symbols\"",
+    "\"syntax\"",
+    "\"variables\"",
+    "\"lexical syntax\"",
+    "\"context-free syntax\"",
+    "\"lexical variables\"",
+    "\"cons\"",
+    "\"left\"",
+    "\"assoc\"",
+    "\"avoid\"",
+    "\"right\"",
+    "\"prefer\"",
+    "\"bracket\"",
+    "\"reject\"",
+    "\"non-assoc\"",
+    "\"recover\"",
+    "\"deprecated\"",
+    "\"indentpadding\"",
+    "\"priorities\"",
+    "\"context-free priorities\"",
+    "\"lexical restrictions\"",
+    "\"context-free restrictions\"",
     "\"all\"",
     "\"constructors\"",
     "\"fail\"",
     "\"id\"",
     "\"in\"",
     "\"let\"",
-    "\"module\"",
     "\"not\"",
     "\"one\"",
     "\"on\"",
     "\"call\"",
     "\"proceed\"",
     "\"signatures\"",
-    "\"specification\"",
     "\"with\"",
     "\"overlays\"",
     "\"prim\"",
@@ -164,15 +194,11 @@ public interface StrategoParserConstants {
     "\"script\"",
     "\"signature\"",
     "\"some\"",
-    "\"sorts\"",
     "\"strategies\"",
     "\"stratego\"",
     "\"test\"",
     "\"where\"",
     "\"import-term\"",
-    "\"imports\"",
-    "\"exports\"",
-    "\"hiddens\"",
     "\"case\"",
     "\"else\"",
     "\"end\"",
@@ -187,29 +213,7 @@ public interface StrategoParserConstants {
     "\"internal\"",
     "\"sealed\"",
     "\"extensible\"",
-    "\"syntax\"",
-    "\"variables\"",
-    "\"priorities\"",
     "\"overrideable\"",
-    "\"left\"",
-    "\"assoc\"",
-    "\"avoid\"",
-    "\"right\"",
-    "\"prefer\"",
-    "\"bracket\"",
-    "\"reject\"",
-    "\"non-assoc\"",
-    "\"recover\"",
-    "\"indentpadding\"",
-    "\"context-free start-symbols\"",
-    "\"lexical syntax\"",
-    "\"context-free syntax\"",
-    "\"lexical variables\"",
-    "\"context-free priorities\"",
-    "\"lexical restrictions\"",
-    "\"context-free restrictions\"",
-    "\"cons\"",
-    "\"deprecated\"",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
     "<HEX_LITERAL>",
@@ -228,33 +232,37 @@ public interface StrategoParserConstants {
     "\"{\"",
     "\"}\"",
     "\"[\"",
-    "\"[[\"",
     "\"]\"",
+    "\"[[\"",
     "\"]]\"",
-    "\",\"",
-    "\"->\"",
     "\"<\"",
     "\">\"",
-    "\"-/-\"",
+    "\"+\"",
+    "\"-\"",
+    "\"*\"",
+    "\"/\"",
+    "\",\"",
+    "\";\"",
     "\":\"",
     "\".\"",
     "\"?\"",
     "\"!\"",
-    "\"\\\'\"",
-    "\"%\"",
-    "\"_\"",
-    "\"$\"",
-    "\"@\"",
-    "\"~\"",
-    "\"\\\"\"",
-    "\"/\"",
-    "\"\\\\\"",
     "\"#\"",
+    "\"@\"",
+    "\"$\"",
     "\"|\"",
-    "\"+\"",
-    "\"-\"",
-    "\"*\"",
-    "<SPECIALSIGN>",
+    "\"~\"",
+    "\"&\"",
+    "\"%\"",
+    "\"^\"",
+    "\"`\"",
+    "\"\\\'\"",
+    "\"->\"",
+    "\"=\"",
+    "\"-/-\"",
+    "\"_\"",
+    "\"\\\"\"",
+    "\"\\\\\"",
   };
 
 }
