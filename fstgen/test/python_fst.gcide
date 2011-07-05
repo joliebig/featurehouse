@@ -12,8 +12,6 @@ options {
 PARSER_BEGIN(PythonParser)
 
 package tmp.generated_python;
-import java.io.*;
-import java.util.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
@@ -900,8 +898,8 @@ ClassName
 	;
 
 classdef_End
-	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") @+ small_stmt <NEWLINE>
-	|  @FSTNonTerminal() @+ classsuite
+	:  @FSTTerminal(name="{small_stmt}", merge="SemanticConflict") small_stmt
+	|  @FSTNonTerminal() classsuite
 	;
 
 @FSTInline
