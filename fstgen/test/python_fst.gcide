@@ -450,7 +450,7 @@ stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
-	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef :: FunctionDefinition
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ LOOK_AHEAD(" (decorators())? \"def\"") funcdef :: FunctionDefinition
 	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
 	;
 
@@ -563,8 +563,7 @@ ImportFrom
 	;
 
 ImportFrom_End
-	:   <IMPORT> ImportFromEnd
-	|   dotted_name <IMPORT> ImportFromEnd
+	:  [dotted_name] <IMPORT> ImportFromEnd
 	;
 
 ImportFromEnd
@@ -873,8 +872,8 @@ decorator_End
 	;
 
 decorator_End_Par
-	:  ")"<NONE> <NEWLINE>
-	|  arglist ")" <NEWLINE>
+	:  LOOK_AHEAD(1) ")"<NONE> <NEWLINE>
+	|  arglist ")"<NONE> <NEWLINE>
 	;
 
 @FSTExportName("{<NAME>}({parameters})")
@@ -913,7 +912,7 @@ classsimple_stmt
 	;
 
 classsmall_stmt
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ LOOK_AHEAD("(decorators())? \"def\"") funcdef
 	|  @FSTNonTerminal(name="{classdef}") classdef
 	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
 	|  @FSTTerminal(name="{AUTO}") expr_stmt
