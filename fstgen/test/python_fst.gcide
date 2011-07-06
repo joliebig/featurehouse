@@ -455,7 +455,7 @@ stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") for_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") try_stmt
 	|  @FSTTerminal(name="{AUTO}", merge="SemanticConflict") with_stmt
-	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef :: FunctionDefinition
+	|  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ LOOK_AHEAD(" (decorators())? \"def\"") funcdef :: FunctionDefinition
 	|  @FSTNonTerminal(name="{classdef}") classdef :: ClassDefinition
 	;
 
@@ -488,23 +488,23 @@ expr_stmt
 	;
 
 expr_stmtEnd
-	:  <PLUSEQ> SmartTestList 
-	|  <MINUSEQ> SmartTestList 
-	|  <MULTIPLYEQ> SmartTestList 
-	|  <DIVIDEEQ> SmartTestList 
-	|  <FLOORDIVIDEEQ> SmartTestList 
+	:  <PLUSEQ> SmartTestList
+	|  <MINUSEQ> SmartTestList
+	|  <MULTIPLYEQ> SmartTestList
+	|  <DIVIDEEQ> SmartTestList
+	|  <FLOORDIVIDEEQ> SmartTestList
 	|  <MODULOEQ> SmartTestList
 	|  <ANDEQ> SmartTestList
-	|  <OREQ> SmartTestList 
-	|  <XOREQ> SmartTestList 
-	|  <LSHIFTEQ> SmartTestList 
-	|  <RSHIFTEQ> SmartTestList 
-	|  <POWEREQ> SmartTestList 
+	|  <OREQ> SmartTestList
+	|  <XOREQ> SmartTestList
+	|  <LSHIFTEQ> SmartTestList
+	|  <RSHIFTEQ> SmartTestList
+	|  <POWEREQ> SmartTestList
 	|  ("=" SmartTestList)*
 	;
 
 print_stmt
-	:  LL(2) <PRINT> <RSHIFT> test [print_stmtEndP]        
+	:  LL(2) <PRINT> <RSHIFT> test [print_stmtEndP]
 	|  LL(2) <PRINT> print_stmtEndA
 	|  <PRINT>
 	;
@@ -526,7 +526,7 @@ pass_stmt
 	;
 
 flow_stmt
-	:  <BREAK> 
+	:  <BREAK>
 	|  <CONTINUE>
 	|  return_stmt
 	|  yield_stmt
@@ -568,8 +568,7 @@ ImportFrom
 	;
 
 ImportFrom_End
-	:   <IMPORT> ImportFromEnd
-	|   dotted_name <IMPORT> ImportFromEnd
+	:  [dotted_name] <IMPORT> ImportFromEnd
 	;
 
 ImportFromEnd
@@ -717,16 +716,16 @@ compEnd
 	;
 
 comp_op
-	:  <LESS> 
-	|  <GREATER> 
-	|  <EQEQUAL> 
-	|  <EQGREATER> 
-	|  <EQLESS> 
-	|  <LESSGREATER> 
+	:  <LESS>
+	|  <GREATER>
+	|  <EQEQUAL>
+	|  <EQGREATER>
+	|  <EQLESS>
+	|  <LESSGREATER>
 	|  <NOTEQUAL>
-	|  <IN> 
+	|  <IN>
 	|  "not" <IN>
-	|  LL(2) <IS> "not" 
+	|  LL(2) <IS> "not"
 	|  <IS>
 	;
 
@@ -758,23 +757,23 @@ arith_expr
 arith_exprEnd
 	:  <PLUS> term
 	| <MINUS> term
-	; 
+	;
 
 term
 	:  factor (termEnd)*
 	;
 
 termEnd
-	:  "*" factor 
-	|  <DIVIDE> factor 
-	|  <FLOORDIVIDE> factor 
+	:  "*" factor
+	|  <DIVIDE> factor
+	|  <FLOORDIVIDE> factor
 	|  <MODULO> factor
 	;
 
 factor
 	:  <PLUS> factor
-	|  <MINUS> factor 
-	|  <NOT> factor 
+	|  <MINUS> factor
+	|  <NOT> factor
 	|  powerfactor
 	;
 
@@ -785,21 +784,21 @@ powerfactor
 atomtrailer
 	:  atom (atomtrailerEnd)*
 	;
-    
+
 atomtrailerEnd
 	:  LL(2) "(" ")" <NONE>
-	|  "(" arglist ")" 
-	|  "[" subscriptlist "]" 
+	|  "(" arglist ")"
+	|  "[" subscriptlist "]"
 	|  <DOT> AnyName
 	;
 
 atom
 	:  LL(2) "(" ")" <NONE>
 	|  LL(2) Name "=" test
-	|  "(" [SmartTestList] ")" 
-	|  <LBRACKET> [listmaker] "]" 
+	|  "(" [SmartTestList] ")"
+	|  <LBRACKET> [listmaker] "]"
 	|  "{" [dictmaker] "}"
-	|  "`" SmartTestList "`" 
+	|  "`" SmartTestList "`"
 	|  Name
 	|  Number
 	|  StringNode (StringNode)*
@@ -814,7 +813,7 @@ subscriptlist
 	;
 
 subscript
-	:  <DOT> <DOT> <DOT> 
+	:  <DOT> <DOT> <DOT>
 	|  test (slice)?
 	|  slice
 	;
@@ -851,13 +850,13 @@ dictInt
 listmaker
 	:  test listmakerEnd
 	;
- 
+
 listmakerEnd
 	:  (list_for)+
 	|  (LL(2) "," test)* [","<NONE>]
-	; 
+	;
 
-list_for: 
+list_for:
  	"for" exprlist "in" SmartTestList (list_if)* ;
 
 list_if
@@ -876,10 +875,10 @@ decorator_End
 	:  <NEWLINE>
 	|  "(" decorator_End_Par
 	;
-	
+
 decorator_End_Par
-	:  ")"<NONE> <NEWLINE>
-	|  arglist ")" <NEWLINE>  
+	:  LOOK_AHEAD(1) ")"<NONE> <NEWLINE>
+	|  arglist ")"<NONE> <NEWLINE>
 	;
 
 @FSTExportName("{<NAME>}({parameters})")
@@ -918,7 +917,7 @@ classsimple_stmt
 	;
 
 classsmall_stmt
-	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ funcdef
+	:  @FSTTerminal(name="{funcdef}", merge="LineBased") @+ LOOK_AHEAD("(decorators())? \"def\"") funcdef
 	|  @FSTNonTerminal(name="{classdef}") classdef
 	|  @FSTTerminal(name="{FieldDeclaration}", merge="SemanticConflict") @+ LOOK_AHEAD("Name() \"=\"") FieldDeclaration
 	|  @FSTTerminal(name="{AUTO}") expr_stmt
@@ -939,7 +938,7 @@ classsmall_stmt
 FieldDeclaration
 	:  Field (";" Field)*
 	;
-	
+
 @FSTExportName("{<NAME>}")
 Field
 	:  <NAME> "=" SmartTestList
@@ -958,7 +957,7 @@ arglist
 arglist1End
 	:  ","  [LL(2) arglist1EndEnd]
 	;
-  
+
 arglist1EndEnd
 	:  LL(2) ExtraArgValueList ["," ExtraKeywordValueList]
 	|  ExtraKeywordValueList
@@ -975,7 +974,7 @@ ExtraArgValueList
 ExtraKeywordValueList
 	:  power test
 	;
- 
+
 power
 	:  "**"<NONE>
 	|  "*" "*" <NONE>
@@ -992,7 +991,7 @@ Number
 	|  <FLOAT>
 	|  <COMPLEX>
 	;
-        
+
 Complex
 	:  <FLOAT>
 	;
@@ -1015,34 +1014,34 @@ StringNode
 
 AnyName
 	:  <NAME>
-	|  "or" 
-	|  "and" 
-	|  "not" 
-	|  <IS> 
-	|  <IN> 
-	|  <LAMBDA> 
-	|  <IF> 
-	|  <ELSE> 
-	|  <ELIF> 
-	|  <WHILE> 
-	|  <FOR> 
-	|  <TRY> 
-	|  <EXCEPT> 
-	|  <DEF> 
-	|  <CLASS> 
-	|  <FINALLY> 
-	|  <PRINT> 
-	|  <PASS> 
-	|  <BREAK> 
-	|  <CONTINUE> 
-	|  <RETURN> 
-	|  <YIELD> 
-	|  <IMPORT> 
-	|  <FROM> 
-	|  <DEL> 
-	|  <RAISE> 
-	|  <GLOBAL> 
-	|  <EXEC> 
-	|  <ASSERT> 
+	|  "or"
+	|  "and"
+	|  "not"
+	|  <IS>
+	|  <IN>
+	|  <LAMBDA>
+	|  <IF>
+	|  <ELSE>
+	|  <ELIF>
+	|  <WHILE>
+	|  <FOR>
+	|  <TRY>
+	|  <EXCEPT>
+	|  <DEF>
+	|  <CLASS>
+	|  <FINALLY>
+	|  <PRINT>
+	|  <PASS>
+	|  <BREAK>
+	|  <CONTINUE>
+	|  <RETURN>
+	|  <YIELD>
+	|  <IMPORT>
+	|  <FROM>
+	|  <DEL>
+	|  <RAISE>
+	|  <GLOBAL>
+	|  <EXEC>
+	|  <ASSERT>
 	|  <AS>
 	;
