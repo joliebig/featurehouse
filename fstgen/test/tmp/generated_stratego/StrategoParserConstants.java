@@ -263,6 +263,9 @@ public interface StrategoParserConstants {
     "\"_\"",
     "\"\\\"\"",
     "\"\\\\\"",
+    "\"t\"",
+    "\"n\"",
+    "\"r\"",
   };
 
 }

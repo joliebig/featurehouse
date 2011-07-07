@@ -1,5 +1,6 @@
 options {
 	STATIC = false;
+	FORCE_LA_CHECK = false;
 }
 
 PARSER_BEGIN(StrategoParser)
@@ -294,10 +295,10 @@ ModuleSort :
 	"[[" Id "]]" ;
 
 ModName :
-	&LI ModNamePart ( "/" &LI ModNamePart )* ;
+	ModNamePart ( LOOK_AHEAD(2) "/" ModNamePart )* ;
 
 ModNamePart :
-	&LI Id ( "-" &LI Id )* ;
+	Id ( LOOK_AHEAD(2) "-" Id )* ;
 
 ImportModName : 
 	ModName [ModuleParameter] ;
@@ -331,24 +332,24 @@ Productions :
 	ProdPart ( Production )* ;
 
 ProdPart :
-	"syntax" |
-	"lexical syntax" |
-	"context-free syntax" |
-	"variables" |
-	"lexical variables" ;
+	"syntax" <NONE> |
+	"lexical syntax" <NONE> |
+	"context-free syntax" <NONE> |
+	"variables" <NONE> |
+	"lexical variables" <NONE> ;
 
 /* Constructs to define in a declarative way that certain kinds of derivations 
    are not allowed, also known as disambiguation filters */
 Disambiguations :
-	"context-free priorities" ( Priority )* ;
-	/*"lexical restrictions" ( Restriction )* |
-	"context-free restrictions" ( Restriction )* ;*/
+	"context-free priorities" ( Priority )* |
+	"lexical restrictions" ( Restriction )* |
+	"context-free restrictions" ( Restriction )* ;
 
 /* Productions have the form A1 ... An -> A0, where A0 is non-terminal and 
    A1 ... An is a string of terminals and non-terminals. */
 Production :
-	/* hier muss irgendwie ein LOOK_AHEAD rein */
-	( Symbol )* "->" Symbol [OptAttributes] ;
+	( Symbol )* 
+	"->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
 
 /* There are three kinds of symbols: sorts, character classes and literals. 
    Sorts are names for language specific constructs.
@@ -357,27 +358,18 @@ Production :
    operators, such as complement, difference, union, intersection.
    A literal is a String. */
 Symbol :
-	LOOK_AHEAD(3)
-	Sort [NeuesSymbol] |
-	LOOK_AHEAD(2)
-	"(" Sort [NeuesSymbol] ")" |
-	LOOK_AHEAD(2)
-	CharacterClass [NeuesSymbol] |
-	LOOK_AHEAD(2)
-	"(" CharacterClass [NeuesSymbol] ")" |
-	LOOK_AHEAD(2)
-	String [SortOp] [NeuesSymbol] | 
-	"(" String [SortOp] [NeuesSymbol] ")" ;
+	LOOK_AHEAD(2) "(" Symbol ")" |
+	Sort [AlternativeSymbol] |
+	CharacterClass [AlternativeSymbol] |
+	String [SortOp] [AlternativeSymbol] ;
 
-NeuesSymbol :
+AlternativeSymbol :
 	"|" Symbol ;
 
 Sort :
-	LOOK_AHEAD(2)
-	Id [SortOp] |
 	"[[" Id "]]" |
-	"<" Id ">" |
-	LOOK_AHEAD(2)
+	"<" Id [SortOp] ["-" Id] ">" |
+	Id [SortOp] |	
 	"{" Id String "}" [SortOp] |
 	"(" ( Sort )+ ")" [SortOp] ;
 
@@ -387,10 +379,51 @@ SortOp :
 	"?" ;
 
 CharacterClass :
-	[Id] "[" ( Id )* "]" [SortOp] ;
+	[<TILDE>] "[" ( CharClass )* "]" [SortOp] ;
+
+CharClass :
+	"\\" SpecialSign |
+	Id ( LOOK_AHEAD(2) "-" Id )* ;
+
+SpecialSign :
+	"("<NONE> | 
+	")"<NONE> | 
+	"{"<NONE> |
+	"}"<NONE> |
+	"["<NONE> |
+	"]"<NONE> |
+	","<NONE> |
+	"<"<NONE> |
+	">"<NONE> |
+	":"<NONE> |
+	"."<NONE> |
+	"?"<NONE> |
+	"!"<NONE> |
+	"'"<NONE> |
+	"%"<NONE> |
+	"_"<NONE> |
+	"$"<NONE> |
+	"@"<NONE> |
+	"~"<NONE> |
+	"\""<NONE> |
+	"/"<NONE> |
+	"\\"<NONE> |
+	"#"<NONE> |
+	"|"<NONE> |
+	"+"<NONE> |
+	"-"<NONE> |
+	"*"<NONE> |
+	";"<NONE> |
+	"`"<NONE> |
+	"="<NONE> |
+	"&"<NONE> |
+	"^"<NONE> |
+	"t"<NONE> |
+	"n"<NONE> |
+	"r"<NONE> ;
 
 OptAttributes :
-	"{" &LI Attribute ( "," &LI Attribute )* "}" ;
+	"{" Attribute ( LOOK_AHEAD(2) "," Attribute )* "}" ;
 
 Attribute :
 	"bracket" |
@@ -410,16 +443,14 @@ Constructor :
 	"deprecated" "(" String ")" ;
 
 Priority :
-	LOOK_AHEAD(3)
-	&LI Production ( ">" &LI Production )* |
-	LOOK_AHEAD(3)
-	"{" [Attribute ":"] @! ( Production )+ "}" ">" Production |
+	LOOK_AHEAD(2) "{" [Attribute ":"] @! ( Production )+ "}" ">" Production |
+	LOOK_AHEAD(2) Production ( LOOK_AHEAD(2) ">" Production )* |
 	Production ">" "{" [Attribute ":"] @!( Production )+ "}" ;
 
-/*Restriction : 
-	LOOK_AHEAD(3)
-	Symbol Id CharacterClass |
-	Symbol Id CharacterClass "." CharacterClass ;*/
+Restriction : 
+	/*LOOK_AHEAD(3)*/
+	( Symbol )+ "-/-" CharacterClass ( LOOK_AHEAD(2) "." CharacterClass )* ;
+	/*Symbol "-/-" CharacterClass "." CharacterClass ;*/
 
 /*****************************************************************************
  * TRANSFORMATIONS                                                           *
