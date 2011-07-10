@@ -44,86 +44,87 @@ public interface StrategoParserConstants {
   int LET = 48;
   int NOT = 49;
   int ONE = 50;
-  int ON = 51;
-  int CALL = 52;
-  int PROCEED = 53;
-  int SIGNATURES = 54;
-  int WITH = 55;
-  int OVERLAYS = 56;
-  int PRIM = 57;
-  int RULES = 58;
-  int SCRIPT = 59;
-  int SIGNATURE = 60;
-  int SOME = 61;
-  int STRATEGIES = 62;
-  int STRATEGO = 63;
-  int TEST = 64;
-  int WHERE = 65;
-  int IMPORTTERM = 66;
-  int CASE = 67;
-  int ELSE = 68;
-  int END = 69;
-  int EXTERNAL = 70;
-  int IF = 71;
-  int OTHERWISE = 72;
-  int REC = 73;
-  int SWITCH = 74;
-  int THEN = 75;
-  int EXTEND = 76;
-  int OVERRIDE = 77;
-  int INTERNAL = 78;
-  int SEALED = 79;
-  int EXTENSIBLE = 80;
-  int OVERRIDABLE = 81;
-  int INTEGER_LITERAL = 82;
-  int DECIMAL_LITERAL = 83;
-  int HEX_LITERAL = 84;
-  int OCTAL_LITERAL = 85;
-  int FLOATING_POINT_LITERAL = 86;
-  int EXPONENT = 87;
-  int CHARACTER_LITERAL = 88;
-  int STRING_LITERAL = 89;
-  int IDENTIFIER = 90;
-  int LETTER = 91;
-  int LCCHAR = 92;
-  int UCCHAR = 93;
-  int DIGIT = 94;
-  int LPAREN = 95;
-  int RPAREN = 96;
-  int LBRACE = 97;
-  int RBRACE = 98;
-  int LBRACKET = 99;
-  int RBRACKET = 100;
-  int DLBRACKET = 101;
-  int DRBRACKET = 102;
-  int LT = 103;
-  int GT = 104;
-  int PLUS = 105;
-  int MINUS = 106;
-  int STAR = 107;
-  int SLASH = 108;
-  int COMMA = 109;
-  int SEMICOLON = 110;
-  int DDOT = 111;
-  int DOT = 112;
-  int QUESTIONMARK = 113;
-  int EXCLAMATIONMARK = 114;
-  int NUMBERSIGN = 115;
-  int AT = 116;
-  int DOLLAR = 117;
-  int VERTICALLINE = 118;
-  int TILDE = 119;
-  int AMPERSAND = 120;
-  int PERCENTAGE = 121;
-  int CIRCUMFLEXACCENT = 122;
-  int GRAVEACCENT = 123;
-  int APOSTROPHE = 124;
-  int ARROW = 125;
-  int ASSIGN = 126;
-  int NOTALLOWED = 127;
-  int LOWLINE = 128;
-  int QUOTATIONMARK = 129;
-  int BACKSLASH = 130;
+  int DEPENDS = 51;
+  int ON = 52;
+  int CALL = 53;
+  int PROCEED = 54;
+  int SIGNATURES = 55;
+  int WITH = 56;
+  int OVERLAYS = 57;
+  int PRIM = 58;
+  int RULES = 59;
+  int SCRIPT = 60;
+  int SIGNATURE = 61;
+  int SOME = 62;
+  int STRATEGIES = 63;
+  int STRATEGO = 64;
+  int TEST = 65;
+  int WHERE = 66;
+  int IMPORTTERM = 67;
+  int CASE = 68;
+  int ELSE = 69;
+  int END = 70;
+  int EXTERNAL = 71;
+  int IF = 72;
+  int OTHERWISE = 73;
+  int REC = 74;
+  int SWITCH = 75;
+  int THEN = 76;
+  int EXTEND = 77;
+  int OVERRIDE = 78;
+  int INTERNAL = 79;
+  int SEALED = 80;
+  int EXTENSIBLE = 81;
+  int OVERRIDABLE = 82;
+  int INTEGER_LITERAL = 83;
+  int DECIMAL_LITERAL = 84;
+  int HEX_LITERAL = 85;
+  int OCTAL_LITERAL = 86;
+  int FLOATING_POINT_LITERAL = 87;
+  int EXPONENT = 88;
+  int CHARACTER_LITERAL = 89;
+  int STRING_LITERAL = 90;
+  int IDENTIFIER = 91;
+  int LETTER = 92;
+  int LCCHAR = 93;
+  int UCCHAR = 94;
+  int DIGIT = 95;
+  int LPAREN = 96;
+  int RPAREN = 97;
+  int LBRACE = 98;
+  int RBRACE = 99;
+  int LBRACKET = 100;
+  int RBRACKET = 101;
+  int DLBRACKET = 102;
+  int DRBRACKET = 103;
+  int LT = 104;
+  int GT = 105;
+  int PLUS = 106;
+  int MINUS = 107;
+  int STAR = 108;
+  int SLASH = 109;
+  int COMMA = 110;
+  int SEMICOLON = 111;
+  int DDOT = 112;
+  int DOT = 113;
+  int QUESTIONMARK = 114;
+  int EXCLAMATIONMARK = 115;
+  int NUMBERSIGN = 116;
+  int AT = 117;
+  int DOLLAR = 118;
+  int VERTICALLINE = 119;
+  int TILDE = 120;
+  int AMPERSAND = 121;
+  int PERCENTAGE = 122;
+  int CIRCUMFLEXACCENT = 123;
+  int GRAVEACCENT = 124;
+  int APOSTROPHE = 125;
+  int ARROW = 126;
+  int ASSIGN = 127;
+  int NOTALLOWED = 128;
+  int LOWLINE = 129;
+  int QUOTATIONMARK = 130;
+  int BACKSLASH = 131;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -183,6 +184,7 @@ public interface StrategoParserConstants {
     "\"let\"",
     "\"not\"",
     "\"one\"",
+    "\"depends\"",
     "\"on\"",
     "\"call\"",
     "\"proceed\"",
@@ -266,6 +268,15 @@ public interface StrategoParserConstants {
     "\"t\"",
     "\"n\"",
     "\"r\"",
+    "\"{|\"",
+    "\"|}\"",
+    "\":=\"",
+    "\"<+\"",
+    "\"+>\"",
+    "\":-\"",
+    "\":+=\"",
+    "\":+\"",
+    "\"{^\"",
   };
 
 }

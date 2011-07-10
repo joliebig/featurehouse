@@ -1,9 +1,1137 @@
-module Common
+module MoBL-Action
+
+imports
+  Common
+  MoBL-UI
+  MoBL-Data
+  MoBL-Action
+  MoBL-Service
+  MoBL-Type
+  MoBL-Regex
+  MoBL-External
+  MoBL-Style
+  MoBL-Config
+  MoBL-Server
+  js/Javascript
+  StrategoMix[StrategoHost]
+  Jsfax
 
 exports
 
-  sorts
+sorts
     ID INT STRING StringChar CommentChar
+
+context-free start-symbols
+    Start
+
+context-free start-symbols Module[[StrategoHost]]
+
+context-free syntax %% JSStatements
+    JSStat*                       -> JSModule {cons("JSModule")}
+    "var" {JSID ","}* ";"         -> JSStat {cons("JSVarDeclNoInit")}
+    "var" JSID "=" JSExp ";" -> JSStat {cons("JSVarDecl")}
+    "for" "(" JSStat JSExp ";" JSExp ")" JSStat   -> JSStat {cons("JSFor")}
+    "for" "(" "var" JSID "in" JSExp ")" JSStat  -> JSStat {cons("JSForIn")}
+    "if" "(" JSExp ")" JSStat "else" JSStat     -> JSStat {cons("JSIf")}
+    "if" "(" JSExp ")" JSStat                 -> JSStat {cons("JSIfNoElse")}
+    "while" "(" JSExp ")" JSStat              -> JSStat {cons("JSWhile")}
+    "try" "{" JSStat* "}" "catch" "(" JSID ")" "{" JSStat* "}" -> JSStat {cons("JSTryCatch")}
+    "switch" "(" JSExp ")" "{" Case* "}"    -> JSStat {cons("JSSwitch")}
+    "case" JSExp ":" JSStat*                  -> Case {cons("JSCase")}
+    "default" ":" JSStat*                   -> Case {cons("JSDefaultCase")}
+    "break" ";"                           -> JSStat {cons("JSBreak")}
+    "throw" JSExp ";"                       -> JSStat {cons("JSThrow")}
+    "return" JSExp ";" -> JSStat {cons("JSReturn")}
+    "return" ";" -> JSStat {cons("JSReturn")}
+    "delete" JSExp ";" -> JSStat {cons("JSDelete")}
+    JSExp ";"                -> JSStat {cons("JSExpStat")}
+    "{" JSStat* "}" -> JSStat {cons("JSBlock")}
+    "function" JSID "(" {JSID ","}* ")" "{" JSStat* "}" -> JSStat {cons("JSFunctionDecl")}
+    "function" JSID "~(" {JSID ","}* ")" "{" JSStat* "}" -> JSStat {cons("JSAsyncFunctionDecl")}
+    JSExp "." JSID                            -> JSLVal {cons("JSLFieldAccess")}
+    JSID                                    -> JSLVal {cons("JSLVar")}
+    JSExp "[" JSExp "]"                       -> JSLVal {cons("JSLPropAccess")}
+
+  context-free syntax %% JSExpressions
+    "/" Pattern "/" JSID? -> JSExp {cons("JSRegex")}
+    JSSTRING                 -> JSExp {cons("JSStringLit")}
+    JSDecimalLiteral                  -> JSExp {cons("JSIntLit")}
+    JSHexIntegerLiteral               -> JSExp {cons("JSIntLit")}
+    JSID                     -> VarJSExp {cons("JSVar")}
+    "true"                 -> JSExp {cons("JSTrue")}
+    "false"                -> JSExp {cons("JSFalse")}
+    "this"                 -> JSExp {cons("JSThis")}
+    "null"                 -> JSExp {cons("JSNull")}
+    VarJSExp                 -> JSExp
+    JSLVal JSAssignOp JSExp    -> JSExp {cons("JSAssign")}
+    "[" {JSExp ","}* "]"     -> JSExp {cons("JSArrayCons")}
+    "new" JSExp "(" {JSExp ","}* ")" -> JSExp {cons("JSNew")}
+    "{" {JSPropVal ","}* "}" -> JSExp {cons("JSObj")}
+    JSID ":" JSExp             -> JSPropVal {cons("JSPropVal"), prefer}
+    JSExp ":" JSExp             -> JSPropVal {cons("JSPropVal"), prefer, left}
+    JSExp "++"            -> JSExp {cons("JSInc")}
+    JSExp "--"            -> JSExp {cons("JSDec")}
+    "!" JSExp                -> JSExp {cons("JSNot")}
+    "typeof" JSExp           -> JSExp {cons("JSTypeOf")}
+    JSExp "in" JSExp           -> JSExp {cons("JSIn")}
+    JSExp "?" JSExp ":" JSExp    -> JSExp {cons("JSChoice")}
+    "(" JSExp ")"            -> JSExp {cons("JSBracket")}
+    JSExp JSBoolMethodId JSExp         -> JSExp {cons("JSOp"), left}
+    JSExp JSCompareMethodId JSExp      -> JSExp {cons("JSOp"), left}
+    JSExp JSTermOperatorMethodId JSExp -> JSExp {cons("JSOp"), left}
+    JSExp JSOperatorMethodId JSExp     -> JSExp {cons("JSOp"), left}
+    JSExp "." JSID              -> JSExp {cons("JSFieldAccess")}
+    JSExp "(" {JSExp ","}* ")"  -> JSExp {cons("JSCall")}
+    JSExp "~(" {JSExp ","}* ")" -> JSExp {cons("JSAsyncCall")}
+    JSExp JSIndexerSubscript    -> JSExp {cons("JSPropAccess")}
+    "[" JSExp "]"            -> JSIndexerSubscript {cons("JSIndex")}
+    "function" "(" {JSID ","}* ")" "{" JSStat* "}" -> JSExp {cons("JSFunctionExp")}
+    "function" "~(" {JSID ","}* ")" "{" JSStat* "}" -> JSExp {cons("JSAsyncFunctionExp")}
+
+   context-free priorities
+    {
+      JSExp "." JSID -> JSExp
+      JSExp "(" {JSExp ","}* ")"   -> JSExp
+      JSExp "~(" {JSExp ","}* ")"   -> JSExp
+      JSExp JSIndexerSubscript     -> JSExp
+    }
+  > "!" JSExp         -> JSExp
+  > "typeof" JSExp         -> JSExp
+  > "new" JSExp "(" {JSExp ","}* ")" -> JSExp
+  > {
+      JSExp "++"            -> JSExp
+      JSExp "--"            -> JSExp
+    }
+  > JSExp JSTermOperatorMethodId JSExp -> JSExp
+  > JSExp JSOperatorMethodId JSExp -> JSExp
+  > JSExp JSCompareMethodId JSExp -> JSExp
+  > JSExp JSBoolMethodId JSExp -> JSExp
+  > JSExp "?" JSExp ":" JSExp     -> JSExp
+  > JSExp "in" JSExp            -> JSExp
+  > JSLVal JSAssignOp JSExp     -> JSExp
+
+  lexical syntax
+    "||"                     -> JSBoolMethodId
+    "&&"                     -> JSBoolMethodId
+    "==="                     -> JSCompareMethodId
+    "!=="                     -> JSCompareMethodId
+    "<"                      -> JSCompareMethodId
+    "<="                     -> JSCompareMethodId
+    ">"                      -> JSCompareMethodId
+    ">="                     -> JSCompareMethodId
+    "*"                      -> JSTermOperatorMethodId
+    "/"                      -> JSTermOperatorMethodId
+    "<<"                     -> JSTermOperatorMethodId
+    ">>"                     -> JSTermOperatorMethodId
+    "&"                      -> JSTermOperatorMethodId
+    "|"                      -> JSTermOperatorMethodId
+    "%"                      -> JSTermOperatorMethodId
+    "+"                      -> JSOperatorMethodId
+    "-"                      -> JSOperatorMethodId
+    "="                      -> JSAssignOp
+    "+="                     -> JSAssignOp
+    "-="                     -> JSAssignOp
+    "*="                     -> JSAssignOp
+    "%="                     -> JSAssignOp
+
+  lexical syntax
+    %% Javascript keywords (source: http://www.perlscriptsjavascripts.com/tutorials/javascript/keywords_1.html)
+    "abstract" -> KEYWORD
+    "boolean" -> KEYWORD
+    "break" -> KEYWORD
+    "byte" -> KEYWORD
+    "case" -> KEYWORD
+    "catch" -> KEYWORD
+    "char" -> KEYWORD
+    "class" -> KEYWORD
+    "const" -> KEYWORD
+    "continue" -> KEYWORD
+    "debugger" -> KEYWORD
+    "default" -> KEYWORD
+    "delete" -> KEYWORD
+    "do" -> KEYWORD
+    "double" -> KEYWORD
+    "else" -> KEYWORD
+    "enum" -> KEYWORD
+    "export" -> KEYWORD
+    "extends" -> KEYWORD
+    "false" -> KEYWORD
+    "final" -> KEYWORD
+    "finally" -> KEYWORD
+    "float" -> KEYWORD
+    "for" -> KEYWORD
+    "function" -> KEYWORD
+    "goto" -> KEYWORD
+    "if" -> KEYWORD
+    "implements" -> KEYWORD
+    "import" -> KEYWORD
+    "in" -> KEYWORD
+    "instanceof" -> KEYWORD
+    "int" -> KEYWORD
+    "interface" -> KEYWORD
+    "long" -> KEYWORD
+    "native" -> KEYWORD
+    "new" -> KEYWORD
+    "null" -> KEYWORD
+    "package" -> KEYWORD
+    "private" -> KEYWORD
+    "protected" -> KEYWORD
+    "public" -> KEYWORD
+    "return" -> KEYWORD
+    "short" -> KEYWORD
+    "static" -> KEYWORD
+    "super" -> KEYWORD
+    "switch" -> KEYWORD
+    "synchronized" -> KEYWORD
+    "this" -> KEYWORD
+    "throw" -> KEYWORD
+    "throws" -> KEYWORD
+    "transient" -> KEYWORD
+    "true" -> KEYWORD
+    "try" -> KEYWORD
+    "typeof" -> KEYWORD
+    "var" -> KEYWORD
+    "volatile" -> KEYWORD
+    "while" -> KEYWORD
+    "with" -> KEYWORD
+    KEYWORD -> JSID {reject}
+
+  lexical restrictions
+    "abstract" "boolean" "break" "byte" "case" "catch" "char" "class" "const" "continue" "debugger" "default" "delete" "do" "double" "else" "enum" "export" "extends" "false" "final" "finally" "float" "for" "function" "goto" "if" "implements" "import" "in" "instanceof" "int" "interface" "long" "native" "new" "null" "package" "private" "protected" "public" "return" "short" "static" "super" "switch" "synchronized" "this" "throw" "throws" "transient" "true" "try" "typeof" "var" "volatile" "while" "with"
+ -/- [a-zA-Z0-9\_]
+
+  lexical syntax
+    [0-9]*               -> MetaVarSuffix
+    "_" [A-Za-z0-9\_\-]+ -> MetaVarSuffix
+
+  lexical restrictions
+    MetaVarSuffix -/- [a-zA-Z0-9]
+
+  context-free syntax
+    "js-e"     "|[" Exp   "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "js-lval"  "|[" LVal  "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "js-stat"  "|[" Stat  "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "js-stat*" "|[" Stat* "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+
+  variables
+    [xyz]      MetaVarSuffix              -> ID                  {prefer}
+    [xyz]      MetaVarSuffix "*"          -> {ID ","}*           {prefer}
+    "lval"     MetaVarSuffix              -> LVal                {prefer}
+    "e"        MetaVarSuffix              -> Exp                 {prefer}
+    "e"        MetaVarSuffix "*"          -> {Exp ","}*          {prefer}
+    "stat"     MetaVarSuffix              -> Stat                {prefer}
+    "stat"     MetaVarSuffix "*"          -> Stat*               {prefer}
+
+context-free start-symbols
+    Module[[StrategoHost]]
+
+  lexical syntax
+
+    [0-9]*               -> MetaVarSuffix
+    "_" [A-Za-z0-9\_\-]+ -> MetaVarSuffix
+
+  lexical restrictions
+    MetaVarSuffix -/- [a-zA-Z0-9]
+
+  context-free syntax
+
+    "mobl-e"     "|[" Exp   "]|"       -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-lval"  "|[" LValue  "]|"     -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-stat"  "|[" Statement  "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-stat*" "|[" Statement* "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-elem*" "|[" ScreenElem* "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-elem"  "|[" ScreenElem "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+    "mobl-def"   "|[" Definition "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")}
+
+  variables
+    [xyz]      MetaVarSuffix              -> ID                  {prefer}
+    [xyz]      MetaVarSuffix "*"          -> {ID ","}*           {prefer}
+    "qid"      MetaVarSuffix              -> QId                 {prefer}
+    "lval"     MetaVarSuffix              -> LVal                {prefer}
+    "e"        MetaVarSuffix              -> Exp                 {prefer}
+    "e"        MetaVarSuffix "*"          -> {Exp ","}*          {prefer}
+    "t"        MetaVarSuffix              -> Type                {prefer}
+    "stat"     MetaVarSuffix              -> Statement           {prefer}
+    "stat"     MetaVarSuffix "*"          -> Statement*          {prefer}
+	
+lexical syntax
+    [a-zA-Z\_\$][a-zA-Z0-9\_]* -> JSID
+    "\"" JSStringChar* "\"" -> JSSTRING
+    ~[\"\n]               -> JSStringChar
+    "\\\""                -> JSStringChar
+    JSBackSlashChar         -> JSStringChar
+    "\\"                  -> JSBackSlashChar
+    "'" JSStringChar2* "'" -> JSSTRING
+    ~[\'\n]               -> JSStringChar2
+    "\\'"                 -> JSStringChar2
+    JSBackSlashChar         -> JSStringChar2
+    [\ \t\n\r] -> LAYOUT
+    [\*]                             -> JSCommentChar
+    "/*" (~[\*] | JSCommentChar)* "*/" -> LAYOUT
+    "//" ~[\n\r]* ([\n\r] | JSEOF)     -> LAYOUT
+    -> JSEOF
+
+  lexical syntax
+    JSDecimalIntLiteral "." [0-9]* JSExponentPart? -> JSDecimalLiteral
+                      "." [0-9]+ JSExponentPart? -> JSDecimalLiteral
+    JSDecimalIntLiteral            JSExponentPart? -> JSDecimalLiteral
+        [0]         -> JSDecimalIntLiteral
+        [1-9][0-9]* -> JSDecimalIntLiteral
+    "-" [0]         -> JSDecimalIntLiteral
+    "-" [1-9][0-9]* -> JSDecimalIntLiteral
+    "+" [0]         -> JSDecimalIntLiteral
+    "+" [1-9][0-9]* -> JSDecimalIntLiteral
+    [eE] JSSignedInteger -> JSExponentPart
+        [0-9]+ -> JSSignedInteger
+    "+" [0-9]+ -> JSSignedInteger
+    "-" [0-9]+ -> JSSignedInteger
+    "0x" JSHexDigit+ -> JSHexIntegerLiteral
+    [0-9a-fA-F] -> JSHexDigit
+
+  lexical restrictions
+    %% Ensure greedy matching for lexicals
+    JSCommentChar    -/- [\/]
+    JSDecimalLiteral -/- [0-9]
+    JSID             -/- [a-zA-Z0-9\_]
+    %% EOF may not be followed by any char
+    JSEOF           -/- ~[]
+    %% Backslash chars in strings may not be followed by "
+    JSBackSlashChar -/- [\"]
+
+  context-free restrictions
+    %% Ensure greedy matching for comments
+    LAYOUT? -/- [\ \t\n\r]
+    LAYOUT? -/- [\/].[\/]
+    LAYOUT? -/- [\/].[\*]
+
+context-free syntax
+    "/" Pattern "/" Modifiers  -> Exp {cons("RegExp")}
+    Branche                    -> Pattern {cons("SingleBranch")}
+    Pattern "|" Pattern        -> Pattern {cons("TupleBranch"), right, prefer}
+
+  sorts Branche
+  context-free syntax
+    Piece+                     -> Branche {cons("Pieces")}
+
+  sorts Piece
+  context-free syntax
+    Atom                       -> Piece {cons("SingleAtom")}
+    Atom Quantifier            -> Piece {cons("QuantifiedAtom")}
+
+  sorts Quantifier
+  context-free syntax
+   "{" Integer "}"              -> Quantifier {cons("GreedyExactBound")}
+   "{" Integer "," "}"          -> Quantifier {cons("GreedyLowerBound")}
+   "{" Integer "," Integer "}"  -> Quantifier {cons("GreedyLowerUpperBound")}
+   "?"                          -> Quantifier {cons("GreedyOnceOrNot")}
+   "*"                          -> Quantifier {cons("GreedyZeroOrMore")}
+   "+"                          -> Quantifier {cons("GreedyOneOrMore")}
+   "{" Integer "}?"             -> Quantifier {cons("ReluctantExactBound")}
+   "{" Integer "," "}?"         -> Quantifier {cons("ReluctantLowerBound")}
+   "{" Integer "," Integer "}?" -> Quantifier {cons("ReluctantLowerUpperBound")}
+   "??"                         -> Quantifier {cons("ReluctantOnceOrNot")}
+   "*?"                         -> Quantifier {cons("ReluctantZeroOrMore")}
+   "+?"                         -> Quantifier {cons("ReluctantOneOrMore")}
+   "{" Integer "}+"             -> Quantifier {cons("PossessiveExactBound")}
+   "{" Integer "," "}+"         -> Quantifier {cons("PossessiveLowerBound")}
+   "{" Integer "," Integer "}+" -> Quantifier {cons("PossessiveLowerUpperBound")}
+   "?+"                         -> Quantifier {cons("PossessiveOnceOrNot")}
+   "*+"                         -> Quantifier {cons("PossessiveZeroOrMore")}
+   "++"                         -> Quantifier {cons("PossessiveOneOrMore")}
+
+  sorts Atom
+  context-free syntax
+    "("   Pattern ")"          -> Atom {cons("Capture")}
+    "(?:" Pattern ")"          -> Atom {cons("NonCapture")}
+    "(?=" Pattern ")"          -> Atom {cons("PositiveLookahead")}
+    "(?!" Pattern ")"          -> Atom {cons("NegativeLookahead")}
+    "(?<=" Pattern ")"         -> Atom {cons("PositiveLookbehind")}
+    "(?<!" Pattern ")"         -> Atom {cons("NegativeLookbehind")}
+    "(?P<" RegexId ">" Pattern ")"  -> Atom {cons("PythonCapture")}
+    "(" Pattern ")@{" RegexId "}"   -> Atom {cons("RegexCapture")}
+    "()"                       -> Atom {cons("Empty")}
+    "."                        -> Atom {cons("SingleCharacter")}
+    "^"                        -> Atom {cons("LineStart")}
+    "$"                        -> Atom {cons("LineEnd")}
+    CharacterClass             -> Atom {cons("CharacterClass")}
+    AtomLiteral                -> Atom {cons("AtomLiteral")}
+    AtomCharacter              -> Atom {cons("AtomCharacter")}
+    "\\Q" AllChars "\\E"       -> Atom {cons("QuotedAtom")}
+
+  sorts CharacterClass BracketItem
+  context-free syntax
+    "[" BracketItem+ "]"       -> CharacterClass {cons("BracketList")}
+    "[^" BracketItem+ "]"      -> CharacterClass {cons("NegatedBracketList")}
+%%d "\\p\{" ClassKeyword "\}"   -> CharacterClass {cons("PredefineClass")}
+%%d "\\P\{" ClassKeyword "\}"   -> CharacterClass {cons("NegatedPredefineClass")}
+    (BracketLiteral | BracketCharacter) "-" (BracketLiteral | BracketCharacter)   -> BracketItem {cons("Range")}
+    CharacterClass                        -> BracketItem {cons("Union")}
+%%d "\&\&" CharacterClass                 -> BracketItem {cons("Intersection")}
+    BracketLiteral                        -> BracketItem {cons("BracketLiteral")}
+    BracketCharacter                      -> BracketItem {cons("BracketCharacter")}
+
+%%
+ %%   Defining characterclasses
+  %%
+sorts ClassKeyword
+  context-free syntax
+    "Lower"                    -> ClassKeyword {cons("LowerClass")}
+    "Upper"                    -> ClassKeyword {cons("UpperClass")}
+    "ASCII"                    -> ClassKeyword {cons("ASCIIClass")}
+    "Alpha"                    -> ClassKeyword {cons("AlphaClass")}
+    "Digit"                    -> ClassKeyword {cons("DigitClass")}
+    "Alnum"                    -> ClassKeyword {cons("AlnumClass")}
+    "Punct"                    -> ClassKeyword {cons("PunctClass")}
+    "Graph"                    -> ClassKeyword {cons("GraphClass")}
+    "Print"                    -> ClassKeyword {cons("PrintClass")}
+    "Blank"                    -> ClassKeyword {cons("BlankClass")}
+    "Cntrl"                    -> ClassKeyword {cons("CntrlClass")}
+    "XDigit"                   -> ClassKeyword {cons("XDigitClass")}
+    "Space"                    -> ClassKeyword {cons("WhiteSpace")}
+    "javaLowerCase"            -> ClassKeyword {cons("JavaIsLowerCase")}
+    "javaUpperCase"            -> ClassKeyword {cons("JavaIsLowerCase")}
+    "javaWhitespace"           -> ClassKeyword {cons("JavaIsWhitespace")}
+    "javaMirrored"             -> ClassKeyword {cons("JavaIsMirrored")}
+    "InGreek"                  -> ClassKeyword {cons("GreekBlock")}
+    "Lu"                       -> ClassKeyword {cons("UppercaseLetter")}
+    "Sc"                       -> ClassKeyword {cons("CurrencySymbol")}
+
+%%
+ %%   Defining the Character -> Characters that appear as Atom and in Brackets
+  %%
+%%  ASCII characters:
+%%  $*+?.{}()                             %% OnlyBranchSpecial
+%%  &]-                                   %% OnlyClassSpecial
+%%  [^\                                   %% AlwaysSpecial
+%%  !"#%',/:;<=>@_`~                      %% NeverSpecialCharacter
+%%  ABCDEFGHIJKLMNOPQRSTUVWXYZ            %% Character
+%%  abcdefghijklmnopqrstuvwxyz            %% Charater
+%%  0123456789                            %% Charater
+%%  <tab> <newline> <return> <form-feed>  %% SpecialEscapeCharacter
+
+  sorts BracketLiteral AtomLiteral AllChars
+  lexical syntax
+    [a-zA-Z0-9\!\#\%\'\,\:\;\<\=\>\@\_\`\~\$\*\+\?\.\}\|] -> BracketLiteral
+    "/"                                           -> BracketLiteral
+    [\&\]\-]                                      -> BracketLiteral {reject}
+    [a-zA-Z0-9\!\#\%\'\,\:\;\<\=\>\@\_\`\~\&\]\-] -> AtomLiteral
+    "/"                                           -> AtomLiteral
+    [\}\)\|\[]                                    -> AtomLiteral {reject}
+    [\\\|\$\*\+\?\.\{\}\(\)\&\]\-\[\^\!\#\%\'\,\:\;\<\=\>\@\_\`\~a-zA-Z0-9\t\n\r]* -> AllChars
+    "/"   -> AllChars
+    "\""  -> AllChars {cons("DoubleQuote") }
+    "i"       -> Modifier
+    "g"       -> Modifier
+    "m"       -> Modifier
+    Modifier* -> Modifiers
+
+  sorts BracketCharacter AtomCharacter
+  context-free syntax
+%%d    "\{"                -> BracketCharacter {cons("CurlyBraceOpen") }
+%%d    "\{"                -> AtomCharacter    {cons("CurlyBraceOpen"), avoid}
+    "\""                -> BracketCharacter {cons("DoubleQuote") }
+    "\""                -> AtomCharacter    {cons("DoubleQuote") }
+%%d    "\)"                -> BracketCharacter {cons("BraceClose"), avoid }
+%%d    "\)"                -> AtomCharacter    {cons("BraceClose") }
+
+%%
+ %%   Escaping with a '\' to express a special character
+  %%
+  context-free syntax
+    "\\0" OctalValue       -> BracketCharacter {cons("OctalChar")}
+    "\\x" TwoHexValue      -> BracketCharacter {cons("HexHexChar")}
+    "\\u" FourHexValue     -> BracketCharacter {cons("DecHexChar")}
+    "\\t"                  -> BracketCharacter {cons("Tab")}
+    "\\n"                  -> BracketCharacter {cons("Newline")}
+    "\\r"                  -> BracketCharacter {cons("Return")}
+    "\\f"                  -> BracketCharacter {cons("Formfeed")}
+    "\\a"                  -> BracketCharacter {cons("Alarm")}
+    "\\e"                  -> BracketCharacter {cons("Escape")}
+    "\\w"                  -> BracketCharacter {cons("WordChar")}
+    "\\W"                  -> BracketCharacter {cons("NonWordChar")}
+    "\\s"                  -> BracketCharacter {cons("WhiteSpaceChar")}
+    "\\S"                  -> BracketCharacter {cons("NonWhiteSpaceChar")}
+    "\\d"                  -> BracketCharacter {cons("DigitChar")}
+    "\\D"                  -> BracketCharacter {cons("NonDigitChar")}
+    "\\c" ControlValue     -> BracketCharacter {cons("ControlCharacter")}
+    "\\b"                  -> BracketCharacter {cons("WordBoundry")}
+    "\\B"                  -> BracketCharacter {cons("NonWordBoundry")}
+    "\\A"                  -> BracketCharacter {cons("InputBeginBoundry")}
+    "\\G"                  -> BracketCharacter {cons("PrevMatchEndBoundry")}
+    "\\Z"                  -> BracketCharacter {cons("EndInputBoundry")}
+    "\\z"                  -> BracketCharacter {cons("EndInputFinalBoundry")}
+    "\\" BackReference     -> BracketCharacter {cons("BackReference")}
+    "\\ "                  -> BracketCharacter {cons("Space")}
+    "\\\t"                 -> BracketCharacter {cons("Tab")}
+%%d    "\\\r"                 -> BracketCharacter {cons("Return")}
+    "\\\n"                 -> BracketCharacter {cons("Newline")}
+    "\\0" OctalValue       -> AtomCharacter {cons("OctalChar")}
+    "\\x" TwoHexValue      -> AtomCharacter {cons("HexHexChar")}
+    "\\u" FourHexValue     -> AtomCharacter {cons("DecHexChar")}
+    "\\t"                  -> AtomCharacter {cons("Tab")}
+    "\\n"                  -> AtomCharacter {cons("Newline")}
+    "\\r"                  -> AtomCharacter {cons("Return")}
+    "\\f"                  -> AtomCharacter {cons("Formfeed")}
+    "\\a"                  -> AtomCharacter {cons("Alarm")}
+    "\\e"                  -> AtomCharacter {cons("Escape")}
+    "\\w"                  -> AtomCharacter {cons("WordChar")}
+    "\\W"                  -> AtomCharacter {cons("NonWordChar")}
+    "\\s"                  -> AtomCharacter {cons("WhiteSpaceChar")}
+    "\\S"                  -> AtomCharacter {cons("NonWhiteSpaceChar")}
+    "\\d"                  -> AtomCharacter {cons("DigitChar")}
+    "\\D"                  -> AtomCharacter {cons("NonDigitChar")}
+    "\\c" ControlValue     -> AtomCharacter {cons("ControlCharacter")}
+    "\\b"                  -> AtomCharacter {cons("WordBoundry")}
+    "\\B"                  -> AtomCharacter {cons("NonWordBoundry")}
+    "\\A"                  -> AtomCharacter {cons("InputBeginBoundry")}
+    "\\G"                  -> AtomCharacter {cons("PrevMatchEndBoundry")}
+    "\\Z"                  -> AtomCharacter {cons("EndInputBoundry")}
+    "\\z"                  -> AtomCharacter {cons("EndInputFinalBoundry")}
+    "\\" BackReference     -> AtomCharacter {cons("BackReference")}
+    "\\ "                  -> AtomCharacter {cons("Space")}
+    "\\\t"                 -> AtomCharacter {cons("Tab")}
+%%d    "\\\r"                 -> AtomCharacter {cons("Return")}
+    "\\\n"                 -> AtomCharacter {cons("Newline")}
+
+%%
+ %%   Quoting of symbols is always allowed to express that symbol
+  %%
+  sorts QuotablePatternSymbol
+  context-free syntax
+    "\\" QuotablePatternSymbol            -> AtomCharacter {cons("Quoted")}
+    "\\" QuotablePatternSymbol            -> BracketCharacter {cons("Quoted")}
+  lexical syntax
+    [\|\$\*\+\?\.\{\}\(\)\&\]\[\-\^\\\!\#\%\'\,\:\;\<\=\>\@\_\`\~\/]
+                                   -> QuotablePatternSymbol
+  context-free syntax
+    "\""                -> QuotablePatternSymbol {cons("DoubleQuote") }
+    "\""                -> QuotablePatternSymbol {cons("DoubleQuote") }
+%%
+ %%   Defining integers and number values
+  %%
+  sorts Integer OctalValue TwoHexValue FourHexValue BackReference ControlValue
+  lexical syntax
+    [0-9]+                                       -> Integer
+    [1-9] [0-9]*                                 -> BackReference
+    [0-7]                                        -> OctalValue
+    [0-7][0-7]                                   -> OctalValue
+    [0-3][0-7][0-7]                              -> OctalValue
+    [0-9A-Fa-f][0-9A-Fa-f]                       -> TwoHexValue
+    [0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f][0-9A-Fa-f] -> FourHexValue
+    [0-9]                                        -> ControlValue
+    [0-9][0-9]                                   -> ControlValue
+
+%%d  lexical restrictions
+%%d    "/"  -/- [\]]
+%%d    "\\" -/- [\ \t\12\n\r]
+
+  sorts
+    RegexId
+    RegexID
+
+  context-free syntax
+    RegexID -> RegexId {cons("RegexId")}
+
+  lexical syntax
+    [A-Za-z\_\$][A-Za-z0-9\_\$]* -> RegexID
+    "true"  -> RegexID {reject}
+    "false" -> RegexID {reject}
+    "null"  -> RegexID {reject}
+
+  lexical restrictions
+    RegexID -/- [a-zA-Z0-9\_\$]
 
   lexical syntax
     [a-zA-Z\_\$][a-zA-Z0-9\_]* -> ID
+    [a-zA-Z\_\$][a-zA-Z0-9\_\-]* -> HTMLID
+    "-"? [0-9]+            -> INT
+    [a-zA-Z\_\$\%\.][a-zA-Z0-9\_\-\.\%]* -> FILENAME
+
+  lexical syntax
+    "-"? FloatDigits
+     ExponentPart? [fFdD]? -> NUMBER
+    [0-9]+ "." [0-9]*      -> FloatDigits
+    [0-9]+                 -> FloatDigits
+    [eE] SignedInteger     -> ExponentPart
+    [\+\-]? [0-9]+         -> SignedInteger
+    "-"? [0-9]+            -> NUM {reject}
+    "."                    -> FloatDigits {reject}
+    "\"" StringChar* "\"" -> STRING
+    "\"\"\"" StringChar2* "\"\"\"" -> STRING
+    ~[\"\n]               -> StringChar
+    ~[\0]                 -> StringChar2
+    "\\\""                -> StringChar
+    [\ \t\n\r] -> LAYOUT
+    [\*]                             -> CommentChar
+    "/*" (~[\*] | CommentChar)* "*/" -> LAYOUT
+    "//" ~[\n\r]* ([\n\r] | EOF)     -> LAYOUT
+    -> EOF
+
+  lexical restrictions
+
+    CommentChar -/- [\/]
+    NUMBER      -/- [0-9]
+    ID          -/- [a-zA-Z0-9\_]
+    FILENAME    -/- [a-zA-Z0-9\_\-\.\*]
+    EOF         -/- ~[]
+
+  context-free restrictions
+
+    LAYOUT? -/- [\ \t\n\r]
+    LAYOUT? -/- [\/].[\/]
+    LAYOUT? -/- [\/].[\*]
+
+context-free syntax
+
+    MetaAnno* "style" StyleSelector+ "{" StyleElem* "}"    -> Definition {cons("Style")}
+    MetaAnno* "style" "mixin" QId "(" {StyleFArg ","}* ")" "{" StyleElem* "}"    -> Definition {cons("StyleMixin")}
+    "$" STYLEID -> StyleFArg {cons("StyleFArg")}
+    "style" StyleVar "=" StyleExp -> Definition {cons("StyleVarDecl")}
+    "$" STYLEID -> StyleVar {cons("StyleVar")}
+    MetaAnno* "external" "style" StyleSelector+ -> Definition {cons("ExternalStyle")}
+    STYLEPROPID ":" StyleExpsTL ";"  -> StyleElem {cons("StyleProperty")}
+    QId "(" {StyleExps ","}* ")" ";" -> StyleElem {cons("StyleMixinCall")}
+    QId ";" -> StyleElem {cons("StyleElemRecover"), avoid}
+    QId                                       -> StyleSelector {cons("StyleSelector")}
+    QId ":" STYLEPROPID                       -> StyleSelector {cons("StyleSelectorWithPseudo")}
+    QId ":" STYLEPROPID "(" STYLEPROPID ")"   -> StyleSelector {cons("StyleSelectorWithPseudoArg")}
+    COLOR                   -> StyleExp {cons("Color")}
+    STYLEID                 -> StyleExp {cons("StyleId")}
+    STRING                  -> StyleExp {cons("String")}
+    NUMBER                  -> StyleExp {cons("Num")}
+    NUMBER Unit             -> StyleExp {cons("NumUnit")}
+    StyleVar                -> StyleExp
+    StyleExp "+" StyleExp   -> StyleExp {cons("StyleAdd"), left}
+    StyleExp "~" StyleExp   -> StyleExp {cons("StyleSub"), left}
+    StyleExp "*" StyleExp   -> StyleExp {cons("StyleMul"), left}
+    StyleVar "." ID         -> StyleExp {cons("StyleFieldAccess")}
+    "$data" "(" Path ")"    -> StyleExp {cons("ImportData")}
+    %%"(" StyleExp ")"        -> StyleExp {bracket}
+    FILENAME "/" {FILENAME "/"}+         -> StyleExp {cons("StylePath"), avoid}
+    STYLEPROPID "(" {StyleExps ","}* ")" -> StyleExp {cons("StyleCall")}
+    StyleExp+               -> StyleExps {cons("StyleExps"), prefer}
+    {StyleExp ","}+         -> StyleExpsTL {cons("StyleExpsCS"), prefer}
+    StyleExps               -> StyleExpsTL
+    "px" -> Unit {cons("PxUnit")}
+    "em" -> Unit {cons("EmUnit")}
+    "pt" -> Unit {cons("PtUnit")}
+    "s"  -> Unit {cons("SUnit")}
+    "%"  -> Unit {cons("PercentageUnit")}
+
+  context-free priorities
+      StyleExp "*" StyleExp -> StyleExp
+    > {
+      StyleExp "+" StyleExp -> StyleExp
+      StyleExp "~" StyleExp -> StyleExp
+    }
+
+  lexical syntax
+    [\#][0-9a-fA-F]* -> COLOR
+    [a-zA-Z\_\-][a-zA-Z0-9\_\-]+ -> STYLEPROPID
+    [a-zA-Z\_][a-zA-Z0-9\_\-]+ -> STYLEID
+    "px" -> STYLEID {reject}
+    "em" -> STYLEID {reject}
+    "pt" -> STYLEID {reject}
+    "mixin" -> ID {reject}
+
+  lexical restrictions
+
+    STYLEID          -/- [a-zA-Z0-9\_]
+    STYLEPROPID      -/- [a-zA-Z0-9\_]
+    COLOR            -/- [a-zA-Z0-9\_\#]
+
+  context-free syntax %% Main
+
+    ID                               -> QId
+    QId "::" ID                      -> QId {cons("QId")}
+    "module" QId Definition*         -> Start {cons("Module")}
+    "application" ID Definition* -> Start {cons("Application")}
+
+    "dynamic" "import" QId         -> Definition {cons("DynamicImport")}
+    "import" QId                   -> Definition {cons("Import")}
+    "load" Path                    -> Definition {cons("Load")}
+    "resource" Path                -> Definition {cons("Resource")}
+
+    "mixin" QId                    -> Definition {cons("Mixin")}
+
+    ID ":" Type                    -> FArg {cons("FArg")}
+    ID ":" Type "=" Exp            -> FArg {cons("FArgOptional")}
+
+    QId                            -> NFType {cons("SimpleType")}
+    QId "<" {Type ","}* ">"        -> NFType {cons("GenericType")}
+    "(" {Type ","}* ")"            -> NFType {cons("TupleType")}
+    "[" Type "]"                   -> NFType {cons("ArrayType")}
+    "?"                            -> NFType {cons("DynamicType")}
+
+    NFType                         -> Type
+    {NFType "*"}+ "->" NFType      -> Type {cons("FunctionType"), avoid}
+
+    "@doc" STRING                  -> MetaAnno {cons("DocAnno")}
+    "@when" Exp                    -> MetaAnno {cons("WhenAnno")}
+    "@persistable"                 -> MetaAnno {cons("PersistableAnno")}
+
+    "@" Exp                        -> MetaAnno {cons("DecoratorAnno"), 
+
+avoid}
+
+  context-free syntax %% Paths
+    {FILENAME "/"}+                  -> Path {cons("Path")}
+    "/" {FILENAME "/"}+              -> Path {cons("AbsolutePath")}
+    STRING                           -> Path {cons("QuotedPath")}
+
+  %%syntax
+        %%"<javascript>" <JSString-LEX> "</javascript>"  -> <Definition-CF> {cons("Javascript")}
+
+  context-free syntax %% native javascript
+
+    "<javascript>" JSModule "</javascript>"     -> Definition {cons
+
+("Javascript")}
+    QId "@<javascript>" JSModule "</javascript>"     -> Definition {cons
+
+("ModuleJavascript")}
+    "<javascript" "for" "=" QId ">" JSModule "</javascript>"     -> 
+
+Definition {cons("JavascriptFor")}
+    QId "@<javascript" "for" "=" QId ">" JSModule "</javascript>"     -> 
+
+Definition {cons("ModuleJavascriptFor")}
+
+  %%lexical syntax
+  %%  JSChar*       -> JSString
+  %%  ~[\<]         -> JSChar
+  %%  SmallerThan   -> JSChar
+  %%  [\<]          -> SmallerThan
+  %%  ""            -> JSString {reject}
+
+  %%lexical restrictions
+  %%  SmallerThan   -/- [\/]
+  %%  JSString -/- [\ \t\n\r]
+  %%  JSString -/- ~[\<]
+
+  context-free syntax %% Paths
+    "/" {UriPart "/"}*                  -> UriPath {cons("UriPath")}
+
+    FILENAME  -> UriPart {cons("UriPart")}
+    ":" ID    -> UriPart {cons("UriVar")}
+
+  lexical syntax
+    "control" -> ID {reject}
+    "var" -> ID {reject}
+    "script" -> ID {reject}
+    "screen" -> ID {reject}
+    "entity" -> ID {reject}
+    "function" -> ID {reject}
+    "callback" -> ID {reject}
+    %%"sync" -> ID {reject}
+    "null" -> ID {reject}
+    "return" -> ID {reject}
+    "true" -> ID {reject}
+    "false" -> ID {reject}
+    "if" -> ID {reject}
+    "else" -> ID {reject}
+    "databind" -> HTMLID {reject}
+    "cond" -> ID {reject}
+    "when" -> ID {reject}
+    "this" -> ID {reject}
+    "javascript" -> ID {reject}
+    "$data" -> ID {reject}
+
+
+
+context-free syntax
+
+    MetaAnno* "screen" QId "(" {FArg ","}* ")" "{" ScreenElem* "}" -> 
+
+Definition {cons("ScreenNoReturnType")}
+    MetaAnno* "screen" QId "(" {FArg ","}* ")" ":" Type "{" ScreenElem* "}" 
+
+-> Definition {cons("Screen")}
+
+    MetaAnno* "control" QId "(" {FArg ","}* ")" "{" ScreenElem* "}" -> 
+
+ControlDefinition {cons("Control")}
+
+    %% Legacy
+    MetaAnno* "template" QId "(" {FArg ","}* ")" "{" ScreenElem* "}" -> 
+
+ControlDefinition {deprecated("the 'template' keyword has been replaced with 'control'."),cons("Control")}
+
+    ID "(" {FArg ","}* ")" -> ControlSig {cons("ControlSig")}
+
+    ControlDefinition      -> Definition
+
+	%% Feature HTML - Start
+    "<" HTMLID HtmlArg* ">" ScreenElem* "</" HTMLID ">"         -> 
+
+ScreenElem {cons("Html")}
+    "<" HTMLID HtmlArg* "/"">"                                  -> 
+
+ScreenElem {cons("HtmlShort")}
+    ID "@" "<" HTMLID HtmlArg* ">" ScreenElem* "</" HTMLID ">"  -> 
+
+ScreenElem {cons("NamedHtml")}
+    ID "@" "<" HTMLID HtmlArg* "/"">"                           -> 
+
+ScreenElem {cons("NamedHtmlShort")}
+    HTMLID "=" Exp                     -> HtmlArg    {cons("HtmlArg")}
+    "databind" "=" Exp             -> HtmlArg    {cons("HtmlDatabindArg")}
+	%% Feature HTML - Ende
+	
+    ControlDefinition                                                -> 
+
+ScreenElem
+
+    "var" ID ":" Type "=" Exp                                        -> 
+
+ScreenElem {cons("VarDecl")}
+    "var" ID "=" Exp                                                 -> 
+
+ScreenElem {cons("VarDeclInferred")}
+
+    "var" ID ":" Type "<-" Exp                                   -> 
+
+ScreenElem {cons("DeriveDecl")}
+    "var" ID "<-" Exp                                            -> 
+
+ScreenElem {cons("DeriveDeclInferred")}
+
+    FunctionDef                                                       -> 
+
+ScreenElem
+
+    %% Deprecated
+    "init" "{" Statement* "}"                                         -> 
+
+ScreenElem {cons("Script"), deprecated("Please use 'script' instead.")}
+
+    "script" "{" Statement* "}"                                       -> 
+
+ScreenElem {cons("Script")}
+
+    STRING                                                            -> 
+
+ScreenElem {cons("ScreenString")}
+
+    "list" "(" LValue ":" Type "in" Exp ")" "{" ScreenElem* "}"       -> 
+
+ScreenElem {cons("List")}
+    "list" "(" LValue "in" Exp ")" "{" ScreenElem* "}"                -> 
+
+ScreenElem {cons("ListInferred")}
+
+    "cond" "(" Exp ")" "{" ScreenElem* "}"                            -> 
+
+ScreenElem {cons("WhenNoElse"), deprecated("Please use when instead, same syntax, different keyword")}
+    "when" "(" Exp ")" "{" ScreenElem* "}" "else" "{" ScreenElem* "}" -> 
+
+ScreenElem {cons("When")}
+    "when" "(" Exp ")" "{" ScreenElem* "}"                            -> 
+
+ScreenElem {cons("WhenNoElse")}
+
+    "var" ID ":" Type "=" Exp                                         -> 
+
+ScreenElem {cons("ScreenVarDecl")}
+
+    LimitedExp "(" {NamedExp ","}* ")" "{" ScreenElem* "}"   -> ScreenElem 
+
+{prefer, cons("ControlCall")}
+    LimitedExp "(" {NamedExp ","}* ")"                       -> ScreenElem 
+
+{cons("ControlCallNoBody")}
+    LimitedExp "{" ScreenElem* "}"                           -> ScreenElem 
+
+{cons("ControlCallNoArgs")}
+
+    Exp "." ID "(" {NamedExp ","}* ")"                       -> ScreenElem 
+
+{reject}
+    %%QId                                               -> ScreenElem {cons("ControlCallNoArgsNoBody")}
+
+
+context-free syntax
+
+    MetaAnno* "type" QId "{" EntityBodyDecl* "}"                          
+
+-> Definition {cons("TypeNoSuper")}
+    MetaAnno* "type" QId ":" Type "{" EntityBodyDecl* "}"                 
+
+-> Definition {cons("Type")}
+
+syntax
+
+    "\"" StringQuotedPart1* "\""    -> <StringQuotation-CF> {cons
+
+("StringQuotation") }
+    "$(" <LAYOUT?-CF> <Exp-CF> <LAYOUT?-CF> ")"             -> StringQuotedPart1 {cons("StringEscape")}
+    %%<StringQuotedChars1-LEX>                                -> StringQuotedPart1 {cons("QStr")}
+    %%<Dollar1-LEX>                                           -> StringQuotedPart1 {cons("QDollar")}
+    %%"$" <QuotedBracket1-LEX> "$"                            -> StringQuotedPart1 {cons("QBr")}
+    ~[\$\"]+                                                    -> <StringQuotedChars1-LEX>
+    %%"$"                                                     -> <Dollar1-LEX>
+
+    %% Padding is a dummy lexical that will contain the indentation prefix of every quotation
+    <Padding-LEX>                       -> Padding
+                                       -> <Padding-LEX> {indentpadding}
+
+  lexical restrictions
+
+    StringQuotedChars1 -/- ~[\(\)\$]
+    %%Dollar1            -/- [\(] . [\$]
+
+
+context-free syntax
+
+	%% Feature Service - Start
+    MetaAnno* "service" QId "{" ServiceElem* "}"    -> Definition {cons("Service")}
+    PropVal                                         -> ServiceElem
+    MetaAnno* "resource" ID "(" {FArg ","}* ")" ":" Type "{" ResourceElem* "}" -> ServiceElem {cons("Resource")}
+    PropVal                                         -> ResourceElem
+	%% Feature Service - Ende    
+
+context-free syntax %% Main
+
+    "server" ID ServerSetting* Definition* -> Start {cons("ServerApplication")}
+    "database" "host" STRING "name" STRING "username" STRING "password" STRING -> ServerSetting {cons("DatabaseSetting")}
+    "debug" -> ServerSetting {cons("DebugSetting")}
+    "@service" HttpMethod UriPath  -> MetaAnno {cons("ServiceAnno")}
+    "@socketevent" "(" STRING ")"  -> MetaAnno {cons("SocketEventAnno")}
+    "GET"        -> HttpMethod {cons("GetMethod")}
+    "POST"       -> HttpMethod {cons("PostMethod")}
+    "PUT"        -> HttpMethod {cons("PutMethod")}
+    "DELETE"     -> HttpMethod {cons("DeleteMethod")}
+
+  context-free syntax
+
+    "middleware" Exp      -> Definition {cons("MiddlewareUse")}
+
+context-free syntax
+    MetaAnno* "external" "type" QId "{" ExternalMemberDecl* "}" -> Definition {cons("ExternalTypeNoSuper")}
+    MetaAnno* "external" "type" QId ":" Type "{" ExternalMemberDecl* "}" -> Definition {cons("ExternalType")}
+    MetaAnno* "external" "type" QId "<" {ID ","}* ">" "{" ExternalMemberDecl* "}" -> Definition {cons("ExternalGenericType")}
+    MetaAnno* "static" "function" ID "(" {FArg ","}* ")" ":" Type -> ExternalMemberDecl {cons("ExternalStaticMethod")}
+    MetaAnno* "function" ID "(" {FArg ","}* ")" ":" Type -> ExternalMemberDecl {cons("ExternalMethod")}
+    MetaAnno* "static" "sync" "function" ID "(" {FArg ","}* ")" ":" Type -> ExternalMemberDecl {cons("ExternalStaticSyncMethod")}
+    MetaAnno* "sync" "function" ID "(" {FArg ","}* ")" ":" Type -> ExternalMemberDecl {cons("ExternalSyncMethod")}
+    EntityBodyDecl          -> ExternalMemberDecl
+    MetaAnno* "external" "control" QId "(" {FArg ","}* ")" -> Definition {cons("ExternalControl")}
+    MetaAnno* "external" "screen" QId "(" {FArg ","}* ")" ":" Type -> Definition {cons("ExternalScreen")}
+    MetaAnno* "external" "entity" QId ":" Type "{" EntityBodyDecl* "}" -> Definition {cons("ExternalEntity")}
+    MetaAnno* "external" "function" QId "(" {FArg ","}* ")" ":" Type -> Definition {cons("ExternalFunction")}
+    MetaAnno* "external" "sync" "function" QId "(" {FArg ","}* ")" ":" Type -> Definition {cons("ExternalSyncFunction")}
+    "external" "var" QId ":" Type ";" -> Definition {cons("ExternalVarDecl")}
+    MetaAnno* "external" "template" QId "(" {FArg ","}* ")" -> Definition {deprecated("The 'template' keyword has been replaced with 'control'."),cons
+
+("ExternalControl")}
+
+context-free syntax
+
+    MetaAnno* "entity" QId ":" Type "{" EntityBodyDecl* "}"  -> Definition {cons("Entity")}
+    MetaAnno* "entity" QId "{" EntityBodyDecl* "}"  -> Definition {cons("EntityNoSuper")}
+    MetaAnno* ID ":" Type "(" {Anno ","}* ")" -> EntityBodyDecl {cons("Property")}
+    MetaAnno* ID ":" Type                     -> EntityBodyDecl {cons("PropertyNoAnnos")}
+    FunctionDef                               -> EntityBodyDecl
+    ID                              -> Anno {cons("SimpleAnno")}
+    "inverse" ":" ID                -> Anno {cons("InverseAnno")}
+
+  context-free syntax
+
+    "@sync" UriPath  -> MetaAnno {cons("SyncEntityAnno")}
+    
+ context-free syntax
+
+    MetaAnno* "entity" QId ":" Type "{" EntityBodyDecl* "}"  -> Definition {cons("Entity")}
+    MetaAnno* "entity" QId "{" EntityBodyDecl* "}"  -> Definition {cons("EntityNoSuper")}
+    MetaAnno* ID ":" Type "(" {Anno ","}* ")" -> EntityBodyDecl {cons("Property")}
+    MetaAnno* ID ":" Type                     -> EntityBodyDecl {cons("PropertyNoAnnos")}
+    FunctionDef                               -> EntityBodyDecl
+    ID                              -> Anno {cons("SimpleAnno")}
+    "inverse" ":" ID                -> Anno {cons("InverseAnno")}
+
+  context-free syntax
+
+    "@sync" UriPath  -> MetaAnno {cons("SyncEntityAnno")}
+
+context-free syntax
+
+    "configuration" Setting*         -> Start {cons("Configuration")}
+    "title" STRING                   -> Setting {cons("TitleSetting")}
+    "database" STRING                -> Setting {cons("DatabaseSetting")}
+    "icon" Path                      -> Setting {cons("IconSetting")}
+    "version" STRING                 -> Setting {cons("VersionSetting")}
+    "stdlib" Path                    -> Setting {cons("StdLibSetting")}
+    "lib" Path                       -> Setting {cons("LibSetting")}
+    "html" FILENAME                  -> Setting {cons("HtmlSetting")}
+    "output" STRING                  -> Setting {cons("OutputSetting")}
+    "release" "output" STRING        -> Setting {cons("ReleaseOutputSetting")}
+    "offline"                        -> Setting {cons("OfflineSetting")}
+    "debug"                          -> Setting {cons("DebugSetting")}
+    "loadingHTML" STRING             -> Setting {cons("LoadingHtmlSetting")}
+    "style" StyleVar "=" StyleExp    -> Setting {cons("StyleVarSetting")}
+
+  context-free syntax %% Logic
+
+    MetaAnno* "function" QId "(" {FArg ","}* ")" ":" Type "{" Statement* "}" -> FunctionDef {cons("Function")}
+    MetaAnno* "function" QId "(" {FArg ","}* ")" "{" Statement* "}" -> FunctionDef {cons("FunctionNoReturnType")}
+    MetaAnno* "sync" "function" QId "(" {FArg ","}* ")" ":" Type "{" Statement* "}" -> FunctionDef {cons("SyncFunction")}
+    MetaAnno* "sync" "function" QId "(" {FArg ","}* ")" "{" Statement* "}" -> FunctionDef {cons("SyncFunctionNoReturnType")}
+    MetaAnno* "static" "function" QId "(" {FArg ","}* ")" ":" Type "{" Statement* "}" -> FunctionDef {cons("StaticFunction")}
+    MetaAnno* "static" "function" QId "(" {FArg ","}* ")" "{" Statement* "}" -> FunctionDef {cons("StaticFunctionNoReturnType")}
+    MetaAnno* "static" "sync" "function" QId "(" {FArg ","}* ")" ":" Type "{" Statement* "}" -> FunctionDef {cons("StaticSyncFunction")}
+    MetaAnno* "static" "sync" "function" QId "(" {FArg ","}* ")" "{" Statement* "}" -> FunctionDef {cons("StaticSyncFunctionNoReturnType")}
+    %%FunctionDef -> Definition
+    %%"var" ID ":" Type "=" Exp ";"              -> Definition {cons("VarDecl")}
+    %%"var" ID "=" Exp ";"                       -> Definition {cons("VarDeclInferred")}
+    Statement                                  -> Definition
+
+  context-free syntax %% Statements
+    "var" ID ":" Type "=" Exp ";"              -> Statement {cons("VarDecl")}
+    "var" ID "=" Exp ";"                       -> Statement {cons("VarDeclInferred")}
+    LValue "=" Exp ";"                          -> Statement {cons("Assignment")}
+    QId                                         -> LValue
+    Exp "." ID                                  -> LValue {cons("LFieldAccess")}
+    "(" LValue "," {LValue ","}* ")"            -> LValue {cons("LTuple")}
+    Exp "[" Exp "]"                             -> LValue {cons("LIndexer"), left}
+    Exp ";"                                     -> Statement {cons("ExpStat")}
+    %%Exp                                         -> Statement {cons("ExpStat"), recover}
+    "if" "(" Exp ")" Statement "else" Statement -> Statement {cons("If")}
+    "if" "(" Exp ")" Statement                            -> Statement {cons("IfNoElse")}
+    "foreach" "(" LValue ":" Type "in" Exp ")" "{" Statement* "}" -> Statement {cons("For")}
+    "foreach" "(" LValue "in" Exp ")" "{" Statement* "}" -> Statement {cons("ForInferred")}
+    "while" "(" Exp ")" "{" Statement* "}" -> Statement {cons("While")}
+    "{" Statement* "}"                          -> Statement {cons("Block")}
+    "for" "(" LValue ":" Type "in" Exp ")" "{" Statement* "}" -> Statement {cons("For"), deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
+    "for" "(" LValue "in" Exp ")" "{" Statement* "}" -> Statement {cons("ForInferred"), deprecated("To avoid confusing Javascript programmers, for(... in ...) is now foreach(... in ...)")}
+    "return" Exp ";"                            -> Statement {cons("Return")}
+    "screen" "return" Exp ";"                   -> Statement {cons("ScreenReturn")}
+    "return" ";"                                -> Statement {cons("Return")}
+    "screen" "return" ";"                       -> Statement {cons("ScreenReturn")}
+    %% Feature Async - Start    
+    "async" "{" Statement* "}"                  -> Statement {cons("Async")}
+	%% Feature Async - Ende	
+    FunctionDef                                 -> Statement
+
+  context-free syntax %% Expressions
+    %%StringQuotation               -> LimitedSetExp {cons("String")}
+    STRING                        -> LimitedSetExp {cons("String")}
+    NUMBER                        -> LimitedSetExp {cons("Num")}
+    "true"                        -> LimitedSetExp {cons("True")}
+    "false"                       -> LimitedSetExp {cons("False")}
+    "null"                        -> LimitedSetExp {cons("Null")}
+    "this"                        -> LimitedSetExp {cons("This")}
+    "!" Exp                       -> Exp {cons("Not")}
+    LimitedSetExp                 -> Exp
+    QId "(" {NamedExp ","}* ")"   -> LimitedExp {cons("Call")}
+    QId                           -> LimitedExp {cons("Var")}
+    "(" Exp ")"                   -> LimitedExp {cons("Brackets")}
+    Exp "." ID "(" {NamedExp ","}* ")" -> LimitedExp {cons("MethodCall")}
+    Exp "." ID                    -> LimitedExp {cons("FieldAccess")}
+    Exp "[" Exp "]"               -> LimitedExp {left, cons("Indexer")}
+    %%LimitedExp                    -> Exp
+    LimitedExp                    -> LimitedSetExp
+    Exp                           -> NamedExp
+    ID "=" Exp                    -> NamedExp {cons("NamedExp")}
+    Exp BoolMethodId Exp         -> Exp {cons("BinMethodCall"), left}
+    Exp CompareMethodId Exp      -> Exp {cons("BinMethodCall"), left}
+    Exp TermOperatorMethodId Exp -> Exp {cons("BinMethodCall"), left}
+    Exp OperatorMethodId Exp     -> Exp {cons("BinMethodCall"), left}
+    Exp "?" Exp ":" Exp          -> Exp {left, cons("Choice")}
+    QId "<" {Type ","}* ">" "(" {Exp ","}* ")"      -> Exp {cons("CollectionCons"), prefer}
+    Type "{" {PropVal ","}* "}"  -> Exp {cons("EntityCons"), deprecated("Please use the SomeEntity(name=...) syntax instead")}
+    "[" {Exp ","}* "]"           -> Exp {cons("List")}
+    "(" Exp "," {Exp ","}* ")"   -> Exp {cons("Tuple")}
+	%% Feature Async - Start
+    "async" "(" {Exp ","}* ")"   -> Exp {cons("AsyncCall"), prefer}
+	%% Feature Async - Ende
+    "{" Statement* "}"             -> Exp {cons("Callback")}
+    "control" "(" {FArg ","}* ")" "{" ScreenElem* "}" -> Exp {cons("AnonymousControl")}
+    "function" "(" {FArg ","}* ")" "{" Statement* "}" -> Exp {cons("AnonymousFunctionNoReturnType")}
+    "function" "(" {FArg ","}* ")" ":" Type "{" Statement* "}" -> Exp {cons("AnonymousFunction")}
+    ID "=" Exp                  -> PropVal {cons("PropVal")}
+    "$data" "(" Path ")"           -> Exp {cons("ImportData")}
+
+  context-free syntax %% Filters
+    %%Exp                                      -> NonSetExp
+    %%SetCompExp                               -> NonSetExp {reject}
+    %%NonSetExp Filter                         -> SetCompExp {cons("SetComp")}
+    %%SetCompExp                               -> Exp
+    LimitedExp Filter+                        -> Exp {cons("SetComp")}
+    "where" SetExp                           -> Filter {cons("WhereFilter")}
+    "order" "by" OrderExp                    -> Filter {cons("OrderByFilter")}
+    "prefetch" {ID ","}+                     -> Filter {cons("PrefetchFilter")}
+    "limit" Exp                              -> Filter {cons("LimitFilter")}
+    "offset" Exp                             -> Filter {cons("OffsetFilter")}
+    ID                                       -> OrderExp {cons("OrderNonSpecific")}
+    ID "asc"                                 -> OrderExp {cons("OrderAscending")}
+    ID "desc"                                -> OrderExp {cons("OrderDescending")}
+    %%"where" SetExp                           -> Filter {cons("FilterNoOrderByNoLimit")}
+    %%"order" "by" OrderExp                    -> Filter {cons("FilterNoWhereNoLimit")}
+    %%"where" SetExp "order" "by" OrderExp     -> Filter {cons("FilterNoLimit")}
+    %%"where" SetExp Limit                     -> Filter {cons("FilterNoOrderBy")}
+    %%"order" "by" OrderExp Limit              -> Filter {cons("FilterNoWhere")}
+    %%Limit                                    -> Filter {cons("FilterNoWhereNoOrderBy")}
+    %%"where" Exp "order" "by" OrderExp Limit  -> Filter {cons("Filter")}
+    %%ID                                       -> OrderExp {cons("OrderNonSpecific")}
+    %%ID "asc"                                 -> OrderExp {cons("OrderAscending")}
+    %%ID "desc"                                -> OrderExp {cons("OrderDescending")}
+    %%"limit" Exp "offset" Exp     -> Limit {cons("Limit")}
+    %%"limit" Exp                        -> Limit {cons("LimitNoOffset")}
+    %%"offset" Exp                       -> Limit {cons("LimitNoLimit")}
+    ID "==" LimitedSetExp                        -> SetExp {cons("SetEq")}
+    ID "!=" LimitedSetExp                        -> SetExp {cons("SetNotEq")}
+    ID "<" LimitedSetExp                         -> SetExp {cons("SetLt")}
+    ID "<=" LimitedSetExp                        -> SetExp {cons("SetLeq")}
+    ID ">" LimitedSetExp                         -> SetExp {cons("SetGt")}
+    ID ">=" LimitedSetExp                        -> SetExp {cons("SetGeq")}
+    ID "in" LimitedSetExp                        -> SetExp {cons("SetIn")}
+    ID "not" "in" LimitedSetExp                  -> SetExp {cons("SetNotIn")}
+    SetExp "&&" SetExp                       -> SetExp {left, cons("SetAnd"), prefer}
+
+  context-free priorities
+    Exp "." ID -> LimitedExp
+  > Exp "." ID "(" {NamedExp ","}* ")" -> LimitedExp
+  > Exp TermOperatorMethodId Exp -> Exp
+  > Exp OperatorMethodId Exp -> Exp
+  > Exp CompareMethodId Exp -> Exp
+  > Exp BoolMethodId Exp -> Exp
+  > "!" Exp -> Exp
+  > Exp "?" Exp ":" Exp -> Exp
+  > LimitedExp Filter+ -> Exp
+
+  context-free priorities
+  {
+    ID "==" LimitedSetExp                        -> SetExp
+    ID "!=" LimitedSetExp                        -> SetExp
+    ID "<" LimitedSetExp                         -> SetExp
+    ID "<=" LimitedSetExp                        -> SetExp
+    ID ">" LimitedSetExp                         -> SetExp
+    ID ">=" LimitedSetExp                        -> SetExp
+  }
+  > SetExp "&&" SetExp                 -> SetExp
+
+  lexical syntax
+    "||"                     -> BoolMethodId
+    "&&"                     -> BoolMethodId
+    "=="                     -> CompareMethodId
+    "!="                     -> CompareMethodId
+    "<"                      -> CompareMethodId
+    "<="                     -> CompareMethodId
+    ">"                      -> CompareMethodId
+    ">="                     -> CompareMethodId
+    "*"                      -> TermOperatorMethodId
+    "/"                      -> TermOperatorMethodId
+    "<<"                     -> TermOperatorMethodId
+    ">>"                     -> TermOperatorMethodId
+    "&"                      -> TermOperatorMethodId
+    "|"                      -> TermOperatorMethodId
+    "%"                      -> TermOperatorMethodId
+    "+"                      -> OperatorMethodId
+    "-"                      -> OperatorMethodId
+    "++"                     -> PostFixId
+    "--"                     -> PostFixId
+    BoolMethodId             -> MethodId
+    CompareMethodId          -> MethodId
+    TermOperatorMethodId     -> MethodId
+    OperatorMethodId         -> MethodId
+    PostFixId                -> MethodId
