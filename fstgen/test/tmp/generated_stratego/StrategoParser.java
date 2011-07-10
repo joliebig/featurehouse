@@ -831,7 +831,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     label_15:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
+      case LETTER:
+      case DIGIT:
       case BACKSLASH:
         ;
         break;
@@ -868,24 +869,37 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("CharClass1","-","-","Replacement","Default",first,token);}
       break;
-    case IDENTIFIER:
-      n = Id(true);
-                    replaceName(n);
-      label_16:
-      while (true) {
-        if (jj_2_5(2)) {
-          ;
-        } else {
-          break label_16;
-        }
-        jj_consume_token(MINUS);
-        n = Id(true);
-                                                                   replaceName(n);
-      }
-                                                                                       {if (true) return productionEndTerminal("CharClass2","-","-","Replacement","Default",first,token);}
+    case LETTER:
+    case DIGIT:
+      n = LetterOrDigit(true);
+                               replaceName(n);
+      jj_consume_token(MINUS);
+      n = LetterOrDigit(true);
+                                                                           replaceName(n);
+                                                                                             {if (true) return productionEndTerminal("CharClass2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[39] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo LetterOrDigit(boolean inTerminal) throws ParseException {
+                                              Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case LETTER:
+      jj_consume_token(LETTER);
+                  {if (true) return productionEndTerminal("LetterOrDigit1","-","-","Replacement","Default",first,token);}
+      break;
+    case DIGIT:
+      jj_consume_token(DIGIT);
+                 {if (true) return productionEndTerminal("LetterOrDigit2","-","-","Replacement","Default",first,token);}
+      break;
+    default:
+      jj_la1[40] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1037,7 +1051,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               {if (true) return productionEndTerminal("SpecialSign35","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[40] = jj_gen;
+      jj_la1[41] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1050,12 +1064,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_consume_token(LBRACE);
     n = Attribute(true);
                                replaceName(n);
-    label_17:
+    label_16:
     while (true) {
-      if (jj_2_6(2)) {
+      if (jj_2_5(2)) {
         ;
       } else {
-        break label_17;
+        break label_16;
       }
       jj_consume_token(COMMA);
       n = Attribute(true);
@@ -1117,7 +1131,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                {if (true) return productionEndTerminal("Attribute11","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[41] = jj_gen;
+      jj_la1[42] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1145,7 +1159,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                                {if (true) return productionEndTerminal("Constructor2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[42] = jj_gen;
+      jj_la1[43] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1155,7 +1169,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final public FSTInfo Priority(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_8(2)) {
+    if (jj_2_7(2)) {
       jj_consume_token(LBRACE);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CONS:
@@ -1175,10 +1189,10 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         jj_consume_token(DDOT);
         break;
       default:
-        jj_la1[43] = jj_gen;
+        jj_la1[44] = jj_gen;
         ;
       }
-      label_18:
+      label_17:
       while (true) {
         n = Production(true);
                                                                                         replaceName(n);
@@ -1195,8 +1209,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           ;
           break;
         default:
-          jj_la1[44] = jj_gen;
-          break label_18;
+          jj_la1[45] = jj_gen;
+          break label_17;
         }
       }
       jj_consume_token(RBRACE);
@@ -1204,15 +1218,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       n = Production(true);
                                                                                                                                        replaceName(n);
                                                                                                                                                          {if (true) return productionEndTerminal("Priority1","-","-","Replacement","Default",first,token);}
-    } else if (jj_2_9(2)) {
+    } else if (jj_2_8(2)) {
       n = Production(true);
                                          replaceName(n);
-      label_19:
+      label_18:
       while (true) {
-        if (jj_2_7(2)) {
+        if (jj_2_6(2)) {
           ;
         } else {
-          break label_19;
+          break label_18;
         }
         jj_consume_token(GT);
         n = Production(true);
@@ -1252,10 +1266,10 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           jj_consume_token(DDOT);
           break;
         default:
-          jj_la1[45] = jj_gen;
+          jj_la1[46] = jj_gen;
           ;
         }
-        label_20:
+        label_19:
         while (true) {
           n = Production(true);
                                                                                                                     replaceName(n);
@@ -1272,15 +1286,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             ;
             break;
           default:
-            jj_la1[46] = jj_gen;
-            break label_20;
+            jj_la1[47] = jj_gen;
+            break label_19;
           }
         }
         jj_consume_token(RBRACE);
                                                                                                                                             {if (true) return productionEndTerminal("Priority3","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[47] = jj_gen;
+        jj_la1[48] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1291,7 +1305,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final public FSTInfo Restriction(boolean inTerminal) throws ParseException {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_21:
+    label_20:
     while (true) {
       n = Symbol(true);
                          replaceName(n);
@@ -1307,19 +1321,19 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         ;
         break;
       default:
-        jj_la1[48] = jj_gen;
-        break label_21;
+        jj_la1[49] = jj_gen;
+        break label_20;
       }
     }
     jj_consume_token(NOTALLOWED);
     n = CharacterClass(true);
                                                                           replaceName(n);
-    label_22:
+    label_21:
     while (true) {
-      if (jj_2_10(2)) {
+      if (jj_2_9(2)) {
         ;
       } else {
-        break label_22;
+        break label_21;
       }
       jj_consume_token(DOT);
       n = CharacterClass(true);
@@ -1333,15 +1347,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(RULES);
-    label_23:
+    label_22:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
         ;
         break;
       default:
-        jj_la1[49] = jj_gen;
-        break label_23;
+        jj_la1[50] = jj_gen;
+        break label_22;
       }
       n = Def(true);
                               replaceName(n);
@@ -1374,7 +1388,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final public FSTInfo RuleName(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_24:
+    label_23:
     while (true) {
       n = Id(true);
                      replaceName(n);
@@ -1383,8 +1397,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         ;
         break;
       default:
-        jj_la1[50] = jj_gen;
-        break label_24;
+        jj_la1[51] = jj_gen;
+        break label_23;
       }
     }
                                          {if (true) return productionEndTerminal("RuleName","-","-","Replacement","Default",first,token);}
@@ -1399,7 +1413,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_consume_token(ARROW);
     n = Term(true);
                                                           replaceName(n);
-    label_25:
+    label_24:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case WITH:
@@ -1407,8 +1421,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         ;
         break;
       default:
-        jj_la1[51] = jj_gen;
-        break label_25;
+        jj_la1[52] = jj_gen;
+        break label_24;
       }
       n = RuleCond(true);
                                                                                               replaceName(n);
@@ -1434,7 +1448,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                    {if (true) return productionEndTerminal("RuleCond2","-","-","Replacement","Default",first,token);}
       break;
     default:
-      jj_la1[52] = jj_gen;
+      jj_la1[53] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -1444,7 +1458,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final public FSTInfo Strategy(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_11(2)) {
+    if (jj_2_10(2)) {
       n = Var(true);
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("Strategy1","-","-","Replacement","Default",first,token);}
@@ -1468,7 +1482,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                                                    {if (true) return productionEndTerminal("Strategy3","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[53] = jj_gen;
+        jj_la1[54] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1479,11 +1493,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final public FSTInfo Term(boolean inTerminal) throws ParseException {
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_12(2)) {
+    if (jj_2_11(2)) {
       n = Var(true);
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("Term1","-","-","Replacement","Default",first,token);}
-    } else if (jj_2_13(3)) {
+    } else if (jj_2_12(3)) {
       n = Int(true);
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("Term2","-","-","Replacement","Default",first,token);}
@@ -1504,7 +1518,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         n = Id(true);
                     replaceName(n);
         jj_consume_token(LPAREN);
-        label_26:
+        label_25:
         while (true) {
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case INTEGER_LITERAL:
@@ -1514,8 +1528,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             ;
             break;
           default:
-            jj_la1[54] = jj_gen;
-            break label_26;
+            jj_la1[55] = jj_gen;
+            break label_25;
           }
           n = Term(true);
                                                         replaceName(n);
@@ -1525,7 +1539,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                                                     {if (true) return productionEndTerminal("Term5","-","-","Replacement","Default",first,token);}
         break;
       default:
-        jj_la1[55] = jj_gen;
+        jj_la1[56] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1626,120 +1640,58 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     finally { jj_save(11, xla); }
   }
 
-  final private boolean jj_2_13(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_13(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(12, xla); }
-  }
-
-  final private boolean jj_3R_53() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_56()) {
-    jj_scanpos = xsp;
-    if (jj_3R_57()) return true;
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_47() {
-    if (jj_3R_53()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_46() {
-    if (jj_scan_token(INDENTPADDING)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_67() {
-    if (jj_3R_71()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_55() {
-    if (jj_scan_token(STRING_LITERAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_45() {
+  final private boolean jj_3R_44() {
     if (jj_scan_token(RECOVER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_44() {
+  final private boolean jj_3R_43() {
     if (jj_scan_token(REJECT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_43() {
+  final private boolean jj_3R_42() {
     if (jj_scan_token(ASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_35() {
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_69() {
-    if (jj_3R_68()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_42() {
-    if (jj_scan_token(NONASSOC)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_76() {
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_1() {
-    if (jj_scan_token(SLASH)) return true;
+  final private boolean jj_3R_34() {
     if (jj_3R_27()) return true;
     return false;
   }
 
   final private boolean jj_3R_41() {
-    if (jj_scan_token(RIGHT)) return true;
+    if (jj_scan_token(NONASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_75() {
-    if (jj_scan_token(BACKSLASH)) return true;
+  final private boolean jj_3R_78() {
+    if (jj_scan_token(DIGIT)) return true;
     return false;
   }
 
-  final private boolean jj_3_2() {
-    if (jj_scan_token(MINUS)) return true;
-    if (jj_3R_28()) return true;
+  final private boolean jj_3R_66() {
+    if (jj_3R_70()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_54() {
+    if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
 
   final private boolean jj_3R_40() {
-    if (jj_scan_token(LEFT)) return true;
+    if (jj_scan_token(RIGHT)) return true;
     return false;
   }
 
-  final private boolean jj_3_13() {
-    if (jj_3R_36()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_36() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(106)) jj_scanpos = xsp;
-    if (jj_3R_52()) return true;
+  final private boolean jj_3R_77() {
+    if (jj_scan_token(LETTER)) return true;
     return false;
   }
 
   final private boolean jj_3R_39() {
-    if (jj_scan_token(AVOID)) return true;
+    if (jj_scan_token(LEFT)) return true;
     return false;
   }
 
@@ -1748,57 +1700,81 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_75()) {
-    jj_scanpos = xsp;
-    if (jj_3R_76()) return true;
-    }
+  final private boolean jj_3R_38() {
+    if (jj_scan_token(AVOID)) return true;
     return false;
   }
 
-  final private boolean jj_3R_38() {
-    if (jj_scan_token(PREFER)) return true;
+  final private boolean jj_3R_68() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_11() {
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_76() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_77()) {
+    jj_scanpos = xsp;
+    if (jj_3R_78()) return true;
+    }
     return false;
   }
 
   final private boolean jj_3R_37() {
+    if (jj_scan_token(PREFER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_75() {
+    if (jj_3R_76()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_1() {
+    if (jj_scan_token(SLASH)) return true;
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_36() {
     if (jj_scan_token(BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_3R_68()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_33() {
-    if (jj_3R_31()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_34() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_scan_token(119)) jj_scanpos = xsp;
-    if (jj_scan_token(LBRACKET)) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_67()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(RBRACKET)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_74() {
-    if (jj_scan_token(QUESTIONMARK)) return true;
+    if (jj_scan_token(BACKSLASH)) return true;
     return false;
   }
 
-  final private boolean jj_3R_29() {
+  final private boolean jj_3R_32() {
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_scan_token(MINUS)) return true;
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_35() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_scan_token(106)) jj_scanpos = xsp;
+    if (jj_3R_51()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_28() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_36()) {
+    jj_scanpos = xsp;
     if (jj_3R_37()) {
     jj_scanpos = xsp;
     if (jj_3R_38()) {
@@ -1817,9 +1793,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_scanpos = xsp;
     if (jj_3R_45()) {
     jj_scanpos = xsp;
-    if (jj_3R_46()) {
-    jj_scanpos = xsp;
-    if (jj_3R_47()) return true;
+    if (jj_3R_46()) return true;
     }
     }
     }
@@ -1830,107 +1804,140 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     }
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_73() {
-    if (jj_scan_token(PLUS)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_63() {
-    if (jj_3R_66()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_11() {
-    if (jj_3R_35()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_52() {
-    if (jj_scan_token(INTEGER_LITERAL)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_7() {
-    if (jj_scan_token(GT)) return true;
-    if (jj_3R_31()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_72() {
-    if (jj_scan_token(STAR)) return true;
     return false;
   }
 
   final private boolean jj_3R_70() {
-    if (jj_3R_54()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_74()) {
+    jj_scanpos = xsp;
+    if (jj_3R_75()) return true;
+    }
     return false;
   }
 
-  final private boolean jj_3R_68() {
+  final private boolean jj_3_10() {
+    if (jj_3R_34()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_scan_token(GT)) return true;
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_63() {
+    if (jj_3R_67()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_33() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_72()) {
-    jj_scanpos = xsp;
-    if (jj_3R_73()) {
-    jj_scanpos = xsp;
-    if (jj_3R_74()) return true;
+    if (jj_scan_token(119)) jj_scanpos = xsp;
+    if (jj_scan_token(LBRACKET)) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_66()) { jj_scanpos = xsp; break; }
     }
-    }
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_73() {
+    if (jj_scan_token(QUESTIONMARK)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_72() {
+    if (jj_scan_token(PLUS)) return true;
     return false;
   }
 
   final private boolean jj_3R_62() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_51() {
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_71() {
+    if (jj_scan_token(STAR)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_69() {
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_67() {
     Token xsp;
-    if (jj_3R_70()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_70()) { jj_scanpos = xsp; break; }
+    xsp = jj_scanpos;
+    if (jj_3R_71()) {
+    jj_scanpos = xsp;
+    if (jj_3R_72()) {
+    jj_scanpos = xsp;
+    if (jj_3R_73()) return true;
+    }
     }
     return false;
   }
 
   final private boolean jj_3R_61() {
-    if (jj_scan_token(LBRACE)) return true;
-    if (jj_3R_28()) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    if (jj_3R_69()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_69()) { jj_scanpos = xsp; break; }
+    }
     return false;
   }
 
   final private boolean jj_3R_60() {
-    if (jj_3R_28()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_69()) jj_scanpos = xsp;
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_27()) return true;
     return false;
   }
 
   final private boolean jj_3R_59() {
-    if (jj_scan_token(LT)) return true;
-    if (jj_3R_28()) return true;
+    if (jj_3R_27()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_68()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_58() {
-    if (jj_scan_token(DLBRACKET)) return true;
-    if (jj_3R_28()) return true;
+    if (jj_scan_token(LT)) return true;
+    if (jj_3R_27()) return true;
     return false;
   }
 
-  final private boolean jj_3R_54() {
+  final private boolean jj_3R_57() {
+    if (jj_scan_token(DLBRACKET)) return true;
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_53() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_57()) {
+    jj_scanpos = xsp;
     if (jj_3R_58()) {
     jj_scanpos = xsp;
     if (jj_3R_59()) {
     jj_scanpos = xsp;
     if (jj_3R_60()) {
     jj_scanpos = xsp;
-    if (jj_3R_61()) {
-    jj_scanpos = xsp;
-    if (jj_3R_62()) return true;
+    if (jj_3R_61()) return true;
     }
     }
     }
@@ -1938,147 +1945,161 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_27() {
-    if (jj_3R_28()) return true;
+  final private boolean jj_3R_26() {
+    if (jj_3R_27()) return true;
     return false;
   }
 
-  final private boolean jj_3R_66() {
+  final private boolean jj_3R_65() {
     if (jj_scan_token(VERTICALLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_50() {
-    if (jj_3R_55()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_64()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_65()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_49() {
-    if (jj_3R_34()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_48() {
     if (jj_3R_54()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_63()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_64()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_31() {
+    if (jj_3R_28()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_48() {
+    if (jj_3R_33()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_47() {
+    if (jj_3R_53()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_62()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3_4() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_30()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_32() {
     if (jj_3R_29()) return true;
     return false;
   }
 
-  final private boolean jj_3R_51() {
+  final private boolean jj_3R_50() {
+    if (jj_3R_29()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_29() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_4()) {
+    jj_scanpos = xsp;
+    if (jj_3R_47()) {
+    jj_scanpos = xsp;
+    if (jj_3R_48()) {
+    jj_scanpos = xsp;
+    if (jj_3R_49()) return true;
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3_8() {
     if (jj_3R_30()) return true;
     return false;
   }
 
   final private boolean jj_3R_30() {
     Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_4()) {
-    jj_scanpos = xsp;
-    if (jj_3R_48()) {
-    jj_scanpos = xsp;
-    if (jj_3R_49()) {
-    jj_scanpos = xsp;
-    if (jj_3R_50()) return true;
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_31() {
-    Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_51()) { jj_scanpos = xsp; break; }
+      if (jj_3R_50()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_3R_30()) return true;
+    if (jj_3R_29()) return true;
     return false;
   }
 
   final private boolean jj_3_5() {
-    if (jj_scan_token(MINUS)) return true;
+    if (jj_scan_token(COMMA)) return true;
     if (jj_3R_28()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_7() {
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_31()) jj_scanpos = xsp;
+    if (jj_3R_32()) return true;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_32()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
+  final private boolean jj_3_9() {
+    if (jj_scan_token(DOT)) return true;
+    if (jj_3R_33()) return true;
     return false;
   }
 
   final private boolean jj_3_3() {
     if (jj_scan_token(LBRACE)) return true;
-    if (jj_3R_29()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_9() {
-    if (jj_3R_31()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_6() {
-    if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_29()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_65() {
-    if (jj_3R_66()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_8() {
-    if (jj_scan_token(LBRACE)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_32()) jj_scanpos = xsp;
-    if (jj_3R_33()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_33()) { jj_scanpos = xsp; break; }
-    }
-    return false;
-  }
-
-  final private boolean jj_3_10() {
-    if (jj_scan_token(DOT)) return true;
-    if (jj_3R_34()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_57() {
-    if (jj_scan_token(DEPRECATED)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_55()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_28() {
-    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_3R_28()) return true;
     return false;
   }
 
   final private boolean jj_3R_56() {
+    if (jj_scan_token(DEPRECATED)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_54()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_64() {
+    if (jj_3R_65()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_55() {
     if (jj_scan_token(CONS)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_55()) return true;
+    if (jj_3R_54()) return true;
     if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_52() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_55()) {
+    jj_scanpos = xsp;
+    if (jj_3R_56()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_46() {
+    if (jj_3R_52()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_45() {
+    if (jj_scan_token(INDENTPADDING)) return true;
     return false;
   }
 
@@ -2090,7 +2111,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   public boolean lookingAhead = false;
   private boolean jj_semLA;
   private int jj_gen;
-  final private int[] jj_la1 = new int[56];
+  final private int[] jj_la1 = new int[57];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -2104,21 +2125,21 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_la1_4();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x20000,0x40000,0x80000,0x0,0x0,0x0,0x0,0x0,0x0,0x7f00000,0x7f00000,0x0,0x0,0x7f00000,0x0,0x7c00000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf8000000,0x8000000,0xf8000000,0x0,0xf8000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x0,0x20000,0x40000,0x80000,0x0,0x0,0x0,0x0,0x0,0x0,0x7f00000,0x7f00000,0x0,0x0,0x7f00000,0x0,0x7c00000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xf8000000,0x8000000,0xf8000000,0x0,0xf8000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x4000000,0x0,0x0,0x0,0x0,0x0,0x700,0x700,0x0,0x0,0x700,0x0,0x0,0x0,0x0,0x0,0x700,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7f,0x20,0x7f,0x0,0x7f,0x0,0x0,0x0,0x0,0x0,0x800000,0x800000,0x20000,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x4000000,0x0,0x0,0x0,0x0,0x0,0x700,0x700,0x0,0x0,0x700,0x0,0x0,0x0,0x0,0x0,0x700,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7f,0x20,0x7f,0x0,0x7f,0x0,0x0,0x0,0x0,0x0,0x800000,0x800000,0x20000,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4000000,0x4000000,0x0,0x4000000,0x0,0x0,0x84000000,0x84000000,0x0,0x86000000,0x0,0x86000000,0x86000000,0x86000000,0x0,0x86000000,0x0,0x0,0x0,0x0,0x86000000,0x0,0x0,0x0,0x0,0x84000000,0x0,0x84000000,0x0,0x0,0x4000000,0x0,0x4000000,0x80000000,0x0,0x0,0x0,0x86000000,0x0,0x86000000,0x86000000,0x86000000,0x4000000,0x4000000,0x2,0x2,0x0,0x6040000,0x6040000,};
+      jj_la1_2 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4000000,0x4000000,0x0,0x4000000,0x0,0x0,0x84000000,0x84000000,0x0,0x86000000,0x0,0x86000000,0x86000000,0x86000000,0x0,0x86000000,0x0,0x0,0x0,0x0,0x86000000,0x0,0x0,0x0,0x0,0x84000000,0x0,0x84000000,0x0,0x0,0x48000000,0x0,0x48000000,0x48000000,0x80000000,0x0,0x0,0x0,0x86000000,0x0,0x86000000,0x86000000,0x86000000,0x4000000,0x4000000,0x2,0x2,0x0,0x6040000,0x6040000,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x400,0x400,0x0,0x0,0x0,0x0,0x8,0x20,0x20,0x8,0x0,0x0,0x0,0xa2,0xa2,0x0,0x208000aa,0x0,0x208000aa,0x8000aa,0x8000aa,0x0,0x8000aa,0x400000,0x400000,0x20a00,0x400000,0x8000aa,0x20a00,0x400,0x20a00,0x20a00,0xa2,0x20a00,0xa2,0x20a00,0x800000,0x0,0x20a00,0x0,0x5fffff9f,0x0,0x0,0x0,0x208000aa,0x0,0x208000aa,0x208000aa,0x8000aa,0x0,0x0,0x0,0x0,0x80,0x400,0x400,};
+      jj_la1_3 = new int[] {0x400,0x400,0x0,0x0,0x0,0x0,0x8,0x20,0x20,0x8,0x0,0x0,0x0,0xa2,0xa2,0x0,0x208000aa,0x0,0x208000aa,0x8000aa,0x8000aa,0x0,0x8000aa,0x400000,0x400000,0x20a00,0x400000,0x8000aa,0x20a00,0x400,0x20a00,0x20a00,0xa2,0x20a00,0xa2,0x20a00,0x800000,0x0,0x20a00,0x0,0x0,0x5fffff9f,0x0,0x0,0x0,0x208000aa,0x0,0x208000aa,0x208000aa,0x8000aa,0x0,0x0,0x0,0x0,0x80,0x400,0x400,};
    }
    private static void jj_la1_4() {
-      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x4,0x3f,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
+      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x4,0x0,0x3f,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[13];
+  final private JJCalls[] jj_2_rtns = new JJCalls[12];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2127,7 +2148,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 57; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2136,7 +2157,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 57; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2145,7 +2166,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 57; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2154,7 +2175,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 56; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 57; i++) jj_la1[i] = -1;
     for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -2273,7 +2294,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 56; i++) {
+    for (int i = 0; i < 57; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -2319,7 +2340,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < 12; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -2338,7 +2359,6 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             case 9: jj_3_10(); break;
             case 10: jj_3_11(); break;
             case 11: jj_3_12(); break;
-            case 12: jj_3_13(); break;
           }
         }
         p = p.next;

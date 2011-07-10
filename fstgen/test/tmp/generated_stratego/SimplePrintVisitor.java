@@ -33,6 +33,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SpecialSign24") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Attribute11") && expectedType.equals("Attribute")) return true;
 		if (type.equals("SpecialSign20") && expectedType.equals("SpecialSign")) return true;
+		if (type.equals("LetterOrDigit1") && expectedType.equals("LetterOrDigit")) return true;
 		if (type.equals("SpecialSign2") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Symbol2") && expectedType.equals("Symbol")) return true;
 		if (type.equals("Symbol1") && expectedType.equals("Symbol")) return true;
@@ -53,6 +54,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SpecialSign6") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("SpecialSign29") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("ModuleSort1") && expectedType.equals("ModuleSort")) return true;
+		if (type.equals("LetterOrDigit2") && expectedType.equals("LetterOrDigit")) return true;
 		if (type.equals("SpecialSign25") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Attribute10") && expectedType.equals("Attribute")) return true;
 		if (type.equals("ProdPart1") && expectedType.equals("ProdPart")) return true;

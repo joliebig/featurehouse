@@ -383,7 +383,12 @@ CharacterClass :
 
 CharClass :
 	"\\" SpecialSign |
-	Id ( LOOK_AHEAD(2) "-" Id )* ;
+	LetterOrDigit "-" LetterOrDigit ;
+	/*LetterOrDigit ( LOOK_AHEAD(2) "-" LetterOrDigit )* ;*/
+
+LetterOrDigit :
+	<LETTER> |
+	<DIGIT> ;
 
 SpecialSign :
 	"("<NONE> | 
@@ -426,16 +431,16 @@ OptAttributes :
 	"{" Attribute ( LOOK_AHEAD(2) "," Attribute )* "}" ;
 
 Attribute :
-	"bracket" |
-	"prefer" |
-	"avoid" |
-	"left" |
-	"right" |
-	"non-assoc" |
-	"assoc" |
-	"reject" |
-	"recover" |
-	"indentpadding" |
+	"bracket"<NONE> |
+	"prefer"<NONE> |
+	"avoid"<NONE> |
+	"left"<NONE> |
+	"right"<NONE> |
+	"non-assoc"<NONE> |
+	"assoc"<NONE> |
+	"reject"<NONE> |
+	"recover"<NONE> |
+	"indentpadding"<NONE> |
 	Constructor ;
 
 Constructor :
@@ -448,9 +453,7 @@ Priority :
 	Production ">" "{" [Attribute ":"] @!( Production )+ "}" ;
 
 Restriction : 
-	/*LOOK_AHEAD(3)*/
 	( Symbol )+ "-/-" CharacterClass ( LOOK_AHEAD(2) "." CharacterClass )* ;
-	/*Symbol "-/-" CharacterClass "." CharacterClass ;*/
 
 /*****************************************************************************
  * TRANSFORMATIONS                                                           *

@@ -446,7 +446,15 @@ FSTInfo CharClass(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"\\" n=SpecialSign(true){ replaceName(n);} {return productionEndTerminal("CharClass1","-","-","Replacement","Default",first,token);}
  |
-	n=Id(true){ replaceName(n);} (LOOKAHEAD(2) "-" n=Id(true){ replaceName(n);})* {return productionEndTerminal("CharClass2","-","-","Replacement","Default",first,token);}
+	n=LetterOrDigit(true){ replaceName(n);} "-" n=LetterOrDigit(true){ replaceName(n);} {return productionEndTerminal("CharClass2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LetterOrDigit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<LETTER> {return productionEndTerminal("LetterOrDigit1","-","-","Replacement","Default",first,token);}
+ |
+	<DIGIT> {return productionEndTerminal("LetterOrDigit2","-","-","Replacement","Default",first,token);}
 
  )  }
 
