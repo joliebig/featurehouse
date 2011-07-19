@@ -157,7 +157,7 @@
 			<param name="parserClass" value="StrategoParser" />
 			<param name="mainProduction" value="Module" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.sdf" />
+			<param name="testFile" value="TestTrafo.sdf" />
 		</antcall>
 	</target>	
 <!-- Stratego - Ende -->	
