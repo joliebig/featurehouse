@@ -32,24 +32,19 @@ SPECIAL_TOKEN :
  *****************************************************************************/
 MORE :
 	{ "//" : IN_SINGLE_LINE_COMMENT |
-	  "%%" : IN_SINGLE_LINE_COMMENT_SDF |
 	  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT |
 	  "/*" : IN_MULTI_LINE_COMMENT 
 	}
 	<IN_SINGLE_LINE_COMMENT>
 		SPECIAL_TOKEN :
 			{ <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT }
-	<IN_SINGLE_LINE_COMMENT_SDF>
-		SPECIAL_TOKEN :
-			{ <SINGLE_LINE_COMMENT_SDF: "\n" | "\r" | "\r\n" > : DEFAULT }
 	<IN_FORMAL_COMMENT>
 		SPECIAL_TOKEN :
 			{ <FORMAL_COMMENT: "*/" > : DEFAULT }
 	<IN_MULTI_LINE_COMMENT>
 		SPECIAL_TOKEN :
 			{ <MULTI_LINE_COMMENT: "*/" > : DEFAULT }
-	<IN_SINGLE_LINE_COMMENT,IN_SINGLE_LINE_COMMENT_SDF,
-	 IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
 			{ < ~[] > }
 /*****************************************************************************
@@ -288,164 +283,23 @@ Id :
  *****************************************************************************/
 Module : 
 	ModuleDeclaration
-	[ImportDeclaration]
-	[ExportDeclaration]
-	[HiddenDeclaration]
-	[TrafoDeclaration]
+	(Declaration)*
 	<EOF> ;
 
-ModuleDeclaration :
-	"module" ModName [ModuleParameter] @+! ;
-
-ModuleParameter :
-	"[" (ModuleSort)+ "]" ;
-
-ModuleSort :
-	Id |
-	"[[" Id "]]" ;
-
-ModName :
+ModName : 
 	Id (LOOK_AHEAD(2) "/" Id)* ;
 
-ImportModName : 
-	ModName [ModuleParameter] ;
+ModuleDeclaration :
+	"module" ModName |
+	"specification"<NONE> ;
 
-@FSTTerminal(name="{ModName}{ImportModule}")
-ImportDeclaration :
-	"imports" (ImportModName)+ ;
-
-ExportDeclaration :
-	"exports" (Grammer)+ ;
-
-HiddenDeclaration :
-	"hiddens" (Grammer)+ ;
-
-Grammer :
-	/* Every syntax definition introduces names for the syntactical sorts 
-	   of a language. */
-	"sorts" (Sort)* |
-	/* Every syntax definition needs to define one or more start symbols. */
-	"context-free start-symbols" (Sort)* |
-	Productions |
-	Disambiguations ;
-
-/* The actual syntax is defined in lexical and context-free syntax.
-   The lexical syntax defines the syntax of language constructs like literals, 
-   comments, whitespace, and identifiers, or what is usally referred to as 
-   terminals. 
-   The context-free syntax defines the syntax of constructs like operators, 
-   statements, or what is usually referred to as non-terminals */
-Productions :
-	ProdPart (Production)* ;
-
-ProdPart :
-	"syntax" <NONE> |
-	"lexical syntax" <NONE> |
-	"context-free syntax" <NONE> |
-	"variables" <NONE> |
-	"lexical variables" <NONE> ;
-
-/* Constructs to define in a declarative way that certain kinds of derivations 
-   are not allowed, also known as disambiguation filters */
-Disambiguations :
-	"context-free priorities" (Priority)* |
-	"lexical restrictions" (Restriction)* |
-	"context-free restrictions" (Restriction)* ;
-
-/* Productions have the form A1 ... An -> A0, where A0 is non-terminal and 
-   A1 ... An is a string of terminals and non-terminals. */
-Production :
-	(Symbol)* 
-	"->" (LOOK_AHEAD(2) Symbol)+ [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
-
-/* There are three kinds of symbols: sorts, character classes and literals. 
-   Sorts are names for language specific constructs.
-   A character class is set of characters. Character classes are specified 
-   by single characters, character ranges, and can be combined using set 
-   operators, such as complement, difference, union, intersection.
-   A literal is a String. */
-Symbol :
-	LOOK_AHEAD(2) "(" Symbol ")" [SortOp] |
-	Sort [AlternativeSymbol] |
-	CharacterClass [AlternativeSymbol] |
-	String [SortOp] [AlternativeSymbol] ;
-
-AlternativeSymbol :
-	"|" Symbol ;
-
-Sort :
-	"[[" Id "]]" |
-	"<" Id [SortOp] ["-" Id] ">" |
-	Id [SortOp] |	
-	"{" Id String "}" [SortOp] |
-	"(" (Sort)+ ")" [SortOp] ;
-
-SortOp :
-	"*" | 
-	"+" | 
-	"?" ;
-
-CharacterClass :
-	[<TILDE>] "[" (CharClass)* "]" [SortOp] ;
-
-CharClass :
-	SpecialSign |
-	Id |
-	Int ;
-
-SpecialSign :
-	"\\("<NONE> | "\\)"<NONE> | "\\{"<NONE> | "\\}"<NONE> | "\\["<NONE> |
-	"\\]"<NONE> | "\\,"<NONE> | "\\<"<NONE> | "\\>"<NONE> | "\\:"<NONE> |
-	"\\."<NONE> | "\\?"<NONE> | "\\!"<NONE> | "\\'"<NONE> | "\\%"<NONE> |
-	"\\_"<NONE> | "\\$"<NONE> | "\\@"<NONE> | "\\~"<NONE> | "\\\""<NONE> |
-	"\\/"<NONE> | "\\\\"<NONE> | "\\#"<NONE> | "\\|"<NONE> | "\\+"<NONE> |
-	"\\-"<NONE> | "\\*"<NONE> | "\\;"<NONE> | "\\`"<NONE> | "\\="<NONE> |
-	"\\&"<NONE> | "\\^"<NONE> | "\\ "<NONE> | "\\0"<NONE> | "\\1"<NONE> |
-	"\\2"<NONE> | "\\3"<NONE> | "\\4"<NONE> | "\\5"<NONE> | "\\6"<NONE> |
-	"\\7"<NONE> | "\\8"<NONE> | "\\9"<NONE> | "\\n"<NONE> | "\\t"<NONE> |
-	"\\r"<NONE> ;
-
-OptAttributes :
-	"{" Attribute (LOOK_AHEAD(2) "," Attribute)* "}" ;
-
-Attribute :
-	"bracket"<NONE> |
-	"prefer"<NONE> |
-	"avoid"<NONE> |
-	"left"<NONE> |
-	"right"<NONE> |
-	"non-assoc"<NONE> |
-	"assoc"<NONE> |
-	"reject"<NONE> |
-	"recover"<NONE> |
-	"indentpadding"<NONE> |
-	Constructor ;
-
-Constructor :
-	"cons" "(" String ")" |
-	"deprecated" "(" String ")" ;
-
-Priority :
-	LOOK_AHEAD(3) "{" [Attribute ":"] @! (Production)+ "}" [LOOK_AHEAD(2) ">" Priority] |
-	Production (LOOK_AHEAD(2) ">" Priority)* ;
-
-/*[LOOK_AHEAD(2) Production] (LOOK_AHEAD(2) ">" Production)
-Prio :
-	LOOK_AHEAD(3) "{" [Attribute ":"] @!(Production)+ "}" |
-	Production (LOOK_AHEAD(2) ">" Production)* ;*/
-
-Restriction : 
-	(Symbol)+ "-/-" CharacterClass (LOOK_AHEAD(2) "." CharacterClass)* ;
-
-/*****************************************************************************
- * TRANSFORMATIONS                                                           *
- *****************************************************************************/
-TrafoDeclaration :
-	"rules" (Definition)* |
-	"strategies" (Definition)* |
-	"signature" (SigDeclaration)* |
-	"signatures" (SigDeclaration)* |
-	"overlays" (Overlay)* ;
+Declaration :
+	"imports" (ModName)+ |
+	"rules" (Definition)+ |
+	"strategies" (Definition)+ |
+	"signature" (SigDeclaration)+ |
+	"signatures" (SigDeclaration)+ |
+	"overlays" (Overlay)+ ;
 
 Overlay :
 	Id [OptOverlay] "=" Term ;
@@ -457,7 +311,7 @@ Definition :
 	(Anno)* Def ;
 
 Def :
-	LOOK_AHEAD(3) RuleDef |
+	LOOK_AHEAD("RuleDef()") RuleDef |
 	StrategyDef ;
 
 Anno :
@@ -501,14 +355,14 @@ OptOpDecl2 :
 	String ;
 
 Strategy :
-	LOOK_AHEAD(3) "<" Strategy ">" [LOOK_AHEAD(2) Term] [AlternativeStrategy] |
+	LOOK_AHEAD("\"<\" Strategy() \">\"") "<" Strategy ">" [LOOK_AHEAD("Term()") Term] [AlternativeStrategy] |
 	"if" Strategy "then" Strategy ["else" Strategy] "end" [AlternativeStrategy] |
 	"switch" Strategy (SwitchCase)* ["otherwise" ":" Strategy] 
 	         "end" [AlternativeStrategy] |
 	"let" (Definition)* "in" Strategy "end" [AlternativeStrategy] |
 	"call" "(" Term "|" Strategy (LOOK_AHEAD(2) "," Strategy)* "|" 
 	           Term (LOOK_AHEAD(2) "," Term)* ")" [AlternativeStrategy] |
-	LOOK_AHEAD(3) "prim" "(" String "," [LOOK_AHEAD(2) OptStrategy3] 
+	LOOK_AHEAD("\"prim\" \"(\" String()") "prim" "(" String "," [LOOK_AHEAD("OptStrategy3()") OptStrategy3] 
 	              Term (LOOK_AHEAD(2) "," Term)* ")" [AlternativeStrategy] |
 	"proceed" [OptStrategy1] [AlternativeStrategy] |
 	"fail"<NONE> [AlternativeStrategy] |
@@ -518,15 +372,15 @@ Strategy :
 	"rec" Id "(" Strategy ")"  [AlternativeStrategy] |
 	"import-term" "(" ModName ")"  [AlternativeStrategy] |
 	"rules" "(" (DynRuleDef)* ")" [AlternativeStrategy] |
-	LOOK_AHEAD(3) 
+	LOOK_AHEAD("\"(\" Strategy()") 
 	"(" Strategy (LOOK_AHEAD(2) "," Strategy)* ")" [AlternativeStrategy] |
-	LOOK_AHEAD(3) 
+	LOOK_AHEAD("\"{\" Id()") 
 	"{" Id (LOOK_AHEAD(2) "," Id)* ":" Strategy "}" [AlternativeStrategy] |
-	LOOK_AHEAD(3) 
+	LOOK_AHEAD("\"[\" Strategy()") 
 	"[" Strategy (LOOK_AHEAD(2) "," Strategy)* ["|" Strategy] "]" [AlternativeStrategy]|
 	"{" Strategy "}" [AlternativeStrategy] |
-	"\\ " Rule "\\ " [AlternativeStrategy] |
-	LOOK_AHEAD(3) "(" Rule ")" [AlternativeStrategy] |
+	"\\" Rule "\\" [AlternativeStrategy] |
+	LOOK_AHEAD("\"(\" Rule()") "(" Rule ")" [AlternativeStrategy] |
 	"{|" ScopeLabels ":" Strategy "|}" [AlternativeStrategy] |
 	"|" String [AlternativeStrategy] |
 	Strategies ;
@@ -534,9 +388,9 @@ Strategy :
 Strategies :
 	Strat "(" Strategy ")" [AlternativeStrategy] |
 	LOOK_AHEAD("Term() \":=\"") Term ":=" Term [AlternativeStrategy] |
-	LOOK_AHEAD(3) Id [OptStrategy1] [AlternativeStrategy] |
+	LOOK_AHEAD("Id()") Id [OptStrategy1] [AlternativeStrategy] |
 	String [OptStrategy1] [AlternativeStrategy] |
-	LOOK_AHEAD(3) Int [AlternativeStrategy] |
+	LOOK_AHEAD("Int()") Int [AlternativeStrategy] |
 	Real [AlternativeStrategy] ;
 
 AlternativeStrategy :
@@ -570,10 +424,10 @@ DynRuleScopeId :
 	Id ;
 
 DynRuleDef :
-	LOOK_AHEAD(3) Id "+" Term |
-	LOOK_AHEAD(3) DynRuleId TermOperator Term |
-	LOOK_AHEAD(3) DynRuleId RuleOperator Rule |
-	LOOK_AHEAD(3) DynRuleId ":" RuleOrTerm |
+	LOOK_AHEAD("Id() \"+\" Term()") Id "+" Term |
+	LOOK_AHEAD("DynRuleId() TermOperator() Term()") DynRuleId TermOperator Term |
+	LOOK_AHEAD("DynRuleId() RuleOperator() Rule()") DynRuleId RuleOperator Rule |
+	LOOK_AHEAD("DynRuleId() \":\" RuleOrTerm()") DynRuleId ":" RuleOrTerm |
 	DynRuleId ":" Rule "depends" "on" Term ;
 
 RuleOrTerm :
@@ -601,19 +455,17 @@ RuleDecOperator :
 
 TermOperator :
 	":-"<NONE> |
-	/*":"<NONE> |*/
 	":="<NONE> |
 	":+="<NONE> ;
 
 RuleOperator :
-	/*":"<NONE> |*/
 	":+"<NONE> ;
 
 TypedId :
 	Id ":" Type ;
 
 Type :
-	LOOK_AHEAD(3) FunType |
+	LOOK_AHEAD("FunType()") FunType |
 	ConstType ;
 
 FunType :
@@ -648,67 +500,42 @@ OptStrategy2 :
 OptStrategy3 :
 	Strategy (LOOK_AHEAD(2) "," Strategy)* "|" ;
 
-Term :
-	"_" [LOOK_AHEAD(2) Term] [LOOK_AHEAD(2) AlternativeTerm] |
-	"(" Term (LOOK_AHEAD(2) "," Term)* ")" [LOOK_AHEAD(2) AlternativeTerm] |
-	"[" Term (LOOK_AHEAD(2) "," Term)* [OptTerm] "]" [LOOK_AHEAD(2) AlternativeTerm] |
-	"<" Strategy ">" [LOOK_AHEAD(2) Term] [LOOK_AHEAD(2) AlternativeTerm] |
-	/*"<" Strategy ">" TermOrNoTerm [LOOK_AHEAD(2) AlternativeTerm]*/
-	Id [LOOK_AHEAD(2) SortOp] [OptTermId] [LOOK_AHEAD(2) AlternativeTerm] |
-	LOOK_AHEAD(3) Int [LOOK_AHEAD(2) AlternativeTerm] |
-	Real [LOOK_AHEAD(2) AlternativeTerm] |
-	String [OptTermString] [LOOK_AHEAD(2) AlternativeTerm] ;
-	
-TermOrNoTerm :
-	LOOK_AHEAD("RuleDef()") <NONE> |
-	Term ;
-	
-	/*Id "@" Term |
-	Id "(" Term (LOOK_AHEAD(2) "," Term)* ")" |
-	"_" Term |
-	String "(" Term (LOOK_AHEAD(2) "," Term)* ")" |
-	"[" Term (LOOK_AHEAD(2) "," Term)* "]" |
-	"[" Term (LOOK_AHEAD(2) "," Term)* "|" Term "]" |
-	Term "#" "(" Term ")" |
-	Term "{^" Term "}" |
-	Term "{" Term (LOOK_AHEAD(2) "," Term)* "}" |*/
-
-OptTermId :
-	"@" Term |
-	"(" Term (LOOK_AHEAD(2) "," Term)* ")" ;
-
-OptTermString :
-	"(" Term (LOOK_AHEAD(2) "," Term)* ")" ;
-
-OptTerm :
-	"|" Term ;
+SortOp :
+	"*" | 
+	"+" | 
+	"?" ;
 
 /* Hilfskonstrukt zum Auflösen von Linksrekursion */
-AlternativeTerm :
+AlternativePreTerm :
 	"#" "(" Term ")" |
 	"{^" Term "}" |
 	"{" Term (LOOK_AHEAD(2) "," Term)* "}" ;
 
-/*Term :
-	"_" [LOOK_AHEAD(2) Term] |
-	LOOK_AHEAD(3) "<" Strategy ">" |
+Term :
+	"_" [LOOK_AHEAD("Term()") Term] |
+	LOOK_AHEAD("\"<\" Strategy() \">\"") "<" Strategy ">" |
+	LOOK_AHEAD("\"<\" Strategy() \">\" Term()") "<" Strategy ">" Term |
 	PreTerm [OptTerm1] |
-	Id [LOOK_AHEAD(2) SortOp] [OptTerm2] ;
+	Id [LOOK_AHEAD("SortOp()") SortOp] [OptTerm2] ;
 	
 PreTerm :
-	"(" Term (LOOK_AHEAD(2) "," Term)* ")" [AlternativePreTerm] |
-	"[" Term (LOOK_AHEAD(2) "," Term)* [OptTerm4] "]" [AlternativePreTerm] |
-	LOOK_AHEAD(3)
-	Int [AlternativePreTerm] |
-	Real [AlternativePreTerm] |
-	String [OptTerm3] [AlternativePreTerm] ;
+	"(" Term (LOOK_AHEAD(2) "," Term)* ")" [LOOK_AHEAD("AlternativePreTerm()") AlternativePreTerm] |
+	"[" Term (LOOK_AHEAD(2) "," Term)* [OptTerm4] "]" [LOOK_AHEAD("AlternativePreTerm()") AlternativePreTerm] |
+	LOOK_AHEAD("Int()")
+	Int [LOOK_AHEAD("AlternativePreTerm()")AlternativePreTerm] |
+	Real [LOOK_AHEAD("AlternativePreTerm()")AlternativePreTerm] |
+	String [OptTerm3] [LOOK_AHEAD("AlternativePreTerm()")AlternativePreTerm] ;
 
 OptTerm1 :
 	"{" Term (LOOK_AHEAD(2) "," Term)* "}" | 
 	"{^" PreTerm "}" ;
 
+OptTerm2 :
+	"@" Term |
+	"(" Term (LOOK_AHEAD(2) "," Term)* ")" ;
+
 OptTerm3 :
 	"(" Term (LOOK_AHEAD(2) "," Term)* ")" ;
 
 OptTerm4 :
-	"|" Term ;*/
+	"|" Term ;
