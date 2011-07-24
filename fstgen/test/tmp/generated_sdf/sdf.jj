@@ -1,7 +1,7 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = false;
+	DEBUG_PARSER = true;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -138,7 +138,7 @@ TOKEN :
  *****************************************************************************/
 TOKEN :
 	{ < IDENTIFIER: (<LETTER>|<DIGIT>) 
-	                (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>)* > |
+	                (<LETTER>|<DIGIT>|<MINUS>)* > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |

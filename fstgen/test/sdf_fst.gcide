@@ -138,7 +138,7 @@ TOKEN :
  *****************************************************************************/
 TOKEN :
 	{ < IDENTIFIER: (<LETTER>|<DIGIT>) 
-	                (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>)* > |
+	                (<LETTER>|<DIGIT>|<MINUS>)* > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
