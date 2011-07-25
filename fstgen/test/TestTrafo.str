@@ -1,6 +1,11 @@
 module analyze
 
 rules
+  ensure-mobl-import :
+    Configuration(_) -> <id>
+
+  import-all =
+    alltd(import-module)
 
   import-module :
     Import(qid) -> Import(qid)
@@ -11,3 +16,5 @@ rules
              ; <declare-all> Module(qid, <id>))
          ; rules ( Imports :+= qid )
            )
+
+

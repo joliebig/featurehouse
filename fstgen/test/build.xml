@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     13.03.2008 18:00:55                                                        
+<!-- ======================================================================
+     13.03.2008 18:00:55
 
-     test_fstgen    
+     test_fstgen
      description
-                   
-     ckaestne                                                                
+
+     ckaestne
      ====================================================================== -->
 <project name="test_fstgen" default="testAlloy">
 	<echo>${java.class.path}</echo>
@@ -27,7 +27,7 @@
 			<pathelement path="${astgen_dir}" />
 		</classpath>
 	</taskdef>
-	
+
 	<target name="all" depends="testFJ,testJava,testJavaMerge,testJak,testCSharp,testC,testHaskell,testJavaCC,testAlloy"></target>
 
 	<target name="testFJ">
@@ -38,7 +38,7 @@
 			<param name="directory" value="${fstgen_dir}/test" />
 			<param name="testFile" value="Complex.fj" />
 		</antcall>
-	</target>	
+	</target>
 
 	<target name="testJava">
 		<antcall target="testGrammar">
@@ -49,7 +49,7 @@
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
-	
+
 	<target name="testJavaMerge">
 		<antcall target="testGrammar">
 			<param name="language" value="java15_merge" />
@@ -59,7 +59,7 @@
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
-	
+
 	<target name="testJak">
 		<antcall target="testGrammar">
 			<param name="language" value="jak" />
@@ -79,7 +79,7 @@
 			<param name="testFile" value="Test.cs" />
 		</antcall>
 	</target>
-	
+
 	<target name="testCSharpMerge">
 		<antcall target="testGrammar">
 			<param name="language" value="csharp_merge" />
@@ -89,7 +89,7 @@
 			<param name="testFile" value="Test_Merge.cs" />
 		</antcall>
 	</target>
-	
+
 	<target name="testC">
 			<antcall target="testGrammar">
 				<param name="language" value="capprox" />
@@ -99,7 +99,7 @@
 				<param name="testFile" value="Test.c" />
 			</antcall>
 	</target>
-	
+
 	<target name="testPython">
 			<antcall target="testGrammar">
 				<param name="language" value="python" />
@@ -119,7 +119,7 @@
 				<param name="testFile" value="Test.py" />
 			</antcall>
 	</target>
-	
+
 	<target name="testHaskell">
 			<antcall target="testGrammar">
 				<param name="language" value="haskell" />
@@ -149,7 +149,31 @@
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
-	
+
+	<!-- Stratego - Start -->
+	<target name="testStratego">
+		<antcall target="testGrammar">
+			<param name="language" value="stratego" />
+			<param name="parserClass" value="StrategoParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="TestTrafo.str" />
+		</antcall>
+	</target>
+<!-- Stratego - Ende -->
+
+<!-- SDF - Start -->
+	<target name="testSDF">
+		<antcall target="testGrammar">
+			<param name="language" value="sdf" />
+			<param name="parserClass" value="SDFParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.sdf" />
+		</antcall>
+	</target>
+<!-- SDF - Ende -->
+
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
 
