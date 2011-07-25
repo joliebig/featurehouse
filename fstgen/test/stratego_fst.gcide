@@ -1,15 +1,11 @@
 options {
 	STATIC = false;
+	FORCE_LA_CHECK = false;
+	DEBUG_PARSER = true;
 }
 
 PARSER_BEGIN(StrategoParser)
 package tmp.generated_stratego;
-
-/* Wird glaub ich nicht ben�tigt! 
-import java.io.*;
-import java.util.*; 
-*/
-
 import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
@@ -21,7 +17,9 @@ public class StrategoParser extends AbstractFSTParser
 
 PARSER_END(StrategoParser)
 
-/* WHITE SPACE */
+/*****************************************************************************
+ * WHITE SPACE                                                               *
+ *****************************************************************************/
 SPECIAL_TOKEN : 
 	{ " " | 
       "\t" | 
@@ -29,56 +27,93 @@ SPECIAL_TOKEN :
       "\r" | 
       "\f" 
     }
-
-/* COMMENTS */
-MORE : 
+/*****************************************************************************
+ * COMMENTS                                                                  *
+ *****************************************************************************/
+MORE :
 	{ "//" : IN_SINGLE_LINE_COMMENT |
-      <"/**" ~["/"]> 
-      	{ input_stream.backup(1); } : IN_FORMAL_COMMENT |
-      "/*" : IN_MULTI_LINE_COMMENT
+	  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT |
+	  "/*" : IN_MULTI_LINE_COMMENT 
 	}
-
-<IN_SINGLE_LINE_COMMENT>
-	SPECIAL_TOKEN : 
-		{ <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT }
-
-<IN_FORMAL_COMMENT>
-	SPECIAL_TOKEN :
-		{ <FORMAL_COMMENT: "*/" > : DEFAULT }
-
-<IN_MULTI_LINE_COMMENT>
-	SPECIAL_TOKEN : 
-		{ <MULTI_LINE_COMMENT: "*/" > : DEFAULT }
-
-<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
-	MORE :
-	{ < ~[] > }
-
-/* Reserved words and literals*/
-TOKEN:
+	<IN_SINGLE_LINE_COMMENT>
+		SPECIAL_TOKEN :
+			{ <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT }
+	<IN_FORMAL_COMMENT>
+		SPECIAL_TOKEN :
+			{ <FORMAL_COMMENT: "*/" > : DEFAULT }
+	<IN_MULTI_LINE_COMMENT>
+		SPECIAL_TOKEN :
+			{ <MULTI_LINE_COMMENT: "*/" > : DEFAULT }
+	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+		MORE :
+			{ < ~[] > }
+/*****************************************************************************
+ * RESERVED KEYWORDS AND LITERALS                                            *
+ *****************************************************************************/
+/*****************************************************************************
+ * MODULE DECLARATION                                                        *
+ *****************************************************************************/
+TOKEN :
+	{ < MODULE: "module" > |
+	  < SPECIFICATION: "specification" > |
+	  < IMPORTS: "imports" >
+	}
+/*****************************************************************************
+ * GRAMMAR DECLARATION                                                       *
+ *****************************************************************************/
+TOKEN :
+	{ < SORTS: "sorts" > }
+/*****************************************************************************
+ * PRODUCTION DECLARATION                                                    *
+ *****************************************************************************/
+TOKEN :
+	{ < CONS: "cons" > }
+/*****************************************************************************
+ * DISAMBIGUATION DECLARATION                                                *
+ *****************************************************************************/
+TOKEN :
+	{ < LEFT: "left" > |
+	  < ASSOC: "assoc" > |
+	  < AVOID: "avoid" > |
+	  < RIGHT: "right" > |
+	  < PREFER: "prefer" > |
+	  < BRACKET: "bracket" > |
+	  < REJECT: "reject" > |
+	  < NONASSOC: "non-assoc" > |
+	  < RECOVER: "recover" > |
+	  < DEPRECATED: "deprecated" > | 
+	  < INDENTPADDING: "indentpadding" >
+	}
+/*****************************************************************************
+ * TRANSFORMATION DECLARATION                                                *
+ *****************************************************************************/
+TOKEN :
 	{ < ALL: "all" > | 
 	  < CONSTRUCTORS: "constructors" > | 
 	  < FAIL: "fail" > |
 	  < ID: "id" > | 
 	  < IN: "in" > | 
 	  < LET: "let" > |
-	  < MODULE: "module" > |
 	  < NOT: "not" > | 
-	  < ONE: "one" > | 
+	  < ONE: "one" > |
+	  < DEPENDS: "depends" > |
+	  < ON: "on" > |
+	  < CALL: "call" > |
+	  < PROCEED: "proceed" > |
+	  < SIGNATURES: "signatures" > |
+	  < WITH: "with" > |
 	  < OVERLAYS: "overlays" > | 
 	  < PRIM: "prim" > |
 	  < RULES: "rules" > | 
 	  < SCRIPT: "script" > | 
 	  < SIGNATURE: "signature" > | 
-	  < SOME: "some" > | 
-	  < SORTS: "sorts" > | 
+	  < SOME: "some" > |
 	  < STRATEGIES: "strategies" > | 
 	  < STRATEGO: "stratego" > | 
 	  < TEST: "test" > | 
 	  < WHERE: "where" > | 
-      < IMPORTTERM: "import-term" > | 
-      < IMPORTS: "imports" > | 
-      < CASE: "case" > |
+	  < IMPORTTERM: "import-term" > | 
+	  < CASE: "case" > |
 	  < ELSE: "else" > | 
 	  < END: "end" > | 
 	  < EXTERNAL: "external" > | 
@@ -92,10 +127,11 @@ TOKEN:
 	  < INTERNAL: "internal" > | 
 	  < SEALED: "sealed" > | 
 	  < EXTENSIBLE: "extensible" > |
-	  < OVERRIDABLE: "overrideable" >
+	  < OVERRIDABLE: "overrideable" > 
 	}
-
-/* LITERALS */
+/*****************************************************************************
+ * LITERALS                                                                  *
+ *****************************************************************************/
 TOKEN :
 	{ < INTEGER_LITERAL:
 		<DECIMAL_LITERAL> (["l","L"])? | 
@@ -111,89 +147,418 @@ TOKEN :
     	(["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"] > |
 	  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ > |
 	  < CHARACTER_LITERAL:
-	  	"'" ( 
-	  		(~["'","\\","\n","\r"]) | 
-				("\\"
-					( ["n","t","b","r","f","u","\\","'","\""] | 
-					  ["0"-"7"] ( ["0"-"7"] )? | 
-			          ["0"-"3"] ["0"-"7"] ["0"-"7"]
-					)
-				)
-    		)
-    	"'" > |
+	  	"'" ( (~["'","\\","\n","\r"]) | 
+			("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] | 
+				  ["0"-"7"] ( ["0"-"7"] )? | 
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) ) "'" > |
 	  < STRING_LITERAL:
-    	"\"" (
-    		(~["\"","\\","\n","\r"]) | 
-				("\\"
-					( ["n","t","b","r","f","u","\\","'","\""] | 
-					  ["0"-"7"] ( ["0"-"7"] )? | 
-					  ["0"-"3"] ["0"-"7"] ["0"-"7"]
-            		)
-        		)
-    		)*
-    	"\"" >
+    	"\"" ( (~["\"","\\"]) | 
+			 ("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] | 
+				  ["0"-"7"] ( ["0"-"7"] )? | 
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
-
-/* IDENTIFIERS */
+/*****************************************************************************
+ * IDENTIFIER                                                                *
+ *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* > |
-	  < #LETTER:
-	  	[ "\u0024",
-	  	  "\u0027",
-    	  "\u0041"-"\u005a",
-    	  "\u005f",
-    	  "\u0061"-"\u007a",
-    	  "\u00c0"-"\u00d6",
-    	  "\u00d8"-"\u00f6",
-    	  "\u00f8"-"\u00ff",
-    	  "\u0100"-"\u1fff",
-    	  "\u3040"-"\u318f",
-    	  "\u3300"-"\u337f",
-    	  "\u3400"-"\u3d2d",
-    	  "\u4e00"-"\u9fff",
-    	  "\uf900"-"\ufaff"
-    	] > |
-	  < #DIGIT:
-    	[ "\u0030"-"\u0039",
-		  "\u0660"-"\u0669",
-    	  "\u06f0"-"\u06f9",
-    	  "\u0966"-"\u096f",
-    	  "\u09e6"-"\u09ef",
-    	  "\u0a66"-"\u0a6f",
-    	  "\u0ae6"-"\u0aef",
-    	  "\u0b66"-"\u0b6f",
-    	  "\u0be7"-"\u0bef",
-    	  "\u0c66"-"\u0c6f",
-    	  "\u0ce6"-"\u0cef",
-    	  "\u0d66"-"\u0d6f",
-    	  "\u0e50"-"\u0e59",
-    	  "\u0ed0"-"\u0ed9",
-    	  "\u1040"-"\u1049"
-    	] >
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<APOSTROPHE>) 
+	                (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>)* (<STAR>)? > |
+	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
+	  < LCCHAR: [ "a"-"z" ] > |
+	  < UCCHAR: [ "A"-"Z" ] > |
+	  < DIGIT: [ "0"-"9" ] >
 	}
-
-/* SEPARATORS */
+/*****************************************************************************
+ * PARENTHESIS                                                               *
+ *****************************************************************************/
 TOKEN :
 	{ < LPAREN: "(" > | 
 	  < RPAREN: ")" > | 
 	  < LBRACE: "{" > | 
 	  < RBRACE: "}" > | 
-	  < LBRACKET: "[" > | 
-	  < RBRACKET: "]" > | 
-	  < COMMA: "," > | 
-	  < DOT: "." >
+	  < LBRACKET: "[" > |
+	  < RBRACKET: "]" > |
+	  < LT: "<" > |
+	  < GT: ">" > 
 	}
-
-/* OPERATORS */
+/*****************************************************************************
+ * OPERATORS                                                                 *
+ *****************************************************************************/
 TOKEN :
-	{ < PLUS: "+" > | 
-	  < MINUS: "-" > | 
-	  < STAR : "*" > | 
+	{ < PLUS: "+" > |
+	  < MINUS: "-" > |
+	  < STAR: "*" > |
 	  < SLASH: "/" >
 	}
+/*****************************************************************************
+ * SEPARATORS                                                                *
+ *****************************************************************************/
+TOKEN :
+	{ < COMMA: "," > |
+	  < SEMICOLON: ";" > |
+	  < DDOT: ":" > |
+	  < DOT: "." > |
+	  < QUESTIONMARK: "?" > |
+	  < EXCLAMATIONMARK: "!" >
+	}
+/*****************************************************************************
+ * SPECIAL SIGNS                                                             *
+ *****************************************************************************/
+TOKEN :
+	{ < NUMBERSIGN: "#" > |
+	  < AT: "@" > |
+	  < DOLLAR: "$" > |
+	  < VERTICALLINE: "|" > |
+	  < TILDE: "~" > |
+	  < AMPERSAND: "&" > |
+	  < PERCENTAGE: "%" > |
+	  < CIRCUMFLEXACCENT: "^" > |
+	  < GRAVEACCENT: "`" > |
+	  < APOSTROPHE: "'" > |
+	  < ARROW: "->" > |
+	  < ASSIGN: "=" > |
+	  < LOWLINE: "_" > |
+	  < QUOTATIONMARK: "\"" > |
+	  < BACKSLASH: "\\" >
+	}
 
-GRAMMARSTART
 /*****************************************************************************
  * THE STRATEGO LANGUAGE GRAMMAR STARTS HERE                                 *
  *****************************************************************************/
-Module: "module" Modename <EOF> ;
+GRAMMARSTART
+ 
+/*****************************************************************************
+ * LITERALS                                                                  *
+ *****************************************************************************/
+NatInteger : 
+	<INTEGER_LITERAL> ;
+
+RealDigit: 
+	<INTEGER_LITERAL> "." <INTEGER_LITERAL> ;
+
+Int : 
+	[<MINUS>] NatInteger ;
+
+Real : 
+	[<MINUS>] RealDigit ;
+
+String : 
+	<STRING_LITERAL> ;
+
+Char :
+	<CHARACTER_LITERAL> ;
+
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id :
+	<IDENTIFIER> ;
+
+/*****************************************************************************
+ * MAIN PRODUCTION                                                           *
+ *****************************************************************************/
+Module : 
+	ModuleDeclaration
+	(Declaration)*
+	<EOF> ;
+
+ModName : 
+	Id (LOOK_AHEAD(2) "/" Id)* ;
+
+ModuleDeclaration :
+	"module" ModName |
+	"specification"<NONE> ;
+
+Declaration :
+	"imports" (ModName)+ |
+	"rules" (Definition)+ |
+	"strategies" (Definition)+ |
+	"signature" (SigDeclaration)+ |
+	"signatures" (SigDeclaration)+ |
+	"overlays" (Overlay)+ ;
+
+Overlay :
+	Id [OptOverlay] "=" Term ;
+
+OptOverlay :
+	"(" [IdList] ")" ;
+
+SigDeclaration :
+	"sorts" (TrafoSort)* |
+	"constructors" (OpDeclaration)* ;
+
+TrafoSort :
+	BracketSort |
+	Id [LOOK_AHEAD("OptSort1()") OptSort1] ;
+
+OptSort1 :
+	"(" [TrafoSortList] ")" ;
+
+BracketSort :
+	"[" [TrafoSortList] [OptSort2] "]" |
+	OptSort1 ;
+
+OptSort2 :
+	"|" TrafoSort ;
+
+OpDeclaration :
+	[OptOpDecl1] [OptOpDecl2] ":" Type ;
+
+OptOpDecl1 :
+	"external"<NONE> ;
+
+OptOpDecl2 :
+	Id | 
+	String ;
+
+Definition :
+	(Anno)* Def ;
+
+Anno :
+	"extend"<NONE> |
+	"override"<NONE> |
+	"internal"<NONE> ;
+
+Def :
+	LOOK_AHEAD("RuleDef()") RuleDef |
+	StrategyDef ;
+
+RuleDef :
+	Id [OptDef1] ":" Rule ;
+
+OptDef1 :
+	"(" [TypedIdList] [OptDef2] ")" ;
+
+OptDef2 :
+	"|" [TypedIdList] ;
+
+Rule :
+	Term "->" Term (RuleCond)* ;
+
+RuleCond :
+	"where" Strategy |
+	"with" Strategy ;
+
+StrategyDef :
+	"external" [Id] "(" [TypedIdList] "|" 
+	                    [TypedIdList] ")" ["=" Strategy] |
+	Id [OptDef1] "=" Strategy ;
+
+Strategy :
+	"if" Strategy "then" Strategy ["else" Strategy] "end" 
+	[AlternativeStrategy] |
+	"switch" Strategy (SwitchCase)* ["otherwise" ":" Strategy] "end" 
+	[AlternativeStrategy] |
+	"let" (Definition)* "in" Strategy "end" 
+	[AlternativeStrategy] |
+	"call" "(" Term "|" [StrategyList] "|" [TermList] ")" 
+	[AlternativeStrategy] |
+	"proceed" [OptStrategy] 
+	[AlternativeStrategy] |
+	"fail"<NONE> 
+	[AlternativeStrategy] |
+	"id"<NONE> 
+	[AlternativeStrategy] |
+	"?" Term 
+	[AlternativeStrategy] |
+	"!" Term 
+	[AlternativeStrategy] |
+	"rec" Id "(" Strategy ")" 
+	[AlternativeStrategy] |
+	"import-term" "(" ModName ")" 
+	[AlternativeStrategy] |
+	"\\" Rule "\\" 
+	[AlternativeStrategy] |
+	"{|" ScopeLabels ":" Strategy "|}" 
+	[AlternativeStrategy] |
+	"rules" "(" (DynRuleDef)* ")" 
+	[AlternativeStrategy] |
+	Strat "(" Strategy ")" 
+	[AlternativeStrategy] |
+	"prim" "(" String [OptPrimStrategy] ")" 
+	[AlternativeStrategy] |
+	LOOK_AHEAD("Term() \":=\"") Term ":=" Term 
+	[AlternativeStrategy] |
+	"(" OptRuleOrStrategy ")" 
+	[AlternativeStrategy] |
+	StrategyCurly 
+	[AlternativeStrategy] |
+	StrategyAngle Term 
+	[AlternativeStrategy] |
+	"[" [StrategyList] ["|" Strategy] "]" 
+	[AlternativeStrategy] |
+	Id [OptStrategy] 
+	[AlternativeStrategy] |
+	String [OptStrategy] 
+	[AlternativeStrategy] |
+	LOOK_AHEAD("Real()") Real 
+	[AlternativeStrategy] |
+	Int 
+	[AlternativeStrategy] ;
+
+	/*
+	"/" RuleNames "\\*" Strategy
+	Strategy StrategyCurly
+	Strategy "/" RuleNames "\\" Strategy
+	Strategy "\\" RuleNames "/" Strategy
+	Strategy "/" RuleNames "\\" RuleNames "/" Strategy
+	Strategy "<" Strategy "+" Strategy 
+	 */
+
+Strat :
+	"some"<NONE> |
+	"one"<NONE> |
+	"all"<NONE> |
+	"not"<NONE> |
+	"where"<NONE> |
+	"with"<NONE> |
+	"test"<NONE> ;
+
+/* Hilfskonstrukt zum Aufl�sen von Linksrekursion */
+AlternativeStrategy :
+	AlternativeOperator Strategy |
+	"=>" Term;
+
+AlternativeOperator :
+	";"<NONE> |
+	"+"<NONE> |
+	"<+"<NONE> |
+	"+>"<NONE> ;
+
+OptPrimStrategy :
+	"," [LOOK_AHEAD("StrategyList() \"|\"") StrategyList "|"] [TermList] ;
+
+OptRuleOrStrategy :
+	LOOK_AHEAD("Rule()") Rule |
+	[StrategyList] ;
+
+StrategyCurly :
+	"{" [LOOK_AHEAD("OptStrategyCurly()") OptStrategyCurly] Strategy "}" ;
+
+OptStrategyCurly :
+	[IdList] ":" ;
+
+StrategyAngle :
+	"<" Strategy ">" ;
+
+OptStrategy :
+	"(" [StrategyList] [OptTerm] ")" ;
+
+OptTerm :
+	"|" [TermList] ;
+
+SwitchCase :
+	"case" Strategy ":" Strategy ;
+
+ScopeLabels :
+	"~" Term |
+	[DynRuleScopedIdList] ;
+
+DynRuleScopeId :
+	LOOK_AHEAD(2) Id "." Term |
+	Id ;
+
+DynRuleDef :
+	LOOK_AHEAD("DynRuleId() \":\" Rule() \"depends\"") 
+	DynRuleId ":" Rule "depends" "on" Term |
+	LOOK_AHEAD("DynRuleId() \":\"") 
+	DynRuleId ":" RuleOrTerm |
+	LOOK_AHEAD("DynRuleId() \":+\"") 
+	DynRuleId ":+" Rule |
+	LOOK_AHEAD("DynRuleId() TermOperator()") 
+	DynRuleId TermOperator Term |
+	Id "+" Term ;
+
+RuleOrTerm :
+	LOOK_AHEAD("Term() \"->\"") Rule |
+	Term ;
+
+DynRuleId :
+	RuleDec [OptRuleDec3] ;
+
+RuleDec :
+	Id [OptRuleDec1] ;
+
+OptRuleDec1 :
+	"(" [TypedIdList] [OptRuleDec2] ")" ;
+
+OptRuleDec2 :
+	"|" [TypedIdList] ;
+
+OptRuleDec3 :
+	RuleDecOperator Term ;
+
+RuleDecOperator :
+	"+" |
+	"." ;
+
+TermOperator :
+	":-"<NONE> |
+	":="<NONE> |
+	":+="<NONE> ;
+
+RuleNames :
+	"~" Term |
+	[IdList] ;
+
+TypedId :
+	Id [":" Type] ;
+
+Type :
+	LOOK_AHEAD("FunType()") FunType |
+	TrafoSort ;
+
+FunType :
+	ArgType (LOOK_AHEAD(2) "*" ArgType)* "->" Type ;
+
+ArgType :
+	LOOK_AHEAD("TrafoSort()") TrafoSort |
+	"(" Type ")" ;
+
+/* Hilfskonstrukt zum Aufl�sen von Linksrekursion */
+AlternativePreTerm :
+	"#" "(" Term ")" ;
+
+Term :
+	LOOK_AHEAD("StrategyAngle() Term()") 
+	StrategyAngle Term |
+	StrategyAngle |
+	"_" [LOOK_AHEAD("Term()") Term] |
+	LOOK_AHEAD("PreTerm()") PreTerm [OptPreTerm] |
+	Id ["@" Term] ;
+
+PreTerm :
+	Id "(" [TermList] ")" [AlternativePreTerm] |
+	LOOK_AHEAD("Real()") Real [AlternativePreTerm] |
+	Int [AlternativePreTerm] |
+	String [OptStringTerm] [AlternativePreTerm] |
+	"(" [TermList] ")" [AlternativePreTerm] |
+	"[" [TermList] ["|" Term] "]" [AlternativePreTerm] ;
+
+OptPreTerm :
+	"{" [TermList] "}" | 
+	"{^" PreTerm "}" ;
+
+OptStringTerm :
+	"(" [TermList] ")" ;
+
+/*****************************************************************************
+ * DEFINITION OF LISTS                                                       *
+ *****************************************************************************/
+IdList :
+	Id (LOOK_AHEAD(2) "," Id)* ;
+
+TermList :
+	Term (LOOK_AHEAD(2) "," Term)* ;
+
+TypedIdList :
+	TypedId (LOOK_AHEAD(2) "," TypedId)* ;
+
+StrategyList :
+	Strategy (LOOK_AHEAD(2) "," Strategy)* ;
+
+DynRuleScopedIdList :
+	DynRuleScopeId (LOOK_AHEAD(2) "," DynRuleScopeId)* ;
+
+TrafoSortList :
+	TrafoSort (LOOK_AHEAD(2) "," TrafoSort)* ;
