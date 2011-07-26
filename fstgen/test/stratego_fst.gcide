@@ -291,7 +291,7 @@ SigDeclaration :
 
 TrafoSort :
 	BracketSort
-	| Id [LOOK_AHEAD("OptSort1()") OptSort1]
+	| Id [LOOK_AHEAD("OptSort1()") OptSort1] // TODO
 	;
 
 OptSort1 :
@@ -326,7 +326,7 @@ Anno :
 	;
 
 Def :
-	LOOK_AHEAD("RuleDef()") RuleDef
+	LOOK_AHEAD("Id() [OptDef1()] \":\"") RuleDef
 	| StrategyDef
 	;
 
@@ -334,13 +334,13 @@ RuleDef :
 	Id [OptDef1] ":" Rule ;
 
 OptDef1 :
-	"(" [TypedIdList] [OptDef2] ")" ;
+	"(" [TypedIdList] [OptDef2] ")" ; // TODO nur "(" ")" erlaubt?
 
 OptDef2 :
-	"|" [TypedIdList] ;
+	"|" [TypedIdList] ; // TODO nur "|" erlaubt?
 
 Rule :
-	Term "->" Term (RuleCond)+ ;
+	Term "->" Term (RuleCond)* ;  // TODO + -> *
 
 RuleCond :
 	"where" Strategy
@@ -348,7 +348,7 @@ RuleCond :
 	;
 
 StrategyDef :
-	"external" [Id] "(" [TypedIdList] "|" [TypedIdList] ")" ["=" Strategy]
+	"external" [Id] "(" [TypedIdList] "|" [TypedIdList] ")" ["=" Strategy] // TODO
 	| Id [OptDef1] "=" Strategy
 	;
 
@@ -468,10 +468,10 @@ RuleDec :
 	Id [OptRuleDec1] ;
 
 OptRuleDec1 :
-	"(" [TypedIdList] [OptRuleDec2] ")" ;
+	"(" [TypedIdList] [OptRuleDec2] ")" ; // TODO ist "(" ")" ein gueltiger Ausdruck?
 
 OptRuleDec2 :
-	"|" [TypedIdList] ;
+	"|" [TypedIdList] ; // TODO ist ein einzelnen "|" gueltig?
 
 OptRuleDec3 :
 	RuleDecOperator Term ;
@@ -488,8 +488,9 @@ TermOperator :
 	;
 
 RuleNames :
-	"~" Term |
-	[IdList] ;
+	"~" Term
+	| [IdList]
+	;
 
 TypedId :
 	Id [":" Type] ;
@@ -512,29 +513,28 @@ AlternativePreTerm :
 	"#" "(" Term ")" ;
 
 Term :
-	LOOK_AHEAD("StrategyAngle() Term()") StrategyAngle Term
-	| StrategyAngle
+	StrategyAngle [Term] // TODO in welchen Faellen kommt ein Term? Kann ueberhaupt entschieden werden, dass danach ein Term kommt?
 	| "_" [Term]
-	| PreTerm [OptPreTerm]
-	| Id ["@" Term]
+	| LOOK_AHEAD("Id() \"(\"") PreTerm [OptPreTerm]
+	| Id ["@" Term]  // TODO unreachable code
 	;
 
 PreTerm :
-	Id "(" [TermList] ")" [AlternativePreTerm]
+	Id "(" [TermList] ")" [AlternativePreTerm] // TODO ist "(" ")" ein gueltiger Ausdruck?
 	| LOOK_AHEAD("Real()") Real [AlternativePreTerm]
 	| Int [AlternativePreTerm]
 	| String [OptStringTerm] [AlternativePreTerm]
-	| "(" [TermList] ")" [AlternativePreTerm]
-	| "[" [TermList] ["|" Term] "]" [AlternativePreTerm]
+	| "(" [TermList] ")" [AlternativePreTerm] // TODO ist "(" ")" ein gueltiger Ausdruck?
+	| "[" [TermList] ["|" Term] "]" [AlternativePreTerm] // TODO ist "[" "]" ein gueltiger Ausdruck?
 	;
 
 OptPreTerm :
-	"{" [TermList] "}"
+	"{" [TermList] "}" // TODO ist "{" "}" ein gueltiger Ausdruck?
 	| "{^" PreTerm "}"
 	;
 
 OptStringTerm :
-	"(" [TermList] ")" ;
+	"(" [TermList] ")" ; // TODO ist "(" ")" ein gueltiger Ausdruck?
 
 /*****************************************************************************
  * DEFINITION OF LISTS                                                       *

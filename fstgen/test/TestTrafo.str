@@ -1,6 +1,7 @@
 module analyze
 
 rules
+
   ensure-mobl-import :
     Configuration(_) -> <id>
 
@@ -10,11 +11,9 @@ rules
   import-module :
     Import(qid) -> Import(qid)
     where (<ParsedAndImported> qid
-           ; rules ( Imports :+= qid )
+        ; rules ( Imports :+= qid )
         <+ rules ( ParsedAndImported : qid )
-         ; where(<open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+        ; where(<open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
              ; <declare-all> Module(qid, <id>))
-         ; rules ( Imports :+= qid )
-           )
-
-
+        ; rules ( Imports :+= qid )
+    )
