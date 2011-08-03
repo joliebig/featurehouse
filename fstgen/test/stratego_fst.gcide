@@ -1,7 +1,8 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
+	DEBUG_LOOKAHEAD = false;
 }
 
 PARSER_BEGIN(StrategoParser)
@@ -64,11 +65,6 @@ TOKEN :
 TOKEN :
 	{ < SORTS: "sorts" > }
 /*****************************************************************************
- * PRODUCTION DECLARATION                                                    *
- *****************************************************************************/
-TOKEN :
-	{ < CONS: "cons" > }
-/*****************************************************************************
  * DISAMBIGUATION DECLARATION                                                *
  *****************************************************************************/
 TOKEN :
@@ -105,7 +101,7 @@ TOKEN :
 	  < OVERLAYS: "overlays" > | 
 	  < PRIM: "prim" > |
 	  < RULES: "rules" > | 
-	  < SCRIPT: "script" > | 
+	  /*< SCRIPT: "script" > |*/ 
 	  < SIGNATURE: "signature" > | 
 	  < SOME: "some" > |
 	  < STRATEGIES: "strategies" > | 
@@ -163,8 +159,8 @@ TOKEN :
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<APOSTROPHE>) 
-	                (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>)* (<STAR>)? > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<APOSTROPHE>|<LOWLINE>) 
+	  (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -235,11 +231,11 @@ GRAMMARSTART
 NatInteger : 
 	<INTEGER_LITERAL> ;
 
-RealDigit: 
-	<INTEGER_LITERAL> "." <INTEGER_LITERAL> ;
-
 Int : 
 	[<MINUS>] NatInteger ;
+
+RealDigit: 
+	<INTEGER_LITERAL> "." <INTEGER_LITERAL> ;
 
 Real : 
 	[<MINUS>] RealDigit ;
@@ -289,7 +285,7 @@ SigDeclaration :
 
 TrafoSort :
 	BracketSort |
-	Id [LOOK_AHEAD("OptSort1()") OptSort1] ;
+	Id [LOOK_AHEAD("\"(\" [TrafoSortList()] \")\"") OptSort1] ;
 
 OptSort1 :
 	"(" [TrafoSortList] ")" ;
@@ -320,7 +316,7 @@ Anno :
 	"internal"<NONE> ;
 
 Def :
-	LOOK_AHEAD("RuleDef()") RuleDef |
+	LOOK_AHEAD("Id() [OptDef1()] \":\"") RuleDef |
 	StrategyDef ;
 
 RuleDef :
@@ -429,11 +425,11 @@ OptPrimStrategy :
 	"," [LOOK_AHEAD("StrategyList() \"|\"") StrategyList "|"] [TermList] ;
 
 OptRuleOrStrategy :
-	LOOK_AHEAD("Rule()") Rule |
+	LOOK_AHEAD("Term() \"->\"") Rule |
 	[StrategyList] ;
 
 StrategyCurly :
-	"{" [LOOK_AHEAD("OptStrategyCurly()") OptStrategyCurly] Strategy "}" ;
+	"{" [LOOK_AHEAD("[IdList()] \":\"") OptStrategyCurly] Strategy "}" ;
 
 OptStrategyCurly :
 	[IdList] ":" ;
@@ -459,13 +455,13 @@ DynRuleScopeId :
 	Id ;
 
 DynRuleDef :
-	LOOK_AHEAD("DynRuleId() \":\" Rule() \"depends\"") 
+	LOOK_AHEAD("RuleDec() [OptRuleDec3()] \":\" Rule() \"depends\"") 
 	DynRuleId ":" Rule "depends" "on" Term |
-	LOOK_AHEAD("DynRuleId() \":\"") 
+	LOOK_AHEAD("RuleDec() [OptRuleDec3()] \":\"") 
 	DynRuleId ":" RuleOrTerm |
-	LOOK_AHEAD("DynRuleId() \":+\"") 
+	LOOK_AHEAD("RuleDec() [OptRuleDec3()] \":+\"") 
 	DynRuleId ":+" Rule |
-	LOOK_AHEAD("DynRuleId() TermOperator()") 
+	LOOK_AHEAD("RuleDec() [OptRuleDec3()] TermOperator()") 
 	DynRuleId TermOperator Term |
 	Id "+" Term ;
 
@@ -516,31 +512,79 @@ ArgType :
 	"(" Type ")" ;
 
 /* Hilfskonstrukt zum Auflösen von Linksrekursion */
-AlternativePreTerm :
+AlternativeTerm :
+	"{^" Term "}" |
+	"{" [TermList] "}" |
 	"#" "(" Term ")" ;
 
 Term :
-	LOOK_AHEAD("StrategyAngle() Term()") 
-	StrategyAngle Term |
-	StrategyAngle |
-	"_" [LOOK_AHEAD("Term()") Term] |
-	LOOK_AHEAD("PreTerm()") PreTerm [OptPreTerm] |
-	Id ["@" Term] ;
+	"_" [LOOK_AHEAD("Term()") Term] [AlternativeTerm] |
+	LOOK_AHEAD("Real()") Real [AlternativeTerm] |
+	Int [AlternativeTerm] |
+	String [LOOK_AHEAD("OptStringTerm()") OptStringTerm] [AlternativeTerm] |
+	"(" [TermList] ")" [AlternativeTerm] |
+	"[" [TermList] ["|" Term] "]" [AlternativeTerm] |
+	"{" [TermList] "}" [AlternativeTerm] |
+	"#" "(" Term ")" [AlternativeTerm] |
+	"$" "[" (StringQuotation)* "]" 
+	[AlternativeTerm] | 
+	Id [LOOK_AHEAD(2) OptIdTerm] [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() Id() \":\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() Id() \":=\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() Id() \"=\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"where\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"with\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"strategies\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"rules\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \")\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"]\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"}\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \",\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \";\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"|\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"|}\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	/*LOOK_AHEAD("StrategyAngle() \"#\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |*/
+	LOOK_AHEAD("StrategyAngle() \"end\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() \"then\"") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	LOOK_AHEAD("StrategyAngle() <EOF>") 
+	NoTermAfterStrategyAngle [AlternativeTerm] |
+	StrategyAngle Term [AlternativeTerm] ;
 
-PreTerm :
-	Id "(" [TermList] ")" [AlternativePreTerm] |
-	LOOK_AHEAD("Real()") Real [AlternativePreTerm] |
-	Int [AlternativePreTerm] |
-	String [OptStringTerm] [AlternativePreTerm] |
-	"(" [TermList] ")" [AlternativePreTerm] |
-	"[" [TermList] ["|" Term] "]" [AlternativePreTerm] ;
+NoTermAfterStrategyAngle :
+	StrategyAngle ;
 
-OptPreTerm :
-	"{" [TermList] "}" | 
-	"{^" PreTerm "}" ;
+OptIdTerm :
+	"(" [TermList] ")" |
+	"@" Term | 
+	"|" "[" [TermList] "]" "|";
 
 OptStringTerm :
 	"(" [TermList] ")" ;
+
+StringQuotation :
+	Term |
+	SpecialStringQuotation ;
+
+SpecialStringQuotation :
+	","<NONE> | ":"<NONE> | "."<NONE> | "/"<NONE> | ";"<NONE> | "="<NONE> |
+	"@"<NONE> ;
 
 /*****************************************************************************
  * DEFINITION OF LISTS                                                       *

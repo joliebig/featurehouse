@@ -1,6 +1,80 @@
 module analyze
 
+imports
+  libstratego-lib
+  include/MoBL
+  lib/editor-common
+  declare
+  lookup
+  type
+  rename
+  normalize
+  desugar
+  mobl
+  resolve
+  generation/compile
+  generation/server
+  generation/css
+  sync-analysis
+  util
+ 
+imports
+  libstratego-xtc
+  libstratego-tool-doc
+
 rules
+
+  analyze =
+    (?Module(qid, def*) <+ ?Application(qid, def*) <+ ?ServerApplication(qid, _, def*))
+    ; {| ModuleName, Imports
+       : rules ( ModuleName := qid )
+       ; normalize-all
+       ; ensure-mobl-import
+       ; import-all
+       ; add-tl-namespaces
+       ; declare-all
+       ; rename-all
+       ; add-namespace-all
+       ; declare-all
+       ; rename-all
+       ; add-namespace-all
+       ; analyze-sync
+       //; declare-all
+       //; debug
+       |}
+
+  analyze =
+     ?Configuration(_)
+
+  ensure-mobl-import :
+    Module(qid, def*) -> Module(qid, def2*)
+    where if <"mobl" := qid <+ fetch(?Import("mobl"))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    Application(qid, def*) -> Application(qid, def2*)
+    where if "mobl" := qid <+ <fetch(?Import("mobl"))> def* <+ <fetch(?ExternalType(_, QId("mobl", "void"), _, _))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    ServerApplication(qid, setting*, def*) -> ServerApplication(qid, setting*, def2*)
+    where if <"mobl" := qid <+ fetch(?Import("mobl"))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    Configuration(_) -> <id>
+
+  import-all =
+    alltd(import-module)
 
   import-module :
     Import(qid) -> Import(qid)
@@ -11,3 +85,2237 @@ rules
              ; <declare-all> Module(qid, <id>))
          ; rules ( Imports :+= qid )
            )
+
+  compile-import-module :
+    Import(qid) -> Import(qid)
+    where <compile-import-module-aux> qid
+
+  compile-import-module :
+    DynamicImport(qid) -> Import(qid)
+    where <compile-import-module-aux> qid
+
+  compile-import-module-aux :
+    qid -> <id>
+    where not(ServerContext)
+    where path := <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+        ; path-js := <concat-strings; guarantee-extension(|"js")> [<OutputPath>, "/", <qid-to-path> qid]
+        ; if not(<Compiled> qid
+                <+ (<is-newer> (path-js, path)
+                    ; not(<file-exists> <get-configuration-filename>) <+ <is-newer> (path-js, <get-configuration-filename>))) then
+            <parse-file> path
+            ; compile
+          end
+
+  lookup-import-module =
+    ?Import(qid)
+    ; (<ParsedAndImported> qid
+    <+ rules ( ParsedAndImported : qid )
+     //; debug(!"Importing: ")
+     ; where(<open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+             ; <declare-all> Module(qid, <id>))
+      )
+
+  get-module-defs :
+    qid -> def*
+    with def* := <open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+
+  externalize-module :
+    Module(qid, def*) -> def2*
+    with def2* := <analyze; ?Module(_, <id>); filter(origin-track-forced(definition-to-external))>
+
+  externalize-module :
+    Application(qid, def*) -> def2*
+    with def2* := <analyze; ?Application(_, <id>); filter(definition-to-external)>
+
+  externalize-module :
+    ServerApplication(qid, _, def*) -> def2*
+    with def2* := <analyze; ?ServerApplication(_, _, <id>); filter(definition-to-external)>
+
+strategies
+
+  declare-all =
+    with(
+      (?Module(_, def*) <+ ?Application(_, def*) <+ ?ServerApplication(_, _, def*))
+      ; <filter(origin-track-forced(declare))> def*
+    )
+
+  // Records the definition of an entity in a dynamic rule GetEntity.
+  declare:
+    Entity(_, qid, super, body) -> <id>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules(
+          GetEntity : qid -> extern
+        )
+
+  declare:
+    Type(manno*, qid, super, def*) -> <id>
+    with extern := <origin-track-forced(definition-to-external)>
+       ; rules (
+           GetType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalType(manno*, qid, super, method*) -> <id>
+    with rules (
+           GetType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalGenericType(manno*, qid, arg*, method*) -> <id>
+    with rules (
+           GetGenericType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalEntity(manno*, qid, super, prop*) -> <id>
+    with rules (
+             GetEntity : qid -> extern
+           )
+
+  declare:
+    extern@ExternalFunction(manno*, qid, farg*, rt) -> <id>
+    with rules (
+           GetFunction : qid -> extern
+         )
+
+  declare:
+    extern@ExternalSyncFunction(manno*, qid, farg*, rt) -> <id>
+    with rules (
+           GetFunction : qid -> extern
+         )
+
+  declare:
+    Function(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetFunction : qid -> extern
+        )
+
+  declare:
+    SyncFunction(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetFunction : qid -> extern
+        )
+
+  declare:
+    Control(manno*, qid, farg*, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetControl : qid -> extern
+        )
+
+  declare:
+    extern@ExternalControl(manno*, qid, farg*) -> <fail>
+    with rules (
+           GetControl : qid -> extern
+         )
+
+  declare :
+    Screen(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetScreen : qid -> extern
+        )
+
+  declare:
+    extern@ExternalScreen(manno*, qid, farg*, rt) -> <fail>
+    where [_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*
+    with rules (
+           GetScreen : qid -> extern
+         )
+
+  declare:
+    ExternalScreen(manno*, qid, farg*, rt) -> <fail>
+    where not([_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*)
+    with rules (
+           GetScreen : qid -> ExternalScreen(manno*, qid, [farg*, FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
+                                                                   FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))], rt)
+         )
+
+  // Feature Service - Start
+  declare :
+    Service(manno*, qid, selem*) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetType : qid -> extern
+        )
+  // Feature Service - Ende
+  
+  declare :
+    extern@ExternalVarDecl(qid, t) -> <fail>
+    with rules (
+           GetGlobalVar : qid -> extern
+         )
+
+  declare :
+    VarDecl(qid, t, e) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetGlobalVar : qid -> extern
+        )
+
+  declare :
+    VarDeclInferred(qid, e) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetGlobalVar : qid -> extern
+        )
+
+strategies // convert to externals
+
+  definition-to-external :
+    Entity(manno*, qid, super, decl*) -> ExternalEntity(manno*, qid, super, decl2*)
+    where decl2* := <map(try(function-to-external-method))> decl*
+
+  function-to-external-method :
+    Function(manno*, qid, farg*, rt, stat*) -> ExternalMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    SyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalSyncMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    StaticFunction(manno*, qid, farg*, rt, stat*) -> ExternalStaticMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    StaticSyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalStaticSyncMethod(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    Function(manno*, qid, farg*, rt, stat*) -> ExternalFunction(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    SyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalSyncFunction(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    Control(manno*, qid, farg*, elem*) -> ExternalControl(manno*, qid, farg*)
+
+  definition-to-external :
+    Screen(manno*, qid, farg*, rt, _) -> ExternalScreen(manno*, qid, [farg*, extrafarg*], rt)
+    where extrafarg* := [FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
+                         FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))]
+
+  // Feature Service - Start
+  definition-to-external :
+    Service(manno*, qid, selem*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), <filter(service-elem-to-external)> selem*)
+  // Feature Service - Ende
+  definition-to-external :
+    Type(manno*, qid, super, def*) -> ExternalType(manno*, qid, super, <map(type-def-to-external <+ definition-to-external)> def*)
+
+  type-def-to-external :
+    Function(manno*, x, farg*, rt, _) -> ExternalMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    SyncFunction(manno*, x, farg*, rt, _) -> ExternalSyncMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    StaticFunction(manno*, x, farg*, rt, _) -> ExternalStaticMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    StaticSyncFunction(manno*, x, farg*, rt, _) -> ExternalStaticSyncMethod(manno*, x, farg*, rt)
+
+  // For signatures we turn a webservice into an external type and resources into external methods
+  // Feature Service - Start
+  service-elem-to-external :
+    Resource(manno*, qid, farg*, rt, _) -> ExternalStaticMethod(manno*, qid, farg*, rt)
+  // Feature Service - Ende
+  
+  definition-to-external :
+    Import(s) -> Import(s)
+
+  definition-to-external :
+    Load(p) -> Load(p)
+
+  definition-to-external :
+    Resource(p) -> Resource(p)
+
+  definition-to-external :
+    VarDecl(x, t, e) -> ExternalVarDecl(x, t)
+
+  definition-to-external :
+    VarDeclInferred(x, e) -> ExternalVarDecl(x, <type-of <+ !SimpleType(QId("mobl", "Dynamic"))> e)
+
+  definition-to-external =
+    ?c#(_)
+    ; where(<string-starts-with(|"External")> c)
+
+  definition-to-external :
+    Property(_, _, _, _) -> <id>
+
+strategies
+
+  external path-to-dataurl(|)
+
+  desugar-all =
+    capture-style-configs
+    ; innermost(desugar)
+    ; topdown(try(flatten-list))
+
+  desugar :
+    Assignment(LTuple(fst, rest*), e) -> result
+    with tmp := <newname> "tmp"
+       ; assign* := <map-with-index(\ (idx, lv) -> Assignment(lv, FieldAccess(Var(tmp), <concat-strings> ["_", <inc; int-to-string> idx])) \)> rest*
+       ; action-scope(
+           result := <rename-all> [VarDeclInferred(tmp, e), Assignment(fst, FieldAccess(Var(tmp), "_1")), assign*]
+         )
+
+  desugar :
+    ListInferred(lvalue, e, elem*) -> List(lvalue, t, e, elem*)
+    where e-t := <type-of> e
+        ; (
+            GenericType(_, [t]) := <type-of> e
+         <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+            ; t := SimpleType(QId("mobl", "Dynamic"))
+          )
+
+  desugar :
+    ForInferred(lvalue, e, elem*) -> For(lvalue, t, e, elem*)
+    where e-t := <type-of> e
+        ; (
+            GenericType(_, [t]) := <type-of> e
+         <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+            ; t := SimpleType(QId("mobl", "Dynamic"))
+          )
+
+  desugar :
+    DeriveDeclInferred(x, e) -> DeriveDecl(x, <type-of> e, e)
+
+  desugar :
+    ControlCall(Var(qid), e*, elem*) -> ControlCall(Var(qid), e2*, elem*)
+    where ExternalControl(_, _, farg*) := <lookup-control> qid
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+  desugar :
+    Call(qid, e*) -> Call(qid, e2*)
+    where (ExternalFunction(_, _, farg*, _) := <lookup-function> qid
+        <+ ExternalSyncFunction(_, _, farg*, _) := <lookup-function> qid
+        <+ ExternalScreen(_, _, farg*, _) := <lookup-screen> qid
+          )
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+  desugar :
+    MethodCall(e, x, e*) -> MethodCall(e, x, e2*)
+    where (ExternalMethod(_, _, farg*, _) := <lookup-method> (<type-of> e, x)
+        <+ ExternalSyncMethod(_, _, farg*, _) := <lookup-method> (<type-of> e, x)
+          )
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+rules
+
+  desugar :
+    SetComp(e, filter*) -> <add-one-filter(|filter*)> e
+
+  add-one-filter(|filter*) :
+    e -> e
+    where [] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|[WhereFilter(se2)|rest])> <add-one-filter(|[WhereFilter(se1)])> e
+    where [WhereFilter(SetAnd(se1, se2))|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetEq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetNotEq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["!="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetLt(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["<"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetLeq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["<="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetGt(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($[">"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetGeq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($[">="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetIn(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["in"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetNotIn(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["not in"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.limit(e_l) ]|
+    where [LimitFilter(e_l)|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.skip(e_o) ]|
+    where [OffsetFilter(e_o)|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, true) ]|
+    where [OrderByFilter(OrderAscending(x))|rest] := filter*
+    with e_x := String($["[x]"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, false) ]|
+    where [OrderByFilter(OrderDescending(x))|rest] := filter*
+    with e_x := String($["[x]"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> <add-prefetch(|x*)> e
+    where [PrefetchFilter(x*)|rest] := filter*
+
+  add-prefetch(|xs) :
+    e -> e
+    where [] := xs
+
+  add-prefetch(|xs) :
+    e -> <add-prefetch(|rest)> mobl-e|[ e.prefetch(e_x) ]|
+    where [x|rest] := xs
+    with e_x := String($["[x]"])
+
+rules
+   resolve-fargs :
+    (arg*, []) -> <fail>
+    where not([] := arg*)
+        //; debug(!"This should never happen: ")
+
+  resolve-fargs :
+    ([], [FArgOptional(x, _, e)|rest]) -> [e|<resolve-fargs> ([], rest)]
+
+  resolve-fargs :
+    ([], []) -> []
+
+  resolve-fargs :
+    ([e|arg*], [farg|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    where not(NamedExp(_, _) := e)
+    //where debug(!"Case 1")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArgOptional(x, _, _)|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    //where debug(!"Case 2")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArg(x, _)|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    //where debug(!"Case 3")
+
+  resolve-fargs :
+    ([ne@NamedExp(x, e)|arg*], [farg@FArgOptional(y, _, default-e)|farg*]) -> <resolve-fargs> ([arg*, ne], [farg|farg*])
+    where not(<eq> (x, y))
+    where not([] := <filter(?NamedExp(y, _))> arg*)
+    //where debug(!"Case 4a")
+
+  resolve-fargs :
+    ([ne@NamedExp(x, e)|arg*], [farg@FArgOptional(y, _, default-e)|farg*]) -> [default-e|<resolve-fargs> ([ne|arg*], farg*)]
+    where not(<eq> (x, y))
+    where [] := <filter(?NamedExp(y, _))> arg*
+    //where debug(!"Case 4b")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArg(y, _)|farg*]) -> <fail>
+    where not(<eq> (x, y))
+    //where debug(!"Unmatched named exp: ")
+
+rules
+
+  desugar :
+    Application(qid, def*) -> Application(qid, def2*)
+    where def2* := <find-cond-control> def*
+    where not(<eq> (def*, def2*))
+
+  desugar :
+    Module(qid, def*) -> Module(qid, def2*)
+    where def2* := <find-cond-control> def*
+    where not(<eq> (def*, def2*))
+
+  find-cond-control :
+    [Control(manno*, qid, farg*, elem*)|rest*] -> [Control([], qid, farg*, [When(e, elem2*, elem*)])|<filter(not(?ctrl)); find-cond-control> rest*]
+    where [ctrl@Control(manno2*, _, _, elem2*)|_] := <filter(?Control(_, qid, _, _))> rest*
+    where <fetch-elem(?WhenAnno(e))> manno2*
+
+  find-cond-control :
+    [ctrl@Control(manno*, qid, farg*, elem*)|rest*] -> [ctrl|<find-cond-control> rest*]
+    where [] := <filter(?Control(_, qid, _, _))> rest*
+
+  find-cond-control :
+    [fst|rest*] -> [fst|<find-cond-control> rest*]
+    where not(Control(manno*, qid, farg*, elem*) := fst)
+
+  find-cond-control :
+    [] -> []
+
+rules
+
+  desugar :
+    ImportData(path) -> String($["[s]"])
+    with s := <path-to-string; resolve-file; path-to-dataurl> path
+
+// rules
+
+ //  /*desugar :
+ //    Service(_, qid, res*) -> mobl-def|[
+ // 
+ //    ]|*/
+
+strategies
+
+  resolve-file :
+    filename -> filename
+    where <file-exists> filename
+
+  resolve-file :
+    filename -> path
+    where not(<file-exists> filename)
+        ; [path|_] := <filter(\ p -> <concat-strings> [p, "/", filename] \; file-exists)> <IncludePaths>
+
+  /*resolve-file =
+    string-tokenize(|<explode-string> "/")
+    ; where(
+       last
+       ; ?wildcard
+       ; string-replace(|"%", "")
+       ; not(?wildcard))
+    ; drop-last; separate-by(|"/"); concat-strings
+    ; (?"" <+ resolve-file)
+    ; <concat-strings> [<id>, "/", wildcard]*/
+
+strategies
+
+  get-doc =
+       one(?manno*)
+       ; <one(?DocAnno(doc))> manno*
+       ; <un-double-quote> doc
+    <+ !""
+
+  store-result =
+    ?t
+    ; rules ( ResultingAST := t )
+
+
+  lookup-node :
+    (path, ast) -> <find-node> (<desugar-position(normalize|ast)> path, <ResultingAST>)
+
+  find-node :
+    ([], t) -> t
+
+  find-node :
+    ([a|k], c#(ts)) -> <find-node> (k, <at-index(?result); !result> (a, ts)) 
+
+strategies
+
+  main =
+    init-moblc-options
+  ; xtc-io-wrap(
+        moblc-options
+      , moblc-usage
+      , moblc-about
+      , ![] // xtc dependencies
+      , moblc-main
+    )
+
+  moblc-main = id
+    ; filename := <get-config> "-i"
+    ; rules ( Standalone := 1 )
+    ; ast := <parse-file> filename
+    ; output-path := $[[<getcwd>]/[<OutputPath <+ !"www">]]
+    ; include-param* := <get-config>"-I"
+    ; cwd := <getcwd>
+    ; rules ( ProjectPath       := cwd )
+    ; setting* := <get-configuration>
+    ; <filter(\ StyleVarSetting(StyleVar(x), e) -> <id>  where rules ( StyleVar : x -> e ) \)> setting*
+    ; if <fetch-elem(?StdLibSetting(stdlib-p))> setting* then
+         stdlib-path := <path-to-string> stdlib-p
+      else
+        stdlib-path := <<Hd> include-param* <+ !"./stdlib">
+      end
+    ; path* := <filter(\ LibSetting(p) -> <path-to-string> p \)> setting*
+    ; rules(
+        IncludePaths      := [cwd, stdlib-path, include-param*, path*]
+        ServerOutputPath  := <concat-strings> [<ProjectPath>, "/server"]
+        CachedParseAst    : filename -> ast
+        StdLibPath        := stdlib-path
+        CompilingFilename := filename
+        OutputPath        := output-path)
+    ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+    ; rules ( CompilingModule := mod-name )
+    ; ast2 := <analyze> ast
+    ; errors   := <collect-all(constraint-error, conc); map(?(_, <id>); <concat-strings> ["Error: ", <id>])> ast2
+    ; warnings := <collect-all(constraint-warning, conc); map(?(_, <id>); <concat-strings> ["Warning: ", <id>])> ast2
+    ; notes    := <collect-all(constraint-note, conc); map(?(_, <id>); <concat-strings> ["Note: ", <id>])> ast2
+    ; <concat; map(debug)> [errors, warnings, notes]
+    ; if [] := errors; not(OptimizationLevel) then
+        <compile> ast
+        ; <exit> 0
+      else
+        if OptimizationLevel then
+          <optimized-compile(|mod-name)> ast
+        ; <exit> 0
+        else
+          <exit> 1
+        end
+      end
+
+  init-moblc-options =
+    where(<set-config>("-I",[]))
+
+  moblc-options =
+    ArgOption("-d"
+    , ?path; rules( OutputPath := path )
+    , !HelpString("-d path", "Relative path to desired output directory")
+    )
+
+  moblc-options =
+    Option("-O"
+    , rules( OptimizationLevel := 1 )
+    , !HelpString("-O", "Enable optimization mode")
+    )
+
+  moblc-options =
+    ArgOption("-I" + "--Include"
+    , where(<post-extend-config>("-I", [<id>])); !()
+    , !HelpString("-I d | --Include d", "Include modules from directory d")
+    )
+
+  moblc-usage =
+    <tool-doc>
+      [ Usage("moblc -i foo.mobl [OPTIONS]")
+      , Summary("Generates an application from a mobl definition")
+      , OptionUsage()
+      , AutoReportBugs()
+      ]
+
+  moblc-about =
+    <tool-doc>
+      [ AutoProgram()
+      , Program("mobl compiler")
+      , Author(Person("Zef Hemel", "zef@zefhemel.com"))
+      , GNU_LGPL("2010", "Zef Hemel <zef@zefhemel>")
+      //, WebHome("http://www.webdsl.org")
+      ]
+
+    /*
+    ; pil-info(|<pp-pil-to-string> <id>)
+    ; ![]
+    */
+    //; output-pil-to-file(|<get-config <+ !"rewritten.pil"> "-o")
+
+rules
+
+  normalize-all =
+    innermost(normalize)
+
+  normalize :
+    Module(qid, def*) -> Module(qid, def2*)
+    where def2* := <flatten-list> def*
+        ; not(<eq> (def*, def2*))
+
+  normalize :
+    Application(qid, def*) -> Application(qid, def2*)
+    where def2* := <flatten-list> def*
+        ; not(<eq> (def*, def2*))
+
+  normalize :
+    FunctionNoReturnType(manno*, name, farg*, stat*) -> Function(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    SyncFunctionNoReturnType(manno*, name, farg*, stat*) -> SyncFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    StaticFunctionNoReturnType(manno*, name, farg*, stat*) -> StaticFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    StaticSyncFunctionNoReturnType(manno*, name, farg*, stat*) -> StaticSyncFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    AnonymousFunctionNoReturnType(farg*, stat*) -> AnonymousFunction(farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    IfNoElse(e, block) -> If(e, block, Block([]))
+
+  normalize :
+    If(e, stm, block) -> If(e, Block([stm]), block)
+    where not(Block(_) := stm)
+
+  normalize :
+    If(e, block, stm) -> If(e, block, Block([stm]))
+    where not(Block(_) := stm)
+        ; not(If(_, _, _) := stm)
+        ; not(IfNoElse(_, _) := stm)
+
+  normalize :
+    WhenNoElse(e, block) -> When(e, block, [])
+
+  // Feature HTML - Start
+  normalize :
+    HtmlShort(tag, attr*) -> Html(tag, attr*, [], tag)
+  normalize :
+    NamedHtmlShort(qid, tag, attr*) -> NamedHtml(qid, tag, attr*, [], tag)
+  // Feature HTML - Ende    
+
+  normalize :
+    EntityNoSuper(manno*, qid, prop*) -> Entity(manno*, qid, GenericType(QId("mobl", "Entity"), [SimpleType(qid)]), prop*)
+
+  normalize :
+    ExternalTypeNoSuper(manno*, qid, method*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), method*)
+
+  normalize :
+    TypeNoSuper(manno*, qid, def*) -> Type(manno*, qid, SimpleType(QId("mobl", "Object")), def*)
+
+  normalize :
+    PropertyNoAnnos(manno*, x, t) -> Property(manno*, x, t, [])
+
+  normalize :
+    ScreenNoReturnType(manno*, name, farg*, body) -> Screen(manno*, name, farg*, SimpleType(QId("mobl", "void")), body)
+
+  normalize :
+    ControlCallNoArgs(e, body) -> ControlCall(e, [], body)
+
+  normalize :
+    ControlCallNoBody(e, arg*) -> ControlCall(e, arg*, [])
+
+  normalize :
+    EntityNoSuper(manno*, qid, prop*) -> Entity(manno*, qid, GenericType(QId("mobl", "Entity"), [SimpleType(qid)]), prop*)
+
+  normalize :
+    TupleType(t*) -> GenericType(QId("mobl", $[Tuple[<length> t*]]), t*)
+
+  normalize :
+    ArrayType(t) -> GenericType(QId("mobl", "Array"), [t])
+
+  normalize :
+    DynamicType() -> SimpleType(QId("mobl", "Dynamic"))
+
+  normalize :
+    Mixin(qid) -> def*
+    with Module(_, def*) := <parse-file> <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+
+  normalize :
+    FunctionType(t*, rt) -> GenericType(QId("mobl", $[Function[n]]), [t*, rt])
+    where n := <length> t*
+
+  normalize :
+    Indexer(e, e_idx) -> MethodCall(e, "get", [e_idx])
+
+  normalize :
+    Assignment(LIndexer(e, e_idx), e_ass) -> ExpStat(MethodCall(e, "set", [e_idx, e_ass]))
+
+rules
+
+  normalize :
+    OrderNonSpecific(e) -> OrderAscending(e)
+
+strategies
+
+  add-tl-namespaces :
+    Application(qid, def*) -> Application(qid, <map(try(add-tl-namespace))> def*)
+
+  add-tl-namespaces :
+    Module(qid, def*) -> Module(qid, <map(try(add-tl-namespace))> def*)
+
+  add-tl-namespace :
+    Screen(manno*, x, farg*, rt, elem*) -> Screen(manno*, QId(<ModuleName>, x), farg*, rt, elem*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalScreen(manno*, x, farg*, rt) -> ExternalScreen(manno*, QId(<ModuleName>, x), farg*, rt)
+    where <is-string> x
+
+  add-tl-namespace :
+    Entity(manno*, x, super, prop*) -> Entity(manno*, QId(<ModuleName>, x), super, prop*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalEntity(manno*, x, super, prop*) -> ExternalEntity(manno*, QId(<ModuleName>, x), super, prop*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalFunction(manno*, x, farg*, rt) -> ExternalFunction(manno*, QId(<ModuleName>, x), farg*, rt)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalSyncFunction(manno*, x, farg*, rt) -> ExternalSyncFunction(manno*, QId(<ModuleName>, x), farg*, rt)
+    where <is-string> x
+
+  add-tl-namespace :
+    Function(manno*, x, farg*, rt, stat*) -> Function(manno*, QId(<ModuleName>, x), farg*, rt, stat*)
+    where <is-string> x
+
+  add-tl-namespace :
+    SyncFunction(manno*, x, farg*, rt, stat*) -> SyncFunction(manno*, QId(<ModuleName>, x), farg*, rt, stat*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalGenericType(manno*, x, t*, method*) -> ExternalGenericType(manno*, QId(<ModuleName>, x), t*, method*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalType(manno*, x, super, method*) -> ExternalType(manno*, QId(<ModuleName>, x), super, method*)
+    where <is-string> x
+
+  add-tl-namespace :
+    Type(manno*, x, super, method*) -> Type(manno*, QId(<ModuleName>, x), super, method*)
+    where <is-string> x
+
+  add-tl-namespace :
+    Control(manno*, x, farg*, elem*) -> Control(manno*, QId(<ModuleName>, x), farg*, elem*)
+    where <is-string> x
+
+  add-tl-namespace :
+    ExternalControl(manno*, x, farg*) -> ExternalControl(manno*, QId(<ModuleName>, x), farg*)
+    where <is-string> x
+
+  // Feature Service - Start
+  add-tl-namespace :
+    Service(manno*, x, selem*) -> Service(manno*, QId(<ModuleName>, x), selem*)
+    where <is-string> x
+  // Feature Service - Ende
+
+  add-tl-namespace :
+    ExternalVarDecl(x, t) -> ExternalVarDecl(QId(<ModuleName>, x), t)
+    where <is-string> x
+
+  add-tl-namespace :
+    VarDecl(x, t, e) -> VarDecl(QId(<ModuleName>, x), t, e)
+    where <is-string> x
+
+  add-tl-namespace :
+    VarDeclInferred(x, e) -> VarDeclInferred(QId(<ModuleName>, x), e)
+    where <is-string> x
+
+  add-tl-namespace :
+    Call(_, _) -> <id>
+
+  add-tl-namespace :
+    MethodCall(_, _, _) -> <id>
+
+  add-tl-namespace :
+    Javascript(js) -> ModuleJavascript(<ModuleName>, js)
+
+  add-tl-namespace :
+    JavascriptFor(x, js) -> ModuleJavascriptFor(<ModuleName>, QId(<ModuleName>, x), js)
+    where <is-string> x
+
+rules
+
+  add-namespace-all =
+    alltd(add-namespace)
+
+  add-namespace :
+    SimpleType(qid) -> SimpleType(<alternatives(|alternatives)> qid2)
+    where not(lookup-type-aux)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; <lookup-type-aux> SimpleType(<id>); !newid})> [<ModuleName>|<bagof-Imports>]
+
+  // Add namespace to possible type references which look like vars
+  add-namespace :
+    Var(qid) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-type-aux> SimpleType(qid))
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; <lookup-type-aux> SimpleType(<id>); !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    Var(qid{}) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-control-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-control-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    Var(qid{}) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-function-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-function-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    Var(qid{}) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-global-var-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-global-var-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    Assignment(qid, e) -> Assignment(<alternatives(|alternatives)> qid2, <add-namespace-all> e)
+    where <is-string> qid
+    where not(<lookup-global-var-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-global-var-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    GenericType(qid, t*) -> GenericType(<alternatives(|alternatives)> qid2, t2*)
+    where not(lookup-type-aux)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; <lookup-type-aux> GenericType(<id>, t*); !newid})> [<ModuleName>|<bagof-Imports>]
+        ; t2* := <alltd(add-namespace)> t*
+
+  add-namespace :
+    CollectionCons(qid, t*, e*) -> CollectionCons(<alternatives(|alternatives)> qid2, t2*, e2*)
+    where not(<lookup-type-aux> GenericType(qid, t*))
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; <lookup-type-aux> GenericType(<id>, t*); !newid})> [<ModuleName>|<bagof-Imports>]
+        ; t2* := <alltd(add-namespace)> t*
+        ; e2* := <alltd(add-namespace)> e*
+
+  add-namespace :
+    Call(qid, e*) -> Call(<alternatives(|alternatives)> qid2, e2*)
+    where not(<lookup-function-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-function-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+        ; e2* := <alltd(add-namespace)> e*
+
+  add-namespace :
+    Call(qid, e*) -> Call(<alternatives(|alternatives)> qid2, e2*)
+    where not(<lookup-screen-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-screen-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+        ; e2* := <alltd(add-namespace)> e*
+
+  add-namespace :
+    Call(qid, e*) -> Call(<alternatives(|alternatives)> qid2, e2*)
+    where not(<lookup-type-aux> SimpleType(qid))
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; !SimpleType(newid); lookup-type-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+        ; e2* := <alltd(add-namespace)> e*
+
+  add-namespace :
+    Call(qid, e*) -> Call(<alternatives(|alternatives)> qid2, e2*)
+    where <is-string> qid
+    where not(<lookup-global-var-aux> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-global-var-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+        ; e2* := <alltd(add-namespace)> e*
+
+  alternatives(|alt*) :
+    qid@QId(_, x) -> x{Alternatives([qid|alt*])}
+    where not([] := alt*)
+
+  alternatives(|alt*) :
+    t -> t
+    where [] := alt*
+
+  prefix-qid(|qid) :
+    qid2 -> QId(qid, qid2)
+    where is-string
+
+  prefix-qid(|qid) :
+    QId(q, x) -> QId(<prefix-qid(|qid)> q, x)
+
+rules // declare
+
+  declare :
+    Style(_, qid*, _) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; last-qid := <reverse; Hd; ?_#([<id>|_])> qid*
+      ; rules (
+          GetStyle : last-qid -> extern
+        )
+
+  declare :
+    extern@ExternalStyle(_, qid*) -> <fail>
+    with
+      last-qid := <reverse; Hd; ?_#([<id>|_])> qid*
+      ; rules (
+          GetStyle : last-qid -> extern
+        )
+
+  declare :
+    sm@StyleMixin(_, qid, _, _) -> <fail>
+    with
+      rules (
+          GetStyleMixin : qid -> sm
+        )
+
+  definition-to-external :
+    Style(manno*, sel*, _) -> ExternalStyle(manno*, sel*)
+
+  definition-to-external :
+    StyleMixin(_, _, _, _) -> <id>
+
+rules // resolve
+
+  add-tl-namespace :
+    Style(manno*, sel*, selem*) -> Style(manno*, sel2*, selem*)
+    where sel2* := <map(try(add-tl-namespace-sel))> sel*
+
+  add-tl-namespace :
+    ExternalStyle(manno*, sel*) -> ExternalStyle(manno*, sel2*)
+    where sel2* := <map(try(add-tl-namespace-sel))> sel*
+
+  add-tl-namespace-sel :
+    StyleSelector(x) -> StyleSelector(QId(<ModuleName>, x))
+    where <is-string> x
+
+  add-tl-namespace-sel :
+    StyleSelectorWithPseudo(x, pt) -> StyleSelectorWithPseudo(QId(<ModuleName>, x), pt)
+    where <is-string> x
+
+  add-tl-namespace-sel :
+    StyleSelectorWithPseudoArg(x, pt, arg) -> StyleSelectorWithPseudoArg(QId(<ModuleName>, x), pt, arg)
+    where <is-string> x
+
+  add-tl-namespace :
+    StyleMixin(manno*, qid, farg*, selem*) -> StyleMixin(manno*, QId(<ModuleName>, qid), farg*, selem*)
+    where <is-string> qid
+
+  add-namespace :
+    Var(qid{}) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-style> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-style; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    StyleMixinCall(qid, se*) -> StyleMixinCall(<alternatives(|alternatives)> qid2, <add-namespace-all> se*)
+    where <is-string> qid
+    where not(<lookup-style-mixin> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-style-mixin-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+
+rules // lookup
+
+  lookup-style =
+      lookup-style-aux
+   //<+ import-and-retry(lookup-style-aux|<id>)
+
+  lookup-style-aux :
+    qid -> <GetStyle> qid
+
+  get-all-styles =
+    all-keys-GetStyle
+
+  lookup-style-mixin =
+      lookup-style-mixin-aux
+   //<+ import-and-retry(lookup-style-mixin-aux|<id>)
+
+  lookup-style-mixin-aux :
+    qid -> <GetStyleMixin> qid
+
+  get-all-style-mixins =
+    all-keys-GetStyleMixin
+
+rules // rename
+
+  rename :
+    StyleMixin(manno*, qid, farg*, selem*) -> StyleMixin(manno*, qid, farg2*, selem2*)
+    where {| RenameStyleVar
+           : farg2* := <map(rename-style-farg)> farg*
+           ; selem2* := <rename-all> selem*
+           |}
+
+  rename-style-farg :
+    StyleFArg(x) -> StyleFArg(y)
+    where y := x{<newname> x}
+        ; rules ( RenameStyleVar : x -> y )
+
+  rename :
+    StyleVar(x) -> StyleVar(<RenameStyleVar> x)
+
+rules
+
+  constraint-error :
+    sv@StyleVar(x{}) -> (sv, $[Unknown style variable.])
+    where not(<StyleVar> x)
+
+  constraint-error :
+    sv@StyleMixinCall(qid, _) -> (sv, $[Unkown style mixin.])
+    where not(<lookup-style-mixin> qid)
+
+  constraint-error :
+    sv@StyleMixinCall(qid, se*) -> (sv, $[Invalid number of arguments, excepted: [<length> farg*]])
+    where StyleMixin(_, _, farg*, _) := <lookup-style-mixin> qid
+        ; not(<eq> (<length> se*, <length> farg*))
+
+  editor-complete-proposal :
+    StyleVar(COMPLETION(_)) -> <map(\ s -> ([s], "") \)> <all-keys-StyleVar>
+
+  editor-complete-proposal :
+    StyleVarDecl(COMPLETION(_), _) -> <map(\ s -> ([s], "") \)> <all-keys-StyleVar>
+
+  editor-complete-proposal :
+    StyleMixinCall(COMPLETION(_), _) -> <map(\ qid -> [([<pp-mobl-qid> qid], ""), [([<try(?QId(_, <id>))> qid], "")]] \); flatten-list> <get-all-style-mixins>
+
+  editor-complete-proposal :
+    StyleElemRecover(COMPLETION(_)) -> <map(qid-to-style-mixin-proposal); flatten-list> <get-all-style-mixins>
+
+  qid-to-style-mixin-proposal :
+    qid -> [([<pp-mobl-qid> qid, "(", arg*, ")"], ""), [([<try(?QId(_, <id>))> qid, "(", arg*, ")"], "")]]
+    where StyleMixin(_, _, farg*, _) := <lookup-style-mixin> qid
+        ; arg* := <map(?StyleFArg(<id>)); separate-by(|", ")> farg*
+
+rules // style
+
+  capture-style-configs = alltd(capture-style-config)
+
+  capture-style-config :
+    StyleVarDecl(StyleVar(x), e) -> <id>
+    where not(<StyleVar> x)
+    where rules ( StyleVar : x -> e )
+
+  floorS = string-tokenize(|<explode-string> "."); Hd
+
+  apply-real-to-str-tuple(s) =
+    (string-to-real, string-to-real) ; s ; real-to-string; floorS
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "r") -> r
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "g") -> g
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "b") -> b
+
+  desugar :
+    StyleVar(x) -> <StyleVar> x
+
+  desugar :
+    StyleAdd(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(add)> (n1, n2))
+
+  desugar :
+    StyleSub(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(subt)> (n1, n2))
+
+  desugar :
+    StyleMul(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(mul)> (n1, n2))
+
+  desugar :
+    StyleMixinCall(qid, se*) -> selem2*
+    where StyleMixin(_, _, farg*, selem*) := <lookup-style-mixin> qid
+    where {| ReplaceStyleVar
+           : <zip(\ (StyleFArg(x), e) -> <id> where rules ( ReplaceStyleVar : StyleVar(x) -> e ) \)> (farg*, se*)
+           ; selem2* := <alltd(ReplaceStyleVar)> selem*
+           |}
+
+strategies
+
+  analyze-sync =
+    topdown(try(mark-all-sync))
+    ; declare-all
+    //; debug
+    ; repeat(analyze-sync-code)
+
+  mark-all-sync :
+    Function(anno*, qid, arg*, rt, stat*) -> SyncFunction(anno*, qid, arg*, rt, stat*)
+
+  mark-all-sync :
+    StaticFunction(anno*, qid, arg*, rt, stat*) -> StaticSyncFunction(anno*, qid, arg*, rt, stat*)
+
+  analyze-sync-code =
+    ?t-before
+    ; alltd(analyze-sync-function)
+    ; not(?t-before)
+    ; declare-all
+
+  analyze-sync-function :
+    SyncFunction(anno*, qid, arg*, rt, stat*) -> <try(declare)> Function(anno*, qid, arg*, rt, stat*)
+    where not([] := <collect(async-exp)> stat*)
+        //; <debug(!"Marking as async: ")> qid
+
+  analyze-sync-function :
+    Function(anno*, qid, arg*, rt, stat*) -> <try(declare)> SyncFunction(anno*, qid, arg*, rt, stat*)
+    where [] := <collect(async-exp)> stat*
+        //; <debug(!"Marking as sync: ")> qid
+
+  analyze-sync-function :
+    StaticSyncFunction(anno*, qid, arg*, rt, stat*) -> StaticFunction(anno*, qid, arg*, rt, stat*)
+    where not([] := <collect(async-exp)> stat*)
+        //; <debug(!"Marking as async: ")> qid
+
+  analyze-sync-function :
+    StaticFunction(anno*, qid, arg*, rt, stat*) -> StaticSyncFunction(anno*, qid, arg*, rt, stat*)
+    where [] := <collect(async-exp)> stat*
+        //; <debug(!"Marking as sync: ")> qid
+
+  async-exp :
+    Call(_, _) -> <not(is-sync)>
+
+  async-exp :
+    MethodCall(_, _, _) -> <not(is-sync)>
+
+
+  async-exp :
+    ForInferred(_, e, _) -> <id>
+    where GenericType(QId("mobl", "Collection"), _) := <type-of> e
+
+  async-exp :
+    For(_, _, e, _) -> <id>
+    where GenericType(QId("mobl", "Collection"), _) := <type-of> e
+
+strategies
+
+  desugar = ui-lift
+
+  ui-lift :
+    ControlCall(e, arg*, elem*) -> <concat> [inits, [ControlCall(e, arg2*, elem*)]]
+    where {| Elems
+           : arg2* := <map(ui-lift-expression)> arg*
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    List(lvalue, t, e, elem*) -> <concat> [inits, [List(lvalue, t, e2, elem*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    ListInferred(lvalue, e, elem*) -> <concat> [inits, [ListInferred(lvalue, e2, elem*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    When(e, elem*, elem2*) -> <concat> [inits, [When(e2, elem*, elem2*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  /*ui-lift :
+    VarDecl(x, t, e) -> <concat> [inits, [VarDecl(x, t, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    VarDeclInferred(x, e) -> <concat> [inits, [VarDeclInferred(x, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    DeriveDeclInferred(x, e) -> <concat> [inits, [DeriveDeclInferred(x, e2)]]
+    where <IsControlVar> x
+    where not(<string-starts-with(|"tmp")> x)
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    DeriveDecl(x, t, e) -> <concat> [inits, [DeriveDecl(x, t, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)*/
+
+  ui-lift-expression =
+    \ NamedExp(x, e) -> NamedExp(x, <ui-lift-expression> e) \
+    <+ ?Var(_)
+    <+ ?FieldAccess(_, _)
+    <+ ?Num(_)
+    <+ ?String(_)
+    <+ ?True()
+    <+ ?False()
+    <+ ?Null()
+    <+ ui-lift-exp
+
+  ui-lift-exp :
+    e -> Var(<rename-ref-var> (newvar, <type-of> e))
+    where newvar := <newname> "tmp"
+        ; rules ( IsRefVar : newvar )
+        ; rules ( Elems :+= DeriveDeclInferred(newvar, e) )
+
+rules
+
+  lvalue-vars :
+    s -> [s]
+    where is-string
+
+  lvalue-vars :
+    LTuple(fst, rest*) -> [<lvalue-vars> fst|<map(lvalue-vars); concat> rest*]
+
+  cut-off-last-element :
+    [_] -> []
+
+  cut-off-last-element :
+    [a|k] -> [a|<cut-off-last-element> k]
+
+  setup-paths =
+    setting* := <get-configuration>
+    ; if <fetch-elem(?StdLibSetting(stdlib-p))> setting* then
+         stdlib-path := <path-to-string; resolve-file> stdlib-p
+      else
+        stdlib-path := <concat-strings> [<plugin-path>, "/stdlib"]
+      end
+    ; path* := <filter(\ LibSetting(p) -> <path-to-string; resolve-file> p \)> setting*
+    ; if not(<fetch-elem(?OutputSetting(output-path))> setting*) then
+        output-path := $["www"]
+      end
+    ; if not(<fetch-elem(?ReleaseOutputSetting(release-output-path))> setting*) then
+        release-output-path := $["www.release"]
+      end
+    ; <filter(\ StyleVarSetting(StyleVar(x), e) -> <id>  where rules ( StyleVar : x -> e ) \)> setting*
+    ; rules(
+        IncludePaths      := [<ProjectPath>, stdlib-path, path*]
+        OutputPath        := $[[<ProjectPath>]/[<un-double-quote> output-path]]
+        ReleaseOutputPath := $[[<ProjectPath>]/[<un-double-quote> release-output-path]]
+        StdLibPath        := stdlib-path
+        ServerOutputPath  := <concat-strings> [<ProjectPath>, "/server"]
+      )
+
+  get-configuration :
+    _ -> setting*
+    where filename := <get-configuration-filename>
+    where <file-exists> filename
+    with Configuration(setting*) := <parse-file <+ !Configuration([])> filename
+
+  get-configuration :
+    _ -> []
+    where filename := <get-configuration-filename>
+    where not(<file-exists> filename)
+
+  get-configuration-filename :
+    _ -> $[[<ProjectPath; string-replace(|"\\", "/")>]/config.mobl]
+
+rules
+
+  editor-complete :
+    (t, position, ast, path, project-path) -> proposals
+    where ast' := <analyze; capture-style-configs> ast
+    where {| Proposals, CompletionVars, Parents
+           : rules ( Parents := [] )
+           ; <alltd({props, stack:
+                 editor-complete-proposal
+                 ; ?props
+                 ; rules ( Proposals := props )
+              <+ stack := [<id>|<Parents>]
+                 ; rules ( Parents := stack )
+                 ; fail
+             })> ast'
+           ; proposals := <Proposals>
+           |}
+
+  editor-complete-proposal :
+    SimpleType(COMPLETION(_)) -> proposals
+    where
+      all-types := <get-all-types>;
+      proposals    := <map(type-name-to-proposal); flatten-list> all-types
+
+  editor-complete-proposal :
+    FieldAccess(e, COMPLETION(_)) -> [prop*, method*]
+    where t := <type-of> e
+        ; method* := <get-all-methods; map(\ meth@c#([_, x, args|_]) -> (<concat> [[x, "("], <filter(?FArg(<id>, _)); separate-by(!", ")> args, [")"]], <get-doc> meth) \)> t
+        ; if GenericType(QId("mobl", "Type"), _) := t then
+            prop* := []
+          else
+            prop* := <get-all-properties; map(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> t
+          end
+
+  editor-complete-proposal :
+    Var(COMPLETION(_)) -> [type*, var*, function*, global-var*, styles*]
+    where var* := <CompletionVars>
+    where type* := <get-all-types; map(type-name-to-proposal); flatten-list>
+        ; function* := <get-all-functions; map(lookup-function; function-to-proposal); flatten-list>
+        ; global-var* := <get-all-global-vars; map(global-var-to-proposal); flatten-list>
+        ; styles* := <get-all-styles; map(global-var-to-proposal); flatten-list>
+
+  editor-complete-proposal :
+    QId(qid, COMPLETION(_)) -> [type*, function*]
+    where type* := <get-all-types; filter(?QId(qid, <id>)); map(type-name-to-proposal); flatten-list>
+        ; function* := <get-all-functions; filter(?QId(qid, _)); map(lookup-function; function-to-proposal-qid); flatten-list>
+
+  global-var-to-proposal :
+    QId(qid, x) -> [([<pp-mobl-qid> qid], ""), ([x], "")]
+
+  function-to-proposal :
+    f@ExternalFunction(_, qid@QId(_, x), args, _) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> f),
+      (<concat> [[x, "("], fargs2, [")"]], <get-doc> f),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs, [")"]], <get-doc> f),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs2, [")"]], <get-doc> f)
+    ]
+    with fargs := <filter(?FArg(_, _); farg-to-proposal); separate-by(!", ")> args
+    with fargs2 := <map(farg-to-proposal); separate-by(!", ")> args
+
+  function-to-proposal :
+    f@ExternalSyncFunction(manno*, qid, args, rt) -> <function-to-proposal> ExternalFunction(manno*, qid, args, rt)
+
+  function-to-proposal-qid :
+    f@ExternalFunction(_, qid@QId(_, x), args, _) -> (<concat> [[x, "("], fargs, [")"]], <get-doc> f)
+    with fargs := <map(farg-to-proposal); separate-by(!", ")> args
+
+  function-to-proposal-qid :
+    f@ExternalSyncFunction(manno*, qid, args, rt) -> <function-to-proposal-qid> ExternalFunction(manno*, qid, args, rt)
+
+  editor-complete-proposal :
+    StyleFieldAccess(_, COMPLETION(_)) -> [(["r"], "red component"), (["g"], "green component"), (["b"], "blue component")]
+    where
+      all-types := <get-all-types>;
+      proposals    := <map(type-name-to-proposal); flatten-list> all-types
+
+rules
+
+  editor-complete-proposal :
+    c#([COMPLETION(prefix), _]) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where <string-starts-with(|"Set")> c
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderAscending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderDescending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderNonSpecific(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    PrefetchFilter(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+rules
+
+  editor-complete-proposal :
+    MethodCall(e, COMPLETION(prefix), _) -> method*
+    where t := <type-of> e
+        ; method* := <get-all-methods; map(\ meth@c#([_, x|_]) -> ([x], <get-doc> meth) \)> t
+
+  // My guess is control call
+  editor-complete-proposal :
+    NOCONTEXT(COMPLETION(prefix)) -> control*
+    where control* := <get-all-controls; map(control-to-proposal <+ debug(!"Could not map to a proposal: "); fail); flatten-list>
+
+  control-to-proposal :
+    tpl@ExternalControl(_, qid@QId(_, x), args) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> tpl),
+      (<concat> [[x, "("], fargs2, [")"]], <get-doc> tpl),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs, [")"]], <get-doc> tpl),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs2, [")"]], <get-doc> tpl)
+    ]
+    with fargs := <filter(?FArg(_, _); farg-to-proposal); separate-by(!", ")> args
+    with fargs2 := <map(farg-to-proposal); separate-by(!", ")> args
+
+  control-to-proposal :
+    tpl@ExternalControl(_, x, args) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> tpl)
+    ]
+    where <is-string> x
+    with fargs := <map(farg-to-proposal); separate-by(!", ")> args
+
+  farg-to-proposal :
+    FArg(x, _) -> x
+
+  farg-to-proposal :
+    FArgOptional(x, t, e) -> $[[x]=[<pp-mobl-exp> e]]
+    where not(SimpleType(QId("mobl", "Callback")) := t)
+
+  farg-to-proposal :
+    FArgOptional(x, SimpleType(QId("mobl", "Callback")), e) -> $[[x]={}]
+
+  type-name-to-proposal:
+    x -> ([x], "")
+    where is-string
+
+  type-name-to-proposal:
+    qid@QId(_, x) -> [([x], ""), ([<pp-mobl-qid> qid], "")]
+
+rules
+
+
+  // Analyzes the current program, returning a tuple with errors, warnings, and notes;
+  // each a list of (term, message) tuples or simply (message) terms.
+  editor-analyze:
+    (ast, path, project-path) -> (ast2, errors, warnings, notes)
+    where not(Configuration(_) := ast)
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath := project-path
+              IsImported  : path )
+      ; if not(Configuration(_) := ast) then
+          setup-paths
+        end
+      ; ast2 := <analyze; capture-style-configs; store-result> ast
+      ; (Module(mod-name, _) := ast2 <+ Application(mod-name, _) := ast2 <+ ServerApplication(mod-name, _, _) := ast2 <+ Configuration(_) := ast2; mod-name := "")
+      ; rules ( CompilingModule := mod-name
+                CompilingFilename := path )
+      ; errors   := <collect-all(constraint-error, conc)> ast2
+      ; if not([] := errors) then
+          rules ( HasErrors := True() )
+          ; debug(!"Errors: ")
+        end
+      ; warnings := <collect-all(constraint-warning, conc)> ast2
+      ; notes    := <collect-all(constraint-note, conc)> ast2
+
+  editor-analyze:
+    (ast@Configuration(_), path, project-path) -> (ast, [], [], [])
+
+  // Prints the abstract syntax ATerm of a selection.
+  generate-aterm:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := selected // we just return the input term
+
+rules
+
+  editor-desugar :
+    (selected, position, ast, path, project-path) -> (filename, <desugar-all> ast2)
+    with
+            rules ( ProjectPath := project-path
+                    IsImported  : path )
+      ; setup-paths
+      ; ast2 := <analyze; store-result> ast
+      ; filename := <guarantee-extension(|"aterm")> "desugared"
+
+  format-code :
+    (selected, position, ast, path, project-path) -> (filename, <pp-mobl> selected)
+    with
+      filename := <guarantee-extension(|"mobl")> "formatted"
+
+rules
+
+  external deltree(|)
+  external confirm-dialog(|)
+
+  generate-artifacts:
+    (selected, position, ast, path, project-path) -> None() //(filename-html, result-html)
+    where not(HasErrors)
+    where not(Configuration(_) := ast)
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+      ; rules ( CompilingModule := mod-name )
+      ; <compile> ast
+
+  generate-artifacts:
+    (selected, position, Configuration(_), path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path )
+      ; setup-paths
+    where <readdir> project-path
+        ; list-loop(
+            if has-extension(|"mobl") then
+              where({ast:
+                ast := <parse-file> $[[project-path]/[<id>]]
+                ; if Application(_, _) := ast then
+                    <compile> ast
+                  end
+              })
+            end
+          )
+  generate-artifacts:
+    _ -> None() //(filename-html, result-html)
+    where HasErrors
+
+  editor-optimize :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+      ; rules ( CompilingModule := mod-name
+                OutputPath := <ReleaseOutputPath>)
+      ; <optimized-compile(|mod-name)> ast
+
+  editor-clean-project :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      rules ( ProjectPath := project-path )
+      ; setup-paths
+      ; try(
+          //<confirm-dialog> "Are you sure you want to clean the project, this will remove the output directories."
+          if <file-exists> <OutputPath> then
+              <deltree> <OutputPath>
+            end
+          ; if <file-exists> <ReleaseOutputPath> then
+              <deltree> <ReleaseOutputPath>
+            end
+          ; <refresh-workspace-file> <ProjectPath>
+       )
+
+  editor-rebuild-project :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; if <file-exists> <OutputPath> then
+          <deltree> <OutputPath>
+        end
+    where <readdir> project-path
+        ; list-loop(
+            if has-extension(|"mobl") then
+              where({ast:
+                ast := <parse-file> $[[project-path]/[<id>]]
+                ; if Application(_, _) := ast then
+                    <compile> ast
+                  end
+              })
+            end
+          )
+
+rules
+
+  editor-hover:
+    (t@SimpleType(_), position, ast, path, project-path) -> <get-doc> <lookup-type> t2
+    where t2 := <lookup-node> (position, ast)
+
+  editor-hover:
+    (t@GenericType(_, _), position, ast, path, project-path) -> <get-doc> <lookup-type> t2
+    where t2 := <lookup-node> (position, ast)
+
+  editor-hover:
+    (c@Call(_, _), position, ast, path, project-path) -> <get-doc> <lookup-function> qid
+    where Call(qid, _) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (f@FieldAccess(_, _), position, ast, path, project-path) -> <get-doc> <lookup-property> (<type-of> e, x)
+    where FieldAccess(e, x) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (c@MethodCall(_, _, _), position, ast, path, project-path) -> <get-doc> <lookup-method> (<type-of> e, x)
+    where MethodCall(e, x, _) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (e, position, ast, path, project-path) -> <pp-mobl-type> t
+    where t := <type-of> <lookup-node> (position, ast)
+
+rules
+
+  editor-resolve:
+    (Import(qid), position, ast, path, project-path) -> <parse-file> <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+
+  editor-resolve:
+    (t@SimpleType(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> t
+
+  editor-resolve:
+    (t@GenericType(qid, _), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> t
+
+  editor-resolve:
+    (Call(qid, _), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-function <+ lookup-screen|qid)> qid
+
+  editor-resolve:
+    (MethodCall(e, x, _), position, ast, path, project-path) -> target
+    where (   SimpleType(qid) := <type-of> e
+           <+ GenericType(qid, _) := <type-of> e)
+          ; ?t
+    where target := <ensure-origin(lookup-method|qid)> (t, x)
+
+  editor-resolve:
+    (FieldAccess(e, x), position, ast, path, project-path) -> target
+    where (   SimpleType(qid) := <type-of> e
+           <+ GenericType(qid, _) := <type-of> e)
+          ; ?t
+    where target := <ensure-origin(lookup-property|qid)> (t, x)
+
+  editor-resolve:
+    (QId(_, _), position, ast, path, project-path) -> <editor-resolve> (parent, <cut-off-last-element> position, ast, path, project-path)
+    where parent := <parent-at-position(|position)> ast
+
+  // For actual variables
+  editor-resolve:
+    (Var(x), position, ast, path, project-path) -> target
+    where target := <VarLookup> x
+
+  // For controls
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-control|qid)> qid
+
+  // For entities
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> SimpleType(qid)
+
+  // For entities
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-style|qid)> qid
+
+rules
+
+  ensure-origin(lookup|qid) :
+    node -> target
+    where
+      lookup-target := <lookup> node
+      ; if QId(qid2, _) := qid; not(<origin-term> lookup-target) then
+          <parse-file; externalize-module> <resolve-file> $[[<qid-to-path> qid2].mobl]
+          ; <declare-all> Module(qid2, <id>)
+          ; target := <lookup> node
+        else
+          target := lookup-target
+        end
+
+strategies
+
+  cps-list-all-expressions =
+    cps-lift-expressions
+    ; action-scope(rename-all)
+
+  cps-lift-expressions =
+       cps-lift-exprs
+    <+ ?[a|k]
+       ; ![a|<cps-lift-expressions> k]
+
+
+  cps-lift-expressions :
+    [] -> []
+
+  cps-lift-exprs :
+    [Return(e)|stats] -> <concat> [stats2, [Return(e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [ScreenReturn(e)|stats] -> <concat> [stats2, [ScreenReturn(e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [VarDecl(x, t, e)|stats] -> <concat> [stats2, [VarDecl(x, t, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [VarDeclInferred(x, e)|stats] -> <concat> [stats2, [VarDeclInferred(x, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [Assignment(lvalue, e)|stats] -> <concat> [stats2, [Assignment(lvalue, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [ExpStat(e)|stats] -> <concat> [stats2, <cps-lift-expressions> stats]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  //  Feature Async - Start
+  cps-lift-exprs :
+    [Async(stat*)|stats] ->
+    [Async(<cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+  //  Feature Async - Ende
+  
+  cps-lift-exprs :
+    [If(e, true-stat, false-stat)|stats] ->
+    <concat> [stats2, [If(e2, Block(<cps-lift-expressions> [true-stat]), Block(<cps-lift-expressions> [false-stat]))|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [Block(stat*)|stats] ->
+    [Block(<cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+
+  cps-lift-exprs :
+    [For(x, t, e, stat*)|stats] ->
+    <concat> [stats2, [For(x, t, e2, <cps-lift-expressions> stat*)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [If(e, true-stat, false-stat)|stats] ->
+    [If(e, <cps-lift-expressions; ?[<id>]> [true-stat], <cps-lift-expressions; !Block(<id>)> [false-stat])|<cps-lift-expressions> stats]
+    where <is-sync> e
+
+  cps-lift-exprs :
+    [For(x, t, e, stat*)|stats] ->
+    [For(x, t, e, <cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+    where <is-sync> e
+
+rules
+
+  cps-lift-args :
+    e* -> (exps, <concat> stats)
+    where (exps, stats) := <map(cps-lift-expression-capture-exps); unzip> e*
+
+  cps-lift-expression-capture-exps :
+    e -> (exp, stats)
+    where	stats := <cps-lift-expression> e
+        ; exp := <Exp>
+
+rules
+
+  cps-lift-expression :
+    e -> []
+    where is-sync
+    with rules ( Exp := e)
+
+  cps-lift-expression :
+    NamedExp(x, e) -> stats
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; rules ( Exp := NamedExp(x, e2) )
+
+  cps-lift-expression :
+    e@Call(qid, e*) -> <concat> [stats, [VarDeclInferred(v, Call(qid, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    e@EntityCons(qid, propval*) -> <concat> [stats, [VarDeclInferred(v, EntityCons(qid, propval2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          //: stats := <map(?PropVal(_, <id>); cps-lift-expression); concat> propval*
+          : (e2*, stats) := <map(?PropVal(_, <id>)); cps-lift-args> propval*
+          ; propval2* := <zip(\ (prop, val) -> PropVal(prop, val) \)> (<map(?PropVal(<id>, _))> propval*, e2*)
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    MethodCall(e, x, e*) -> <concat> [stats2, stats, [VarDeclInferred(v, MethodCall(e2, x, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Tuple(e, e*) -> <concat> [stats2, stats, [VarDeclInferred(v, Tuple(e2, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    List(e*) -> <concat> [stats, [VarDeclInferred(v, List(e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    e@CollectionCons(gt, t, e*) -> <concat> [stats, [VarDeclInferred(v, CollectionCons(gt, t, e2*))]]
+    where not(is-sync)
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    BinMethodCall(e1, op, e2) -> <concat> [stats1, stats2, [VarDeclInferred(v, BinMethodCall(e3, op, e4))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e3 := <Exp>
+         |}
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e2
+          ; e4 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Choice(e1, e-true1, e-false1) -> <concat> [stats1, stats2, stats3, [VarDeclInferred(v, Choice(e2, e-true2, e-false2))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e-true1
+          ; e-true2 := <Exp>
+         |}
+       ; {| Exp
+          : stats3 := <cps-lift-expression> e-false1
+          ; e-false2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    FieldAccess(e1, x) -> <concat> [stats1, [VarDeclInferred(v, FieldAccess(e2, x))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Not(e1) -> <concat> [stats1, [VarDeclInferred(v, Not(e2))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+strategies
+
+  is-sync = ?Num(_)
+  is-sync = ?True()
+  is-sync = ?Null()
+  is-sync = ?False()
+  is-sync = ?String(_)
+  is-sync = ?Var(_)
+  is-sync = ?Callback(_)
+  is-sync = ?AnonymousControl(_, _)
+  is-sync = ?AnonymousFunction(_, _, _)
+  is-sync = ?This()
+
+  is-sync =
+    ?BinMethodCall(e1, _, e2)
+    ; <is-sync> e1
+    ; <is-sync> e2
+
+  is-sync =
+    ?NamedExp(_, e)
+    ; <is-sync> e
+
+  is-sync =
+    ?FieldAccess(e, x)
+    ; <is-sync> e
+
+  is-sync =
+    ?Brackets(e)
+    ; <is-sync> e
+
+  is-sync =
+    ?Call(qid, e*)
+    ; (
+         ExternalSyncFunction(_, _, _, _) := <lookup-function> qid
+      <+ <lookup-type> SimpleType(qid)
+      )
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Tuple(e, e*)
+    ; <is-sync> e
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Choice(e, e-true, e-false)
+    ; <is-sync> e
+    ; <is-sync> e-true
+    ; <is-sync> e-false
+
+  is-sync = ?RegExp(_, _)
+
+  is-sync =
+    ?List(e*)
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Not(e)
+    ; <is-sync> e
+
+  is-sync =
+    ?MethodCall(e, x, e*)
+    ; <is-sync> e
+    ; where(<map(is-sync)> e*)
+    ; <lookup-method> (<type-of> e, x)
+    ; ?ExternalSyncMethod(_, _, _, _)
+
+  is-sync =
+    ?CollectionCons(_, _, e*)
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?EntityCons(t, propval*)
+    ; <map(?PropVal(_, <id>); is-sync)> propval*
+
+  is-sync =	?Function(_, _, _, _, _)
+  is-sync =	?SyncFunction(_, _, _, _, _)
+
+  /*is-sync = ?Control(_, _, _, _)
+  is-sync = ?Screen(_, _, _, _, _)
+  is-sync =	?Entity(_, _, _, _)
+  is-sync =	?Service(_, _, _)
+  is-sync =	?Load(_)
+  is-sync =	?Resource(_)
+  is-sync =	?Javascript(_)
+  is-sync =	?Type(_, _, _, _)
+
+  is-sync =
+    ?c#(_)
+    ; where(<string-starts-with(|"External")> c)
+*/
+
+rules
+
+  definition-to-js :
+    Style(_, sel*, prop*) -> <emit-css>
+    $[[<map(sel-to-css; <concat-strings> [".", <id>]); separate-by(|" ") <+ debug(!"Could not generate for: "); fail> sel*] {
+        [<map(style-prop-to-css); separate-by(|"\n") <+ debug(!"Could not generate for: "); fail> prop*]
+      }
+      ]
+    with qid := <reverse; Hd; ?_#([<id>|_])> sel*
+    with <emit> $[[<qid-to-js> qid] = '[<qid-to-css> qid]';
+]
+
+  sel-to-css :
+    StyleSelector(qid) -> <qid-to-css> qid
+
+  sel-to-css :
+    StyleSelectorWithPseudo(qid, pt) -> $[[<qid-to-css> qid]:[pt]]
+
+  sel-to-css :
+    StyleSelectorWithPseudoArg(qid, pt, arg) -> $[[<qid-to-css> qid]:[pt]([arg])]
+
+  qid-to-css :
+    s -> s
+    where is-string
+
+  qid-to-css :
+    QId(qid, x) -> $[[<qid-to-css> qid]__[x]]
+
+  style-prop-to-css :
+    StyleProperty(x, e) -> $[[x]: [<style-exp-to-css> e];]
+
+  style-exp-to-css :
+    StyleCall(x, e*) -> $[[x]([<map(style-exp-to-css); separate-by(|", ")> e*])]
+
+  style-exp-to-css :
+    Num(n) -> n
+
+  style-exp-to-css :
+    NumUnit(n, unit) -> $[[n][<unit-to-css> unit]]
+
+  style-exp-to-css :
+    StyleId(x) -> x
+
+  style-exp-to-css :
+    Color(x) -> x
+
+  style-exp-to-css :
+    String(s) -> s
+
+  style-exp-to-css :
+    StylePath(p, p*) -> $[[p]/[<separate-by(|"/"); concat-strings> p*]]
+
+  style-exp-to-css :
+    StyleExps(e*) -> <map(style-exp-to-css); separate-by(|" "); concat-strings> e*
+
+  style-exp-to-css :
+    StyleExpsCS(e*) -> <map(style-exp-to-css); separate-by(|", "); concat-strings> e*
+
+  unit-to-css :
+    EmUnit() -> "em"
+
+  unit-to-css :
+    PxUnit() -> "px"
+
+  unit-to-css :
+    PtUnit() -> "pt"
+
+  unit-to-css :
+    SUnit() -> "s"
+
+  unit-to-css :
+    PercentageUnit() -> "%"
+
+strategies
+
+  emit =
+    ?code
+    ; current := <Emitted <+ !"">
+    ; rules ( Emitted := <concat-strings> [current, code] )
+
+  emit-tl-statement =
+    ?stat
+    ; current := <EmittedStatements <+ ![]>
+    ; rules ( EmittedStatements := <concat> [current, [stat]] )
+
+  emit-css =
+    ?css
+    ; current := <EmittedCss <+ !"">
+    ; rules ( EmittedCss := <concat-strings> [current, css] )
+
+  get-all =
+       Emitted
+       ; rules ( Emitted := "")
+    <+ !""
+
+  get-all-css =
+       EmittedCss
+       ; rules ( EmittedCss := "")
+    <+ !""
+
+  get-all-tl-statements =
+       EmittedStatements
+       ; rules ( EmittedStatements := [])
+    <+ ![]
+
+strategies
+
+  sql-type :
+    SimpleType(QId("mobl", "String")) -> "VARCHAR(255)"
+
+  sql-type :
+    SimpleType(QId("mobl", "Text")) -> "TEXT"
+
+  sql-type :
+    SimpleType(QId("mobl", "Uri")) -> "VARCHAR(255)"
+
+  sql-type :
+    SimpleType(QId("mobl", "Num")) -> "INT"
+
+  sql-type :
+    SimpleType(QId("mobl", "Bool")) -> "BOOL"
+
+  sql-type :
+    SimpleType(QId("mobl", "DateTime")) -> "DATE"
+
+  sql-type :
+    SimpleType(QId("mobl", "JSON")) -> "JSON"
+
+  sql-type :
+    SimpleType(QId("mobl", "Dynamic")) -> "JSON"
+
+rules
+
+  uri-part-to-string :
+    UriPart(s) -> s
+
+  uri-part-to-string :
+    UriVar(s) -> $[:[s]]
+
+strategies
+
+  eliminate-dead-code :
+    Application(qid, def*) -> Application(qid, def2*)
+    where {| LookupDef, Used
+           : <filter(capture-def)> def*
+           ; <mark-uses> QId(qid, "root")
+           ; def2* := <filter(used-def)> def*
+           |}
+
+  capture-def :
+    def@c#([_, qid@QId(_, _)|_]) -> <id>
+    where rules ( LookupDef : qid -> def )
+
+  capture-def :
+    def@Style(_, qid*, _) -> <id>
+    where <last; alltd(?QId(_, _); ?qid)> qid*
+    where rules ( LookupDef : qid -> def )
+
+  capture-def :
+    def@VarDecl(qid, _, _) -> <id>
+    where rules ( LookupDef : qid -> def )
+
+  mark-uses =
+    ?qid
+    ; rules ( Used : qid )
+    ; qid* := <collect(?QId(_, _))> <LookupDef> qid
+    ; <filter(\ qid -> <mark-uses> qid where not(<Used> qid) \)> qid*
+
+  used-def :
+    def@c#([_, qid@QId(_, _)|_]) -> <id>
+    where <Used> qid
+
+  used-def :
+    ModuleJavascriptFor(_, qid, _) -> <id>
+    where <Used> qid
+
+  used-def :
+    Style(_, qid*, _) -> <id>
+    where <last; alltd(?QId(_, _); ?qid)> qid*
+    where <Used> qid
+
+  used-def :
+    VarDecl(qid, _, _) -> <id>
+    where <Used> qid
+
+  used-def :
+    t -> <id>
+    where not(?_#([_, QId(_, _)|_]))
+        ; not(?ModuleJavascriptFor(_, _, _))
+        ; not(?Style(_, _, _))
+        ; not(?VarDecl(_, _, _))
+

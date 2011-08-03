@@ -1,7 +1,7 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
 }
 
 PARSER_BEGIN(SDFParser)
