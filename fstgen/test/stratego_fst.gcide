@@ -1,7 +1,7 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = false;
+	DEBUG_PARSER = true;
 	DEBUG_LOOKAHEAD = false;
 }
 
@@ -48,6 +48,16 @@ MORE :
 	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
 			{ < ~[] > }
+			
+/*TEST
+MORE :
+	{ "$[" : IN_STRING_QUOTATION }
+	<IN_STRING_QUOTATION>
+		SPECIAL_TOKEN :
+			{ <STRING_QUOTATION: "]" > : DEFAULT }
+	<IN_STRING_QUOTATION>
+		MORE : 
+			{ < ~[] > }*/
 /*****************************************************************************
  * RESERVED KEYWORDS AND LITERALS                                            *
  *****************************************************************************/
@@ -155,12 +165,39 @@ TOKEN :
 				  ["0"-"7"] ( ["0"-"7"] )? | 
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
+
+/*TEST
+TOKEN :
+	{ < STRING_QUOT: 
+	  "$""[" ( (~["]"]) | <ANYSIGN> | <SQUOTATION> )* 
+	  "]" >
+	}
+
+TOKEN :
+	{ <SQUOTATION: 
+		"\'" ( <ANYSIGN> | <QUOT> )* 
+		"\'" > }
+
+TOKEN :
+	{ <QUOT:
+		"[" ( <ANYSIGN> )* "]" > }
+
+TOKEN :
+	{ <ANYSIGN : 
+		("\\"
+			( ["n","t","b","r","f","u","\\","\""] | 
+			  ["0"-"7"] ( ["0"-"7"] )? | 
+			  ["0"-"3"] ["0"-"7"] ["0"-"7"] 
+			) 
+		) >
+	}
+*/
 /*****************************************************************************
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<APOSTROPHE>|<LOWLINE>) 
-	  (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>) 
+	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -245,6 +282,9 @@ String :
 
 Char :
 	<CHARACTER_LITERAL> ;
+
+StringQuot :
+	<STRING_QUOT> ;
 
 @FSTTerminal(name="{<IDENTIFIER>}")
 Id :
@@ -515,6 +555,7 @@ ArgType :
 AlternativeTerm :
 	"{^" Term "}" |
 	"{" [TermList] "}" |
+	/*"{" (StringQuotation)* "}" |*/
 	"#" "(" Term ")" ;
 
 Term :
@@ -526,8 +567,12 @@ Term :
 	"[" [TermList] ["|" Term] "]" [AlternativeTerm] |
 	"{" [TermList] "}" [AlternativeTerm] |
 	"#" "(" Term ")" [AlternativeTerm] |
-	"$" "[" (StringQuotation)* "]" 
-	[AlternativeTerm] | 
+	
+	
+	/* "$" "[" (StringQuotation)* "]" 
+	[AlternativeTerm] | */
+	StringQuot  |
+	
 	Id [LOOK_AHEAD(2) OptIdTerm] [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() Id() \":\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
@@ -573,18 +618,19 @@ NoTermAfterStrategyAngle :
 OptIdTerm :
 	"(" [TermList] ")" |
 	"@" Term | 
+	/*"|" "[" (StringQuotation)* "]" "|" ;*/
 	"|" "[" [TermList] "]" "|";
 
 OptStringTerm :
 	"(" [TermList] ")" ;
 
-StringQuotation :
+/*StringQuotation :
 	Term |
 	SpecialStringQuotation ;
 
 SpecialStringQuotation :
 	","<NONE> | ":"<NONE> | "."<NONE> | "/"<NONE> | ";"<NONE> | "="<NONE> |
-	"@"<NONE> ;
+	"@"<NONE> | "<-"<NONE> ;*/
 
 /*****************************************************************************
  * DEFINITION OF LISTS                                                       *

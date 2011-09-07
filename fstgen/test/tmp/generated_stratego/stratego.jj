@@ -1,7 +1,7 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = false;
+	DEBUG_PARSER = true;
 	DEBUG_LOOKAHEAD = false;
 }
 
@@ -48,6 +48,16 @@ MORE :
 	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
 			{ < ~[] > }
+			
+/*TEST
+MORE :
+	{ "$[" : IN_STRING_QUOTATION }
+	<IN_STRING_QUOTATION>
+		SPECIAL_TOKEN :
+			{ <STRING_QUOTATION: "]" > : DEFAULT }
+	<IN_STRING_QUOTATION>
+		MORE : 
+			{ < ~[] > }*/
 /*****************************************************************************
  * RESERVED KEYWORDS AND LITERALS                                            *
  *****************************************************************************/
@@ -155,12 +165,39 @@ TOKEN :
 				  ["0"-"7"] ( ["0"-"7"] )? | 
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
+
+/*TEST*/
+TOKEN :
+	{ < STRING_QUOT: 
+	  "$""[" ( (~["]"]) | <ANYSIGN> | <SQUOTATION> )* 
+	  "]" >
+	}
+
+TOKEN :
+	{ <SQUOTATION: 
+		"\'" ( <ANYSIGN> | <QUOT> )* 
+		"\'" > }
+
+TOKEN :
+	{ <QUOT:
+		"[" ( <ANYSIGN> )* "]" > }
+
+TOKEN :
+	{ <ANYSIGN : 
+		("\\"
+			( ["n","t","b","r","f","u","\\","\""] | 
+			  ["0"-"7"] ( ["0"-"7"] )? | 
+			  ["0"-"3"] ["0"-"7"] ["0"-"7"] 
+			) 
+		) >
+	}
+
 /*****************************************************************************
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<APOSTROPHE>|<LOWLINE>) 
-	  (<LETTER>|<DIGIT>|<APOSTROPHE>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>) 
+	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -252,6 +289,12 @@ FSTInfo String(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 FSTInfo Char(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<CHARACTER_LITERAL> {return productionEndTerminal("Char","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo StringQuot(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<STRING_QUOT> {return productionEndTerminal("StringQuot","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -721,7 +764,7 @@ FSTInfo Term(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"#" "(" n=Term(true){ replaceName(n);} ")" [n=AlternativeTerm(true){ replaceName(n);}] {return productionEndTerminal("Term8","-","-","Replacement","Default",first,token);}
  |
-	"$" "[" (n=StringQuotation(true){ replaceName(n);})* "]" [n=AlternativeTerm(true){ replaceName(n);}] {return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
+	n=StringQuot(true){ replaceName(n);} {return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
  |
 	n=Id(true){ replaceName(n);} [LOOKAHEAD(2) n=OptIdTerm(true){ replaceName(n);}] [n=AlternativeTerm(true){ replaceName(n);}] {return productionEndTerminal("Term10","-","-","Replacement","Default",first,token);}
  |
@@ -782,32 +825,6 @@ FSTInfo OptIdTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 FSTInfo OptStringTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	"(" [n=TermList(true){ replaceName(n);}] ")" {return productionEndTerminal("OptStringTerm","-","-","Replacement","Default",first,token);}
-
- )  }
-
-FSTInfo StringQuotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=Term(true){ replaceName(n);} {return productionEndTerminal("StringQuotation1","-","-","Replacement","Default",first,token);}
- |
-	n=SpecialStringQuotation(true){ replaceName(n);} {return productionEndTerminal("StringQuotation2","-","-","Replacement","Default",first,token);}
-
- )  }
-
-FSTInfo SpecialStringQuotation(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	","  {return productionEndTerminal("SpecialStringQuotation1","-","-","Replacement","Default",first,token);}
- |
-	":"  {return productionEndTerminal("SpecialStringQuotation2","-","-","Replacement","Default",first,token);}
- |
-	"."  {return productionEndTerminal("SpecialStringQuotation3","-","-","Replacement","Default",first,token);}
- |
-	"/"  {return productionEndTerminal("SpecialStringQuotation4","-","-","Replacement","Default",first,token);}
- |
-	";"  {return productionEndTerminal("SpecialStringQuotation5","-","-","Replacement","Default",first,token);}
- |
-	"="  {return productionEndTerminal("SpecialStringQuotation6","-","-","Replacement","Default",first,token);}
- |
-	"@"  {return productionEndTerminal("SpecialStringQuotation7","-","-","Replacement","Default",first,token);}
 
  )  }
 

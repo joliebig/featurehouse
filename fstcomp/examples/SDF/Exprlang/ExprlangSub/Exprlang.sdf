@@ -1,0 +1,10 @@
+module Exprlang
+
+exports
+
+  context-free syntax
+    Exp "-" Exp  -> Exp {cons("Sub"),left}
+
+  context-free priorities
+    "-" Exp -> Exp
+  > {left: Exp "-" Exp -> Exp }

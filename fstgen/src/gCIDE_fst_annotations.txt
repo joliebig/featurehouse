@@ -8,7 +8,7 @@ all productions for non-terminals are annotated with
 All child elements are assumed to be terminals if not specified otherwise.
 In order to reconstruct the original document, non-terminals may not reference tokens like <IDENTIFIER>, but
 those must be refactored into an external declaration.
-The name is decuded from the production name. By default the name of a non-terminal is a constant "-", 
+The name is deduced from the production name. By default the name of a non-terminal is a constant "-", 
 but can be specified otherwise with the "name" parameter of the annotation (see below).
 
 Every production that is not annotated or annotated with @FSTTerminal is considered a terminal. 
@@ -36,7 +36,7 @@ where sequences in curly brackets can be patterns and are replaced with values d
 		=> named by the first and the second identifier-token found during parsing of the production, e.g, "ABC-abc"
 
 There are some special constructs. {AUTO} generates a unique name, {TOSTRING} is replaced by the content
-of the whole production (whitespaces are striped). Finally "{X}^." can be used as list construct, where
+of the whole production (whitespaces are stripped). Finally "{X}^." can be used as list construct, where
 X can occur 0 to n times during parsing. When replaced, all occurances of X are separated by a . (the character
 following the ^ symbol, use ~ for no separator). For example: "{Type}^." can be replaced by "com.util.Test".
 
@@ -98,7 +98,7 @@ Merging
 -------
 
 Terminals can be annotated with a parameter merge
-@FSTTerminal(name="xy",compose="mech1")
+@FSTTerminal(name="xy",merge="mech1")
 in which the attribute specifies the merging mechanism.
 The default is 'SemanticConflict'.
 

@@ -69,44 +69,48 @@ public interface StrategoParserConstants {
   int EXPONENT = 72;
   int CHARACTER_LITERAL = 73;
   int STRING_LITERAL = 74;
-  int IDENTIFIER = 75;
-  int LETTER = 76;
-  int LCCHAR = 77;
-  int UCCHAR = 78;
-  int DIGIT = 79;
-  int LPAREN = 80;
-  int RPAREN = 81;
-  int LBRACE = 82;
-  int RBRACE = 83;
-  int LBRACKET = 84;
-  int RBRACKET = 85;
-  int LT = 86;
-  int GT = 87;
-  int PLUS = 88;
-  int MINUS = 89;
-  int STAR = 90;
-  int SLASH = 91;
-  int COMMA = 92;
-  int SEMICOLON = 93;
-  int DDOT = 94;
-  int DOT = 95;
-  int QUESTIONMARK = 96;
-  int EXCLAMATIONMARK = 97;
-  int NUMBERSIGN = 98;
-  int AT = 99;
-  int DOLLAR = 100;
-  int VERTICALLINE = 101;
-  int TILDE = 102;
-  int AMPERSAND = 103;
-  int PERCENTAGE = 104;
-  int CIRCUMFLEXACCENT = 105;
-  int GRAVEACCENT = 106;
-  int APOSTROPHE = 107;
-  int ARROW = 108;
-  int ASSIGN = 109;
-  int LOWLINE = 110;
-  int QUOTATIONMARK = 111;
-  int BACKSLASH = 112;
+  int STRING_QUOT = 75;
+  int SQUOTATION = 76;
+  int QUOT = 77;
+  int ANYSIGN = 78;
+  int IDENTIFIER = 79;
+  int LETTER = 80;
+  int LCCHAR = 81;
+  int UCCHAR = 82;
+  int DIGIT = 83;
+  int LPAREN = 84;
+  int RPAREN = 85;
+  int LBRACE = 86;
+  int RBRACE = 87;
+  int LBRACKET = 88;
+  int RBRACKET = 89;
+  int LT = 90;
+  int GT = 91;
+  int PLUS = 92;
+  int MINUS = 93;
+  int STAR = 94;
+  int SLASH = 95;
+  int COMMA = 96;
+  int SEMICOLON = 97;
+  int DDOT = 98;
+  int DOT = 99;
+  int QUESTIONMARK = 100;
+  int EXCLAMATIONMARK = 101;
+  int NUMBERSIGN = 102;
+  int AT = 103;
+  int DOLLAR = 104;
+  int VERTICALLINE = 105;
+  int TILDE = 106;
+  int AMPERSAND = 107;
+  int PERCENTAGE = 108;
+  int CIRCUMFLEXACCENT = 109;
+  int GRAVEACCENT = 110;
+  int APOSTROPHE = 111;
+  int ARROW = 112;
+  int ASSIGN = 113;
+  int LOWLINE = 114;
+  int QUOTATIONMARK = 115;
+  int BACKSLASH = 116;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -189,6 +193,10 @@ public interface StrategoParserConstants {
     "<EXPONENT>",
     "<CHARACTER_LITERAL>",
     "<STRING_LITERAL>",
+    "<STRING_QUOT>",
+    "<SQUOTATION>",
+    "<QUOT>",
+    "<ANYSIGN>",
     "<IDENTIFIER>",
     "<LETTER>",
     "<LCCHAR>",
