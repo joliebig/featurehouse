@@ -1,12 +1,1 @@
 module check
-
-rules
-
-  constraint-error :
-    Application(qid, def*) -> (qid, $[No 'root' screen defined with no arguments. The root screen functions as the application's entry point and is required.])
-    where [] := <filter(?Screen(_, QId(qid, "root"), [], _, _))> def*
-
-  constraint-error :
-    Application(_, def*) -> (qid, $[Multiple definitions of '[<pp-mobl-qid> qid]'])
-    where all-names := <filter({?_#([manno*, <id>, _|_]); where([] := <filter(?WhenAnno(_))> manno*)})> def*
-        ; qid := <find-duplicate> all-names

@@ -34,7 +34,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -159,7 +158,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("classsmall_stmt14") && expectedType.equals("classsmall_stmt")) return true;
 		if (type.equals("classsmall_stmt4") && expectedType.equals("classsmall_stmt")) return true;
 		if (type.equals("flow_stmt1") && expectedType.equals("flow_stmt")) return true;
-		if (type.equals("ImportFrom_End2") && expectedType.equals("ImportFrom_End")) return true;
 		if (type.equals("atomtrailerEnd1") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("StringNode5") && expectedType.equals("StringNode")) return true;
 		if (type.equals("AnyName17") && expectedType.equals("AnyName")) return true;
@@ -180,8 +178,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("classsmall_stmt7") && expectedType.equals("classsmall_stmt")) return true;
 		if (type.equals("shift_exprEnd1") && expectedType.equals("shift_exprEnd")) return true;
 		if (type.equals("decorator_End2") && expectedType.equals("decorator_End")) return true;
-		if (type.equals("atomtrailerEnd2") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("expr_stmtEnd12") && expectedType.equals("expr_stmtEnd")) return true;
+		if (type.equals("atomtrailerEnd2") && expectedType.equals("atomtrailerEnd")) return true;
 		if (type.equals("atom8") && expectedType.equals("atom")) return true;
 		if (type.equals("arglist1") && expectedType.equals("arglist")) return true;
 		if (type.equals("StringNode4") && expectedType.equals("StringNode")) return true;
@@ -298,7 +296,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("except_clause_End1") && expectedType.equals("except_clause_End")) return true;
 		if (type.equals("expr_stmtEnd1") && expectedType.equals("expr_stmtEnd")) return true;
 		if (type.equals("try_stmt_End1") && expectedType.equals("try_stmt_End")) return true;
-		if (type.equals("ImportFrom_End1") && expectedType.equals("ImportFrom_End")) return true;
 		if (type.equals("comp_op7") && expectedType.equals("comp_op")) return true;
 		if (type.equals("atom3") && expectedType.equals("atom")) return true;
 		if (type.equals("stmt2") && expectedType.equals("stmt")) return true;
