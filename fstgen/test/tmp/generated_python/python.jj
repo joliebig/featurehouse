@@ -12,6 +12,9 @@ options {
 PARSER_BEGIN(PythonParser)
 
 package tmp.generated_python;
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
@@ -41,8 +44,6 @@ TOKEN_MGR_DECLS: {
 	public boolean stdprompt = false;
 
 	public boolean generator_allowed = true;
-
-	private static boolean DEBUG = false;
 
 	static Token addDedent(Token previous) {
 		Token t = new Token();
@@ -110,13 +111,10 @@ TOKEN_MGR_DECLS: {
 
 SPECIAL_TOKEN : {
 	<SPACE: " ">
-	| "\014"
+	|  "\t"
+	|  "\014"
 	|  <CONTINUATION: ("\\") ("\r\n"|"\n"|"\r")>
-}
-
-SKIP: {
-	"\t" |
-	<NEWLINE1: ("\r\n"|"\n"|"\r")> {
+	|  <NEWLINE1: ("\r\n"|"\n"|"\r")> {
 		if (parens == 0) {
 			indent = 0;
 			input_stream.backup(1);
@@ -470,7 +468,7 @@ FSTInfo stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=with_stmt(true){ replaceName(n);} {return productionEndTerminal("stmt6","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
  |
-	LOOKAHEAD( (decorators())? "def") n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
  |
 	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("ClassDefinition","{classdef}","{classdef}");}
 
@@ -650,7 +648,9 @@ FSTInfo ImportFrom(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ImportFrom_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=dotted_name(true){ replaceName(n);}] <IMPORT> n=ImportFromEnd(true){ replaceName(n);} {return productionEndTerminal("ImportFrom_End","-","-","Replacement","Default",first,token);}
+	<IMPORT> n=ImportFromEnd(true){ replaceName(n);} {return productionEndTerminal("ImportFrom_End1","-","-","Replacement","Default",first,token);}
+ |
+	n=dotted_name(true){ replaceName(n);} <IMPORT> n=ImportFromEnd(true){ replaceName(n);} {return productionEndTerminal("ImportFrom_End2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1136,9 +1136,9 @@ FSTInfo decorator_End(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo decorator_End_Par(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(1) ")"  <NEWLINE> {return productionEndTerminal("decorator_End_Par1","-","-","Replacement","Default",first,token);}
+	")"  <NEWLINE> {return productionEndTerminal("decorator_End_Par1","-","-","Replacement","Default",first,token);}
  |
-	n=arglist(true){ replaceName(n);} ")"  <NEWLINE> {return productionEndTerminal("decorator_End_Par2","-","-","Replacement","Default",first,token);}
+	n=arglist(true){ replaceName(n);} ")" <NEWLINE> {return productionEndTerminal("decorator_End_Par2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1170,7 +1170,7 @@ FSTInfo ClassName(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo classdef_End(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=small_stmt(true){ replaceName("small_stmt", n);}{ replaceName(n);} {return productionEndTerminal("classdef_End1","{small_stmt}","{small_stmt}","Replacement","SemanticConflict",first,token);}
+	n=small_stmt(true){ replaceName("small_stmt", n);}{ replaceName(n);} <NEWLINE> {return productionEndTerminal("classdef_End1","{small_stmt}","{small_stmt}","Replacement","SemanticConflict",first,token);}
  |
 	<NEWLINE> <INDENT> (n=classsimple_stmt(inTerminal){ replaceName(n);})+ <DEDENT> {return productionEndNonTerminal("classdef_End2","-","-");}
 
@@ -1190,7 +1190,7 @@ FSTInfo classsimple_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo classsmall_stmt(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD((decorators())? "def") n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("classsmall_stmt1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
+	n=funcdef(true){ replaceName("funcdef", n);}{ replaceName(n);} {return productionEndTerminal("classsmall_stmt1","{funcdef}","{funcdef}","Replacement","LineBased",first,token);}
  |
 	n=classdef(inTerminal){ replaceName("classdef", n);}{ replaceName(n);} {return productionEndNonTerminal("classsmall_stmt2","{classdef}","{classdef}");}
  |

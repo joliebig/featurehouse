@@ -1,6 +1,5 @@
 options {
 	STATIC = false;
-	FORCE_LA_CHECK = false;
 	DEBUG_PARSER = false;
 }
 
@@ -224,8 +223,8 @@ Real :
 String : 
 	<STRING_LITERAL> ;
 
-Char :
-	<CHARACTER_LITERAL> ;
+/*Char :
+	<CHARACTER_LITERAL> ;*/
 
 CharClassLiteral :
 	<CHARCLASS_LITERAL> ;
@@ -237,16 +236,19 @@ Id :
 /*****************************************************************************
  * MAIN PRODUCTION                                                           *
  *****************************************************************************/
+@FSTNonTerminal(name="{ModuleDeclaration}")
 Module : 
-	ModuleDeclaration
+	ModuleDeclaration @!
 	[ImportDeclaration]
 	[ExportDeclaration]
 	[HiddenDeclaration]
 	<EOF> ;
 
+@FSTTerminal(name="{ModNamePart}")
 ModName : 
 	ModNamePart [ModuleParameter] ;
 
+@FSTExportName("{Id}")
 ModNamePart :
 	Id (LOOK_AHEAD(2) "/" Id)* ;
 
@@ -257,25 +259,33 @@ ModuleSort :
 	Id |
 	"[[" Id "]]" ;
 
+@FSTTerminal(name="{ModName}")
 ModuleDeclaration :
-	"module" ModName @+! ;
+	"module" ModName ;
 
-@FSTTerminal(name="{ModName}{ImportModule}")
+@FSTNonTerminal(name="imports")
 ImportDeclaration :
-	"imports" (ModName)+ ;
+	"imports" @+! (ModName)+ @! ;
 
+@FSTNonTerminal(name="exports")
 ExportDeclaration :
-	"exports" (Grammer)+ ;
+	@- "exports" @+! (Grammar)+ @! ;
 
+@FSTNonTerminal(name="hiddens")
 HiddenDeclaration :
-	"hiddens" (Grammer)+ ;
+	@- "hiddens" @+! (Grammar)+ @!;
 
 /* Every syntax definition introduces names for the syntactical sorts of a 
 language and needs to define one or more start symbols. */
-Grammer :
-	"sorts" (Sort)+ |
+@FSTInline
+Grammar :
+	@FSTNonTerminal(name="sorts")
+	"sorts" (Sort)+ @!|
+	@FSTNonTerminal(name="context-free start-symbols")
 	"context-free start-symbols" (Sort)+ |
-	Productions |
+	@FSTNonTerminal(name="Productions")
+	Productions @! |
+	@FSTNonTerminal(name="Disambiguations")
 	Disambiguations ;
 
 /* The actual syntax is defined in lexical and context-free syntax.
@@ -284,28 +294,43 @@ Grammer :
    terminals. 
    The context-free syntax defines the syntax of constructs like operators, 
    statements, or what is usually referred to as non-terminals */
+@FSTNonTerminal(name="{ProdPart}")
 Productions :
 	ProdPart (Production)* ;
 
 ProdPart :
+	@FSTExportName("syntax")
 	"syntax" <NONE> |
+	@FSTExportName("lexical syntax")
 	"lexical syntax" <NONE> |
+	@FSTExportName("context-free syntax")
 	"context-free syntax" <NONE> |
+	@FSTExportName("variables")
 	"variables" <NONE> |
+	@FSTExportName("lexical variables")
 	"lexical variables" <NONE> ;
 
 /* Constructs to define in a declarative way that certain kinds of derivations 
    are not allowed, also known as disambiguation filters */
 Disambiguations :
+	@FSTNonTerminal(name="{AUTO}")
 	"context-free priorities" (Priority)+ |
+	@FSTNonTerminal(name="lexical restrictions")
 	"lexical restrictions" (Restriction)+ |
+	@FSTNonTerminal(name="context-free restrictions")
 	"context-free restrictions" (Restriction)+ ;
 
 /* Productions have the form A1 ... An -> A0, where A0 is non-terminal and 
    A1 ... An is a string of terminals and non-terminals. */
+@FSTTerminal(name="{AUTO}")
 Production :
-	(Symbol)* 
-	"->" (LOOK_AHEAD("Symbol()") Symbol)+ [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
+
+/*Production :
+	(Symbol)* "->" (LOOK_AHEAD("Symbol()") Symbol)+ 
+				   [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
+
+
 
 /* There are three kinds of symbols: sorts, character classes and literals. 
    Sorts are names for language specific constructs.
@@ -322,6 +347,7 @@ Symbol :
 AlternativeSymbol :
 	"|" Symbol ;
 
+@FSTTerminal(name="{Id}")
 Sort :
 	"[[" Id "]]" |
 	"<" Id [SortOp] ["-" CFOrLEX] ">" |
@@ -374,9 +400,11 @@ Constructor :
 	"cons" "(" String ")" |
 	"deprecated" "(" String ")" ;
 
+@FSTTerminal(name="{AUTO}")
 Priority :
 	LOOK_AHEAD(3) "{" [Attribute ":"] @! (Production)+ "}" [LOOK_AHEAD(2) ">" Priority] |
 	Production (LOOK_AHEAD(2) ">" Priority)* ;
 
+@FSTTerminal(name="{AUTO}")
 Restriction : 
 	(Symbol)+ "-/-" CharacterClass (LOOK_AHEAD(2) "." CharacterClass)* ;

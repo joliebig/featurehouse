@@ -17,12 +17,162 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("Module")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ModuleDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "ExportDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "HiddenDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ImportDeclaration")) {
+			printFeatures(nonTerminal,true);
+			printToken("imports");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"ModName")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ExportDeclaration")) {
+			printFeatures(nonTerminal,true);
+			hintDecIndent();
+			printToken("exports");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"Grammar")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("HiddenDeclaration")) {
+			printFeatures(nonTerminal,true);
+			hintDecIndent();
+			printToken("hiddens");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"Grammar")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Grammar1")) {
+			printFeatures(nonTerminal,true);
+			printToken("sorts");
+			for (FSTNode v : getChildren(nonTerminal,"Sort")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Grammar2")) {
+			printFeatures(nonTerminal,true);
+			printToken("context-free start-symbols");
+			for (FSTNode v : getChildren(nonTerminal,"Sort")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Grammar3")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Productions");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Grammar4")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Disambiguations");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Productions")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ProdPart");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"Production")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Disambiguations1")) {
+			printFeatures(nonTerminal,true);
+			printToken("context-free priorities");
+			for (FSTNode v : getChildren(nonTerminal,"Priority")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Disambiguations2")) {
+			printFeatures(nonTerminal,true);
+			printToken("lexical restrictions");
+			for (FSTNode v : getChildren(nonTerminal,"Restriction")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Disambiguations3")) {
+			printFeatures(nonTerminal,true);
+			printToken("context-free restrictions");
+			for (FSTNode v : getChildren(nonTerminal,"Restriction")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
 		if (type.equals(expectedType)) return true;
 		if (type.equals("SpecialSign14") && expectedType.equals("SpecialSign")) return true;
-		if (type.equals("Grammer1") && expectedType.equals("Grammer")) return true;
 		if (type.equals("Attribute2") && expectedType.equals("Attribute")) return true;
 		if (type.equals("SortOp1") && expectedType.equals("SortOp")) return true;
 		if (type.equals("ProdPart4") && expectedType.equals("ProdPart")) return true;
@@ -51,12 +201,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SpecialSign6") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("SpecialSign29") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("ModuleSort1") && expectedType.equals("ModuleSort")) return true;
+		if (type.equals("Grammar1") && expectedType.equals("Grammar")) return true;
 		if (type.equals("SpecialSign25") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Attribute10") && expectedType.equals("Attribute")) return true;
 		if (type.equals("ProdPart1") && expectedType.equals("ProdPart")) return true;
 		if (type.equals("SpecialSign21") && expectedType.equals("SpecialSign")) return true;
+		if (type.equals("Grammar4") && expectedType.equals("Grammar")) return true;
 		if (type.equals("Symbol3") && expectedType.equals("Symbol")) return true;
-		if (type.equals("Grammer4") && expectedType.equals("Grammer")) return true;
 		if (type.equals("SpecialSign3") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("SpecialSign7") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Sort1") && expectedType.equals("Sort")) return true;
@@ -73,10 +224,10 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SpecialSign26") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Constructor1") && expectedType.equals("Constructor")) return true;
 		if (type.equals("Attribute4") && expectedType.equals("Attribute")) return true;
-		if (type.equals("Grammer3") && expectedType.equals("Grammer")) return true;
 		if (type.equals("SpecialSign5") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("SpecialSign16") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Symbol4") && expectedType.equals("Symbol")) return true;
+		if (type.equals("Grammar3") && expectedType.equals("Grammar")) return true;
 		if (type.equals("SpecialSign22") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("ModuleSort2") && expectedType.equals("ModuleSort")) return true;
 		if (type.equals("Attribute8") && expectedType.equals("Attribute")) return true;
@@ -88,11 +239,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SpecialSign27") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("SpecialSign17") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("ProdPart3") && expectedType.equals("ProdPart")) return true;
-		if (type.equals("Grammer2") && expectedType.equals("Grammer")) return true;
 		if (type.equals("SpecialSign4") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("CFOrLEX2") && expectedType.equals("CFOrLEX")) return true;
 		if (type.equals("Disambiguations3") && expectedType.equals("Disambiguations")) return true;
 		if (type.equals("SpecialSign1") && expectedType.equals("SpecialSign")) return true;
+		if (type.equals("Grammar2") && expectedType.equals("Grammar")) return true;
 		if (type.equals("SpecialSign23") && expectedType.equals("SpecialSign")) return true;
 		if (type.equals("Sort3") && expectedType.equals("Sort")) return true;
 		if (type.equals("SpecialSign9") && expectedType.equals("SpecialSign")) return true;

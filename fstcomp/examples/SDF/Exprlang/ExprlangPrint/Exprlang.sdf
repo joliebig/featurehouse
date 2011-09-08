@@ -1,0 +1,6 @@
+module Exprlang
+
+exports
+
+  context-free syntax
+    "print" "(" Exp ")" ";" -> Stat {cons("Print")}

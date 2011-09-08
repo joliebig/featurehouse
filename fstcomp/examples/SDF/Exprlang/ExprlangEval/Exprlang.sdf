@@ -1,0 +1,6 @@
+module Exprlang
+
+exports
+
+  context-free syntax
+    "eval" "(" Exp ")" ";" -> Stat {cons("Eval")}

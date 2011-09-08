@@ -67,14 +67,6 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Char(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(CHARACTER_LITERAL);
-                             {if (true) return productionEndTerminal("Char","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
   final public FSTInfo CharClassLiteral(boolean inTerminal) throws ParseException {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
@@ -95,12 +87,13 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final public FSTInfo Module(boolean inTerminal) throws ParseException {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = ModuleDeclaration(true);
-                                   replaceName(n);
+    n = ModuleDeclaration(inTerminal);
+                                         replaceName("ModuleDeclaration", n);
+                                                                                replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IMPORTS:
-      n = ImportDeclaration(true);
-                                                                                replaceName(n);
+      n = ImportDeclaration(inTerminal);
+                                                                                                                                   replaceName(n);
       break;
     default:
       jj_la1[2] = jj_gen;
@@ -108,8 +101,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case EXPORTS:
-      n = ExportDeclaration(true);
-                                                                                                                              replaceName(n);
+      n = ExportDeclaration(inTerminal);
+                                                                                                                                                                                       replaceName(n);
       break;
     default:
       jj_la1[3] = jj_gen;
@@ -117,15 +110,15 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     }
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case HIDDENS:
-      n = HiddenDeclaration(true);
-                                                                                                                                                                            replaceName(n);
+      n = HiddenDeclaration(inTerminal);
+                                                                                                                                                                                                                                           replaceName(n);
       break;
     default:
       jj_la1[4] = jj_gen;
       ;
     }
     jj_consume_token(0);
-                                                                                                                                                                                                     {if (true) return productionEndTerminal("Module","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                                                                                                                    {if (true) return productionEndNonTerminal("Module","{ModuleDeclaration}","{ModuleDeclaration}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -133,17 +126,18 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = ModNamePart(true);
-                             replaceName(n);
+                             replaceName("ModNamePart", n);
+                                                              replaceName(n);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case LBRACKET:
       n = ModuleParameter(true);
-                                                                        replaceName(n);
+                                                                                                         replaceName(n);
       break;
     default:
       jj_la1[5] = jj_gen;
       ;
     }
-                                                                                           {if (true) return productionEndTerminal("ModName","-","-","Replacement","Default",first,token);}
+                                                                                                                            {if (true) return productionEndTerminal("ModName","{ModNamePart}","{ModNamePart}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -151,7 +145,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     n = Id(true);
-                    replaceName(n);
+                    replaceName("Id", n);
+                                            replaceName(n);
     label_1:
     while (true) {
       if (jj_2_1(2)) {
@@ -161,9 +156,10 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       }
       jj_consume_token(SLASH);
       n = Id(true);
-                                                                   replaceName(n);
+                                                                                           replaceName("Id", n);
+                                                                                                                   replaceName(n);
     }
-                                                                                       {if (true) return productionEndTerminal("ModNamePart","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("ModNamePart","-","{Id}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -219,8 +215,9 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(MODULE);
     n = ModName(true);
-                                  replaceName(n);
-                                                    {if (true) return productionEndTerminal("ModuleDeclaration","-","-","Replacement","Default",first,token);}
+                                  replaceName("ModName", n);
+                                                               replaceName(n);
+                                                                                 {if (true) return productionEndTerminal("ModuleDeclaration","{ModName}","{ModName}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -230,9 +227,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_consume_token(IMPORTS);
     label_3:
     while (true) {
-      n = ModName(true);
-                                    replaceName("ModName", n);
-                                                                 replaceName(n);
+      n = ModName(inTerminal);
+                                          replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
         ;
@@ -242,7 +238,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         break label_3;
       }
     }
-                                                                                     {if (true) return productionEndTerminal("ImportDeclaration","{ModName}{ImportModule}","{ModName}{ImportModule}","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndNonTerminal("ImportDeclaration","imports","imports");}
     throw new Error("Missing return statement in function");
   }
 
@@ -252,8 +248,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_consume_token(EXPORTS);
     label_4:
     while (true) {
-      n = Grammer(true);
-                                    replaceName(n);
+      n = Grammar(inTerminal);
+                                          replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SORTS:
       case STARTSYMBOL:
@@ -272,7 +268,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         break label_4;
       }
     }
-                                                        {if (true) return productionEndTerminal("ExportDeclaration","-","-","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndNonTerminal("ExportDeclaration","exports","exports");}
     throw new Error("Missing return statement in function");
   }
 
@@ -282,8 +278,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_consume_token(HIDDENS);
     label_5:
     while (true) {
-      n = Grammer(true);
-                                    replaceName(n);
+      n = Grammar(inTerminal);
+                                          replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SORTS:
       case STARTSYMBOL:
@@ -302,11 +298,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         break label_5;
       }
     }
-                                                        {if (true) return productionEndTerminal("HiddenDeclaration","-","-","Replacement","Default",first,token);}
+                                                              {if (true) return productionEndNonTerminal("HiddenDeclaration","hiddens","hiddens");}
     throw new Error("Missing return statement in function");
   }
 
-  final public FSTInfo Grammer(boolean inTerminal) throws ParseException {
+  final public FSTInfo Grammar(boolean inTerminal) throws ParseException {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -314,8 +310,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       jj_consume_token(SORTS);
       label_6:
       while (true) {
-        n = Sort(true);
-                               replaceName(n);
+        n = Sort(inTerminal);
+                                     replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
         case LPAREN:
@@ -329,14 +325,14 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break label_6;
         }
       }
-                                                   {if (true) return productionEndTerminal("Grammer1","-","-","Replacement","Default",first,token);}
+                                                         {if (true) return productionEndNonTerminal("Grammar1","sorts","sorts");}
       break;
     case STARTSYMBOL:
       jj_consume_token(STARTSYMBOL);
       label_7:
       while (true) {
-        n = Sort(true);
-                                                    replaceName(n);
+        n = Sort(inTerminal);
+                                                          replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
         case LPAREN:
@@ -350,23 +346,23 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break label_7;
         }
       }
-                                                                        {if (true) return productionEndTerminal("Grammer2","-","-","Replacement","Default",first,token);}
+                                                                              {if (true) return productionEndNonTerminal("Grammar2","context-free start-symbols","context-free start-symbols");}
       break;
     case SYNTAX:
     case VARIABLES:
     case LEXICALSYNTAX:
     case CFREESYNTAX:
     case LEXICALVARS:
-      n = Productions(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("Grammer3","-","-","Replacement","Default",first,token);}
+      n = Productions(inTerminal);
+                                   replaceName(n);
+                                                     {if (true) return productionEndNonTerminal("Grammar3","Productions","Productions");}
       break;
     case CFREEPRIORITIES:
     case LEXICALRESTRICTIONS:
     case CFREERESTRICTIONS:
-      n = Disambiguations(true);
-                                 replaceName(n);
-                                                   {if (true) return productionEndTerminal("Grammer4","-","-","Replacement","Default",first,token);}
+      n = Disambiguations(inTerminal);
+                                       replaceName(n);
+                                                         {if (true) return productionEndNonTerminal("Grammar4","Disambiguations","Disambiguations");}
       break;
     default:
       jj_la1[13] = jj_gen;
@@ -379,8 +375,9 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final public FSTInfo Productions(boolean inTerminal) throws ParseException {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = ProdPart(true);
-                          replaceName(n);
+    n = ProdPart(inTerminal);
+                                replaceName("ProdPart", n);
+                                                              replaceName(n);
     label_8:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
@@ -399,10 +396,10 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         jj_la1[14] = jj_gen;
         break label_8;
       }
-      n = Production(true);
-                                                                replaceName(n);
+      n = Production(inTerminal);
+                                                                                                          replaceName(n);
     }
-                                                                                    {if (true) return productionEndTerminal("Productions","-","-","Replacement","Default",first,token);}
+                                                                                                                              {if (true) return productionEndNonTerminal("Productions","{ProdPart}","{ProdPart}");}
     throw new Error("Missing return statement in function");
   }
 
@@ -412,23 +409,23 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SYNTAX:
       jj_consume_token(SYNTAX);
-                   {if (true) return productionEndTerminal("ProdPart1","-","-","Replacement","Default",first,token);}
+                   {if (true) return productionEndTerminal("ProdPart1","-","syntax","Replacement","Default",first,token);}
       break;
     case LEXICALSYNTAX:
       jj_consume_token(LEXICALSYNTAX);
-                           {if (true) return productionEndTerminal("ProdPart2","-","-","Replacement","Default",first,token);}
+                           {if (true) return productionEndTerminal("ProdPart2","-","lexical syntax","Replacement","Default",first,token);}
       break;
     case CFREESYNTAX:
       jj_consume_token(CFREESYNTAX);
-                                {if (true) return productionEndTerminal("ProdPart3","-","-","Replacement","Default",first,token);}
+                                {if (true) return productionEndTerminal("ProdPart3","-","context-free syntax","Replacement","Default",first,token);}
       break;
     case VARIABLES:
       jj_consume_token(VARIABLES);
-                      {if (true) return productionEndTerminal("ProdPart4","-","-","Replacement","Default",first,token);}
+                      {if (true) return productionEndTerminal("ProdPart4","-","variables","Replacement","Default",first,token);}
       break;
     case LEXICALVARS:
       jj_consume_token(LEXICALVARS);
-                              {if (true) return productionEndTerminal("ProdPart5","-","-","Replacement","Default",first,token);}
+                              {if (true) return productionEndTerminal("ProdPart5","-","lexical variables","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[15] = jj_gen;
@@ -446,8 +443,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       jj_consume_token(CFREEPRIORITIES);
       label_9:
       while (true) {
-        n = Priority(true);
-                                                     replaceName(n);
+        n = Priority(inTerminal);
+                                                           replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STRING_LITERAL:
         case IDENTIFIER:
@@ -465,14 +462,14 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break label_9;
         }
       }
-                                                                         {if (true) return productionEndTerminal("Disambiguations1","-","-","Replacement","Default",first,token);}
+                                                                               {if (true) return productionEndNonTerminal("Disambiguations1","{AUTO}","{AUTO}");}
       break;
     case LEXICALRESTRICTIONS:
       jj_consume_token(LEXICALRESTRICTIONS);
       label_10:
       while (true) {
-        n = Restriction(true);
-                                                     replaceName(n);
+        n = Restriction(inTerminal);
+                                                           replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STRING_LITERAL:
         case IDENTIFIER:
@@ -489,14 +486,14 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break label_10;
         }
       }
-                                                                         {if (true) return productionEndTerminal("Disambiguations2","-","-","Replacement","Default",first,token);}
+                                                                               {if (true) return productionEndNonTerminal("Disambiguations2","lexical restrictions","lexical restrictions");}
       break;
     case CFREERESTRICTIONS:
       jj_consume_token(CFREERESTRICTIONS);
       label_11:
       while (true) {
-        n = Restriction(true);
-                                                          replaceName(n);
+        n = Restriction(inTerminal);
+                                                                replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STRING_LITERAL:
         case IDENTIFIER:
@@ -513,7 +510,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break label_11;
         }
       }
-                                                                              {if (true) return productionEndTerminal("Disambiguations3","-","-","Replacement","Default",first,token);}
+                                                                                    {if (true) return productionEndNonTerminal("Disambiguations3","context-free restrictions","context-free restrictions");}
       break;
     default:
       jj_la1[19] = jj_gen;
@@ -547,30 +544,22 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                          replaceName(n);
     }
     jj_consume_token(ARROW);
-    label_13:
-    while (true) {
-      n = Symbol(true);
-                                                                                      replaceName(n);
-      if (jj_2_2(2147483647)) {
-        ;
-      } else {
-        break label_13;
-      }
-    }
-    if (jj_2_3(2147483647)) {
+    n = Symbol(true);
+                                                                 replaceName(n);
+    if (jj_2_2(2147483647)) {
       n = OptAttributes(true);
-                                                                                                                                                            replaceName(n);
+                                                                                                                                     replaceName(n);
     } else {
       ;
     }
-                                                                                                                                                                               {if (true) return productionEndTerminal("Production","-","-","Replacement","Default",first,token);}
+                                                                                                                                                        {if (true) return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo Symbol(boolean inTerminal) throws ParseException {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_4(2147483647)) {
+    if (jj_2_3(2147483647)) {
       jj_consume_token(LPAREN);
       n = Symbol(true);
                                                         replaceName(n);
@@ -682,20 +671,22 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     case DLBRACKET:
       jj_consume_token(DLBRACKET);
       n = Id(true);
-                         replaceName(n);
+                         replaceName("Id", n);
+                                                 replaceName(n);
       jj_consume_token(DRBRACKET);
-                                                {if (true) return productionEndTerminal("Sort1","-","-","Replacement","Default",first,token);}
+                                                                        {if (true) return productionEndTerminal("Sort1","{Id}","{Id}","Replacement","Default",first,token);}
       break;
     case LT:
       jj_consume_token(LT);
       n = Id(true);
-                        replaceName(n);
+                        replaceName("Id", n);
+                                                replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case STAR:
       case QUESTIONMARK:
         n = SortOp(true);
-                                                          replaceName(n);
+                                                                                  replaceName(n);
         break;
       default:
         jj_la1[28] = jj_gen;
@@ -705,54 +696,56 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       case MINUS:
         jj_consume_token(MINUS);
         n = CFOrLEX(true);
-                                                                                                  replaceName(n);
+                                                                                                                          replaceName(n);
         break;
       default:
         jj_la1[29] = jj_gen;
         ;
       }
       jj_consume_token(GT);
-                                                                                                                         {if (true) return productionEndTerminal("Sort2","-","-","Replacement","Default",first,token);}
+                                                                                                                                                 {if (true) return productionEndTerminal("Sort2","{Id}","{Id}","Replacement","Default",first,token);}
       break;
     case IDENTIFIER:
       n = Id(true);
-                    replaceName(n);
+                    replaceName("Id", n);
+                                            replaceName(n);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case STAR:
       case QUESTIONMARK:
         n = SortOp(true);
-                                                      replaceName(n);
+                                                                              replaceName(n);
         break;
       default:
         jj_la1[30] = jj_gen;
         ;
       }
-                                                                         {if (true) return productionEndTerminal("Sort3","-","-","Replacement","Default",first,token);}
+                                                                                                 {if (true) return productionEndTerminal("Sort3","{Id}","{Id}","Replacement","Default",first,token);}
       break;
     case LBRACE:
       jj_consume_token(LBRACE);
       n = Id(true);
-                        replaceName(n);
+                        replaceName("Id", n);
+                                                replaceName(n);
       n = String(true);
-                                                         replaceName(n);
+                                                                                 replaceName(n);
       jj_consume_token(RBRACE);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case STAR:
       case QUESTIONMARK:
         n = SortOp(true);
-                                                                                               replaceName(n);
+                                                                                                                       replaceName(n);
         break;
       default:
         jj_la1[31] = jj_gen;
         ;
       }
-                                                                                                                  {if (true) return productionEndTerminal("Sort4","-","-","Replacement","Default",first,token);}
+                                                                                                                                          {if (true) return productionEndTerminal("Sort4","{Id}","{Id}","Replacement","Default",first,token);}
       break;
     case LPAREN:
       jj_consume_token(LPAREN);
-      label_14:
+      label_13:
       while (true) {
         n = Sort(true);
                            replaceName(n);
@@ -766,7 +759,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break;
         default:
           jj_la1[32] = jj_gen;
-          break label_14;
+          break label_13;
         }
       }
       jj_consume_token(RPAREN);
@@ -781,7 +774,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         jj_la1[33] = jj_gen;
         ;
       }
-                                                                                      {if (true) return productionEndTerminal("Sort5","-","-","Replacement","Default",first,token);}
+                                                                                      {if (true) return productionEndTerminal("Sort5","{Id}","{Id}","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[34] = jj_gen;
@@ -847,7 +840,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       ;
     }
     jj_consume_token(LBRACKET);
-    label_15:
+    label_14:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER_LITERAL:
@@ -859,7 +852,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         break;
       default:
         jj_la1[38] = jj_gen;
-        break label_15;
+        break label_14;
       }
       n = CharClass(true);
                                           replaceName(n);
@@ -1048,12 +1041,12 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_consume_token(LBRACE);
     n = Attribute(true);
                                replaceName(n);
-    label_16:
+    label_15:
     while (true) {
-      if (jj_2_5(2)) {
+      if (jj_2_4(2)) {
         ;
       } else {
-        break label_16;
+        break label_15;
       }
       jj_consume_token(COMMA);
       n = Attribute(true);
@@ -1153,7 +1146,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final public FSTInfo Priority(boolean inTerminal) throws ParseException {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_8(3)) {
+    if (jj_2_7(3)) {
       jj_consume_token(LBRACE);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case CONS:
@@ -1176,7 +1169,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         jj_la1[44] = jj_gen;
         ;
       }
-      label_17:
+      label_16:
       while (true) {
         n = Production(true);
                                                                                         replaceName(n);
@@ -1194,18 +1187,18 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           break;
         default:
           jj_la1[45] = jj_gen;
-          break label_17;
+          break label_16;
         }
       }
       jj_consume_token(RBRACE);
-      if (jj_2_6(2)) {
+      if (jj_2_5(2)) {
         jj_consume_token(GT);
         n = Priority(true);
                                                                                                                                                    replaceName(n);
       } else {
         ;
       }
-                                                                                                                                                                      {if (true) return productionEndTerminal("Priority1","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                      {if (true) return productionEndTerminal("Priority1","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case STRING_LITERAL:
@@ -1219,18 +1212,18 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       case ARROW:
         n = Production(true);
                             replaceName(n);
-        label_18:
+        label_17:
         while (true) {
-          if (jj_2_7(2)) {
+          if (jj_2_6(2)) {
             ;
           } else {
-            break label_18;
+            break label_17;
           }
           jj_consume_token(GT);
           n = Priority(true);
                                                                                  replaceName(n);
         }
-                                                                                                     {if (true) return productionEndTerminal("Priority2","-","-","Replacement","Default",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("Priority2","{AUTO}","{AUTO}","Replacement","Default",first,token);}
         break;
       default:
         jj_la1[46] = jj_gen;
@@ -1244,7 +1237,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final public FSTInfo Restriction(boolean inTerminal) throws ParseException {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_19:
+    label_18:
     while (true) {
       n = Symbol(true);
                          replaceName(n);
@@ -1261,24 +1254,24 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         break;
       default:
         jj_la1[47] = jj_gen;
-        break label_19;
+        break label_18;
       }
     }
     jj_consume_token(NOTALLOWED);
     n = CharacterClass(true);
                                                                           replaceName(n);
-    label_20:
+    label_19:
     while (true) {
-      if (jj_2_9(2)) {
+      if (jj_2_8(2)) {
         ;
       } else {
-        break label_20;
+        break label_19;
       }
       jj_consume_token(DOT);
       n = CharacterClass(true);
                                                                                                                                      replaceName(n);
     }
-                                                                                                                                                         {if (true) return productionEndTerminal("Restriction","-","-","Replacement","Default",first,token);}
+                                                                                                                                                         {if (true) return productionEndTerminal("Restriction","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1338,11 +1331,37 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     finally { jj_save(7, xla); }
   }
 
-  final private boolean jj_2_9(int xla) {
-    jj_la = xla; jj_lastpos = jj_scanpos = token;
-    try { return !jj_3_9(); }
-    catch(LookaheadSuccess ls) { return true; }
-    finally { jj_save(8, xla); }
+  final private boolean jj_3R_60() {
+    if (jj_3R_20()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_70()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_59() {
+    if (jj_scan_token(LT)) return true;
+    if (jj_3R_20()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_68()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_69()) jj_scanpos = xsp;
+    if (jj_scan_token(GT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_scan_token(GT)) return true;
+    if (jj_3R_23()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_58() {
+    if (jj_scan_token(DLBRACKET)) return true;
+    if (jj_3R_20()) return true;
+    if (jj_scan_token(DRBRACKET)) return true;
+    return false;
   }
 
   final private boolean jj_3R_47() {
@@ -1364,7 +1383,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_4() {
+  final private boolean jj_3_3() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_22()) return true;
     if (jj_scan_token(RPAREN)) return true;
@@ -1377,7 +1396,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_31() {
+  final private boolean jj_3R_41() {
     if (jj_3R_50()) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -1387,15 +1406,15 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_30() {
-    if (jj_3R_27()) return true;
+  final private boolean jj_3R_40() {
+    if (jj_3R_26()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_49()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_29() {
+  final private boolean jj_3R_39() {
     if (jj_3R_47()) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -1403,7 +1422,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_28() {
+  final private boolean jj_3R_38() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_22()) return true;
     if (jj_scan_token(RPAREN)) return true;
@@ -1415,8 +1434,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_25() {
-    if (jj_3R_23()) return true;
+  final private boolean jj_3R_24() {
+    if (jj_3R_21()) return true;
     if (jj_scan_token(DDOT)) return true;
     return false;
   }
@@ -1424,74 +1443,70 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final private boolean jj_3R_22() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_28()) {
+    if (jj_3R_38()) {
     jj_scanpos = xsp;
-    if (jj_3R_29()) {
+    if (jj_3R_39()) {
     jj_scanpos = xsp;
-    if (jj_3R_30()) {
+    if (jj_3R_40()) {
     jj_scanpos = xsp;
-    if (jj_3R_31()) return true;
+    if (jj_3R_41()) return true;
     }
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_54() {
+  final private boolean jj_3R_53() {
     if (jj_3R_22()) return true;
     return false;
   }
 
-  final private boolean jj_3R_44() {
+  final private boolean jj_3R_43() {
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_54()) { jj_scanpos = xsp; break; }
+      if (jj_3R_53()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_3R_55()) return true;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_55()) { jj_scanpos = xsp; break; }
-    }
+    if (jj_3R_22()) return true;
     return false;
   }
 
-  final private boolean jj_3R_43() {
-    if (jj_3R_44()) return true;
+  final private boolean jj_3R_42() {
+    if (jj_3R_43()) return true;
     return false;
   }
 
-  final private boolean jj_3_5() {
+  final private boolean jj_3_4() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_23()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
-  final private boolean jj_3_8() {
+  final private boolean jj_3_7() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_25()) jj_scanpos = xsp;
-    if (jj_3R_26()) return true;
+    if (jj_3R_24()) jj_scanpos = xsp;
+    if (jj_3R_25()) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_26()) { jj_scanpos = xsp; break; }
+      if (jj_3R_25()) { jj_scanpos = xsp; break; }
     }
     return false;
   }
 
-  final private boolean jj_3R_24() {
+  final private boolean jj_3R_23() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_8()) {
+    if (jj_3_7()) {
     jj_scanpos = xsp;
-    if (jj_3R_43()) return true;
+    if (jj_3R_42()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_66() {
+  final private boolean jj_3R_55() {
     if (jj_scan_token(DEPRECATED)) return true;
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_50()) return true;
@@ -1499,7 +1514,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_65() {
+  final private boolean jj_3R_54() {
     if (jj_scan_token(CONS)) return true;
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_50()) return true;
@@ -1507,74 +1522,90 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_53() {
+  final private boolean jj_3R_44() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_65()) {
+    if (jj_3R_54()) {
     jj_scanpos = xsp;
-    if (jj_3R_66()) return true;
+    if (jj_3R_55()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_42() {
-    if (jj_3R_53()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_41() {
-    if (jj_scan_token(INDENTPADDING)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_40() {
-    if (jj_scan_token(RECOVER)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_scan_token(REJECT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_38() {
-    if (jj_scan_token(ASSOC)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_37() {
-    if (jj_scan_token(NONASSOC)) return true;
+    if (jj_3R_44()) return true;
     return false;
   }
 
   final private boolean jj_3R_36() {
-    if (jj_scan_token(RIGHT)) return true;
+    if (jj_scan_token(INDENTPADDING)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_1() {
+    if (jj_scan_token(SLASH)) return true;
+    if (jj_3R_20()) return true;
     return false;
   }
 
   final private boolean jj_3R_35() {
-    if (jj_scan_token(LEFT)) return true;
+    if (jj_scan_token(RECOVER)) return true;
     return false;
   }
 
   final private boolean jj_3R_34() {
-    if (jj_scan_token(AVOID)) return true;
+    if (jj_scan_token(REJECT)) return true;
     return false;
   }
 
   final private boolean jj_3R_33() {
-    if (jj_scan_token(PREFER)) return true;
+    if (jj_scan_token(ASSOC)) return true;
     return false;
   }
 
   final private boolean jj_3R_32() {
+    if (jj_scan_token(NONASSOC)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_31() {
+    if (jj_scan_token(RIGHT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_30() {
+    if (jj_scan_token(LEFT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_29() {
+    if (jj_scan_token(AVOID)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_28() {
+    if (jj_scan_token(PREFER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
     if (jj_scan_token(BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_23() {
+  final private boolean jj_3R_21() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_27()) {
+    jj_scanpos = xsp;
+    if (jj_3R_28()) {
+    jj_scanpos = xsp;
+    if (jj_3R_29()) {
+    jj_scanpos = xsp;
+    if (jj_3R_30()) {
+    jj_scanpos = xsp;
+    if (jj_3R_31()) {
+    jj_scanpos = xsp;
     if (jj_3R_32()) {
     jj_scanpos = xsp;
     if (jj_3R_33()) {
@@ -1585,17 +1616,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_scanpos = xsp;
     if (jj_3R_36()) {
     jj_scanpos = xsp;
-    if (jj_3R_37()) {
-    jj_scanpos = xsp;
-    if (jj_3R_38()) {
-    jj_scanpos = xsp;
-    if (jj_3R_39()) {
-    jj_scanpos = xsp;
-    if (jj_3R_40()) {
-    jj_scanpos = xsp;
-    if (jj_3R_41()) {
-    jj_scanpos = xsp;
-    if (jj_3R_42()) return true;
+    if (jj_3R_37()) return true;
     }
     }
     }
@@ -1606,56 +1627,61 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     }
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3_1() {
-    if (jj_scan_token(SLASH)) return true;
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_115() {
-    if (jj_scan_token(CIRCUMFLEXACCENT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_114() {
-    if (jj_scan_token(AMPERSAND)) return true;
     return false;
   }
 
   final private boolean jj_3R_113() {
-    if (jj_scan_token(ASSIGN)) return true;
+    if (jj_scan_token(CIRCUMFLEXACCENT)) return true;
     return false;
   }
 
   final private boolean jj_3R_112() {
-    if (jj_scan_token(GRAVEACCENT)) return true;
+    if (jj_scan_token(AMPERSAND)) return true;
     return false;
   }
 
   final private boolean jj_3R_111() {
-    if (jj_scan_token(SEMICOLON)) return true;
+    if (jj_scan_token(ASSIGN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_71() {
+    if (jj_3R_56()) return true;
     return false;
   }
 
   final private boolean jj_3R_110() {
-    if (jj_scan_token(STAR)) return true;
+    if (jj_scan_token(GRAVEACCENT)) return true;
     return false;
   }
 
   final private boolean jj_3R_109() {
-    if (jj_scan_token(MINUS)) return true;
+    if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
 
   final private boolean jj_3R_108() {
-    if (jj_scan_token(PLUS)) return true;
+    if (jj_scan_token(STAR)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_69() {
+    if (jj_scan_token(MINUS)) return true;
+    if (jj_3R_75()) return true;
     return false;
   }
 
   final private boolean jj_3R_107() {
+    if (jj_scan_token(MINUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_106() {
+    if (jj_scan_token(PLUS)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_105() {
     if (jj_scan_token(VERTICALLINE)) return true;
     return false;
   }
@@ -1665,7 +1691,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_106() {
+  final private boolean jj_3R_104() {
     if (jj_scan_token(NUMBERSIGN)) return true;
     return false;
   }
@@ -1675,106 +1701,105 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_105() {
+  final private boolean jj_3R_103() {
     if (jj_scan_token(SLASH)) return true;
     return false;
   }
 
-  final private boolean jj_3R_104() {
+  final private boolean jj_3R_102() {
     if (jj_scan_token(TILDE)) return true;
     return false;
   }
 
-  final private boolean jj_3_3() {
-    if (jj_scan_token(LBRACE)) return true;
-    if (jj_3R_23()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_103() {
+  final private boolean jj_3R_101() {
     if (jj_scan_token(AT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_102() {
+  final private boolean jj_3R_100() {
     if (jj_scan_token(DOLLAR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_101() {
+  final private boolean jj_3R_99() {
     if (jj_scan_token(LOWLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_73() {
-    if (jj_3R_56()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_100() {
+  final private boolean jj_3R_98() {
     if (jj_scan_token(PERCENTAGE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_99() {
+  final private boolean jj_3R_97() {
     if (jj_scan_token(EXCLAMATIONMARK)) return true;
     return false;
   }
 
-  final private boolean jj_3R_98() {
+  final private boolean jj_3R_96() {
     if (jj_scan_token(QUESTIONMARK)) return true;
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    if (jj_scan_token(MINUS)) return true;
-    if (jj_3R_77()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_97() {
+  final private boolean jj_3R_95() {
     if (jj_scan_token(DOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_96() {
+  final private boolean jj_3R_94() {
     if (jj_scan_token(DDOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_95() {
-    if (jj_scan_token(GT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_6() {
-    if (jj_scan_token(GT)) return true;
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_94() {
-    if (jj_scan_token(LT)) return true;
-    return false;
-  }
-
   final private boolean jj_3R_93() {
-    if (jj_scan_token(COMMA)) return true;
+    if (jj_scan_token(GT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_5() {
+    if (jj_scan_token(GT)) return true;
+    if (jj_3R_23()) return true;
     return false;
   }
 
   final private boolean jj_3R_92() {
-    if (jj_scan_token(RBRACKET)) return true;
+    if (jj_scan_token(LT)) return true;
     return false;
   }
 
   final private boolean jj_3R_91() {
+    if (jj_scan_token(COMMA)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_21()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_90() {
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_68() {
+    if (jj_3R_56()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_89() {
     if (jj_scan_token(LBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_21() {
+  final private boolean jj_3R_20() {
     if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_70() {
+    if (jj_3R_56()) return true;
     return false;
   }
 
@@ -1783,28 +1808,28 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_90() {
+  final private boolean jj_3R_88() {
     if (jj_scan_token(RBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_89() {
+  final private boolean jj_3R_87() {
     if (jj_scan_token(LBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3_9() {
+  final private boolean jj_3_8() {
     if (jj_scan_token(DOT)) return true;
-    if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_88() {
-    if (jj_scan_token(RPAREN)) return true;
+    if (jj_3R_26()) return true;
     return false;
   }
 
   final private boolean jj_3R_86() {
+    if (jj_scan_token(RPAREN)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_84() {
     if (jj_scan_token(CHARCLASS_LITERAL)) return true;
     return false;
   }
@@ -1814,24 +1839,33 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_75() {
+  final private boolean jj_3R_73() {
     if (jj_3R_56()) return true;
     return false;
   }
 
-  final private boolean jj_3R_87() {
+  final private boolean jj_3R_85() {
     if (jj_scan_token(LPAREN)) return true;
     return false;
   }
 
   final private boolean jj_3R_63() {
-    if (jj_3R_76()) return true;
+    if (jj_3R_74()) return true;
     return false;
   }
 
-  final private boolean jj_3R_84() {
+  final private boolean jj_3R_50() {
+    if (jj_scan_token(STRING_LITERAL)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_82() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_85()) {
+    jj_scanpos = xsp;
+    if (jj_3R_86()) {
+    jj_scanpos = xsp;
     if (jj_3R_87()) {
     jj_scanpos = xsp;
     if (jj_3R_88()) {
@@ -1884,11 +1918,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_scanpos = xsp;
     if (jj_3R_112()) {
     jj_scanpos = xsp;
-    if (jj_3R_113()) {
-    jj_scanpos = xsp;
-    if (jj_3R_114()) {
-    jj_scanpos = xsp;
-    if (jj_3R_115()) return true;
+    if (jj_3R_113()) return true;
     }
     }
     }
@@ -1917,71 +1947,51 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     }
     }
     }
-    return false;
-  }
-
-  final private boolean jj_3R_81() {
-    if (jj_3R_86()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_80() {
-    if (jj_3R_85()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_50() {
-    if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
 
   final private boolean jj_3R_79() {
-    if (jj_3R_21()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_78() {
-    if (jj_scan_token(BACKSLASH)) return true;
     if (jj_3R_84()) return true;
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_78() {
+    if (jj_3R_83()) return true;
     return false;
   }
 
-  final private boolean jj_3R_72() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_77() {
+    if (jj_3R_20()) return true;
     return false;
   }
 
   final private boolean jj_3R_76() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_78()) {
-    jj_scanpos = xsp;
-    if (jj_3R_79()) {
-    jj_scanpos = xsp;
-    if (jj_3R_80()) {
-    jj_scanpos = xsp;
-    if (jj_3R_81()) return true;
-    }
-    }
-    }
+    if (jj_scan_token(BACKSLASH)) return true;
+    if (jj_3R_82()) return true;
     return false;
   }
 
-  final private boolean jj_3R_85() {
+  final private boolean jj_3R_83() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(68)) jj_scanpos = xsp;
-    if (jj_3R_116()) return true;
+    if (jj_3R_114()) return true;
     return false;
   }
 
-  final private boolean jj_3_2() {
-    if (jj_3R_22()) return true;
+  final private boolean jj_3R_74() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_76()) {
+    jj_scanpos = xsp;
+    if (jj_3R_77()) {
+    jj_scanpos = xsp;
+    if (jj_3R_78()) {
+    jj_scanpos = xsp;
+    if (jj_3R_79()) return true;
+    }
+    }
+    }
     return false;
   }
 
@@ -1990,7 +2000,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_27() {
+  final private boolean jj_3R_26() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_scan_token(81)) jj_scanpos = xsp;
@@ -2005,13 +2015,18 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_83() {
+  final private boolean jj_3R_81() {
     if (jj_scan_token(LEX)) return true;
     return false;
   }
 
-  final private boolean jj_3R_82() {
+  final private boolean jj_3R_80() {
     if (jj_scan_token(CF)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_114() {
+    if (jj_scan_token(INTEGER_LITERAL)) return true;
     return false;
   }
 
@@ -2020,33 +2035,23 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_26() {
-    if (jj_3R_44()) return true;
+  final private boolean jj_3R_25() {
+    if (jj_3R_43()) return true;
     return false;
   }
 
-  final private boolean jj_3R_77() {
+  final private boolean jj_3R_75() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_82()) {
+    if (jj_3R_80()) {
     jj_scanpos = xsp;
-    if (jj_3R_83()) return true;
+    if (jj_3R_81()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_55() {
-    if (jj_3R_22()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_69() {
+  final private boolean jj_3R_67() {
     if (jj_scan_token(QUESTIONMARK)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_116() {
-    if (jj_scan_token(INTEGER_LITERAL)) return true;
     return false;
   }
 
@@ -2055,17 +2060,17 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_68() {
+  final private boolean jj_3R_66() {
     if (jj_scan_token(PLUS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_67() {
+  final private boolean jj_3R_65() {
     if (jj_scan_token(STAR)) return true;
     return false;
   }
 
-  final private boolean jj_3R_74() {
+  final private boolean jj_3R_72() {
     if (jj_3R_47()) return true;
     return false;
   }
@@ -2073,11 +2078,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final private boolean jj_3R_56() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_67()) {
+    if (jj_3R_65()) {
     jj_scanpos = xsp;
-    if (jj_3R_68()) {
+    if (jj_3R_66()) {
     jj_scanpos = xsp;
-    if (jj_3R_69()) return true;
+    if (jj_3R_67()) return true;
     }
     }
     return false;
@@ -2086,58 +2091,25 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final private boolean jj_3R_62() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
-    if (jj_3R_74()) return true;
+    if (jj_3R_72()) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_74()) { jj_scanpos = xsp; break; }
+      if (jj_3R_72()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RPAREN)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_75()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_61() {
-    if (jj_scan_token(LBRACE)) return true;
-    if (jj_3R_21()) return true;
-    if (jj_3R_50()) return true;
-    if (jj_scan_token(RBRACE)) return true;
-    Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_73()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_60() {
-    if (jj_3R_21()) return true;
+  final private boolean jj_3R_61() {
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_20()) return true;
+    if (jj_3R_50()) return true;
+    if (jj_scan_token(RBRACE)) return true;
     Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_72()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_59() {
-    if (jj_scan_token(LT)) return true;
-    if (jj_3R_21()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_70()) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_71()) jj_scanpos = xsp;
-    if (jj_scan_token(GT)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_7() {
-    if (jj_scan_token(GT)) return true;
-    if (jj_3R_24()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_58() {
-    if (jj_scan_token(DLBRACKET)) return true;
-    if (jj_3R_21()) return true;
-    if (jj_scan_token(DRBRACKET)) return true;
     return false;
   }
 
@@ -2167,7 +2139,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
    private static void jj_la1_2() {
       jj_la1_2 = new int[] {0x10,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x820002,0x0,0x820002,0x20002,0x20002,0x0,0x20002,0x828,0x10000,0x10000,0x10000,0x828,0x10000,0x20002,0x828,0x10,0x828,0x828,0x2,0x828,0x2,0x828,0x0,0x20000,0x10000010,0x828,0x10000010,0x53ffffe,0x0,0x0,0x0,0x820002,0x820002,0x20002,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[9];
+  final private JJCalls[] jj_2_rtns = new JJCalls[8];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2362,7 +2334,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 8; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -2377,7 +2349,6 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
             case 5: jj_3_6(); break;
             case 6: jj_3_7(); break;
             case 7: jj_3_8(); break;
-            case 8: jj_3_9(); break;
           }
         }
         p = p.next;

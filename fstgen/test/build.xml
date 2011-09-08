@@ -149,8 +149,6 @@
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
-
-	<!-- Stratego - Start -->
 	<target name="testStratego">
 		<antcall target="testGrammar">
 			<param name="language" value="stratego" />
@@ -160,9 +158,7 @@
 			<param name="testFile" value="TestTrafo.str" />
 		</antcall>
 	</target>
-<!-- Stratego - Ende -->
 
-<!-- SDF - Start -->
 	<target name="testSDF">
 		<antcall target="testGrammar">
 			<param name="language" value="sdf" />
