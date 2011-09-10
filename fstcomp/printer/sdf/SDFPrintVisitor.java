@@ -12,7 +12,7 @@ import tmp.generated_sdf.SimplePrintVisitor;
 
 public class SDFPrintVisitor extends ArtifactPrintVisitor {
 
-	public SDFPrintVisitor(String suffix) {
+	public SDFPrintVisitor() {
 		super("SDF-File");
 	}
 

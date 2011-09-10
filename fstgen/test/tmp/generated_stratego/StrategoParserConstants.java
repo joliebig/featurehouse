@@ -70,8 +70,8 @@ public interface StrategoParserConstants {
   int CHARACTER_LITERAL = 73;
   int STRING_LITERAL = 74;
   int STRING_QUOT = 75;
-  int SQUOTATION = 76;
-  int QUOT = 77;
+  int TEST_STRING = 76;
+  int SQUOTATION = 77;
   int ANYSIGN = 78;
   int IDENTIFIER = 79;
   int LETTER = 80;
@@ -194,8 +194,8 @@ public interface StrategoParserConstants {
     "<CHARACTER_LITERAL>",
     "<STRING_LITERAL>",
     "<STRING_QUOT>",
+    "<TEST_STRING>",
     "<SQUOTATION>",
-    "<QUOT>",
     "<ANYSIGN>",
     "<IDENTIFIER>",
     "<LETTER>",
