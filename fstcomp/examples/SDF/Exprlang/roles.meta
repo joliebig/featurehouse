@@ -1,7 +1,14 @@
 {
 	"features" : [
 		"BasicExprlang",
-		"ExprlangAdd"
+		"ExprlangAdd",
+		"ExprlangSub",
+		"ExprlangMult",
+		"ExprlangDiv",
+		"ExprlangMod",
+		"ExprlangEval",
+		"ExprlangPrint",
+		"ExprlangSimplify"
 	],
 	"roles": {
 	}

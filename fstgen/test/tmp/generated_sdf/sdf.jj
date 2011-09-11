@@ -1,6 +1,6 @@
 options {
 	STATIC = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -334,7 +334,7 @@ FSTInfo ProdPart(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Disambiguations(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"context-free priorities" (n=Priority(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations1","{AUTO}","{AUTO}");}
+	"context-free priorities" (n=Priority(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations1","context-free priorities","context-free priorities");}
  |
 	"lexical restrictions" (n=Restriction(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations2","lexical restrictions","lexical restrictions");}
  |

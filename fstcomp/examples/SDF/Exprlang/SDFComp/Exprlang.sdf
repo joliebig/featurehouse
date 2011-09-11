@@ -18,7 +18,22 @@ exports
     Var                   -> Exp {cons("Var")}     
     STRING                -> Exp {cons("String")}    
     "(" Exp ")"           -> Exp {bracket} 
-    Exp "+" Exp  -> Exp {cons("Add"),assoc}
+    Exp "+" Exp  -> Exp {cons("Add"),assoc} 
+    Exp "-" Exp  -> Exp {cons("Sub"),left} 
+    Exp "*" Exp  -> Exp {cons("Mul"),assoc} 
+    Exp "/" Exp  -> Exp {cons("Div"),assoc} 
+    Exp "%" Exp  -> Exp {cons("Mod"),non-assoc} 
+    "eval" "(" Exp ")" ";" -> Stat {cons("Eval")} 
+    "print" "(" Exp ")" ";" -> Stat {cons("Print")} 
+    "simplify" "(" Exp ")" ";" -> Stat {cons("Simplify")}
 	context-free priorities 
     "-" Exp -> Exp
-  > {left: Exp "+" Exp -> Exp }
+  > {left: Exp "+" Exp -> Exp } 
+    "-" Exp -> Exp
+  > {left: Exp "-" Exp -> Exp } 
+    "-" Exp -> Exp
+  > {left: Exp "*" Exp -> Exp } 
+    "-" Exp -> Exp
+  > {left: Exp "/" Exp -> Exp } 
+    "-" Exp -> Exp
+  > {left: Exp "%" Exp -> Exp }

@@ -1,8 +1,10 @@
 module Exprlang
 
-  imports Common
-
 exports
+
+  context-free syntax
+    Exp "+" Exp  -> Exp {cons("Add"),assoc}
 
   context-free priorities
     "-" Exp -> Exp
+  > {left: Exp "+" Exp -> Exp }

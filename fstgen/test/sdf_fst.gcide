@@ -1,6 +1,6 @@
 options {
 	STATIC = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -317,7 +317,7 @@ ProdPart :
 /* Constructs to define in a declarative way that certain kinds of derivations 
    are not allowed, also known as disambiguation filters */
 Disambiguations :
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="context-free priorities")
 	"context-free priorities" (Priority)+ |
 	@FSTNonTerminal(name="lexical restrictions")
 	"lexical restrictions" (Restriction)+ |
