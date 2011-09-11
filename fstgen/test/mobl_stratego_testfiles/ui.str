@@ -1,0 +1,512 @@
+module generation/ui
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/MoBL
+  lib/editor-common
+  desugar
+  type
+  rename
+  util
+  lookup
+  generation/emit
+  generation/action
+  generation/cps-lift
+  generation/cps-action
+
+rules
+
+  definition-to-js :
+    Control(manno*, qid, farg*, elems) -> <emit> $[
+      [<qid-to-js> qid] = function([fargs]) {
+        var [root] = $("<span>");
+        var subs__ = new mobl.CompSubscription();
+        [body]
+        return subs__;
+      };
+      ]
+    where [] := <filter(?WhenAnno(_))> manno*
+    with {| InControl
+          : rules ( InControl := 1 )
+          ; root := <newname> "root"
+          ; fargs :=  <filter(farg-to-js); <concat> [<id>, ["elements", "callback"]]; separate-by(!", "); concat-strings> farg*
+          ; body := <elems-to-js-callback(|root)> elems
+          |}
+
+  definition-to-js :
+    Control(manno*, qid, farg*, elems) -> <emit> $[
+      [<qid-to-js> qid] = mobl.conditionalDef([<qid-to-js> qid], function() { return [<expression-to-js> cond-e]; }, function([fargs]) {
+        var [root] = $("<span>");
+        var subs__ = new mobl.CompSubscription();
+        [body]
+        return subs__;
+      });
+      ]
+    where [WhenAnno(cond-e)] := <filter(?WhenAnno(_))> manno*
+    with {| InControl
+          : rules ( InControl := 1 )
+          ; root := <newname> "root"
+          ; fargs :=  <filter(farg-to-js); <concat> [<id>, ["elements", "callback"]]; separate-by(!", "); concat-strings> farg*
+          ; body := <elems-to-js-callback(|root)> elems
+          |}
+
+  definition-to-js :
+    Screen(_, qid, farg*, rt, elems) -> <emit> $[
+      [<qid-to-js> qid] = function([fargs]) {
+        var [root] = $("<div>");
+        var subs__ = new mobl.CompSubscription();
+        [body]
+        return subs__;
+      };
+      ]
+    with {| InControl
+          : rules ( InControl := 1 )
+          ; root := <newname> "root"
+          ; body := <elems-to-js-callback(|root)> elems
+          ; fargs :=  <filter(farg-to-js); <concat> [<id>, ["callback", "screenCallback"]]; separate-by(!", "); concat-strings> farg*
+          |}
+
+  elems-to-js-callback(|root) =
+    <concat; elems-to-js(|root)> [<id>, [$[callback([root]); return subs__;]]]
+
+  elems-to-js(|root) :
+    [Control(_, qid, farg*, elems)|rest*] -> $[
+      var [<qid-to-js> qid] = function([fargs]) {
+        var [root2] = $("<span>");
+        var subs__ = new mobl.CompSubscription();
+        [body]
+        return subs__;
+      };
+      [<elems-to-js(|root)> rest*]
+      ]
+    with root2 := <newname> "root"
+       ; fargs :=  <filter(farg-to-js); <concat> [<id>, ["elements", "callback"]]; separate-by(!", "); concat-strings> farg*
+       ; body := <elems-to-js-callback(|root2)> elems
+
+  // Static control call (i.e e is not mutable)
+  elems-to-js(|root) :
+    [ControlCall(e@Var(qid@QId(_, _)), arg*, elems)|rest*] ->
+    $[var [nodes] = $("<span>");
+      [root].append([nodes]);
+      [controlcall]
+      [<elems-to-js(|root)> rest*]
+]
+    with elem-root := <newname> "root"
+       ; nodes := <newname> "nodes"
+       ; elems-fun := $[function(_, callback) {
+                          var [elem-root] = $("<span>");
+                          var subs__ = new mobl.CompSubscription();
+                          [<elems-to-js-callback(|elem-root)> elems]
+                          return subs__;
+                        }]
+       ; args  := <ref-arguments-to-js; <concat> [<id>, [elems-fun,
+           $[function(node) {
+               var oldNodes = [nodes];
+               [nodes] = node.contents();
+               oldNodes.replaceWith([nodes]);
+             }]
+         ]]; separate-by(!", "); concat-strings> arg*
+       ; controlcall := <concat-strings> ["subs__.addSub((", <expression-to-js> e, ")(", args, "));"]
+
+  // Dynamic control call
+  elems-to-js(|root) :
+    [ControlCall(e, arg*, elems)|rest*] ->
+    $[var [nodes] = $("<span>");
+      [root].append([nodes]);
+      [subscriptions]
+      function [renderControl]() {
+        [controlcall]
+      }
+      [renderControl]();
+      [<elems-to-js(|root)> rest*]
+]
+    where not(Var(QId(_, _)) := e)
+    with elem-root := <newname> "root"
+       ; subScope := <newname> "subScope"
+       ; nodes := <newname> "nodes"
+       ; renderControl := <newname> "renderControl"
+       ; elems-fun := $[function(elements, callback) {
+                          var [elem-root] = $("<span>");
+                          var subs__ = new mobl.CompSubscription();
+                          [<elems-to-js-callback(|elem-root)> elems]
+                          return subs__;
+                        }]
+       ; watch-e-expr* := <hide-anon-controls; collect(?Var(_) <+ ?FieldAccess(_, _))> e
+       ; subscriptions := <map(exp-to-watcher-js(|renderControl)); concat-strings> watch-e-expr*
+       ; args  := <ref-arguments-to-js; <concat> [<id>, [elems-fun,
+           $[function(node) {
+               var oldNodes = [nodes];
+               [nodes] = node.contents();
+               oldNodes.replaceWith([nodes]);
+             }]
+         ]]; separate-by(!", "); concat-strings> arg*
+       ; controlcall := <concat-strings> ["subs__.addSub((", <expression-to-js> e, ")(", args, "));"]
+
+  hide-anon-controls =
+    alltd(\ AnonymousControl(_, _) -> Null() \)
+    ; alltd(\ Callback(_) -> Null() \)
+
+  find-watchable-expressions =
+        not(?Var(_))
+        ; not(?FieldAccess(_, _))
+        ; not(?Indexer(_, _))
+        ; hide-anon-controls
+        ; collect(?Var(_) <+ ?FieldAccess(_, _) <+ collection-method-call)
+        ; flatten-list
+     <+ ![]
+
+  collection-method-call :
+    mc@MethodCall(e, x, args) -> [<id>|<collect(find-watchable-expressions)> [e, args]]
+    where def := <lookup-method> (<type-of> e, x)
+        ; (ExternalMethod(_, _, _, GenericType(QId("mobl", "Collection"), _)) := def
+        <+ ExternalSyncMethod(_, _, _, GenericType(QId("mobl", "Collection"), _)) := def)
+
+  exp-to-watcher-js(|renderControl) :
+    e -> $[subs__.addSub([<ref-expression-to-js> e].addEventListener('change', function() {
+             [renderControl]();
+           }));
+]
+
+  // Feature HTML - Start
+  elems-to-js(|root) :
+    [tg@Html(tag, arg*, elems, _)|rest*] -> $[
+      var [node] = $("<[tag]>");
+      [<filter(tag-arg-to-js(|tg, node)); concat-strings> arg*]
+      [body]
+    ]
+    with //args := <filter(tag-arg-to-html); separate-by(!" "); concat-strings> arg*
+       node := <newname> "node"
+       ; body := <elems-to-js(|node)> <concat> [elems, [
+           $[[root].append([node]);
+           [<elems-to-js(|root)> rest*]]]]
+  elems-to-js(|root) :
+    [tg@NamedHtml(x, tag, arg*, elems, _)|rest*] -> $[
+      var [x] = $("<[tag]>");
+      [<filter(tag-arg-to-js(|tg, x)); concat-strings> arg*]
+      [body]
+    ]
+    with //args := <filter(tag-arg-to-html); separate-by(!" "); concat-strings> arg*
+       body := <elems-to-js(|x)> <concat> [elems, [
+           $[[root].append([x]);
+           [<elems-to-js(|root)> rest*]]]]
+  // Feature HTML - Ende
+  
+  elems-to-js(|root) :
+    [f@Function(_, _, _, _, _)|rest*] -> $[
+      [<function-to-js> f]
+      [<elems-to-js(|root)> rest*]]
+
+  elems-to-js(|root) :
+    [f@SyncFunction(_, _, _, _, _)|rest*] -> $[
+      [<function-to-js> f]
+      [<elems-to-js(|root)> rest*]]
+
+  elems-to-js(|root) :
+    [s|rest*] -> $[[s][<elems-to-js(|root)> rest*]]
+    where <is-string> s
+
+  elems-to-js(|root) :
+    [Script(init-stats)|rest*] -> <concat; cps-statements> [<cps-list-all-expressions> init-stats, [<elems-to-js(|root)> rest*]]
+
+  elems-to-js(|root) :
+    [] -> ""
+
+  // Feature HTML - Start
+  tag-arg-to-js(|tg, node) :
+    HtmlArg(name, True()) -> $[[node].attr('[name]', true);
+]
+  tag-arg-to-js(|tg, node) :
+    HtmlArg(name, False()) -> $[[node].attr('[name]', false);
+]
+  tag-arg-to-js(|tg, node) :
+    HtmlArg(name, String(s)) -> $[[node].attr('[name]', [s]);
+]
+  tag-arg-to-js(|tg, node) :
+    HtmlArg(name, e) -> $[
+      var [r] = [es];
+      if([r].get() !== null) {
+        [node].attr('[name]', [r].get());
+        subs__.addSub([r].addEventListener('change', function(_, ref, val) {
+          [node].attr('[name]', val);
+        }));
+        [subscriptions]
+      }
+      subs__.addSub([r].rebind());
+    ]
+    where not(String(_) := e <+ True() := e <+ False() := e)
+        ; not(SimpleType(QId("mobl", "Callback")) := <type-of> e <+ GenericType(QId("mobl", "Function0"), _) := <type-of> e)
+    with es := <ref-expression-to-js> e
+       ; r  := <newname> "ref"
+       ; watch-expr* := <find-watchable-expressions> e
+       ; subscriptions := <map(exp-to-html-watcher-js(|node, name, <expression-to-js> e)); concat-strings> watch-expr*
+  // Feature HTML - Ende
+
+
+  exp-to-html-watcher-js(|node, attr, es) :
+    e -> $[subs__.addSub([<ref-expression-to-js> e].addEventListener('change', function() {
+             [node].attr('[attr]', [es]);
+           }));
+]
+
+  // Feature HTML - Start
+  tag-arg-to-js(|tg, node) :
+    HtmlArg(name, e) -> $[
+      var [val] = [es];
+      if([val] !== null) {
+        subs__.addSub(mobl.domBind([node], '[<string-replace(|"on", "")> name]', [val]));
+      }
+    ]
+    where (SimpleType(QId("mobl", "Callback")) := <type-of> e
+        <+ GenericType(QId("mobl", "Function0"), _) := <type-of> e)
+        ; not("onclick" := name)
+    with es := <expression-to-js> e
+       ; val  := <newname> "val"
+  tag-arg-to-js(|tg, node) :
+    HtmlArg("onclick", e) -> $[
+      var [val] = [es];
+      if([val] !== null) {
+        subs__.addSub(mobl.domBind([node], 'tap', [val]));
+      }
+    ]
+    where (SimpleType(QId("mobl", "Callback")) := <type-of> e
+        <+ GenericType(QId("mobl", "Function0"), _) := <type-of> e)
+    with es := <expression-to-js> e
+       ; val  := <newname> "val"
+  tag-arg-to-js(|tg, node) :
+    HtmlDatabindArg(e) -> $[
+      var [r] = [es];
+      [node].[method](""+[r].get());
+      var [ignore] = false;
+      subs__.addSub([r].addEventListener('change', function(_, ref, val) {
+        if([ignore]) return;
+        [node].[method](""+val);
+      }));
+      subs__.addSub([r].rebind());
+      [subs][subscriptions]
+    ]
+    where (Html(tag, arg*, _, _) := tg
+        <+ NamedHtml(_, tag, arg*, _, _) := tg)
+        ; [] := <filter(?HtmlArg("type", String("\"checkbox\"")))> arg*
+    with es := <ref-expression-to-js> e
+       ; r  := <newname> "ref"
+       ; ignore := <newname> "ignore"
+       ; typeconverter := <concat-strings> ["mobl.stringTo", <type-of; ?SimpleType(<id>); qid-to-html> e]
+       ; if "input" := tag <+ "textarea" := tag then
+           method := "val"
+           ; subs := $[
+               subs__.addSub(mobl.domBind([node], 'keyup change', function() {
+                 [ignore] = true;
+                 [es].set([typeconverter]([node].[method]()));
+                 [ignore] = false;
+               }));
+             ]
+         else
+           if "select" := tag then
+             method := "val"
+             ; subs := $[
+               subs__.addSub(mobl.domBind([node], 'change', function() {
+                   [ignore] = true;
+                   [es].set([typeconverter]([node].[method]()));
+                   [ignore] = false;
+                 }));
+               ]
+           else
+             method := "text"
+             ; subs := ""
+           end
+         end
+         ; watch-expr* := <find-watchable-expressions> e
+         ; subscriptions := <map(exp-to-html-databind-watcher-js(|node, method, <expression-to-js> e)); concat-strings> watch-expr*
+  // Feature HTML - Ende
+
+  exp-to-html-databind-watcher-js(|node, method, es) :
+    e -> $[[<ref-expression-to-js> e].addEventListener('change', function(_, _, val) {
+             [node].[method]([es]);
+           });
+]
+
+  // Feature HTML -  Start
+  tag-arg-to-js(|tg, node) :
+    HtmlDatabindArg(e) -> $[
+      var [r] = [es];
+      [node].attr('checked', !![r].get());
+      subs__.addSub([r].addEventListener('change', function(_, ref, val) {
+        if(ref === [r]) [node].attr('checked', !!val);
+      }));
+      subs__.addSub(mobl.domBind([node], 'change', function() {
+        [es].set(!![node].attr('checked'));
+      }));
+    ]
+    where (Html(tag, arg*, _, _) := tg
+        <+ NamedHtml(_, tag, arg*, _, _) := tg)
+        ; not([] := <filter(?HtmlArg("type", String("\"checkbox\"")))> arg*)
+    with es := <ref-expression-to-js> e
+       ; r  := <newname> "ref"
+  // Feature HTML - Ende
+  
+  elems-to-js(|root) :
+    [List(lvalue, t, e, elems)|rest*] -> $[
+      var [node] = mobl.loadingSpan();
+      [root].append([node]);
+      var [list];
+      var listSubs__ = new mobl.CompSubscription();
+      subs__.addSub(listSubs__);
+      var [renderList] = function() {
+        var subs__ = listSubs__;
+        [list] = [<expression-to-js> e];
+        [list].list(function([results]) {
+          [node].empty();
+          for(var [i] = 0; [i] < [results].length; [i]++) {
+            (function() {
+              var [iternode] = $("<span>");
+              [node].append([iternode]);
+              [vardecls]
+              [assigns]
+              [<concat; elems-to-js(|iternode)> [elems, [$[
+                 var oldNodes = [iternode];
+                 [iternode] = [iternode].contents();
+                 oldNodes.replaceWith([iternode]);
+              ]]]]
+            }());
+          }
+          mobl.delayedUpdateScrollers();
+          subs__.addSub([list].addEventListener('change', function() { listSubs__.unsubscribe(); [renderList](true); }));
+          subs__.addSub([<ref-expression-to-js> e].addEventListener('change', function() { listSubs__.unsubscribe(); [renderList](true); }));
+        });
+      };
+      [renderList]();
+      [subscriptions]
+      [<elems-to-js(|root)> rest*]
+    ]
+    with node := <newname> "node"
+       ; iternode := <newname> "iternode"
+       ; i := <newname> "i"
+       ; renderList := <newname> "renderList"
+       ; list := <newname> "list"
+       ; results := <newname> "results"
+       ; vardecls := <map(!$[var [<id>]; ]); concat-strings> <lvalue-vars> lvalue
+       ; assigns := <list-assign-lvalue(|results, i)> lvalue//<control-scope(desugar-all); (map(statement-to-js); concat-strings <+ statement-to-js)> Assignment(lvalue, Indexer(Var(results), Var(i)))
+       ; subscriptions := <hide-anon-controls; collect-all(?MethodCall(_, _, <id>) <+ ?Call(_, _)); find-watchable-expressions; map(exp-to-watcher-js(|renderList)); concat-strings> e
+
+  list-assign-lvalue(|results, i) :
+    x -> $[[x] = mobl.ref(mobl.ref([results]), [i]);]
+    where is-string
+
+  list-assign-lvalue(|results, i) :
+    LTuple(fst, rest*) -> <concat-strings> assign*
+    with tmp := <newname> "tmp"
+       ; assign* := <map-with-index(\ (idx, lv) -> $[[<lvalue-to-js> lv] = mobl.ref(mobl.ref(mobl.ref([results]), [i]), "_[<int-to-string> idx]"); ] \)> [fst|rest*] //Assignment(lv, FieldAccess(Var(tmp), <concat-strings> ["_", <inc; int-to-string> idx])) \)> rest*
+
+  elems-to-js(|root) :
+    [When(e, elems, elems2)|rest*] -> $[
+      var [node] = $("<span>");
+      [root].append([node]);
+      var [condSubs] = new mobl.CompSubscription();
+      subs__.addSub([condSubs]);
+      var [oldValue];
+      var [renderCond] = function() {
+        var [value] = [<expression-to-js> e];
+        if([oldValue] === [value]) return;
+        [oldValue] = [value];
+        var subs__ = [condSubs];
+        subs__.unsubscribe();
+        [node].empty();
+        if([value]) {
+          [<elems-to-js(|node)> elems]
+        } else {
+          [<elems-to-js(|node)> elems2]
+        }
+      };
+      [renderCond]();
+      [subscriptions]
+      [<elems-to-js(|root)> rest*]
+    ]
+    with node := <newname> "node"
+       ; value := <newname> "value"
+       ; oldValue := <newname> "oldValue"
+       ; renderCond := <newname> "renderCond"
+       ; condSubs := <newname> "condSubs"
+       ; subscriptions := <hide-anon-controls; collect(?Var(_) <+ ?FieldAccess(_, _)); map(exp-to-watcher-js(|renderCond)); concat-strings> e
+
+
+  elems-to-js(|root) :
+    [ScreenString(s)|rest*] -> $[
+      [root].append([s]);
+      [<elems-to-js(|root)> rest*]]
+
+/*  elems-to-js(|root) :
+    [vd@VarDecl(x, t, e)|rest] -> <concat; elems-to-js(|root)> [<cps-list-all-expressions> [vd], rest]
+    where not(<is-sync> e)*/
+
+  elems-to-js(|root) :
+    [VarDecl(x, t, e)|rest] -> <cps-list-all-expressions; <concat> [<id>,
+      [$[var [x] = mobl.ref(result__);
+        [<elems-to-js(|root)> rest]]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> [ExpStat(e)]
+    where not(<is-sync> e)
+
+  elems-to-js(|root) :
+    [vd@VarDecl(x, t, e)|rest] -> $[
+      var [x] = mobl.ref([<expression-to-js> e]);
+      [<elems-to-js(|root)> rest]]
+    where <is-sync> e
+
+  elems-to-js(|root) :
+    [DeriveDecl(x, t, e)|rest] -> <cps-list-all-expressions; <concat> [<id>,
+      [$[var [x] = mobl.ref(result__);
+        [subscriptions]
+        [<elems-to-js(|root)> rest]]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> [ExpStat(e)]
+    with subscriptions := <find-watchable-expressions; map(exp-to-update-ref-js(|x, e)); concat-strings> e
+
+  elems-to-js(|root) :
+    [vd@DeriveDecl(x, t, e)|rest] -> $[
+      var [x] = mobl.ref([<expression-to-js> e]);
+      [subscriptions]
+      [<elems-to-js(|root)> rest]]
+    where <is-sync> e
+        ; subscriptions := <find-watchable-expressions; map(exp-to-update-ref-js(|x, e)); concat-strings> e
+
+  exp-to-update-ref-js(|x, exp) :
+    e -> $[subs__.addSub([es].addEventListener('change', function() {
+             [x].set([<expression-to-js> exp]);
+           }));
+]
+  where <is-sync> exp
+  with es := <ref-expression-to-js> e
+
+  exp-to-update-ref-js(|x, exp) :
+    e -> $[subs__.addSub([es].addEventListener('change', function() {
+             [<concat; cps-statements> [<cps-list-all-expressions> [Assignment(x, exp)]]]
+           }));
+] //, [$[[x].set(result__);]]]]
+  where not(<is-sync> exp)///////////////////////////////////
+  with es := <ref-expression-to-js> e
+
+/*  elems-to-js(|root) :
+    [vd@VarDeclInferred(x, e)|rest] -> <concat; elems-to-js(|root)> [<cps-list-all-expressions> [vd], rest]
+    where not(<is-sync> e)*/
+
+  elems-to-js(|root) :
+    //[VarDeclInferred(x, e)|rest] -> <cps-expression(|[$[var [x] = mobl.ref(result__);
+    //                                                    [<elems-to-js(|root)> rest]]])> e
+    [VarDeclInferred(x, e)|rest] -> <cps-list-all-expressions; <concat> [<id>,
+      [$[var [x] = mobl.ref(result__);
+        [<elems-to-js(|root)> rest]]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> [ExpStat(e)]
+    where not(<is-sync> e)
+
+  elems-to-js(|root) :
+    [vd@VarDeclInferred(x, e)|rest] -> $[
+      var [x] = mobl.ref([<expression-to-js> e]);
+      [<elems-to-js(|root)> rest]]
+    where <is-sync> e
+
+rules // utils
+
+  qid-to-html :
+    s -> s
+    where is-string
+
+  qid-to-html :
+    QId(qid, x) -> $[[qids]__[x]]
+    with qids := <qid-to-html> qid

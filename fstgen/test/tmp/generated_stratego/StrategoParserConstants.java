@@ -69,55 +69,85 @@ public interface StrategoParserConstants {
   int EXPONENT = 72;
   int CHARACTER_LITERAL = 73;
   int STRING_LITERAL = 74;
-  int STRING_QUOT = 75;
-  int STRING_QUOT_END = 76;
-  int IN_STRING_QUOT = 77;
-  int IN_STRING_QUOT_END = 78;
-  int IDENTIFIER = 81;
-  int LETTER = 82;
-  int LCCHAR = 83;
-  int UCCHAR = 84;
-  int DIGIT = 85;
-  int LPAREN = 86;
-  int RPAREN = 87;
-  int LBRACE = 88;
-  int RBRACE = 89;
-  int LBRACKET = 90;
-  int RBRACKET = 91;
-  int LT = 92;
-  int GT = 93;
-  int PLUS = 94;
-  int MINUS = 95;
-  int STAR = 96;
-  int SLASH = 97;
-  int COMMA = 98;
-  int SEMICOLON = 99;
-  int DDOT = 100;
-  int DOT = 101;
-  int QUESTIONMARK = 102;
-  int EXCLAMATIONMARK = 103;
-  int NUMBERSIGN = 104;
-  int AT = 105;
-  int DOLLAR = 106;
-  int VERTICALLINE = 107;
-  int TILDE = 108;
-  int AMPERSAND = 109;
-  int PERCENTAGE = 110;
-  int CIRCUMFLEXACCENT = 111;
-  int GRAVEACCENT = 112;
-  int APOSTROPHE = 113;
-  int ARROW = 114;
-  int ASSIGN = 115;
-  int LOWLINE = 116;
-  int QUOTATIONMARK = 117;
-  int BACKSLASH = 118;
+  int STRING_QUOT_BRACKET = 75;
+  int SQBRACKETEND = 76;
+  int IN1SQBRACKET = 77;
+  int IN1SQBRACKETEND = 78;
+  int IN2SQBRACKET = 79;
+  int IN2SQBRACKETEND = 80;
+  int IN3SQBRACKET = 81;
+  int IN3SQBRACKETEND = 82;
+  int IN4SQBRACKET = 83;
+  int IN4SQBRACKETEND = 84;
+  int IN5SQBRACKET = 85;
+  int IN5SQBRACKETEND = 86;
+  int STRING_QUOT_BRACE = 93;
+  int SQBRACEEND = 94;
+  int IN1SQBRACE = 95;
+  int IN1SQBRACEEND = 96;
+  int IN2SQBRACE = 97;
+  int IN2SQBRACEEND = 98;
+  int IN3SQBRACE = 99;
+  int IN3SQBRACEEND = 100;
+  int IN4SQBRACE = 101;
+  int IN4SQBRACEEND = 102;
+  int IN5SQBRACE = 103;
+  int IN5SQBRACEEND = 104;
+  int IDENTIFIER = 111;
+  int LETTER = 112;
+  int LCCHAR = 113;
+  int UCCHAR = 114;
+  int DIGIT = 115;
+  int LPAREN = 116;
+  int RPAREN = 117;
+  int LBRACE = 118;
+  int RBRACE = 119;
+  int LBRACKET = 120;
+  int RBRACKET = 121;
+  int LT = 122;
+  int GT = 123;
+  int PLUS = 124;
+  int MINUS = 125;
+  int STAR = 126;
+  int SLASH = 127;
+  int COMMA = 128;
+  int SEMICOLON = 129;
+  int DDOT = 130;
+  int DOT = 131;
+  int QUESTIONMARK = 132;
+  int EXCLAMATIONMARK = 133;
+  int NUMBERSIGN = 134;
+  int AT = 135;
+  int DOLLAR = 136;
+  int VERTICALLINE = 137;
+  int TILDE = 138;
+  int AMPERSAND = 139;
+  int PERCENTAGE = 140;
+  int CIRCUMFLEXACCENT = 141;
+  int GRAVEACCENT = 142;
+  int APOSTROPHE = 143;
+  int ARROW = 144;
+  int ASSIGN = 145;
+  int LOWLINE = 146;
+  int QUOTATIONMARK = 147;
+  int BACKSLASH = 148;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
   int IN_FORMAL_COMMENT = 2;
   int IN_MULTI_LINE_COMMENT = 3;
-  int STATEONE = 4;
-  int STATETWO = 5;
+  int SQBRACKETS1 = 4;
+  int SQBRACKETS2 = 5;
+  int SQBRACKETS3 = 6;
+  int SQBRACKETS4 = 7;
+  int SQBRACKETS5 = 8;
+  int SQBRACKETS6 = 9;
+  int SQBRACES1 = 10;
+  int SQBRACES2 = 11;
+  int SQBRACES3 = 12;
+  int SQBRACES4 = 13;
+  int SQBRACES5 = 14;
+  int SQBRACES6 = 15;
 
   String[] tokenImage = {
     "<EOF>",
@@ -195,12 +225,42 @@ public interface StrategoParserConstants {
     "<EXPONENT>",
     "<CHARACTER_LITERAL>",
     "<STRING_LITERAL>",
-    "<STRING_QUOT>",
+    "<STRING_QUOT_BRACKET>",
     "\"]\"",
     "\"[\"",
     "\"]\"",
-    "<token of kind 79>",
-    "<token of kind 80>",
+    "\"[\"",
+    "\"]\"",
+    "\"[\"",
+    "\"]\"",
+    "\"[\"",
+    "\"]\"",
+    "\"[\"",
+    "\"]\"",
+    "<token of kind 87>",
+    "<token of kind 88>",
+    "<token of kind 89>",
+    "<token of kind 90>",
+    "<token of kind 91>",
+    "<token of kind 92>",
+    "<STRING_QUOT_BRACE>",
+    "\"}\"",
+    "\"{\"",
+    "\"}\"",
+    "\"{\"",
+    "\"}\"",
+    "\"{\"",
+    "\"}\"",
+    "\"{\"",
+    "\"}\"",
+    "\"{\"",
+    "\"}\"",
+    "<token of kind 105>",
+    "<token of kind 106>",
+    "<token of kind 107>",
+    "<token of kind 108>",
+    "<token of kind 109>",
+    "<token of kind 110>",
     "<IDENTIFIER>",
     "<LETTER>",
     "<LCCHAR>",

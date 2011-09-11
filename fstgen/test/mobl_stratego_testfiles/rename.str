@@ -1,0 +1,372 @@
+module rename
+
+imports
+  include/MoBL
+  declare
+  type
+  util
+  resolve
+  lib/editor-common
+
+strategies
+
+  //rename-all = alltd({?x; origin-track-forced(rename); with(origin-equal(|x))})
+  rename-all = alltd(rename)
+
+  rename-var :
+   (x, t) -> y
+   with x_anno := <newname> x
+      ; y := x{x_anno}
+      ; rules(
+           //RenameId : x -> x{x_anno}
+           RenameAnno : x -> x_anno
+           TypeOf   : y -> t
+           VarLookup : y -> x
+        )
+      ; if "control" := <RenameScope> then
+          rules ( IsControlVar : y )
+        end
+
+  rename-local-function :
+   Function(mannos, name, farg*, rt, body) -> name2
+   where RenameScope
+   with name2 := <rename-var> (name, <fargs-to-function-type> farg*)
+      ; rules(
+           RenameFunction : name -> name2
+        )
+      ; <try(declare)> Function(mannos, name2, farg*, rt, body)
+
+  rename-local-function :
+    Function(mannos, name, farg*, rt, body) -> name
+    where not(RenameScope)
+
+  rename-local-function :
+   SyncFunction(mannos, name, farg*, rt, body) -> name2
+   where "control" := <RenameScope>
+   with name2 := <rename-var> (name, <fargs-to-function-type> farg*)
+      ; rules(
+           RenameFunction : name -> name2
+        )
+      ; <try(declare)> Function(mannos, name2, farg*, rt, body)
+
+  rename-local-function :
+    SyncFunction(mannos, name, farg*, rt, body) -> name
+    where not("control" := <RenameScope>)
+
+  rename-ref-var :
+   (x, t) -> y
+   with y := <rename-var>
+      ; rules(
+           IsRefVar : y
+        )
+
+  is-ref :
+    y -> <IsRefVar> y
+
+  is-ref :
+    Var(y) -> <IsRefVar> y
+
+  is-ref :
+    QId(_, _) -> <GetGlobalVar>
+
+  rename :
+    Var(x) -> Var(x{<RenameAnno> x})
+
+  rename :
+    Assignment(x, e) -> Assignment(x{<RenameAnno> x}, <rename-all> e)
+
+  rename :
+    Call(x, e*) -> Call(<RenameFunction> x, <rename-all> e*)
+
+  rename :
+    Call(x, e*) -> Call(x{<RenameAnno> x}, <rename-all> e*)
+
+  rename-scope(s) =
+    {| RenameAnno, RenameFunction, RenameThis
+     : s
+     |}
+
+  control-scope(s) =
+    {| RenameScope
+     : rules ( RenameScope := "control" )
+     ; rename-scope(s)
+     |}
+
+  action-scope(s) =
+    {| RenameScope
+     : rules ( RenameScope := "action" )
+     ; rename-scope(s)
+     |}
+
+  rename :
+    ExternalGenericType(manno*, qid, x*, method*) -> ExternalGenericType(manno*, qid, x*, method2*)
+    with {| RenameType
+          : <map(\ x -> x where rules ( RenameType : SimpleType(x) -> SimpleType(x){"ControlType"} ) \)> x*
+          ; method2* := <rename-all> method*
+          |}
+
+  rename = RenameType
+
+  rename :
+    COMPLETION(_) -> <id>
+    where vars := <concat> [<all-keys-RenameAnno>, <all-keys-RenameFunction>]
+        ; rules ( CompletionVars := vars )
+
+  rename :
+    Control(manno*, qid, farg*, body) -> Control(manno*, qid, farg2*, body2)
+    where not("control" := <RenameScope>)
+    with control-scope(
+           farg2* := <map(rename-ref-farg)> farg*
+           //; <rename-var> ("elements", SimpleType(QId("mobl", "Control")))
+           ; body2 := <prename-functions; rename-all> body
+         )
+
+  // Local control definitions
+  rename :
+    Control(manno*, name, farg*, body) -> <try(declare)> Control(manno*, name2, farg2*, body2)
+    where "control" := <RenameScope>
+    with control-scope(
+           farg2* := <map(rename-ref-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+       ; name2 := <rename-var> (name, SimpleType(QId("mobl", "Control")))
+
+  rename-ref-farg :
+    FArg(x, t) -> FArg(<rename-ref-var> (x, t), t)
+
+  rename-ref-farg :
+    FArgOptional(x, t, e) -> FArgOptional(<rename-ref-var> (x, t), t, <rename-all> e)
+
+  rename-farg :
+    FArg(x, t) -> FArg(<rename-var> (x, t), t)
+
+  rename-farg :
+    FArgOptional(x, t, e) -> FArgOptional(<rename-var> (x, t), t, <rename-all> e)
+
+  rename :
+    Screen(manno*, name, arg*, rt, body) -> Screen(manno*, name, arg2*, rt, body2)
+    with control-scope(
+           arg2* := <map(rename-ref-farg)> arg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+
+strategies
+
+  prename-functions = alltd(prename-function)
+
+  prename-function :
+    f@Function(manno*, qid, farg*, rt, body) -> Function(manno*, <rename-local-function> f, farg*, rt, body)
+
+  prename-function :
+    f@SyncFunction(manno*, qid, farg*, rt, body) -> SyncFunction(manno*, <rename-local-function> f, farg*, rt, body)
+
+rules
+
+  rename :
+    Entity(manno*, qid, st, decl*) -> Entity(manno*, qid, st, decl2*)
+    with rename-scope(
+            rules ( RenameThis : This() -> This(){SimpleType(qid)} )
+            ; decl2* := <rename-all> decl*
+         )
+
+  rename :
+    Type(manno*, qid, st, decl*) -> Type(manno*, qid, st, decl2*)
+    with rename-scope(
+            rules ( RenameThis : This() -> This(){SimpleType(qid)} )
+            ; decl2* := <rename-all> decl*
+         )
+
+  rename = RenameThis
+
+  rename :
+    Type(manno*, qid, st, decl*) -> Type(manno*, qid, st, decl2*)
+    with rename-scope(
+            rules ( RenameThis : This() -> This(){SimpleType(qid)} )
+            ; decl2* := <rename-all> decl*
+         )
+
+  rename :
+    f@Function(manno*, qid, farg*, rt, body) -> Function(manno*, qid, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+         //; qid2 := <rename-local-function> f
+
+  rename :
+    f@AnonymousFunction(farg*, rt, body) -> AnonymousFunction(farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+
+  rename :
+    f@SyncFunction(manno*, qid, farg*, rt, body) -> SyncFunction(manno*, qid, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+         //; qid2 := <rename-local-function> f
+
+  rename :
+    f@StaticFunction(manno*, qid, farg*, rt, body) -> StaticFunction(manno*, qid, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+         //; qid2 := <rename-local-function> f
+
+  rename :
+    f@StaticSyncFunction(manno*, qid, farg*, rt, body) -> StaticSyncFunction(manno*, qid, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+         //; qid2 := <rename-local-function> f
+
+  // Feature Service - Start
+  rename :
+    Resource(manno*, x, farg*, rt, body) -> Resource(manno*, x, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )
+         //; qid2 := <rename-local-function> f
+  // Feature Service - Ende
+  
+  rename :
+    Script(body) -> Script(body2)
+    with action-scope(body2 := <rename-all> body)
+
+  rename :
+    Callback(body) -> Callback(body2)
+    with action-scope(
+           <rename-var> ("event", SimpleType(QId("mobl", "DOMEvent")))
+           ; body2 := <rename-all> body
+         )
+
+  rename :
+    AnonymousControl(farg*, body) -> AnonymousControl(farg2*, body2)
+    with control-scope(
+           farg2* := <map(rename-ref-farg)> farg*
+           ; body2 := <rename-all> body
+         )
+
+strategies
+
+  rename :
+    VarDecl(name, t, e) -> VarDecl(<rename-var> (name, t), t, <rename-all> e)
+    where "action" := <RenameScope>
+
+  //  Feature Async - Start
+  rename :
+    VarDecl(name, t, e) -> VarDecl(<rename-ref-var> (name, t), t, <rename-all; try(?AsyncCall(_); !<id>{"OK"})> e)
+    where "control" := <RenameScope>
+  //  Feature Async - Ende
+  
+  rename :
+    VarDeclInferred(name, e) -> VarDeclInferred(<rename-var> (name, <type-of <+ !SimpleType(QId("mobl", "Dynamic"))> e), <rename-all> e)
+    where "action" := <RenameScope>
+
+  //  Feature Async - Start
+  rename :
+    VarDeclInferred(name, e) -> VarDeclInferred(<rename-ref-var> (name, <type-of <+ !SimpleType(QId("mobl", "Dynamic"))> e), <rename-all; try(?AsyncCall(_); !<id>{"OK"})> e)
+    where "control" := <RenameScope>
+  //  Feature Async - Ende
+  
+  rename :
+    DeriveDecl(name, t, e) -> DeriveDecl(<rename-ref-var> (name, t), t, <rename-all> e)
+
+  rename :
+    DeriveDeclInferred(name, e) -> DeriveDeclInferred(<rename-ref-var> (name, <type-of> e), <rename-all> e)
+
+  // Feature HTML - Start
+  rename :
+    NamedHtml(name, tag, args, body, ct) -> NamedHtml(<rename-var> (name, SimpleType(QId("mobl", "JQuery"))), tag, <rename-all> args, <rename-all> body, ct)
+  // Feature HTML - Ende
+  
+  rename :
+    List(x, t, e, body) -> List(x2, t, e2, body2)
+    where <is-string> x
+    with rename-scope(
+           x2 := <rename-ref-var> (x, t)
+           ; e2 := <rename-all> e
+           ; body2 := <rename-all> body
+         )
+
+  rename :
+    List(LTuple(fst, rst*), type@GenericType(_, [t|t*]), e, body) -> List(LTuple(fst2, rst2*), type, e2, body2)
+    with rename-scope(
+           fst2 := <rename-ref-var> (fst, t)
+           ; rst2* := <zip; map(rename-ref-var)> (rst*, t*)
+           ; e2 := <rename-all> e
+           ; body2 := <rename-all> body
+         )
+
+  rename :
+    ListInferred(x, e, body) -> ListInferred(x2, e2, body2)
+    where <is-string> x
+    where rename-scope(
+            e2 := <rename-all> e
+            ; e-t := <add-namespace-all; type-of> e2
+            ; (
+                GenericType(_, [t]) := e-t
+                <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+                   ; t := SimpleType(QId("mobl", "Dynamic"))
+              )
+            ; x2 := <rename-ref-var> (x, t)
+            ; body2 := <rename-all> body
+          )
+
+  rename :
+    ListInferred(LTuple(fst, rst*), e, body) -> ListInferred(LTuple(fst2, rst2*), e2, body2)
+    where rename-scope(
+            e2 := <rename-all> e
+            ; GenericType(_, [GenericType(_, [t|t*])]) := <add-namespace-all; type-of> e2
+            ; fst2 := <rename-ref-var> (fst, t)
+            ; rst2* := <zip; map(rename-ref-var)> (rst*, t*)
+            ; body2 := <rename-all> body
+          )
+
+  rename :
+    For(x, t, e, stat*) -> For(x2, t, e2, stat2*)
+    where <is-string> x
+    with rename-scope(
+           x2 := <rename-var> (x, t)
+           ; e2 := <rename-all> e
+           ; stat2* := <rename-all> stat*
+         )
+
+  rename :
+    For(LTuple(fst, rst*), type@GenericType(_, [t|t*]), e, body) -> For(LTuple(fst2, rst2*), type, e2, body2)
+    with rename-scope(
+           fst2 := <rename-var> (fst, t)
+           ; rst2* := <zip; map(rename-var)> (rst*, t*)
+           ; e2 := <rename-all> e
+           ; body2 := <rename-all> body
+         )
+
+  rename :
+    ForInferred(x, e, body) -> ForInferred(x2, e2, body2)
+    where <is-string> x
+    where rename-scope(
+            e2 := <rename-all> e
+            ; e-t := <add-namespace-all; type-of> e2
+            ; (
+                GenericType(_, [t]) := e-t
+                <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+                   ; t := SimpleType(QId("mobl", "Dynamic"))
+              )
+            ; x2 := <rename-var> (x, t)
+            ; body2 := <rename-all> body
+          )
+
+  rename :
+    ForInferred(LTuple(fst, rst*), e, body) -> ForInferred(LTuple(fst2, rst2*), e2, body2)
+    where rename-scope(
+            e2 := <rename-all> e
+            ; GenericType(_, [GenericType(_, [t|t*])]) := <add-namespace-all; type-of> e2
+            ; fst2 := <rename-var> (fst, t)
+            ; rst2* := <zip; map(rename-var)> (rst*, t*)
+            ; body2 := <rename-all> body
+          )

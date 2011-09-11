@@ -1,0 +1,225 @@
+module declare
+
+imports
+  include/MoBL
+  normalize
+  lib/editor-common
+  type
+
+strategies
+
+  declare-all =
+    with(
+      (?Module(_, def*) <+ ?Application(_, def*) <+ ?ServerApplication(_, _, def*))
+      ; <filter(origin-track-forced(declare))> def*
+    )
+
+  // Records the definition of an entity in a dynamic rule GetEntity.
+  declare:
+    Entity(_, qid, super, body) -> <id>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules(
+          GetEntity : qid -> extern
+        )
+
+  declare:
+    Type(manno*, qid, super, def*) -> <id>
+    with extern := <origin-track-forced(definition-to-external)>
+       ; rules (
+           GetType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalType(manno*, qid, super, method*) -> <id>
+    with rules (
+           GetType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalGenericType(manno*, qid, arg*, method*) -> <id>
+    with rules (
+           GetGenericType : qid -> extern
+         )
+
+  declare:
+    extern@ExternalEntity(manno*, qid, super, prop*) -> <id>
+    with rules (
+             GetEntity : qid -> extern
+           )
+
+  declare:
+    extern@ExternalFunction(manno*, qid, farg*, rt) -> <id>
+    with rules (
+           GetFunction : qid -> extern
+         )
+
+  declare:
+    extern@ExternalSyncFunction(manno*, qid, farg*, rt) -> <id>
+    with rules (
+           GetFunction : qid -> extern
+         )
+
+  declare:
+    Function(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetFunction : qid -> extern
+        )
+
+  declare:
+    SyncFunction(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetFunction : qid -> extern
+        )
+
+  declare:
+    Control(manno*, qid, farg*, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetControl : qid -> extern
+        )
+
+  declare:
+    extern@ExternalControl(manno*, qid, farg*) -> <fail>
+    with rules (
+           GetControl : qid -> extern
+         )
+
+  declare :
+    Screen(manno*, qid, farg*, rt, body) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetScreen : qid -> extern
+        )
+
+  declare:
+    extern@ExternalScreen(manno*, qid, farg*, rt) -> <fail>
+    where [_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*
+    with rules (
+           GetScreen : qid -> extern
+         )
+
+  declare:
+    ExternalScreen(manno*, qid, farg*, rt) -> <fail>
+    where not([_, _] := <filter(?FArgOptional("animate", _, _) <+ ?FArgOptional("replace", _, _))> farg*)
+    with rules (
+           GetScreen : qid -> ExternalScreen(manno*, qid, [farg*, FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
+                                                                   FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))], rt)
+         )
+
+  // Feature Service - Start
+  declare :
+    Service(manno*, qid, selem*) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetType : qid -> extern
+        )
+  // Feature Service - Ende
+  
+  declare :
+    extern@ExternalVarDecl(qid, t) -> <fail>
+    with rules (
+           GetGlobalVar : qid -> extern
+         )
+
+  declare :
+    VarDecl(qid, t, e) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetGlobalVar : qid -> extern
+        )
+
+  declare :
+    VarDeclInferred(qid, e) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetGlobalVar : qid -> extern
+        )
+
+strategies // convert to externals
+
+  definition-to-external :
+    Entity(manno*, qid, super, decl*) -> ExternalEntity(manno*, qid, super, decl2*)
+    where decl2* := <map(try(function-to-external-method))> decl*
+
+  function-to-external-method :
+    Function(manno*, qid, farg*, rt, stat*) -> ExternalMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    SyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalSyncMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    StaticFunction(manno*, qid, farg*, rt, stat*) -> ExternalStaticMethod(manno*, qid, farg*, rt)
+
+  function-to-external-method :
+    StaticSyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalStaticSyncMethod(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    Function(manno*, qid, farg*, rt, stat*) -> ExternalFunction(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    SyncFunction(manno*, qid, farg*, rt, stat*) -> ExternalSyncFunction(manno*, qid, farg*, rt)
+
+  definition-to-external :
+    Control(manno*, qid, farg*, elem*) -> ExternalControl(manno*, qid, farg*)
+
+  definition-to-external :
+    Screen(manno*, qid, farg*, rt, _) -> ExternalScreen(manno*, qid, [farg*, extrafarg*], rt)
+    where extrafarg* := [FArgOptional("replace", SimpleType(QId("mobl", "Bool")), False()),
+                         FArgOptional("animate", SimpleType(QId("mobl", "String")), String("\"slide\""))]
+
+  // Feature Service - Start
+  definition-to-external :
+    Service(manno*, qid, selem*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), <filter(service-elem-to-external)> selem*)
+  // Feature Service - Ende
+  definition-to-external :
+    Type(manno*, qid, super, def*) -> ExternalType(manno*, qid, super, <map(type-def-to-external <+ definition-to-external)> def*)
+
+  type-def-to-external :
+    Function(manno*, x, farg*, rt, _) -> ExternalMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    SyncFunction(manno*, x, farg*, rt, _) -> ExternalSyncMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    StaticFunction(manno*, x, farg*, rt, _) -> ExternalStaticMethod(manno*, x, farg*, rt)
+
+  type-def-to-external :
+    StaticSyncFunction(manno*, x, farg*, rt, _) -> ExternalStaticSyncMethod(manno*, x, farg*, rt)
+
+  // For signatures we turn a webservice into an external type and resources into external methods
+  // Feature Service - Start
+  service-elem-to-external :
+    Resource(manno*, qid, farg*, rt, _) -> ExternalStaticMethod(manno*, qid, farg*, rt)
+  // Feature Service - Ende
+  
+  definition-to-external :
+    Import(s) -> Import(s)
+
+  definition-to-external :
+    Load(p) -> Load(p)
+
+  definition-to-external :
+    Resource(p) -> Resource(p)
+
+  definition-to-external :
+    VarDecl(x, t, e) -> ExternalVarDecl(x, t)
+
+  definition-to-external :
+    VarDeclInferred(x, e) -> ExternalVarDecl(x, <type-of <+ !SimpleType(QId("mobl", "Dynamic"))> e)
+
+  definition-to-external =
+    ?c#(_)
+    ; where(<string-starts-with(|"External")> c)
+
+  definition-to-external :
+    Property(_, _, _, _) -> <id>

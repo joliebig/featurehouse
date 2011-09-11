@@ -1,0 +1,196 @@
+module style
+
+imports
+  include/MoBL
+  lib/editor-common
+  declare
+  analyze
+  lookup
+  rename
+  pp
+  resolve
+
+rules // declare
+
+  declare :
+    Style(_, qid*, _) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; last-qid := <reverse; Hd; ?_#([<id>|_])> qid*
+      ; rules (
+          GetStyle : last-qid -> extern
+        )
+
+  declare :
+    extern@ExternalStyle(_, qid*) -> <fail>
+    with
+      last-qid := <reverse; Hd; ?_#([<id>|_])> qid*
+      ; rules (
+          GetStyle : last-qid -> extern
+        )
+
+  declare :
+    sm@StyleMixin(_, qid, _, _) -> <fail>
+    with
+      rules (
+          GetStyleMixin : qid -> sm
+        )
+
+  definition-to-external :
+    Style(manno*, sel*, _) -> ExternalStyle(manno*, sel*)
+
+  definition-to-external :
+    StyleMixin(_, _, _, _) -> <id>
+
+rules // resolve
+
+  add-tl-namespace :
+    Style(manno*, sel*, selem*) -> Style(manno*, sel2*, selem*)
+    where sel2* := <map(try(add-tl-namespace-sel))> sel*
+
+  add-tl-namespace :
+    ExternalStyle(manno*, sel*) -> ExternalStyle(manno*, sel2*)
+    where sel2* := <map(try(add-tl-namespace-sel))> sel*
+
+  add-tl-namespace-sel :
+    StyleSelector(x) -> StyleSelector(QId(<ModuleName>, x))
+    where <is-string> x
+
+  add-tl-namespace-sel :
+    StyleSelectorWithPseudo(x, pt) -> StyleSelectorWithPseudo(QId(<ModuleName>, x), pt)
+    where <is-string> x
+
+  add-tl-namespace-sel :
+    StyleSelectorWithPseudoArg(x, pt, arg) -> StyleSelectorWithPseudoArg(QId(<ModuleName>, x), pt, arg)
+    where <is-string> x
+
+  add-tl-namespace :
+    StyleMixin(manno*, qid, farg*, selem*) -> StyleMixin(manno*, QId(<ModuleName>, qid), farg*, selem*)
+    where <is-string> qid
+
+  add-namespace :
+    Var(qid{}) -> Var(<alternatives(|alternatives)> qid2)
+    where <is-string> qid
+    where not(<lookup-style> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-style; !newid})> [<ModuleName>|<bagof-Imports>]
+
+  add-namespace :
+    StyleMixinCall(qid, se*) -> StyleMixinCall(<alternatives(|alternatives)> qid2, <add-namespace-all> se*)
+    where <is-string> qid
+    where not(<lookup-style-mixin> qid)
+        ; [qid2|alternatives] := <filter({c, newid: ?c; <prefix-qid(|c)> qid; ?newid; lookup-style-mixin-aux; !newid})> [<ModuleName>|<bagof-Imports>]
+
+
+rules // lookup
+
+  lookup-style =
+      lookup-style-aux
+   //<+ import-and-retry(lookup-style-aux|<id>)
+
+  lookup-style-aux :
+    qid -> <GetStyle> qid
+
+  get-all-styles =
+    all-keys-GetStyle
+
+  lookup-style-mixin =
+      lookup-style-mixin-aux
+   //<+ import-and-retry(lookup-style-mixin-aux|<id>)
+
+  lookup-style-mixin-aux :
+    qid -> <GetStyleMixin> qid
+
+  get-all-style-mixins =
+    all-keys-GetStyleMixin
+
+rules // rename
+
+  rename :
+    StyleMixin(manno*, qid, farg*, selem*) -> StyleMixin(manno*, qid, farg2*, selem2*)
+    where {| RenameStyleVar
+           : farg2* := <map(rename-style-farg)> farg*
+           ; selem2* := <rename-all> selem*
+           |}
+
+  rename-style-farg :
+    StyleFArg(x) -> StyleFArg(y)
+    where y := x{<newname> x}
+        ; rules ( RenameStyleVar : x -> y )
+
+  rename :
+    StyleVar(x) -> StyleVar(<RenameStyleVar> x)
+
+rules
+
+  constraint-error :
+    sv@StyleVar(x{}) -> (sv, $[Unknown style variable.])
+    where not(<StyleVar> x)
+
+  constraint-error :
+    sv@StyleMixinCall(qid, _) -> (sv, $[Unkown style mixin.])
+    where not(<lookup-style-mixin> qid)
+
+  constraint-error :
+    sv@StyleMixinCall(qid, se*) -> (sv, $[Invalid number of arguments, excepted: [<length> farg*]])
+    where StyleMixin(_, _, farg*, _) := <lookup-style-mixin> qid
+        ; not(<eq> (<length> se*, <length> farg*))
+
+  editor-complete-proposal :
+    StyleVar(COMPLETION(_)) -> <map(\ s -> ([s], "") \)> <all-keys-StyleVar>
+
+  editor-complete-proposal :
+    StyleVarDecl(COMPLETION(_), _) -> <map(\ s -> ([s], "") \)> <all-keys-StyleVar>
+
+  editor-complete-proposal :
+    StyleMixinCall(COMPLETION(_), _) -> <map(\ qid -> [([<pp-mobl-qid> qid], ""), [([<try(?QId(_, <id>))> qid], "")]] \); flatten-list> <get-all-style-mixins>
+
+  editor-complete-proposal :
+    StyleElemRecover(COMPLETION(_)) -> <map(qid-to-style-mixin-proposal); flatten-list> <get-all-style-mixins>
+
+  qid-to-style-mixin-proposal :
+    qid -> [([<pp-mobl-qid> qid, "(", arg*, ")"], ""), [([<try(?QId(_, <id>))> qid, "(", arg*, ")"], "")]]
+    where StyleMixin(_, _, farg*, _) := <lookup-style-mixin> qid
+        ; arg* := <map(?StyleFArg(<id>)); separate-by(|", ")> farg*
+
+rules // style
+
+  capture-style-configs = alltd(capture-style-config)
+
+  capture-style-config :
+    StyleVarDecl(StyleVar(x), e) -> <id>
+    where not(<StyleVar> x)
+    where rules ( StyleVar : x -> e )
+
+  floorS = string-tokenize(|<explode-string> "."); Hd
+
+  apply-real-to-str-tuple(s) =
+    (string-to-real, string-to-real) ; s ; real-to-string; floorS
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "r") -> r
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "g") -> g
+
+  desugar :
+    StyleFieldAccess(StyleCall("rgb", [StyleExps([r]), StyleExps([g]), StyleExps([b])]), "b") -> b
+
+  desugar :
+    StyleVar(x) -> <StyleVar> x
+
+  desugar :
+    StyleAdd(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(add)> (n1, n2))
+
+  desugar :
+    StyleSub(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(subt)> (n1, n2))
+
+  desugar :
+    StyleMul(Num(n1), Num(n2)) -> Num(<apply-real-to-str-tuple(mul)> (n1, n2))
+
+  desugar :
+    StyleMixinCall(qid, se*) -> selem2*
+    where StyleMixin(_, _, farg*, selem*) := <lookup-style-mixin> qid
+    where {| ReplaceStyleVar
+           : <zip(\ (StyleFArg(x), e) -> <id> where rules ( ReplaceStyleVar : StyleVar(x) -> e ) \)> (farg*, se*)
+           ; selem2* := <alltd(ReplaceStyleVar)> selem*
+           |}

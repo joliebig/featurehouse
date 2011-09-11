@@ -43,16 +43,6 @@ MORE :
 	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
 			{ < ~[] > }
-			
-/*TEST
-MORE :
-	{ "$[" : IN_STRING_QUOTATION }
-	<IN_STRING_QUOTATION>
-		SPECIAL_TOKEN :
-			{ <STRING_QUOTATION: "]" > : DEFAULT }
-	<IN_STRING_QUOTATION>
-		MORE : 
-			{ < ~[] > }*/
 /*****************************************************************************
  * RESERVED KEYWORDS AND LITERALS                                            *
  *****************************************************************************/
@@ -159,27 +149,123 @@ TOKEN :
 				  ["0"-"7"] ( ["0"-"7"] )? | 
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" >
 	}
-
 /*****************************************************************************
  * STRING QUOTATIONS                                                         *
  *****************************************************************************/
+/*****************************************************************************
+ * BRACKET                                                                   *
+ *****************************************************************************/
 <DEFAULT> TOKEN :
-	{ < STRING_QUOT: 
-	  "$""[" > : STATEONE
+	{ < STRING_QUOT_BRACKET: 
+	  "$""[" > : SQBRACKETS1 
 	}
-	<STATEONE>
+	<SQBRACKETS1>
 		SPECIAL_TOKEN :
-			{ <STRING_QUOT_END: "]" > : DEFAULT }
-	<STATEONE>
+			{ <SQBRACKETEND: "]" > : DEFAULT }
+	<SQBRACKETS1>
 		SPECIAL_TOKEN :
-			{ <IN_STRING_QUOT: "[" > : STATETWO }
-	<STATETWO>
+			{ <IN1SQBRACKET: "[" > : SQBRACKETS2 }
+	<SQBRACKETS2>
 		SPECIAL_TOKEN :
-			{ <IN_STRING_QUOT_END: "]" > : STATEONE }
-	<STATEONE> 
+			{ <IN1SQBRACKETEND: "]" > : SQBRACKETS1 }
+	<SQBRACKETS2>
+		SPECIAL_TOKEN :
+			{ <IN2SQBRACKET: "[" > : SQBRACKETS3 }
+	<SQBRACKETS3>
+		SPECIAL_TOKEN :
+			{ <IN2SQBRACKETEND: "]" > : SQBRACKETS2 }
+	<SQBRACKETS3>
+		SPECIAL_TOKEN :
+			{ <IN3SQBRACKET: "[" > : SQBRACKETS4 }
+	<SQBRACKETS4>
+		SPECIAL_TOKEN :
+			{ <IN3SQBRACKETEND: "]" > : SQBRACKETS3 }
+	<SQBRACKETS4>
+		SPECIAL_TOKEN :
+			{ <IN4SQBRACKET: "[" > : SQBRACKETS5 }
+	<SQBRACKETS5>
+		SPECIAL_TOKEN :
+			{ <IN4SQBRACKETEND: "]" > : SQBRACKETS4 }
+	<SQBRACKETS5>
+		SPECIAL_TOKEN :
+			{ <IN5SQBRACKET: "[" > : SQBRACKETS6 }
+	<SQBRACKETS6>
+		SPECIAL_TOKEN :
+			{ <IN5SQBRACKETEND: "]" > : SQBRACKETS5 }
+	<SQBRACKETS1> 
 		MORE: 
 			{ < ~[] > }
-	<STATETWO>
+	<SQBRACKETS2>
+		MORE:
+			{ < ~[] > }
+	<SQBRACKETS3>
+		MORE:
+			{ < ~[] > }
+	<SQBRACKETS4>
+		MORE:
+			{ < ~[] > }
+	<SQBRACKETS5>
+		MORE:
+			{ < ~[] > }
+	<SQBRACKETS6>
+		MORE:
+			{ < ~[] > }
+/*****************************************************************************
+ * BRACE                                                                     *
+ *****************************************************************************/
+<DEFAULT> TOKEN :
+	{ < STRING_QUOT_BRACE: 
+	  "$""{" > : SQBRACES1 
+	}
+	<SQBRACES1>
+		SPECIAL_TOKEN :
+			{ <SQBRACEEND: "}" > : DEFAULT }
+	<SQBRACES1>
+		SPECIAL_TOKEN :
+			{ <IN1SQBRACE: "{" > : SQBRACES2 }
+	<SQBRACES2>
+		SPECIAL_TOKEN :
+			{ <IN1SQBRACEEND: "}" > : SQBRACES1 }
+	<SQBRACES2>
+		SPECIAL_TOKEN :
+			{ <IN2SQBRACE: "{" > : SQBRACES3 }
+	<SQBRACES3>
+		SPECIAL_TOKEN :
+			{ <IN2SQBRACEEND: "}" > : SQBRACES2 }
+	<SQBRACES3>
+		SPECIAL_TOKEN :
+			{ <IN3SQBRACE: "{" > : SQBRACES4 }
+	<SQBRACES4>
+		SPECIAL_TOKEN :
+			{ <IN3SQBRACEEND: "}" > : SQBRACES3 }
+	<SQBRACES4>
+		SPECIAL_TOKEN :
+			{ <IN4SQBRACE: "{" > : SQBRACES5 }
+	<SQBRACES5>
+		SPECIAL_TOKEN :
+			{ <IN4SQBRACEEND: "}" > : SQBRACES4 }
+	<SQBRACES5>
+		SPECIAL_TOKEN :
+			{ <IN5SQBRACE: "{" > : SQBRACES6 }
+	<SQBRACES6>
+		SPECIAL_TOKEN :
+			{ <IN5SQBRACEEND: "}" > : SQBRACES5 }
+	<SQBRACES1> 
+		MORE: 
+			{ < ~[] > }
+	<SQBRACES2>
+		MORE:
+			{ < ~[] > }
+	<SQBRACES3>
+		MORE:
+			{ < ~[] > }
+	<SQBRACES4>
+		MORE:
+			{ < ~[] > }
+	<SQBRACES5>
+		MORE:
+			{ < ~[] > }
+	<SQBRACES6>
 		MORE:
 			{ < ~[] > }
 /*****************************************************************************
@@ -187,7 +273,7 @@ TOKEN :
  *****************************************************************************/
 TOKEN :
 	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>) 
-	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>)? > |
+	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>|<APOSTROPHE>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -273,8 +359,11 @@ String :
 Char :
 	<CHARACTER_LITERAL> ;
 
-StringQuot :
-	<STRING_QUOT> ;
+StringQuotBracket :
+	<STRING_QUOT_BRACKET> ;
+
+StringQuotBrace :
+	<STRING_QUOT_BRACE> ;
 
 @FSTTerminal(name="{<IDENTIFIER>}")
 Id :
@@ -545,7 +634,6 @@ ArgType :
 AlternativeTerm :
 	"{^" Term "}" |
 	"{" [TermList] "}" |
-	/*"{" (StringQuotation)* "}" |*/
 	"#" "(" Term ")" ;
 
 Term :
@@ -557,12 +645,8 @@ Term :
 	"[" [TermList] ["|" Term] "]" [AlternativeTerm] |
 	"{" [TermList] "}" [AlternativeTerm] |
 	"#" "(" Term ")" [AlternativeTerm] |
-	
-	
-	/* "$" "[" (StringQuotation)* "]" 
-	[AlternativeTerm] | */
-	StringQuot |
-	
+	StringQuotBracket [AlternativeTerm] |
+	StringQuotBrace [AlternativeTerm] |
 	Id [LOOK_AHEAD(2) OptIdTerm] [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() Id() \":\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
@@ -607,21 +691,10 @@ NoTermAfterStrategyAngle :
 
 OptIdTerm :
 	"(" [TermList] ")" |
-	"@" Term | 
-	/*"|" "[" (StringQuotation)* "]" "|" ;*/
-	"|" "[" [TermList] "]" "|";
+	"@" Term ;
 
 OptStringTerm :
 	"(" [TermList] ")" ;
-
-/*StringQuotation :
-	Term |
-	SpecialStringQuotation ;
-
-SpecialStringQuotation :
-	","<NONE> | ":"<NONE> | "."<NONE> | "/"<NONE> | ";"<NONE> | "="<NONE> |
-	"@"<NONE> | "<-"<NONE> ;*/
-
 /*****************************************************************************
  * DEFINITION OF LISTS                                                       *
  *****************************************************************************/

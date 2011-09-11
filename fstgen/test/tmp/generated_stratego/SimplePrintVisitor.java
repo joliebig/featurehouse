@@ -71,7 +71,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Strat3") && expectedType.equals("Strat")) return true;
 		if (type.equals("Term5") && expectedType.equals("Term")) return true;
 		if (type.equals("OptOpDecl22") && expectedType.equals("OptOpDecl2")) return true;
-		if (type.equals("OptIdTerm3") && expectedType.equals("OptIdTerm")) return true;
 		if (type.equals("Term16") && expectedType.equals("Term")) return true;
 		if (type.equals("Strategy15") && expectedType.equals("Strategy")) return true;
 		if (type.equals("RuleCond2") && expectedType.equals("RuleCond")) return true;
@@ -85,6 +84,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Strategy5") && expectedType.equals("Strategy")) return true;
 		if (type.equals("RuleOrTerm1") && expectedType.equals("RuleOrTerm")) return true;
 		if (type.equals("Term4") && expectedType.equals("Term")) return true;
+		if (type.equals("Term29") && expectedType.equals("Term")) return true;
 		if (type.equals("DynRuleDef3") && expectedType.equals("DynRuleDef")) return true;
 		if (type.equals("Type1") && expectedType.equals("Type")) return true;
 		if (type.equals("Strat2") && expectedType.equals("Strat")) return true;

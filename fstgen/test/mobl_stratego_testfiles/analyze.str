@@ -1,0 +1,128 @@
+module analyze
+
+imports
+  libstratego-lib
+  include/MoBL
+  lib/editor-common
+  declare
+  lookup
+  type
+  rename
+  normalize
+  desugar
+  mobl
+  resolve
+  generation/compile
+  generation/server
+  generation/css
+  sync-analysis
+  util
+
+rules
+
+  analyze =
+    (?Module(qid, def*) <+ ?Application(qid, def*) <+ ?ServerApplication(qid, _, def*))
+    ; {| ModuleName, Imports
+       : rules ( ModuleName := qid )
+       ; normalize-all
+       ; ensure-mobl-import
+       ; import-all
+       ; add-tl-namespaces
+       ; declare-all
+       ; rename-all
+       ; add-namespace-all
+       ; declare-all
+       ; rename-all
+       ; add-namespace-all
+       ; analyze-sync
+       //; declare-all
+       //; debug
+       |}
+
+  analyze =
+     ?Configuration(_)
+
+  ensure-mobl-import :
+    Module(qid, def*) -> Module(qid, def2*)
+    where if <"mobl" := qid <+ fetch(?Import("mobl"))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    Application(qid, def*) -> Application(qid, def2*)
+    where if "mobl" := qid <+ <fetch(?Import("mobl"))> def* <+ <fetch(?ExternalType(_, QId("mobl", "void"), _, _))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    ServerApplication(qid, setting*, def*) -> ServerApplication(qid, setting*, def2*)
+    where if <"mobl" := qid <+ fetch(?Import("mobl"))> def* then
+            def2* := def*
+          else
+            def2* := [Import("mobl")|def*]
+          end
+
+  ensure-mobl-import :
+    Configuration(_) -> <id>
+
+  import-all =
+    alltd(import-module)
+
+  import-module :
+    Import(qid) -> Import(qid)
+    where (<ParsedAndImported> qid
+           ; rules ( Imports :+= qid )
+        <+ rules ( ParsedAndImported : qid )
+         ; where(<open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+             ; <declare-all> Module(qid, <id>))
+         ; rules ( Imports :+= qid )
+           )
+
+  compile-import-module :
+    Import(qid) -> Import(qid)
+    where <compile-import-module-aux> qid
+
+  compile-import-module :
+    DynamicImport(qid) -> Import(qid)
+    where <compile-import-module-aux> qid
+
+  compile-import-module-aux :
+    qid -> <id>
+    where not(ServerContext)
+    where path := <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+        ; path-js := <concat-strings; guarantee-extension(|"js")> [<OutputPath>, "/", <qid-to-path> qid]
+        ; if not(<Compiled> qid
+                <+ (<is-newer> (path-js, path)
+                    ; not(<file-exists> <get-configuration-filename>) <+ <is-newer> (path-js, <get-configuration-filename>))) then
+            <parse-file> path
+            ; compile
+          end
+
+  lookup-import-module =
+    ?Import(qid)
+    ; (<ParsedAndImported> qid
+    <+ rules ( ParsedAndImported : qid )
+     //; debug(!"Importing: ")
+     ; where(<open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+             ; <declare-all> Module(qid, <id>))
+      )
+
+  get-module-defs :
+    qid -> def*
+    with def* := <open-import(\ path -> <resolve-file> <concat-strings> [path, ".mobl"] \, parse-file, externalize-module)> <qid-to-path> qid
+
+  externalize-module :
+    Module(qid, def*) -> def2*
+    with def2* := <analyze; ?Module(_, <id>); filter(origin-track-forced(definition-to-external))>
+
+  externalize-module :
+    Application(qid, def*) -> def2*
+    with def2* := <analyze; ?Application(_, <id>); filter(definition-to-external)>
+
+  externalize-module :
+    ServerApplication(qid, _, def*) -> def2*
+    with def2* := <analyze; ?ServerApplication(_, _, <id>); filter(definition-to-external)>

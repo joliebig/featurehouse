@@ -1,0 +1,150 @@
+module generation/compile
+
+imports
+  libstratego-lib
+  analyze
+  declare
+  rename
+  desugar
+  mobl
+  pp
+  generation/emit
+  generation/cps-action
+  generation/cps-lift
+  generation/ui
+  generation/action
+  generation/data
+  generation/script
+  generation/html
+  generation/service
+  generation/type
+  generation/css
+  generation/server
+  include/MoBL
+  lib/editor-common
+  sync-analysis
+  style
+  util
+
+strategies
+
+  ensure-existing-dir =
+    where(project-path := <ProjectPath; string-replace(|"\\", "/")>)
+    ; string-replace(|$[[project-path]/], "")
+    ; string-tokenize(|<explode-string> "/")
+    ; where(old := <getcwd>; <chdir> project-path)
+    ; where(map((?"" <+ file-exists <+ mkdir(|"w") <+ debug(!"Failed to created: ")); chdir)
+            ; <chdir> old)
+    ; separate-by(|"/"); concat-strings
+
+  compile =
+      (?Module(qid, _) <+ ?app@Application(qid, _))
+      ; where(not(ServerContext))
+      ; where(<pp-mobl-qid; debug(!"Now compiling: ")> qid
+              ; rules ( Compiled : qid ))
+      ; analyze
+      ; (?Module(_, def*) <+ ?Application(_, def*))
+      ; where(alltd(compile-import-module))
+      ; {| ModuleName, StyleVar
+         : rules ( ModuleName := qid )
+         ; desugar-all
+         ; module-to-js
+         |}
+      ; if !app then
+          setting* := <get-configuration>
+        end
+      ; where(path := <qid-to-path> qid
+              ; js-filename   := <concat-strings; guarantee-extension(|"js")> [<OutputPath>, "/", path]
+              ; css-filename   := <concat-strings; guarantee-extension(|"css")> [<OutputPath>, "/", path]
+              ; <dirname; ensure-existing-dir> js-filename
+              ; if <fetch-elem(?HtmlSetting(index-html-setting))> setting* then
+                  index-html-filename := <concat-strings> [<OutputPath>, "/", index-html-setting]
+                else
+                  index-html-filename := <concat-strings; guarantee-extension(|"html")> [<OutputPath>, "/", path]
+                end
+              //; chrome-manifest-filename := <concat-strings> [<OutputPath>, "/manifest.json"]
+             )
+      ; fp := <fopen> (js-filename, "w")
+      ; <fputs> ($[mobl.provides('[<qid-to-js> qid]');
+], fp)
+      ; <fputs> (<collect(gen-provides); concat-strings> def*, fp)
+      ; if !app then
+          <fputs> (<<not(fetch(?DebugSetting())); !"persistence.debug = false;"> setting* <+ !"">, fp)
+        end
+      ; <fputs> (<get-all>, fp)
+      ; <fputs> (<get-all-tl-statements; (cps-list-all-expressions; cps-statements <+ debug(!"Could not cps tl statements: "); fail)>, fp)
+      ; <fclose> fp
+      // CSS
+      ; all-css := <get-all-css>
+      ; if not("" := all-css) then
+          fp_css := <fopen> (css-filename, "w")
+          ; <fputs> (all-css, fp_css)
+          ; <fclose> fp_css
+          ; <refresh-workspace-file> css-filename
+        end
+      ; if !app then
+        with(
+          fp2 := <fopen <+ debug(!"Could not open file: "); fail> (index-html-filename, "w")
+          ; {| ResourceProcessed
+             : <fputs> (<generate-index-html(|<get-all-resources-no-dynamic(|qid)> def*, setting*) <+ debug(!"Could not generate index.html")> app, fp2)
+             |}
+          ; <fclose> fp2
+          ; <refresh-workspace-file> index-html-filename
+          /*; fp4 := <fopen <+ debug(!"Could not open file: "); fail> (chrome-manifest-filename, "w")
+          ; <fputs> (<generate-chrome-manifest(|<get-all-resources-no-dynamic(|qid)> def*, setting*)> app, fp4)
+          ; <fclose> fp4
+          ; <refresh-workspace-file> chrome-manifest-filename*/
+        )
+        end
+      ; <refresh-workspace-file> js-filename
+
+  gen-provides :
+    QId(qid, _) -> $[mobl.provides('[<qid-to-js> qid]');
+]
+
+  get-all-resources :
+    qid -> [res*, import*, style*, $[[<qid-to-path> qid].js]]
+    where not(ResourceProcessed)
+    with rules ( ResourceProcessed : qid )
+       ; def* := <get-module-defs> qid
+       ; res* := <filter(?Load(<id>); path-to-string)> def*
+       ; import* := <filter((?Import(<id>) <+ ?DynamicImport(<id>)); get-all-resources); concat> def*
+       ; if [] := <filter(?ExternalStyle(_, _))> def* then
+            style* := []
+         else
+            style* := [$[[<qid-to-path> qid].css]]
+         end
+
+  get-all-resources-no-dynamic(|qid) :
+    def* -> [res*, import*, style*, $[[<qid-to-path> qid].js]]
+    where not(ResourceProcessed)
+    with rules ( ResourceProcessed : qid )
+       ; res* := <filter(?Load(<id>); path-to-string)> def*
+       ; import* := <filter(?Import(<id>); get-all-resources); concat> def*
+       ; if [] := <filter(?Style(_, _, _))> def* then
+            style* := []
+         else
+            style* := [$[[<qid-to-path> qid].css]]
+         end
+
+  get-all-resources-no-dynamic(|qid) :
+    def* -> []
+    where <ResourceProcessed> qid
+
+  get-all-resources :
+    qid -> []
+    where ResourceProcessed
+
+strategies
+
+  qid-to-path =
+    is-string
+
+  qid-to-path :
+    QId(qid, x) -> $[[qids]/[x]]
+    with qids := <qid-to-path> qid
+
+strategies // hack
+
+  ignoreme = rules ( ProjectPath := "" )
+

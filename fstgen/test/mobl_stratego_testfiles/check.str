@@ -1,0 +1,461 @@
+module check
+
+imports
+  include/MoBL
+  lookup
+  type
+  rename
+  desugar
+  mobl
+  pp
+  generation/compile
+  generation/cps-lift
+  editor/editor
+
+rules
+
+  constraint-error :
+    Application(qid, def*) -> (qid, $[No 'root' screen defined with no arguments. The root screen functions as the application's entry point and is required.])
+    where [] := <filter(?Screen(_, QId(qid, "root"), [], _, _))> def*
+
+  constraint-error :
+    Application(_, def*) -> (qid, $[Multiple definitions of '[<pp-mobl-qid> qid]'])
+    where all-names := <filter({?_#([manno*, <id>, _|_]); where([] := <filter(?WhenAnno(_))> manno*)})> def*
+        ; qid := <find-duplicate> all-names
+
+  constraint-error :
+    Module(_, def*) -> (qid, $[Multiple definitions of '[<pp-mobl-qid> qid]'])
+    where all-names := <filter({?_#([manno*, <id>, _|_]); where([] := <filter(?WhenAnno(_))> manno*)})> def*
+        ; qid := <find-duplicate> all-names
+
+  constraint-error :
+    t@qid{Alternatives(alt*)} -> (t, $[Name is ambiguous, could be: [<map(pp-mobl-qid); separate-by(|", ")> alt*]. Please pick one.])
+
+  find-duplicate :
+    [el|k] -> <find-duplicate(|el)> k
+
+  find-duplicate :
+    [el|k] -> <find-duplicate> k
+    where not(<find-duplicate(|el)> k)
+
+  find-duplicate(|el) :
+   [el2|k] -> el2
+   where <eq> (el, el2)
+
+  find-duplicate(|el) :
+   [el2|k] -> <find-duplicate(|el)> k
+   where not(<eq> (el, el2))
+
+rules
+
+  constraint-warning :
+    Application(qid, _) -> (qid, $[Application name does not match file path.])
+    where not(<eq> ($[[<qid-to-path> qid].mobl], <CompilingFilename>))
+
+  constraint-warning :
+    Module(qid, _) -> (qid, $[Module name does not match file path.])
+    where not(<eq> ($[[<qid-to-path> qid].mobl], <CompilingFilename>))
+
+rules
+
+  constraint-error :
+    Function(_, qid, _, rt, body) -> (qid, $[Function '[<pp-mobl-qid> qid]' has no return statement.])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [] := <collect(?Return(_))> body
+
+  constraint-error :
+    t@AnonymousFunction(farg*, rt, body) -> (t, $[Anonymous function has no return statement.])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [] := <collect(?Return(_))> body
+
+  constraint-error :
+    Function(_, qid, _, rt, body) -> (stm, $[Return statement of function '[<pp-mobl-qid> qid]' should return expression of type [<pp-mobl-type> rt].])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [stm|_] := <collect(where(?Return(<id>); type-of; not(<type-compatible> (rt, <id>))))> body
+
+  constraint-error :
+    t@AnonymousFunction(farg*, rt, body) -> (stm, $[Return statement of anonymous function should return expression of type [<pp-mobl-type> rt].])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [stm|_] := <collect(where(?Return(<id>); type-of; not(<type-compatible> (rt, <id>))))> body
+
+  constraint-error :
+    t@SyncFunction(manno*, qid, farg*, rt, body) -> <constraint-error> Function(manno*, qid, farg*, rt, body)
+
+  constraint-error :
+    Function(_, qid, _, SimpleType(QId("mobl", "void")), body) -> (stm, $[Return statement of function '[<pp-mobl-qid> qid]' should not return a value.])
+    where [stm|_] := <collect(?Return(_))> body
+
+  constraint-error :
+    t@AnonymousFunction(farg*, SimpleType(QId("mobl", "void")), body) -> (stm, $[Return statement of anonymous function should not return a value.])
+    where [stm|_] := <collect(?Return(_))> body
+
+  constraint-error :
+    StaticFunction(_, qid, _, rt, body) -> (qid, $[Function '[<pp-mobl-qid> qid]' has no return statement.])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [] := <collect(?Return(_))> body
+
+  constraint-error :
+    StaticFunction(_, qid, _, rt, body) -> (stm, $[Return statement of function '[<pp-mobl-qid> qid]' should return expression of type [<pp-mobl-type> rt].])
+    where not(SimpleType(QId("mobl", "void")) := rt)
+    where [stm|_] := <collect(where(?Return(<id>); type-of; not(<type-compatible> (rt, <id>))))> body
+
+  constraint-error :
+    t@StaticSyncFunction(manno*, qid, farg*, rt, body) -> <constraint-error> StaticFunction(manno*, qid, farg*, rt, body)
+
+  constraint-error :
+    StaticFunction(_, qid, _, SimpleType(QId("mobl", "void")), body) -> (stm, $[Return statement of function '[<pp-mobl-qid> qid]' should not return a value.])
+    where [stm|_] := <collect(?Return(_))> body
+
+  //  Feature Async - Start
+  constraint-error :
+    e@AsyncCall(_){} -> (e, $[async call is only allowed as a top-level call in variable declarations in controls and screens.])
+  //  Feature Async - Ende
+  
+  constraint-error :
+    VarDeclInferred(v, Null()) -> (v, $[When initializing a variable with null, you have to specify a type, e.g.: var [v] : String = null])
+
+  constraint-error :
+    Application(_, _) -> (e, $[screen return statements are only allowed within screen definitions.])
+    where [e|_] := <collect(?ScreenReturn() <+ ?ScreenReturn(_) <+ ?Screen(_, _, _, _, _) <+ ?FArgOptional(_, _, _)); remove-all(?Screen(_, _, _, _, _) <+ ?FArgOptional(_, _, _))>
+
+rules
+
+  constraint-error :
+    Entity(_, qid, _, body) -> <collect(constraint-error-entity(|qid)); Hd> body
+
+  constraint-error :
+    Type(_, qid, _, body) -> <collect(constraint-error-type(|qid)); Hd> body
+
+  constraint-error :
+    t@SimpleAnno(n) -> (t, $[Not a valid annotion: [n]])
+    where not(<eq> (n, "searchable"))
+
+  constraint-error-entity(|qid) :
+    p@Property(_, x, GenericType(QId("mobl", "Collection"), _), anno*) -> (p, $[A collection entity property has to define an inverse relationship: (inverse: ...)])
+    where not(<fetch-elem(?InverseAnno(_))> anno*)
+
+  constraint-error-entity(|qid) :
+    Property(_, x, t@SimpleType(qid2), [ann@InverseAnno(inv-prop)]) -> (ann, $[The inverse property '[inv-prop]' does not exist])
+    where not(<lookup-property> (t, inv-prop))
+
+  constraint-error-entity(|qid) :
+    Property(_, x, t@SimpleType(qid2), [ann@InverseAnno(inv-prop)]) -> (ann, $[The inverse property '[inv-prop]' is not of type [<pp-mobl-qid> qid] or Collection<[<pp-mobl-qid> qid]>])
+    where Property(_, _, t2, _) := <lookup-property> (t, inv-prop)
+        ; not(<eq> (t2, SimpleType(qid)) <+ <eq> (t2, GenericType(QId("mobl", "Collection"), [SimpleType(qid)])))
+
+  constraint-error-entity(|qid) :
+    Property(_, x, GenericType(_, [t]), [ann@InverseAnno(inv-prop)]) -> (ann, $[The inverse property '[inv-prop]' does not exist])
+    where not(<lookup-property> (t, inv-prop))
+
+  constraint-error-entity(|qid) :
+    Property(_, x, GenericType(_, [t]), [ann@InverseAnno(inv-prop)]) -> (ann, $[The inverse property '[inv-prop]' is not of type [<pp-mobl-qid> qid] or Collection<[<pp-mobl-qid> qid]>])
+    where Property(_, _, t2, _) := <lookup-property> (t, inv-prop)
+        ; not(<eq> (t2, SimpleType(qid)) <+ <eq> (t2, GenericType(QId("mobl", "Collection"), [SimpleType(qid)])))
+
+  constraint-error-type(|qid) :
+    p@Property(_, x, _, anno*) -> (anno*, $[Annotations are not supported for types, only for entities.])
+    where not([] := anno*)
+
+rules
+
+  constraint-error :
+    t@SimpleType(_) -> (t, $[Type is not defined: [<pp-mobl-type> t]])
+    where not(<lookup-type> t) // no entity for this type
+        ; not(_{"ControlType"} := t)
+
+  constraint-error :
+    t@GenericType(_, _) -> (t, $[Type is not defined: [<pp-mobl-type> t]])
+    where not(<lookup-type> t) // no entity for this type
+
+  // Feature HTML - Start
+  constraint-error :
+    Html(tag, _, _, closeTag) -> (closeTag, $[Wrong closing tag])
+    where not(<eq> (tag, closeTag))
+  constraint-error :
+    NamedHtml(_, tag, _, _, closeTag) -> (closeTag, $[Wrong closing tag])
+    where not(<eq> (tag, closeTag))
+  // Feature HTML - Ende
+  
+  constraint-error :
+    t@Var(qid) -> (t, $[Variable not defined: [<pp-mobl-exp> t]])
+    where not("elements" := qid)
+    where not(type-of)
+
+  constraint-error :
+    VarDeclInferred(x, e) -> (x, $[Not able to infer type, please declare type explicitly, e.g. var [x] : SomeType = ...])
+    where not(<type-of> Var(x))
+
+  constraint-error :
+    c@Call(qid, e*) -> (c, $[Wrong set of arguments for function '[<pp-mobl-qid> qid]'. Expected arguments are: [<filter(?FArg(<id>, _)); separate-by(!", "); concat-strings> farg*]])
+    where def := <lookup-function> qid
+        ; (ExternalFunction(_, _, farg*, _) := def <+ ExternalSyncFunction(_, _, farg*, _) := def)
+        ; not(<resolve-fargs> (e*, <topdown(try(strip-annos))> farg*))
+
+  constraint-error :
+    c@Call(qid, e*) -> (c, $[Wrong set of arguments for screen '[<pp-mobl-qid> qid]'. Expected arguments are: [<filter(?FArg(<id>, _)); separate-by(!", "); concat-strings> farg*]])
+    where ExternalScreen(_, _, farg*, _) := <lookup-screen> qid
+        ; not(<resolve-fargs> (e*, <topdown(try(strip-annos))> farg*))
+
+  constraint-error :
+    c@Call(qid, e*) -> (c, $[Not a function variable: [<pp-mobl-qid> qid]])
+    where _{_} := qid
+    where <type-of> Var(qid)
+        ; not(?GenericType(QId("mobl", <id>), t*); string-starts-with(|"Function")
+              <+ ?SimpleType(QId("mobl", "Callback")))
+
+  constraint-error :
+    c@Call(qid, e*) -> (c, $[Invalid set of arguments for function [<pp-mobl-qid> qid], expected: [<drop-last; map(pp-mobl-type); separate-by(|", ")> t*]])
+    where _{_} := qid
+    where <type-of> Var(qid)
+        ; ?GenericType(QId("mobl", <id>), t*); string-starts-with(|"Function")
+        ; not(<zip(type-compatible)> (<drop-last> t*, <map(type-of)> e*))
+
+  drop-last :
+    [] -> []
+
+  drop-last :
+    [_] -> []
+
+  drop-last :
+    [a,b|k] -> [a|<drop-last> [b|k]]
+
+  constraint-error :
+    c@Call(qid, e*) -> (c, $[Invalid set of arguments for function [<pp-mobl-qid> qid], expected: mobl::Object])
+    where _{_} := qid
+    where SimpleType(QId("mobl", "Callback")) := <type-of> Var(qid)
+        ; not([_] := e*)
+
+  constraint-error :
+    Call(qid, e*) -> <fargs-type-not-compatible> (farg*, e*)
+    where def := <lookup-function> qid
+        ; (ExternalFunction(_, _, farg*, _) := def <+ ExternalSyncFunction(_, _, farg*, _) := def)
+
+  constraint-error :
+    t@Call(qid, e*) -> (t, $[All arguments of an entity constructors need to be named, e.g. [<pp-mobl-qid> qid](name="...", age=27).])
+    where ExternalEntity(_, _, _, _) := <lookup-type> SimpleType(qid)
+       <+ ExternalType(_, _, _, _) := <lookup-type> SimpleType(qid)
+    where not([] := <remove-all(?NamedExp(_, _))> e*)
+
+  constraint-error :
+    t@Call(qid, e*) -> (arg, $[No such property defined for [<pp-mobl-qid> qid]: [arg]])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> SimpleType(qid)
+       <+ ExternalType(_, _, _, prop*) := <lookup-type> SimpleType(qid)
+    where not(QId("mobl", "Dynamic") := qid)
+    where args := <map(?NamedExp(<id>, _))> e*
+        ; arg := <fetch-elem(\ a -> a where [] := <filter(?Property(_, a, _, _))> prop* \)> args
+
+  constraint-error :
+    Call(qid, _) -> (qid, $[No such function or entity defined: [<pp-mobl-qid> qid]])
+    where not(<lookup-type> SimpleType(qid)
+           <+ <lookup-function> qid
+           <+ <lookup-screen> qid
+           <+ <type-of> Var(qid))
+
+  constraint-error :
+    t@Choice(_, _, _) -> (t, $[Could not determine type of: [<write-to-string> t]])
+    where not(type-of)
+
+  constraint-error :
+    t@Brackets(_) -> (t, $[Could not determine type of: [<write-to-string> t]])
+    where not(type-of)
+
+  constraint-error :
+    ControlCall(e, e*, elem*) -> (e, $[Expression does not return a control type])
+    where t := <type-of> e
+    where not(<is-control-type> t)
+
+  constraint-error :
+    ControlCall(e@Var(qid@QId(_, _)), e*, _) -> (e, $[Wrong set  of arguments for [<pp-mobl-qid> qid]. Expected arguments are: [<filter(?FArg(<id>, _)); separate-by(!", "); concat-strings> farg*]])
+    where ExternalControl(_, _, farg*) := <lookup-control> qid
+        ; not(<resolve-fargs> (e*, <topdown(try(strip-annos))> farg*))
+
+  constraint-error :
+    ControlCall(e@Var(qid@QId(_, _)), e*, _) -> <fargs-type-not-compatible> (farg*, e*)
+    where ExternalControl(_, _, farg*) := <lookup-control> qid
+
+  constraint-error :
+    ControlCall(e@Var(qid@QId(_, _)), e*, _) -> (t, $[Invalid named arguments for control [<pp-mobl-qid> qid]: [<separate-by(!", "); concat-strings> invalid-args].
+                                                       Valid named arguments: [<separate-by(!", "); concat-strings> named-fargs]])
+    where ExternalControl(_, _, farg*) := <lookup-control> qid
+        ; named-fargs := <filter(?FArgOptional(<id>, _, _)); strip-annos> farg*
+        ; invalid-args := <filter(\ NamedExp(x, _) -> x where not(<fetch(?x)> named-fargs) \)> e*
+        ; [t|_] := invalid-args
+
+  constraint-error :
+    t@FieldAccess(e, x) -> (t, $[Property [x] not defined on type [<pp-mobl-type> typ]])
+    where typ := <type-of> e
+    where not(type-of)
+
+  constraint-error :
+    t@LFieldAccess(e, x) -> (t, $[Property [x] not defined on type [<pp-mobl-type> typ]])
+    where typ := <type-of> e
+    where not(type-of-lvalue)
+
+  constraint-error :
+    t@Call(qid{}, arg*) -> (t, $[Function [<pp-mobl-qid> qid] not defined])
+    where <map(type-of)> arg*
+    where not(type-of)
+
+  constraint-error :
+    VarDecl(QId(_, _), _, e) -> (e, $[Global variables may only be initialized with simple literal expression, e.g. 10, $[$$]$, Map<String, Num>() etc.])
+    where not(<is-sync> e)
+
+  constraint-error :
+    VarDeclInferred(QId(_, _), e) -> (e, $[Global variables may only be initialized with simple literal expression, e.g. 10, $[$$]$, Map<String, Num>() etc.])
+    where not(<is-sync> e)
+
+  constraint-error :
+    MethodCall(e, x, e*) -> (x, $[Wrong set of arguments for method [x]. Expected arguments are: [<filter(?FArg(<id>, _)); separate-by(!", "); concat-strings> farg*]])
+    where not(<type-of> e
+              ; (?SimpleType(QId("mobl", "Dynamic")) <+ ?SimpleType(QId("mobl", "JQuery"))))
+    where def := <lookup-method> (<type-of> e, x)
+        ; (ExternalMethod(_, _, farg*, _) := def <+ ExternalSyncMethod(_, _, farg*, _) := def)
+        ; not(<resolve-fargs> (e*, <topdown(try(strip-annos))> farg*))
+
+  constraint-error :
+    t@MethodCall(e, x, arg*) -> (t, $[No such method '[x]' defined on type [<pp-mobl-type> typ]])
+    where typ := <type-of> e
+    where not(type-of)
+
+  constraint-error :
+    t@MethodCall(e, x, e*) -> <fargs-type-not-compatible> (farg*, e*)
+    where not(<type-of> e
+              ; (?SimpleType(QId("mobl", "Dynamic")) <+ ?SimpleType(QId("mobl", "JQuery"))))
+    where fn := <lookup-method> (<type-of> e, x)
+        ; (?ExternalMethod(_, _, farg*, _)
+        <+ ?ExternalSyncMethod(_, _, farg*, _))
+
+  constraint-error :
+    Assignment(lhs, e) -> (lhs, $[No such variable '[lhs]' defined])
+    where <is-string> lhs
+    where not(<type-of> Var(lhs))
+
+  constraint-error :
+    Assignment(lv, e) -> (e, $[Cannot assign an expression of type [<pp-mobl-type> t1] to l-value of type [<pp-mobl-type> t2]])
+    where t1 := <type-of> e
+        ; t2 := <type-of-lvalue> lv
+    where not(<type-compatible> (t2, t1))
+
+  constraint-error :
+    VarDecl(x, t, e) -> (e, $[Cannot assign an expression of type [<pp-mobl-type> t1] to variable of type [<pp-mobl-type> t]])
+    where t1 := <type-of> e
+    where not(<type-compatible> (t, t1))
+
+  constraint-error :
+    p@Path(part*){} -> (p, $[File not found: [pths] Note that paths are relative to the project root.])
+    where not(<separate-by(|"/"); concat-strings; ?pths; resolve-file> part*)
+
+  constraint-error :
+    p@AbsolutePath(part*){} -> (p, $[File not found: [pths]. Note that paths are relative to the project root.])
+    where not(<separate-by(|"/"); !["/"|<id>]; concat-strings; ?pths; resolve-file> part*)
+
+  constraint-error :
+    Import(qid) -> (qid, $[Module not found: [<pp-mobl-qid> qid]])
+    where not(<qid-to-path; <concat-strings> [<id>, ".mobl"]; resolve-file> qid)
+
+  constraint-error :
+    Mixin(qid) -> (qid, $[Module not found: [<pp-mobl-qid> qid]])
+    where not(<qid-to-path; <concat-strings> [<id>, ".mobl"]; resolve-file> qid)
+
+  constraint-error :
+    t@SetComp(e, fltr) -> (t, $[Comprehensions can only be used with expressions of type Collection<T>.])
+    where not(GenericType(QId("mobl", "Collection"), _) := <type-of> e)
+
+rules
+
+  constraint-error :
+    VarDecl(v, _, _) -> (v, $[Variables can not have the same name as the module they are in.])
+    where <eq> (<strip-annos> v, <CompilingModule>)
+
+  constraint-error :
+    VarDeclInferred(v, _) -> (v, $[Variables can not have the same name as the module they are in.])
+    where <eq> (<strip-annos> v, <CompilingModule>)
+
+  constraint-error :
+    FArg(v, _) -> (v, $[Arguments can not have the same name as the module they are in.])
+    where <eq> (<strip-annos> v, <CompilingModule>)
+
+  constraint-error :
+    FArgOptional(v, _, _) -> (v, $[Arguments can not have the same name as the module they are in.])
+    where <eq> (<strip-annos> v, <CompilingModule>)
+
+rules
+
+  constraint-error :
+    SetComp(e, fltr*) -> <oncetd(set-comp-error(|<type-of; ?GenericType(QId("mobl", "Collection"), [<id>])> e); ?err); !err> fltr*
+
+  set-comp-error(|t) :
+    LimitFilter(e1) -> (e1, $[Expression should be of type Num])
+    where not(SimpleType(QId("mobl", "Num")) := <type-of> e1)
+
+  set-comp-error(|t) :
+    OffsetFilter(e1) -> (e1, $[Expression should be of type Num])
+    where not(SimpleType(QId("mobl", "Num")) := <type-of> e1)
+
+  set-comp-error(|t) :
+    PrefetchFilter(x*) -> (x, $[Not a prefetchable property])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [x|_] := <filter({x, pt: \
+                    x -> x
+                    where <filter(?Property(_, x, pt, _))> prop*
+                        ; not(ExternalEntity(_, _, _, _) := <lookup-type> pt) \})> x*
+
+  set-comp-error(|t) :
+    OrderAscending(prop) -> (prop, $[[<pp-mobl-type> t] has no property '[prop]'])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [] := <filter(?Property(_, prop, _, _))> prop*
+
+  set-comp-error(|t) :
+    OrderDescending(prop) -> (prop, $[[<pp-mobl-type> t] has no property '[prop]'])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [] := <filter(?Property(_, prop, _, _))> prop*
+
+  set-comp-error(|t) :
+    OrderAscending(prop) -> (prop, $[Collection cannot be ordered on property '[prop]'])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [] := <filter(?Property(_, prop, SimpleType(_), _))> prop*
+
+  set-comp-error(|t) :
+    OrderDescending(prop) -> (prop, $[Collection cannot be ordered on property '[prop]'])
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [] := <filter(?Property(_, prop, SimpleType(_), _))> prop*
+
+  set-comp-error(|t) :
+    term@c#([prop, _]) -> (term, $[[<pp-mobl-type> t] has no property '[prop]'])
+    where <string-starts-with(|"Set")> c
+    where <is-string> prop
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where [] := <filter(?Property(_, prop, _, _))> prop*
+
+  set-comp-error(|t) :
+    term@c#([prop, e]) -> (e, $[Value should be of type [<pp-mobl-type> pt].])
+    where <fetch-elem(?c)> ["SetEq", "SetNotEq", "SetLt", "SetLeq", "SetGt", "SetGeq"]
+    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
+    where <filter(?Property(_, prop, pt, _))> prop*
+    where not(<type-compatible> (pt, <type-of> e))
+
+  constraint-warning:
+    Entity(_, qid, _, _) -> (x, $[Entity names must start with a capital])
+    where
+      if <is-string> qid then
+        x := qid
+      else
+        QId(_, x) := qid
+      end
+      ; not(<explode-string; Hd; is-upper> x)
+
+
+rules
+
+ fargs-type-not-compatible :
+    (farg*, e*) -> (e, $[Expression should be of type [<pp-mobl-type> t] instead of [<pp-mobl-type> <type-of> e].])
+    where e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; t* := <map(?FArg(_, <id>) <+ ?FArgOptional(_, <id>, _))> farg*
+        ; (e, t) := <zip; fetch-elem(\ (e, t) -> <id> where <not(type-compatible)> (t, <type-of> e) \)> (e2*, t*)
+
+
+/*  constraint-note:
+    Module(x @ "example", _) -> (x, $[This is just an example program in the "entities" language
+                                      (this note is defined in trans/check.str) ])
+*/
+  constraint-note = fail

@@ -1,0 +1,61 @@
+module util
+
+imports
+  include/MoBL
+  libstratego-lib
+  lib/editor-common
+  generation/action
+  mobl
+  // moblc // fehlender Import
+
+rules
+
+  lvalue-vars :
+    s -> [s]
+    where is-string
+
+  lvalue-vars :
+    LTuple(fst, rest*) -> [<lvalue-vars> fst|<map(lvalue-vars); concat> rest*]
+
+  cut-off-last-element :
+    [_] -> []
+
+  cut-off-last-element :
+    [a|k] -> [a|<cut-off-last-element> k]
+
+  setup-paths =
+    setting* := <get-configuration>
+    ; if <fetch-elem(?StdLibSetting(stdlib-p))> setting* then
+         stdlib-path := <path-to-string; resolve-file> stdlib-p
+      else
+        stdlib-path := <concat-strings> [<plugin-path>, "/stdlib"]
+      end
+    ; path* := <filter(\ LibSetting(p) -> <path-to-string; resolve-file> p \)> setting*
+    ; if not(<fetch-elem(?OutputSetting(output-path))> setting*) then
+        output-path := $["www"]
+      end
+    ; if not(<fetch-elem(?ReleaseOutputSetting(release-output-path))> setting*) then
+        release-output-path := $["www.release"]
+      end
+    ; <filter(\ StyleVarSetting(StyleVar(x), e) -> <id>  where rules ( StyleVar : x -> e ) \)> setting*
+    ; rules(
+        IncludePaths      := [<ProjectPath>, stdlib-path, path*]
+        OutputPath        := $[[<ProjectPath>]/[<un-double-quote> output-path]]
+        ReleaseOutputPath := $[[<ProjectPath>]/[<un-double-quote> release-output-path]]
+        StdLibPath        := stdlib-path
+        ServerOutputPath  := <concat-strings> [<ProjectPath>, "/server"]
+      )
+
+  get-configuration :
+    _ -> setting*
+    where filename := <get-configuration-filename>
+    where <file-exists> filename
+    with Configuration(setting*) := <parse-file <+ !Configuration([])> filename
+
+  get-configuration :
+    _ -> []
+    where filename := <get-configuration-filename>
+    where not(<file-exists> filename)
+
+  get-configuration-filename :
+    _ -> $[[<ProjectPath; string-replace(|"\\", "/")>]/config.mobl]
