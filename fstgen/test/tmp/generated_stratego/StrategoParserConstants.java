@@ -70,52 +70,54 @@ public interface StrategoParserConstants {
   int CHARACTER_LITERAL = 73;
   int STRING_LITERAL = 74;
   int STRING_QUOT = 75;
-  int TEST_STRING = 76;
-  int SQUOTATION = 77;
-  int ANYSIGN = 78;
-  int IDENTIFIER = 79;
-  int LETTER = 80;
-  int LCCHAR = 81;
-  int UCCHAR = 82;
-  int DIGIT = 83;
-  int LPAREN = 84;
-  int RPAREN = 85;
-  int LBRACE = 86;
-  int RBRACE = 87;
-  int LBRACKET = 88;
-  int RBRACKET = 89;
-  int LT = 90;
-  int GT = 91;
-  int PLUS = 92;
-  int MINUS = 93;
-  int STAR = 94;
-  int SLASH = 95;
-  int COMMA = 96;
-  int SEMICOLON = 97;
-  int DDOT = 98;
-  int DOT = 99;
-  int QUESTIONMARK = 100;
-  int EXCLAMATIONMARK = 101;
-  int NUMBERSIGN = 102;
-  int AT = 103;
-  int DOLLAR = 104;
-  int VERTICALLINE = 105;
-  int TILDE = 106;
-  int AMPERSAND = 107;
-  int PERCENTAGE = 108;
-  int CIRCUMFLEXACCENT = 109;
-  int GRAVEACCENT = 110;
-  int APOSTROPHE = 111;
-  int ARROW = 112;
-  int ASSIGN = 113;
-  int LOWLINE = 114;
-  int QUOTATIONMARK = 115;
-  int BACKSLASH = 116;
+  int STRING_QUOT_END = 76;
+  int IN_STRING_QUOT = 77;
+  int IN_STRING_QUOT_END = 78;
+  int IDENTIFIER = 81;
+  int LETTER = 82;
+  int LCCHAR = 83;
+  int UCCHAR = 84;
+  int DIGIT = 85;
+  int LPAREN = 86;
+  int RPAREN = 87;
+  int LBRACE = 88;
+  int RBRACE = 89;
+  int LBRACKET = 90;
+  int RBRACKET = 91;
+  int LT = 92;
+  int GT = 93;
+  int PLUS = 94;
+  int MINUS = 95;
+  int STAR = 96;
+  int SLASH = 97;
+  int COMMA = 98;
+  int SEMICOLON = 99;
+  int DDOT = 100;
+  int DOT = 101;
+  int QUESTIONMARK = 102;
+  int EXCLAMATIONMARK = 103;
+  int NUMBERSIGN = 104;
+  int AT = 105;
+  int DOLLAR = 106;
+  int VERTICALLINE = 107;
+  int TILDE = 108;
+  int AMPERSAND = 109;
+  int PERCENTAGE = 110;
+  int CIRCUMFLEXACCENT = 111;
+  int GRAVEACCENT = 112;
+  int APOSTROPHE = 113;
+  int ARROW = 114;
+  int ASSIGN = 115;
+  int LOWLINE = 116;
+  int QUOTATIONMARK = 117;
+  int BACKSLASH = 118;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
   int IN_FORMAL_COMMENT = 2;
   int IN_MULTI_LINE_COMMENT = 3;
+  int STATEONE = 4;
+  int STATETWO = 5;
 
   String[] tokenImage = {
     "<EOF>",
@@ -194,9 +196,11 @@ public interface StrategoParserConstants {
     "<CHARACTER_LITERAL>",
     "<STRING_LITERAL>",
     "<STRING_QUOT>",
-    "<TEST_STRING>",
-    "<SQUOTATION>",
-    "<ANYSIGN>",
+    "\"]\"",
+    "\"[\"",
+    "\"]\"",
+    "<token of kind 79>",
+    "<token of kind 80>",
     "<IDENTIFIER>",
     "<LETTER>",
     "<LCCHAR>",

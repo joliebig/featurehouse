@@ -978,9 +978,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                                                                           replaceName(n);
           break;
@@ -1022,9 +1022,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                                                                                      replaceName(n);
           break;
@@ -1060,9 +1060,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                                   replaceName(n);
           break;
@@ -1111,7 +1111,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case NUMBERSIGN:
         case LOWLINE:
         case BACKSLASH:
-        case 117:
+        case 119:
           n = StrategyList(true);
                                                                              replaceName(n);
           break;
@@ -1143,9 +1143,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                                                                           replaceName(n);
           break;
@@ -1169,9 +1169,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                         replaceName(n);
           break;
@@ -1186,9 +1186,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                               replaceName(n);
           break;
@@ -1203,9 +1203,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                             replaceName(n);
           break;
@@ -1222,9 +1222,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                          replaceName(n);
           break;
@@ -1241,9 +1241,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                          replaceName(n);
           break;
@@ -1264,9 +1264,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                     replaceName(n);
           break;
@@ -1285,9 +1285,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                               replaceName(n);
           break;
@@ -1305,9 +1305,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                replaceName(n);
           break;
@@ -1317,20 +1317,20 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         }
                                                                                                   {if (true) return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
         break;
-      case 117:
-        jj_consume_token(117);
+      case 119:
+        jj_consume_token(119);
         n = ScopeLabels(true);
                                   replaceName(n);
         jj_consume_token(DDOT);
         n = Strategy(true);
                                                                          replaceName(n);
-        jj_consume_token(118);
+        jj_consume_token(120);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                              replaceName(n);
           break;
@@ -1360,9 +1360,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                               replaceName(n);
           break;
@@ -1388,9 +1388,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                  replaceName(n);
           break;
@@ -1418,9 +1418,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 120:
-        case 121:
         case 122:
+        case 123:
+        case 124:
           n = AlternativeStrategy(true);
                                                                                                                                   replaceName(n);
           break;
@@ -1435,15 +1435,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         if (jj_2_4(2147483647)) {
           n = Term(true);
                                              replaceName(n);
-          jj_consume_token(119);
+          jj_consume_token(121);
           n = Term(true);
                                                                                  replaceName(n);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case PLUS:
           case SEMICOLON:
-          case 120:
-          case 121:
           case 122:
+          case 123:
+          case 124:
             n = AlternativeStrategy(true);
                                                                                                                                 replaceName(n);
             break;
@@ -1462,9 +1462,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                                           replaceName(n);
               break;
@@ -1480,9 +1480,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                               replaceName(n);
               break;
@@ -1500,9 +1500,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                                                              replaceName(n);
               break;
@@ -1547,7 +1547,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             case NUMBERSIGN:
             case LOWLINE:
             case BACKSLASH:
-            case 117:
+            case 119:
               n = StrategyList(true);
                                    replaceName(n);
               break;
@@ -1569,9 +1569,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                                                                                 replaceName(n);
               break;
@@ -1596,9 +1596,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                                                            replaceName(n);
               break;
@@ -1623,9 +1623,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 120:
-            case 121:
             case 122:
+            case 123:
+            case 124:
               n = AlternativeStrategy(true);
                                                                                                                replaceName(n);
               break;
@@ -1643,9 +1643,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case PLUS:
               case SEMICOLON:
-              case 120:
-              case 121:
               case 122:
+              case 123:
+              case 124:
                 n = AlternativeStrategy(true);
                                                                                        replaceName(n);
                 break;
@@ -1663,9 +1663,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
                 case PLUS:
                 case SEMICOLON:
-                case 120:
-                case 121:
                 case 122:
+                case 123:
+                case 124:
                   n = AlternativeStrategy(true);
                                                                     replaceName(n);
                   break;
@@ -1743,16 +1743,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case SEMICOLON:
-      case 121:
-      case 122:
+      case 123:
+      case 124:
         n = AlternativeOperator(true);
                                      replaceName(n);
         n = Strategy(true);
                                                                         replaceName(n);
                                                                                           {if (true) return productionEndTerminal("AlternativeStrategy1","-","-","Replacement","Default",first,token);}
         break;
-      case 120:
-        jj_consume_token(120);
+      case 122:
+        jj_consume_token(122);
         n = Term(true);
                            replaceName(n);
                                              {if (true) return productionEndTerminal("AlternativeStrategy2","-","-","Replacement","Default",first,token);}
@@ -1782,12 +1782,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         jj_consume_token(PLUS);
               {if (true) return productionEndTerminal("AlternativeOperator2","-","-","Replacement","Default",first,token);}
         break;
-      case 121:
-        jj_consume_token(121);
+      case 123:
+        jj_consume_token(123);
                {if (true) return productionEndTerminal("AlternativeOperator3","-","-","Replacement","Default",first,token);}
         break;
-      case 122:
-        jj_consume_token(122);
+      case 124:
+        jj_consume_token(124);
                {if (true) return productionEndTerminal("AlternativeOperator4","-","-","Replacement","Default",first,token);}
         break;
       default:
@@ -1883,7 +1883,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case NUMBERSIGN:
         case LOWLINE:
         case BACKSLASH:
-        case 117:
+        case 119:
           n = StrategyList(true);
                                replaceName(n);
           break;
@@ -1998,7 +1998,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       case NUMBERSIGN:
       case LOWLINE:
       case BACKSLASH:
-      case 117:
+      case 119:
         n = StrategyList(true);
                                    replaceName(n);
         break;
@@ -2161,7 +2161,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       } else if (jj_2_12(2147483647)) {
         n = DynRuleId(true);
                                                                      replaceName(n);
-        jj_consume_token(123);
+        jj_consume_token(125);
         n = Rule(true);
                                                                                                          replaceName(n);
                                                                                                                            {if (true) return productionEndTerminal("DynRuleDef3","-","-","Replacement","Default",first,token);}
@@ -2381,16 +2381,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 124:
-        jj_consume_token(124);
+      case 126:
+        jj_consume_token(126);
                {if (true) return productionEndTerminal("TermOperator1","-","-","Replacement","Default",first,token);}
         break;
-      case 119:
-        jj_consume_token(119);
+      case 121:
+        jj_consume_token(121);
                {if (true) return productionEndTerminal("TermOperator2","-","-","Replacement","Default",first,token);}
         break;
-      case 125:
-        jj_consume_token(125);
+      case 127:
+        jj_consume_token(127);
                 {if (true) return productionEndTerminal("TermOperator3","-","-","Replacement","Default",first,token);}
         break;
       default:
@@ -2553,8 +2553,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 126:
-        jj_consume_token(126);
+      case 128:
+        jj_consume_token(128);
         n = Term(true);
                            replaceName(n);
         jj_consume_token(RBRACE);
@@ -2620,7 +2620,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LBRACE:
         case NUMBERSIGN:
-        case 126:
+        case 128:
           n = AlternativeTerm(true);
                                                                                          replaceName(n);
           break;
@@ -2638,7 +2638,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case LBRACE:
           case NUMBERSIGN:
-          case 126:
+          case 128:
             n = AlternativeTerm(true);
                                                                                    replaceName(n);
             break;
@@ -2656,7 +2656,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                 replaceName(n);
               break;
@@ -2678,7 +2678,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                                                                                         replaceName(n);
               break;
@@ -2713,7 +2713,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                                replaceName(n);
               break;
@@ -2758,7 +2758,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
               break;
@@ -2793,7 +2793,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                                replaceName(n);
               break;
@@ -2812,7 +2812,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                              replaceName(n);
               break;
@@ -2839,7 +2839,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 126:
+            case 128:
               n = AlternativeTerm(true);
                                                                                                                   replaceName(n);
               break;
@@ -2857,7 +2857,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                          replaceName(n);
                 break;
@@ -2872,7 +2872,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                           replaceName(n);
                 break;
@@ -2887,7 +2887,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                          replaceName(n);
                 break;
@@ -2902,7 +2902,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                         replaceName(n);
                 break;
@@ -2917,7 +2917,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                        replaceName(n);
                 break;
@@ -2932,7 +2932,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                              replaceName(n);
                 break;
@@ -2947,7 +2947,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                         replaceName(n);
                 break;
@@ -2962,7 +2962,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2977,7 +2977,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2992,7 +2992,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3007,7 +3007,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3022,7 +3022,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3037,7 +3037,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3052,7 +3052,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                      replaceName(n);
                 break;
@@ -3067,7 +3067,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                       replaceName(n);
                 break;
@@ -3082,7 +3082,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                        replaceName(n);
                 break;
@@ -3097,7 +3097,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 126:
+              case 128:
                 n = AlternativeTerm(true);
                                                                                                                       replaceName(n);
                 break;
@@ -3116,7 +3116,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
                 case LBRACE:
                 case NUMBERSIGN:
-                case 126:
+                case 128:
                   n = AlternativeTerm(true);
                                                                                                          replaceName(n);
                   break;
@@ -3719,6 +3719,53 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     finally { jj_save(43, xla); }
   }
 
+  final private boolean jj_3R_56() {
+    if (jj_3R_137()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_18() {
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_131() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_55() {
+    if (jj_scan_token(NUMBERSIGN)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_26()) return true;
+    if (jj_scan_token(RPAREN)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_136()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_129() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_54() {
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_134()) jj_scanpos = xsp;
+    if (jj_scan_token(RBRACE)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_135()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3_21() {
+    if (jj_3R_27()) return true;
+    return false;
+  }
+
   final private boolean jj_3_16() {
     if (jj_scan_token(STAR)) return true;
     if (jj_3R_38()) return true;
@@ -3912,7 +3959,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_231() {
-    if (jj_scan_token(126)) return true;
+    if (jj_scan_token(128)) return true;
     if (jj_3R_26()) return true;
     if (jj_scan_token(RBRACE)) return true;
     return false;
@@ -4004,17 +4051,17 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_83() {
-    if (jj_scan_token(125)) return true;
+    if (jj_scan_token(127)) return true;
     return false;
   }
 
   final private boolean jj_3R_82() {
-    if (jj_scan_token(119)) return true;
+    if (jj_scan_token(121)) return true;
     return false;
   }
 
   final private boolean jj_3R_81() {
-    if (jj_scan_token(124)) return true;
+    if (jj_scan_token(126)) return true;
     return false;
   }
 
@@ -4162,7 +4209,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_34()) jj_scanpos = xsp;
-    if (jj_scan_token(123)) return true;
+    if (jj_scan_token(125)) return true;
     return false;
   }
 
@@ -4222,7 +4269,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3R_261() {
     if (jj_3R_276()) return true;
-    if (jj_scan_token(123)) return true;
+    if (jj_scan_token(125)) return true;
     if (jj_3R_32()) return true;
     return false;
   }
@@ -4547,7 +4594,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_282() {
-    if (jj_scan_token(122)) return true;
+    if (jj_scan_token(124)) return true;
     return false;
   }
 
@@ -4558,7 +4605,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_281() {
-    if (jj_scan_token(121)) return true;
+    if (jj_scan_token(123)) return true;
     return false;
   }
 
@@ -4630,7 +4677,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_253() {
-    if (jj_scan_token(120)) return true;
+    if (jj_scan_token(122)) return true;
     if (jj_3R_26()) return true;
     return false;
   }
@@ -4799,7 +4846,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3_4() {
     if (jj_3R_26()) return true;
-    if (jj_scan_token(119)) return true;
+    if (jj_scan_token(121)) return true;
     return false;
   }
 
@@ -4855,7 +4902,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3R_109() {
     if (jj_3R_26()) return true;
-    if (jj_scan_token(119)) return true;
+    if (jj_scan_token(121)) return true;
     if (jj_3R_26()) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -4907,11 +4954,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_105() {
-    if (jj_scan_token(117)) return true;
+    if (jj_scan_token(119)) return true;
     if (jj_3R_193()) return true;
     if (jj_scan_token(DDOT)) return true;
     if (jj_3R_44()) return true;
-    if (jj_scan_token(118)) return true;
+    if (jj_scan_token(120)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_194()) jj_scanpos = xsp;
@@ -5490,7 +5537,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3R_27() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(93)) jj_scanpos = xsp;
+    if (jj_scan_token(95)) jj_scanpos = xsp;
     if (jj_3R_76()) return true;
     return false;
   }
@@ -5505,7 +5552,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3R_124() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(93)) jj_scanpos = xsp;
+    if (jj_scan_token(95)) jj_scanpos = xsp;
     if (jj_3R_172()) return true;
     return false;
   }
@@ -5809,7 +5856,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3_35() {
     if (jj_3R_42()) return true;
-    if (jj_scan_token(118)) return true;
+    if (jj_scan_token(120)) return true;
     return false;
   }
 
@@ -6026,7 +6073,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3_23() {
     if (jj_3R_42()) return true;
     if (jj_3R_23()) return true;
-    if (jj_scan_token(119)) return true;
+    if (jj_scan_token(121)) return true;
     return false;
   }
 
@@ -6100,53 +6147,6 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_56() {
-    if (jj_3R_137()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_18() {
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_131() {
-    if (jj_3R_165()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_55() {
-    if (jj_scan_token(NUMBERSIGN)) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_26()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_136()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_129() {
-    if (jj_3R_165()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_54() {
-    if (jj_scan_token(LBRACE)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_134()) jj_scanpos = xsp;
-    if (jj_scan_token(RBRACE)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_135()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3_21() {
-    if (jj_3R_27()) return true;
-    return false;
-  }
-
   public StrategoParserTokenManager token_source;
   public Token token, jj_nt;
   private int jj_ntk;
@@ -6160,11 +6160,13 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
   static private int[] jj_la1_3;
+  static private int[] jj_la1_4;
   static {
       jj_la1_0();
       jj_la1_1();
       jj_la1_2();
       jj_la1_3();
+      jj_la1_4();
    }
    private static void jj_la1_0() {
       jj_la1_0 = new int[] {0x0,0x0,0x8000,0x6000,0x0,0x0,0x0,0x20010000,0x20010000,0x0,0x8000,0x0,0x0,0x0,0x0,0x20010000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0000000,0x0,0x0,0x10000000,0x0,0x0,0x0,0xd0000000,0x0,0xd0000000,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
@@ -6173,10 +6175,13 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_la1_1 = new int[] {0x0,0x0,0xb500,0x0,0x0,0xe0800000,0xe0800000,0x0,0x0,0x0,0xb500,0x0,0x0,0x0,0x800000,0x0,0x0,0x0,0x0,0x0,0x0,0x800000,0x0,0x0,0xe0000000,0xe0000000,0x800000,0x0,0x0,0x0,0x0,0x40200,0x40200,0x0,0x0,0x0,0x0,0x0,0x800000,0x200000,0x0,0x100000,0x2000000,0x0,0xe0800000,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0e5ace,0x0,0x0,0x6420c,0x0,0x0,0x0,0xd0e5ace,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x20000000,0x20000000,0x0,0x0,0x8000,0x8000,0x8000,0x0,0x0,0x8000,0x0,0x100000,0x8000,0x1108000,0x8400,0x0,0x1108000,0x1108000,0x1108000,0x0,0x1100000,0x0,0x8400,0x8400,0x0,0x0,0x8000,0x100000,0x8000,0x0,0x8000,0x0,0x0,0x8000,0x8000,0x8000,0x0,0x100000,0x8000,0x0,0x10000000,0x0,0x0,0x10000000,0x8000,0x10000000,0x25508c08,0x25508c08,0x10000000,0x100000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x8000,0x10000000,0x10000000,0x0,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x25508c08,0x0,0x10000000,0x100000,0x10000000,0x100000,0x10000000,0x10000000,0x10000000,0x0,0x5508400,0x20000008,0x0,0x10000000,0x10000000,0x25508c08,0x25508c08,0x8000,0x25508c08,0x0,0x25508c08,0x8000,0x0,0x8000,0x8000,0x25508c08,0x10000000,0x100000,0x8000,0x0,0x8000,0x10000000,0x0,0x8000,0x0,0x0,0x1108000,0x100000,0x25508c08,0x400000,0x400000,0x400000,0x400000,0x400000,0x25508c08,0x400000,0x25508c08,0x0,0x400000,0x25508c08,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x0,0x21508c08,0x4000000,0x25508c08,0x25508c08,0x100000,0x25508c08,};
+      jj_la1_2 = new int[] {0x80000000,0x80000000,0x0,0x0,0x20000,0x20000,0x20000,0x0,0x0,0x20000,0x0,0x400000,0x20000,0x4420000,0x20400,0x0,0x4420000,0x4420000,0x4420000,0x0,0x4400000,0x0,0x20400,0x20400,0x0,0x0,0x20000,0x400000,0x20000,0x0,0x20000,0x0,0x0,0x20000,0x20000,0x20000,0x0,0x400000,0x20000,0x0,0x40000000,0x0,0x0,0x40000000,0x20000,0x40000000,0x95420c08,0x95420c08,0x40000000,0x400000,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x20000,0x40000000,0x40000000,0x0,0x40000000,0x40000000,0x40000000,0x40000000,0x40000000,0x95420c08,0x0,0x40000000,0x400000,0x40000000,0x400000,0x40000000,0x40000000,0x40000000,0x0,0x15420400,0x80000008,0x0,0x40000000,0x40000000,0x95420c08,0x95420c08,0x20000,0x95420c08,0x0,0x95420c08,0x20000,0x0,0x20000,0x20000,0x95420c08,0x40000000,0x400000,0x20000,0x0,0x20000,0x40000000,0x0,0x20000,0x0,0x0,0x4420000,0x400000,0x95420c08,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x95420c08,0x1000000,0x95420c08,0x0,0x1000000,0x95420c08,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x1000000,0x0,0x85420c08,0x10000000,0x95420c08,0x95420c08,0x400000,0x95420c08,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x20000,0x0,0x0,0x0,0x7000002,0x0,0x0,0x7000002,0x0,0x7000002,0x340070,0x40040,0x7000002,0x0,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x0,0x7000002,0x7000002,0x1,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x340070,0x200,0x7000002,0x0,0x7000002,0x0,0x7000002,0x7000002,0x7000002,0x300030,0x0,0x0,0x0,0x7000002,0x6000002,0x40040,0x340070,0x0,0x340070,0x200,0x40040,0x0,0x400,0x0,0x0,0x40040,0x8,0x0,0x0,0x200,0x0,0x8,0x30800000,0x0,0x400,0x4,0x0,0x0,0x40040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40040,0x40000040,0x40040,0x200,0x40000040,0x40040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000,0x40,0x0,0x40040,0x40040,0x280,0x40040,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x10,0x0,0x0,0x0,0x0,0x800,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x800,0x0,0x0,0x0,0x0,0x0,0x0,0x80000,0x0,0x0,0x0,0x1c000008,0x0,0x0,0x1c000008,0x0,0x1c000008,0xd001c0,0x100100,0x1c000008,0x0,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x0,0x1c000008,0x1c000008,0x4,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0x1c000008,0xd001c0,0x800,0x1c000008,0x0,0x1c000008,0x0,0x1c000008,0x1c000008,0x1c000008,0xc000c0,0x0,0x0,0x0,0x1c000008,0x18000008,0x100100,0xd001c0,0x0,0xd001c0,0x800,0x100100,0x0,0x1000,0x0,0x0,0x100100,0x20,0x0,0x0,0x800,0x0,0x20,0xc2000000,0x0,0x1000,0x10,0x0,0x0,0x100100,0x100,0x100,0x100,0x100,0x100,0x100100,0x100,0x100100,0x800,0x100,0x100100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100,0x100000,0x100,0x0,0x100100,0x100100,0xa00,0x100100,};
+   }
+   private static void jj_la1_4() {
+      jj_la1_4 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x1,0x1,0x1,0x1,0x0,0x1,0x0,0x0,0x1,0x0,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[44];
   private boolean jj_rescan = false;
@@ -6327,8 +6332,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[127];
-    for (int i = 0; i < 127; i++) {
+    boolean[] la1tokens = new boolean[129];
+    for (int i = 0; i < 129; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -6350,10 +6355,13 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           if ((jj_la1_3[i] & (1<<j)) != 0) {
             la1tokens[96+j] = true;
           }
+          if ((jj_la1_4[i] & (1<<j)) != 0) {
+            la1tokens[128+j] = true;
+          }
         }
       }
     }
-    for (int i = 0; i < 127; i++) {
+    for (int i = 0; i < 129; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
