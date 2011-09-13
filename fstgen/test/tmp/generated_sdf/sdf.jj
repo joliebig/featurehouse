@@ -1,6 +1,6 @@
 options {
 	STATIC = false;
-	DEBUG_PARSER = false;
+	DEBUG_PARSER = true;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -344,7 +344,7 @@ FSTInfo Disambiguations(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=Symbol(true){ replaceName(n);})* "->" n=Symbol(true){ replaceName(n);} [LOOKAHEAD("{" Attribute()) n=OptAttributes(true){ replaceName(n);}] {return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	(n=Symbol(true){ replaceName(n);})* "->" n=Symbol(true){ replaceName(n);} [LOOKAHEAD("[[" Symbol() "]]") "[[" n=Symbol(true){ replaceName(n);} "]]"] [LOOKAHEAD("{" Attribute()) n=OptAttributes(true){ replaceName(n);}] {return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
 
  )  }
 

@@ -1,0 +1,316 @@
+module generate
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/Exprlang
+  lib/editor-common.generated
+  check
+
+rules
+	
+  // Feature Expr - Start -----------------------------------------------------
+  to-java:
+    Start(e*) -> 
+    $[package expression;
+    
+      // Feature Expr
+      abstract class Expr {
+      	// Feature Print
+      	abstract String print();
+      	
+      	// Feature Eval				
+				abstract int eval();
+				
+				// Feature Simplify				
+				abstract int simplify();			
+      }
+
+			// Feature Val
+			class Val extends Expr {
+				int val;
+				Val(int n) {
+					val = n;
+				}
+			
+				// Feature Print
+				String print() {
+					return String.valueOf(val);
+				}
+				
+				// Feature Eval
+				int eval() {
+					return val;
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					return val;
+				}			
+			}
+		
+			// Feature Add
+			class Add extends Expr {
+	 			Expr a; 
+	 			Expr b;
+	 			Add(Expr e1, Expr e2) {
+	 				a = e1;
+	 				b = e2;
+	 			}
+	 		
+	 			// Feature Print
+	 			String print() {
+	 				return a.print() + "+" + b.print();
+	 			}
+	 			
+	 			// Feature Eval
+				int eval() {
+					return a.eval() + b.eval();
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					// To do
+					return null;
+				}			
+	 		}
+	 	
+	 		// Feature Sub
+	 		class Sub extends Expr {
+	 			Expr a; 
+	 			Expr b;	  			
+	 			Sub(Expr e1, Expr e2) {
+	 				a = e1;
+	 				b = e2;
+	 			}
+	 		
+	 			// Feature Print
+	 			String print() {
+	 				return a.print() + "-" + b.print();
+	 			}
+	 			
+	 			// Feature Eval
+				int eval() {
+					return a.eval() - b.eval();
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					// To do
+					return null;
+				}			
+			}
+		
+			// Feature Mul
+			class Mul extends Expr {
+	 			Expr a; 
+	 			Expr b;
+	 			Mul(Expr e1, Expr e2) {
+	 				a = e1;
+	 				b = e2;
+	 			}
+	 		
+	 			// Feature Print
+	 			String print() {
+	 				return "(" + a.print() + "*" + b.print() + ")";
+	 			}
+	 			
+	 			// Feature Eval
+				int eval() {
+					return a.eval() * b.eval();
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					// To do
+					return null;
+				}
+	 		}
+	 	
+	 		// Feature Div	  			  			
+	 		class Div extends Expr {
+	 			Expr a; 
+	 			Expr b;
+	 			Div(Expr e1, Expr e2) {
+	 				a = e1;
+	 				b = e2;
+	 			}
+	 		
+	 			// Feature Print
+	 			String print() {
+	 				return a.print() + "/" + b.print();
+	 			}
+	 			
+	 			// Feature Eval
+				int eval() {
+					return a.eval() / b.eval();
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					// To do
+					return null;
+				}
+	 		}
+	 	
+	 		// Feature Mod
+	 		class Mod extends Expr {
+				Expr a; 
+				Expr b;
+				Mod(Expr e1, Expr e2) {
+					a = e1;
+					b = e2;
+				}
+			
+				// Feature Print
+				String print() {
+					return a.print() + "%" + b.print();
+				}
+				
+				// Feature Eval
+				int eval() {
+					return a.eval() % b.eval();
+				}
+				
+				// Feature Simplify
+				int simplify() {
+					// To do
+					return null;
+				}
+			}
+			           
+    	class Main {
+    		// main function
+      	static void main(String[a] args) {
+      		
+      		[e'*]
+      	}
+      }
+     ]
+    with
+    	a := "[]";
+      e'* := <to-java> e*
+
+	// to-java:
+ //    Start(e*) -> 
+ //    $[package expression;
+ //                 
+ //    	class Main {
+ //    		// main function
+ //      	static void main(String[a] args) {
+ //      		
+ //      		[e'*]
+ //      	}
+ //      }
+ //     ]
+ //    with
+ //    	a := "[]";
+ //      e'* := <to-java> e*
+  
+  to-java:
+  	Assign(x, y*) -> $[Expr [x] = [y'*];
+  	]
+  	with
+  		y'* := <to-java> y*
+    	  		
+  to-java:
+  	Int(i) -> $[new Int([i])]
+  						
+  to-java:
+    Type(t) -> t
+
+  to-java:
+    t* -> <map(to-java)> t*
+  // Feature Expr - Ende ------------------------------------------------------
+  
+  // to-java:
+  // 	VarDec(x, Type(t)) -> $[int [x] = new Int();
+  // 	]
+  // 	where 
+  // 		!t => "Int" 
+  // 
+  // to-java:
+  // 	VarDec(x, Type(t)) -> $[[t] [x] = new String();
+  // 	]
+  
+  // Feature Var - Start ------------------------------------------------------
+  to-java:
+  	VarDec(x, Type(t)) -> $[]  
+  // to-java:
+  // 	Var(i) -> $[new Var([i])]
+    
+  to-java:
+  	Var(i) -> $[[i]]
+		where
+			<bagof-GetVar> i
+	// Feature Var - Ende -------------------------------------------------------			
+      		
+  // Feature Add - Start ------------------------------------------------------
+  to-java:
+  	Add(x*, y*) -> $[new Add([x'*],[y'*])]
+  	with
+  		x'* := <to-java> x*;
+  		y'* := <to-java> y*
+  // Feature Add - Ende -------------------------------------------------------		
+  
+  // Feature Sub - Start ------------------------------------------------------
+  to-java:
+  	Sub(x*, y*) -> $[new Sub([x'*],[y'*])]
+  	with
+  		x'* := <to-java> x*;
+  		y'* := <to-java> y*
+  // Feature Sub - Ende -------------------------------------------------------		
+  
+  // Feature Mul - Start ------------------------------------------------------		
+  to-java:
+  	Mul(x*, y*) -> $[new Mul([x'*],[y'*])]
+  	with
+  		x'* := <to-java> x*;
+  		y'* := <to-java> y*
+  // Feature Mul - Ende -------------------------------------------------------				
+  
+  // Feature Mod - Start ------------------------------------------------------
+  to-java:
+  	Mod(x*, y*) -> $[new Mod([x'*],[y'*])]
+  	with
+  		x'* := <to-java> x*;
+  		y'* := <to-java> y*
+  // Feature Mod - Ende -------------------------------------------------------		
+  
+  // Feature Div - Start ------------------------------------------------------
+  to-java:
+  	Div(x*, y*) -> $[new Div([x'*],[y'*])]
+  	with
+  		x'* := <to-java> x*;
+  		y'* := <to-java> y*
+  // Feature Div - Ende -------------------------------------------------------				
+  
+  // Feature Eval - Start ----------------------------------------------------- 
+  to-java:
+  	Eval(t*) -> $[System.out.println(([t'*]).eval());
+  	]
+  	with
+  		t'* := <to-java> t*
+  // Feature Eval - Ende ------------------------------------------------------			
+  
+  // Feature Print - Start ---------------------------------------------------- 
+  to-java:
+  	Print(t*) -> $[System.out.println(([t'*]).print());
+  	]
+  	with
+  		t'* := <to-java> t*
+  // Feature Print - Ende -----------------------------------------------------		
+  
+  // Feature Simplify - Start -------------------------------------------------
+  to-java:
+  	Simplify(t*) -> $[System.out.println(([t'*]).simplify());
+  	]
+  with
+  		t'* := <to-java> t*
+  // Feature Simplify - Ende --------------------------------------------------			
+    
+  // Feature String - Start ---------------------------------------------------
+  to-java:
+  	String(s) -> $[new String([s])]
+  // Feature String - Ende ----------------------------------------------------	

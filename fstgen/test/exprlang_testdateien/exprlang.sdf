@@ -1,0 +1,78 @@
+module Exprlang
+
+	imports Common
+	
+exports
+	
+	sorts Type Stat Exp Var
+
+  context-free start-symbols
+		Start
+
+  context-free syntax
+      
+    %% Feature Expr
+    Stat*					        -> Start {cons("Start")}    
+    Var ":=" Exp ";" 			-> Stat {cons("Assign")}
+    ID                    -> Type {cons("Type")}
+    "(" Exp ")"           -> Exp {bracket}
+    "-" Exp               -> Exp {cons("UnaryMinus")}
+    INT                   -> Exp {cons("Int")}
+    
+    %% Funktionen - Start -----------------------------------------------------  
+    %% Feature Eval
+    "eval" "(" Exp ")" ";"     -> Stat {cons("Eval")}
+       
+    %% Feature Print
+    "print" "(" Exp ")" ";"    -> Stat {cons("Print")}
+        
+    %% Feature Simplifiy
+    "simplify" "(" Exp ")" ";" -> Stat {cons("Simplify")}
+        
+    %% Funktionen - Ende ------------------------------------------------------
+        
+    %% Feature Var
+    "var" ID ":" Type ";" -> Stat {cons("VarDec")}
+    ID                    -> Var
+    Var                   -> Exp {cons("Var")}    
+   
+    %% Feature String
+    STRING       -> Exp {cons("String")}
+    
+    %% Operationen auf Ausdrücken - Start -------------------------------------
+    %% Feature Add
+    Exp "+" Exp  -> Exp {cons("Add"),assoc}
+    
+    %% Feature Sub
+    Exp "-" Exp  -> Exp {cons("Sub"),left}
+    
+    %% Feature Mul
+    Exp "*" Exp  -> Exp {cons("Mul"),assoc}
+    
+    %% Feature Div
+    Exp "/" Exp  -> Exp {cons("Div"),assoc}
+    
+    %% Feature Mod
+    Exp "%" Exp  -> Exp {cons("Mod"),non-assoc}
+    %% Operationen auf Ausdrücken - Ende --------------------------------------
+
+  %% Priorität (>) und Assoziativität (left, right, assoc, non-assoc) dienen 
+  %% der Disambiguierung 
+	context-free priorities
+		"-" Exp -> Exp
+  > {left:
+ 			 %% Feature Mul   
+       Exp "*" Exp -> Exp
+       
+       %% Feature Div 
+       Exp "/" Exp -> Exp   
+       
+       %% Feature Mod
+       Exp "%" Exp -> Exp }    
+  > {left:
+  		 %% Feature Add 
+       Exp "+" Exp -> Exp
+       
+       %% Feature Sub 
+       Exp "-" Exp -> Exp }   
+      

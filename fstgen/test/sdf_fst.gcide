@@ -1,6 +1,6 @@
 options {
 	STATIC = false;
-	DEBUG_PARSER = false;
+	DEBUG_PARSER = true;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -327,13 +327,12 @@ Disambiguations :
 /* Productions have the form A1 ... An -> A0, where A0 is non-terminal and 
    A1 ... An is a string of terminals and non-terminals. */
 @FSTTerminal(name="{AUTO}")
-Production :
-	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
-
 /*Production :
-	(Symbol)* "->" (LOOK_AHEAD("Symbol()") Symbol)+ 
-				   [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
 
+Production :
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"[[\" Symbol() \"]]\"") "[[" Symbol "]]"] 
+	               [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
 
 
 /* There are three kinds of symbols: sorts, character classes and literals. 

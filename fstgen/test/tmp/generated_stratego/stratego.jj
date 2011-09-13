@@ -272,8 +272,8 @@ TOKEN :
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>) 
-	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>|<APOSTROPHE>)? > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>|<APOSTROPHE>) 
+	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>|<APOSTROPHE>)* (<STAR>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -630,7 +630,7 @@ FSTInfo AlternativeStrategy(boolean inTerminal) : { Token first=null,t;FSTInfo n
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=AlternativeOperator(true){ replaceName(n);} n=Strategy(true){ replaceName(n);} {return productionEndTerminal("AlternativeStrategy1","-","-","Replacement","Default",first,token);}
  |
-	"=>" n=Term(true){ replaceName(n);} {return productionEndTerminal("AlternativeStrategy2","-","-","Replacement","Default",first,token);}
+	"=>" n=Term(true){ replaceName(n);} [n=AlternativeStrategy(true){ replaceName(n);}] {return productionEndTerminal("AlternativeStrategy2","-","-","Replacement","Default",first,token);}
 
  )  }
 

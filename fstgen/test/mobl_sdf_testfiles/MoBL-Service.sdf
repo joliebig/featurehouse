@@ -1,0 +1,18 @@
+module MoBL-Service
+
+imports
+  Common
+  MoBL
+  MoBL-Action
+
+exports
+
+  context-free syntax
+
+	%% Feature Service - Start
+    MetaAnno* "service" QId "{" ServiceElem* "}"    -> Definition {cons("Service")}
+    PropVal                                         -> ServiceElem
+    MetaAnno* "resource" ID "(" {FArg ","}* ")" ":" Type "{" ResourceElem* "}" -> ServiceElem {cons("Resource")}
+    PropVal                                         -> ResourceElem
+	%% Feature Service - Ende    
+    

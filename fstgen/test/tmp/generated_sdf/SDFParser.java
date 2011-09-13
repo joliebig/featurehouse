@@ -8,443 +8,465 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         public SDFParser(){}
 
   final public FSTInfo NatInteger(boolean inTerminal) throws ParseException {
+    trace_call("NatInteger");
+    try {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(INTEGER_LITERAL);
+      jj_consume_token(INTEGER_LITERAL);
                            {if (true) return productionEndTerminal("NatInteger","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("NatInteger");
+    }
   }
 
   final public FSTInfo RealDigit(boolean inTerminal) throws ParseException {
+    trace_call("RealDigit");
+    try {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(INTEGER_LITERAL);
-    jj_consume_token(DOT);
-    jj_consume_token(INTEGER_LITERAL);
+      jj_consume_token(INTEGER_LITERAL);
+      jj_consume_token(DOT);
+      jj_consume_token(INTEGER_LITERAL);
                                                  {if (true) return productionEndTerminal("RealDigit","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("RealDigit");
+    }
   }
 
   final public FSTInfo Int(boolean inTerminal) throws ParseException {
+    trace_call("Int");
+    try {
                                     Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MINUS:
-      jj_consume_token(MINUS);
-      break;
-    default:
-      jj_la1[0] = jj_gen;
-      ;
-    }
-    n = NatInteger(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case MINUS:
+        jj_consume_token(MINUS);
+        break;
+      default:
+        jj_la1[0] = jj_gen;
+        ;
+      }
+      n = NatInteger(true);
                                       replaceName(n);
                                                         {if (true) return productionEndTerminal("Int","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Int");
+    }
   }
 
   final public FSTInfo Real(boolean inTerminal) throws ParseException {
+    trace_call("Real");
+    try {
                                      Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case MINUS:
-      jj_consume_token(MINUS);
-      break;
-    default:
-      jj_la1[1] = jj_gen;
-      ;
-    }
-    n = RealDigit(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case MINUS:
+        jj_consume_token(MINUS);
+        break;
+      default:
+        jj_la1[1] = jj_gen;
+        ;
+      }
+      n = RealDigit(true);
                                      replaceName(n);
                                                        {if (true) return productionEndTerminal("Real","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Real");
+    }
   }
 
   final public FSTInfo String(boolean inTerminal) throws ParseException {
+    trace_call("String");
+    try {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(STRING_LITERAL);
+      jj_consume_token(STRING_LITERAL);
                           {if (true) return productionEndTerminal("String","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("String");
+    }
   }
 
   final public FSTInfo CharClassLiteral(boolean inTerminal) throws ParseException {
+    trace_call("CharClassLiteral");
+    try {
                                                  Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(CHARCLASS_LITERAL);
+      jj_consume_token(CHARCLASS_LITERAL);
                              {if (true) return productionEndTerminal("CharClassLiteral","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("CharClassLiteral");
+    }
   }
 
   final public FSTInfo Id(boolean inTerminal) throws ParseException {
+    trace_call("Id");
+    try {
                                    Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    t = jj_consume_token(IDENTIFIER);
+      t = jj_consume_token(IDENTIFIER);
                         replaceName(new FSTInfo("<IDENTIFIER>",t.image));
                                                                             {if (true) return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Id");
+    }
   }
 
   final public FSTInfo Module(boolean inTerminal) throws ParseException {
+    trace_call("Module");
+    try {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = ModuleDeclaration(inTerminal);
+      n = ModuleDeclaration(inTerminal);
                                          replaceName("ModuleDeclaration", n);
                                                                                 replaceName(n);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case IMPORTS:
-      n = ImportDeclaration(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IMPORTS:
+        n = ImportDeclaration(inTerminal);
                                                                                                                                    replaceName(n);
-      break;
-    default:
-      jj_la1[2] = jj_gen;
-      ;
-    }
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case EXPORTS:
-      n = ExportDeclaration(inTerminal);
+        break;
+      default:
+        jj_la1[2] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case EXPORTS:
+        n = ExportDeclaration(inTerminal);
                                                                                                                                                                                        replaceName(n);
-      break;
-    default:
-      jj_la1[3] = jj_gen;
-      ;
-    }
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case HIDDENS:
-      n = HiddenDeclaration(inTerminal);
+        break;
+      default:
+        jj_la1[3] = jj_gen;
+        ;
+      }
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case HIDDENS:
+        n = HiddenDeclaration(inTerminal);
                                                                                                                                                                                                                                            replaceName(n);
-      break;
-    default:
-      jj_la1[4] = jj_gen;
-      ;
-    }
-    jj_consume_token(0);
+        break;
+      default:
+        jj_la1[4] = jj_gen;
+        ;
+      }
+      jj_consume_token(0);
                                                                                                                                                                                                                                                                     {if (true) return productionEndNonTerminal("Module","{ModuleDeclaration}","{ModuleDeclaration}");}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Module");
+    }
   }
 
   final public FSTInfo ModName(boolean inTerminal) throws ParseException {
+    trace_call("ModName");
+    try {
                                         Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = ModNamePart(true);
+      n = ModNamePart(true);
                              replaceName("ModNamePart", n);
                                                               replaceName(n);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LBRACKET:
-      n = ModuleParameter(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LBRACKET:
+        n = ModuleParameter(true);
                                                                                                          replaceName(n);
-      break;
-    default:
-      jj_la1[5] = jj_gen;
-      ;
-    }
+        break;
+      default:
+        jj_la1[5] = jj_gen;
+        ;
+      }
                                                                                                                             {if (true) return productionEndTerminal("ModName","{ModNamePart}","{ModNamePart}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ModName");
+    }
   }
 
   final public FSTInfo ModNamePart(boolean inTerminal) throws ParseException {
+    trace_call("ModNamePart");
+    try {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = Id(true);
+      n = Id(true);
                     replaceName("Id", n);
                                             replaceName(n);
-    label_1:
-    while (true) {
-      if (jj_2_1(2)) {
-        ;
-      } else {
-        break label_1;
-      }
-      jj_consume_token(SLASH);
-      n = Id(true);
+      label_1:
+      while (true) {
+        if (jj_2_1(2)) {
+          ;
+        } else {
+          break label_1;
+        }
+        jj_consume_token(SLASH);
+        n = Id(true);
                                                                                            replaceName("Id", n);
                                                                                                                    replaceName(n);
-    }
+      }
                                                                                                                                        {if (true) return productionEndTerminal("ModNamePart","-","{Id}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ModNamePart");
+    }
   }
 
   final public FSTInfo ModuleParameter(boolean inTerminal) throws ParseException {
+    trace_call("ModuleParameter");
+    try {
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(LBRACKET);
-    label_2:
-    while (true) {
-      n = ModuleSort(true);
+      jj_consume_token(LBRACKET);
+      label_2:
+      while (true) {
+        n = ModuleSort(true);
                                  replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
-      case DLBRACKET:
-        ;
-        break;
-      default:
-        jj_la1[6] = jj_gen;
-        break label_2;
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+        case DLBRACKET:
+          ;
+          break;
+        default:
+          jj_la1[6] = jj_gen;
+          break label_2;
+        }
       }
-    }
-    jj_consume_token(RBRACKET);
+      jj_consume_token(RBRACKET);
                                                          {if (true) return productionEndTerminal("ModuleParameter","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ModuleParameter");
+    }
   }
 
   final public FSTInfo ModuleSort(boolean inTerminal) throws ParseException {
+    trace_call("ModuleSort");
+    try {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case IDENTIFIER:
-      n = Id(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IDENTIFIER:
+        n = Id(true);
                     replaceName(n);
                                       {if (true) return productionEndTerminal("ModuleSort1","-","-","Replacement","Default",first,token);}
-      break;
-    case DLBRACKET:
-      jj_consume_token(DLBRACKET);
-      n = Id(true);
+        break;
+      case DLBRACKET:
+        jj_consume_token(DLBRACKET);
+        n = Id(true);
                          replaceName(n);
-      jj_consume_token(DRBRACKET);
+        jj_consume_token(DRBRACKET);
                                                 {if (true) return productionEndTerminal("ModuleSort2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[7] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[7] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ModuleSort");
+    }
   }
 
   final public FSTInfo ModuleDeclaration(boolean inTerminal) throws ParseException {
+    trace_call("ModuleDeclaration");
+    try {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(MODULE);
-    n = ModName(true);
+      jj_consume_token(MODULE);
+      n = ModName(true);
                                   replaceName("ModName", n);
                                                                replaceName(n);
                                                                                  {if (true) return productionEndTerminal("ModuleDeclaration","{ModName}","{ModName}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ModuleDeclaration");
+    }
   }
 
   final public FSTInfo ImportDeclaration(boolean inTerminal) throws ParseException {
+    trace_call("ImportDeclaration");
+    try {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(IMPORTS);
-    label_3:
-    while (true) {
-      n = ModName(inTerminal);
+      jj_consume_token(IMPORTS);
+      label_3:
+      while (true) {
+        n = ModName(inTerminal);
                                           replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
-        ;
-        break;
-      default:
-        jj_la1[8] = jj_gen;
-        break label_3;
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case IDENTIFIER:
+          ;
+          break;
+        default:
+          jj_la1[8] = jj_gen;
+          break label_3;
+        }
       }
-    }
                                                               {if (true) return productionEndNonTerminal("ImportDeclaration","imports","imports");}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ImportDeclaration");
+    }
   }
 
   final public FSTInfo ExportDeclaration(boolean inTerminal) throws ParseException {
+    trace_call("ExportDeclaration");
+    try {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(EXPORTS);
-    label_4:
-    while (true) {
-      n = Grammar(inTerminal);
+      jj_consume_token(EXPORTS);
+      label_4:
+      while (true) {
+        n = Grammar(inTerminal);
                                           replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case SORTS:
-      case STARTSYMBOL:
-      case SYNTAX:
-      case VARIABLES:
-      case LEXICALSYNTAX:
-      case CFREESYNTAX:
-      case LEXICALVARS:
-      case CFREEPRIORITIES:
-      case LEXICALRESTRICTIONS:
-      case CFREERESTRICTIONS:
-        ;
-        break;
-      default:
-        jj_la1[9] = jj_gen;
-        break label_4;
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SORTS:
+        case STARTSYMBOL:
+        case SYNTAX:
+        case VARIABLES:
+        case LEXICALSYNTAX:
+        case CFREESYNTAX:
+        case LEXICALVARS:
+        case CFREEPRIORITIES:
+        case LEXICALRESTRICTIONS:
+        case CFREERESTRICTIONS:
+          ;
+          break;
+        default:
+          jj_la1[9] = jj_gen;
+          break label_4;
+        }
       }
-    }
                                                               {if (true) return productionEndNonTerminal("ExportDeclaration","exports","exports");}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ExportDeclaration");
+    }
   }
 
   final public FSTInfo HiddenDeclaration(boolean inTerminal) throws ParseException {
+    trace_call("HiddenDeclaration");
+    try {
                                                   Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(HIDDENS);
-    label_5:
-    while (true) {
-      n = Grammar(inTerminal);
+      jj_consume_token(HIDDENS);
+      label_5:
+      while (true) {
+        n = Grammar(inTerminal);
                                           replaceName(n);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case SORTS:
+        case STARTSYMBOL:
+        case SYNTAX:
+        case VARIABLES:
+        case LEXICALSYNTAX:
+        case CFREESYNTAX:
+        case LEXICALVARS:
+        case CFREEPRIORITIES:
+        case LEXICALRESTRICTIONS:
+        case CFREERESTRICTIONS:
+          ;
+          break;
+        default:
+          jj_la1[10] = jj_gen;
+          break label_5;
+        }
+      }
+                                                              {if (true) return productionEndNonTerminal("HiddenDeclaration","hiddens","hiddens");}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("HiddenDeclaration");
+    }
+  }
+
+  final public FSTInfo Grammar(boolean inTerminal) throws ParseException {
+    trace_call("Grammar");
+    try {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case SORTS:
+        jj_consume_token(SORTS);
+        label_6:
+        while (true) {
+          n = Sort(inTerminal);
+                                     replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case DLBRACKET:
+          case LT:
+            ;
+            break;
+          default:
+            jj_la1[11] = jj_gen;
+            break label_6;
+          }
+        }
+                                                         {if (true) return productionEndNonTerminal("Grammar1","sorts","sorts");}
+        break;
       case STARTSYMBOL:
+        jj_consume_token(STARTSYMBOL);
+        label_7:
+        while (true) {
+          n = Sort(inTerminal);
+                                                          replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case DLBRACKET:
+          case LT:
+            ;
+            break;
+          default:
+            jj_la1[12] = jj_gen;
+            break label_7;
+          }
+        }
+                                                                              {if (true) return productionEndNonTerminal("Grammar2","context-free start-symbols","context-free start-symbols");}
+        break;
       case SYNTAX:
       case VARIABLES:
       case LEXICALSYNTAX:
       case CFREESYNTAX:
       case LEXICALVARS:
+        n = Productions(inTerminal);
+                                   replaceName(n);
+                                                     {if (true) return productionEndNonTerminal("Grammar3","Productions","Productions");}
+        break;
       case CFREEPRIORITIES:
       case LEXICALRESTRICTIONS:
       case CFREERESTRICTIONS:
-        ;
-        break;
-      default:
-        jj_la1[10] = jj_gen;
-        break label_5;
-      }
-    }
-                                                              {if (true) return productionEndNonTerminal("HiddenDeclaration","hiddens","hiddens");}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Grammar(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case SORTS:
-      jj_consume_token(SORTS);
-      label_6:
-      while (true) {
-        n = Sort(inTerminal);
-                                     replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case IDENTIFIER:
-        case LPAREN:
-        case LBRACE:
-        case DLBRACKET:
-        case LT:
-          ;
-          break;
-        default:
-          jj_la1[11] = jj_gen;
-          break label_6;
-        }
-      }
-                                                         {if (true) return productionEndNonTerminal("Grammar1","sorts","sorts");}
-      break;
-    case STARTSYMBOL:
-      jj_consume_token(STARTSYMBOL);
-      label_7:
-      while (true) {
-        n = Sort(inTerminal);
-                                                          replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case IDENTIFIER:
-        case LPAREN:
-        case LBRACE:
-        case DLBRACKET:
-        case LT:
-          ;
-          break;
-        default:
-          jj_la1[12] = jj_gen;
-          break label_7;
-        }
-      }
-                                                                              {if (true) return productionEndNonTerminal("Grammar2","context-free start-symbols","context-free start-symbols");}
-      break;
-    case SYNTAX:
-    case VARIABLES:
-    case LEXICALSYNTAX:
-    case CFREESYNTAX:
-    case LEXICALVARS:
-      n = Productions(inTerminal);
-                                   replaceName(n);
-                                                     {if (true) return productionEndNonTerminal("Grammar3","Productions","Productions");}
-      break;
-    case CFREEPRIORITIES:
-    case LEXICALRESTRICTIONS:
-    case CFREERESTRICTIONS:
-      n = Disambiguations(inTerminal);
+        n = Disambiguations(inTerminal);
                                        replaceName(n);
                                                          {if (true) return productionEndNonTerminal("Grammar4","Disambiguations","Disambiguations");}
-      break;
-    default:
-      jj_la1[13] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[13] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Grammar");
+    }
   }
 
   final public FSTInfo Productions(boolean inTerminal) throws ParseException {
+    trace_call("Productions");
+    try {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = ProdPart(inTerminal);
+      n = ProdPart(inTerminal);
                                 replaceName("ProdPart", n);
                                                               replaceName(n);
-    label_8:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_LITERAL:
-      case IDENTIFIER:
-      case LPAREN:
-      case LBRACE:
-      case LBRACKET:
-      case DLBRACKET:
-      case LT:
-      case TILDE:
-      case ARROW:
-        ;
-        break;
-      default:
-        jj_la1[14] = jj_gen;
-        break label_8;
-      }
-      n = Production(inTerminal);
-                                                                                                          replaceName(n);
-    }
-                                                                                                                              {if (true) return productionEndNonTerminal("Productions","{ProdPart}","{ProdPart}");}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo ProdPart(boolean inTerminal) throws ParseException {
-                                         Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case SYNTAX:
-      jj_consume_token(SYNTAX);
-                   {if (true) return productionEndTerminal("ProdPart1","-","syntax","Replacement","Default",first,token);}
-      break;
-    case LEXICALSYNTAX:
-      jj_consume_token(LEXICALSYNTAX);
-                           {if (true) return productionEndTerminal("ProdPart2","-","lexical syntax","Replacement","Default",first,token);}
-      break;
-    case CFREESYNTAX:
-      jj_consume_token(CFREESYNTAX);
-                                {if (true) return productionEndTerminal("ProdPart3","-","context-free syntax","Replacement","Default",first,token);}
-      break;
-    case VARIABLES:
-      jj_consume_token(VARIABLES);
-                      {if (true) return productionEndTerminal("ProdPart4","-","variables","Replacement","Default",first,token);}
-      break;
-    case LEXICALVARS:
-      jj_consume_token(LEXICALVARS);
-                              {if (true) return productionEndTerminal("ProdPart5","-","lexical variables","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[15] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Disambiguations(boolean inTerminal) throws ParseException {
-                                                Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case CFREEPRIORITIES:
-      jj_consume_token(CFREEPRIORITIES);
-      label_9:
+      label_8:
       while (true) {
-        n = Priority(inTerminal);
-                                                           replaceName(n);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STRING_LITERAL:
         case IDENTIFIER:
@@ -458,721 +480,896 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           ;
           break;
         default:
-          jj_la1[16] = jj_gen;
-          break label_9;
+          jj_la1[14] = jj_gen;
+          break label_8;
         }
+        n = Production(inTerminal);
+                                                                                                          replaceName(n);
       }
-                                                                               {if (true) return productionEndNonTerminal("Disambiguations1","context-free priorities","context-free priorities");}
-      break;
-    case LEXICALRESTRICTIONS:
-      jj_consume_token(LEXICALRESTRICTIONS);
-      label_10:
-      while (true) {
-        n = Restriction(inTerminal);
-                                                           replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case STRING_LITERAL:
-        case IDENTIFIER:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case DLBRACKET:
-        case LT:
-        case TILDE:
-          ;
-          break;
-        default:
-          jj_la1[17] = jj_gen;
-          break label_10;
-        }
-      }
-                                                                               {if (true) return productionEndNonTerminal("Disambiguations2","lexical restrictions","lexical restrictions");}
-      break;
-    case CFREERESTRICTIONS:
-      jj_consume_token(CFREERESTRICTIONS);
-      label_11:
-      while (true) {
-        n = Restriction(inTerminal);
-                                                                replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case STRING_LITERAL:
-        case IDENTIFIER:
-        case LPAREN:
-        case LBRACE:
-        case LBRACKET:
-        case DLBRACKET:
-        case LT:
-        case TILDE:
-          ;
-          break;
-        default:
-          jj_la1[18] = jj_gen;
-          break label_11;
-        }
-      }
-                                                                                    {if (true) return productionEndNonTerminal("Disambiguations3","context-free restrictions","context-free restrictions");}
-      break;
-    default:
-      jj_la1[19] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+                                                                                                                              {if (true) return productionEndNonTerminal("Productions","{ProdPart}","{ProdPart}");}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Productions");
+    }
+  }
+
+  final public FSTInfo ProdPart(boolean inTerminal) throws ParseException {
+    trace_call("ProdPart");
+    try {
+                                         Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case SYNTAX:
+        jj_consume_token(SYNTAX);
+                   {if (true) return productionEndTerminal("ProdPart1","-","syntax","Replacement","Default",first,token);}
+        break;
+      case LEXICALSYNTAX:
+        jj_consume_token(LEXICALSYNTAX);
+                           {if (true) return productionEndTerminal("ProdPart2","-","lexical syntax","Replacement","Default",first,token);}
+        break;
+      case CFREESYNTAX:
+        jj_consume_token(CFREESYNTAX);
+                                {if (true) return productionEndTerminal("ProdPart3","-","context-free syntax","Replacement","Default",first,token);}
+        break;
+      case VARIABLES:
+        jj_consume_token(VARIABLES);
+                      {if (true) return productionEndTerminal("ProdPart4","-","variables","Replacement","Default",first,token);}
+        break;
+      case LEXICALVARS:
+        jj_consume_token(LEXICALVARS);
+                              {if (true) return productionEndTerminal("ProdPart5","-","lexical variables","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[15] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("ProdPart");
+    }
+  }
+
+  final public FSTInfo Disambiguations(boolean inTerminal) throws ParseException {
+    trace_call("Disambiguations");
+    try {
+                                                Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case CFREEPRIORITIES:
+        jj_consume_token(CFREEPRIORITIES);
+        label_9:
+        while (true) {
+          n = Priority(inTerminal);
+                                                           replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case DLBRACKET:
+          case LT:
+          case TILDE:
+          case ARROW:
+            ;
+            break;
+          default:
+            jj_la1[16] = jj_gen;
+            break label_9;
+          }
+        }
+                                                                               {if (true) return productionEndNonTerminal("Disambiguations1","context-free priorities","context-free priorities");}
+        break;
+      case LEXICALRESTRICTIONS:
+        jj_consume_token(LEXICALRESTRICTIONS);
+        label_10:
+        while (true) {
+          n = Restriction(inTerminal);
+                                                           replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case DLBRACKET:
+          case LT:
+          case TILDE:
+            ;
+            break;
+          default:
+            jj_la1[17] = jj_gen;
+            break label_10;
+          }
+        }
+                                                                               {if (true) return productionEndNonTerminal("Disambiguations2","lexical restrictions","lexical restrictions");}
+        break;
+      case CFREERESTRICTIONS:
+        jj_consume_token(CFREERESTRICTIONS);
+        label_11:
+        while (true) {
+          n = Restriction(inTerminal);
+                                                                replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case DLBRACKET:
+          case LT:
+          case TILDE:
+            ;
+            break;
+          default:
+            jj_la1[18] = jj_gen;
+            break label_11;
+          }
+        }
+                                                                                    {if (true) return productionEndNonTerminal("Disambiguations3","context-free restrictions","context-free restrictions");}
+        break;
+      default:
+        jj_la1[19] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Disambiguations");
+    }
   }
 
   final public FSTInfo Production(boolean inTerminal) throws ParseException {
+    trace_call("Production");
+    try {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_12:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_LITERAL:
-      case IDENTIFIER:
-      case LPAREN:
-      case LBRACE:
-      case LBRACKET:
-      case DLBRACKET:
-      case LT:
-      case TILDE:
-        ;
-        break;
-      default:
-        jj_la1[20] = jj_gen;
-        break label_12;
-      }
-      n = Symbol(true);
+      label_12:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case STRING_LITERAL:
+        case IDENTIFIER:
+        case LPAREN:
+        case LBRACE:
+        case LBRACKET:
+        case DLBRACKET:
+        case LT:
+        case TILDE:
+          ;
+          break;
+        default:
+          jj_la1[20] = jj_gen;
+          break label_12;
+        }
+        n = Symbol(true);
                          replaceName(n);
-    }
-    jj_consume_token(ARROW);
-    n = Symbol(true);
+      }
+      jj_consume_token(ARROW);
+      n = Symbol(true);
                                                                  replaceName(n);
-    if (jj_2_2(2147483647)) {
-      n = OptAttributes(true);
-                                                                                                                                     replaceName(n);
-    } else {
-      ;
-    }
-                                                                                                                                                        {if (true) return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+      if (jj_2_2(2147483647)) {
+        jj_consume_token(DLBRACKET);
+        n = Symbol(true);
+                                                                                                                                      replaceName(n);
+        jj_consume_token(DRBRACKET);
+      } else {
+        ;
+      }
+      if (jj_2_3(2147483647)) {
+        n = OptAttributes(true);
+                                                                                                                                                                                                                replaceName(n);
+      } else {
+        ;
+      }
+                                                                                                                                                                                                                                   {if (true) return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Production");
+    }
   }
 
   final public FSTInfo Symbol(boolean inTerminal) throws ParseException {
+    trace_call("Symbol");
+    try {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_3(2147483647)) {
-      jj_consume_token(LPAREN);
-      n = Symbol(true);
+      if (jj_2_4(2147483647)) {
+        jj_consume_token(LPAREN);
+        n = Symbol(true);
                                                         replaceName(n);
-      jj_consume_token(RPAREN);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-      case STAR:
-      case QUESTIONMARK:
-        n = SortOp(true);
-                                                                                              replaceName(n);
-        break;
-      default:
-        jj_la1[21] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case VERTICALLINE:
-        n = AlternativeSymbol(true);
-                                                                                                                                            replaceName(n);
-        break;
-      default:
-        jj_la1[22] = jj_gen;
-        ;
-      }
-                                                                                                                                                               {if (true) return productionEndTerminal("Symbol1","-","-","Replacement","Default",first,token);}
-    } else {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case IDENTIFIER:
-      case LPAREN:
-      case LBRACE:
-      case DLBRACKET:
-      case LT:
-        n = Sort(true);
-                      replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case VERTICALLINE:
-          n = AlternativeSymbol(true);
-                                                                   replaceName(n);
-          break;
-        default:
-          jj_la1[23] = jj_gen;
-          ;
-        }
-                                                                                      {if (true) return productionEndTerminal("Symbol2","-","-","Replacement","Default",first,token);}
-        break;
-      case LBRACKET:
-      case TILDE:
-        n = CharacterClass(true);
-                                replaceName(n);
-        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-        case VERTICALLINE:
-          n = AlternativeSymbol(true);
-                                                                             replaceName(n);
-          break;
-        default:
-          jj_la1[24] = jj_gen;
-          ;
-        }
-                                                                                                {if (true) return productionEndTerminal("Symbol3","-","-","Replacement","Default",first,token);}
-        break;
-      case STRING_LITERAL:
-        n = String(true);
-                        replaceName(n);
+        jj_consume_token(RPAREN);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case STAR:
         case QUESTIONMARK:
           n = SortOp(true);
-                                                          replaceName(n);
+                                                                                              replaceName(n);
           break;
         default:
-          jj_la1[25] = jj_gen;
+          jj_la1[21] = jj_gen;
           ;
         }
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case VERTICALLINE:
           n = AlternativeSymbol(true);
-                                                                                                        replaceName(n);
+                                                                                                                                            replaceName(n);
           break;
         default:
-          jj_la1[26] = jj_gen;
+          jj_la1[22] = jj_gen;
           ;
         }
-                                                                                                                           {if (true) return productionEndTerminal("Symbol4","-","-","Replacement","Default",first,token);}
-        break;
-      default:
-        jj_la1[27] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo AlternativeSymbol(boolean inTerminal) throws ParseException {
-                                                  Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(VERTICALLINE);
-    n = Symbol(true);
-                            replaceName(n);
-                                              {if (true) return productionEndTerminal("AlternativeSymbol","-","-","Replacement","Default",first,token);}
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo Sort(boolean inTerminal) throws ParseException {
-                                     Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case DLBRACKET:
-      jj_consume_token(DLBRACKET);
-      n = Id(true);
-                         replaceName("Id", n);
-                                                 replaceName(n);
-      jj_consume_token(DRBRACKET);
-                                                                        {if (true) return productionEndTerminal("Sort1","{Id}","{Id}","Replacement","Default",first,token);}
-      break;
-    case LT:
-      jj_consume_token(LT);
-      n = Id(true);
-                        replaceName("Id", n);
-                                                replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-      case STAR:
-      case QUESTIONMARK:
-        n = SortOp(true);
-                                                                                  replaceName(n);
-        break;
-      default:
-        jj_la1[28] = jj_gen;
-        ;
-      }
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case MINUS:
-        jj_consume_token(MINUS);
-        n = CFOrLEX(true);
-                                                                                                                          replaceName(n);
-        break;
-      default:
-        jj_la1[29] = jj_gen;
-        ;
-      }
-      jj_consume_token(GT);
-                                                                                                                                                 {if (true) return productionEndTerminal("Sort2","{Id}","{Id}","Replacement","Default",first,token);}
-      break;
-    case IDENTIFIER:
-      n = Id(true);
-                    replaceName("Id", n);
-                                            replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-      case STAR:
-      case QUESTIONMARK:
-        n = SortOp(true);
-                                                                              replaceName(n);
-        break;
-      default:
-        jj_la1[30] = jj_gen;
-        ;
-      }
-                                                                                                 {if (true) return productionEndTerminal("Sort3","{Id}","{Id}","Replacement","Default",first,token);}
-      break;
-    case LBRACE:
-      jj_consume_token(LBRACE);
-      n = Id(true);
-                        replaceName("Id", n);
-                                                replaceName(n);
-      n = String(true);
-                                                                                 replaceName(n);
-      jj_consume_token(RBRACE);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case PLUS:
-      case STAR:
-      case QUESTIONMARK:
-        n = SortOp(true);
-                                                                                                                       replaceName(n);
-        break;
-      default:
-        jj_la1[31] = jj_gen;
-        ;
-      }
-                                                                                                                                          {if (true) return productionEndTerminal("Sort4","{Id}","{Id}","Replacement","Default",first,token);}
-      break;
-    case LPAREN:
-      jj_consume_token(LPAREN);
-      label_13:
-      while (true) {
-        n = Sort(true);
-                           replaceName(n);
+                                                                                                                                                               {if (true) return productionEndTerminal("Symbol1","-","-","Replacement","Default",first,token);}
+      } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
         case DLBRACKET:
         case LT:
+          n = Sort(true);
+                      replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case VERTICALLINE:
+            n = AlternativeSymbol(true);
+                                                                   replaceName(n);
+            break;
+          default:
+            jj_la1[23] = jj_gen;
+            ;
+          }
+                                                                                      {if (true) return productionEndTerminal("Symbol2","-","-","Replacement","Default",first,token);}
+          break;
+        case LBRACKET:
+        case TILDE:
+          n = CharacterClass(true);
+                                replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case VERTICALLINE:
+            n = AlternativeSymbol(true);
+                                                                             replaceName(n);
+            break;
+          default:
+            jj_la1[24] = jj_gen;
+            ;
+          }
+                                                                                                {if (true) return productionEndTerminal("Symbol3","-","-","Replacement","Default",first,token);}
+          break;
+        case STRING_LITERAL:
+          n = String(true);
+                        replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case PLUS:
+          case STAR:
+          case QUESTIONMARK:
+            n = SortOp(true);
+                                                          replaceName(n);
+            break;
+          default:
+            jj_la1[25] = jj_gen;
+            ;
+          }
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case VERTICALLINE:
+            n = AlternativeSymbol(true);
+                                                                                                        replaceName(n);
+            break;
+          default:
+            jj_la1[26] = jj_gen;
+            ;
+          }
+                                                                                                                           {if (true) return productionEndTerminal("Symbol4","-","-","Replacement","Default",first,token);}
+          break;
+        default:
+          jj_la1[27] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
+        }
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Symbol");
+    }
+  }
+
+  final public FSTInfo AlternativeSymbol(boolean inTerminal) throws ParseException {
+    trace_call("AlternativeSymbol");
+    try {
+                                                  Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      jj_consume_token(VERTICALLINE);
+      n = Symbol(true);
+                            replaceName(n);
+                                              {if (true) return productionEndTerminal("AlternativeSymbol","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("AlternativeSymbol");
+    }
+  }
+
+  final public FSTInfo Sort(boolean inTerminal) throws ParseException {
+    trace_call("Sort");
+    try {
+                                     Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case DLBRACKET:
+        jj_consume_token(DLBRACKET);
+        n = Id(true);
+                         replaceName("Id", n);
+                                                 replaceName(n);
+        jj_consume_token(DRBRACKET);
+                                                                        {if (true) return productionEndTerminal("Sort1","{Id}","{Id}","Replacement","Default",first,token);}
+        break;
+      case LT:
+        jj_consume_token(LT);
+        n = Id(true);
+                        replaceName("Id", n);
+                                                replaceName(n);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case PLUS:
+        case STAR:
+        case QUESTIONMARK:
+          n = SortOp(true);
+                                                                                  replaceName(n);
+          break;
+        default:
+          jj_la1[28] = jj_gen;
+          ;
+        }
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case MINUS:
+          jj_consume_token(MINUS);
+          n = CFOrLEX(true);
+                                                                                                                          replaceName(n);
+          break;
+        default:
+          jj_la1[29] = jj_gen;
+          ;
+        }
+        jj_consume_token(GT);
+                                                                                                                                                 {if (true) return productionEndTerminal("Sort2","{Id}","{Id}","Replacement","Default",first,token);}
+        break;
+      case IDENTIFIER:
+        n = Id(true);
+                    replaceName("Id", n);
+                                            replaceName(n);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case PLUS:
+        case STAR:
+        case QUESTIONMARK:
+          n = SortOp(true);
+                                                                              replaceName(n);
+          break;
+        default:
+          jj_la1[30] = jj_gen;
+          ;
+        }
+                                                                                                 {if (true) return productionEndTerminal("Sort3","{Id}","{Id}","Replacement","Default",first,token);}
+        break;
+      case LBRACE:
+        jj_consume_token(LBRACE);
+        n = Id(true);
+                        replaceName("Id", n);
+                                                replaceName(n);
+        n = String(true);
+                                                                                 replaceName(n);
+        jj_consume_token(RBRACE);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case PLUS:
+        case STAR:
+        case QUESTIONMARK:
+          n = SortOp(true);
+                                                                                                                       replaceName(n);
+          break;
+        default:
+          jj_la1[31] = jj_gen;
+          ;
+        }
+                                                                                                                                          {if (true) return productionEndTerminal("Sort4","{Id}","{Id}","Replacement","Default",first,token);}
+        break;
+      case LPAREN:
+        jj_consume_token(LPAREN);
+        label_13:
+        while (true) {
+          n = Sort(true);
+                           replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case DLBRACKET:
+          case LT:
+            ;
+            break;
+          default:
+            jj_la1[32] = jj_gen;
+            break label_13;
+          }
+        }
+        jj_consume_token(RPAREN);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case PLUS:
+        case STAR:
+        case QUESTIONMARK:
+          n = SortOp(true);
+                                                                   replaceName(n);
+          break;
+        default:
+          jj_la1[33] = jj_gen;
+          ;
+        }
+                                                                                      {if (true) return productionEndTerminal("Sort5","{Id}","{Id}","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[34] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Sort");
+    }
+  }
+
+  final public FSTInfo SortOp(boolean inTerminal) throws ParseException {
+    trace_call("SortOp");
+    try {
+                                       Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case STAR:
+        jj_consume_token(STAR);
+              {if (true) return productionEndTerminal("SortOp1","-","-","Replacement","Default",first,token);}
+        break;
+      case PLUS:
+        jj_consume_token(PLUS);
+              {if (true) return productionEndTerminal("SortOp2","-","-","Replacement","Default",first,token);}
+        break;
+      case QUESTIONMARK:
+        jj_consume_token(QUESTIONMARK);
+              {if (true) return productionEndTerminal("SortOp3","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[35] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("SortOp");
+    }
+  }
+
+  final public FSTInfo CFOrLEX(boolean inTerminal) throws ParseException {
+    trace_call("CFOrLEX");
+    try {
+                                        Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case CF:
+        jj_consume_token(CF);
+               {if (true) return productionEndTerminal("CFOrLEX1","-","-","Replacement","Default",first,token);}
+        break;
+      case LEX:
+        jj_consume_token(LEX);
+                {if (true) return productionEndTerminal("CFOrLEX2","-","-","Replacement","Default",first,token);}
+        break;
+      default:
+        jj_la1[36] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("CFOrLEX");
+    }
+  }
+
+  final public FSTInfo CharacterClass(boolean inTerminal) throws ParseException {
+    trace_call("CharacterClass");
+    try {
+                                               Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case TILDE:
+        jj_consume_token(TILDE);
+        break;
+      default:
+        jj_la1[37] = jj_gen;
+        ;
+      }
+      jj_consume_token(LBRACKET);
+      label_14:
+      while (true) {
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case INTEGER_LITERAL:
+        case CHARCLASS_LITERAL:
+        case IDENTIFIER:
+        case MINUS:
+        case BACKSLASH:
           ;
           break;
         default:
-          jj_la1[32] = jj_gen;
-          break label_13;
+          jj_la1[38] = jj_gen;
+          break label_14;
         }
+        n = CharClass(true);
+                                          replaceName(n);
       }
-      jj_consume_token(RPAREN);
+      jj_consume_token(RBRACKET);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case STAR:
       case QUESTIONMARK:
         n = SortOp(true);
-                                                                   replaceName(n);
-        break;
-      default:
-        jj_la1[33] = jj_gen;
-        ;
-      }
-                                                                                      {if (true) return productionEndTerminal("Sort5","{Id}","{Id}","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[34] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo SortOp(boolean inTerminal) throws ParseException {
-                                       Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case STAR:
-      jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("SortOp1","-","-","Replacement","Default",first,token);}
-      break;
-    case PLUS:
-      jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("SortOp2","-","-","Replacement","Default",first,token);}
-      break;
-    case QUESTIONMARK:
-      jj_consume_token(QUESTIONMARK);
-              {if (true) return productionEndTerminal("SortOp3","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[35] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CFOrLEX(boolean inTerminal) throws ParseException {
-                                        Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case CF:
-      jj_consume_token(CF);
-               {if (true) return productionEndTerminal("CFOrLEX1","-","-","Replacement","Default",first,token);}
-      break;
-    case LEX:
-      jj_consume_token(LEX);
-                {if (true) return productionEndTerminal("CFOrLEX2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[36] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
-    throw new Error("Missing return statement in function");
-  }
-
-  final public FSTInfo CharacterClass(boolean inTerminal) throws ParseException {
-                                               Token first=null,t;FSTInfo n;
-     first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case TILDE:
-      jj_consume_token(TILDE);
-      break;
-    default:
-      jj_la1[37] = jj_gen;
-      ;
-    }
-    jj_consume_token(LBRACKET);
-    label_14:
-    while (true) {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case INTEGER_LITERAL:
-      case CHARCLASS_LITERAL:
-      case IDENTIFIER:
-      case MINUS:
-      case BACKSLASH:
-        ;
-        break;
-      default:
-        jj_la1[38] = jj_gen;
-        break label_14;
-      }
-      n = CharClass(true);
-                                          replaceName(n);
-    }
-    jj_consume_token(RBRACKET);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case PLUS:
-    case STAR:
-    case QUESTIONMARK:
-      n = SortOp(true);
                                                                                   replaceName(n);
-      break;
-    default:
-      jj_la1[39] = jj_gen;
-      ;
-    }
+        break;
+      default:
+        jj_la1[39] = jj_gen;
+        ;
+      }
                                                                                                      {if (true) return productionEndTerminal("CharacterClass","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("CharacterClass");
+    }
   }
 
   final public FSTInfo CharClass(boolean inTerminal) throws ParseException {
+    trace_call("CharClass");
+    try {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case BACKSLASH:
-      jj_consume_token(BACKSLASH);
-      n = SpecialSign(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case BACKSLASH:
+        jj_consume_token(BACKSLASH);
+        n = SpecialSign(true);
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("CharClass1","-","-","Replacement","Default",first,token);}
-      break;
-    case IDENTIFIER:
-      n = Id(true);
+        break;
+      case IDENTIFIER:
+        n = Id(true);
                     replaceName(n);
                                       {if (true) return productionEndTerminal("CharClass2","-","-","Replacement","Default",first,token);}
-      break;
-    case INTEGER_LITERAL:
-    case MINUS:
-      n = Int(true);
+        break;
+      case INTEGER_LITERAL:
+      case MINUS:
+        n = Int(true);
                      replaceName(n);
                                        {if (true) return productionEndTerminal("CharClass3","-","-","Replacement","Default",first,token);}
-      break;
-    case CHARCLASS_LITERAL:
-      n = CharClassLiteral(true);
+        break;
+      case CHARCLASS_LITERAL:
+        n = CharClassLiteral(true);
                                   replaceName(n);
                                                     {if (true) return productionEndTerminal("CharClass4","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[40] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[40] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("CharClass");
+    }
   }
 
   final public FSTInfo SpecialSign(boolean inTerminal) throws ParseException {
+    trace_call("SpecialSign");
+    try {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case LPAREN:
-      jj_consume_token(LPAREN);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case LPAREN:
+        jj_consume_token(LPAREN);
               {if (true) return productionEndTerminal("SpecialSign1","-","-","Replacement","Default",first,token);}
-      break;
-    case RPAREN:
-      jj_consume_token(RPAREN);
+        break;
+      case RPAREN:
+        jj_consume_token(RPAREN);
               {if (true) return productionEndTerminal("SpecialSign2","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACE:
-      jj_consume_token(LBRACE);
+        break;
+      case LBRACE:
+        jj_consume_token(LBRACE);
               {if (true) return productionEndTerminal("SpecialSign3","-","-","Replacement","Default",first,token);}
-      break;
-    case RBRACE:
-      jj_consume_token(RBRACE);
+        break;
+      case RBRACE:
+        jj_consume_token(RBRACE);
               {if (true) return productionEndTerminal("SpecialSign4","-","-","Replacement","Default",first,token);}
-      break;
-    case LBRACKET:
-      jj_consume_token(LBRACKET);
+        break;
+      case LBRACKET:
+        jj_consume_token(LBRACKET);
               {if (true) return productionEndTerminal("SpecialSign5","-","-","Replacement","Default",first,token);}
-      break;
-    case RBRACKET:
-      jj_consume_token(RBRACKET);
+        break;
+      case RBRACKET:
+        jj_consume_token(RBRACKET);
               {if (true) return productionEndTerminal("SpecialSign6","-","-","Replacement","Default",first,token);}
-      break;
-    case COMMA:
-      jj_consume_token(COMMA);
+        break;
+      case COMMA:
+        jj_consume_token(COMMA);
               {if (true) return productionEndTerminal("SpecialSign7","-","-","Replacement","Default",first,token);}
-      break;
-    case LT:
-      jj_consume_token(LT);
+        break;
+      case LT:
+        jj_consume_token(LT);
               {if (true) return productionEndTerminal("SpecialSign8","-","-","Replacement","Default",first,token);}
-      break;
-    case GT:
-      jj_consume_token(GT);
+        break;
+      case GT:
+        jj_consume_token(GT);
               {if (true) return productionEndTerminal("SpecialSign9","-","-","Replacement","Default",first,token);}
-      break;
-    case DDOT:
-      jj_consume_token(DDOT);
+        break;
+      case DDOT:
+        jj_consume_token(DDOT);
               {if (true) return productionEndTerminal("SpecialSign10","-","-","Replacement","Default",first,token);}
-      break;
-    case DOT:
-      jj_consume_token(DOT);
+        break;
+      case DOT:
+        jj_consume_token(DOT);
               {if (true) return productionEndTerminal("SpecialSign11","-","-","Replacement","Default",first,token);}
-      break;
-    case QUESTIONMARK:
-      jj_consume_token(QUESTIONMARK);
+        break;
+      case QUESTIONMARK:
+        jj_consume_token(QUESTIONMARK);
               {if (true) return productionEndTerminal("SpecialSign12","-","-","Replacement","Default",first,token);}
-      break;
-    case EXCLAMATIONMARK:
-      jj_consume_token(EXCLAMATIONMARK);
+        break;
+      case EXCLAMATIONMARK:
+        jj_consume_token(EXCLAMATIONMARK);
               {if (true) return productionEndTerminal("SpecialSign13","-","-","Replacement","Default",first,token);}
-      break;
-    case PERCENTAGE:
-      jj_consume_token(PERCENTAGE);
+        break;
+      case PERCENTAGE:
+        jj_consume_token(PERCENTAGE);
               {if (true) return productionEndTerminal("SpecialSign14","-","-","Replacement","Default",first,token);}
-      break;
-    case LOWLINE:
-      jj_consume_token(LOWLINE);
+        break;
+      case LOWLINE:
+        jj_consume_token(LOWLINE);
               {if (true) return productionEndTerminal("SpecialSign15","-","-","Replacement","Default",first,token);}
-      break;
-    case DOLLAR:
-      jj_consume_token(DOLLAR);
+        break;
+      case DOLLAR:
+        jj_consume_token(DOLLAR);
               {if (true) return productionEndTerminal("SpecialSign16","-","-","Replacement","Default",first,token);}
-      break;
-    case AT:
-      jj_consume_token(AT);
+        break;
+      case AT:
+        jj_consume_token(AT);
               {if (true) return productionEndTerminal("SpecialSign17","-","-","Replacement","Default",first,token);}
-      break;
-    case TILDE:
-      jj_consume_token(TILDE);
+        break;
+      case TILDE:
+        jj_consume_token(TILDE);
               {if (true) return productionEndTerminal("SpecialSign18","-","-","Replacement","Default",first,token);}
-      break;
-    case SLASH:
-      jj_consume_token(SLASH);
+        break;
+      case SLASH:
+        jj_consume_token(SLASH);
               {if (true) return productionEndTerminal("SpecialSign19","-","-","Replacement","Default",first,token);}
-      break;
-    case NUMBERSIGN:
-      jj_consume_token(NUMBERSIGN);
+        break;
+      case NUMBERSIGN:
+        jj_consume_token(NUMBERSIGN);
               {if (true) return productionEndTerminal("SpecialSign20","-","-","Replacement","Default",first,token);}
-      break;
-    case VERTICALLINE:
-      jj_consume_token(VERTICALLINE);
+        break;
+      case VERTICALLINE:
+        jj_consume_token(VERTICALLINE);
               {if (true) return productionEndTerminal("SpecialSign21","-","-","Replacement","Default",first,token);}
-      break;
-    case PLUS:
-      jj_consume_token(PLUS);
+        break;
+      case PLUS:
+        jj_consume_token(PLUS);
               {if (true) return productionEndTerminal("SpecialSign22","-","-","Replacement","Default",first,token);}
-      break;
-    case MINUS:
-      jj_consume_token(MINUS);
+        break;
+      case MINUS:
+        jj_consume_token(MINUS);
               {if (true) return productionEndTerminal("SpecialSign23","-","-","Replacement","Default",first,token);}
-      break;
-    case STAR:
-      jj_consume_token(STAR);
+        break;
+      case STAR:
+        jj_consume_token(STAR);
               {if (true) return productionEndTerminal("SpecialSign24","-","-","Replacement","Default",first,token);}
-      break;
-    case SEMICOLON:
-      jj_consume_token(SEMICOLON);
+        break;
+      case SEMICOLON:
+        jj_consume_token(SEMICOLON);
               {if (true) return productionEndTerminal("SpecialSign25","-","-","Replacement","Default",first,token);}
-      break;
-    case GRAVEACCENT:
-      jj_consume_token(GRAVEACCENT);
+        break;
+      case GRAVEACCENT:
+        jj_consume_token(GRAVEACCENT);
               {if (true) return productionEndTerminal("SpecialSign26","-","-","Replacement","Default",first,token);}
-      break;
-    case ASSIGN:
-      jj_consume_token(ASSIGN);
+        break;
+      case ASSIGN:
+        jj_consume_token(ASSIGN);
               {if (true) return productionEndTerminal("SpecialSign27","-","-","Replacement","Default",first,token);}
-      break;
-    case AMPERSAND:
-      jj_consume_token(AMPERSAND);
+        break;
+      case AMPERSAND:
+        jj_consume_token(AMPERSAND);
               {if (true) return productionEndTerminal("SpecialSign28","-","-","Replacement","Default",first,token);}
-      break;
-    case CIRCUMFLEXACCENT:
-      jj_consume_token(CIRCUMFLEXACCENT);
+        break;
+      case CIRCUMFLEXACCENT:
+        jj_consume_token(CIRCUMFLEXACCENT);
               {if (true) return productionEndTerminal("SpecialSign29","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[41] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[41] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("SpecialSign");
+    }
   }
 
   final public FSTInfo OptAttributes(boolean inTerminal) throws ParseException {
+    trace_call("OptAttributes");
+    try {
                                               Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    jj_consume_token(LBRACE);
-    n = Attribute(true);
-                               replaceName(n);
-    label_15:
-    while (true) {
-      if (jj_2_4(2)) {
-        ;
-      } else {
-        break label_15;
-      }
-      jj_consume_token(COMMA);
+      jj_consume_token(LBRACE);
       n = Attribute(true);
+                               replaceName(n);
+      label_15:
+      while (true) {
+        if (jj_2_5(2)) {
+          ;
+        } else {
+          break label_15;
+        }
+        jj_consume_token(COMMA);
+        n = Attribute(true);
                                                                                      replaceName(n);
-    }
-    jj_consume_token(RBRACE);
+      }
+      jj_consume_token(RBRACE);
                                                                                                              {if (true) return productionEndTerminal("OptAttributes","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("OptAttributes");
+    }
   }
 
   final public FSTInfo Attribute(boolean inTerminal) throws ParseException {
+    trace_call("Attribute");
+    try {
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case BRACKET:
-      jj_consume_token(BRACKET);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case BRACKET:
+        jj_consume_token(BRACKET);
                     {if (true) return productionEndTerminal("Attribute1","-","-","Replacement","Default",first,token);}
-      break;
-    case PREFER:
-      jj_consume_token(PREFER);
+        break;
+      case PREFER:
+        jj_consume_token(PREFER);
                    {if (true) return productionEndTerminal("Attribute2","-","-","Replacement","Default",first,token);}
-      break;
-    case AVOID:
-      jj_consume_token(AVOID);
+        break;
+      case AVOID:
+        jj_consume_token(AVOID);
                   {if (true) return productionEndTerminal("Attribute3","-","-","Replacement","Default",first,token);}
-      break;
-    case LEFT:
-      jj_consume_token(LEFT);
+        break;
+      case LEFT:
+        jj_consume_token(LEFT);
                  {if (true) return productionEndTerminal("Attribute4","-","-","Replacement","Default",first,token);}
-      break;
-    case RIGHT:
-      jj_consume_token(RIGHT);
+        break;
+      case RIGHT:
+        jj_consume_token(RIGHT);
                   {if (true) return productionEndTerminal("Attribute5","-","-","Replacement","Default",first,token);}
-      break;
-    case NONASSOC:
-      jj_consume_token(NONASSOC);
+        break;
+      case NONASSOC:
+        jj_consume_token(NONASSOC);
                       {if (true) return productionEndTerminal("Attribute6","-","-","Replacement","Default",first,token);}
-      break;
-    case ASSOC:
-      jj_consume_token(ASSOC);
+        break;
+      case ASSOC:
+        jj_consume_token(ASSOC);
                   {if (true) return productionEndTerminal("Attribute7","-","-","Replacement","Default",first,token);}
-      break;
-    case REJECT:
-      jj_consume_token(REJECT);
+        break;
+      case REJECT:
+        jj_consume_token(REJECT);
                    {if (true) return productionEndTerminal("Attribute8","-","-","Replacement","Default",first,token);}
-      break;
-    case RECOVER:
-      jj_consume_token(RECOVER);
+        break;
+      case RECOVER:
+        jj_consume_token(RECOVER);
                     {if (true) return productionEndTerminal("Attribute9","-","-","Replacement","Default",first,token);}
-      break;
-    case INDENTPADDING:
-      jj_consume_token(INDENTPADDING);
+        break;
+      case INDENTPADDING:
+        jj_consume_token(INDENTPADDING);
                           {if (true) return productionEndTerminal("Attribute10","-","-","Replacement","Default",first,token);}
-      break;
-    case CONS:
-    case DEPRECATED:
-      n = Constructor(true);
+        break;
+      case CONS:
+      case DEPRECATED:
+        n = Constructor(true);
                              replaceName(n);
                                                {if (true) return productionEndTerminal("Attribute11","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[42] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[42] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Attribute");
+    }
   }
 
   final public FSTInfo Constructor(boolean inTerminal) throws ParseException {
+    trace_call("Constructor");
+    try {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case CONS:
-      jj_consume_token(CONS);
-      jj_consume_token(LPAREN);
-      n = String(true);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case CONS:
+        jj_consume_token(CONS);
+        jj_consume_token(LPAREN);
+        n = String(true);
                                    replaceName(n);
-      jj_consume_token(RPAREN);
+        jj_consume_token(RPAREN);
                                                          {if (true) return productionEndTerminal("Constructor1","-","-","Replacement","Default",first,token);}
-      break;
-    case DEPRECATED:
-      jj_consume_token(DEPRECATED);
-      jj_consume_token(LPAREN);
-      n = String(true);
+        break;
+      case DEPRECATED:
+        jj_consume_token(DEPRECATED);
+        jj_consume_token(LPAREN);
+        n = String(true);
                                          replaceName(n);
-      jj_consume_token(RPAREN);
+        jj_consume_token(RPAREN);
                                                                {if (true) return productionEndTerminal("Constructor2","-","-","Replacement","Default",first,token);}
-      break;
-    default:
-      jj_la1[43] = jj_gen;
-      jj_consume_token(-1);
-      throw new ParseException();
-    }
+        break;
+      default:
+        jj_la1[43] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Constructor");
+    }
   }
 
   final public FSTInfo Priority(boolean inTerminal) throws ParseException {
+    trace_call("Priority");
+    try {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_7(3)) {
-      jj_consume_token(LBRACE);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case CONS:
-      case LEFT:
-      case ASSOC:
-      case AVOID:
-      case RIGHT:
-      case PREFER:
-      case BRACKET:
-      case REJECT:
-      case NONASSOC:
-      case RECOVER:
-      case DEPRECATED:
-      case INDENTPADDING:
-        n = Attribute(true);
+      if (jj_2_8(3)) {
+        jj_consume_token(LBRACE);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case CONS:
+        case LEFT:
+        case ASSOC:
+        case AVOID:
+        case RIGHT:
+        case PREFER:
+        case BRACKET:
+        case REJECT:
+        case NONASSOC:
+        case RECOVER:
+        case DEPRECATED:
+        case INDENTPADDING:
+          n = Attribute(true);
                                              replaceName(n);
-        jj_consume_token(DDOT);
-        break;
-      default:
-        jj_la1[44] = jj_gen;
-        ;
-      }
-      label_16:
-      while (true) {
-        n = Production(true);
+          jj_consume_token(DDOT);
+          break;
+        default:
+          jj_la1[44] = jj_gen;
+          ;
+        }
+        label_16:
+        while (true) {
+          n = Production(true);
                                                                                         replaceName(n);
+          switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+          case STRING_LITERAL:
+          case IDENTIFIER:
+          case LPAREN:
+          case LBRACE:
+          case LBRACKET:
+          case DLBRACKET:
+          case LT:
+          case TILDE:
+          case ARROW:
+            ;
+            break;
+          default:
+            jj_la1[45] = jj_gen;
+            break label_16;
+          }
+        }
+        jj_consume_token(RBRACE);
+        if (jj_2_6(2)) {
+          jj_consume_token(GT);
+          n = Priority(true);
+                                                                                                                                                   replaceName(n);
+        } else {
+          ;
+        }
+                                                                                                                                                                      {if (true) return productionEndTerminal("Priority1","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+      } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case STRING_LITERAL:
         case IDENTIFIER:
@@ -1183,96 +1380,77 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
         case LT:
         case TILDE:
         case ARROW:
-          ;
+          n = Production(true);
+                            replaceName(n);
+          label_17:
+          while (true) {
+            if (jj_2_7(2)) {
+              ;
+            } else {
+              break label_17;
+            }
+            jj_consume_token(GT);
+            n = Priority(true);
+                                                                                 replaceName(n);
+          }
+                                                                                                     {if (true) return productionEndTerminal("Priority2","{AUTO}","{AUTO}","Replacement","Default",first,token);}
           break;
         default:
-          jj_la1[45] = jj_gen;
-          break label_16;
+          jj_la1[46] = jj_gen;
+          jj_consume_token(-1);
+          throw new ParseException();
         }
       }
-      jj_consume_token(RBRACE);
-      if (jj_2_5(2)) {
-        jj_consume_token(GT);
-        n = Priority(true);
-                                                                                                                                                   replaceName(n);
-      } else {
-        ;
-      }
-                                                                                                                                                                      {if (true) return productionEndTerminal("Priority1","{AUTO}","{AUTO}","Replacement","Default",first,token);}
-    } else {
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_LITERAL:
-      case IDENTIFIER:
-      case LPAREN:
-      case LBRACE:
-      case LBRACKET:
-      case DLBRACKET:
-      case LT:
-      case TILDE:
-      case ARROW:
-        n = Production(true);
-                            replaceName(n);
-        label_17:
-        while (true) {
-          if (jj_2_6(2)) {
-            ;
-          } else {
-            break label_17;
-          }
-          jj_consume_token(GT);
-          n = Priority(true);
-                                                                                 replaceName(n);
-        }
-                                                                                                     {if (true) return productionEndTerminal("Priority2","{AUTO}","{AUTO}","Replacement","Default",first,token);}
-        break;
-      default:
-        jj_la1[46] = jj_gen;
-        jj_consume_token(-1);
-        throw new ParseException();
-      }
-    }
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Priority");
+    }
   }
 
   final public FSTInfo Restriction(boolean inTerminal) throws ParseException {
+    trace_call("Restriction");
+    try {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    label_18:
-    while (true) {
-      n = Symbol(true);
+      label_18:
+      while (true) {
+        n = Symbol(true);
                          replaceName(n);
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case STRING_LITERAL:
-      case IDENTIFIER:
-      case LPAREN:
-      case LBRACE:
-      case LBRACKET:
-      case DLBRACKET:
-      case LT:
-      case TILDE:
-        ;
-        break;
-      default:
-        jj_la1[47] = jj_gen;
-        break label_18;
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case STRING_LITERAL:
+        case IDENTIFIER:
+        case LPAREN:
+        case LBRACE:
+        case LBRACKET:
+        case DLBRACKET:
+        case LT:
+        case TILDE:
+          ;
+          break;
+        default:
+          jj_la1[47] = jj_gen;
+          break label_18;
+        }
       }
-    }
-    jj_consume_token(NOTALLOWED);
-    n = CharacterClass(true);
-                                                                          replaceName(n);
-    label_19:
-    while (true) {
-      if (jj_2_8(2)) {
-        ;
-      } else {
-        break label_19;
-      }
-      jj_consume_token(DOT);
+      jj_consume_token(NOTALLOWED);
       n = CharacterClass(true);
+                                                                          replaceName(n);
+      label_19:
+      while (true) {
+        if (jj_2_9(2)) {
+          ;
+        } else {
+          break label_19;
+        }
+        jj_consume_token(DOT);
+        n = CharacterClass(true);
                                                                                                                                      replaceName(n);
-    }
+      }
                                                                                                                                                          {if (true) return productionEndTerminal("Restriction","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("Restriction");
+    }
   }
 
   final private boolean jj_2_1(int xla) {
@@ -1331,31 +1509,38 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     finally { jj_save(7, xla); }
   }
 
-  final private boolean jj_3_6() {
+  final private boolean jj_2_9(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_9(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
+  }
+
+  final private boolean jj_3_7() {
     if (jj_scan_token(GT)) return true;
     if (jj_3R_23()) return true;
     return false;
   }
 
-  final private boolean jj_3R_58() {
+  final private boolean jj_3R_56() {
     if (jj_scan_token(DLBRACKET)) return true;
     if (jj_3R_20()) return true;
     if (jj_scan_token(DRBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_47() {
+  final private boolean jj_3R_46() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_56()) {
+    jj_scanpos = xsp;
+    if (jj_3R_57()) {
+    jj_scanpos = xsp;
     if (jj_3R_58()) {
     jj_scanpos = xsp;
     if (jj_3R_59()) {
     jj_scanpos = xsp;
-    if (jj_3R_60()) {
-    jj_scanpos = xsp;
-    if (jj_3R_61()) {
-    jj_scanpos = xsp;
-    if (jj_3R_62()) return true;
+    if (jj_3R_60()) return true;
     }
     }
     }
@@ -1363,73 +1548,73 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_3() {
+  final private boolean jj_3_4() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_57() {
+  final private boolean jj_3R_55() {
     if (jj_scan_token(VERTICALLINE)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
-  final private boolean jj_3R_41() {
-    if (jj_3R_50()) return true;
+  final private boolean jj_3R_30() {
+    if (jj_3R_49()) return true;
     Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_50()) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_51()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_52()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_40() {
+  final private boolean jj_3R_29() {
     if (jj_3R_26()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_49()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_3R_47()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_48()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_38() {
+  final private boolean jj_3R_28() {
+    if (jj_3R_46()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_47()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_45()) jj_scanpos = xsp;
+    if (jj_3R_44()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_46()) jj_scanpos = xsp;
+    if (jj_3R_45()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_24() {
-    if (jj_3R_21()) return true;
+    if (jj_3R_22()) return true;
     if (jj_scan_token(DDOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_22() {
+  final private boolean jj_3R_21() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_38()) {
+    if (jj_3R_27()) {
     jj_scanpos = xsp;
-    if (jj_3R_39()) {
+    if (jj_3R_28()) {
     jj_scanpos = xsp;
-    if (jj_3R_40()) {
+    if (jj_3R_29()) {
     jj_scanpos = xsp;
-    if (jj_3R_41()) return true;
+    if (jj_3R_30()) return true;
     }
     }
     }
@@ -1437,7 +1622,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_53() {
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1448,7 +1633,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       if (jj_3R_53()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1457,13 +1642,13 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_4() {
+  final private boolean jj_3_5() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_21()) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
-  final private boolean jj_3_7() {
+  final private boolean jj_3_8() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -1479,46 +1664,52 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final private boolean jj_3R_23() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_7()) {
+    if (jj_3_8()) {
     jj_scanpos = xsp;
     if (jj_3R_42()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_55() {
+  final private boolean jj_3R_64() {
     if (jj_scan_token(DEPRECATED)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_54() {
+  final private boolean jj_3R_63() {
     if (jj_scan_token(CONS)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_44() {
+  final private boolean jj_3R_52() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_54()) {
+    if (jj_3R_63()) {
     jj_scanpos = xsp;
-    if (jj_3R_55()) return true;
+    if (jj_3R_64()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_37() {
-    if (jj_3R_44()) return true;
+  final private boolean jj_3R_41() {
+    if (jj_3R_52()) return true;
     return false;
   }
 
-  final private boolean jj_3R_36() {
+  final private boolean jj_3R_40() {
     if (jj_scan_token(INDENTPADDING)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
@@ -1528,62 +1719,54 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_35() {
+  final private boolean jj_3R_39() {
     if (jj_scan_token(RECOVER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_34() {
+  final private boolean jj_3R_38() {
     if (jj_scan_token(REJECT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_33() {
+  final private boolean jj_3R_37() {
     if (jj_scan_token(ASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_32() {
+  final private boolean jj_3R_36() {
     if (jj_scan_token(NONASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_31() {
+  final private boolean jj_3R_35() {
     if (jj_scan_token(RIGHT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_30() {
+  final private boolean jj_3R_34() {
     if (jj_scan_token(LEFT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_29() {
+  final private boolean jj_3R_33() {
     if (jj_scan_token(AVOID)) return true;
     return false;
   }
 
-  final private boolean jj_3R_28() {
+  final private boolean jj_3R_32() {
     if (jj_scan_token(PREFER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_27() {
+  final private boolean jj_3R_31() {
     if (jj_scan_token(BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_21() {
+  final private boolean jj_3R_22() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_27()) {
-    jj_scanpos = xsp;
-    if (jj_3R_28()) {
-    jj_scanpos = xsp;
-    if (jj_3R_29()) {
-    jj_scanpos = xsp;
-    if (jj_3R_30()) {
-    jj_scanpos = xsp;
     if (jj_3R_31()) {
     jj_scanpos = xsp;
     if (jj_3R_32()) {
@@ -1596,7 +1779,15 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_scanpos = xsp;
     if (jj_3R_36()) {
     jj_scanpos = xsp;
-    if (jj_3R_37()) return true;
+    if (jj_3R_37()) {
+    jj_scanpos = xsp;
+    if (jj_3R_38()) {
+    jj_scanpos = xsp;
+    if (jj_3R_39()) {
+    jj_scanpos = xsp;
+    if (jj_3R_40()) {
+    jj_scanpos = xsp;
+    if (jj_3R_41()) return true;
     }
     }
     }
@@ -1626,7 +1817,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_71() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1666,8 +1857,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_62() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1676,8 +1867,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_46() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_45() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1736,7 +1927,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_5() {
+  final private boolean jj_3_6() {
     if (jj_scan_token(GT)) return true;
     if (jj_3R_23()) return true;
     return false;
@@ -1753,8 +1944,9 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3_2() {
-    if (jj_scan_token(LBRACE)) return true;
+    if (jj_scan_token(DLBRACKET)) return true;
     if (jj_3R_21()) return true;
+    if (jj_scan_token(DRBRACKET)) return true;
     return false;
   }
 
@@ -1764,7 +1956,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_68() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1779,12 +1971,12 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_70() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
-  final private boolean jj_3R_52() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_51() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1798,7 +1990,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_8() {
+  final private boolean jj_3_9() {
     if (jj_scan_token(DOT)) return true;
     if (jj_3R_26()) return true;
     return false;
@@ -1814,13 +2006,13 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_45() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_44() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
   final private boolean jj_3R_73() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1829,12 +2021,12 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_63() {
+  final private boolean jj_3R_61() {
     if (jj_3R_74()) return true;
     return false;
   }
 
-  final private boolean jj_3R_50() {
+  final private boolean jj_3R_49() {
     if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
@@ -1975,8 +2167,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_49() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_48() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1987,11 +2179,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     if (jj_scan_token(LBRACKET)) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_63()) { jj_scanpos = xsp; break; }
+      if (jj_3R_61()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACKET)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_64()) jj_scanpos = xsp;
+    if (jj_3R_62()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2010,8 +2202,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_51() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_50() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -2035,8 +2227,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_48() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_47() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -2051,11 +2243,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_72() {
-    if (jj_3R_47()) return true;
+    if (jj_3R_46()) return true;
     return false;
   }
 
-  final private boolean jj_3R_56() {
+  final private boolean jj_3R_54() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_65()) {
@@ -2068,7 +2260,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_62() {
+  final private boolean jj_3R_60() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     if (jj_3R_72()) return true;
@@ -2082,10 +2274,10 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_61() {
+  final private boolean jj_3R_59() {
     if (jj_scan_token(LBRACE)) return true;
     if (jj_3R_20()) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -2093,7 +2285,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_60() {
+  final private boolean jj_3R_58() {
     if (jj_3R_20()) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -2101,7 +2293,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_59() {
+  final private boolean jj_3R_57() {
     if (jj_scan_token(LT)) return true;
     if (jj_3R_20()) return true;
     Token xsp;
@@ -2139,7 +2331,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
    private static void jj_la1_2() {
       jj_la1_2 = new int[] {0x10,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x820002,0x0,0x820002,0x20002,0x20002,0x0,0x20002,0x828,0x10000,0x10000,0x10000,0x828,0x10000,0x20002,0x828,0x10,0x828,0x828,0x2,0x828,0x2,0x828,0x0,0x20000,0x10000010,0x828,0x10000010,0x53ffffe,0x0,0x0,0x0,0x820002,0x820002,0x20002,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[8];
+  final private JJCalls[] jj_2_rtns = new JJCalls[9];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2196,6 +2388,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           }
         }
       }
+      trace_token(token, "");
       return token;
     }
     token = oldToken;
@@ -2231,6 +2424,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     else token = token.next = token_source.getNextToken();
     jj_ntk = -1;
     jj_gen++;
+      trace_token(token, " (in getNextToken)");
     return token;
   }
 
@@ -2326,15 +2520,58 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return new ParseException(token, exptokseq, tokenImage);
   }
 
+  private int trace_indent = 0;
+  private boolean trace_enabled = true;
+
   final public void enable_tracing() {
+    trace_enabled = true;
   }
 
   final public void disable_tracing() {
+    trace_enabled = false;
+  }
+
+  final private void trace_call(String s) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.println("Call:   " + s);
+    }
+    trace_indent = trace_indent + 2;
+  }
+
+  final private void trace_return(String s) {
+    trace_indent = trace_indent - 2;
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.println("Return: " + s);
+    }
+  }
+
+  final private void trace_token(Token t, String where) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.print("Consumed token: <" + tokenImage[t.kind]);
+      if (t.kind != 0 && !tokenImage[t.kind].equals("\"" + t.image + "\"")) {
+        System.out.print(": \"" + t.image + "\"");
+      }
+      System.out.println(" at line " + t.beginLine + " column " + t.beginColumn + ">" + where);
+    }
+  }
+
+  final private void trace_scan(Token t1, int t2) {
+    if (trace_enabled) {
+      for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
+      System.out.print("Visited token: <" + tokenImage[t1.kind]);
+      if (t1.kind != 0 && !tokenImage[t1.kind].equals("\"" + t1.image + "\"")) {
+        System.out.print(": \"" + t1.image + "\"");
+      }
+      System.out.println(" at line " + t1.beginLine + " column " + t1.beginColumn + ">; Expected token: <" + tokenImage[t2] + ">");
+    }
   }
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 9; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -2349,6 +2586,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
             case 5: jj_3_6(); break;
             case 6: jj_3_7(); break;
             case 7: jj_3_8(); break;
+            case 8: jj_3_9(); break;
           }
         }
         p = p.next;

@@ -272,8 +272,8 @@ TOKEN :
  * IDENTIFIER                                                                *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>) 
-	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>)* (<STAR>|<APOSTROPHE>)? > |
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>|<LOWLINE>|<APOSTROPHE>) 
+	  (<LETTER>|<DIGIT>|<MINUS>|<DOT>|<LOWLINE>|<APOSTROPHE>)* (<STAR>)? > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
 	  < UCCHAR: [ "A"-"Z" ] > |
@@ -532,7 +532,7 @@ Strat :
 /* Hilfskonstrukt zum Auflösen von Linksrekursion */
 AlternativeStrategy :
 	AlternativeOperator Strategy |
-	"=>" Term;
+	"=>" Term [AlternativeStrategy];
 
 AlternativeOperator :
 	";"<NONE> |
