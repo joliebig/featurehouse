@@ -105,6 +105,19 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     }
   }
 
+  final public FSTInfo StringQuot(boolean inTerminal) throws ParseException {
+    trace_call("StringQuot");
+    try {
+                                           Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+      jj_consume_token(STRING_QUOT);
+                       {if (true) return productionEndTerminal("StringQuot","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+    } finally {
+      trace_return("StringQuot");
+    }
+  }
+
   final public FSTInfo Id(boolean inTerminal) throws ParseException {
     trace_call("Id");
     try {
@@ -965,9 +978,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                                                                           replaceName(n);
           break;
@@ -1009,9 +1022,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                                                                                      replaceName(n);
           break;
@@ -1047,9 +1060,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                                   replaceName(n);
           break;
@@ -1086,6 +1099,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case SWITCH:
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -1097,7 +1111,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case NUMBERSIGN:
         case LOWLINE:
         case BACKSLASH:
-        case 113:
+        case 117:
           n = StrategyList(true);
                                                                              replaceName(n);
           break;
@@ -1109,6 +1123,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -1128,9 +1143,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                                                                           replaceName(n);
           break;
@@ -1154,9 +1169,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                         replaceName(n);
           break;
@@ -1171,9 +1186,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                               replaceName(n);
           break;
@@ -1188,9 +1203,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                             replaceName(n);
           break;
@@ -1207,9 +1222,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                          replaceName(n);
           break;
@@ -1226,9 +1241,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                          replaceName(n);
           break;
@@ -1249,9 +1264,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                     replaceName(n);
           break;
@@ -1270,9 +1285,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                               replaceName(n);
           break;
@@ -1290,9 +1305,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                replaceName(n);
           break;
@@ -1302,20 +1317,20 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         }
                                                                                                   {if (true) return productionEndTerminal("Strategy12","-","-","Replacement","Default",first,token);}
         break;
-      case 113:
-        jj_consume_token(113);
+      case 117:
+        jj_consume_token(117);
         n = ScopeLabels(true);
                                   replaceName(n);
         jj_consume_token(DDOT);
         n = Strategy(true);
                                                                          replaceName(n);
-        jj_consume_token(114);
+        jj_consume_token(118);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                              replaceName(n);
           break;
@@ -1345,9 +1360,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                               replaceName(n);
           break;
@@ -1373,9 +1388,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                  replaceName(n);
           break;
@@ -1403,9 +1418,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case PLUS:
         case SEMICOLON:
-        case 116:
-        case 117:
-        case 118:
+        case 120:
+        case 121:
+        case 122:
           n = AlternativeStrategy(true);
                                                                                                                                   replaceName(n);
           break;
@@ -1420,15 +1435,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         if (jj_2_4(2147483647)) {
           n = Term(true);
                                              replaceName(n);
-          jj_consume_token(115);
+          jj_consume_token(119);
           n = Term(true);
                                                                                  replaceName(n);
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case PLUS:
           case SEMICOLON:
-          case 116:
-          case 117:
-          case 118:
+          case 120:
+          case 121:
+          case 122:
             n = AlternativeStrategy(true);
                                                                                                                                 replaceName(n);
             break;
@@ -1447,9 +1462,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                                           replaceName(n);
               break;
@@ -1465,9 +1480,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                               replaceName(n);
               break;
@@ -1485,9 +1500,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                                                              replaceName(n);
               break;
@@ -1520,6 +1535,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             case SWITCH:
             case INTEGER_LITERAL:
             case STRING_LITERAL:
+            case STRING_QUOT:
             case IDENTIFIER:
             case LPAREN:
             case LBRACE:
@@ -1531,7 +1547,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             case NUMBERSIGN:
             case LOWLINE:
             case BACKSLASH:
-            case 113:
+            case 117:
               n = StrategyList(true);
                                    replaceName(n);
               break;
@@ -1553,9 +1569,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                                                                                 replaceName(n);
               break;
@@ -1580,9 +1596,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                                                            replaceName(n);
               break;
@@ -1607,9 +1623,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case PLUS:
             case SEMICOLON:
-            case 116:
-            case 117:
-            case 118:
+            case 120:
+            case 121:
+            case 122:
               n = AlternativeStrategy(true);
                                                                                                                replaceName(n);
               break;
@@ -1627,9 +1643,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case PLUS:
               case SEMICOLON:
-              case 116:
-              case 117:
-              case 118:
+              case 120:
+              case 121:
+              case 122:
                 n = AlternativeStrategy(true);
                                                                                        replaceName(n);
                 break;
@@ -1647,9 +1663,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
                 case PLUS:
                 case SEMICOLON:
-                case 116:
-                case 117:
-                case 118:
+                case 120:
+                case 121:
+                case 122:
                   n = AlternativeStrategy(true);
                                                                     replaceName(n);
                   break;
@@ -1727,16 +1743,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PLUS:
       case SEMICOLON:
-      case 117:
-      case 118:
+      case 121:
+      case 122:
         n = AlternativeOperator(true);
                                      replaceName(n);
         n = Strategy(true);
                                                                         replaceName(n);
                                                                                           {if (true) return productionEndTerminal("AlternativeStrategy1","-","-","Replacement","Default",first,token);}
         break;
-      case 116:
-        jj_consume_token(116);
+      case 120:
+        jj_consume_token(120);
         n = Term(true);
                            replaceName(n);
                                              {if (true) return productionEndTerminal("AlternativeStrategy2","-","-","Replacement","Default",first,token);}
@@ -1766,12 +1782,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         jj_consume_token(PLUS);
               {if (true) return productionEndTerminal("AlternativeOperator2","-","-","Replacement","Default",first,token);}
         break;
-      case 117:
-        jj_consume_token(117);
+      case 121:
+        jj_consume_token(121);
                {if (true) return productionEndTerminal("AlternativeOperator3","-","-","Replacement","Default",first,token);}
         break;
-      case 118:
-        jj_consume_token(118);
+      case 122:
+        jj_consume_token(122);
                {if (true) return productionEndTerminal("AlternativeOperator4","-","-","Replacement","Default",first,token);}
         break;
       default:
@@ -1801,6 +1817,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER_LITERAL:
       case STRING_LITERAL:
+      case STRING_QUOT:
       case IDENTIFIER:
       case LPAREN:
       case LBRACE:
@@ -1854,6 +1871,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case SWITCH:
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -1865,7 +1883,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         case NUMBERSIGN:
         case LOWLINE:
         case BACKSLASH:
-        case 113:
+        case 117:
           n = StrategyList(true);
                                replaceName(n);
           break;
@@ -1968,6 +1986,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       case SWITCH:
       case INTEGER_LITERAL:
       case STRING_LITERAL:
+      case STRING_QUOT:
       case IDENTIFIER:
       case LPAREN:
       case LBRACE:
@@ -1979,7 +1998,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       case NUMBERSIGN:
       case LOWLINE:
       case BACKSLASH:
-      case 113:
+      case 117:
         n = StrategyList(true);
                                    replaceName(n);
         break;
@@ -2013,6 +2032,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER_LITERAL:
       case STRING_LITERAL:
+      case STRING_QUOT:
       case IDENTIFIER:
       case LPAREN:
       case LBRACE:
@@ -2141,7 +2161,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       } else if (jj_2_12(2147483647)) {
         n = DynRuleId(true);
                                                                      replaceName(n);
-        jj_consume_token(119);
+        jj_consume_token(123);
         n = Rule(true);
                                                                                                          replaceName(n);
                                                                                                                            {if (true) return productionEndTerminal("DynRuleDef3","-","-","Replacement","Default",first,token);}
@@ -2188,6 +2208,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -2360,16 +2381,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                              Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 120:
-        jj_consume_token(120);
+      case 124:
+        jj_consume_token(124);
                {if (true) return productionEndTerminal("TermOperator1","-","-","Replacement","Default",first,token);}
         break;
-      case 115:
-        jj_consume_token(115);
+      case 119:
+        jj_consume_token(119);
                {if (true) return productionEndTerminal("TermOperator2","-","-","Replacement","Default",first,token);}
         break;
-      case 121:
-        jj_consume_token(121);
+      case 125:
+        jj_consume_token(125);
                 {if (true) return productionEndTerminal("TermOperator3","-","-","Replacement","Default",first,token);}
         break;
       default:
@@ -2532,8 +2553,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case 122:
-        jj_consume_token(122);
+      case 126:
+        jj_consume_token(126);
         n = Term(true);
                            replaceName(n);
         jj_consume_token(RBRACE);
@@ -2544,6 +2565,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -2598,7 +2620,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case LBRACE:
         case NUMBERSIGN:
-        case 122:
+        case 126:
           n = AlternativeTerm(true);
                                                                                          replaceName(n);
           break;
@@ -2616,7 +2638,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
           switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
           case LBRACE:
           case NUMBERSIGN:
-          case 122:
+          case 126:
             n = AlternativeTerm(true);
                                                                                    replaceName(n);
             break;
@@ -2634,7 +2656,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                 replaceName(n);
               break;
@@ -2656,7 +2678,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                                                                                         replaceName(n);
               break;
@@ -2671,6 +2693,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case INTEGER_LITERAL:
             case STRING_LITERAL:
+            case STRING_QUOT:
             case IDENTIFIER:
             case LPAREN:
             case LBRACE:
@@ -2690,7 +2713,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                                replaceName(n);
               break;
@@ -2705,6 +2728,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case INTEGER_LITERAL:
             case STRING_LITERAL:
+            case STRING_QUOT:
             case IDENTIFIER:
             case LPAREN:
             case LBRACE:
@@ -2734,7 +2758,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
               break;
@@ -2749,6 +2773,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case INTEGER_LITERAL:
             case STRING_LITERAL:
+            case STRING_QUOT:
             case IDENTIFIER:
             case LPAREN:
             case LBRACE:
@@ -2768,7 +2793,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                                replaceName(n);
               break;
@@ -2787,7 +2812,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                              replaceName(n);
               break;
@@ -2796,6 +2821,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               ;
             }
                                                                                                 {if (true) return productionEndTerminal("Term8","-","-","Replacement","Default",first,token);}
+            break;
+          case STRING_QUOT:
+            n = StringQuot(true);
+                            replaceName(n);
+                                              {if (true) return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
             break;
           case IDENTIFIER:
             n = Id(true);
@@ -2809,7 +2839,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case LBRACE:
             case NUMBERSIGN:
-            case 122:
+            case 126:
               n = AlternativeTerm(true);
                                                                                                                   replaceName(n);
               break;
@@ -2817,7 +2847,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               jj_la1[120] = jj_gen;
               ;
             }
-                                                                                                                                     {if (true) return productionEndTerminal("Term9","-","-","Replacement","Default",first,token);}
+                                                                                                                                     {if (true) return productionEndTerminal("Term10","-","-","Replacement","Default",first,token);}
             break;
           default:
             jj_la1[140] = jj_gen;
@@ -2827,7 +2857,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                          replaceName(n);
                 break;
@@ -2835,14 +2865,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[121] = jj_gen;
                 ;
               }
-                                                                                                                                            {if (true) return productionEndTerminal("Term10","-","-","Replacement","Default",first,token);}
+                                                                                                                                            {if (true) return productionEndTerminal("Term11","-","-","Replacement","Default",first,token);}
             } else if (jj_2_23(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                                replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                           replaceName(n);
                 break;
@@ -2850,14 +2880,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[122] = jj_gen;
                 ;
               }
-                                                                                                                                             {if (true) return productionEndTerminal("Term11","-","-","Replacement","Default",first,token);}
+                                                                                                                                             {if (true) return productionEndTerminal("Term12","-","-","Replacement","Default",first,token);}
             } else if (jj_2_24(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                               replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                          replaceName(n);
                 break;
@@ -2865,14 +2895,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[123] = jj_gen;
                 ;
               }
-                                                                                                                                            {if (true) return productionEndTerminal("Term12","-","-","Replacement","Default",first,token);}
+                                                                                                                                            {if (true) return productionEndTerminal("Term13","-","-","Replacement","Default",first,token);}
             } else if (jj_2_25(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                              replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                         replaceName(n);
                 break;
@@ -2880,14 +2910,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[124] = jj_gen;
                 ;
               }
-                                                                                                                                           {if (true) return productionEndTerminal("Term13","-","-","Replacement","Default",first,token);}
+                                                                                                                                           {if (true) return productionEndTerminal("Term14","-","-","Replacement","Default",first,token);}
             } else if (jj_2_26(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                             replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                        replaceName(n);
                 break;
@@ -2895,14 +2925,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[125] = jj_gen;
                 ;
               }
-                                                                                                                                          {if (true) return productionEndTerminal("Term14","-","-","Replacement","Default",first,token);}
+                                                                                                                                          {if (true) return productionEndTerminal("Term15","-","-","Replacement","Default",first,token);}
             } else if (jj_2_27(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                                   replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                              replaceName(n);
                 break;
@@ -2910,14 +2940,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[126] = jj_gen;
                 ;
               }
-                                                                                                                                                {if (true) return productionEndTerminal("Term15","-","-","Replacement","Default",first,token);}
+                                                                                                                                                {if (true) return productionEndTerminal("Term16","-","-","Replacement","Default",first,token);}
             } else if (jj_2_28(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                              replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                         replaceName(n);
                 break;
@@ -2925,14 +2955,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[127] = jj_gen;
                 ;
               }
-                                                                                                                                           {if (true) return productionEndTerminal("Term16","-","-","Replacement","Default",first,token);}
+                                                                                                                                           {if (true) return productionEndTerminal("Term17","-","-","Replacement","Default",first,token);}
             } else if (jj_2_29(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2940,14 +2970,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[128] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term17","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term18","-","-","Replacement","Default",first,token);}
             } else if (jj_2_30(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2955,14 +2985,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[129] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term18","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term19","-","-","Replacement","Default",first,token);}
             } else if (jj_2_31(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2970,14 +3000,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[130] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term19","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term20","-","-","Replacement","Default",first,token);}
             } else if (jj_2_32(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -2985,14 +3015,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[131] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term20","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term21","-","-","Replacement","Default",first,token);}
             } else if (jj_2_33(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3000,14 +3030,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[132] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term21","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term22","-","-","Replacement","Default",first,token);}
             } else if (jj_2_34(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                          replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                     replaceName(n);
                 break;
@@ -3015,14 +3045,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[133] = jj_gen;
                 ;
               }
-                                                                                                                                       {if (true) return productionEndTerminal("Term22","-","-","Replacement","Default",first,token);}
+                                                                                                                                       {if (true) return productionEndTerminal("Term23","-","-","Replacement","Default",first,token);}
             } else if (jj_2_35(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                           replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                      replaceName(n);
                 break;
@@ -3030,14 +3060,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[134] = jj_gen;
                 ;
               }
-                                                                                                                                        {if (true) return productionEndTerminal("Term23","-","-","Replacement","Default",first,token);}
+                                                                                                                                        {if (true) return productionEndTerminal("Term24","-","-","Replacement","Default",first,token);}
             } else if (jj_2_36(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                            replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                       replaceName(n);
                 break;
@@ -3045,14 +3075,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[135] = jj_gen;
                 ;
               }
-                                                                                                                                         {if (true) return productionEndTerminal("Term24","-","-","Replacement","Default",first,token);}
+                                                                                                                                         {if (true) return productionEndTerminal("Term25","-","-","Replacement","Default",first,token);}
             } else if (jj_2_37(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                             replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                        replaceName(n);
                 break;
@@ -3060,14 +3090,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[136] = jj_gen;
                 ;
               }
-                                                                                                                                          {if (true) return productionEndTerminal("Term25","-","-","Replacement","Default",first,token);}
+                                                                                                                                          {if (true) return productionEndTerminal("Term26","-","-","Replacement","Default",first,token);}
             } else if (jj_2_38(2147483647)) {
               n = NoTermAfterStrategyAngle(true);
                                                                            replaceName(n);
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LBRACE:
               case NUMBERSIGN:
-              case 122:
+              case 126:
                 n = AlternativeTerm(true);
                                                                                                                       replaceName(n);
                 break;
@@ -3075,7 +3105,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 jj_la1[137] = jj_gen;
                 ;
               }
-                                                                                                                                         {if (true) return productionEndTerminal("Term26","-","-","Replacement","Default",first,token);}
+                                                                                                                                         {if (true) return productionEndTerminal("Term27","-","-","Replacement","Default",first,token);}
             } else {
               switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
               case LT:
@@ -3086,7 +3116,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                 switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
                 case LBRACE:
                 case NUMBERSIGN:
-                case 122:
+                case 126:
                   n = AlternativeTerm(true);
                                                                                                          replaceName(n);
                   break;
@@ -3094,7 +3124,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                   jj_la1[138] = jj_gen;
                   ;
                 }
-                                                                                                                            {if (true) return productionEndTerminal("Term27","-","-","Replacement","Default",first,token);}
+                                                                                                                            {if (true) return productionEndTerminal("Term28","-","-","Replacement","Default",first,token);}
                 break;
               default:
                 jj_la1[141] = jj_gen;
@@ -3136,6 +3166,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -3166,6 +3197,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case INTEGER_LITERAL:
         case STRING_LITERAL:
+        case STRING_QUOT:
         case IDENTIFIER:
         case LPAREN:
         case LBRACE:
@@ -3205,6 +3237,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case INTEGER_LITERAL:
       case STRING_LITERAL:
+      case STRING_QUOT:
       case IDENTIFIER:
       case LPAREN:
       case LBRACE:
@@ -3686,37 +3719,56 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     finally { jj_save(43, xla); }
   }
 
+  final private boolean jj_3_16() {
+    if (jj_scan_token(STAR)) return true;
+    if (jj_3R_38()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_53() {
+    if (jj_scan_token(LBRACKET)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_131()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_132()) jj_scanpos = xsp;
+    if (jj_scan_token(RBRACKET)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_133()) jj_scanpos = xsp;
+    return false;
+  }
+
   final private boolean jj_3R_52() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_128()) jj_scanpos = xsp;
+    if (jj_3R_129()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_129()) jj_scanpos = xsp;
+    if (jj_3R_130()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_51() {
-    if (jj_3R_125()) return true;
+    if (jj_3R_126()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_126()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
     if (jj_3R_127()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_128()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_120() {
+  final private boolean jj_3R_121() {
     if (jj_3R_26()) return true;
     return false;
   }
 
   final private boolean jj_3R_50() {
-    if (jj_3R_123()) return true;
+    if (jj_3R_124()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_124()) jj_scanpos = xsp;
+    if (jj_3R_125()) jj_scanpos = xsp;
     return false;
   }
 
@@ -3724,7 +3776,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_3R_27()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_122()) jj_scanpos = xsp;
+    if (jj_3R_123()) jj_scanpos = xsp;
     return false;
   }
 
@@ -3732,14 +3784,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(LOWLINE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_120()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
     if (jj_3R_121()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_122()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_248() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_250() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
@@ -3798,7 +3850,10 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_scanpos = xsp;
     if (jj_3R_73()) {
     jj_scanpos = xsp;
-    if (jj_3R_74()) return true;
+    if (jj_3R_74()) {
+    jj_scanpos = xsp;
+    if (jj_3R_75()) return true;
+    }
     }
     }
     }
@@ -3828,7 +3883,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_231() {
+  final private boolean jj_3R_233() {
     if (jj_scan_token(NUMBERSIGN)) return true;
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_26()) return true;
@@ -3841,49 +3896,49 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_230() {
+  final private boolean jj_3R_232() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_248()) jj_scanpos = xsp;
+    if (jj_3R_250()) jj_scanpos = xsp;
     if (jj_scan_token(RBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_247() {
+  final private boolean jj_3R_249() {
     if (jj_scan_token(DDOT)) return true;
-    if (jj_3R_83()) return true;
+    if (jj_3R_84()) return true;
     return false;
   }
 
-  final private boolean jj_3R_229() {
-    if (jj_scan_token(122)) return true;
+  final private boolean jj_3R_231() {
+    if (jj_scan_token(126)) return true;
     if (jj_3R_26()) return true;
     if (jj_scan_token(RBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_169() {
+  final private boolean jj_3R_171() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_229()) {
+    if (jj_3R_231()) {
     jj_scanpos = xsp;
-    if (jj_3R_230()) {
+    if (jj_3R_232()) {
     jj_scanpos = xsp;
-    if (jj_3R_231()) return true;
+    if (jj_3R_233()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_85() {
+  final private boolean jj_3R_86() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_83()) return true;
+    if (jj_3R_84()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_84() {
+  final private boolean jj_3R_85() {
     if (jj_3R_39()) return true;
     return false;
   }
@@ -3896,9 +3951,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3R_38() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_84()) {
+    if (jj_3R_85()) {
     jj_scanpos = xsp;
-    if (jj_3R_85()) return true;
+    if (jj_3R_86()) return true;
     }
     return false;
   }
@@ -3911,32 +3966,32 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       if (jj_3_16()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_3R_83()) return true;
+    if (jj_3R_84()) return true;
     return false;
   }
 
-  final private boolean jj_3R_160() {
+  final private boolean jj_3R_162() {
     if (jj_3R_39()) return true;
     return false;
   }
 
-  final private boolean jj_3R_159() {
+  final private boolean jj_3R_161() {
     if (jj_3R_37()) return true;
     return false;
   }
 
-  final private boolean jj_3R_83() {
+  final private boolean jj_3R_84() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_159()) {
+    if (jj_3R_161()) {
     jj_scanpos = xsp;
-    if (jj_3R_160()) return true;
+    if (jj_3R_162()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_213() {
-    if (jj_3R_243()) return true;
+  final private boolean jj_3R_215() {
+    if (jj_3R_245()) return true;
     return false;
   }
 
@@ -3944,110 +3999,110 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_247()) jj_scanpos = xsp;
+    if (jj_3R_249()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_83() {
+    if (jj_scan_token(125)) return true;
     return false;
   }
 
   final private boolean jj_3R_82() {
-    if (jj_scan_token(121)) return true;
+    if (jj_scan_token(119)) return true;
     return false;
   }
 
   final private boolean jj_3R_81() {
-    if (jj_scan_token(115)) return true;
+    if (jj_scan_token(124)) return true;
     return false;
   }
 
-  final private boolean jj_3R_80() {
-    if (jj_scan_token(120)) return true;
+  final private boolean jj_3R_78() {
+    if (jj_3R_158()) return true;
     return false;
   }
 
-  final private boolean jj_3R_77() {
-    if (jj_3R_156()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_287() {
-    if (jj_3R_78()) return true;
+  final private boolean jj_3R_289() {
+    if (jj_3R_79()) return true;
     return false;
   }
 
   final private boolean jj_3R_36() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_80()) {
-    jj_scanpos = xsp;
     if (jj_3R_81()) {
     jj_scanpos = xsp;
-    if (jj_3R_82()) return true;
+    if (jj_3R_82()) {
+    jj_scanpos = xsp;
+    if (jj_3R_83()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_215() {
+  final private boolean jj_3R_217() {
     if (jj_scan_token(DOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_214() {
+  final private boolean jj_3R_216() {
     if (jj_scan_token(PLUS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_157() {
+  final private boolean jj_3R_159() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_214()) {
+    if (jj_3R_216()) {
     jj_scanpos = xsp;
-    if (jj_3R_215()) return true;
+    if (jj_3R_217()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_266() {
-    if (jj_3R_167()) return true;
+  final private boolean jj_3R_268() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
-  final private boolean jj_3R_78() {
-    if (jj_3R_157()) return true;
+  final private boolean jj_3R_79() {
+    if (jj_3R_159()) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_212() {
-    if (jj_3R_167()) return true;
+  final private boolean jj_3R_214() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
-  final private boolean jj_3R_243() {
+  final private boolean jj_3R_245() {
     if (jj_scan_token(VERTICALLINE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_266()) jj_scanpos = xsp;
+    if (jj_3R_268()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_156() {
+  final private boolean jj_3R_158() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_212()) jj_scanpos = xsp;
+    if (jj_3R_214()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_213()) jj_scanpos = xsp;
+    if (jj_3R_215()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
   final private boolean jj_3R_35() {
-    if (jj_3R_78()) return true;
+    if (jj_3R_79()) return true;
     return false;
   }
 
   final private boolean jj_3R_34() {
-    if (jj_3R_78()) return true;
+    if (jj_3R_79()) return true;
     return false;
   }
 
@@ -4061,29 +4116,29 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_77()) jj_scanpos = xsp;
+    if (jj_3R_78()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_33() {
-    if (jj_3R_78()) return true;
+    if (jj_3R_79()) return true;
     return false;
   }
 
   final private boolean jj_3R_31() {
-    if (jj_3R_78()) return true;
+    if (jj_3R_79()) return true;
     return false;
   }
 
-  final private boolean jj_3R_274() {
+  final private boolean jj_3R_276() {
     if (jj_3R_30()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_287()) jj_scanpos = xsp;
+    if (jj_3R_289()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_289() {
+  final private boolean jj_3R_291() {
     if (jj_3R_26()) return true;
     return false;
   }
@@ -4097,7 +4152,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_288() {
+  final private boolean jj_3R_290() {
     if (jj_3R_32()) return true;
     return false;
   }
@@ -4107,12 +4162,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_34()) jj_scanpos = xsp;
-    if (jj_scan_token(119)) return true;
+    if (jj_scan_token(123)) return true;
     return false;
   }
 
-  final private boolean jj_3R_263() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_265() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
@@ -4125,8 +4180,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_255() {
-    if (jj_3R_272()) return true;
+  final private boolean jj_3R_257() {
+    if (jj_3R_274()) return true;
     return false;
   }
 
@@ -4141,46 +4196,46 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_275() {
+  final private boolean jj_3R_277() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_288()) {
+    if (jj_3R_290()) {
     jj_scanpos = xsp;
-    if (jj_3R_289()) return true;
+    if (jj_3R_291()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_261() {
+  final private boolean jj_3R_263() {
     if (jj_3R_23()) return true;
     if (jj_scan_token(PLUS)) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_260() {
-    if (jj_3R_274()) return true;
+  final private boolean jj_3R_262() {
+    if (jj_3R_276()) return true;
     if (jj_3R_36()) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_259() {
-    if (jj_3R_274()) return true;
-    if (jj_scan_token(119)) return true;
+  final private boolean jj_3R_261() {
+    if (jj_3R_276()) return true;
+    if (jj_scan_token(123)) return true;
     if (jj_3R_32()) return true;
     return false;
   }
 
-  final private boolean jj_3R_258() {
-    if (jj_3R_274()) return true;
+  final private boolean jj_3R_260() {
+    if (jj_3R_276()) return true;
     if (jj_scan_token(DDOT)) return true;
-    if (jj_3R_275()) return true;
+    if (jj_3R_277()) return true;
     return false;
   }
 
-  final private boolean jj_3R_257() {
-    if (jj_3R_274()) return true;
+  final private boolean jj_3R_259() {
+    if (jj_3R_276()) return true;
     if (jj_scan_token(DDOT)) return true;
     if (jj_3R_32()) return true;
     if (jj_scan_token(DEPENDS)) return true;
@@ -4189,18 +4244,18 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_238() {
+  final private boolean jj_3R_240() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_257()) {
-    jj_scanpos = xsp;
-    if (jj_3R_258()) {
-    jj_scanpos = xsp;
     if (jj_3R_259()) {
     jj_scanpos = xsp;
     if (jj_3R_260()) {
     jj_scanpos = xsp;
-    if (jj_3R_261()) return true;
+    if (jj_3R_261()) {
+    jj_scanpos = xsp;
+    if (jj_3R_262()) {
+    jj_scanpos = xsp;
+    if (jj_3R_263()) return true;
     }
     }
     }
@@ -4208,7 +4263,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_117() {
+  final private boolean jj_3R_118() {
     if (jj_3R_23()) return true;
     return false;
   }
@@ -4220,8 +4275,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_175() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_177() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
@@ -4230,60 +4285,60 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     xsp = jj_scanpos;
     if (jj_3_9()) {
     jj_scanpos = xsp;
-    if (jj_3R_117()) return true;
+    if (jj_3R_118()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_256() {
-    if (jj_3R_273()) return true;
+  final private boolean jj_3R_258() {
+    if (jj_3R_275()) return true;
     return false;
   }
 
-  final private boolean jj_3R_237() {
+  final private boolean jj_3R_239() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_256()) jj_scanpos = xsp;
+    if (jj_3R_258()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_236() {
+  final private boolean jj_3R_238() {
     if (jj_scan_token(TILDE)) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_180() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_182() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_191() {
+  final private boolean jj_3R_193() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_236()) {
+    if (jj_3R_238()) {
     jj_scanpos = xsp;
-    if (jj_3R_237()) return true;
+    if (jj_3R_239()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_286() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_288() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_172() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_174() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_205() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_207() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_233() {
+  final private boolean jj_3R_235() {
     if (jj_scan_token(CASE)) return true;
     if (jj_3R_44()) return true;
     if (jj_scan_token(DDOT)) return true;
@@ -4291,37 +4346,37 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_254() {
+  final private boolean jj_3R_256() {
     if (jj_3R_28()) return true;
     return false;
   }
 
-  final private boolean jj_3R_296() {
+  final private boolean jj_3R_298() {
     if (jj_scan_token(ASSIGN)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_272() {
+  final private boolean jj_3R_274() {
     if (jj_scan_token(VERTICALLINE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_286()) jj_scanpos = xsp;
+    if (jj_3R_288()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_197() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_199() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_198() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_200() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
   final private boolean jj_3R_29() {
-    if (jj_3R_76()) return true;
+    if (jj_3R_77()) return true;
     return false;
   }
 
@@ -4333,24 +4388,24 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_235() {
+  final private boolean jj_3R_237() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_254()) jj_scanpos = xsp;
+    if (jj_3R_256()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_255()) jj_scanpos = xsp;
+    if (jj_3R_257()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_209() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_211() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_276() {
-    if (jj_3R_76()) return true;
+  final private boolean jj_3R_278() {
+    if (jj_3R_77()) return true;
     return false;
   }
 
@@ -4361,23 +4416,23 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_192() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_194() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_207() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_209() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_242() {
-    if (jj_3R_265()) return true;
+  final private boolean jj_3R_244() {
+    if (jj_3R_267()) return true;
     return false;
   }
 
-  final private boolean jj_3R_202() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_204() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
@@ -4387,251 +4442,251 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_267() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_278()) jj_scanpos = xsp;
+    if (jj_scan_token(DDOT)) return true;
+    return false;
+  }
+
   final private boolean jj_3_6() {
     if (jj_3R_28()) return true;
     if (jj_scan_token(VERTICALLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_265() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_276()) jj_scanpos = xsp;
-    if (jj_scan_token(DDOT)) return true;
+  final private boolean jj_3R_197() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_195() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_266() {
+    if (jj_3R_28()) return true;
     return false;
   }
 
-  final private boolean jj_3R_166() {
+  final private boolean jj_3R_168() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_242()) jj_scanpos = xsp;
+    if (jj_3R_244()) jj_scanpos = xsp;
     if (jj_3R_44()) return true;
     if (jj_scan_token(RBRACE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_264() {
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_241() {
+  final private boolean jj_3R_243() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_264()) jj_scanpos = xsp;
+    if (jj_3R_266()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_179() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_181() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_240() {
+  final private boolean jj_3R_242() {
     if (jj_3R_32()) return true;
     return false;
   }
 
-  final private boolean jj_3R_177() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_179() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_187() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_189() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_262() {
+  final private boolean jj_3R_264() {
     if (jj_3R_28()) return true;
     if (jj_scan_token(VERTICALLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_210() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_212() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_199() {
+  final private boolean jj_3R_201() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_240()) {
+    if (jj_3R_242()) {
     jj_scanpos = xsp;
-    if (jj_3R_241()) return true;
+    if (jj_3R_243()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_174() {
+  final private boolean jj_3R_176() {
     if (jj_scan_token(OTHERWISE)) return true;
     if (jj_scan_token(DDOT)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_200() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_202() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_239() {
+  final private boolean jj_3R_241() {
     if (jj_scan_token(COMMA)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_262()) jj_scanpos = xsp;
+    if (jj_3R_264()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_263()) jj_scanpos = xsp;
+    if (jj_3R_265()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_280() {
-    if (jj_scan_token(118)) return true;
+  final private boolean jj_3R_282() {
+    if (jj_scan_token(122)) return true;
     return false;
   }
 
-  final private boolean jj_3R_204() {
+  final private boolean jj_3R_206() {
     if (jj_scan_token(VERTICALLINE)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_279() {
-    if (jj_scan_token(117)) return true;
+  final private boolean jj_3R_281() {
+    if (jj_scan_token(121)) return true;
     return false;
   }
 
-  final private boolean jj_3R_295() {
-    if (jj_3R_167()) return true;
+  final private boolean jj_3R_297() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
-  final private boolean jj_3R_171() {
+  final private boolean jj_3R_173() {
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_194() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_196() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_278() {
+  final private boolean jj_3R_280() {
     if (jj_scan_token(PLUS)) return true;
     return false;
   }
 
-  final private boolean jj_3R_277() {
+  final private boolean jj_3R_279() {
     if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
 
-  final private boolean jj_3R_211() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_213() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_208() {
-    if (jj_3R_235()) return true;
+  final private boolean jj_3R_210() {
+    if (jj_3R_237()) return true;
     return false;
   }
 
-  final private boolean jj_3R_189() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_191() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_201() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_203() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_268() {
+  final private boolean jj_3R_270() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_277()) {
-    jj_scanpos = xsp;
-    if (jj_3R_278()) {
-    jj_scanpos = xsp;
     if (jj_3R_279()) {
     jj_scanpos = xsp;
-    if (jj_3R_280()) return true;
+    if (jj_3R_280()) {
+    jj_scanpos = xsp;
+    if (jj_3R_281()) {
+    jj_scanpos = xsp;
+    if (jj_3R_282()) return true;
     }
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_196() {
-    if (jj_3R_239()) return true;
+  final private boolean jj_3R_198() {
+    if (jj_3R_241()) return true;
     return false;
   }
 
-  final private boolean jj_3R_251() {
-    if (jj_scan_token(116)) return true;
+  final private boolean jj_3R_253() {
+    if (jj_scan_token(120)) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_206() {
-    if (jj_3R_235()) return true;
+  final private boolean jj_3R_208() {
+    if (jj_3R_237()) return true;
     return false;
   }
 
-  final private boolean jj_3R_250() {
-    if (jj_3R_268()) return true;
+  final private boolean jj_3R_252() {
+    if (jj_3R_270()) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_232() {
+  final private boolean jj_3R_234() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_250()) {
+    if (jj_3R_252()) {
     jj_scanpos = xsp;
-    if (jj_3R_251()) return true;
+    if (jj_3R_253()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_227() {
+  final private boolean jj_3R_229() {
     if (jj_scan_token(TEST)) return true;
     return false;
   }
 
-  final private boolean jj_3R_190() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_192() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_226() {
+  final private boolean jj_3R_228() {
     if (jj_scan_token(WITH)) return true;
     return false;
   }
 
-  final private boolean jj_3R_225() {
+  final private boolean jj_3R_227() {
     if (jj_scan_token(WHERE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_224() {
+  final private boolean jj_3R_226() {
     if (jj_scan_token(NOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_182() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_184() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_223() {
+  final private boolean jj_3R_225() {
     if (jj_scan_token(ALL)) return true;
     return false;
   }
@@ -4641,38 +4696,34 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_222() {
+  final private boolean jj_3R_224() {
     if (jj_scan_token(ONE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_221() {
+  final private boolean jj_3R_223() {
     if (jj_scan_token(SOME)) return true;
     return false;
   }
 
-  final private boolean jj_3R_178() {
+  final private boolean jj_3R_180() {
     if (jj_3R_28()) return true;
     return false;
   }
 
-  final private boolean jj_3R_186() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_188() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_185() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_187() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_165() {
+  final private boolean jj_3R_167() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_221()) {
-    jj_scanpos = xsp;
-    if (jj_3R_222()) {
-    jj_scanpos = xsp;
     if (jj_3R_223()) {
     jj_scanpos = xsp;
     if (jj_3R_224()) {
@@ -4681,7 +4732,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_scanpos = xsp;
     if (jj_3R_226()) {
     jj_scanpos = xsp;
-    if (jj_3R_227()) return true;
+    if (jj_3R_227()) {
+    jj_scanpos = xsp;
+    if (jj_3R_228()) {
+    jj_scanpos = xsp;
+    if (jj_3R_229()) return true;
     }
     }
     }
@@ -4691,39 +4746,49 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_116() {
-    if (jj_3R_123()) return true;
+  final private boolean jj_3R_117() {
+    if (jj_3R_124()) return true;
     Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_213()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_175() {
+    if (jj_3R_235()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_116() {
+    if (jj_3R_27()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_212()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_80() {
+    if (jj_3R_160()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_205() {
+    if (jj_3R_28()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_115() {
+    if (jj_3R_126()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_210()) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_211()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_173() {
-    if (jj_3R_233()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_115() {
-    if (jj_3R_27()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_210()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_79() {
-    if (jj_3R_158()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_203() {
-    if (jj_3R_28()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_114() {
-    if (jj_3R_125()) return true;
+    if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_208()) jj_scanpos = xsp;
@@ -4732,66 +4797,66 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3_4() {
+    if (jj_3R_26()) return true;
+    if (jj_scan_token(119)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_113() {
-    if (jj_3R_23()) return true;
+    if (jj_scan_token(LBRACKET)) return true;
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_205()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
     if (jj_3R_206()) jj_scanpos = xsp;
+    if (jj_scan_token(RBRACKET)) return true;
     xsp = jj_scanpos;
     if (jj_3R_207()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3_4() {
-    if (jj_3R_26()) return true;
-    if (jj_scan_token(115)) return true;
+  final private boolean jj_3R_296() {
+    if (jj_3R_169()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_195() {
+    if (jj_3R_240()) return true;
     return false;
   }
 
   final private boolean jj_3R_112() {
-    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_3R_42()) return true;
+    if (jj_3R_26()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_203()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
     if (jj_3R_204()) jj_scanpos = xsp;
-    if (jj_scan_token(RBRACKET)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_205()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_294() {
-    if (jj_3R_167()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_193() {
-    if (jj_3R_238()) return true;
     return false;
   }
 
   final private boolean jj_3R_111() {
-    if (jj_3R_42()) return true;
-    if (jj_3R_26()) return true;
+    if (jj_3R_168()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_203()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_110() {
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_201()) return true;
+    if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_202()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_110() {
-    if (jj_3R_166()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_201()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_109() {
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_199()) return true;
-    if (jj_scan_token(RPAREN)) return true;
+    if (jj_3R_26()) return true;
+    if (jj_scan_token(119)) return true;
+    if (jj_3R_26()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_200()) jj_scanpos = xsp;
@@ -4799,64 +4864,64 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_108() {
-    if (jj_3R_26()) return true;
-    if (jj_scan_token(115)) return true;
-    if (jj_3R_26()) return true;
+    if (jj_scan_token(PRIM)) return true;
+    if (jj_scan_token(LPAREN)) return true;
+    if (jj_3R_126()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_198()) jj_scanpos = xsp;
+    if (jj_scan_token(RPAREN)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_199()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_107() {
-    if (jj_scan_token(PRIM)) return true;
+    if (jj_3R_167()) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_125()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_196()) jj_scanpos = xsp;
+    if (jj_3R_44()) return true;
     if (jj_scan_token(RPAREN)) return true;
+    Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_197()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_106() {
-    if (jj_3R_165()) return true;
-    if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_44()) return true;
-    if (jj_scan_token(RPAREN)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_195()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_105() {
     if (jj_scan_token(RULES)) return true;
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_193()) { jj_scanpos = xsp; break; }
+      if (jj_3R_195()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RPAREN)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_196()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_299() {
+    if (jj_3R_47()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_105() {
+    if (jj_scan_token(117)) return true;
+    if (jj_3R_193()) return true;
+    if (jj_scan_token(DDOT)) return true;
+    if (jj_3R_44()) return true;
+    if (jj_scan_token(118)) return true;
+    Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_194()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_297() {
-    if (jj_3R_47()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_104() {
-    if (jj_scan_token(113)) return true;
-    if (jj_3R_191()) return true;
-    if (jj_scan_token(DDOT)) return true;
-    if (jj_3R_44()) return true;
-    if (jj_scan_token(114)) return true;
+    if (jj_scan_token(BACKSLASH)) return true;
+    if (jj_3R_32()) return true;
+    if (jj_scan_token(BACKSLASH)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_192()) jj_scanpos = xsp;
@@ -4864,42 +4929,32 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_103() {
-    if (jj_scan_token(BACKSLASH)) return true;
-    if (jj_3R_32()) return true;
-    if (jj_scan_token(BACKSLASH)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_190()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_102() {
     if (jj_scan_token(IMPORTTERM)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_188()) return true;
+    if (jj_3R_190()) return true;
     if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_189()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_181() {
-    if (jj_3R_235()) return true;
+    if (jj_3R_191()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_183() {
-    if (jj_3R_232()) return true;
+    if (jj_3R_237()) return true;
     return false;
   }
 
-  final private boolean jj_3R_184() {
-    if (jj_3R_232()) return true;
+  final private boolean jj_3R_185() {
+    if (jj_3R_234()) return true;
     return false;
   }
 
-  final private boolean jj_3R_101() {
+  final private boolean jj_3R_186() {
+    if (jj_3R_234()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_102() {
     if (jj_scan_token(REC)) return true;
     if (jj_3R_23()) return true;
     if (jj_scan_token(LPAREN)) return true;
@@ -4907,95 +4962,111 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_187()) jj_scanpos = xsp;
+    if (jj_3R_189()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_101() {
+    if (jj_scan_token(EXCLAMATIONMARK)) return true;
+    if (jj_3R_26()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_188()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_100() {
-    if (jj_scan_token(EXCLAMATIONMARK)) return true;
+    if (jj_scan_token(QUESTIONMARK)) return true;
     if (jj_3R_26()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_187()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_99() {
+    if (jj_scan_token(ID)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_186()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_99() {
-    if (jj_scan_token(QUESTIONMARK)) return true;
-    if (jj_3R_26()) return true;
+  final private boolean jj_3R_120() {
+    if (jj_3R_170()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_178() {
+    if (jj_3R_236()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_98() {
+    if (jj_scan_token(FAIL)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_185()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_98() {
-    if (jj_scan_token(ID)) return true;
+  final private boolean jj_3R_97() {
+    if (jj_scan_token(PROCEED)) return true;
     Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_183()) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_184()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_119() {
-    if (jj_3R_168()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_176() {
-    if (jj_3R_234()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_97() {
-    if (jj_scan_token(FAIL)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_183()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_96() {
-    if (jj_scan_token(PROCEED)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_181()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_182()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_95() {
     if (jj_scan_token(CALL)) return true;
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_26()) return true;
     if (jj_scan_token(VERTICALLINE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_178()) jj_scanpos = xsp;
+    if (jj_3R_180()) jj_scanpos = xsp;
     if (jj_scan_token(VERTICALLINE)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_179()) jj_scanpos = xsp;
+    if (jj_3R_181()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_180()) jj_scanpos = xsp;
+    if (jj_3R_182()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_293() {
+  final private boolean jj_3R_295() {
     if (jj_3R_23()) return true;
     return false;
   }
 
-  final private boolean jj_3R_94() {
+  final private boolean jj_3R_95() {
     if (jj_scan_token(LET)) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_176()) { jj_scanpos = xsp; break; }
+      if (jj_3R_178()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(IN)) return true;
     if (jj_3R_44()) return true;
+    if (jj_scan_token(END)) return true;
+    xsp = jj_scanpos;
+    if (jj_3R_179()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_94() {
+    if (jj_scan_token(SWITCH)) return true;
+    if (jj_3R_44()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_175()) { jj_scanpos = xsp; break; }
+    }
+    xsp = jj_scanpos;
+    if (jj_3R_176()) jj_scanpos = xsp;
     if (jj_scan_token(END)) return true;
     xsp = jj_scanpos;
     if (jj_3R_177()) jj_scanpos = xsp;
@@ -5003,40 +5074,22 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
   final private boolean jj_3R_93() {
-    if (jj_scan_token(SWITCH)) return true;
-    if (jj_3R_44()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_173()) { jj_scanpos = xsp; break; }
-    }
-    xsp = jj_scanpos;
-    if (jj_3R_174()) jj_scanpos = xsp;
-    if (jj_scan_token(END)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_175()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_92() {
     if (jj_scan_token(IF)) return true;
     if (jj_3R_44()) return true;
     if (jj_scan_token(THEN)) return true;
     if (jj_3R_44()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_171()) jj_scanpos = xsp;
+    if (jj_3R_173()) jj_scanpos = xsp;
     if (jj_scan_token(END)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_172()) jj_scanpos = xsp;
+    if (jj_3R_174()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_44() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_92()) {
-    jj_scanpos = xsp;
     if (jj_3R_93()) {
     jj_scanpos = xsp;
     if (jj_3R_94()) {
@@ -5083,7 +5136,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     jj_scanpos = xsp;
     if (jj_3R_115()) {
     jj_scanpos = xsp;
-    if (jj_3R_116()) return true;
+    if (jj_3R_116()) {
+    jj_scanpos = xsp;
+    if (jj_3R_117()) return true;
     }
     }
     }
@@ -5111,72 +5166,72 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_292() {
+  final private boolean jj_3R_294() {
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_297()) jj_scanpos = xsp;
+    if (jj_3R_299()) jj_scanpos = xsp;
     if (jj_scan_token(ASSIGN)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_291() {
+  final private boolean jj_3R_293() {
     if (jj_scan_token(EXTERNAL)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_293()) jj_scanpos = xsp;
+    if (jj_3R_295()) jj_scanpos = xsp;
     if (jj_scan_token(LPAREN)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_294()) jj_scanpos = xsp;
+    if (jj_3R_296()) jj_scanpos = xsp;
     if (jj_scan_token(VERTICALLINE)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_295()) jj_scanpos = xsp;
+    if (jj_3R_297()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_296()) jj_scanpos = xsp;
+    if (jj_3R_298()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_290() {
+  final private boolean jj_3R_292() {
     if (jj_3R_47()) return true;
     return false;
   }
 
-  final private boolean jj_3R_285() {
+  final private boolean jj_3R_287() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_291()) {
+    if (jj_3R_293()) {
     jj_scanpos = xsp;
-    if (jj_3R_292()) return true;
+    if (jj_3R_294()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_217() {
+  final private boolean jj_3R_219() {
     if (jj_scan_token(WITH)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_216() {
+  final private boolean jj_3R_218() {
     if (jj_scan_token(WHERE)) return true;
     if (jj_3R_44()) return true;
     return false;
   }
 
-  final private boolean jj_3R_158() {
+  final private boolean jj_3R_160() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_216()) {
+    if (jj_3R_218()) {
     jj_scanpos = xsp;
-    if (jj_3R_217()) return true;
+    if (jj_3R_219()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_228() {
-    if (jj_3R_167()) return true;
+  final private boolean jj_3R_230() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
@@ -5187,13 +5242,13 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_79()) { jj_scanpos = xsp; break; }
+      if (jj_3R_80()) { jj_scanpos = xsp; break; }
     }
     return false;
   }
 
-  final private boolean jj_3R_118() {
-    if (jj_3R_167()) return true;
+  final private boolean jj_3R_119() {
+    if (jj_3R_169()) return true;
     return false;
   }
 
@@ -5202,11 +5257,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_168() {
+  final private boolean jj_3R_170() {
     if (jj_scan_token(VERTICALLINE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_228()) jj_scanpos = xsp;
+    if (jj_3R_230()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5223,78 +5278,78 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_118()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
     if (jj_3R_119()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_120()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_284() {
+  final private boolean jj_3R_286() {
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_290()) jj_scanpos = xsp;
+    if (jj_3R_292()) jj_scanpos = xsp;
     if (jj_scan_token(DDOT)) return true;
     if (jj_3R_32()) return true;
     return false;
   }
 
-  final private boolean jj_3R_271() {
-    if (jj_3R_285()) return true;
+  final private boolean jj_3R_273() {
+    if (jj_3R_287()) return true;
     return false;
   }
 
-  final private boolean jj_3R_270() {
-    if (jj_3R_284()) return true;
+  final private boolean jj_3R_272() {
+    if (jj_3R_286()) return true;
     return false;
   }
 
-  final private boolean jj_3R_245() {
-    if (jj_3R_267()) return true;
+  final private boolean jj_3R_247() {
+    if (jj_3R_269()) return true;
     return false;
   }
 
-  final private boolean jj_3R_253() {
+  final private boolean jj_3R_255() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_270()) {
+    if (jj_3R_272()) {
     jj_scanpos = xsp;
-    if (jj_3R_271()) return true;
+    if (jj_3R_273()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_283() {
+  final private boolean jj_3R_285() {
     if (jj_scan_token(INTERNAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_282() {
+  final private boolean jj_3R_284() {
     if (jj_scan_token(OVERRIDE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_281() {
+  final private boolean jj_3R_283() {
     if (jj_scan_token(EXTEND)) return true;
     return false;
   }
 
-  final private boolean jj_3R_269() {
+  final private boolean jj_3R_271() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_281()) {
+    if (jj_3R_283()) {
     jj_scanpos = xsp;
-    if (jj_3R_282()) {
+    if (jj_3R_284()) {
     jj_scanpos = xsp;
-    if (jj_3R_283()) return true;
+    if (jj_3R_285()) return true;
     }
     }
     return false;
   }
 
-  final private boolean jj_3R_252() {
-    if (jj_3R_269()) return true;
+  final private boolean jj_3R_254() {
+    if (jj_3R_271()) return true;
     return false;
   }
 
@@ -5303,13 +5358,13 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_234() {
+  final private boolean jj_3R_236() {
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_252()) { jj_scanpos = xsp; break; }
+      if (jj_3R_254()) { jj_scanpos = xsp; break; }
     }
-    if (jj_3R_253()) return true;
+    if (jj_3R_255()) return true;
     return false;
   }
 
@@ -5322,35 +5377,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_162() {
-    if (jj_3R_220()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_244() {
-    if (jj_3R_46()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_267() {
-    if (jj_scan_token(VERTICALLINE)) return true;
-    if (jj_3R_39()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_219() {
-    if (jj_3R_220()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_218() {
-    if (jj_scan_token(LBRACKET)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_244()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_245()) jj_scanpos = xsp;
-    if (jj_scan_token(RBRACKET)) return true;
+  final private boolean jj_3R_164() {
+    if (jj_3R_222()) return true;
     return false;
   }
 
@@ -5359,44 +5387,71 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_161() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_218()) {
-    jj_scanpos = xsp;
-    if (jj_3R_219()) return true;
-    }
+  final private boolean jj_3R_269() {
+    if (jj_scan_token(VERTICALLINE)) return true;
+    if (jj_3R_39()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_221() {
+    if (jj_3R_222()) return true;
     return false;
   }
 
   final private boolean jj_3R_220() {
-    if (jj_scan_token(LPAREN)) return true;
+    if (jj_scan_token(LBRACKET)) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_246()) jj_scanpos = xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_247()) jj_scanpos = xsp;
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_248() {
+    if (jj_3R_46()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_163() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_220()) {
+    jj_scanpos = xsp;
+    if (jj_3R_221()) return true;
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_222() {
+    if (jj_scan_token(LPAREN)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_248()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_87() {
+  final private boolean jj_3R_88() {
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_162()) jj_scanpos = xsp;
+    if (jj_3R_164()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_86() {
-    if (jj_3R_161()) return true;
+  final private boolean jj_3R_87() {
+    if (jj_3R_163()) return true;
     return false;
   }
 
   final private boolean jj_3R_39() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_86()) {
+    if (jj_3R_87()) {
     jj_scanpos = xsp;
-    if (jj_3R_87()) return true;
+    if (jj_3R_88()) return true;
     }
     return false;
   }
@@ -5407,7 +5462,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_188() {
+  final private boolean jj_3R_190() {
     if (jj_3R_23()) return true;
     Token xsp;
     while (true) {
@@ -5422,7 +5477,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_125() {
+  final private boolean jj_3R_137() {
+    if (jj_scan_token(STRING_QUOT)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_126() {
     if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
@@ -5430,27 +5490,27 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3R_27() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(89)) jj_scanpos = xsp;
-    if (jj_3R_75()) return true;
+    if (jj_scan_token(93)) jj_scanpos = xsp;
+    if (jj_3R_76()) return true;
     return false;
   }
 
-  final private boolean jj_3R_75() {
+  final private boolean jj_3R_76() {
     if (jj_scan_token(INTEGER_LITERAL)) return true;
     if (jj_scan_token(DOT)) return true;
     if (jj_scan_token(INTEGER_LITERAL)) return true;
     return false;
   }
 
-  final private boolean jj_3R_123() {
+  final private boolean jj_3R_124() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(89)) jj_scanpos = xsp;
-    if (jj_3R_170()) return true;
+    if (jj_scan_token(93)) jj_scanpos = xsp;
+    if (jj_3R_172()) return true;
     return false;
   }
 
-  final private boolean jj_3R_170() {
+  final private boolean jj_3R_172() {
     if (jj_scan_token(INTEGER_LITERAL)) return true;
     return false;
   }
@@ -5467,8 +5527,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_154() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_156() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5478,18 +5538,18 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_155() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_154() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_153() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_152() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_151() {
-    if (jj_3R_169()) return true;
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5499,33 +5559,33 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_150() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_152() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_155() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_157() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_151() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_150() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_145() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
   final private boolean jj_3R_149() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_148() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_143() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_147() {
-    if (jj_3R_169()) return true;
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5535,28 +5595,28 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_144() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_146() {
-    if (jj_3R_169()) return true;
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_145() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_148() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_142() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_147() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_141() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_144() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_143() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5566,23 +5626,23 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_142() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_141() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_128() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_140() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_127() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_139() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_138() {
-    if (jj_3R_169()) return true;
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5596,7 +5656,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_273() {
+  final private boolean jj_3R_275() {
     if (jj_3R_45()) return true;
     Token xsp;
     while (true) {
@@ -5606,8 +5666,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_136() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_138() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
@@ -5621,12 +5681,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_132() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_133() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_167() {
+  final private boolean jj_3R_169() {
     if (jj_3R_43()) return true;
     Token xsp;
     while (true) {
@@ -5636,7 +5696,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_163() {
+  final private boolean jj_3R_165() {
     if (jj_3R_26()) return true;
     Token xsp;
     while (true) {
@@ -5646,17 +5706,17 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_88() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_89() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_249() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_251() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_76() {
+  final private boolean jj_3R_77() {
     if (jj_3R_23()) return true;
     Token xsp;
     while (true) {
@@ -5670,38 +5730,38 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_88()) jj_scanpos = xsp;
+    if (jj_3R_89()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_164() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_166() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
-  final private boolean jj_3R_91() {
+  final private boolean jj_3R_92() {
     if (jj_scan_token(VERTICALLINE)) return true;
     if (jj_scan_token(LBRACKET)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_249()) jj_scanpos = xsp;
+    if (jj_3R_251()) jj_scanpos = xsp;
     if (jj_scan_token(RBRACKET)) return true;
     if (jj_scan_token(VERTICALLINE)) return true;
     return false;
   }
 
-  final private boolean jj_3R_90() {
+  final private boolean jj_3R_91() {
     if (jj_scan_token(AT)) return true;
     if (jj_3R_26()) return true;
     return false;
   }
 
-  final private boolean jj_3R_89() {
+  final private boolean jj_3R_90() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_164()) jj_scanpos = xsp;
+    if (jj_3R_166()) jj_scanpos = xsp;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
@@ -5715,11 +5775,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   final private boolean jj_3R_41() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_89()) {
-    jj_scanpos = xsp;
     if (jj_3R_90()) {
     jj_scanpos = xsp;
-    if (jj_3R_91()) return true;
+    if (jj_3R_91()) {
+    jj_scanpos = xsp;
+    if (jj_3R_92()) return true;
     }
     }
     return false;
@@ -5731,49 +5791,44 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_134() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_135() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_121() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
   final private boolean jj_3_36() {
     if (jj_3R_42()) return true;
     if (jj_scan_token(END)) return true;
     return false;
   }
 
+  final private boolean jj_3R_135() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_136() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
   final private boolean jj_3_35() {
     if (jj_3R_42()) return true;
-    if (jj_scan_token(114)) return true;
+    if (jj_scan_token(118)) return true;
     return false;
   }
 
-  final private boolean jj_3R_129() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_122() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_137() {
+  final private boolean jj_3R_139() {
     if (jj_3R_42()) return true;
     return false;
   }
 
-  final private boolean jj_3R_74() {
+  final private boolean jj_3R_75() {
     if (jj_3R_42()) return true;
     if (jj_3R_26()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_155()) jj_scanpos = xsp;
+    if (jj_3R_157()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5783,22 +5838,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_122() {
-    if (jj_3R_169()) return true;
+  final private boolean jj_3R_130() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_131() {
-    if (jj_scan_token(VERTICALLINE)) return true;
-    if (jj_3R_26()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_73() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_74() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_154()) jj_scanpos = xsp;
+    if (jj_3R_156()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5808,16 +5857,22 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3_19() {
-    if (jj_3R_40()) return true;
+  final private boolean jj_3R_123() {
+    if (jj_3R_171()) return true;
     return false;
   }
 
-  final private boolean jj_3R_72() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_132() {
+    if (jj_scan_token(VERTICALLINE)) return true;
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_73() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_153()) jj_scanpos = xsp;
+    if (jj_3R_155()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5827,11 +5882,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_71() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3_19() {
+    if (jj_3R_40()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_72() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_152()) jj_scanpos = xsp;
+    if (jj_3R_154()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5846,11 +5906,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_70() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_71() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_151()) jj_scanpos = xsp;
+    if (jj_3R_153()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5860,11 +5920,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_69() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_70() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_150()) jj_scanpos = xsp;
+    if (jj_3R_152()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5874,11 +5934,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_68() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_69() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_149()) jj_scanpos = xsp;
+    if (jj_3R_151()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5888,16 +5948,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_126() {
-    if (jj_3R_40()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_67() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_68() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_148()) jj_scanpos = xsp;
+    if (jj_3R_150()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5907,11 +5962,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_66() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_127() {
+    if (jj_3R_40()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_67() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_147()) jj_scanpos = xsp;
+    if (jj_3R_149()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5921,16 +5981,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_124() {
-    if (jj_3R_169()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_65() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_66() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_146()) jj_scanpos = xsp;
+    if (jj_3R_148()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5940,11 +5995,16 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_125() {
+    if (jj_3R_171()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_65() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_145()) jj_scanpos = xsp;
+    if (jj_3R_147()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5955,26 +6015,26 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_63() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_64() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_144()) jj_scanpos = xsp;
+    if (jj_3R_146()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3_23() {
     if (jj_3R_42()) return true;
     if (jj_3R_23()) return true;
-    if (jj_scan_token(115)) return true;
+    if (jj_scan_token(119)) return true;
     return false;
   }
 
-  final private boolean jj_3R_62() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_63() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_143()) jj_scanpos = xsp;
+    if (jj_3R_145()) jj_scanpos = xsp;
     return false;
   }
 
@@ -5985,58 +6045,63 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_62() {
+    if (jj_3R_139()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_144()) jj_scanpos = xsp;
+    return false;
+  }
+
   final private boolean jj_3R_61() {
-    if (jj_3R_137()) return true;
+    if (jj_3R_139()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_143()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_60() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_142()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_60() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_59() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_141()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_59() {
-    if (jj_3R_137()) return true;
+  final private boolean jj_3R_58() {
+    if (jj_3R_139()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_140()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_58() {
-    if (jj_3R_137()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_139()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_57() {
-    if (jj_3R_137()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_138()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_133() {
-    if (jj_3R_163()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_56() {
     if (jj_3R_23()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_20()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_136()) jj_scanpos = xsp;
+    if (jj_3R_138()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_134() {
+    if (jj_3R_165()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_56() {
+    if (jj_3R_137()) return true;
     return false;
   }
 
@@ -6045,8 +6110,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
-  final private boolean jj_3R_130() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_131() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
@@ -6057,12 +6122,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_135()) jj_scanpos = xsp;
+    if (jj_3R_136()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_128() {
-    if (jj_3R_163()) return true;
+  final private boolean jj_3R_129() {
+    if (jj_3R_165()) return true;
     return false;
   }
 
@@ -6070,34 +6135,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_133()) jj_scanpos = xsp;
+    if (jj_3R_134()) jj_scanpos = xsp;
     if (jj_scan_token(RBRACE)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_134()) jj_scanpos = xsp;
+    if (jj_3R_135()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3_21() {
     if (jj_3R_27()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_16() {
-    if (jj_scan_token(STAR)) return true;
-    if (jj_3R_38()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_53() {
-    if (jj_scan_token(LBRACKET)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_130()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_131()) jj_scanpos = xsp;
-    if (jj_scan_token(RBRACKET)) return true;
-    xsp = jj_scanpos;
-    if (jj_3R_132()) jj_scanpos = xsp;
     return false;
   }
 
@@ -6127,10 +6173,10 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_la1_1 = new int[] {0x0,0x0,0xb500,0x0,0x0,0xe0800000,0xe0800000,0x0,0x0,0x0,0xb500,0x0,0x0,0x0,0x800000,0x0,0x0,0x0,0x0,0x0,0x0,0x800000,0x0,0x0,0xe0000000,0xe0000000,0x800000,0x0,0x0,0x0,0x0,0x40200,0x40200,0x0,0x0,0x0,0x0,0x0,0x800000,0x200000,0x0,0x100000,0x2000000,0x0,0xe0800000,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0xd0e5ace,0x0,0x0,0x6420c,0x0,0x0,0x0,0xd0e5ace,0x0,0xd0e5ace,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x2000000,0x2000000,0x0,0x0,0x800,0x800,0x800,0x0,0x0,0x800,0x0,0x10000,0x800,0x110800,0x40000c00,0x0,0x110800,0x110800,0x110800,0x0,0x110000,0x0,0xc00,0xc00,0x0,0x0,0x800,0x10000,0x800,0x0,0x800,0x0,0x0,0x800,0x800,0x800,0x0,0x10000,0x800,0x0,0x21000000,0x0,0x0,0x21000000,0x800,0x21000000,0x2550c08,0x2550c08,0x21000000,0x10000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x800,0x21000000,0x21000000,0x10000000,0x21000000,0x21000000,0x21000000,0x21000000,0x21000000,0x2550c08,0x0,0x21000000,0x10000,0x21000000,0x10000,0x21000000,0x21000000,0x21000000,0x0,0x550c00,0x2000008,0x0,0x21000000,0x21000000,0x2550c08,0x2550c08,0x800,0x2550c08,0x0,0x2550c08,0x800,0x0,0x800,0x800,0x2550c08,0x81000000,0x10000,0x800,0x0,0x800,0x81000000,0x0,0x800,0x0,0x40000000,0x110800,0x10000,0x2550c08,0x40000,0x40000,0x40000,0x40000,0x40000,0x2550c08,0x40000,0x2550c08,0x0,0x40000,0x2550c08,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x40000,0x0,0x2150c08,0x400000,0x2550c08,0x2550c08,0x10000,0x2550c08,};
+      jj_la1_2 = new int[] {0x20000000,0x20000000,0x0,0x0,0x8000,0x8000,0x8000,0x0,0x0,0x8000,0x0,0x100000,0x8000,0x1108000,0x8400,0x0,0x1108000,0x1108000,0x1108000,0x0,0x1100000,0x0,0x8400,0x8400,0x0,0x0,0x8000,0x100000,0x8000,0x0,0x8000,0x0,0x0,0x8000,0x8000,0x8000,0x0,0x100000,0x8000,0x0,0x10000000,0x0,0x0,0x10000000,0x8000,0x10000000,0x25508c08,0x25508c08,0x10000000,0x100000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x8000,0x10000000,0x10000000,0x0,0x10000000,0x10000000,0x10000000,0x10000000,0x10000000,0x25508c08,0x0,0x10000000,0x100000,0x10000000,0x100000,0x10000000,0x10000000,0x10000000,0x0,0x5508400,0x20000008,0x0,0x10000000,0x10000000,0x25508c08,0x25508c08,0x8000,0x25508c08,0x0,0x25508c08,0x8000,0x0,0x8000,0x8000,0x25508c08,0x10000000,0x100000,0x8000,0x0,0x8000,0x10000000,0x0,0x8000,0x0,0x0,0x1108000,0x100000,0x25508c08,0x400000,0x400000,0x400000,0x400000,0x400000,0x25508c08,0x400000,0x25508c08,0x0,0x400000,0x25508c08,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x400000,0x0,0x21508c08,0x4000000,0x25508c08,0x25508c08,0x100000,0x25508c08,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x20,0x0,0x0,0x0,0x0,0x0,0x0,0x2000,0x0,0x0,0x0,0x700000,0x0,0x0,0x700000,0x0,0x700000,0x34007,0x4004,0x700000,0x0,0x700000,0x700000,0x700000,0x700000,0x700000,0x700000,0x700000,0x700000,0x700000,0x0,0x700000,0x700000,0x0,0x700000,0x700000,0x700000,0x700000,0x700000,0x34007,0x20,0x700000,0x0,0x700000,0x0,0x700000,0x700000,0x700000,0x30003,0x0,0x0,0x0,0x700000,0x600000,0x4004,0x34007,0x0,0x34007,0x20,0x4004,0x0,0x40,0x0,0x0,0x4004,0x0,0x0,0x0,0x20,0x0,0x0,0x3080000,0x0,0x40,0x0,0x0,0x0,0x4004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4004,0x4000004,0x4004,0x20,0x4000004,0x4004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000004,0x4000,0x4,0x0,0x4004,0x4004,0x28,0x4004,};
+      jj_la1_3 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x4,0x0,0x0,0x0,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x200,0x0,0x0,0x0,0x0,0x0,0x0,0x20000,0x0,0x0,0x0,0x7000002,0x0,0x0,0x7000002,0x0,0x7000002,0x340070,0x40040,0x7000002,0x0,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x0,0x7000002,0x7000002,0x1,0x7000002,0x7000002,0x7000002,0x7000002,0x7000002,0x340070,0x200,0x7000002,0x0,0x7000002,0x0,0x7000002,0x7000002,0x7000002,0x300030,0x0,0x0,0x0,0x7000002,0x6000002,0x40040,0x340070,0x0,0x340070,0x200,0x40040,0x0,0x400,0x0,0x0,0x40040,0x8,0x0,0x0,0x200,0x0,0x8,0x30800000,0x0,0x400,0x4,0x0,0x0,0x40040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40040,0x40000040,0x40040,0x200,0x40000040,0x40040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000040,0x40000,0x40,0x0,0x40040,0x40040,0x280,0x40040,};
    }
   final private JJCalls[] jj_2_rtns = new JJCalls[44];
   private boolean jj_rescan = false;
@@ -6281,8 +6327,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[123];
-    for (int i = 0; i < 123; i++) {
+    boolean[] la1tokens = new boolean[127];
+    for (int i = 0; i < 127; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -6307,7 +6353,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
         }
       }
     }
-    for (int i = 0; i < 123; i++) {
+    for (int i = 0; i < 127; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
@@ -6452,3 +6498,4 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
 }
+
