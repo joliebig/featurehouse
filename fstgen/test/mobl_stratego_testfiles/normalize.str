@@ -1,0 +1,112 @@
+module normalize
+
+imports
+  include/MoBL
+  editor-common
+  generation/compile
+  mobl
+
+rules
+
+  normalize-all =
+    innermost(normalize)
+
+  normalize :
+    Module(qid, def*) -> Module(qid, def2*)
+    where def2* := <flatten-list> def*
+        ; not(<eq> (def*, def2*))
+
+  normalize :
+    Application(qid, def*) -> Application(qid, def2*)
+    where def2* := <flatten-list> def*
+        ; not(<eq> (def*, def2*))
+
+  normalize :
+    FunctionNoReturnType(manno*, name, farg*, stat*) -> Function(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    SyncFunctionNoReturnType(manno*, name, farg*, stat*) -> SyncFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    StaticFunctionNoReturnType(manno*, name, farg*, stat*) -> StaticFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    StaticSyncFunctionNoReturnType(manno*, name, farg*, stat*) -> StaticSyncFunction(manno*, name, farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    AnonymousFunctionNoReturnType(farg*, stat*) -> AnonymousFunction(farg*, SimpleType(QId("mobl", "void")), stat*)
+
+  normalize :
+    IfNoElse(e, block) -> If(e, block, Block([]))
+
+  normalize :
+    If(e, stm, block) -> If(e, Block([stm]), block)
+    where not(Block(_) := stm)
+
+  normalize :
+    If(e, block, stm) -> If(e, block, Block([stm]))
+    where not(Block(_) := stm)
+        ; not(If(_, _, _) := stm)
+        ; not(IfNoElse(_, _) := stm)
+
+  normalize :
+    WhenNoElse(e, block) -> When(e, block, [])
+
+  // Feature HTML - Start
+  normalize :
+    HtmlShort(tag, attr*) -> Html(tag, attr*, [], tag)
+  normalize :
+    NamedHtmlShort(qid, tag, attr*) -> NamedHtml(qid, tag, attr*, [], tag)
+  // Feature HTML - Ende    
+
+  normalize :
+    EntityNoSuper(manno*, qid, prop*) -> Entity(manno*, qid, GenericType(QId("mobl", "Entity"), [SimpleType(qid)]), prop*)
+
+  normalize :
+    ExternalTypeNoSuper(manno*, qid, method*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), method*)
+
+  normalize :
+    TypeNoSuper(manno*, qid, def*) -> Type(manno*, qid, SimpleType(QId("mobl", "Object")), def*)
+
+  normalize :
+    PropertyNoAnnos(manno*, x, t) -> Property(manno*, x, t, [])
+
+  normalize :
+    ScreenNoReturnType(manno*, name, farg*, body) -> Screen(manno*, name, farg*, SimpleType(QId("mobl", "void")), body)
+
+  normalize :
+    ControlCallNoArgs(e, body) -> ControlCall(e, [], body)
+
+  normalize :
+    ControlCallNoBody(e, arg*) -> ControlCall(e, arg*, [])
+
+  normalize :
+    EntityNoSuper(manno*, qid, prop*) -> Entity(manno*, qid, GenericType(QId("mobl", "Entity"), [SimpleType(qid)]), prop*)
+
+  normalize :
+    TupleType(t*) -> GenericType(QId("mobl", $[Tuple[<length> t*]]), t*)
+
+  normalize :
+    ArrayType(t) -> GenericType(QId("mobl", "Array"), [t])
+
+  normalize :
+    DynamicType() -> SimpleType(QId("mobl", "Dynamic"))
+
+  normalize :
+    Mixin(qid) -> def*
+    with Module(_, def*) := <parse-file> <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+
+  normalize :
+    FunctionType(t*, rt) -> GenericType(QId("mobl", $[Function[n]]), [t*, rt])
+    where n := <length> t*
+
+  normalize :
+    Indexer(e, e_idx) -> MethodCall(e, "get", [e_idx])
+
+  normalize :
+    Assignment(LIndexer(e, e_idx), e_ass) -> ExpStat(MethodCall(e, "set", [e_idx, e_ass]))
+
+rules
+
+  normalize :
+    OrderNonSpecific(e) -> OrderAscending(e)

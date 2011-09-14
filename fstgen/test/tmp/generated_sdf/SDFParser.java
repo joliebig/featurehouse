@@ -559,7 +559,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
             break label_9;
           }
         }
-                                                                               {if (true) return productionEndNonTerminal("Disambiguations1","{AUTO}","{AUTO}");}
+                                                                               {if (true) return productionEndNonTerminal("Disambiguations1","context-free priorities","context-free priorities");}
         break;
       case LEXICALRESTRICTIONS:
         jj_consume_token(LEXICALRESTRICTIONS);
@@ -649,12 +649,20 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       n = Symbol(true);
                                                                  replaceName(n);
       if (jj_2_2(2147483647)) {
-        n = OptAttributes(true);
-                                                                                                                                     replaceName(n);
+        jj_consume_token(DLBRACKET);
+        n = Symbol(true);
+                                                                                                                                      replaceName(n);
+        jj_consume_token(DRBRACKET);
       } else {
         ;
       }
-                                                                                                                                                        {if (true) return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+      if (jj_2_3(2147483647)) {
+        n = OptAttributes(true);
+                                                                                                                                                                                                                replaceName(n);
+      } else {
+        ;
+      }
+                                                                                                                                                                                                                                   {if (true) return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("Production");
@@ -666,7 +674,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     try {
                                        Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-      if (jj_2_3(2147483647)) {
+      if (jj_2_4(2147483647)) {
         jj_consume_token(LPAREN);
         n = Symbol(true);
                                                         replaceName(n);
@@ -1190,7 +1198,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                                replaceName(n);
       label_15:
       while (true) {
-        if (jj_2_4(2)) {
+        if (jj_2_5(2)) {
           ;
         } else {
           break label_15;
@@ -1308,7 +1316,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     try {
                                          Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-      if (jj_2_7(3)) {
+      if (jj_2_8(3)) {
         jj_consume_token(LBRACE);
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case CONS:
@@ -1353,7 +1361,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
           }
         }
         jj_consume_token(RBRACE);
-        if (jj_2_5(2)) {
+        if (jj_2_6(2)) {
           jj_consume_token(GT);
           n = Priority(true);
                                                                                                                                                    replaceName(n);
@@ -1376,7 +1384,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                             replaceName(n);
           label_17:
           while (true) {
-            if (jj_2_6(2)) {
+            if (jj_2_7(2)) {
               ;
             } else {
               break label_17;
@@ -1429,7 +1437,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
                                                                           replaceName(n);
       label_19:
       while (true) {
-        if (jj_2_8(2)) {
+        if (jj_2_9(2)) {
           ;
         } else {
           break label_19;
@@ -1501,31 +1509,38 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     finally { jj_save(7, xla); }
   }
 
-  final private boolean jj_3_6() {
+  final private boolean jj_2_9(int xla) {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return !jj_3_9(); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(8, xla); }
+  }
+
+  final private boolean jj_3_7() {
     if (jj_scan_token(GT)) return true;
     if (jj_3R_23()) return true;
     return false;
   }
 
-  final private boolean jj_3R_58() {
+  final private boolean jj_3R_56() {
     if (jj_scan_token(DLBRACKET)) return true;
     if (jj_3R_20()) return true;
     if (jj_scan_token(DRBRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_47() {
+  final private boolean jj_3R_46() {
     Token xsp;
     xsp = jj_scanpos;
+    if (jj_3R_56()) {
+    jj_scanpos = xsp;
+    if (jj_3R_57()) {
+    jj_scanpos = xsp;
     if (jj_3R_58()) {
     jj_scanpos = xsp;
     if (jj_3R_59()) {
     jj_scanpos = xsp;
-    if (jj_3R_60()) {
-    jj_scanpos = xsp;
-    if (jj_3R_61()) {
-    jj_scanpos = xsp;
-    if (jj_3R_62()) return true;
+    if (jj_3R_60()) return true;
     }
     }
     }
@@ -1533,73 +1548,73 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_3() {
+  final private boolean jj_3_4() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_57() {
+  final private boolean jj_3R_55() {
     if (jj_scan_token(VERTICALLINE)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
-  final private boolean jj_3R_41() {
-    if (jj_3R_50()) return true;
+  final private boolean jj_3R_30() {
+    if (jj_3R_49()) return true;
     Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_50()) jj_scanpos = xsp;
     xsp = jj_scanpos;
     if (jj_3R_51()) jj_scanpos = xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_52()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_40() {
+  final private boolean jj_3R_29() {
     if (jj_3R_26()) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_49()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_39() {
-    if (jj_3R_47()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_48()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_38() {
+  final private boolean jj_3R_28() {
+    if (jj_3R_46()) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_47()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3R_27() {
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     if (jj_scan_token(RPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_45()) jj_scanpos = xsp;
+    if (jj_3R_44()) jj_scanpos = xsp;
     xsp = jj_scanpos;
-    if (jj_3R_46()) jj_scanpos = xsp;
+    if (jj_3R_45()) jj_scanpos = xsp;
     return false;
   }
 
   final private boolean jj_3R_24() {
-    if (jj_3R_21()) return true;
+    if (jj_3R_22()) return true;
     if (jj_scan_token(DDOT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_22() {
+  final private boolean jj_3R_21() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_38()) {
+    if (jj_3R_27()) {
     jj_scanpos = xsp;
-    if (jj_3R_39()) {
+    if (jj_3R_28()) {
     jj_scanpos = xsp;
-    if (jj_3R_40()) {
+    if (jj_3R_29()) {
     jj_scanpos = xsp;
-    if (jj_3R_41()) return true;
+    if (jj_3R_30()) return true;
     }
     }
     }
@@ -1607,7 +1622,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_53() {
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1618,7 +1633,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
       if (jj_3R_53()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(ARROW)) return true;
-    if (jj_3R_22()) return true;
+    if (jj_3R_21()) return true;
     return false;
   }
 
@@ -1627,13 +1642,13 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_4() {
+  final private boolean jj_3_5() {
     if (jj_scan_token(COMMA)) return true;
-    if (jj_3R_21()) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
-  final private boolean jj_3_7() {
+  final private boolean jj_3_8() {
     if (jj_scan_token(LBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -1649,46 +1664,52 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   final private boolean jj_3R_23() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_7()) {
+    if (jj_3_8()) {
     jj_scanpos = xsp;
     if (jj_3R_42()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_55() {
+  final private boolean jj_3R_64() {
     if (jj_scan_token(DEPRECATED)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_54() {
+  final private boolean jj_3R_63() {
     if (jj_scan_token(CONS)) return true;
     if (jj_scan_token(LPAREN)) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
   }
 
-  final private boolean jj_3R_44() {
+  final private boolean jj_3R_52() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_54()) {
+    if (jj_3R_63()) {
     jj_scanpos = xsp;
-    if (jj_3R_55()) return true;
+    if (jj_3R_64()) return true;
     }
     return false;
   }
 
-  final private boolean jj_3R_37() {
-    if (jj_3R_44()) return true;
+  final private boolean jj_3R_41() {
+    if (jj_3R_52()) return true;
     return false;
   }
 
-  final private boolean jj_3R_36() {
+  final private boolean jj_3R_40() {
     if (jj_scan_token(INDENTPADDING)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_3() {
+    if (jj_scan_token(LBRACE)) return true;
+    if (jj_3R_22()) return true;
     return false;
   }
 
@@ -1698,62 +1719,54 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_35() {
+  final private boolean jj_3R_39() {
     if (jj_scan_token(RECOVER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_34() {
+  final private boolean jj_3R_38() {
     if (jj_scan_token(REJECT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_33() {
+  final private boolean jj_3R_37() {
     if (jj_scan_token(ASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_32() {
+  final private boolean jj_3R_36() {
     if (jj_scan_token(NONASSOC)) return true;
     return false;
   }
 
-  final private boolean jj_3R_31() {
+  final private boolean jj_3R_35() {
     if (jj_scan_token(RIGHT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_30() {
+  final private boolean jj_3R_34() {
     if (jj_scan_token(LEFT)) return true;
     return false;
   }
 
-  final private boolean jj_3R_29() {
+  final private boolean jj_3R_33() {
     if (jj_scan_token(AVOID)) return true;
     return false;
   }
 
-  final private boolean jj_3R_28() {
+  final private boolean jj_3R_32() {
     if (jj_scan_token(PREFER)) return true;
     return false;
   }
 
-  final private boolean jj_3R_27() {
+  final private boolean jj_3R_31() {
     if (jj_scan_token(BRACKET)) return true;
     return false;
   }
 
-  final private boolean jj_3R_21() {
+  final private boolean jj_3R_22() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_27()) {
-    jj_scanpos = xsp;
-    if (jj_3R_28()) {
-    jj_scanpos = xsp;
-    if (jj_3R_29()) {
-    jj_scanpos = xsp;
-    if (jj_3R_30()) {
-    jj_scanpos = xsp;
     if (jj_3R_31()) {
     jj_scanpos = xsp;
     if (jj_3R_32()) {
@@ -1766,7 +1779,15 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     jj_scanpos = xsp;
     if (jj_3R_36()) {
     jj_scanpos = xsp;
-    if (jj_3R_37()) return true;
+    if (jj_3R_37()) {
+    jj_scanpos = xsp;
+    if (jj_3R_38()) {
+    jj_scanpos = xsp;
+    if (jj_3R_39()) {
+    jj_scanpos = xsp;
+    if (jj_3R_40()) {
+    jj_scanpos = xsp;
+    if (jj_3R_41()) return true;
     }
     }
     }
@@ -1796,7 +1817,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_71() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1836,8 +1857,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_64() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_62() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1846,8 +1867,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_46() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_45() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1906,7 +1927,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_5() {
+  final private boolean jj_3_6() {
     if (jj_scan_token(GT)) return true;
     if (jj_3R_23()) return true;
     return false;
@@ -1923,8 +1944,9 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3_2() {
-    if (jj_scan_token(LBRACE)) return true;
+    if (jj_scan_token(DLBRACKET)) return true;
     if (jj_3R_21()) return true;
+    if (jj_scan_token(DRBRACKET)) return true;
     return false;
   }
 
@@ -1934,7 +1956,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_68() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1949,12 +1971,12 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_70() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
-  final private boolean jj_3R_52() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_51() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -1968,7 +1990,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3_8() {
+  final private boolean jj_3_9() {
     if (jj_scan_token(DOT)) return true;
     if (jj_3R_26()) return true;
     return false;
@@ -1984,13 +2006,13 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_45() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_44() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
   final private boolean jj_3R_73() {
-    if (jj_3R_56()) return true;
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -1999,12 +2021,12 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_63() {
+  final private boolean jj_3R_61() {
     if (jj_3R_74()) return true;
     return false;
   }
 
-  final private boolean jj_3R_50() {
+  final private boolean jj_3R_49() {
     if (jj_scan_token(STRING_LITERAL)) return true;
     return false;
   }
@@ -2145,8 +2167,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_49() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_48() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -2157,11 +2179,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     if (jj_scan_token(LBRACKET)) return true;
     while (true) {
       xsp = jj_scanpos;
-      if (jj_3R_63()) { jj_scanpos = xsp; break; }
+      if (jj_3R_61()) { jj_scanpos = xsp; break; }
     }
     if (jj_scan_token(RBRACKET)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_64()) jj_scanpos = xsp;
+    if (jj_3R_62()) jj_scanpos = xsp;
     return false;
   }
 
@@ -2180,8 +2202,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_51() {
-    if (jj_3R_56()) return true;
+  final private boolean jj_3R_50() {
+    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -2205,8 +2227,8 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_48() {
-    if (jj_3R_57()) return true;
+  final private boolean jj_3R_47() {
+    if (jj_3R_55()) return true;
     return false;
   }
 
@@ -2221,11 +2243,11 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
   final private boolean jj_3R_72() {
-    if (jj_3R_47()) return true;
+    if (jj_3R_46()) return true;
     return false;
   }
 
-  final private boolean jj_3R_56() {
+  final private boolean jj_3R_54() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3R_65()) {
@@ -2238,7 +2260,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_62() {
+  final private boolean jj_3R_60() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     if (jj_3R_72()) return true;
@@ -2252,10 +2274,10 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_61() {
+  final private boolean jj_3R_59() {
     if (jj_scan_token(LBRACE)) return true;
     if (jj_3R_20()) return true;
-    if (jj_3R_50()) return true;
+    if (jj_3R_49()) return true;
     if (jj_scan_token(RBRACE)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -2263,7 +2285,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_60() {
+  final private boolean jj_3R_58() {
     if (jj_3R_20()) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -2271,7 +2293,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_59() {
+  final private boolean jj_3R_57() {
     if (jj_scan_token(LT)) return true;
     if (jj_3R_20()) return true;
     Token xsp;
@@ -2309,7 +2331,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
    private static void jj_la1_2() {
       jj_la1_2 = new int[] {0x10,0x10,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x2,0x2,0x0,0x820002,0x0,0x820002,0x20002,0x20002,0x0,0x20002,0x828,0x10000,0x10000,0x10000,0x828,0x10000,0x20002,0x828,0x10,0x828,0x828,0x2,0x828,0x2,0x828,0x0,0x20000,0x10000010,0x828,0x10000010,0x53ffffe,0x0,0x0,0x0,0x820002,0x820002,0x20002,};
    }
-  final private JJCalls[] jj_2_rtns = new JJCalls[8];
+  final private JJCalls[] jj_2_rtns = new JJCalls[9];
   private boolean jj_rescan = false;
   private int jj_gc = 0;
 
@@ -2549,7 +2571,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
 
   final private void jj_rescan_token() {
     jj_rescan = true;
-    for (int i = 0; i < 8; i++) {
+    for (int i = 0; i < 9; i++) {
     try {
       JJCalls p = jj_2_rtns[i];
       do {
@@ -2564,6 +2586,7 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
             case 5: jj_3_6(); break;
             case 6: jj_3_7(); break;
             case 7: jj_3_8(); break;
+            case 8: jj_3_9(); break;
           }
         }
         p = p.next;
@@ -2590,3 +2613,4 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
 }
+

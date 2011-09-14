@@ -1,0 +1,65 @@
+module optimize/dead-code
+
+imports
+  libstratego-lib
+  include/MoBL
+  lib/editor-common
+  mobl
+  analyze
+  generation/compile
+  generation/action
+  generation/html
+  util
+
+strategies
+
+  eliminate-dead-code :
+    Application(qid, def*) -> Application(qid, def2*)
+    where {| LookupDef, Used
+           : <filter(capture-def)> def*
+           ; <mark-uses> QId(qid, "root")
+           ; def2* := <filter(used-def)> def*
+           |}
+
+  capture-def :
+    def@c#([_, qid@QId(_, _)|_]) -> <id>
+    where rules ( LookupDef : qid -> def )
+
+  capture-def :
+    def@Style(_, qid*, _) -> <id>
+    where <last; alltd(?QId(_, _); ?qid)> qid*
+    where rules ( LookupDef : qid -> def )
+
+  capture-def :
+    def@VarDecl(qid, _, _) -> <id>
+    where rules ( LookupDef : qid -> def )
+
+  mark-uses =
+    ?qid
+    ; rules ( Used : qid )
+    ; qid* := <collect(?QId(_, _))> <LookupDef> qid
+    ; <filter(\ qid -> <mark-uses> qid where not(<Used> qid) \)> qid*
+
+  used-def :
+    def@c#([_, qid@QId(_, _)|_]) -> <id>
+    where <Used> qid
+
+  used-def :
+    ModuleJavascriptFor(_, qid, _) -> <id>
+    where <Used> qid
+
+  used-def :
+    Style(_, qid*, _) -> <id>
+    where <last; alltd(?QId(_, _); ?qid)> qid*
+    where <Used> qid
+
+  used-def :
+    VarDecl(qid, _, _) -> <id>
+    where <Used> qid
+
+  used-def :
+    t -> <id>
+    where not(?_#([_, QId(_, _)|_]))
+        ; not(?ModuleJavascriptFor(_, _, _))
+        ; not(?Style(_, _, _))
+        ; not(?VarDecl(_, _, _))

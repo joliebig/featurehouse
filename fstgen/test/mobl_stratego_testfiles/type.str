@@ -1,0 +1,217 @@
+module type
+
+imports
+  include/MoBL
+  rename
+  lookup
+  desugar
+  style
+
+strategies
+
+  type-of = eq-type-of <+ ?Var(<id>); TypeOf
+
+  type-of-lvalue :
+    s -> <type-of> Var(s)
+    where is-string
+       <+ ?QId(_, _)
+
+   type-of-lvalue :
+     LFieldAccess(e, x) -> <type-of> FieldAccess(e, x)
+
+   type-of-lvalue :
+     LTuple(fst, rest*) -> <type-of> Tuple(fst, rest*)
+
+  eq-type-of :
+    Num(_) -> SimpleType(QId("mobl", "Num"))
+
+  eq-type-of :
+    String(_) -> SimpleType(QId("mobl", "String"))
+
+  eq-type-of :
+    True() -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of :
+    False() -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of :
+    Null() -> SimpleType(QId("mobl", "Nothing"))
+
+  eq-type-of :
+    Callback(_) -> SimpleType(QId("mobl", "Callback"))
+
+  eq-type-of :
+    RegExp(_, _) -> SimpleType(QId("mobl", "RegExp"))
+
+  eq-type-of : // TODO: what about null?
+    Choice(e, e1, e2) -> <type-of> e1
+
+  eq-type-of :
+    Not(e) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of :
+    This(){t} -> t
+
+  eq-type-of :
+    Brackets(e) -> <type-of> e
+
+  //  Feature Async - Start
+  eq-type-of :
+    AsyncCall([e|_]) -> <type-of> e
+  //  Feature Async - Ende
+  
+  eq-type-of :
+    AnonymousControl(farg*, _) -> <fargs-to-control-type> farg*
+
+  eq-type-of :
+    AnonymousFunction(farg*, rt, _) -> <fargs-to-function-type> [farg*, FArg("returnType", rt)]
+
+  eq-type-of :
+    Tuple(fst, rest*) -> GenericType(QId("mobl", $[Tuple[n]]), t*)
+    where n := <add> (1, <length> rest*)
+        ; t* := <map(type-of)> [fst|rest*]
+
+  eq-type-of :
+    List([e|_]) -> GenericType(QId("mobl", "Array"), [t])
+    where t := <type-of> e
+
+  eq-type-of :
+    CollectionCons(qid, t*, e*) -> GenericType(qid, t*)
+
+  eq-type-of :
+    ImportData(_) -> SimpleType(QId("mobl", "String"))
+
+  eq-type-of :
+    Call(qid, e*) -> rt
+    where c#([_, _, _, rt]) := <lookup-function> qid
+
+  eq-type-of :
+    Call(qid, e*) -> rt
+    where ExternalScreen(_, _, _, rt) := <lookup-screen> qid
+
+  eq-type-of :
+    Call(qid, e*) -> SimpleType(qid)
+    where ExternalEntity(_, _, _, _) := <lookup-type> SimpleType(qid)
+
+  eq-type-of :
+    Call(qid, e*) -> SimpleType(qid)
+    where ExternalType(_, _, _, _) := <lookup-type> SimpleType(qid)
+
+  eq-type-of :
+    Call(qid, e*) -> rt
+    where rt@SimpleType(QId("mobl", "Callback")) := <type-of> Var(qid)
+
+  eq-type-of :
+    Call(qid, e*) -> <last> t*
+    where GenericType(QId(_, fn), t*) := <type-of> Var(qid)
+        ; <string-starts-with(|"Function")> fn
+
+  eq-type-of :
+    EntityCons(t, _) -> t
+
+  eq-type-of :
+    Var(qid) -> GenericType(QId("mobl", "Type"), [SimpleType(qid)])
+    where <lookup-type> SimpleType(qid)
+
+  eq-type-of :
+    Var(qid) -> <fargs-to-control-type> farg*
+    where ExternalControl(_, _, farg*) := <lookup-control-aux> qid
+
+  eq-type-of :
+    Var(qid) -> <fargs-to-function-type> [farg*, FArg("returnType", rt)]
+    where ExternalFunction(_, _, farg*, rt) := <lookup-function> qid; sync := False()
+       <+ ExternalSyncFunction(_, _, farg*, rt) := <lookup-function> qid; sync := True()
+
+  eq-type-of :
+    Var(qid) -> t
+    where ExternalVarDecl(_, t) := <lookup-global-var-aux> qid
+
+  eq-type-of :
+    Var(qid) -> SimpleType(QId("mobl", "Style"))
+    where <lookup-style> qid
+
+  fargs-to-function-type :
+    farg* -> GenericType(QId("mobl", $[Function[n]]), t*)
+    where t* := <map(?FArg(_, <id>) <+ ?FArgOptional(_, <id>, _))> farg*
+        ; n := <subt> (<length> t*, 1)
+
+  fargs-to-control-type :
+    farg* -> GenericType(QId("mobl", $[Control[n]]), t*)
+    where t* := <map(?FArg(_, <id>) <+ ?FArgOptional(_, <id>, _))> farg*
+        ; n := <length> t*
+        ; not([] := farg*)
+
+  fargs-to-control-type :
+    [] -> SimpleType(QId("mobl", $[Control]))
+
+  eq-type-of :
+    MethodCall(e, x, e*) -> rt
+    where m := <lookup-method> (<type-of> e, x)
+        ; (   ExternalMethod(_, _, _, rt) := m
+           <+ ExternalSyncMethod(_, _, _, rt) := m)
+
+  eq-type-of :
+    FieldAccess(e, x) -> t
+    where Property(_, _, t, _) := <lookup-property> (<type-of> e, x)
+
+  eq-type-of  = eq-type-of-binop <+ eq-type-of-binop-generic
+
+  eq-type-of-binop-generic :
+    BinMethodCall(e1, op, e2) -> <type-of> e1 // @TODO: Fix this
+
+  eq-type-of-binop :
+    BinMethodCall(e1, "==", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of-binop :
+    BinMethodCall(e1, "!=", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of-binop :
+    BinMethodCall(e1, "<", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of-binop :
+    BinMethodCall(e1, "<=", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of-binop :
+    BinMethodCall(e1, ">", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of-binop :
+    BinMethodCall(e1, ">=", e2) -> SimpleType(QId("mobl", "Bool"))
+
+  eq-type-of :
+    SetComp(e, _) -> <type-of> e
+
+strategies
+
+  type-compatible =
+    ?(t, t)
+
+  type-compatible =
+    ?(SimpleType(QId("mobl", "Dynamic")), t)
+
+  type-compatible =
+    ?(t, SimpleType(QId("mobl", "Dynamic")))
+
+  type-compatible =
+    ?(t, SimpleType(QId("mobl", "Nothing")))
+
+  type-compatible =
+    ?(GenericType(x, t1*), GenericType(x, t2*))
+    ; <zip(type-compatible)> (t1*, t2*)
+
+  type-compatible =
+    ?(t1, t2)
+    ; ExternalType(_, _, super-t, _) := <lookup-type> t2
+    ; <not(eq)> (super-t, t2)
+    ; <type-compatible> (t1, super-t)
+
+  is-super-type =
+    ?(t1, t2)
+    ; ExternalType(_, _, super-t, _) := <lookup-type> t2
+    ; <not(eq)> (super-t, t2)
+    ; <eq <+ is-super-type> (t1, super-t)
+
+  type-compatible =
+    ?(t1, t2)
+    ; ExternalEntity(_, _, _, _) := <lookup-type> t2
+    ; <type-compatible> (t1, GenericType(QId("mobl", "Entity"), [t2]))
+

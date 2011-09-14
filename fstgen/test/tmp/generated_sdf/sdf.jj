@@ -334,7 +334,7 @@ FSTInfo ProdPart(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Disambiguations(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"context-free priorities" (n=Priority(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations1","{AUTO}","{AUTO}");}
+	"context-free priorities" (n=Priority(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations1","context-free priorities","context-free priorities");}
  |
 	"lexical restrictions" (n=Restriction(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Disambiguations2","lexical restrictions","lexical restrictions");}
  |
@@ -344,7 +344,7 @@ FSTInfo Disambiguations(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Production(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=Symbol(true){ replaceName(n);})* "->" n=Symbol(true){ replaceName(n);} [LOOKAHEAD("{" Attribute()) n=OptAttributes(true){ replaceName(n);}] {return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	(n=Symbol(true){ replaceName(n);})* "->" n=Symbol(true){ replaceName(n);} [LOOKAHEAD("[[" Symbol() "]]") "[[" n=Symbol(true){ replaceName(n);} "]]"] [LOOKAHEAD("{" Attribute()) n=OptAttributes(true){ replaceName(n);}] {return productionEndTerminal("Production","{AUTO}","{AUTO}","Replacement","Default",first,token);}
 
  )  }
 

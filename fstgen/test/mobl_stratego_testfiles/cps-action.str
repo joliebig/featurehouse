@@ -1,0 +1,242 @@
+module generation/cps-action
+
+imports
+  include/MoBL
+  generation/cps-lift
+  generation/action
+  generation/ui
+  generation/server
+  declare
+  type
+  rename
+  lookup
+  desugar
+  util
+
+strategies
+
+  cps-statements :
+    [Return(e)|stat*] -> <cps-expression(|[$[if(callback && callback.apply) callback(result__);
+                                             return;
+]|stat*])> e
+
+  cps-statements :
+    [ScreenReturn(e)|stat*] -> <cps-expression(|[$[if(screenCallback) screenCallback(result__);
+                                                   return;
+]|stat*])> e
+
+  cps-statements :
+    [Return()|stat*] -> <cps-statements> [$[if(callback && callback.apply) callback();
+                                            return;
+]|stat*]
+
+  cps-statements :
+    [ScreenReturn()|stat*] -> <cps-statements> [$[if(screenCallback) screenCallback();
+                                                  return;
+]|stat*]
+
+  cps-statements :
+    [VarDecl(x, t, e)|stat*] -> <cps-expression(|[$[var [x] = result__;
+]|stat*])> e
+    where not(InControl)
+
+  cps-statements :
+    [VarDeclInferred(x, e)|stat*] -> <cps-expression(|[$[var [x] = result__;
+]|stat*])> e
+    where not(InControl)
+
+  cps-statements :
+    [VarDecl(x, t, e)|stat*] -> <cps-expression(|[$[var [x] = result__;
+]|stat*])> e
+    where InControl
+        ; not(<is-ref> x)
+
+  cps-statements :
+    [VarDecl(x, t, e)|stat*] -> <cps-expression(|[$[var [x] = mobl.ref(result__);
+]|stat*])> e
+    where InControl
+        ; <is-ref> x
+
+  cps-statements :
+    [VarDeclInferred(x, e)|stat*] -> <cps-expression(|[$[var [x] = result__;
+]|stat*])> e
+    where InControl
+        ; not(<is-ref> x)
+
+  cps-statements :
+    [VarDeclInferred(x, e)|stat*] -> <cps-expression(|[$[var [x] = mobl.ref(result__);
+]|stat*])> e
+    where InControl
+        ; <is-ref> x
+
+  cps-statements :
+    [Assignment(qid, e)|stat*] -> <cps-expression(|[$[[<qid-to-js> qid] = result__;
+]|stat*])> e
+    where <is-string> qid
+    where not(<is-ref> qid)
+
+  cps-statements :
+    [Assignment(LFieldAccess(le, x), e)|stat*] -> <cps-expression(|[$[[<exp-to-js> le].[x] = result__;
+]|stat*])> e
+
+  cps-statements :
+    [Assignment(qid, e)|stat*] -> <cps-expression(|[$[[<qid-to-js> qid].set(result__);
+]|stat*])> e
+    where <is-ref> qid
+
+//  Feature Async - Start
+  cps-statements :
+    [Async(stats)|stat*] ->
+      $[[<cps-statements> stats]
+        [<cps-statements> stat*]
+]
+//  Feature Async - Ende
+
+  cps-statements :
+    [ExpStat(e)|stat*] -> <cps-expression(|stat*)> e
+
+  cps-statements :
+    [If(e, true-stat, false-stat)|stat*] ->
+      <cps-expression(|[
+        <concat-strings> ["if(result__) ", <cps-statements> [true-stat|stat*], " else ", <cps-statements> [false-stat|stat*]]])> e
+
+
+  cps-statements :
+    [Block(stats)|stats2] ->
+        $[{
+            [<concat; cps-statements> [stats, stats2]]
+          }]
+
+  cps-statements :
+    [For(lvalue, _, e, stats)|stat*] ->
+      <cps-expression(|[
+        $[[<expression-to-js> e].list(function([coll]) {
+            [coll] = [coll].reverse();
+            function [processOne]() {
+              [vardecls]
+              [assigns]
+              [<concat; cps-statements> [stats, [$[
+                if([coll].length > 0) [processOne](); else [rest]();
+              ]]]]
+            }
+            function [rest]() {
+              [<cps-statements> stat*]
+            }
+            if([coll].length > 0) [processOne](); else [rest]();
+          });
+]])> e
+    with coll := <newname> "coll"
+       ; processOne := <newname> "processOne"
+       ; rest := <newname> "rest"
+       ; vardecls := <map(!$[var [<id>]; ]); concat-strings> <lvalue-vars> lvalue
+       ; assigns := <desugar-all; (map(statement-to-js); concat-strings <+ statement-to-js)> Assignment(lvalue, MethodCall(Var(coll), "pop", []))
+
+  cps-statements :
+    [While(e, stats)|stat*] ->
+      <cps-expression(|[
+        $[function [processOne]() {
+            [<concat; cps-statements> [stats, [$[
+              if([<expression-to-js> e]) [processOne](); else [rest]();
+            ]]]]
+          }
+          function [rest]() {
+            [<cps-statements> stat*]
+          }
+          if([<expression-to-js> e]) [processOne](); else [rest]();
+]])> e
+    with processOne := <newname> "oneIteration"
+       ; rest := <newname> "rest"
+
+  cps-statements :
+    [s|stat*] -> <concat-strings> [s, <cps-statements> stat*]
+    where <is-string> s
+
+  cps-statements :
+    [] -> ""
+
+  cps-statements :
+    [fn@Function(_, _, _, _, _)|stat*] -> <concat-strings> [<function-to-js> fn, <cps-statements> stat*]
+
+  cps-statements :
+    [fn@SyncFunction(_, _, _, _, _)|stat*] -> <concat-strings> [<function-to-js> fn, <cps-statements> stat*]
+
+
+  cps-statements :
+    _ -> <fail>
+    where debug(!"FAIL about to happen: ")
+
+rules
+
+  cps-expression(|stat*) =
+    ?e
+    ; if is-sync then
+        !$[var result__ = [<expression-to-js> e];
+           [<cps-statements> stat*]]
+      else
+        spec-cps-exp(|stat*) <+ cps-exp(|stat*)
+      end
+
+  spec-cps-exp(|stat*) = fail
+
+  cps-exp(|stat*) :
+    BinMethodCall(e1, op, e2) ->
+      <cps-expression(|[$[var [result] = result__;
+], <cps-expression(|[
+        $[op('[op]', [result], result__, function(result__) {
+            [<cps-statements> stat*]
+          });
+]])> e2])> e1
+    with result := <newname> "result"
+
+
+  cps-exp(|stat*) :
+    e@CollectionCons(ct, t, e*) -> $[var result__ = [<expression-to-js> e];
+                         [<cps-statements> stat*]]
+
+  cps-exp(|stat*) :
+    e@Call(qid, _) -> $[var result__ = [<expression-to-js> e];
+                        [<cps-statements> stat*]]
+    where <lookup-type> SimpleType(qid)
+
+  cps-exp(|stat*) :
+    Call(qid, e*) -> <concat-strings> [<qid-to-js> qid, "(", args, ");"]
+    where not(ServerContext)
+    where ExternalFunction(_, _, _, _) := <lookup-function> qid
+        ; not(<GetScreen> qid)
+    with args := <arguments-to-js; <concat> [<id>, [
+$[function(result__) {
+    [<cps-statements> stat*]
+  }]]]; separate-by(!", "); concat-strings> e*
+
+  // variable/arg function
+  cps-exp(|stat*) :
+    Call(qid, e*) -> <concat-strings> [fundef, "var result__ = ", <expression-to-js> Var(qid), "(", args, ");",
+                                          $[if(result__ !== undefined) [after](result__);]]
+    where _{_} := qid <+ <lookup-global-var> qid
+    with after := <newname> "after"
+    with fundef := $[function [after](result__) {
+                       [<cps-statements> stat*]
+                     }
+                     ]
+    with args := <arguments-to-js; <concat> [<id>, [after]]; separate-by(!", "); concat-strings> e*
+
+
+  cps-exp(|stat*) :
+    Call(qid, e*) -> <concat-strings> ["mobl.call('", <qid-to-js> qid, "', [", args, "], ", $[function(result__) {
+    [<cps-statements> stat*]
+  }], ");"]
+    where <GetScreen> qid
+    with args := <ref-arguments-to-js; separate-by(!", "); concat-strings> e*
+
+  cps-exp(|stat*) :
+    e@Call(qid, e*) -> $[var result__ = [<expression-to-js> e];
+                         [<cps-statements> stat*]]
+    where ExternalSyncFunction(_, _, _, _) := <lookup-function> qid
+
+  cps-exp(|stat*) :
+    MethodCall(e, x, e*) -> <concat-strings> [<expression-to-js> e, ".", x, "(", args, ");"]
+    with arg-js := <map(expression-to-js)> e*
+    with args := <concat; separate-by(!", "); concat-strings> [arg-js, [
+$[function(result__) {
+    [<cps-statements <+ debug(!"Fail: "); fail> stat*]
+  }]]]

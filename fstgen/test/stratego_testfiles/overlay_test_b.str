@@ -23,7 +23,7 @@ overlays
     appl(BinOp(o), [x, l1, lit(o), l2, y])
 
   BinExp(x, o, y) =   
-    appl(BinOp(o), [x, _ DefaultLayout, lit(o), _ DefaultLayout, y])
+    appl(BinOp(o), [x, DefaultLayout, lit(o), DefaultLayout, y])
 
   Add(x, l1, l2, y) = BinExp(x, l1, "+", l2, y) 
 

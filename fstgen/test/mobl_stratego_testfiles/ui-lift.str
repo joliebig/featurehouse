@@ -1,0 +1,96 @@
+module ui-lift
+
+imports
+  include/MoBL
+  rename
+  type
+
+strategies
+
+  desugar = ui-lift
+
+  ui-lift :
+    ControlCall(e, arg*, elem*) -> <concat> [inits, [ControlCall(e, arg2*, elem*)]]
+    where {| Elems
+           : arg2* := <map(ui-lift-expression)> arg*
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    List(lvalue, t, e, elem*) -> <concat> [inits, [List(lvalue, t, e2, elem*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    ListInferred(lvalue, e, elem*) -> <concat> [inits, [ListInferred(lvalue, e2, elem*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  ui-lift :
+    When(e, elem*, elem2*) -> <concat> [inits, [When(e2, elem*, elem2*)]]
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits )
+
+  /*ui-lift :
+    VarDecl(x, t, e) -> <concat> [inits, [VarDecl(x, t, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    VarDeclInferred(x, e) -> <concat> [inits, [VarDeclInferred(x, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    DeriveDeclInferred(x, e) -> <concat> [inits, [DeriveDeclInferred(x, e2)]]
+    where <IsControlVar> x
+    where not(<string-starts-with(|"tmp")> x)
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)
+
+  ui-lift :
+    DeriveDecl(x, t, e) -> <concat> [inits, [DeriveDecl(x, t, e2)]]
+    where <IsControlVar> x
+    where {| Elems
+           : e2 := <ui-lift-expression> e
+           ; inits := <bagof-Elems>
+           |}
+           ; not([] := inits)*/
+
+  ui-lift-expression =
+    \ NamedExp(x, e) -> NamedExp(x, <ui-lift-expression> e) \
+    <+ ?Var(_)
+    <+ ?FieldAccess(_, _)
+    <+ ?Num(_)
+    <+ ?String(_)
+    <+ ?True()
+    <+ ?False()
+    <+ ?Null()
+    <+ ui-lift-exp
+
+  ui-lift-exp :
+    e -> Var(<rename-ref-var> (newvar, <type-of> e))
+    where newvar := <newname> "tmp"
+        ; rules ( IsRefVar : newvar )
+        ; rules ( Elems :+= DeriveDeclInferred(newvar, e) )

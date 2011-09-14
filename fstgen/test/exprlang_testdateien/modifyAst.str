@@ -1,0 +1,113 @@
+module modifyAst
+	
+	imports 
+		include/Exprlang
+	  check
+	
+strategies
+	modify =
+		bottomup(try(modifyAst))		
+
+rules
+	
+	// Feature Expr - Start -----------------------------------------------------  			
+	modifyAst:
+  	Assign(x, e) -> Assign(x, e){t}
+    where
+    	<typeof> e => t
+    
+  modifyAst:
+  	UnaryMinus(i) -> UnaryMinus(i){Type("Int")}
+  
+  modifyAst:
+  	Int(i) -> Int(i){Type("Int")}	
+  
+  typeof:
+		e{t*} -> t
+		where
+			<fetch-elem(is-type)> t* => t
+				
+	is-type = 
+		?Type(_)
+	
+	getType:
+  	Type(t) -> t
+  // Feature Expr - Ende ------------------------------------------------------				
+	
+	// Feature Var - Start ------------------------------------------------------ 
+  modifyAst:
+  	VarDec(p, t) -> VarDec(p, t)	
+  
+  modifyAst:
+  	Var(x) -> Var(x){t}
+  	where
+  		t' := <bagof-GetVarType> x; 
+  		t := <fetch-elem(id)>	t'
+  // Feature Var - Ende -------------------------------------------------------		
+  		
+  // Feature String - Start ---------------------------------------------------
+  modifyAst:
+  	String(s) -> String(s){Type("String")}
+  // Feature String - Ende ----------------------------------------------------	
+      		
+  // Feature Add - Start ------------------------------------------------------   		
+  modifyAst:
+  	Add(a, b) -> Add(a, b){t}
+  	where
+  		<typeof> a => t;
+  		<typeof> b => t
+  // Feature Add - Ende -------------------------------------------------------		
+  
+  // Feature Mul - Start ------------------------------------------------------
+  modifyAst:
+  	Mul(a, b) -> Mul(a, b){t}
+  	where
+  		<typeof> a => t;
+  		<typeof> b => t
+  // Feature Mul - Ende -------------------------------------------------------		
+  
+  // Feature Sub - Start ------------------------------------------------------ 		
+  modifyAst:
+  	Sub(a, b) -> Sub(a, b){t}
+  	where
+  		<typeof> a => t;
+  		<typeof> b => t
+  // Feature Sub - Ende -------------------------------------------------------		
+  
+  // Feature Div - Start ------------------------------------------------------		
+  modifyAst:
+  	Div(a, b) -> Div(a, b){t}
+  	where
+  		<typeof> a => t;
+  		<typeof> b => t
+  // Feature Div - Ende -------------------------------------------------------		
+  
+  // Feature Mod - Start ------------------------------------------------------		
+  modifyAst:
+  	Mod(a, b) -> Mod(a, b){t}
+  	where
+  		<typeof> a => t;
+  		<typeof> b => t
+  // Feature Mod - Ende -------------------------------------------------------		
+  
+  // Feature Eval - Start -----------------------------------------------------
+  modifyAst:
+  	Eval(e)	-> Eval(e){Type("Int")}
+  	where
+  		<typeof> e => Type("Int")
+  // Feature Eval - Ende ------------------------------------------------------		
+  
+  // Feature Print - Start ----------------------------------------------------									
+  modifyAst:
+  	Print(e)	-> Print(e){t}
+  	where
+  		<typeof> e => t
+  // Feature Print - Ende -----------------------------------------------------		
+  
+  // Feature Simplify - Start -------------------------------------------------
+  modifyAst:
+  	Simplify(e)	-> Simplify(e){Type("Int")}
+  	where
+  		<typeof> e => Type("Int")
+  // Feature Simplify - Ende --------------------------------------------------		
+			   

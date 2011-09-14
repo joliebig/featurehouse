@@ -1,0 +1,83 @@
+module generation/service
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/MoBL
+  lib/editor-common
+  desugar
+  type
+  rename
+  util
+  generation/emit
+  generation/action
+  generation/cps-lift
+  generation/cps-action
+
+rules
+
+  // Feature Service - Start
+  definition-to-js :
+    Service(_, qid, selem*) -> <emit> $[
+      [<qid-to-js> qid] = {
+        [body]
+      };
+      ]
+    with body := <map(service-elem-to-js); separate-by(|",\n")> selem*
+  // Feature Service - Ende
+  
+  service-elem-to-js :
+    PropVal(x, e) -> $[[x]: [<expression-to-js> e]]
+
+  // Feature Service - Start
+  service-elem-to-js :
+    Resource(_, x, farg*, rt, prop*) ->
+    $[[x]: function([fargs]) {
+        var url = [url];
+        $.ajax({
+           url: url,
+           dataType: [<expression-to-js> encoding],
+           type: [<expression-to-js> method],
+           [data-property]
+           error: function(_, message, error) {
+             console.error(message);
+             console.error(error);
+             callback(null);
+           },
+           success: function(data) {
+              var result = [<expression-to-js> mapper](data, callback);
+              if(result !== undefined) {
+                callback(result);
+              }
+           }
+        });
+      }
+   ]
+  with fargs := <filter(farg-to-js); <concat> [<id>, ["callback"]]; separate-by(!", "); concat-strings> farg*
+     ; <fetch(?PropVal("uri", uri)) <+ uri := String($["/[x]"])> prop*
+     ; <fetch(?PropVal("encoding", encoding)) <+ encoding := String("\"json\"")> prop*
+     ; <fetch(?PropVal("mapper", mapper)) <+ mapper := Var(QId("mobl", "dummyMapper"))> prop*
+     ; <fetch(?PropVal("method", method)) <+ method := String("\"GET\"")> prop*
+     ; <fetch(?PropVal("data", data-exp)) <+ data-exp := String("\"\"")> prop*
+     ; url := <build-service-url> (uri, method)
+     ; if not(String("\"GET\"") := method) then
+         data-property := $[data: [<expression-to-js> data-exp],]
+       else
+         data-property := ""
+       end
+  // Feature Service - Ende
+
+
+  build-service-url :
+    (uri, _) -> $["" + (this.root ? this.root : "") + [<expression-to-js> uri]]
+
+  /*build-service-url :
+    (uri, method, data) -> $[this.root ? mobl.proxyUrl(this.root + [<expression-to-js> uri]) : [<expression-to-js> uri]]
+    where not(String("\"GET\"") := method)*/
+
+  farg-to-js-key-val :
+    FArg(x, _) -> $["[x]": [x]]
+
+  farg-to-js-key-val :
+    FArgOptional(x, _, _) -> $["[x]": [x]]

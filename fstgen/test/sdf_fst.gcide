@@ -317,7 +317,7 @@ ProdPart :
 /* Constructs to define in a declarative way that certain kinds of derivations 
    are not allowed, also known as disambiguation filters */
 Disambiguations :
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="context-free priorities")
 	"context-free priorities" (Priority)+ |
 	@FSTNonTerminal(name="lexical restrictions")
 	"lexical restrictions" (Restriction)+ |
@@ -327,12 +327,8 @@ Disambiguations :
 /* Productions have the form A1 ... An -> A0, where A0 is non-terminal and 
    A1 ... An is a string of terminals and non-terminals. */
 @FSTTerminal(name="{AUTO}")
-Production :
-	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
-
 /*Production :
-	(Symbol)* "->" (LOOK_AHEAD("Symbol()") Symbol)+ 
-				   [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
 
 
 

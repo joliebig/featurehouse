@@ -1,0 +1,43 @@
+/* 
+   Das Modul muss die Signatur der Sprache importieren, die die Konstruktoren
+   der abstrakten Syntax definiert.
+   Dieses Modul definiert Rewrite-Regeln zur Vereinfachung von Termen 
+      - die Addition mit 0
+*/
+module simplify
+
+	imports include/Exprlang
+	
+strategies
+	simplify =
+    innermost(AddZero <+ SubZero <+ MulOne <+ DivOne)
+	
+rules
+	
+	// Feature Add - Start ------------------------------------------------------
+	AddZero:
+    Add(e, Int("0")) -> e
+      
+	AddZero:
+    Add(Int("0"), e) -> e
+  // Feature Add - Ende -------------------------------------------------------  
+    
+  // Feature Sub - Start ------------------------------------------------------
+  SubZero:
+  	Sub(e, Int("0")) -> e  	  
+
+  SubZero:
+  	Sub(Int("0"), e) -> e
+  // Feature Sub - Ende -------------------------------------------------------	
+  
+  // Feature Mul - Start ------------------------------------------------------
+  MulOne:
+    Mul(e, Int("1")) -> e
+    
+  MulOne:
+    Mul(Int("1"), e) -> e
+  // Feature Mul - Ende -------------------------------------------------------  
+  
+  // Feature Div - Start ------------------------------------------------------
+  DivOne:
+  	Div(e, Int("1")) -> e
