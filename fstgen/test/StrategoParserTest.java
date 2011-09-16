@@ -247,37 +247,37 @@ public class StrategoParserTest {
 	@Test
 	public void testFile_exprlang_check() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/check.str"));
+		parseFile(loadFile("test/exprlang_testfiles/check.str"));
 	}
 
 	@Test
 	public void testFile_exprlang_eval() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/eval.str"));
+		parseFile(loadFile("test/exprlang_testfiles/eval.str"));
 	}
 
 	@Test
 	public void testFile_exprlang() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/exprlang.str"));
+		parseFile(loadFile("test/exprlang_testfiles/exprlang.str"));
 	}
 
 	@Test
 	public void testFile_exprlang_generate() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/generate.str"));
+		parseFile(loadFile("test/exprlang_testfiles/generate.str"));
 	}
 
 	@Test
 	public void testFile_exprlang_modifyAst() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/modifyAst.str"));
+		parseFile(loadFile("test/exprlang_testfiles/modifyAst.str"));
 	}
 
 	@Test
 	public void testFile_exprlang_simplify() throws FileNotFoundException,
 			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/simplify.str"));
+		parseFile(loadFile("test/exprlang_testfiles/simplify.str"));
 	}
 
 	@Test
