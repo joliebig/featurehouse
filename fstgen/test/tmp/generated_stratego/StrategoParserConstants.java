@@ -312,4 +312,3 @@ public interface StrategoParserConstants {
   };
 
 }
-

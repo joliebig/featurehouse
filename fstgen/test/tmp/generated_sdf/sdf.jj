@@ -9,7 +9,7 @@ import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
-public class SDFParser extends AbstractFSTParser 
+public class SDFParser extends AbstractFSTParser
 {
 	public SDFParser(){}
 }
@@ -23,7 +23,7 @@ PARSER_END(SDFParser)
  * WHITE SPACE                                                               *
  * These Tokens are ignored and not passed to the Parser                     *
  *****************************************************************************/
-SPECIAL_TOKEN : 
+SPECIAL_TOKEN :
 	{ " " | "\t" | "\n" | "\r" | "\f" }
 /*****************************************************************************
  * COMMENTS                                                                  *
@@ -31,7 +31,7 @@ SPECIAL_TOKEN :
 MORE :
 	{ "%%" : IN_SINGLE_LINE_COMMENT |
 	  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT |
-	  "/*" : IN_MULTI_LINE_COMMENT 
+	  "/*" : IN_MULTI_LINE_COMMENT
 	}
 	<IN_SINGLE_LINE_COMMENT>
 		SPECIAL_TOKEN :
@@ -44,7 +44,7 @@ MORE :
 			{ <MULTI_LINE_COMMENT: "*/" > : DEFAULT }
 	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
 		MORE :
-			{ < ~[] > } /* matches any single character that is not in the 
+			{ < ~[] > } /* matches any single character that is not in the
 						   empty set; it matches any single character */
 /*****************************************************************************
  * RESERVED KEYWORDS AND LITERALS                                            *
@@ -57,7 +57,7 @@ MORE :
 TOKEN :
 	{ < MODULE: "module" > |
 	  < SPECIFICATION: "specification" > |
-	  < IMPORTS: "imports" > | 
+	  < IMPORTS: "imports" > |
 	  < EXPORTS: "exports" > |
 	  < HIDDENS: "hiddens" >
 	}
@@ -79,7 +79,7 @@ TOKEN :
 	  < LEXICALSYNTAX: "lexical syntax" > |
 	  < CFREESYNTAX: "context-free syntax"> |
 	  < LEXICALVARS: "lexical variables" > |
-	  < CONS: "cons" > 
+	  < CONS: "cons" >
 	}
 /*****************************************************************************
  * DISAMBIGUATION DECLARATION                                                *
@@ -94,41 +94,41 @@ TOKEN :
 	  < REJECT: "reject" > |
 	  < NONASSOC: "non-assoc" > |
 	  < RECOVER: "recover" > |
-	  < DEPRECATED: "deprecated" > | 
+	  < DEPRECATED: "deprecated" > |
 	  < INDENTPADDING: "indentpadding" > |
 	  < PRIORITIES: "priorities" > |
 	  < CFREEPRIORITIES: "context-free priorities" > |
 	  < LEXICALRESTRICTIONS: "lexical restrictions" > |
-	  < CFREERESTRICTIONS: "context-free restrictions" > 
+	  < CFREERESTRICTIONS: "context-free restrictions" >
 	}
 /*****************************************************************************
  * LITERALS                                                                  *
  *****************************************************************************/
 TOKEN :
 	{ < INTEGER_LITERAL:
-		<DECIMAL_LITERAL> (["l","L"])? | 
-	  	<HEX_LITERAL> (["l","L"])? | 
+		<DECIMAL_LITERAL> (["l","L"])? |
+	  	<HEX_LITERAL> (["l","L"])? |
 	  	<OCTAL_LITERAL> (["l","L"])? > |
 	  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* > |
 	  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ > |
 	  < #OCTAL_LITERAL: "0" (["0"-"7"])* > |
 	  < FLOATING_POINT_LITERAL:
-    	(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])? | 
-    	"." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])? | 
-    	(["0"-"9"])+ <EXPONENT> (["f","F","d","D"])? | 
+    	(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])? |
+    	"." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])? |
+    	(["0"-"9"])+ <EXPONENT> (["f","F","d","D"])? |
     	(["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"] > |
 	  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ > |
 	  < CHARACTER_LITERAL:
-	  	"'" ( (~["'","\\","\n","\r"]) | 
+	  	"'" ( (~["'","\\","\n","\r"]) |
 			("\\"
-				( ["n","t","b","r","f","u","\\","'","\""] | 
-				  ["0"-"7"] ( ["0"-"7"] )? | 
+				( ["n","t","b","r","f","u","\\","'","\""] |
+				  ["0"-"7"] ( ["0"-"7"] )? |
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) ) "'" > |
 	  < STRING_LITERAL:
-    	"\"" ( (~["\"","\\"]) | 
+    	"\"" ( (~["\"","\\"]) |
 			 ("\\"
-				( ["n","t","b","r","f","u","\\","'","\""] | 
-				  ["0"-"7"] ( ["0"-"7"] )? | 
+				( ["n","t","b","r","f","u","\\","'","\""] |
+				  ["0"-"7"] ( ["0"-"7"] )? |
 				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" > |
 	  < CHARCLASS_LITERAL:
 		"\\" ( ["n","t","r"," ","\\","'","\""] |
@@ -136,10 +136,10 @@ TOKEN :
 	}
 /*****************************************************************************
  * IDENTIFIER                                                                *
- * E.g. the regular expression ["a"-"z"] matches any lower characters        * 
+ * E.g. the regular expression ["a"-"z"] matches any lower characters        *
  *****************************************************************************/
 TOKEN :
-	{ < IDENTIFIER: (<LETTER>|<DIGIT>) 
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>)
 	                (<LETTER>|<DIGIT>|<MINUS>)* > |
 	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
 	  < LCCHAR: [ "a"-"z" ] > |
@@ -150,16 +150,16 @@ TOKEN :
  * PARENTHESIS                                                               *
  *****************************************************************************/
 TOKEN :
-	{ < LPAREN: "(" > | 
-	  < RPAREN: ")" > | 
-	  < LBRACE: "{" > | 
-	  < RBRACE: "}" > | 
+	{ < LPAREN: "(" > |
+	  < RPAREN: ")" > |
+	  < LBRACE: "{" > |
+	  < RBRACE: "}" > |
 	  < LBRACKET: "[" > |
 	  < RBRACKET: "]" > |
-	  < DLBRACKET: "[[" > | 
+	  < DLBRACKET: "[[" > |
 	  < DRBRACKET: "]]" > |
 	  < LT: "<" > |
-	  < GT: ">" > 
+	  < GT: ">" >
 	}
 /*****************************************************************************
  * OPERATORS                                                                 *

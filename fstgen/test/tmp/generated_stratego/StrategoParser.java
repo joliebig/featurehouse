@@ -6565,4 +6565,3 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
   }
 
 }
-

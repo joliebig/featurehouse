@@ -2613,4 +2613,3 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
   }
 
 }
-

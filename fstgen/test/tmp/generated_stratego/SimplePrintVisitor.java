@@ -145,4 +145,3 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		return false;
 	}
 }
-
