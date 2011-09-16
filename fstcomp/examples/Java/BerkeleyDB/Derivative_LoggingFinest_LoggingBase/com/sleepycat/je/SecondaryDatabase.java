@@ -2,7 +2,7 @@ package com.sleepycat.je;
 public class SecondaryDatabase {
 @MethodObject static class SecondaryDatabase_trace {
     void execute() throws DatabaseException {
-      logger=envHandle.getEnvironmentImpl().getLogger();
+      logger=_this.envHandle.getEnvironmentImpl().getLogger();
       if (logger.isLoggable(level)) {
         sb=new StringBuffer();
         sb.append(methodName);
