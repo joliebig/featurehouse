@@ -17,6 +17,102 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("Module")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ModuleDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"Declaration")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ImportDeclaration")) {
+			printFeatures(nonTerminal,true);
+			printToken("imports");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"ModName")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Declaration1")) {
+			printFeatures(nonTerminal,true);
+			printToken("rules");
+			for (FSTNode v : getChildren(nonTerminal,"Definition")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Declaration2")) {
+			printFeatures(nonTerminal,true);
+			printToken("strategies");
+			for (FSTNode v : getChildren(nonTerminal,"Definition")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Declaration3")) {
+			printFeatures(nonTerminal,true);
+			printToken("signature");
+			for (FSTNode v : getChildren(nonTerminal,"SigDeclaration")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Declaration4")) {
+			printFeatures(nonTerminal,true);
+			printToken("signatures");
+			for (FSTNode v : getChildren(nonTerminal,"SigDeclaration")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Declaration5")) {
+			printFeatures(nonTerminal,true);
+			printToken("overlays");
+			for (FSTNode v : getChildren(nonTerminal,"Overlay")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SigDeclaration1")) {
+			printFeatures(nonTerminal,true);
+			printToken("sorts");
+			for (FSTNode v : getChildren(nonTerminal,"TrafoSort")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SigDeclaration2")) {
+			printFeatures(nonTerminal,true);
+			printToken("constructors");
+			for (FSTNode v : getChildren(nonTerminal,"OpDeclaration")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);
 	}
 	protected boolean isSubtype(String type, String expectedType) {
@@ -131,7 +227,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AlternativeOperator2") && expectedType.equals("AlternativeOperator")) return true;
 		if (type.equals("RuleNames1") && expectedType.equals("RuleNames")) return true;
 		if (type.equals("Strategy25") && expectedType.equals("Strategy")) return true;
-		if (type.equals("Declaration6") && expectedType.equals("Declaration")) return true;
 		if (type.equals("ArgType2") && expectedType.equals("ArgType")) return true;
 		if (type.equals("Strategy11") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Term8") && expectedType.equals("Term")) return true;

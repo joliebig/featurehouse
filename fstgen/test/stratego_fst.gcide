@@ -1,7 +1,7 @@
 options {
 	STATIC = false;
 	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
 	DEBUG_LOOKAHEAD = false;
 }
 
@@ -372,26 +372,40 @@ Id :
 /*****************************************************************************
  * MAIN PRODUCTION                                                           *
  *****************************************************************************/
+@FSTNonTerminal(name="{ModuleDeclaration}")
 Module : 
-	ModuleDeclaration
+	ModuleDeclaration @!
+	[ImportDeclaration]
 	(Declaration)*
 	<EOF> ;
 
+@FSTTerminal(name="{Id}")
 ModName : 
 	Id (LOOK_AHEAD(2) "/" Id)* ;
 
 ModuleDeclaration :
+	@FSTTerminal(name="{ModName}")
 	"module" ModName |
+	@FSTTerminal(name="specification")
 	"specification"<NONE> ;
 
+@FSTNonTerminal(name="imports")
+ImportDeclaration :
+	"imports" @+! (ModName)+ @! ;
+
 Declaration :
-	"imports" (ModName)+ |
+	@FSTNonTerminal(name="rules")
 	"rules" (Definition)+ |
+	@FSTNonTerminal(name="strategies")
 	"strategies" (Definition)+ |
+	@FSTNonTerminal(name="signature")
 	"signature" (SigDeclaration)+ |
+	@FSTNonTerminal(name="signatures")
 	"signatures" (SigDeclaration)+ |
+	@FSTNonTerminal(name="overlays")
 	"overlays" (Overlay)+ ;
 
+@FSTTerminal(name="{Id}")
 Overlay :
 	Id [OptOverlay] "=" Term ;
 
@@ -399,11 +413,15 @@ OptOverlay :
 	"(" [IdList] ")" ;
 
 SigDeclaration :
+	@FSTNonTerminal(name="sorts")
 	"sorts" (TrafoSort)* |
+	@FSTNonTerminal(name="constructors")
 	"constructors" (OpDeclaration)* ;
 
 TrafoSort :
+	@FSTTerminal(name="{BracketSort}")
 	BracketSort |
+	@FSTTerminal(name="{Id}")
 	Id [LOOK_AHEAD("\"(\" [TrafoSortList()] \")\"") OptSort1] ;
 
 OptSort1 :
@@ -426,6 +444,7 @@ OptOpDecl2 :
 	Id | 
 	String ;
 
+@FSTTerminal(name="{AUTO}")
 Definition :
 	(Anno)* Def ;
 
@@ -676,8 +695,6 @@ Term :
 	NoTermAfterStrategyAngle [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() \"|}\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
-	/*LOOK_AHEAD("StrategyAngle() \"#\"") 
-	NoTermAfterStrategyAngle [AlternativeTerm] |*/
 	LOOK_AHEAD("StrategyAngle() \"end\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() \"then\"") 

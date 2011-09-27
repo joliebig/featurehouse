@@ -1,0 +1,9 @@
+module modifyAst
+
+rules
+
+  modifyAst:
+    Div(a, b) -> Div(a, b){t}
+    where
+      <typeof> a => t;
+      <typeof> b => t

@@ -11,6 +11,7 @@ import modification.content.Parseables.CSharp.CSharpFile;
 import modification.content.Parseables.CSharp.CSharpInterfaceMemberDeclaration;
 import modification.content.Parseables.CSharp.CSharpMethod;
 import modification.content.Parseables.SDF.SDFFile;
+import modification.content.Parseables.STR.STRFile;
 import modification.content.Parseables.haskell.HaskellDefinition;
 import modification.content.Parseables.haskell.HaskellFile;
 import modification.content.Parseables.java.JavaFile;
@@ -38,8 +39,8 @@ public class ContentGenerator {
 	    return new CSharpFile(file);
 	} else if (file.getName().endsWith("sdf")) {
 	    return new SDFFile(file);
-	    // } else if (file.getName().endsWith("")) {
-	    // return null;
+	} else if (file.getName().endsWith("str")) {
+	     return new STRFile(file);
 	} else {
 	    System.out.println("> " + file.getName());
 	    throw new UnknownFileTypeParseException();
