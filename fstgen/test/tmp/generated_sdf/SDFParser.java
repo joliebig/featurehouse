@@ -354,8 +354,9 @@ public class SDFParser extends AbstractFSTParser implements SDFParserConstants {
     case CFREESYNTAX:
     case LEXICALVARS:
       n = Productions(inTerminal);
-                                   replaceName(n);
-                                                     {if (true) return productionEndNonTerminal("Grammar3","Productions","Productions");}
+                                   replaceName("Productions", n);
+                                                                    replaceName(n);
+                                                                                      {if (true) return productionEndNonTerminal("Grammar3","Productions {Productions}","Productions {Productions}");}
       break;
     case CFREEPRIORITIES:
     case LEXICALRESTRICTIONS:

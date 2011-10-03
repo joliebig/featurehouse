@@ -287,7 +287,7 @@ Grammar :
 	"sorts" (Sort)+ @!|
 	@FSTNonTerminal(name="context-free start-symbols")
 	"context-free start-symbols" (Sort)+ |
-	@FSTNonTerminal(name="Productions")
+	@FSTNonTerminal(name="Productions {Productions}")
 	Productions @! |
 	@FSTNonTerminal(name="Disambiguations")
 	Disambiguations ;

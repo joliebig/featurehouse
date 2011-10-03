@@ -91,3 +91,49 @@ exports
     SetExp "&&" SetExp                       -> SetExp {left, cons("SetAnd"), prefer} 
     "async" "{" Statement* "}"                  -> Statement {cons("Async")} 
     "async" "(" {Exp ","}* ")"   -> Exp {cons("AsyncCall"), prefer}
+	context-free priorities 
+    Exp "." ID -> LimitedExp
+  > Exp "." ID "(" {NamedExp ","}* ")" -> LimitedExp
+  > Exp TermOperatorMethodId Exp -> Exp
+  > Exp OperatorMethodId Exp -> Exp
+  > Exp CompareMethodId Exp -> Exp
+  > Exp BoolMethodId Exp -> Exp
+  > "!" Exp -> Exp
+  > Exp "?" Exp ":" Exp -> Exp
+  > LimitedExp Filter+ -> Exp 
+  {
+    ID "==" LimitedSetExp                        -> SetExp
+    ID "!=" LimitedSetExp                        -> SetExp
+    ID "<" LimitedSetExp                         -> SetExp
+    ID "<=" LimitedSetExp                        -> SetExp
+    ID ">" LimitedSetExp                         -> SetExp
+    ID ">=" LimitedSetExp                        -> SetExp
+  }
+  > SetExp "&&" SetExp                 -> SetExp 
+
+  lexical syntax 
+    "||"                     -> BoolMethodId 
+    "&&"                     -> BoolMethodId 
+    "=="                     -> CompareMethodId 
+    "!="                     -> CompareMethodId 
+    "<"                      -> CompareMethodId 
+    "<="                     -> CompareMethodId 
+    ">"                      -> CompareMethodId 
+    ">="                     -> CompareMethodId 
+    "*"                      -> TermOperatorMethodId 
+    "/"                      -> TermOperatorMethodId 
+    "<<"                     -> TermOperatorMethodId 
+    ">>"                     -> TermOperatorMethodId 
+    "&"                      -> TermOperatorMethodId 
+    "|"                      -> TermOperatorMethodId 
+    "%"                      -> TermOperatorMethodId 
+    "+"                      -> OperatorMethodId 
+    "-"                      -> OperatorMethodId 
+    "++"                     -> PostFixId 
+    "--"                     -> PostFixId 
+    BoolMethodId             -> MethodId 
+    CompareMethodId          -> MethodId 
+    TermOperatorMethodId     -> MethodId 
+    OperatorMethodId         -> MethodId 
+    PostFixId                -> MethodId
+

@@ -1,8 +1,9 @@
 {
 	"features" : [
 		"Base",
-		"Service",
-		"HTML"
+		"HTML",
+		"Async",
+		"Service"
 	],
 	"roles": {
 	}
