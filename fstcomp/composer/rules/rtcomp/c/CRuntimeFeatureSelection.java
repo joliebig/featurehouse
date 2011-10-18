@@ -109,8 +109,8 @@ public class CRuntimeFeatureSelection {
 		cnf = cnf.replaceAll("\\r", "");
 		cnf = cnf.replaceAll("\\(", "( ");
 		cnf = cnf.replaceAll("\\)", " )");
-	    
-	    Pattern varsRegEx = Pattern.compile("[a-zA-Z]+");
+		
+	    Pattern varsRegEx = Pattern.compile("[a-zA-Z_]+");
 		Matcher matcher = varsRegEx.matcher(cnf);
 
 		Set<String> variables = new HashSet<String>();
@@ -120,10 +120,8 @@ public class CRuntimeFeatureSelection {
 			System.out.println("Expected at least one production in cnfFile, none found!!");
 			throw new RuntimeException();
 		}
-		
-		String rootProduction = matcher.group();
-		matcher.reset();
-	    // Find all matches
+		matcher.reset();// start from the beginning again
+		// Find all matches
 	    while (matcher.find()) {	      
 	      variables.add(matcher.group());
 	    }
@@ -131,9 +129,7 @@ public class CRuntimeFeatureSelection {
 	    for (String var: variables) {
 	    	
 	    	String replacement;
-	        if (var.equals(rootProduction)) {
-	            replacement = "__GUIDSL_ROOT_PRODUCTION";
-	        } else if (meta.getFeatures().contains(var)) {
+	    	if (meta.getFeatures().contains(var)) {
 	            replacement = "__SELECTED_FEATURE_" + var;
 	        } else {
 	            replacement = "__GUIDSL_NON_TERMINAL_" + var;
@@ -159,7 +155,8 @@ public class CRuntimeFeatureSelection {
 	    res.append("\nvoid select_helpers() {\n");
 	    res.append("\t__GUIDSL_ROOT_PRODUCTION = 1;\n");
 	    for (String nt: nonterminals) {
-	        res.append("\t" + nt + " = select_one();\n");
+	        //res.append("\t" + nt + " = select_one();\n");
+	    	res.append("\t" + nt + " = 1;\n");
 	    }    
 	    res.append("}\n\n");	    
 	    res.append("int valid_product() {\n");

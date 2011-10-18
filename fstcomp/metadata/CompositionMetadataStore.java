@@ -217,4 +217,7 @@ public final class CompositionMetadataStore {
 	public List<String> getFeatures() {
 		return new ArrayList<String>(features);
 	}
+	public void clearFeatures() {
+		features.clear();
+	}
 }

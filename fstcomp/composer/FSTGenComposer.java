@@ -69,6 +69,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	
 
 	public void run(String[] args) {
+		meta.clearFeatures();
 		cmd.parseCmdLineArguments(args);
 		//select the composition rules
 		compositionRules = new ArrayList<CompositionRule>();
