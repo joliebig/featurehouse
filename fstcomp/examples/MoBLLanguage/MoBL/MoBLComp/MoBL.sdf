@@ -1,6 +1,6 @@
 module MoBL
-imports
-	
+
+imports 
   Common 
   MoBL-UI 
   MoBL-Data 
@@ -12,8 +12,10 @@ imports
   MoBL-Style 
   MoBL-Config 
   MoBL-Server 
-  js/Javascript
+  JS-Javascript
+
 exports
+
 	context-free start-symbols 
     Start 
 
@@ -50,7 +52,7 @@ exports
     "/" {UriPart "/"}*                  -> UriPath {cons("UriPath")} 
     FILENAME  -> UriPart {cons("UriPart")} 
     ":" ID    -> UriPart {cons("UriVar")}
-	
+		
 
   lexical syntax 
     "control" -> ID {reject} 

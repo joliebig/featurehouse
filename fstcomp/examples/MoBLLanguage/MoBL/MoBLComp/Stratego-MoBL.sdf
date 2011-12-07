@@ -1,16 +1,18 @@
 module Stratego-MoBL
-imports
-	
+
+imports 
   StrategoMix[StrategoHost] 
   MoBL
+
 exports
+
 	context-free start-symbols 
     Module [[StrategoHost]] 
 
   lexical syntax 
     [0-9]*               -> MetaVarSuffix 
     "_" [A-Za-z0-9\_\-]+ -> MetaVarSuffix
-	lexical restrictions 
+		lexical restrictions 
     MetaVarSuffix -/- [a-zA-Z0-9] 
 
   context-free syntax 
@@ -21,7 +23,7 @@ exports
     "mobl-elem*" "|[" ScreenElem* "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")} 
     "mobl-elem"  "|[" ScreenElem "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")} 
     "mobl-def"   "|[" Definition "]|"  -> Term [[StrategoHost]] {cons("ToMetaExpr")}
-	
+		
 
   variables 
     [xyz]      MetaVarSuffix              -> ID                  {prefer} 

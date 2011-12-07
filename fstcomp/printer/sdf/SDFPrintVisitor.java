@@ -3,7 +3,6 @@ package printer.sdf;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import printer.ArtifactPrintVisitor;

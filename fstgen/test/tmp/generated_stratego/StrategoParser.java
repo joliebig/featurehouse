@@ -582,8 +582,9 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
                        replaceName(n);
     }
     n = Def(true);
-                                                       replaceName(n);
-                                                                         {if (true) return productionEndTerminal("Definition","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+                                                       replaceName("Def", n);
+                                                                                replaceName(n);
+                                                                                                  {if (true) return productionEndTerminal("Definition","{Def}","{Def}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -617,14 +618,15 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_2_3(2147483647)) {
       n = RuleDef(true);
                                                          replaceName(n);
-                                                                           {if (true) return productionEndTerminal("Def1","-","-","Replacement","Default",first,token);}
+                                                                           {if (true) return productionEndTerminal("Def1","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case EXTERNAL:
       case IDENTIFIER:
         n = StrategyDef(true);
-                             replaceName(n);
-                                               {if (true) return productionEndTerminal("Def2","-","-","Replacement","Default",first,token);}
+                             replaceName("StrategyDef", n);
+                                                              replaceName(n);
+                                                                                {if (true) return productionEndTerminal("Def2","-","{StrategyDef}","Replacement","Default",first,token);}
         break;
       default:
         jj_la1[27] = jj_gen;
@@ -758,8 +760,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_consume_token(EXTERNAL);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
-        n = Id(true);
-                                replaceName(n);
+        n = Id(inTerminal);
+                                      replaceName(n);
         break;
       default:
         jj_la1[34] = jj_gen;
@@ -768,8 +770,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_consume_token(LPAREN);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
-        n = TypedIdList(true);
-                                                                            replaceName(n);
+        n = TypedIdList(inTerminal);
+                                                                                        replaceName(n);
         break;
       default:
         jj_la1[35] = jj_gen;
@@ -778,8 +780,8 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_consume_token(VERTICALLINE);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
-        n = TypedIdList(true);
-                                                                                                                        replaceName(n);
+        n = TypedIdList(inTerminal);
+                                                                                                                                          replaceName(n);
         break;
       default:
         jj_la1[36] = jj_gen;
@@ -789,14 +791,14 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ASSIGN:
         jj_consume_token(ASSIGN);
-        n = Strategy(true);
-                                                                                                                                                                     replaceName(n);
+        n = Strategy(inTerminal);
+                                                                                                                                                                                             replaceName(n);
         break;
       default:
         jj_la1[37] = jj_gen;
         ;
       }
-                                                                                                                                                                                        {if (true) return productionEndTerminal("StrategyDef1","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("StrategyDef1","external","external");}
       break;
     case IDENTIFIER:
       n = Id(true);
@@ -813,7 +815,7 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
       jj_consume_token(ASSIGN);
       n = Strategy(true);
                                                                                                replaceName(n);
-                                                                                                                 {if (true) return productionEndTerminal("StrategyDef2","-","-","Replacement","Default",first,token);}
+                                                                                                                 {if (true) return productionEndTerminal("StrategyDef2","{AUTO}","{AUTO}","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[39] = jj_gen;
@@ -3627,6 +3629,12 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_301() {
+    if (jj_scan_token(ASSIGN)) return true;
+    if (jj_3R_44()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_45() {
     Token xsp;
     xsp = jj_scanpos;
@@ -3695,12 +3703,6 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3R_258() {
     if (jj_3R_28()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_301() {
-    if (jj_scan_token(ASSIGN)) return true;
-    if (jj_3R_44()) return true;
     return false;
   }
 
@@ -3866,6 +3868,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_300() {
+    if (jj_3R_172()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_204() {
     Token xsp;
     xsp = jj_scanpos;
@@ -3911,11 +3918,6 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
 
   final private boolean jj_3R_284() {
     if (jj_scan_token(153)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_300() {
-    if (jj_3R_172()) return true;
     return false;
   }
 
@@ -4127,6 +4129,11 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     return false;
   }
 
+  final private boolean jj_3R_299() {
+    if (jj_3R_172()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_208() {
     if (jj_3R_28()) return true;
     return false;
@@ -4168,11 +4175,6 @@ public class StrategoParser extends AbstractFSTParser implements StrategoParserC
     if (jj_scan_token(RBRACKET)) return true;
     xsp = jj_scanpos;
     if (jj_3R_210()) jj_scanpos = xsp;
-    return false;
-  }
-
-  final private boolean jj_3R_299() {
-    if (jj_3R_172()) return true;
     return false;
   }
 

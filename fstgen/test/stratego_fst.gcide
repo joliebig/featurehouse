@@ -1,8 +1,6 @@
 options {
 	STATIC = false;
-	FORCE_LA_CHECK = false;
 	DEBUG_PARSER = false;
-	DEBUG_LOOKAHEAD = false;
 }
 
 PARSER_BEGIN(StrategoParser)
@@ -444,7 +442,7 @@ OptOpDecl2 :
 	Id | 
 	String ;
 
-@FSTTerminal(name="{AUTO}")
+@FSTTerminal(name="{Def}")
 Definition :
 	(Anno)* Def ;
 
@@ -454,7 +452,9 @@ Anno :
 	"internal"<NONE> ;
 
 Def :
+	@FSTTerminal(name="{AUTO}")
 	LOOK_AHEAD("Id() [OptDef1()] \":\"") RuleDef |
+	@FSTInline@FSTExportName("{StrategyDef}")
 	StrategyDef ;
 
 RuleDef :
@@ -474,8 +474,10 @@ RuleCond :
 	"with" Strategy ;
 
 StrategyDef :
-	"external" [Id] "(" [TypedIdList] "|" 
+	@FSTNonTerminal(name="external")
+	"external" @+! [Id] "(" [TypedIdList] "|" 
 	                    [TypedIdList] ")" ["=" Strategy] |
+	@FSTTerminal(name="{AUTO}")
 	Id [OptDef1] "=" Strategy ;
 
 Strategy :

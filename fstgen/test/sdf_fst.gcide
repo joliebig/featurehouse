@@ -242,8 +242,8 @@ Id :
  *****************************************************************************/
 @FSTNonTerminal(name="{ModuleDeclaration}")
 Module : 
-	ModuleDeclaration @!
-	[ImportDeclaration]
+	ModuleDeclaration @! @!
+	[ImportDeclaration] @-!
 	[ExportDeclaration]
 	[HiddenDeclaration]
 	<EOF> ;
@@ -269,26 +269,26 @@ ModuleDeclaration :
 
 @FSTNonTerminal(name="imports")
 ImportDeclaration :
-	"imports" @+! (ModName)+ @! ;
+	"imports" @+ (ModName)+ @! ;
 
 @FSTNonTerminal(name="exports")
 ExportDeclaration :
-	@- "exports" @+! (Grammar)+ @! ;
+	"exports" @! @+! (Grammar)+ @-! ;
 
 @FSTNonTerminal(name="hiddens")
 HiddenDeclaration :
-	@- "hiddens" @+! (Grammar)+ @!;
+	"hiddens" @! @+! (Grammar)+ @-!;
 
 /* Every syntax definition introduces names for the syntactical sorts of a 
 language and needs to define one or more start symbols. */
 @FSTInline
 Grammar :
 	@FSTNonTerminal(name="sorts")
-	"sorts" (Sort)+ @!|
+	"sorts" @+ (Sort)+ @-! @! |
 	@FSTNonTerminal(name="context-free start-symbols")
-	"context-free start-symbols" (Sort)+ |
+	"context-free start-symbols" @+ (Sort)+ |
 	@FSTNonTerminal(name="Productions {Productions}")
-	Productions @! |
+	Productions |
 	@FSTNonTerminal(name="Disambiguations")
 	Disambiguations ;
 
@@ -300,7 +300,7 @@ Grammar :
    statements, or what is usually referred to as non-terminals */
 @FSTNonTerminal(name="{ProdPart}")
 Productions :
-	ProdPart (Production)* ;
+	ProdPart @+ (Production)* @-! ;
 
 ProdPart :
 	@FSTExportName("syntax")

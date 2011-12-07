@@ -1,0 +1,9 @@
+module desugar
+
+rules
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetEq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["="])

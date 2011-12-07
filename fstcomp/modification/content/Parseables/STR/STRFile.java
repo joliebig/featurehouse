@@ -8,7 +8,6 @@ import tmp.generated_stratego.StrategoParser;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
-
 import modification.content.InvalidFSTTraversalException;
 import modification.content.Parseables.ParseableFile;
 
@@ -28,5 +27,4 @@ public class STRFile extends ParseableFile {
 		strFile.addChild(p.getRoot());
 		return strFile;
 	}
-
 }

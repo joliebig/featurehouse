@@ -1,8 +1,6 @@
 options {
 	STATIC = false;
-	FORCE_LA_CHECK = false;
 	DEBUG_PARSER = false;
-	DEBUG_LOOKAHEAD = false;
 }
 
 PARSER_BEGIN(StrategoParser)
@@ -496,7 +494,7 @@ FSTInfo OptOpDecl2(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Definition(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=Anno(true){ replaceName(n);})* n=Def(true){ replaceName(n);} {return productionEndTerminal("Definition","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	(n=Anno(true){ replaceName(n);})* n=Def(true){ replaceName("Def", n);}{ replaceName(n);} {return productionEndTerminal("Definition","{Def}","{Def}","Replacement","Default",first,token);}
 
  )  }
 
@@ -512,9 +510,9 @@ FSTInfo Anno(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Def(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(Id() [OptDef1()] ":") n=RuleDef(true){ replaceName(n);} {return productionEndTerminal("Def1","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(Id() [OptDef1()] ":") n=RuleDef(true){ replaceName(n);} {return productionEndTerminal("Def1","{AUTO}","{AUTO}","Replacement","Default",first,token);}
  |
-	n=StrategyDef(true){ replaceName(n);} {return productionEndTerminal("Def2","-","-","Replacement","Default",first,token);}
+	n=StrategyDef(true){ replaceName("StrategyDef", n);}{ replaceName(n);} {return productionEndTerminal("Def2","-","{StrategyDef}","Replacement","Default",first,token);}
 
  )  }
 
@@ -552,9 +550,9 @@ FSTInfo RuleCond(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo StrategyDef(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"external" [n=Id(true){ replaceName(n);}] "(" [n=TypedIdList(true){ replaceName(n);}] "|" [n=TypedIdList(true){ replaceName(n);}] ")" ["=" n=Strategy(true){ replaceName(n);}] {return productionEndTerminal("StrategyDef1","-","-","Replacement","Default",first,token);}
+	"external" [n=Id(inTerminal){ replaceName(n);}] "(" [n=TypedIdList(inTerminal){ replaceName(n);}] "|" [n=TypedIdList(inTerminal){ replaceName(n);}] ")" ["=" n=Strategy(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("StrategyDef1","external","external");}
  |
-	n=Id(true){ replaceName(n);} [n=OptDef1(true){ replaceName(n);}] "=" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("StrategyDef2","-","-","Replacement","Default",first,token);}
+	n=Id(true){ replaceName(n);} [n=OptDef1(true){ replaceName(n);}] "=" n=Strategy(true){ replaceName(n);} {return productionEndTerminal("StrategyDef2","{AUTO}","{AUTO}","Replacement","Default",first,token);}
 
  )  }
 

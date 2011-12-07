@@ -1,11 +1,13 @@
 module MoBL-Action
-imports
-	
+
+imports 
   Common 
   MoBL 
   MoBL-UI 
   MoBL-String
+
 exports
+
 	
 
   context-free syntax 
@@ -88,9 +90,7 @@ exports
     ID ">=" LimitedSetExp                        -> SetExp {cons("SetGeq")} 
     ID "in" LimitedSetExp                        -> SetExp {cons("SetIn")} 
     ID "not" "in" LimitedSetExp                  -> SetExp {cons("SetNotIn")} 
-    SetExp "&&" SetExp                       -> SetExp {left, cons("SetAnd"), prefer} 
-    "async" "{" Statement* "}"                  -> Statement {cons("Async")} 
-    "async" "(" {Exp ","}* ")"   -> Exp {cons("AsyncCall"), prefer}
+    SetExp "&&" SetExp                       -> SetExp {left, cons("SetAnd"), prefer}
 	context-free priorities 
     Exp "." ID -> LimitedExp
   > Exp "." ID "(" {NamedExp ","}* ")" -> LimitedExp

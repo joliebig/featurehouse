@@ -27,5 +27,4 @@ public class SDFFile extends ParseableFile {
 		sdfFile.addChild(p.getRoot());
 		return sdfFile;
 	}
-
 }

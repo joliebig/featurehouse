@@ -1,7 +1,0 @@
-
-imports
-	
-  libstratego-lib 
-  include/Exprlang 
-  lib/editor-common.generated 
-  modifyAst

@@ -12,7 +12,7 @@ imports
   MoBL-Style
   MoBL-Config
   MoBL-Server
-  js/Javascript
+  JS-Javascript
 
 exports
 

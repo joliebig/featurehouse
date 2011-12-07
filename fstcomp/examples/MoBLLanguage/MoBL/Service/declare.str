@@ -1,0 +1,17 @@
+module declare
+
+strategies
+
+  declare :
+    Service(manno*, qid, selem*) -> <fail>
+    with
+      extern := <origin-track-forced(definition-to-external)>
+      ; rules (
+          GetType : qid -> extern
+        )
+
+  definition-to-external :
+    Service(manno*, qid, selem*) -> ExternalType(manno*, qid, SimpleType(QId("mobl", "Object")), <filter(service-elem-to-external)> selem*)
+
+  service-elem-to-external :
+    Resource(manno*, qid, farg*, rt, _) -> ExternalStaticMethod(manno*, qid, farg*, rt)

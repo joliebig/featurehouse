@@ -1,0 +1,30 @@
+module generation-service
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/MoBL
+  lib/editor-common
+  desugar
+  type
+  rename
+  util
+  generation-emit
+  generation-action
+  generation-cps-lift
+  generation-cps-action
+
+rules
+
+  service-elem-to-js :
+    PropVal(x, e) -> $[[x]: [<expression-to-js> e]]
+
+  build-service-url :
+    (uri, _) -> $["" + (this.root ? this.root : "") + [<expression-to-js> uri]]
+
+  farg-to-js-key-val :
+    FArg(x, _) -> $["[x]": [x]]
+
+  farg-to-js-key-val :
+    FArgOptional(x, _, _) -> $["[x]": [x]]

@@ -1,0 +1,9 @@
+module pp
+
+strategies
+
+  pp-mobl-stat :
+    Async(stat*) ->
+    $[async {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]

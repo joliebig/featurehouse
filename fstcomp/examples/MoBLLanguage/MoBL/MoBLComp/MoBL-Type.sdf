@@ -1,10 +1,12 @@
 module MoBL-Type
-imports
-	
+
+imports 
   Common 
   MoBL 
   MoBL-Action
+
 exports
+
 	
 
   context-free syntax 

@@ -1,13 +1,16 @@
 module MoBL-Regex
-imports
-	
+
+imports 
   Common
+
 exports
+
 	sorts  
     Branche  Piece  Quantifier  Atom  CharacterClass  BracketItem  ClassKeyword  
     BracketLiteral  AtomLiteral  AllChars  BracketCharacter  AtomCharacter  
     QuotablePatternSymbol  Integer  OctalValue  TwoHexValue  FourHexValue  
     BackReference  ControlValue  RegexId  RegexID
+
 	
 
   context-free syntax 

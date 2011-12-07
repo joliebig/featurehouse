@@ -1,0 +1,18 @@
+module pp
+
+strategies
+
+  pp-mobl-elem :
+    Html(tag, html-arg*, elem*, closeTag) ->
+    $[<[tag][<map(pp-mobl-tag-arg); concat-strings> html-arg*]>
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      </[closeTag]>]
+
+  pp-mobl-elem :
+    HtmlShort(tag, html-arg*) -> $[<[tag][<map(pp-mobl-tag-arg); concat-strings> html-arg*] />]
+
+  pp-mobl-tag-arg :
+    HtmlArg(x, e) -> <concat-strings> [" ", x, "=", <pp-mobl-exp> e]
+
+  pp-mobl-tag-arg :
+    HtmlDatabindArg(e) -> <concat-strings> [" databind=", <pp-mobl-exp> e]

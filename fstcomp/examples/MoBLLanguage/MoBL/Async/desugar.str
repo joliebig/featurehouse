@@ -1,0 +1,35 @@
+module desugar
+
+strategies
+
+  desugar :
+    mobl-elem|[ var x : t = async(e*) ]| -> mobl-elem*|[
+      var x : t = e_init
+      script {
+        async {
+          x = e;
+        }
+      }
+    ]|
+    where if <eq> (<length> e*, 2) then
+            [e, e_init] := e*
+          else
+            e := <Hd> e*
+            ; e_init := mobl-e|[ null ]|
+          end
+          
+  desugar :
+    mobl-elem|[ var x  = async(e*) ]| -> mobl-elem*|[
+      var x = e_init
+      script {
+        async {
+          x = e;
+        }
+      }
+    ]|
+    where if <eq> (<length> e*, 2) then
+            [e, e_init] := e*
+          else
+            e := <Hd> e*
+            ; e_init := mobl-e|[ null ]|
+          end
