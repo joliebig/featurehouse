@@ -900,9 +900,35 @@ FSTInfo NoTermAfterStrategyAngle(boolean inTerminal) : { Token first=null,t;FSTI
 
 FSTInfo OptIdTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"(" [n=TermList(true){ replaceName(n);}] ")" {return productionEndTerminal("OptIdTerm1","-","-","Replacement","Default",first,token);}
+	"|" "[" (n=OptTerms(true){ replaceName(n);})* "]" "|" {return productionEndTerminal("OptIdTerm1","-","-","Replacement","Default",first,token);}
  |
-	"@" n=Term(true){ replaceName(n);} {return productionEndTerminal("OptIdTerm2","-","-","Replacement","Default",first,token);}
+	"(" [n=TermList(true){ replaceName(n);}] ")" {return productionEndTerminal("OptIdTerm2","-","-","Replacement","Default",first,token);}
+ |
+	"@" n=Term(true){ replaceName(n);} {return productionEndTerminal("OptIdTerm3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo OptTerms(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) n=Id(true){ replaceName(n);} {return productionEndTerminal("OptTerms1","-","-","Replacement","Default",first,token);}
+ |
+	":"  {return productionEndTerminal("OptTerms2","-","-","Replacement","Default",first,token);}
+ |
+	"="  {return productionEndTerminal("OptTerms3","-","-","Replacement","Default",first,token);}
+ |
+	"("  {return productionEndTerminal("OptTerms4","-","-","Replacement","Default",first,token);}
+ |
+	")"  {return productionEndTerminal("OptTerms5","-","-","Replacement","Default",first,token);}
+ |
+	"*"  {return productionEndTerminal("OptTerms6","-","-","Replacement","Default",first,token);}
+ |
+	"{"  {return productionEndTerminal("OptTerms7","-","-","Replacement","Default",first,token);}
+ |
+	"}"  {return productionEndTerminal("OptTerms8","-","-","Replacement","Default",first,token);}
+ |
+	";"  {return productionEndTerminal("OptTerms9","-","-","Replacement","Default",first,token);}
+ |
+	","  {return productionEndTerminal("OptTerms10","-","-","Replacement","Default",first,token);}
 
  )  }
 

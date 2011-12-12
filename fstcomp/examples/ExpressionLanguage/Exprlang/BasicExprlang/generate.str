@@ -61,7 +61,11 @@ rules
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 0) {
+            return b;
+          elseif (b == 0) {
+            return a;
+          }
         }
       }
 
@@ -83,7 +87,11 @@ rules
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 0) {
+            return (-b);
+          elseif (b == 0) {
+            return a;
+          }
         }
       }
 
@@ -105,7 +113,11 @@ rules
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 1) {
+            return b;
+          elseif (b == 1) {
+            return a;
+          }
         }
       }
       
@@ -127,7 +139,11 @@ rules
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (b == 1) {
+            return a;
+          } else {
+            return a / b;
+          }
         }
       }
 
@@ -149,7 +165,11 @@ rules
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (b == 1) {
+            return a;
+          } else {
+            return a % b;
+          }
         }
       }
       

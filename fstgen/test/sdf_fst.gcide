@@ -204,7 +204,7 @@ TOKEN :
 	}
 
 /*****************************************************************************
- * THE STRATEGO LANGUAGE GRAMMAR STARTS HERE                                 *
+ * THE SDF LANGUAGE GRAMMAR STARTS HERE                                      *
  * DEFINITION OF THE PARSER                                                  *
  *****************************************************************************/
 GRAMMARSTART

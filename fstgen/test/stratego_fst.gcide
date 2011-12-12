@@ -709,8 +709,21 @@ NoTermAfterStrategyAngle :
 	StrategyAngle ;
 
 OptIdTerm :
+    "|""[" (OptTerms)* "]""|" |
 	"(" [TermList] ")" |
 	"@" Term ;
+
+OptTerms :
+	LOOK_AHEAD(2) Id | 
+	":" | 
+	"=" | 
+	"(" | 
+	")" | 
+	"*" | 
+	"{" | 
+	"}" | 
+	";" | 
+	",";
 
 OptStringTerm :
 	"(" [TermList] ")" ;

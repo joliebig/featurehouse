@@ -1,9 +1,11 @@
 {
 	"features" : [
 		"Base",
+		"Async",
 		"HTML",
 		"Service",
 		"Base",
+		"Async",
 		"HTML",
 		"Service"
 	],

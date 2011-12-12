@@ -1,0 +1,11 @@
+module generation-util
+imports
+	
+  include/MoBL
+	rules 
+
+  uri-part-to-string :
+    UriPart(s) -> s 
+
+  uri-part-to-string :
+    UriVar(s) -> $[

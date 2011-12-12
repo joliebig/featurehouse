@@ -170,6 +170,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("DynRuleDef2") && expectedType.equals("DynRuleDef")) return true;
 		if (type.equals("Anno2") && expectedType.equals("Anno")) return true;
 		if (type.equals("Term18") && expectedType.equals("Term")) return true;
+		if (type.equals("OptTerms1") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Term13") && expectedType.equals("Term")) return true;
 		if (type.equals("AlternativeTerm1") && expectedType.equals("AlternativeTerm")) return true;
 		if (type.equals("Declaration4") && expectedType.equals("Declaration")) return true;
@@ -177,9 +178,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("TermOperator2") && expectedType.equals("TermOperator")) return true;
 		if (type.equals("Strategy17") && expectedType.equals("Strategy")) return true;
 		if (type.equals("DynRuleScopeId1") && expectedType.equals("DynRuleScopeId")) return true;
+		if (type.equals("OptTerms9") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("AlternativeOperator4") && expectedType.equals("AlternativeOperator")) return true;
 		if (type.equals("TrafoSort1") && expectedType.equals("TrafoSort")) return true;
 		if (type.equals("Term6") && expectedType.equals("Term")) return true;
+		if (type.equals("OptTerms8") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Term27") && expectedType.equals("Term")) return true;
 		if (type.equals("DynRuleDef1") && expectedType.equals("DynRuleDef")) return true;
 		if (type.equals("Term22") && expectedType.equals("Term")) return true;
@@ -200,9 +203,11 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Type2") && expectedType.equals("Type")) return true;
 		if (type.equals("RuleOrTerm2") && expectedType.equals("RuleOrTerm")) return true;
 		if (type.equals("ScopeLabels2") && expectedType.equals("ScopeLabels")) return true;
+		if (type.equals("OptTerms7") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Strat3") && expectedType.equals("Strat")) return true;
 		if (type.equals("Term5") && expectedType.equals("Term")) return true;
 		if (type.equals("OptOpDecl22") && expectedType.equals("OptOpDecl2")) return true;
+		if (type.equals("OptIdTerm3") && expectedType.equals("OptIdTerm")) return true;
 		if (type.equals("Term16") && expectedType.equals("Term")) return true;
 		if (type.equals("Strategy15") && expectedType.equals("Strategy")) return true;
 		if (type.equals("RuleCond2") && expectedType.equals("RuleCond")) return true;
@@ -219,6 +224,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Term29") && expectedType.equals("Term")) return true;
 		if (type.equals("DynRuleDef3") && expectedType.equals("DynRuleDef")) return true;
 		if (type.equals("Type1") && expectedType.equals("Type")) return true;
+		if (type.equals("OptTerms6") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Strat2") && expectedType.equals("Strat")) return true;
 		if (type.equals("ScopeLabels1") && expectedType.equals("ScopeLabels")) return true;
 		if (type.equals("RuleDecOperator2") && expectedType.equals("RuleDecOperator")) return true;
@@ -227,6 +233,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Def2") && expectedType.equals("Def")) return true;
 		if (type.equals("RuleNames2") && expectedType.equals("RuleNames")) return true;
 		if (type.equals("Strategy22") && expectedType.equals("Strategy")) return true;
+		if (type.equals("OptTerms4") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Strategy12") && expectedType.equals("Strategy")) return true;
 		if (type.equals("OptIdTerm1") && expectedType.equals("OptIdTerm")) return true;
 		if (type.equals("Term10") && expectedType.equals("Term")) return true;
@@ -242,6 +249,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("StrategyDef2") && expectedType.equals("StrategyDef")) return true;
 		if (type.equals("Strategy3") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Strat4") && expectedType.equals("Strat")) return true;
+		if (type.equals("OptTerms5") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("OptRuleOrStrategy1") && expectedType.equals("OptRuleOrStrategy")) return true;
 		if (type.equals("OptIdTerm2") && expectedType.equals("OptIdTerm")) return true;
 		if (type.equals("Strategy13") && expectedType.equals("Strategy")) return true;
@@ -254,11 +262,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Strategy24") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Declaration5") && expectedType.equals("Declaration")) return true;
 		if (type.equals("Strategy10") && expectedType.equals("Strategy")) return true;
+		if (type.equals("OptTerms2") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Strategy2") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Strat7") && expectedType.equals("Strat")) return true;
 		if (type.equals("Strategy18") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Term1") && expectedType.equals("Term")) return true;
 		if (type.equals("TrafoSort2") && expectedType.equals("TrafoSort")) return true;
+		if (type.equals("OptTerms10") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Term23") && expectedType.equals("Term")) return true;
 		if (type.equals("AlternativeOperator2") && expectedType.equals("AlternativeOperator")) return true;
 		if (type.equals("RuleNames1") && expectedType.equals("RuleNames")) return true;
@@ -266,6 +276,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("ArgType2") && expectedType.equals("ArgType")) return true;
 		if (type.equals("Strategy11") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Term8") && expectedType.equals("Term")) return true;
+		if (type.equals("OptTerms3") && expectedType.equals("OptTerms")) return true;
 		if (type.equals("Strategy1") && expectedType.equals("Strategy")) return true;
 		if (type.equals("Strat6") && expectedType.equals("Strat")) return true;
 		if (type.equals("Strategy19") && expectedType.equals("Strategy")) return true;
