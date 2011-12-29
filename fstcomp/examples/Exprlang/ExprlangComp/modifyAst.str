@@ -43,6 +43,18 @@ imports
     String(s) -> String(s){Type("String")} 
 
   modifyAst:
-    Simplify(e)	-> Simplify(e){Type("Int")}
+    Add(a, b) -> Add(a, b){t}
     where
-      <typeof> e => Type("Int")
+      <typeof> a => t;
+      <typeof> b => t 
+
+  modifyAst:
+    Sub(a, b) -> Sub(a, b){t}
+    where
+      <typeof> a => t;
+      <typeof> b => t 
+
+  modifyAst:
+    Print(e)	-> Print(e){t}
+    where
+      <typeof> e => t

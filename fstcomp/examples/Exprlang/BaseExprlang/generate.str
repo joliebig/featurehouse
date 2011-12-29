@@ -202,9 +202,9 @@ rules
     VarDec(x, Type(t)) -> $[]  
 
   to-java:
+    String(s) -> $[new String([s])]
+
+  to-java:
     Var(i) -> $[[i]]
       where
       <bagof-GetVar> i
-
-  to-java:
-    String(s) -> $[new String([s])]

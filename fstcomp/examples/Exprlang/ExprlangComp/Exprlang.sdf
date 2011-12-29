@@ -11,7 +11,7 @@ exports
 	context-free start-symbols 
 		Start 
 
-	context-free syntax 
+  context-free syntax 
 		Stat*                 -> Start {cons("Start")} 
 		Var ":=" Exp ";"      -> Stat {cons("Assign")} 
 		"var" ID ":" Type ";" -> Stat {cons("VarDec")} 
@@ -22,5 +22,11 @@ exports
 		Var                   -> Exp {cons("Var")} 
 		STRING                -> Exp {cons("String")} 
 		"(" Exp ")"           -> Exp {bracket} 
-		"simplify" "(" Exp ")" ";" -> Stat {cons("Simplify")}
-
+    Exp "+" Exp  -> Exp {cons("Add"),assoc} 
+    Exp "-" Exp  -> Exp {cons("Sub"),left} 
+    "print" "(" Exp ")" ";" -> Stat {cons("Print")}
+		context-free priorities 
+    "-" Exp -> Exp
+  > {left: Exp "+" Exp -> Exp } 
+    "-" Exp -> Exp
+  > {left: Exp "-" Exp -> Exp }

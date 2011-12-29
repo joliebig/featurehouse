@@ -71,11 +71,6 @@ imports
   		not(<GetVar> x) 
 
   constraint-error:
-  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: String])
+  	Print(e) -> (e, $[Erwarteter Typ für print(): int oder String; Erhaltener Typ: undefiniert])
   	where
-  		<typeof> e => Type("String")   		
-  		
-  constraint-error:
-  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: undefiniert])
-  	where  		
   		not(<typeof> e)

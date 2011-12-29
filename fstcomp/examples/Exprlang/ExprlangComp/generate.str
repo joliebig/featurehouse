@@ -60,7 +60,11 @@ imports
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 0) {
+            return b;
+          elseif (b == 0) {
+            return a;
+          }
         }
       }
 
@@ -82,7 +86,11 @@ imports
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 0) {
+            return (-b);
+          elseif (b == 0) {
+            return a;
+          }
         }
       }
 
@@ -104,7 +112,11 @@ imports
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (a == 1) {
+            return b;
+          elseif (b == 1) {
+            return a;
+          }
         }
       }
       
@@ -126,7 +138,11 @@ imports
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (b == 1) {
+            return a;
+          } else {
+            return a / b;
+          }
         }
       }
 
@@ -148,7 +164,11 @@ imports
         }
         // Feature Simplify
         int simplify() {
-          return null;
+          if (b == 1) {
+            return a;
+          } else {
+            return a % b;
+          }
         }
       }
       
@@ -181,15 +201,27 @@ imports
     VarDec(x, Type(t)) -> $[ ]  
 
   to-java:
+    String(s) -> $[ new String([s])]
+
+  to-java:
     Var(i) -> $[[i]]
       where
       <bagof-GetVar> i 
 
   to-java:
-    String(s) -> $[ 
+    Add(x*, y*) -> $[new Add([x'*],[y'*])]
+    with
+      x'* := <to-java> x*;
+      y'* := <to-java> y* 
 
   to-java:
-    Simplify(t*) -> $[System.out.println(([t'*]).simplify());
+    Sub(x*, y*) -> $[new Sub([x'*],[y'*])]
+    with
+      x'* := <to-java> x*;
+      y'* := <to-java> y* 
+
+  to-java:
+    Print(t*) -> $[System.out.println(([t'*]).print());
     ]
     with
       t'* := <to-java> t*
