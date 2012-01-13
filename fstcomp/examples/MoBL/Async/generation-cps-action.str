@@ -1,8 +1,0 @@
-module generation-cps-action
-
-strategies
-
-  cps-statements :
-    [Async(stats)|stat*] ->
-      $[[<cps-statements> stats]
-        [<cps-statements> stat*]

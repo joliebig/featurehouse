@@ -10,7 +10,6 @@ sorts
 
   lexical syntax 
     [a-zA-Z\_\$][a-zA-Z0-9\_]* -> ID 
-    [a-zA-Z\_\$][a-zA-Z0-9\_\-]* -> HTMLID 
     "-"? [0-9]+            -> INT 
     [a-zA-Z\_\$\%\.][a-zA-Z0-9\_\-\.\%]* -> FILENAME 
     "-"? FloatDigits
@@ -30,7 +29,8 @@ sorts
     [\*]                             -> CommentChar 
     "/*" (~[\*] | CommentChar)* "*/" -> LAYOUT 
     "//" ~[\n\r]* ([\n\r] | EOF)     -> LAYOUT 
-    -> EOF
+    -> EOF 
+    [a-zA-Z\_\$][a-zA-Z0-9\_\-]* -> HTMLID
 lexical restrictions 
     CommentChar -/- [\/] 
     NUMBER      -/- [0-9] 

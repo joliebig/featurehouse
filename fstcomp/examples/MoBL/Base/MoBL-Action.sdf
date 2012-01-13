@@ -100,14 +100,14 @@ exports
   > "!" Exp -> Exp
   > Exp "?" Exp ":" Exp -> Exp
   > LimitedExp Filter+ -> Exp
-  {
+  > {
     ID "==" LimitedSetExp                        -> SetExp
     ID "!=" LimitedSetExp                        -> SetExp
     ID "<" LimitedSetExp                         -> SetExp
     ID "<=" LimitedSetExp                        -> SetExp
     ID ">" LimitedSetExp                         -> SetExp
     ID ">=" LimitedSetExp                        -> SetExp
-  }
+    }
   > SetExp "&&" SetExp                 -> SetExp
 
   lexical syntax

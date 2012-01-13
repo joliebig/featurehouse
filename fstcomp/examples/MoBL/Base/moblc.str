@@ -4,15 +4,15 @@ imports
   libstratego-lib
   libstratego-xtc
   libstratego-tool-doc
-  generation-compile
-  generation-action
+  generation/compile
+  generation/action
   editor-common
   include/MoBL
   analyze
   check
   style
   util
-  optimize-optimize
+  optimize/optimize
 
 strategies
 

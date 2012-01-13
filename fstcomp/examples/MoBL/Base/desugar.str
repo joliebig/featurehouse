@@ -9,7 +9,7 @@ imports
   ui-lift
   style
   mobl
-  generation-action
+  generation/action
 
 strategies
 
@@ -72,6 +72,34 @@ strategies
           )
         ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
         ; not(<eq> (e*, e2*))
+
+  desugar :
+    mobl-elem|[ var x : t = e ]| -> mobl-elem*|[
+      var x : t = e_init
+      script {
+        x = e;
+      }
+    ]|
+    where if <eq> (<length> e, 2) then
+            [e', e_init] := e
+          else
+            e' := <Hd> e
+            ; e_init := mobl-e|[ null ]|
+          end
+
+  desugar :
+    mobl-elem|[ var x  = e ]| -> mobl-elem*|[
+      var x = e_init
+      script {
+        x = e;
+      }
+    ]|
+    where if <eq> (<length> e, 2) then
+            [e', e_init] := e
+          else
+            e' := <Hd> e
+            ; e_init := mobl-e|[ null ]|
+          end
 
 rules
 

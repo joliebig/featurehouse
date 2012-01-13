@@ -64,7 +64,7 @@ imports
   lookup-control-aux :
     qid -> extern
     where <GetControl> qid
-        ; extern := <origin-track-forced(\ ExternalControl(manno*, _, farg*) -> ExternalControl(manno*, qid, <alltd(add-namespace)> farg*) \)> () 
+        ; extern := <origin-track-forced(\ ExternalControl(manno*, _, farg*) -> ExternalControl(manno*, qid, <alltd(add-namespace)> farg*) \)> <id> 
 
   get-all-controls =
     dr-all-keys(|"GetControl")
@@ -76,7 +76,7 @@ imports
   lookup-screen-aux :
     qid -> extern
     where <GetScreen> qid
-        ; extern := <origin-track-forced(\ ExternalScreen(manno*, _, farg*, rt) -> ExternalScreen(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> () 
+        ; extern := <origin-track-forced(\ ExternalScreen(manno*, _, farg*, rt) -> ExternalScreen(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> <id> 
 
   lookup-function =
       lookup-function-aux 
@@ -84,12 +84,12 @@ imports
   lookup-function-aux :
     qid -> extern
     where ExternalFunction(manno*, _, farg*, rt) := <GetFunction> qid
-        ; extern := <origin-track-forced(\ ExternalFunction(manno*, _, farg*, rt) -> ExternalFunction(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> () 
+        ; extern := <origin-track-forced(\ ExternalFunction(manno*, _, farg*, rt) -> ExternalFunction(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> <id> 
 
   lookup-function-aux :
     qid -> extern
     where ExternalSyncFunction(manno*, _, farg*, rt) := <GetFunction> qid
-        ; extern := <origin-track-forced(\ ExternalSyncFunction(manno*, _, farg*, rt) -> ExternalSyncFunction(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> () 
+        ; extern := <origin-track-forced(\ ExternalSyncFunction(manno*, _, farg*, rt) -> ExternalSyncFunction(manno*, qid, <alltd(add-namespace)> farg*, <alltd(add-namespace)> rt) \)> <id> 
 
   get-all-functions =
     dr-all-keys(|"GetFunction")
@@ -230,7 +230,7 @@ imports
   lookup-global-var-aux :
     qid -> extern
     where ExternalVarDecl(qid, t) := <GetGlobalVar> qid
-        ; extern := <origin-track-forced(\ ExternalVarDecl(qid, t) -> ExternalVarDecl(qid, <alltd(add-namespace)> t) \)> () 
+        ; extern := <origin-track-forced(\ ExternalVarDecl(qid, t) -> ExternalVarDecl(qid, <alltd(add-namespace)> t) \)> <id> 
 
   get-all-global-vars =
     all-keys-GetGlobalVar signature constructors 

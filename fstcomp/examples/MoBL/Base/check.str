@@ -8,9 +8,9 @@ imports
   desugar
   mobl
   pp
-  generation-compile
-  generation-cps-lift
-  editor-editor
+  generation/compile
+  generation/cps-lift
+  editor/editor
 
 rules
 

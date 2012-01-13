@@ -3,7 +3,7 @@ module normalize
 imports
   include/MoBL
   editor-common
-  generation-compile
+  generation/compile
   mobl
 
 rules

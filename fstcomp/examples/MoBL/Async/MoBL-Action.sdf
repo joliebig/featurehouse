@@ -3,5 +3,5 @@ module MoBL-Action
 exports
 
   context-free syntax
-    "async" "{" Statement* "}"                  -> Statement {cons("Async")}
+    "async" "{" Statement* "}"   -> Statement {cons("Async")}
     "async" "(" {Exp ","}* ")"   -> Exp {cons("AsyncCall"), prefer}

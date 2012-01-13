@@ -7,3 +7,6 @@ strategies
     $[async {
         [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
       }]
+
+  pp-mobl-stat :
+    Async(t) -> Async (t)

@@ -17,7 +17,7 @@ strategies
             e := <Hd> e*
             ; e_init := mobl-e|[ null ]|
           end
-          
+
   desugar :
     mobl-elem|[ var x  = async(e*) ]| -> mobl-elem*|[
       var x = e_init

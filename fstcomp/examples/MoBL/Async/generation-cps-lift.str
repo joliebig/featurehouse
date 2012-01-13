@@ -1,7 +1,0 @@
-module generation-cps-lift
-
-strategies
-
-  cps-lift-exprs :
-    [Async(stat*)|stats] ->
-    [Async(<cps-lift-expressions> stat*)|<cps-lift-expressions> stats]

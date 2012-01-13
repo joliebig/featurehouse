@@ -1,0 +1,50 @@
+module editor/derive-migration
+imports
+	
+  include/MoBL 
+  analyze 
+  mobl 
+  lib/editor-common 
+  lookup 
+  declare 
+  pp 
+  rename 
+  type 
+  util
+	rules 
+
+  editor-derive-migration :
+      (selected, position, ast, path, project-path) -> ("migration_generated.mobl",
+      $[module init_migration_generated["\n"]
+        import mobl::migration["\n"]
+        Migration.defineMigration(1, function(m : Migration) {
+          [<collect(entity-to-migration)> ast2]
+        });
+])
+    with
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+            rules ( ProjectPath := project-path
+                    IsImported  : path )
+      ; setup-paths
+      ; ast2 := <analyze; store-result> ast 
+
+  entity-to-migration :
+    Entity(_, qid, _, prop*) ->
+    $[ m.createEntity("[<pp-mobl-qid> qid]");
+      [<map(prop-to-migration-many(|qid) <+ prop-to-migration(|qid))> prop*]]
+
+  prop-to-migration-many(|entity-qid) :
+    Property(_, x, GenericType(QId("mobl", "Collection"), [t@SimpleType(other-qid)]), anno*) ->
+    $[m.addManyToMany("[<pp-mobl-qid> entity-qid]", "[x]", "[<pp-mobl-qid> other-qid]", "[inv-x]");]
+    where [InverseAnno(inv-x)] := <filter(?InverseAnno(_))> anno*
+    where Property(_, _, GenericType(QId("mobl", "Collection"), _), _) := <lookup-property> (t, inv-x)
+    where <string-gt> (<concat-strings> [<pp-mobl-qid> entity-qid, "__", x], <concat-strings> [<pp-mobl-qid> other-qid, "__", inv-x]) 
+
+  prop-to-migration(|entity-qid) :
+    Property(_, x, SimpleType(qid), anno*) ->
+    $[ m.addProperty("[<pp-mobl-qid> entity-qid]", "[x]", "[<pp-mobl-qid> qid]");]
+
+  prop-to-migration(|entity-qid) :
+    Property(_, x, GenericType(QId("mobl", "Collection"), [t@SimpleType(other-qid)]), anno*) -> ""

@@ -4,7 +4,7 @@ imports
   include/MoBL 
   libstratego-lib 
   lib/editor-common 
-  generation-action 
+  generation/action 
   mobl
 	rules 
 
@@ -50,10 +50,10 @@ imports
     where <file-exists> filename
     with Configuration(setting*) := <parse-file <+ !Configuration([])> filename 
 
+  get-configuration-filename :
+    _ -> $[ [<ProjectPath; string-replace(|"\\", "/")>]/config.mobl]
+
   get-configuration :
     _ -> []
     where filename := <get-configuration-filename>
-    where not(<file-exists> filename) 
-
-  get-configuration-filename :
-    _ -> $[
+    where not(<file-exists> filename)

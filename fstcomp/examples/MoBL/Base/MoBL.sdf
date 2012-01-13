@@ -5,14 +5,13 @@ imports
   MoBL-UI
   MoBL-Data
   MoBL-Action
-  MoBL-Service
   MoBL-Type
   MoBL-Regex
   MoBL-External
   MoBL-Style
   MoBL-Config
   MoBL-Server
-  JS-Javascript
+  js/Javascript
 
 exports
 
@@ -27,7 +26,7 @@ exports
     "dynamic" "import" QId         -> Definition {cons("DynamicImport")}
     "import" QId                   -> Definition {cons("Import")}
     "load" Path                    -> Definition {cons("Load")}
-    "resource" Path                -> Definition {cons("Resource")}
+	"resource" Path                -> Definition {cons("Resource")}
     "mixin" QId                    -> Definition {cons("Mixin")}
     ID ":" Type                    -> FArg {cons("FArg")}
     ID ":" Type "=" Exp            -> FArg {cons("FArgOptional")}
@@ -67,7 +66,6 @@ exports
     "false" -> ID {reject}
     "if" -> ID {reject}
     "else" -> ID {reject}
-    "databind" -> HTMLID {reject}
     "cond" -> ID {reject}
     "when" -> ID {reject}
     "this" -> ID {reject}

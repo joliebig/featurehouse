@@ -391,7 +391,12 @@ imports
 
   pp-mobl-stat :
     Async(stat*) ->
-    $[ 
+    $[ async {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-stat :
+    Async(t) -> Async (t) 
 
   pp-mobl-elem :
     Html(tag, html-arg*, elem*, closeTag) ->

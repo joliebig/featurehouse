@@ -12,9 +12,9 @@ imports
   desugar 
   mobl 
   resolve 
-  generation-compile 
-  generation-server 
-  generation-css 
+  generation/compile 
+  generation/server 
+  generation/css 
   sync-analysis 
   util
 	rules 

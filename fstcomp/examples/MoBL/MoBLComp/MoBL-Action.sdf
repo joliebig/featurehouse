@@ -91,7 +91,7 @@ exports
     ID "in" LimitedSetExp                        -> SetExp {cons("SetIn")} 
     ID "not" "in" LimitedSetExp                  -> SetExp {cons("SetNotIn")} 
     SetExp "&&" SetExp                       -> SetExp {left, cons("SetAnd"), prefer} 
-    "async" "{" Statement* "}"                  -> Statement {cons("Async")} 
+    "async" "{" Statement* "}"   -> Statement {cons("Async")} 
     "async" "(" {Exp ","}* ")"   -> Exp {cons("AsyncCall"), prefer}
 	context-free priorities 
     Exp "." ID -> LimitedExp
@@ -102,15 +102,15 @@ exports
   > Exp BoolMethodId Exp -> Exp
   > "!" Exp -> Exp
   > Exp "?" Exp ":" Exp -> Exp
-  > LimitedExp Filter+ -> Exp 
-  {
+  > LimitedExp Filter+ -> Exp
+  > {
     ID "==" LimitedSetExp                        -> SetExp
     ID "!=" LimitedSetExp                        -> SetExp
     ID "<" LimitedSetExp                         -> SetExp
     ID "<=" LimitedSetExp                        -> SetExp
     ID ">" LimitedSetExp                         -> SetExp
     ID ">=" LimitedSetExp                        -> SetExp
-  }
+    }
   > SetExp "&&" SetExp                 -> SetExp 
 
   lexical syntax 

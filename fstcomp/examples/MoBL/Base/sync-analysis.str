@@ -2,7 +2,7 @@ module sync-analysis
 
 imports 
   include/MoBL
-  generation-cps-lift
+  generation/cps-lift
   type
   declare
 
