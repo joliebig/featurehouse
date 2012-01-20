@@ -1,7 +1,0 @@
-module resolve
-
-strategies
-
-  add-tl-namespace :
-    Service(manno*, x, selem*) -> Service(manno*, QId(<ModuleName>, x), selem*)
-    where <is-string> x
