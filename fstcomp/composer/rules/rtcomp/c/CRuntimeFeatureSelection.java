@@ -71,17 +71,28 @@ public class CRuntimeFeatureSelection {
 	
 	public void saveTo(String filebasename) throws IOException {
 		process();
-		FileWriter headerfile = new FileWriter(filebasename + ".h");
-		headerfile.write(headerContents);		
-		headerfile.close();
-		FileWriter cfile = new FileWriter(filebasename + ".c");
+		FileWriter headerfile = null;
 		try {
-		cfile.write(cFileContents);
+		headerfile = new FileWriter(filebasename + ".h");
+		headerfile.write(headerContents);
+		} finally {
+			if (headerfile != null) {
+				headerfile.close();
+			}
+		}
+		
+		FileWriter cfile = null;
+		try {
+			cfile = new FileWriter(filebasename + ".c");
+			cfile.write(cFileContents);
 		} catch (IOException e) {
 			e.printStackTrace();
 			throw e;
+		} finally {
+			if (cfile != null) {
+				cfile.close();
+			}
 		}
-		cfile.close();
 	}
 	 
 	public void processRestrictions() {

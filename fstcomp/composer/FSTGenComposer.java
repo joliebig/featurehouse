@@ -51,6 +51,15 @@ public class FSTGenComposer extends FSTGenProcessor {
 	public FSTGenComposer() {
 		super();
 	}
+
+	@SuppressWarnings("unchecked")
+	public FSTGenComposer(boolean rememberFSTNodes) {
+		super();
+		if (!rememberFSTNodes) {
+			setFstnodes((ArrayList<FSTNode>)AbstractFSTParser.fstnodes.clone());
+			AbstractFSTParser.fstnodes.clear();
+		}
+	}
 	
 	private FSTNode rewriteSubtree(FSTNode n) {
 		meta.discoverFuncIntroductions(n);	

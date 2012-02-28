@@ -97,9 +97,10 @@ public class JavaFiles
                                          " Version " + versionId + " */";
      char[] buf = new char[firstLine.length()];
 
+     Reader stream = null;
      try {
        File fp = new File(Options.getOutputDirectory(), fileName);
-       Reader stream = new FileReader(fp);
+       stream = new FileReader(fp);
        int read, total = 0;
 
        for (;;)
@@ -118,6 +119,14 @@ public class JavaFiles
       JavaCCErrors.semantic_error("Could not open file " + fileName + " for writing.");
       throw new Error();
     } catch(IOException e2) {
+    } finally {
+    	if (stream != null) {
+    		try {
+				stream.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
     }
 
     JavaCCErrors.warning(fileName + ": File is obsolete.  Please rename or delete this file so" +

@@ -80,8 +80,9 @@ public class FileLoader {
 		File equationFile = new File(equationFileName);
 
 		String equationFileContent = "";
+		BufferedReader fileReader = null;
 		try {
-			BufferedReader fileReader = new BufferedReader(new FileReader(
+			fileReader = new BufferedReader(new FileReader(
 					equationFile));
 			String line = fileReader.readLine();
 			while (line != null) {
@@ -95,6 +96,14 @@ public class FileLoader {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (fileReader != null) {
+				try {
+					fileReader.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		if (!equationFileContent.equals("")) {
 			String[] features = equationFileContent.split("\\s");

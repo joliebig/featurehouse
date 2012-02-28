@@ -71,9 +71,15 @@ public class JavaRuntimeFeatureSelection {
 	
 	public void saveTo(String filebasename) throws IOException {
 		process();
-		FileWriter javafile = new FileWriter(filebasename + "FeatureSwitches.java");
-		javafile.write(javaFileContents);		
-		javafile.close();
+		FileWriter javafile = null;
+		try{
+			javafile = new FileWriter(filebasename + "FeatureSwitches.java");
+			javafile.write(javaFileContents);	
+		}finally {
+			if (javafile != null) {
+				javafile.close();
+			}
+		}
 	}
 	 
 	public void processRestrictions() {

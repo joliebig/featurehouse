@@ -25,15 +25,23 @@ public class TextMergePrintVisitor extends ArtifactPrintVisitor {
 			
 			String content = ((FSTTerminal)nonterminal.getChildren().get(0)).getBody();
 			File textFile = new File(folderPath, nonterminal.getName());
+			BufferedWriter textFileWriter = null;
 			try {
 				textFile.createNewFile();
-				BufferedWriter textFileWriter = new BufferedWriter(new FileWriter(textFile));
+				textFileWriter = new BufferedWriter(new FileWriter(textFile));
 				textFileWriter.write(content + "\n");
 				textFileWriter.flush();
-				textFileWriter.close();
 			} catch (IOException e) {
 				throw new PrintVisitorException(e.getMessage());
-			} 
+			} finally {
+				if (textFileWriter != null) {
+					try {
+						textFileWriter.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+			}
 		} else {
 			assert(!(node instanceof FSTNonTerminal));
 		}
