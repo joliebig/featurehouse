@@ -6,6 +6,7 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -71,9 +72,22 @@ public class FileLoader {
 		parseEquationFile(equationFileName, equationBaseDirectoryName,
 				aheadEquation);
 	}
+	
+	public void loadFiles(String equationFileName,
+			String equationBaseDirectoryName, boolean aheadEquation, String[] features)
+			throws FileNotFoundException, ParseException {
+		parseEquationFile(equationFileName, equationBaseDirectoryName,
+				aheadEquation, features);
+	}
 
 	private void parseEquationFile(String equationFileName,
 			String equationBaseDirectoryName, boolean aheadEquation)
+			throws FileNotFoundException, ParseException {
+		parseEquationFile(equationFileName, equationBaseDirectoryName, aheadEquation, null);
+	}
+	
+	private void parseEquationFile(String equationFileName,
+			String equationBaseDirectoryName, boolean aheadEquation, String[] features)
 			throws FileNotFoundException, ParseException {
 		if (equationFileName == null || equationFileName.length() == 0)
 			throw new FileNotFoundException();
@@ -106,8 +120,9 @@ public class FileLoader {
 			}
 		}
 		if (!equationFileContent.equals("")) {
-			String[] features = equationFileContent.split("\\s");
-
+			if (features == null) {
+				features = equationFileContent.split("\\s");
+			}
 			System.out.println("Found the following features:");
 			for (String s : features)
 				System.out.println(s);
@@ -137,7 +152,7 @@ public class FileLoader {
 		}
 	}
 
-	private void parseDirectory(File directory, boolean recursive)
+	void parseDirectory(File directory, boolean recursive)
 			throws FileNotFoundException, ParseException {
 		if (directory.getName().equals(MODIFICATION_FOLDER_TAG)) {
 			// TODO _mod folder should only be allowed as direct subfolder of
