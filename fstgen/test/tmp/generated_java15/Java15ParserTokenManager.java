@@ -1722,7 +1722,7 @@ void MoreLexicalActions()
             image = new StringBuffer();
          image.append(input_stream.GetSuffix(jjimageLen));
          jjimageLen = 0;
-                            input_stream.backup(1);
+                   input_stream.backup(1);
          break;
       default : 
          break;

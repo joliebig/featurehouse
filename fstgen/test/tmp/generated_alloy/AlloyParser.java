@@ -11,7 +11,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INTEGER_LITERAL);
-                           {if (true) return productionEndTerminal("NatInteger","-","-","Replacement","SemanticConflict",first,token);}
+                           {if (true) return productionEndTerminal("NatInteger","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -23,12 +23,12 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(MINUS);
       n = NatInteger(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("Integer1","-","-","Replacement","SemanticConflict",first,token);}
+                                                  {if (true) return productionEndTerminal("Integer1","-","-","Replacement","Default",first,token);}
       break;
     case INTEGER_LITERAL:
       n = NatInteger(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("Integer2","-","-","Replacement","SemanticConflict",first,token);}
+                                              {if (true) return productionEndTerminal("Integer2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[0] = jj_gen;
@@ -143,7 +143,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                           replaceName(n);
     }
     jj_consume_token(RBRACKET);
-                                                                                                                  {if (true) return productionEndTerminal("ExactlyClause","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                  {if (true) return productionEndTerminal("ExactlyClause","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -161,7 +161,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     }
     n = NatInteger(true);
                                             replaceName(n);
-                                                              {if (true) return productionEndTerminal("ExactlyClauseListElement","-","-","Replacement","SemanticConflict",first,token);}
+                                                              {if (true) return productionEndTerminal("ExactlyClauseListElement","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -223,7 +223,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                             replaceName(n);
     }
     jj_consume_token(RBRACKET);
-                                                                                    {if (true) return productionEndTerminal("RefClause","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                    {if (true) return productionEndTerminal("RefClause","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -233,7 +233,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_consume_token(AS);
     n = Name(true);
                            replaceName(n);
-                                             {if (true) return productionEndTerminal("AsClause","-","-","Replacement","SemanticConflict",first,token);}
+                                             {if (true) return productionEndTerminal("AsClause","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -245,13 +245,13 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       n = FactDecl(true);
                           replaceName("FactDecl", n);
                                                         replaceName(n);
-                                                                          {if (true) return productionEndTerminal("Paragraph1","{FactDecl}","{FactDecl}","Replacement","SemanticConflict",first,token);}
+                                                                          {if (true) return productionEndTerminal("Paragraph1","{FactDecl}","{FactDecl}","Replacement","Default",first,token);}
       break;
     case ASSERT:
       n = AssertDecl(true);
                             replaceName("AssertDecl", n);
                                                             replaceName(n);
-                                                                              {if (true) return productionEndTerminal("Paragraph2","{AssertDecl}","{AssertDecl}","Replacement","SemanticConflict",first,token);}
+                                                                              {if (true) return productionEndTerminal("Paragraph2","{AssertDecl}","{AssertDecl}","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[11] = jj_gen;
@@ -259,7 +259,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         n = FunDecl(true);
                                       replaceName("FunDecl", n);
                                                                    replaceName(n);
-                                                                                     {if (true) return productionEndTerminal("Paragraph3","{FunDecl}","{FunDecl}","Replacement","SemanticConflict",first,token);}
+                                                                                     {if (true) return productionEndTerminal("Paragraph3","{FunDecl}","{FunDecl}","Replacement","Default",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case COLON:
@@ -272,7 +272,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
           n = CmdDecl(true);
                          replaceName("CmdDecl", n);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("Paragraph4","{CmdDecl}","{CmdDecl}","Replacement","SemanticConflict",first,token);}
+                                                                        {if (true) return productionEndTerminal("Paragraph4","{CmdDecl}","{CmdDecl}","Replacement","Default",first,token);}
           break;
         case ENUM:
           n = EnumDecl(inTerminal);
@@ -310,7 +310,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                  replaceName(n);
     n = Block(true);
                                                                                                  replaceName(n);
-                                                                                                                   {if (true) return productionEndTerminal("FactDecl","-","{MaybeName}","Replacement","SemanticConflict",first,token);}
+                                                                                                                   {if (true) return productionEndTerminal("FactDecl","-","{MaybeName}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -323,7 +323,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                    replaceName(n);
     n = Block(true);
                                                                                                    replaceName(n);
-                                                                                                                     {if (true) return productionEndTerminal("AssertDecl","-","{MaybeName}","Replacement","SemanticConflict",first,token);}
+                                                                                                                     {if (true) return productionEndTerminal("AssertDecl","-","{MaybeName}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -360,7 +360,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                                                                                                                                                                                        replaceName(n);
       n = Block(true);
                                                                                                                                                                                                                                                                                        replaceName(n);
-                                                                                                                                                                                                                                                                                                         {if (true) return productionEndTerminal("FunDecl1","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                                                                                                                         {if (true) return productionEndTerminal("FunDecl1","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else if (jj_2_10(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
@@ -391,7 +391,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                                                                                                                                                                                        replaceName(n);
       n = Block(true);
                                                                                                                                                                                                                                                                                        replaceName(n);
-                                                                                                                                                                                                                                                                                                         {if (true) return productionEndTerminal("FunDecl2","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                                                                                                                         {if (true) return productionEndTerminal("FunDecl2","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else if (jj_2_11(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
@@ -417,7 +417,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                                                                                                             replaceName(n);
       n = Block(true);
                                                                                                                                                                                                             replaceName(n);
-                                                                                                                                                                                                                              {if (true) return productionEndTerminal("FunDecl3","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                                              {if (true) return productionEndTerminal("FunDecl3","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else if (jj_2_12(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
@@ -445,7 +445,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(RPAREN);
       n = Block(true);
                                                                                                                                                                                                                                                      replaceName(n);
-                                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FunDecl4","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FunDecl4","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else if (jj_2_13(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
@@ -473,7 +473,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(RBRACKET);
       n = Block(true);
                                                                                                                                                                                                                                                      replaceName(n);
-                                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FunDecl5","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                                                                                       {if (true) return productionEndTerminal("FunDecl5","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else if (jj_2_14(7)) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case PRIVATE:
@@ -496,7 +496,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                                                                                           replaceName(n);
       n = Block(true);
                                                                                                                                                                           replaceName(n);
-                                                                                                                                                                                            {if (true) return productionEndTerminal("FunDecl6","-","{Name}({FunParams})","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                            {if (true) return productionEndTerminal("FunDecl6","-","{Name}({FunParams})","Replacement","Default",first,token);}
     } else {
       jj_consume_token(-1);
       throw new ParseException();
@@ -522,7 +522,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_la1[19] = jj_gen;
       ;
     }
-                                           {if (true) return productionEndTerminal("FunParams","-","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                           {if (true) return productionEndTerminal("FunParams","-","{TOSTRING}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -562,7 +562,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_la1[22] = jj_gen;
       ;
     }
-                                                                                                                                                                               {if (true) return productionEndTerminal("CmdDecl","-","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                               {if (true) return productionEndTerminal("CmdDecl","-","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -572,7 +572,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     n = Name(true);
                       replaceName(n);
     jj_consume_token(COLON);
-                                            {if (true) return productionEndTerminal("CmdDeclClause","-","-","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("CmdDeclClause","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -582,11 +582,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case RUN:
       jj_consume_token(RUN);
-                {if (true) return productionEndTerminal("RunOrCheck1","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("RunOrCheck1","-","-","Replacement","Default",first,token);}
       break;
     case CHECK:
       jj_consume_token(CHECK);
-                  {if (true) return productionEndTerminal("RunOrCheck2","-","-","Replacement","SemanticConflict",first,token);}
+                  {if (true) return productionEndTerminal("RunOrCheck2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[23] = jj_gen;
@@ -643,7 +643,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         n = TypeScope(true);
                                                                                                                                                         replaceName(n);
       }
-                                                                                                                                                                            {if (true) return productionEndTerminal("Scope1","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                            {if (true) return productionEndTerminal("Scope1","-","-","Replacement","Default",first,token);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case FOR:
@@ -664,7 +664,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
           n = TypeScope(true);
                                                                           replaceName(n);
         }
-                                                                                              {if (true) return productionEndTerminal("Scope2","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                              {if (true) return productionEndTerminal("Scope2","-","-","Replacement","Default",first,token);}
         break;
       default:
         jj_la1[27] = jj_gen;
@@ -690,7 +690,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                          replaceName(n);
     n = TypeScopeClause(true);
                                                                                    replaceName(n);
-                                                                                                     {if (true) return productionEndTerminal("TypeScope","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                     {if (true) return productionEndTerminal("TypeScope","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -699,7 +699,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
      first=getToken(1); productionStart(inTerminal);
     n = Name(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("TypeScopeClause1","-","-","Replacement","SemanticConflict",first,token);}
+                                        {if (true) return productionEndTerminal("TypeScopeClause1","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -862,7 +862,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     }
     n = Expr(true);
                                                                                                                                                                                     replaceName(n);
-                                                                                                                                                                                                      {if (true) return productionEndTerminal("Decl","{Name}","{Name}","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                                      {if (true) return productionEndTerminal("Decl","{Name}","{Name}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -903,23 +903,23 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ABSTRACT:
       jj_consume_token(ABSTRACT);
-                     {if (true) return productionEndTerminal("SigQual1","SigQual","SigQual","Replacement","SemanticConflict",first,token);}
+                     {if (true) return productionEndTerminal("SigQual1","SigQual","SigQual","Replacement","Default",first,token);}
       break;
     case LONE:
       jj_consume_token(LONE);
-                 {if (true) return productionEndTerminal("SigQual2","SigQual","SigQual","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("SigQual2","SigQual","SigQual","Replacement","Default",first,token);}
       break;
     case ONE:
       jj_consume_token(ONE);
-                {if (true) return productionEndTerminal("SigQual3","SigQual","SigQual","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("SigQual3","SigQual","SigQual","Replacement","Default",first,token);}
       break;
     case SOME1:
       jj_consume_token(SOME1);
-                 {if (true) return productionEndTerminal("SigQual4","SigQual","SigQual","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("SigQual4","SigQual","SigQual","Replacement","Default",first,token);}
       break;
     case PRIVATE:
       jj_consume_token(PRIVATE);
-                    {if (true) return productionEndTerminal("SigQual5","SigQual","SigQual","Replacement","SemanticConflict",first,token);}
+                    {if (true) return productionEndTerminal("SigQual5","SigQual","SigQual","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[40] = jj_gen;
@@ -937,7 +937,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(EXTENDS);
       n = Ref(true);
                                replaceName(n);
-                                                 {if (true) return productionEndTerminal("SigExt1","SigExt","SigExt","Replacement","SemanticConflict",first,token);}
+                                                 {if (true) return productionEndTerminal("SigExt1","SigExt","SigExt","Replacement","Default",first,token);}
       break;
     case IN:
       jj_consume_token(IN);
@@ -957,7 +957,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         n = Ref(true);
                                                              replaceName(n);
       }
-                                                                                 {if (true) return productionEndTerminal("SigExt2","SigExt","SigExt","Replacement","SemanticConflict",first,token);}
+                                                                                 {if (true) return productionEndTerminal("SigExt2","SigExt","SigExt","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[42] = jj_gen;
@@ -978,7 +978,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                            {if (true) return productionEndTerminal("Expr","{AUTO}","{AUTO}","Replacement","SemanticConflict",first,token);}
+                                                                                            {if (true) return productionEndTerminal("Expr","{AUTO}","{AUTO}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -989,7 +989,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                        replaceName(n);
     n = Expr(true);
                                                       replaceName(n);
-                                                                        {if (true) return productionEndTerminal("BinOpExpr","-","-","Replacement","SemanticConflict",first,token);}
+                                                                        {if (true) return productionEndTerminal("BinOpExpr","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1004,7 +1004,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                              {if (true) return productionEndTerminal("Expr1","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                              {if (true) return productionEndTerminal("Expr1","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1015,7 +1015,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                          replaceName(n);
     n = Expr(true);
                                                         replaceName(n);
-                                                                          {if (true) return productionEndTerminal("ArrowOpExpr","-","-","Replacement","SemanticConflict",first,token);}
+                                                                          {if (true) return productionEndTerminal("ArrowOpExpr","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1030,7 +1030,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                                {if (true) return productionEndTerminal("Expr2","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                {if (true) return productionEndTerminal("Expr2","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1051,7 +1051,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                                  replaceName(n);
     n = Expr(true);
                                                                                                 replaceName(n);
-                                                                                                                  {if (true) return productionEndTerminal("CompareOpExpr","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                  {if (true) return productionEndTerminal("CompareOpExpr","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1066,7 +1066,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                                    {if (true) return productionEndTerminal("Expr3","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                    {if (true) return productionEndTerminal("Expr3","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1088,7 +1088,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_consume_token(ELSE);
     n = Expr(true);
                                                                                                       replaceName(n);
-                                                                                                                        {if (true) return productionEndTerminal("ElseExpr","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                        {if (true) return productionEndTerminal("ElseExpr","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1103,7 +1103,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                           {if (true) return productionEndTerminal("Expr4","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                           {if (true) return productionEndTerminal("Expr4","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1128,7 +1128,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                                                               replaceName(n);
     }
     jj_consume_token(RBRACKET);
-                                                                                      {if (true) return productionEndTerminal("ExprList","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                      {if (true) return productionEndTerminal("ExprList","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1157,7 +1157,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       } else {
         ;
       }
-                                                                                                                                                           {if (true) return productionEndTerminal("Expr51","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                           {if (true) return productionEndTerminal("Expr51","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[48] = jj_gen;
@@ -1183,7 +1183,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
         } else {
           ;
         }
-                                                                                                                                                                                            {if (true) return productionEndTerminal("Expr52","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                                                                                            {if (true) return productionEndTerminal("Expr52","-","-","Replacement","Default",first,token);}
       } else {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case NO:
@@ -1202,52 +1202,52 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
                       replaceName(n);
           n = Expr(true);
                                                      replaceName(n);
-                                                                       {if (true) return productionEndTerminal("Expr53","-","-","Replacement","SemanticConflict",first,token);}
+                                                                       {if (true) return productionEndTerminal("Expr53","-","-","Replacement","Default",first,token);}
           break;
         case INTEGER_LITERAL:
           n = NatInteger(true);
                             replaceName(n);
-                                              {if (true) return productionEndTerminal("Expr54","-","-","Replacement","SemanticConflict",first,token);}
+                                              {if (true) return productionEndTerminal("Expr54","-","-","Replacement","Default",first,token);}
           break;
         case MINUS:
           jj_consume_token(MINUS);
           n = NatInteger(true);
                                 replaceName(n);
-                                                  {if (true) return productionEndTerminal("Expr55","-","-","Replacement","SemanticConflict",first,token);}
+                                                  {if (true) return productionEndTerminal("Expr55","-","-","Replacement","Default",first,token);}
           break;
         case NONE1:
           jj_consume_token(NONE1);
-                 {if (true) return productionEndTerminal("Expr56","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("Expr56","-","-","Replacement","Default",first,token);}
           break;
         case IDEN:
           jj_consume_token(IDEN);
-                 {if (true) return productionEndTerminal("Expr57","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("Expr57","-","-","Replacement","Default",first,token);}
           break;
         case UNIV:
           jj_consume_token(UNIV);
-                 {if (true) return productionEndTerminal("Expr58","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("Expr58","-","-","Replacement","Default",first,token);}
           break;
         case INTT:
           jj_consume_token(INTT);
-                {if (true) return productionEndTerminal("Expr59","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("Expr59","-","-","Replacement","Default",first,token);}
           break;
         case SEQINT:
           jj_consume_token(SEQINT);
-                    {if (true) return productionEndTerminal("Expr510","-","-","Replacement","SemanticConflict",first,token);}
+                    {if (true) return productionEndTerminal("Expr510","-","-","Replacement","Default",first,token);}
           break;
         case LPAREN:
           jj_consume_token(LPAREN);
           n = Expr(true);
                           replaceName(n);
           jj_consume_token(RPAREN);
-                                                {if (true) return productionEndTerminal("Expr511","-","-","Replacement","SemanticConflict",first,token);}
+                                                {if (true) return productionEndTerminal("Expr511","-","-","Replacement","Default",first,token);}
           break;
         default:
           jj_la1[49] = jj_gen;
           if (jj_2_26(3)) {
             n = Block(true);
                                     replaceName(n);
-                                                      {if (true) return productionEndTerminal("Expr512","-","-","Replacement","SemanticConflict",first,token);}
+                                                      {if (true) return productionEndTerminal("Expr512","-","-","Replacement","Default",first,token);}
           } else {
             switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
             case AS:
@@ -1263,7 +1263,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
               }
               n = NonEmptyName(true);
                                       replaceName(n);
-                                                        {if (true) return productionEndTerminal("Expr513","-","-","Replacement","SemanticConflict",first,token);}
+                                                        {if (true) return productionEndTerminal("Expr513","-","-","Replacement","Default",first,token);}
               break;
             case LBRACE:
               jj_consume_token(LBRACE);
@@ -1286,7 +1286,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
               n = BlockOrBar(true);
                                                                                                      replaceName(n);
               jj_consume_token(RBRACE);
-                                                                                                                           {if (true) return productionEndTerminal("Expr514","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                           {if (true) return productionEndTerminal("Expr514","-","-","Replacement","Default",first,token);}
               break;
             default:
               jj_la1[50] = jj_gen;
@@ -1306,11 +1306,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 79:
       jj_consume_token(79);
-              {if (true) return productionEndTerminal("NotClause1","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("NotClause1","-","-","Replacement","Default",first,token);}
       break;
     case NOT:
       jj_consume_token(NOT);
-                {if (true) return productionEndTerminal("NotClause2","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("NotClause2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[51] = jj_gen;
@@ -1326,11 +1326,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 80:
       jj_consume_token(80);
-               {if (true) return productionEndTerminal("ImpliesClause1","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("ImpliesClause1","-","-","Replacement","Default",first,token);}
       break;
     case IMPLIES:
       jj_consume_token(IMPLIES);
-                    {if (true) return productionEndTerminal("ImpliesClause2","-","-","Replacement","SemanticConflict",first,token);}
+                    {if (true) return productionEndTerminal("ImpliesClause2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[52] = jj_gen;
@@ -1348,7 +1348,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     jj_consume_token(81);
     n = Expr(true);
                                                          replaceName(n);
-                                                                           {if (true) return productionEndTerminal("LetDecl","-","-","Replacement","SemanticConflict",first,token);}
+                                                                           {if (true) return productionEndTerminal("LetDecl","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1358,27 +1358,27 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case ALL:
       jj_consume_token(ALL);
-                {if (true) return productionEndTerminal("Quant1","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("Quant1","-","-","Replacement","Default",first,token);}
       break;
     case NO:
       jj_consume_token(NO);
-               {if (true) return productionEndTerminal("Quant2","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("Quant2","-","-","Replacement","Default",first,token);}
       break;
     case SOME1:
       jj_consume_token(SOME1);
-                 {if (true) return productionEndTerminal("Quant3","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("Quant3","-","-","Replacement","Default",first,token);}
       break;
     case LONE:
       jj_consume_token(LONE);
-                 {if (true) return productionEndTerminal("Quant4","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("Quant4","-","-","Replacement","Default",first,token);}
       break;
     case ONE:
       jj_consume_token(ONE);
-                {if (true) return productionEndTerminal("Quant5","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("Quant5","-","-","Replacement","Default",first,token);}
       break;
     case SUM:
       jj_consume_token(SUM);
-                {if (true) return productionEndTerminal("Quant6","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("Quant6","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[53] = jj_gen;
@@ -1394,75 +1394,75 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 82:
       jj_consume_token(82);
-               {if (true) return productionEndTerminal("BinOp1","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp1","-","-","Replacement","Default",first,token);}
       break;
     case OR:
       jj_consume_token(OR);
-               {if (true) return productionEndTerminal("BinOp2","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp2","-","-","Replacement","Default",first,token);}
       break;
     case 83:
       jj_consume_token(83);
-               {if (true) return productionEndTerminal("BinOp3","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp3","-","-","Replacement","Default",first,token);}
       break;
     case AND1:
       jj_consume_token(AND1);
-                {if (true) return productionEndTerminal("BinOp4","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("BinOp4","-","-","Replacement","Default",first,token);}
       break;
     case AND:
       jj_consume_token(AND);
-              {if (true) return productionEndTerminal("BinOp5","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("BinOp5","-","-","Replacement","Default",first,token);}
       break;
     case 84:
       jj_consume_token(84);
-                {if (true) return productionEndTerminal("BinOp6","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("BinOp6","-","-","Replacement","Default",first,token);}
       break;
     case IFF:
       jj_consume_token(IFF);
-                {if (true) return productionEndTerminal("BinOp7","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("BinOp7","-","-","Replacement","Default",first,token);}
       break;
     case 80:
       jj_consume_token(80);
-               {if (true) return productionEndTerminal("BinOp8","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp8","-","-","Replacement","Default",first,token);}
       break;
     case IMPLIES:
       jj_consume_token(IMPLIES);
-                    {if (true) return productionEndTerminal("BinOp9","-","-","Replacement","SemanticConflict",first,token);}
+                    {if (true) return productionEndTerminal("BinOp9","-","-","Replacement","Default",first,token);}
       break;
     case PLUS:
       jj_consume_token(PLUS);
-              {if (true) return productionEndTerminal("BinOp10","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("BinOp10","-","-","Replacement","Default",first,token);}
       break;
     case MINUS:
       jj_consume_token(MINUS);
-              {if (true) return productionEndTerminal("BinOp11","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("BinOp11","-","-","Replacement","Default",first,token);}
       break;
     case 85:
       jj_consume_token(85);
-               {if (true) return productionEndTerminal("BinOp12","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp12","-","-","Replacement","Default",first,token);}
       break;
     case 86:
       jj_consume_token(86);
-               {if (true) return productionEndTerminal("BinOp13","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp13","-","-","Replacement","Default",first,token);}
       break;
     case 87:
       jj_consume_token(87);
-               {if (true) return productionEndTerminal("BinOp14","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp14","-","-","Replacement","Default",first,token);}
       break;
     case DOT:
       jj_consume_token(DOT);
-              {if (true) return productionEndTerminal("BinOp15","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("BinOp15","-","-","Replacement","Default",first,token);}
       break;
     case 88:
       jj_consume_token(88);
-               {if (true) return productionEndTerminal("BinOp16","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp16","-","-","Replacement","Default",first,token);}
       break;
     case 89:
       jj_consume_token(89);
-               {if (true) return productionEndTerminal("BinOp17","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("BinOp17","-","-","Replacement","Default",first,token);}
       break;
     case 90:
       jj_consume_token(90);
-                {if (true) return productionEndTerminal("BinOp18","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("BinOp18","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[54] = jj_gen;
@@ -1488,7 +1488,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     } else {
       ;
     }
-                                                                                                                            {if (true) return productionEndTerminal("ArrowOp","-","-","Replacement","SemanticConflict",first,token);}
+                                                                                                                            {if (true) return productionEndTerminal("ArrowOp","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1498,19 +1498,19 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case SOME1:
       jj_consume_token(SOME1);
-                 {if (true) return productionEndTerminal("ArrowOpClause1","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("ArrowOpClause1","-","-","Replacement","Default",first,token);}
       break;
     case ONE:
       jj_consume_token(ONE);
-                {if (true) return productionEndTerminal("ArrowOpClause2","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("ArrowOpClause2","-","-","Replacement","Default",first,token);}
       break;
     case LONE:
       jj_consume_token(LONE);
-                 {if (true) return productionEndTerminal("ArrowOpClause3","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("ArrowOpClause3","-","-","Replacement","Default",first,token);}
       break;
     case SET:
       jj_consume_token(SET);
-                {if (true) return productionEndTerminal("ArrowOpClause4","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("ArrowOpClause4","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[55] = jj_gen;
@@ -1526,27 +1526,27 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 81:
       jj_consume_token(81);
-              {if (true) return productionEndTerminal("CompareOp1","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("CompareOp1","-","-","Replacement","Default",first,token);}
       break;
     case IN:
       jj_consume_token(IN);
-               {if (true) return productionEndTerminal("CompareOp2","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("CompareOp2","-","-","Replacement","Default",first,token);}
       break;
     case 91:
       jj_consume_token(91);
-              {if (true) return productionEndTerminal("CompareOp3","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("CompareOp3","-","-","Replacement","Default",first,token);}
       break;
     case 92:
       jj_consume_token(92);
-              {if (true) return productionEndTerminal("CompareOp4","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("CompareOp4","-","-","Replacement","Default",first,token);}
       break;
     case 93:
       jj_consume_token(93);
-               {if (true) return productionEndTerminal("CompareOp5","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("CompareOp5","-","-","Replacement","Default",first,token);}
       break;
     case 94:
       jj_consume_token(94);
-               {if (true) return productionEndTerminal("CompareOp6","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("CompareOp6","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[56] = jj_gen;
@@ -1562,51 +1562,51 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case 79:
       jj_consume_token(79);
-              {if (true) return productionEndTerminal("UnOp1","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("UnOp1","-","-","Replacement","Default",first,token);}
       break;
     case NOT:
       jj_consume_token(NOT);
-                {if (true) return productionEndTerminal("UnOp2","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("UnOp2","-","-","Replacement","Default",first,token);}
       break;
     case NO:
       jj_consume_token(NO);
-               {if (true) return productionEndTerminal("UnOp3","-","-","Replacement","SemanticConflict",first,token);}
+               {if (true) return productionEndTerminal("UnOp3","-","-","Replacement","Default",first,token);}
       break;
     case SOME1:
       jj_consume_token(SOME1);
-                 {if (true) return productionEndTerminal("UnOp4","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("UnOp4","-","-","Replacement","Default",first,token);}
       break;
     case LONE:
       jj_consume_token(LONE);
-                 {if (true) return productionEndTerminal("UnOp5","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("UnOp5","-","-","Replacement","Default",first,token);}
       break;
     case ONE:
       jj_consume_token(ONE);
-                {if (true) return productionEndTerminal("UnOp6","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("UnOp6","-","-","Replacement","Default",first,token);}
       break;
     case SET:
       jj_consume_token(SET);
-                {if (true) return productionEndTerminal("UnOp7","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("UnOp7","-","-","Replacement","Default",first,token);}
       break;
     case seq:
       jj_consume_token(seq);
-                {if (true) return productionEndTerminal("UnOp8","-","-","Replacement","SemanticConflict",first,token);}
+                {if (true) return productionEndTerminal("UnOp8","-","-","Replacement","Default",first,token);}
       break;
     case 95:
       jj_consume_token(95);
-              {if (true) return productionEndTerminal("UnOp9","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("UnOp9","-","-","Replacement","Default",first,token);}
       break;
     case 96:
       jj_consume_token(96);
-              {if (true) return productionEndTerminal("UnOp10","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("UnOp10","-","-","Replacement","Default",first,token);}
       break;
     case STAR:
       jj_consume_token(STAR);
-              {if (true) return productionEndTerminal("UnOp11","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("UnOp11","-","-","Replacement","Default",first,token);}
       break;
     case 97:
       jj_consume_token(97);
-              {if (true) return productionEndTerminal("UnOp12","-","-","Replacement","SemanticConflict",first,token);}
+              {if (true) return productionEndTerminal("UnOp12","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[57] = jj_gen;
@@ -1671,13 +1671,13 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     case LBRACE:
       n = Block(true);
                        replaceName(n);
-                                         {if (true) return productionEndTerminal("BlockOrBar1","-","-","Replacement","SemanticConflict",first,token);}
+                                         {if (true) return productionEndTerminal("BlockOrBar1","-","-","Replacement","Default",first,token);}
       break;
     case 98:
       jj_consume_token(98);
       n = Expr(true);
                           replaceName(n);
-                                            {if (true) return productionEndTerminal("BlockOrBar2","-","-","Replacement","SemanticConflict",first,token);}
+                                            {if (true) return productionEndTerminal("BlockOrBar2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[59] = jj_gen;
@@ -1702,7 +1702,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(SLASH);
       jj_consume_token(IDENTIFIER);
     }
-                                                                               {if (true) return productionEndTerminal("Name","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                                                               {if (true) return productionEndTerminal("Name","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1712,15 +1712,15 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("NameClause1","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("NameClause1","-","-","Replacement","Default",first,token);}
       break;
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("NameClause2","-","-","Replacement","SemanticConflict",first,token);}
+                      {if (true) return productionEndTerminal("NameClause2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[60] = jj_gen;
-          {if (true) return productionEndTerminal("NameClause3","-","-","Replacement","SemanticConflict",first,token);}
+          {if (true) return productionEndTerminal("NameClause3","-","-","Replacement","Default",first,token);}
     }
     throw new Error("Missing return statement in function");
   }
@@ -1740,7 +1740,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_consume_token(SLASH);
       jj_consume_token(IDENTIFIER);
     }
-                                                                                       {if (true) return productionEndTerminal("NonEmptyName","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                                                                       {if (true) return productionEndTerminal("NonEmptyName","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1750,11 +1750,11 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case THIS:
       jj_consume_token(THIS);
-                 {if (true) return productionEndTerminal("NonEmptyNameClause1","-","-","Replacement","SemanticConflict",first,token);}
+                 {if (true) return productionEndTerminal("NonEmptyNameClause1","-","-","Replacement","Default",first,token);}
       break;
     case IDENTIFIER:
       jj_consume_token(IDENTIFIER);
-                      {if (true) return productionEndTerminal("NonEmptyNameClause2","-","-","Replacement","SemanticConflict",first,token);}
+                      {if (true) return productionEndTerminal("NonEmptyNameClause2","-","-","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[61] = jj_gen;
@@ -1777,7 +1777,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
       jj_la1[62] = jj_gen;
       ;
     }
-                                                  {if (true) return productionEndTerminal("MaybeName","{TOSTRING}","{TOSTRING}","Replacement","SemanticConflict",first,token);}
+                                                  {if (true) return productionEndTerminal("MaybeName","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -1786,7 +1786,7 @@ public class AlloyParser extends AbstractFSTParser implements AlloyParserConstan
      first=getToken(1); productionStart(inTerminal);
     n = Name(true);
                       replaceName(n);
-                                        {if (true) return productionEndTerminal("Ref1","-","-","Replacement","SemanticConflict",first,token);}
+                                        {if (true) return productionEndTerminal("Ref1","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 

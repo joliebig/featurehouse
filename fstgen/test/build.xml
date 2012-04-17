@@ -139,7 +139,17 @@
 			<param name="testFile" value="C.jj" />
 		</antcall>
 	</target>
-
+	
+	<target name="testJCop">
+		<antcall target="testGrammar">
+			<param name="language" value="jcop" />
+			<param name="parserClass" value="JCopParser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.jcop" />
+		</antcall>
+	</target>
+	
 	<target name="testAlloy">
 		<antcall target="testGrammar">
 			<param name="language" value="alloy" />
@@ -149,6 +159,8 @@
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
+	
+
 	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
