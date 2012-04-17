@@ -3,6 +3,7 @@ options {
   JAVA_UNICODE_ESCAPE = true;
   ERROR_REPORTING = true;
   STATIC = false;
+  DEBUG_PARSER = true;
 }
 
 
@@ -215,8 +216,6 @@ TOKEN :
 {
   < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
 |
-  < LIDENTIFIER: <LETTER> (<LETTER>|<DIGIT>|<DOT>)* > 
-|
   < #LETTER:
       [
        "\u0024",
@@ -255,8 +254,6 @@ TOKEN :
       ]
   >
 }
-
-
 
 /* OPERATORS */
 
@@ -386,21 +383,22 @@ TypeDeclaration:
 	@FSTTerminal(name="{AUTO}")	
 	";"<NONE> :: EmptyTypeDecl
 |
-	@FSTNonTerminal(name="{Id}")
+	@FSTNonTerminal(name="{AUTO}")
   	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
   	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
 |
-	@FSTNonTerminal(name="{Id}")
+	@FSTNonTerminal(name="{AUTO}")
+	LOOK_AHEAD("Modifiers() \"contextclass\"")
+	Modifiers ContextClassDeclaration :: ContextClassDeclaration
+|
+	@FSTNonTerminal(name="{AUTO}")
 	LOOK_AHEAD(2)
   	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
 |
-	@FSTNonTerminal(name="{Id}")
+	@FSTNonTerminal(name="{AUTO}")
 	LOOK_AHEAD(2)
 	Modifiers LayerDeclaration :: LayerDeclaration
-|
-	@FSTNonTerminal(name="{Id}")
-	LOOK_AHEAD(2)
-	Modifiers ContextClassDeclaration :: ContextClassDeclaration
+
 |
 	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD(2)
@@ -426,7 +424,7 @@ LayerDeclaration:
 
 @FSTInline
 ContextClassDeclaration:
-		"contextclass" id ContextClassBody;
+		"contextclass" Id ContextClassBody;
 
 @FSTTerminal(compose="ImplementsListMerging")
 ImplementsList:
@@ -512,7 +510,7 @@ LayerBody:
 LayerBodyDeclaration:
 	@FSTTerminal(name="{AUTO}")
 	LOOK_AHEAD(2)
-	Intializer :: InitializerDecl
+	Initializer :: InitializerDecl
 |
 	@FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD("Modifiers() \"layer\"")
@@ -526,7 +524,7 @@ LayerBodyDeclaration:
   	";" <NONE> :: EmptyDecl
 ;
 
-FSTInline
+@FSTInline
 ContextClassBody:
      "{" @+ @! ( ContextClassBodyDeclaration @! @! )* @- @! "}"
 ;
@@ -534,14 +532,14 @@ ContextClassBody:
 ContextClassBodyDeclaration:
 	@FSTTerminal(name="{AUTO}")
 	LOOK_AHEAD(2)
-	Intializer :: InitializerDecl
+	Initializer :: InitializerDecl
 |
-        @FSTNonTerminal(name="{Id}")
+    @FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD("Modifiers() \"context\"")
-	Modifiers ContextDeclaration :: InnerContextDecl
+	Modifiers ContextClassDeclaration :: InnerContextDecl
 |
 	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
-    	LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
+    LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers CFieldDeclaration :: FieldDecl
 |
 	@FSTTerminal(name="{AUTO}")
@@ -607,15 +605,15 @@ VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
 PMethodDeclaration:
   [ TypeParameters ]
   ResultType
-  PMethodDeclarator [ "throws NameList ]
-  pMethodDeclarationBody
+  PMethodDeclarator [ "throws" NameList ]
+  PMethodDeclarationBody
 ;
 
 PMethodDeclarationBody: Block | ";"<NONE>;
 
-@FSTExportName("{<LIDENTIFIER>}({FormalParameters})")
+@FSTExportName("{<Name>}({FormalParameters})")
 PMethodDeclarator:
-	<INDENTIFIER> FormalParameters ( "[" "]"<NONE> )*
+	Name FormalParameters ( "[" "]"<NONE> )*
 ;
 
 @FSTExportName("{MethodDeclarator}")
