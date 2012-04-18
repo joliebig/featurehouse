@@ -159,6 +159,7 @@
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
+
 	<target name="testStratego">
 		<antcall target="testGrammar">
 			<param name="language" value="stratego" />
@@ -178,8 +179,6 @@
 			<param name="testFile" value="Test.sdf" />
 		</antcall>
 	</target>
-<!-- SDF - Ende -->
-
 
 	
 	<target name="testGrammar" description="--> description">
