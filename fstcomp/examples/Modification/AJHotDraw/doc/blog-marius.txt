@@ -1,9 +1,0 @@
-Note: 
-When running the examples, the target directory 
-(instead of the jar file) should be
-indicated as a path element , in order
-for the app. to "find" the images in the <i>Images</i> menu.
-See also the comment in the build file and, if needed, make the 
-change accordingly.
-
-The same problem occurs in the original version (jhotdraw60b1).
