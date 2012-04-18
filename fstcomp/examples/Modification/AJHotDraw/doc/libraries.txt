@@ -1,7 +1,0 @@
-Libraries - AJHotDraw 
-
-batik-awt-util.jar
-batik-dom.jar
-batik-svggen.jar
-batik-util.jar
-jdo.jar
