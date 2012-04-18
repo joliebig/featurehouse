@@ -1,6 +1,0 @@
- class  Y {
-	
-	void bar() {}
-
-
-}
