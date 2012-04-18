@@ -1,0 +1,26 @@
+package edu.ucdavis.cs.mobile.cop.benchmark;
+
+import edu.ucdavis.cs.mobile.cop.benchmark.Main;
+
+public layer CountLayer {
+	
+	public int edu.ucdavis.cs.mobile.cop.benchmark.Main.countCOP() {
+		int j = 1; // Count from 1
+		for (int i = 0; i < 10; i++) { j++; }
+		return j;
+	}
+
+	public String edu.ucdavis.cs.mobile.cop.benchmark.Main.doSomethingProceed() {
+		return "*" + proceed() + "*";
+	}
+ 
+}
+
+public staticactive contextclass CountContext {
+	Layer countLayer = new CountLayer();
+	
+	when (GlobalState.isActive()) :
+		with (countLayer);
+	
+}
+

@@ -18,6 +18,8 @@ public class JavaRuntimeFeatureSelection {
 	private File cnfFile;
 	private String javaFileContents;
 	
+	public static boolean addJPF_BDD_Annotation = false;
+	
 	public JavaRuntimeFeatureSelection(CompositionMetadataStore meta, File cnfFile) {
 		this.meta = meta;
 		this.cnfFile = cnfFile;
@@ -40,7 +42,8 @@ public class JavaRuntimeFeatureSelection {
 			if (!processedFeatures.contains(feature)) {
 				processedFeatures.add(feature);
 				//javaFileContents += "@FilterField\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
-				javaFileContents += "@gov.nasa.jpf.bdd.TrackWithBDDAnnotation\n";
+				if (addJPF_BDD_Annotation)
+					javaFileContents += "@gov.nasa.jpf.bdd.TrackWithBDD\n";
 				javaFileContents += "public static boolean __SELECTED_FEATURE_" + feature + ";\n";
 				//javaFileContents += "@Symbolic(\"true\")\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
 			}
@@ -68,9 +71,15 @@ public class JavaRuntimeFeatureSelection {
 	
 	public void saveTo(String filebasename) throws IOException {
 		process();
-		FileWriter javafile = new FileWriter(filebasename + "FeatureSwitches.java");
-		javafile.write(javaFileContents);		
-		javafile.close();
+		FileWriter javafile = null;
+		try{
+			javafile = new FileWriter(filebasename + "FeatureSwitches.java");
+			javafile.write(javaFileContents);	
+		}finally {
+			if (javafile != null) {
+				javafile.close();
+			}
+		}
 	}
 	 
 	public void processRestrictions() {

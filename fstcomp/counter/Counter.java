@@ -94,16 +94,25 @@ public class Counter {
 	}
 	
 	public void writeFile(File file) {
+		BufferedWriter textFileWriter = null;
 		try {
 			//System.err.println(file.getAbsolutePath());
 			file.createNewFile();
-			BufferedWriter textFileWriter = new BufferedWriter(new FileWriter(file));
+			textFileWriter = new BufferedWriter(new FileWriter(file));
 			for(Entry entry : data)
 				textFileWriter.write(entry.toString() + "\n");
 			textFileWriter.flush();
 			textFileWriter.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (textFileWriter != null) {
+				try {
+					textFileWriter.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 	}

@@ -91,6 +91,9 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	public String getResult() {
 		if (tokensInCurrentLine.size() > 0)
 			closeLine();
+		if (outputStream != null) {
+			outputStream.close();
+		}
 		return buffer.toString();
 	}
 

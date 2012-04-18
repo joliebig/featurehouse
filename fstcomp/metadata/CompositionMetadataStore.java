@@ -193,9 +193,15 @@ public final class CompositionMetadataStore {
 	}
 	
 	public void saveToFile(String filename) throws IOException {
-		FileWriter fw = new FileWriter(filename);
-		fw.write(this.toString());
-		fw.close();
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(filename);
+			fw.write(this.toString());
+		} finally {
+			if (fw != null) {
+				fw.close();
+			}
+		}
 	}
 	
 	private CompositionMetadataStore() {}	
@@ -216,5 +222,8 @@ public final class CompositionMetadataStore {
 
 	public List<String> getFeatures() {
 		return new ArrayList<String>(features);
+	}
+	public void clearFeatures() {
+		features.clear();
 	}
 }

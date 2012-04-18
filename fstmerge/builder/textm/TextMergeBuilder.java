@@ -28,6 +28,12 @@ public class TextMergeBuilder extends ArtifactBuilder {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				bufRead.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		String docName = st.nextToken();
 		FSTNonTerminal rootDocument = new FSTNonTerminal(getSuffix() + ".merge-File", docName + ".merge");

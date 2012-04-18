@@ -28,19 +28,35 @@ public class BinaryPrintVisitor extends ArtifactPrintVisitor {
 			String originalPath = ((FSTTerminal)nonterminal.getChildren().get(0)).getBody();
 			File dst = new File(folderPath, nonterminal.getName());
 			File src = new File(originalPath);
+			InputStream in = null;
+			OutputStream out = null;
 			try {
 				dst.createNewFile();
-				InputStream in = new FileInputStream(src);
-				OutputStream out = new FileOutputStream(dst);
+				in = new FileInputStream(src);
+				out = new FileOutputStream(dst);
 				byte[] buf = new byte[1024];
 				int len;
 				while ((len = in.read(buf)) > 0) {
 					out.write(buf, 0, len);
 				}
-				in.close();
-				out.close();
 			} catch (IOException e) {
 				throw new PrintVisitorException(e.getMessage());
+			} finally {
+				try {
+					if (in != null) {
+						in.close();
+					} 
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (out != null) {
+						try {
+							out.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
 			}
 		} else {
 			assert(!(node instanceof FSTNonTerminal));

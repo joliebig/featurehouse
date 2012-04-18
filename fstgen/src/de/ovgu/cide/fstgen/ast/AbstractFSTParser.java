@@ -193,7 +193,7 @@ public class AbstractFSTParser {
 			cc().children.addAll(c.children);
 			if (first != null)
 				cc().children.add(new FSTTerminal(type, name, body, prefix,
-						compositionMechanism, mergingMechanism));
+						compositionMechanism, mergingMechanism, first.beginLine, last.endLine));
 		}
 		return new FSTInfo(type, exportName, compositionMechanism);
 	}
