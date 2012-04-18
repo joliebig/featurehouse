@@ -1,0 +1,11 @@
+module rename
+
+strategies
+
+  rename :
+    VarDecl(name, t, e) -> VarDecl(<rename-ref-var> (name, t), t, <rename-all; try(?AsyncCall(_); !<id>{"OK"})> e)
+    where "control" := <RenameScope>
+
+  rename :
+    VarDeclInferred(name, e) -> VarDeclInferred(<rename-ref-var> (name, <type-of <+ !SimpleType(QId("mobl", "Dynamic"))> e), <rename-all; try(?AsyncCall(_); !<id>{"OK"})> e)
+    where "control" := <RenameScope>

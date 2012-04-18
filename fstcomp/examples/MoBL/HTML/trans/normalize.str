@@ -1,0 +1,9 @@
+module normalize
+
+rules
+
+  normalize :
+    HtmlShort(tag, attr*) -> Html(tag, attr*, [], tag)
+    
+  normalize :
+    NamedHtmlShort(qid, tag, attr*) -> NamedHtml(qid, tag, attr*, [], tag)

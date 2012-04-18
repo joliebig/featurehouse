@@ -1,0 +1,9 @@
+module modifyAst
+
+rules
+
+  modifyAst:
+    Mod(a, b) -> Mod(a, b){t}
+    where
+      <typeof> a => t;
+      <typeof> b => t

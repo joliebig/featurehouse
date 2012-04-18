@@ -1,8 +1,6 @@
 options {
 	STATIC = false;
-	FORCE_LA_CHECK = false;
-	DEBUG_PARSER = true;
-	DEBUG_LOOKAHEAD = false;
+	DEBUG_PARSER = false;
 }
 
 PARSER_BEGIN(StrategoParser)
@@ -372,26 +370,40 @@ Id :
 /*****************************************************************************
  * MAIN PRODUCTION                                                           *
  *****************************************************************************/
+@FSTNonTerminal(name="{ModuleDeclaration}")
 Module : 
-	ModuleDeclaration
+	ModuleDeclaration @!
+	[ImportDeclaration]
 	(Declaration)*
 	<EOF> ;
 
+@FSTTerminal(name="{Id}")
 ModName : 
 	Id (LOOK_AHEAD(2) "/" Id)* ;
 
 ModuleDeclaration :
+	@FSTTerminal(name="{ModName}")
 	"module" ModName |
+	@FSTTerminal(name="specification")
 	"specification"<NONE> ;
 
+@FSTNonTerminal(name="imports")
+ImportDeclaration :
+	"imports" @+! (ModName)+ @! ;
+
 Declaration :
-	"imports" (ModName)+ |
+	@FSTNonTerminal(name="rules")
 	"rules" (Definition)+ |
+	@FSTNonTerminal(name="strategies")
 	"strategies" (Definition)+ |
+	@FSTNonTerminal(name="signature")
 	"signature" (SigDeclaration)+ |
+	@FSTNonTerminal(name="signatures")
 	"signatures" (SigDeclaration)+ |
+	@FSTNonTerminal(name="overlays")
 	"overlays" (Overlay)+ ;
 
+@FSTTerminal(name="{Id}")
 Overlay :
 	Id [OptOverlay] "=" Term ;
 
@@ -399,11 +411,15 @@ OptOverlay :
 	"(" [IdList] ")" ;
 
 SigDeclaration :
+	@FSTNonTerminal(name="sorts")
 	"sorts" (TrafoSort)* |
+	@FSTNonTerminal(name="constructors")
 	"constructors" (OpDeclaration)* ;
 
 TrafoSort :
+	@FSTTerminal(name="{BracketSort}")
 	BracketSort |
+	@FSTTerminal(name="{Id}")
 	Id [LOOK_AHEAD("\"(\" [TrafoSortList()] \")\"") OptSort1] ;
 
 OptSort1 :
@@ -426,6 +442,7 @@ OptOpDecl2 :
 	Id | 
 	String ;
 
+@FSTTerminal(name="{Def}")
 Definition :
 	(Anno)* Def ;
 
@@ -435,7 +452,9 @@ Anno :
 	"internal"<NONE> ;
 
 Def :
+	@FSTTerminal(name="{AUTO}")
 	LOOK_AHEAD("Id() [OptDef1()] \":\"") RuleDef |
+	@FSTInline@FSTExportName("{StrategyDef}")
 	StrategyDef ;
 
 RuleDef :
@@ -455,8 +474,10 @@ RuleCond :
 	"with" Strategy ;
 
 StrategyDef :
-	"external" [Id] "(" [TypedIdList] "|" 
+	@FSTNonTerminal(name="external")
+	"external" @+! [Id] "(" [TypedIdList] "|" 
 	                    [TypedIdList] ")" ["=" Strategy] |
+	@FSTTerminal(name="{AUTO}")
 	Id [OptDef1] "=" Strategy ;
 
 Strategy :
@@ -676,8 +697,6 @@ Term :
 	NoTermAfterStrategyAngle [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() \"|}\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
-	/*LOOK_AHEAD("StrategyAngle() \"#\"") 
-	NoTermAfterStrategyAngle [AlternativeTerm] |*/
 	LOOK_AHEAD("StrategyAngle() \"end\"") 
 	NoTermAfterStrategyAngle [AlternativeTerm] |
 	LOOK_AHEAD("StrategyAngle() \"then\"") 
@@ -690,8 +709,21 @@ NoTermAfterStrategyAngle :
 	StrategyAngle ;
 
 OptIdTerm :
+    "|""[" (OptTerms)* "]""|" |
 	"(" [TermList] ")" |
 	"@" Term ;
+
+OptTerms :
+	LOOK_AHEAD(2) Id | 
+	":" | 
+	"=" | 
+	"(" | 
+	")" | 
+	"*" | 
+	"{" | 
+	"}" | 
+	";" | 
+	",";
 
 OptStringTerm :
 	"(" [TermList] ")" ;

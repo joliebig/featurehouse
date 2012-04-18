@@ -1,0 +1,25 @@
+module generation/script
+
+imports
+  include/MoBL
+  generation/emit
+  generation/action
+  lib/editor-common
+  analyze
+  pp
+
+strategies
+
+  definition-to-js :
+    ModuleJavascript(qid, mod) -> <emit>
+    $[(function(__ns) {
+      [s]
+      }([<qid-to-js> qid]));]
+    with s := <pp-mobl-string <+ debug(!"Could not pp: "); fail> mod
+
+  definition-to-js :
+    ModuleJavascriptFor(qid, _, mod) -> <emit>
+    $[(function(__ns) {
+      [s]
+      }([<qid-to-js> qid]));]
+    with s := <pp-mobl-string <+ debug(!"Could not pp: "); fail> mod

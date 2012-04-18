@@ -1,0 +1,13 @@
+module check
+
+rules
+
+  constraint-error:
+  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: String])
+  	where
+  		<typeof> e => Type("String")  		
+  		
+  constraint-error:
+  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: undefiniert])
+  	where  		
+  		not(<typeof> e)

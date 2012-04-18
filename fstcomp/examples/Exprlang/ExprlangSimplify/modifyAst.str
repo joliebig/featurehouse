@@ -1,0 +1,8 @@
+module modifyAst
+
+rules
+
+  modifyAst:
+    Simplify(e)	-> Simplify(e){Type("Int")}
+    where
+      <typeof> e => Type("Int")

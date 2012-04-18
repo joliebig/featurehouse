@@ -1,0 +1,11 @@
+module check
+
+rules
+
+  constraint-error :
+    Html(tag, _, _, closeTag) -> (closeTag, $[Wrong closing tag])
+    where not(<eq> (tag, closeTag))
+    
+  constraint-error :
+    NamedHtml(_, tag, _, _, closeTag) -> (closeTag, $[Wrong closing tag])
+    where not(<eq> (tag, closeTag))

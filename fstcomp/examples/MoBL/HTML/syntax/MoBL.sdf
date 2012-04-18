@@ -1,0 +1,6 @@
+module MoBL
+
+exports
+
+  lexical syntax
+    "databind" -> HTMLID {reject}

@@ -1,33 +1,24 @@
-module js/Stratego-Javascript
+module Exprlang
 
 imports
-  StrategoMix[StrategoHost]
-  Jsfax
+	Common
 
 exports
 
-  context-free start-symbols Module[[StrategoHost]]
+  sorts
+    Type Stat Exp Var
 
-  lexical syntax
-
-    [0-9]*               -> MetaVarSuffix
-    "_" [A-Za-z0-9\_\-]+ -> MetaVarSuffix
-
-  lexical restrictions
-    MetaVarSuffix -/- [a-zA-Z0-9]
+  context-free start-symbols
+    Start
 
   context-free syntax
-
-    "js-e"     "|[" Exp   "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
-    "js-lval"  "|[" LVal  "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
-    "js-stat"  "|[" Stat  "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
-    "js-stat*" "|[" Stat* "]|" -> Term [[StrategoHost]] {cons("ToMetaExpr")}
-
-  variables
-    [xyz]      MetaVarSuffix              -> ID                  {prefer}
-    [xyz]      MetaVarSuffix "*"          -> {ID ","}*           {prefer}
-    "lval"     MetaVarSuffix              -> LVal                {prefer}
-    "e"        MetaVarSuffix              -> Exp                 {prefer}
-    "e"        MetaVarSuffix "*"          -> {Exp ","}*          {prefer}
-    "stat"     MetaVarSuffix              -> Stat                {prefer}
-    "stat"     MetaVarSuffix "*"          -> Stat*               {prefer}
+    Stat*                 -> Start {cons("Start")}    
+    Var ":=" Exp ";"      -> Stat {cons("Assign")}    
+    "var" ID ":" Type ";" -> Stat {cons("VarDec")}
+    ID                    -> Type {cons("Type")}    
+    ID                    -> Var
+    "-" Exp               -> Exp {cons("UnaryMinus")}
+    INT                   -> Exp {cons("Int")}
+    Var                   -> Exp {cons("Var")}    
+    STRING                -> Exp {cons("String")}   
+    "(" Exp ")"           -> Exp {bracket}    

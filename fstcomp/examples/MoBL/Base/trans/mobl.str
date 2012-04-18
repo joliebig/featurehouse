@@ -1,0 +1,55 @@
+module mobl
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/MoBL
+  lib/editor-common
+  check
+  generation/compile
+  generation/emit
+  normalize
+  lookup
+  resolve
+  analyze
+  type
+  style
+  desugar
+  declare
+  pp
+  sync-analysis
+  rename
+  editor/editor
+  util
+  optimize/optimize
+
+strategies
+
+  resolve-file :
+    filename -> filename
+    where <file-exists> filename
+
+  resolve-file :
+    filename -> path
+    where not(<file-exists> filename)
+        ; [path|_] := <filter(\ p -> <concat-strings> [p, "/", filename] \; file-exists)> <IncludePaths>
+
+  get-doc =
+       one(?manno*)
+       ; <one(?DocAnno(doc))> manno*
+       ; <un-double-quote> doc
+    <+ !""
+
+  store-result =
+    ?t
+    ; rules ( ResultingAST := t )
+
+  lookup-node :
+    (path, ast) -> <find-node> (<desugar-position(normalize|ast)> path, <ResultingAST>)
+
+  find-node :
+    ([], t) -> t
+
+  find-node :
+    ([a|k], c#(ts)) -> <find-node> (k, <at-index(?result); !result> (a, ts))

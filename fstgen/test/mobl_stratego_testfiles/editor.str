@@ -9,8 +9,6 @@ imports
   pp
   style
   lib/editor-common
-
-imports
   editor/resolve
   editor/complete
   editor/hover

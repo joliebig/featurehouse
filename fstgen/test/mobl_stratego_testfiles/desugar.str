@@ -272,11 +272,3 @@ rules
   desugar :
     ImportData(path) -> String($["[s]"])
     with s := <path-to-string; resolve-file; path-to-dataurl> path
-
-rules
-
- //  /*desugar :
- //    Service(_, qid, res*) -> mobl-def|[
- // 
- //    ]|*/
-    

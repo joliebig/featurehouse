@@ -1,0 +1,8 @@
+module check
+
+rules
+
+  constraint-error:
+  	Print(e) -> (e, $[Erwarteter Typ für print(): int oder String; Erhaltener Typ: undefiniert])
+  	where
+  		not(<typeof> e)

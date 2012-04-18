@@ -4,8 +4,6 @@ imports
   libstratego-lib
   libstratego-xtc
   libstratego-tool-doc
-
-imports
   generation/compile
   generation/action
   editor-common

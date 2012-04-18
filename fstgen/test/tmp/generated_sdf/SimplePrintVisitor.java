@@ -26,12 +26,15 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			hintNewLine();
+			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			hintDecIndent();
+			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "ExportDeclaration");
 				if (v!=null) {
@@ -51,7 +54,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,true);
 			printToken("imports");
 			hintIncIndent();
-			hintNewLine();
 			for (FSTNode v : getChildren(nonTerminal,"ModName")) {
 				v.accept(this);
 			}
@@ -61,20 +63,20 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		}
 		if (nonTerminal.getType().equals("ExportDeclaration")) {
 			printFeatures(nonTerminal,true);
-			hintDecIndent();
 			printToken("exports");
+			hintNewLine();
 			hintIncIndent();
 			hintNewLine();
 			for (FSTNode v : getChildren(nonTerminal,"Grammar")) {
 				v.accept(this);
 			}
+			hintDecIndent();
 			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("HiddenDeclaration")) {
 			printFeatures(nonTerminal,true);
-			hintDecIndent();
 			printToken("hiddens");
 			hintIncIndent();
 			hintNewLine();
@@ -88,9 +90,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (nonTerminal.getType().equals("Grammar1")) {
 			printFeatures(nonTerminal,true);
 			printToken("sorts");
+			hintIncIndent();
 			for (FSTNode v : getChildren(nonTerminal,"Sort")) {
 				v.accept(this);
 			}
+			hintDecIndent();
+			hintNewLine();
 			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
@@ -98,6 +103,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (nonTerminal.getType().equals("Grammar2")) {
 			printFeatures(nonTerminal,true);
 			printToken("context-free start-symbols");
+			hintIncIndent();
 			for (FSTNode v : getChildren(nonTerminal,"Sort")) {
 				v.accept(this);
 			}
@@ -112,7 +118,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -135,9 +140,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			hintIncIndent();
 			for (FSTNode v : getChildren(nonTerminal,"Production")) {
 				v.accept(this);
 			}
+			hintDecIndent();
+			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}

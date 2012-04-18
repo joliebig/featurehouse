@@ -1,6 +1,0 @@
-module Exprlang
-
-exports
-
-  context-free syntax
-    "simplify" "(" Exp ")" ";" -> Stat {cons("Simplify")}

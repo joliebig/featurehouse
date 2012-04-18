@@ -1,0 +1,11 @@
+module simplify
+
+strategies
+
+  simplify =
+    innermost(DivOne)
+	
+rules
+
+  DivOne:
+    Div(e, Int("1")) -> e

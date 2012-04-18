@@ -1,6 +1,6 @@
 options {
 	STATIC = false;
-	DEBUG_PARSER = true;
+	DEBUG_PARSER = false;
 }
 
 PARSER_BEGIN(SDFParser)
@@ -306,7 +306,7 @@ FSTInfo Grammar(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"context-free start-symbols" (n=Sort(inTerminal){ replaceName(n);})+ {return productionEndNonTerminal("Grammar2","context-free start-symbols","context-free start-symbols");}
  |
-	n=Productions(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Grammar3","Productions","Productions");}
+	n=Productions(inTerminal){ replaceName("Productions", n);}{ replaceName(n);} {return productionEndNonTerminal("Grammar3","Productions {Productions}","Productions {Productions}");}
  |
 	n=Disambiguations(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Grammar4","Disambiguations","Disambiguations");}
 
