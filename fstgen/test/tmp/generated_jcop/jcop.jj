@@ -529,6 +529,8 @@ FSTInfo ContextClassBodyDeclaration(boolean inTerminal) : { Token first=null,t;F
  |
 	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=CFieldDeclaration(true){ replaceName(n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding","Default",first,token);}
  |
+	LOOKAHEAD(2) n=WhenStatement(true){ replaceName(n);} {return productionEndTerminal("WhenDecl","{WhenDeclaration}","{WhenDeclaration}","Replacement","Default",first,token);}
+ |
 	";"  {return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
 
  )  }
@@ -1033,7 +1035,7 @@ FSTInfo CastLAOp(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	<IDENTIFIER> {return productionEndTerminal("CastLAOp7","-","-","Replacement","Default",first,token);}
  |
-	n=Literal(true){ replaceName(n);} {return productionEndTerminal("CastLAOp8","-","-","Replacement","Default",first,token);}
+	"proceed"  n=Literal(true){ replaceName(n);} {return productionEndTerminal("CastLAOp8","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1077,15 +1079,17 @@ FSTInfo PrimaryPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	"this"  {return productionEndTerminal("PrimaryPrefix2","-","-","Replacement","Default",first,token);}
  |
-	"super" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix3","-","-","Replacement","Default",first,token);}
+	"proceed"  {return productionEndTerminal("PrimaryPrefix3","-","-","Replacement","Default",first,token);}
  |
-	"(" n=Expression(true){ replaceName(n);} ")" {return productionEndTerminal("PrimaryPrefix4","-","-","Replacement","Default",first,token);}
+	"super" "." <IDENTIFIER> {return productionEndTerminal("PrimaryPrefix4","-","-","Replacement","Default",first,token);}
  |
-	n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix5","-","-","Replacement","Default",first,token);}
+	"(" n=Expression(true){ replaceName(n);} ")" {return productionEndTerminal("PrimaryPrefix5","-","-","Replacement","Default",first,token);}
  |
-	LOOKAHEAD( ResultType() "." "class") n=ResultType(true){ replaceName(n);} "." "class" {return productionEndTerminal("PrimaryPrefix6","-","-","Replacement","Default",first,token);}
+	n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix6","-","-","Replacement","Default",first,token);}
  |
-	n=Name(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix7","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD( ResultType() "." "class") n=ResultType(true){ replaceName(n);} "." "class" {return productionEndTerminal("PrimaryPrefix7","-","-","Replacement","Default",first,token);}
+ |
+	n=Name(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix8","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1093,17 +1097,19 @@ FSTInfo PrimarySuffix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) "." "this"  {return productionEndTerminal("PrimarySuffix1","-","-","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(2) "." "super"  {return productionEndTerminal("PrimarySuffix2","-","-","Replacement","Default",first,token);}
+	"proceed"  {return productionEndTerminal("PrimarySuffix2","-","-","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(2) "." n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix3","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(2) "." "super"  {return productionEndTerminal("PrimarySuffix3","-","-","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(3) n=MemberSelector(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix4","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(2) "." n=AllocationExpression(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix4","-","-","Replacement","Default",first,token);}
  |
-	"[" n=Expression(true){ replaceName(n);} "]" {return productionEndTerminal("PrimarySuffix5","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(3) n=MemberSelector(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix5","-","-","Replacement","Default",first,token);}
  |
-	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix6","-","-","Replacement","Default",first,token);}
+	"[" n=Expression(true){ replaceName(n);} "]" {return productionEndTerminal("PrimarySuffix6","-","-","Replacement","Default",first,token);}
  |
-	n=Arguments(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix7","-","-","Replacement","Default",first,token);}
+	"." <IDENTIFIER> {return productionEndTerminal("PrimarySuffix7","-","-","Replacement","Default",first,token);}
+ |
+	n=Arguments(true){ replaceName(n);} {return productionEndTerminal("PrimarySuffix8","-","-","Replacement","Default",first,token);}
 
  )  }
 

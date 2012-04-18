@@ -542,6 +542,10 @@ ContextClassBodyDeclaration:
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers CFieldDeclaration :: FieldDecl
 |
+	@FSTTerminal(name="{WhenDeclaration}")
+	LOOK_AHEAD(2)
+	WhenStatement :: WhenDecl
+|
 	@FSTTerminal(name="{AUTO}")
 	";" <NONE> :: EmptyDecl
 ;
@@ -891,7 +895,7 @@ CastLookahead:
 ;
 
 CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "new"<NONE> |
-	 <IDENTIFIER> |
+	 <IDENTIFIER> | "proceed" <NONE>
 	 Literal;
 
 PostfixExpression:
@@ -920,6 +924,8 @@ PrimaryPrefix:
 |
   "this"<NONE>
 |
+  "proceed"<NONE>
+|
   "super" "." <IDENTIFIER>
 |
   "(" Expression ")"
@@ -935,6 +941,8 @@ PrimaryPrefix:
 PrimarySuffix:
   LOOK_AHEAD(2)
   "." "this"<NONE>
+|
+  "proceed"<NONE>
 |
   LOOK_AHEAD(2)
   "." "super"<NONE>
