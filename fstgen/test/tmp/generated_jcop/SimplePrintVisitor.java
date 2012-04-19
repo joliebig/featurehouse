@@ -66,24 +66,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("contextclass");
 			{
-				FSTNode v=getChild(nonTerminal, "Id");
+				FSTNode v=getChild(nonTerminal, "ContextClassDeclaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
-			printToken("{");
-			hintIncIndent();
-			hintNewLine();
-			for (FSTNode v : getChildren(nonTerminal,"ContextClassBodyDeclaration")) {
-				v.accept(this);
-				hintNewLine();
-				hintNewLine();
-			}
-			hintDecIndent();
-			hintNewLine();
-			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -147,24 +135,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("layer");
 			{
-				FSTNode v=getChild(nonTerminal, "Id");
+				FSTNode v=getChild(nonTerminal, "LayerDeclaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
-			printToken("{");
-			hintIncIndent();
-			hintNewLine();
-			for (FSTNode v : getChildren(nonTerminal,"LayerBodyDeclaration")) {
-				v.accept(this);
-				hintNewLine();
-				hintNewLine();
-			}
-			hintDecIndent();
-			hintNewLine();
-			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -204,6 +180,52 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printToken("}");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("LayerDeclaration")) {
+			printFeatures(nonTerminal,true);
+			printToken("layer");
+			{
+				FSTNode v=getChild(nonTerminal, "Id");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"LayerBodyDeclaration")) {
+				v.accept(this);
+				hintNewLine();
+				hintNewLine();
+			}
+			hintDecIndent();
+			hintNewLine();
+			printToken("}");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ContextClassDeclaration")) {
+			printFeatures(nonTerminal,true);
+			printToken("contextclass");
+			{
+				FSTNode v=getChild(nonTerminal, "Id");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("{");
+			hintIncIndent();
+			hintNewLine();
+			for (FSTNode v : getChildren(nonTerminal,"ContextClassBodyDeclaration")) {
+				v.accept(this);
+				hintNewLine();
+				hintNewLine();
+			}
+			hintDecIndent();
+			hintNewLine();
 			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
@@ -317,24 +339,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("layer");
 			{
-				FSTNode v=getChild(nonTerminal, "Id");
+				FSTNode v=getChild(nonTerminal, "LayerDeclaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
-			printToken("{");
-			hintIncIndent();
-			hintNewLine();
-			for (FSTNode v : getChildren(nonTerminal,"LayerBodyDeclaration")) {
-				v.accept(this);
-				hintNewLine();
-				hintNewLine();
-			}
-			hintDecIndent();
-			hintNewLine();
-			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -346,24 +356,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("contextclass");
 			{
-				FSTNode v=getChild(nonTerminal, "Id");
+				FSTNode v=getChild(nonTerminal, "ContextClassDeclaration");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
-			printToken("{");
-			hintIncIndent();
-			hintNewLine();
-			for (FSTNode v : getChildren(nonTerminal,"ContextClassBodyDeclaration")) {
-				v.accept(this);
-				hintNewLine();
-				hintNewLine();
-			}
-			hintDecIndent();
-			hintNewLine();
-			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
 		}

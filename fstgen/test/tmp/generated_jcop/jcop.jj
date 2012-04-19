@@ -305,25 +305,25 @@ TOKEN :
 }
 FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclaration(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName("TypeDeclaration", n);}{ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
+	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclaration(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","-","-");}
 
  )  }
 
 FSTInfo PackageDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"package" n=Name(true){ replaceName(n);} ";" {return productionEndTerminal("PackageDeclaration","-","-","Replacement","Default",first,token);}
+	"package" n=Name(true){ replaceName(n);} ";" {return productionEndTerminal("PackageDeclaration","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
+	"import" ["static" ] n=Name(true){ replaceName(n);} [n=ImportPackage(true){ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo ImportPackage(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	 "." "*" {return productionEndTerminal("ImportPackage","-",".*","Replacement","Default",first,token);}
+	 "." "*" {return productionEndTerminal("ImportPackage","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -375,11 +375,11 @@ FSTInfo TypeDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	LOOKAHEAD(Modifiers() "@" "interface") n=Modifiers(inTerminal){ replaceName(n);} "@" "interface" n=Id(inTerminal){ replaceName(n);} "{" (n=AnnotationTypeMemberDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("AnnotationTypeDeclaration","{AUTO}","{AUTO}");}
  |
-	LOOKAHEAD(Modifiers() "contextclass") n=Modifiers(inTerminal){ replaceName(n);} "contextclass" n=Id(inTerminal){ replaceName(n);} "{" (n=ContextClassBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("ContextClassDeclaration","{AUTO}","{AUTO}");}
+	LOOKAHEAD(Modifiers() "contextclass") n=Modifiers(inTerminal){ replaceName(n);} n=ContextClassDeclaration(inTerminal){ replaceName("ContextClassDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ContextClassDeclaration","{ContextClassDeclaration}","{ContextClassDeclaration}");}
  |
 	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} n=ClassOrInterface(inTerminal){ replaceName(n);} n=Id(inTerminal){ replaceName(n);} [n=TypeParameters(inTerminal){ replaceName(n);}] [n=ExtendsList(inTerminal){ replaceName(n);}] [n=ImplementsList(inTerminal){ replaceName(n);}] "{" (n=ClassOrInterfaceBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("ClassDeclaration","{AUTO}","{AUTO}");}
  |
-	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} "layer" n=Id(inTerminal){ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("LayerDeclaration","{AUTO}","{AUTO}");}
+	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} n=LayerDeclaration(inTerminal){ replaceName("LayerDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("LayerDeclaration","{LayerDeclaration}","{LayerDeclaration}");}
  |
 	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} "enum" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=ImplementsList(inTerminal){ replaceName(n);}] "{" n=EnumConstant(inTerminal){ replaceName(n);} ("," n=EnumConstant(inTerminal){ replaceName(n);})* [n=EnumBodyInternal(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("EnumDecl","{Id}","{Id}");}
 
@@ -413,13 +413,13 @@ FSTInfo ExtendsList(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo LayerDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"layer" n=Id(true){ replaceName(n);} n=LayerBody(true){ replaceName(n);} {return productionEndTerminal("LayerDeclaration","-","-","Replacement","Default",first,token);}
+	"layer" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("LayerDeclaration","{Id}","{Id}");}
 
  )  }
 
 FSTInfo ContextClassDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"contextclass" n=Id(true){ replaceName(n);} n=ContextClassBody(true){ replaceName(n);} {return productionEndTerminal("ContextClassDeclaration","-","-","Replacement","Default",first,token);}
+	"contextclass" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=ContextClassBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("ContextClassDeclaration","{Id}","{Id}");}
 
  )  }
 
@@ -505,9 +505,9 @@ FSTInfo LayerBody(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo LayerBodyDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) n=Initializer(true){ replaceName(n);} {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	LOOKAHEAD(2) n=Initializer(true){ replaceName("Initializer", n);}{ replaceName(n);} {return productionEndTerminal("InitializerDecl","{Initializer}","{Initializer}","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(Modifiers() "layer") n=Modifiers(inTerminal){ replaceName(n);} "layer" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("InnerLayerDecl","{Id}","{Id}");}
+	LOOKAHEAD(Modifiers() "layer") n=Modifiers(inTerminal){ replaceName(n);} n=LayerDeclaration(inTerminal){ replaceName("LayerDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("InnerLayerDecl","{LayerDeclaration}","{LayerDeclaration}");}
  |
 	LOOKAHEAD(2) n=Modifiers(true){ replaceName(n);} n=PMethodDeclaration(true){ replaceName("PMethodDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("PMethodDecl","{PMethodDeclaration}","{PMethodDeclaration}","JavaMethodOverriding","Default",first,token);}
  |
@@ -525,11 +525,11 @@ FSTInfo ContextClassBodyDeclaration(boolean inTerminal) : { Token first=null,t;F
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) n=Initializer(true){ replaceName(n);} {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
  |
-	LOOKAHEAD(Modifiers() "context") n=Modifiers(inTerminal){ replaceName(n);} "contextclass" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=ContextClassBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("InnerContextDecl","{Id}","{Id}");}
+	LOOKAHEAD(Modifiers() "context") n=Modifiers(inTerminal){ replaceName(n);} n=ContextClassDeclaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("InnerContextDecl","{Id}","{Id}");}
  |
-	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=CFieldDeclaration(true){ replaceName(n);} {return productionEndTerminal("FieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding","Default",first,token);}
+	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=Modifiers(true){ replaceName(n);} n=CFieldDeclaration(true){ replaceName("CFieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("FieldDecl","{CFieldDeclaration}","{CFieldDeclaration}","FieldOverriding","Default",first,token);}
  |
-	LOOKAHEAD(2) n=WhenStatement(true){ replaceName(n);} {return productionEndTerminal("WhenDecl","{WhenDeclaration}","{WhenDeclaration}","Replacement","Default",first,token);}
+	LOOKAHEAD(2) n=WhenStatement(true){ replaceName(n);} {return productionEndTerminal("WhenDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
  |
 	";"  {return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
 
@@ -603,7 +603,7 @@ FSTInfo ArrayInitializerInternal(boolean inTerminal) : { Token first=null,t;FSTI
 
 FSTInfo PMethodDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=TypeParameters(true){ replaceName(n);}] n=ResultType(true){ replaceName(n);} n=PMethodDeclarator(true){ replaceName("PMethodDeclarator", n);}{ replaceName(n);} ["throws" n=NameList(true){ replaceName(n);}] n=PMethodDeclarationBody(true){ replaceName(n);} {return productionEndTerminal("PMethodDeclaration","-","{PMethodDeclarator}","Replacement","Default",first,token);}
+	[n=TypeParameters(true){ replaceName(n);}] n=ResultType(true){ replaceName(n);} n=PMethodDeclarator(true){ replaceName("PMethodDeclarator", n);}{ replaceName(n);} ["throws" n=NameList(true){ replaceName(n);}] n=PMethodDeclarationBody(true){ replaceName(n);} {return productionEndTerminal("PMethodDeclaration","{PMethodDeclarator}","{PMethodDeclarator}","Replacement","Default",first,token);}
 
  )  }
 
@@ -617,7 +617,7 @@ FSTInfo PMethodDeclarationBody(boolean inTerminal) : { Token first=null,t;FSTInf
 
 FSTInfo PMethodDeclarator(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Name(true){ replaceName(n);} n=FormalParameters(true){ replaceName("FormalParameters", n);}{ replaceName(n);} ("[" "]" )* {return productionEndTerminal("PMethodDeclarator","-","{<Name>}({FormalParameters})","Replacement","Default",first,token);}
+	n=Name(true){ replaceName("Name", n);}{ replaceName(n);} n=FormalParameters(true){ replaceName("FormalParameters", n);}{ replaceName(n);} ("[" "]" )* {return productionEndTerminal("PMethodDeclarator","-","{Name}({FormalParameters})","Replacement","Default",first,token);}
 
  )  }
 
