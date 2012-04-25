@@ -11,7 +11,7 @@ public class FSTTerminal extends FSTNode {
 	private String merge = defaultMergingMechanism;
 
 	private String prefix;
-	
+
 	public int beginLine = -1;
 	public int endLine = -1;
 
@@ -32,7 +32,7 @@ public class FSTTerminal extends FSTNode {
 		this(type, name, body, prefix, compositionMechanism);
 		this.merge = mergingMechanism;
 	}
-	
+
 	public FSTTerminal(String type, String name, String body, String prefix,
 			String compositionMechanism, String mergingMechanism, int beginLine, int endLine) {
 		this(type, name, body, prefix, compositionMechanism);
@@ -44,6 +44,10 @@ public class FSTTerminal extends FSTNode {
 	public String getSpecialTokenPrefix() {
 		return prefix;
 	}
+
+    public void setSpecialTokenPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
 	@Override
 	public FSTNode getShallowClone() {
