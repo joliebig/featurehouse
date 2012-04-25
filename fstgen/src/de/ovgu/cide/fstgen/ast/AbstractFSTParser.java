@@ -1,6 +1,7 @@
 package de.ovgu.cide.fstgen.ast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -15,6 +16,7 @@ public class AbstractFSTParser {
 
 		List<FSTNode> children = new ArrayList<FSTNode>();
 		List<Replacement> nameReplacements = new ArrayList<Replacement>();
+		List<Replacement> composeReplacements = new ArrayList<Replacement>();
 		boolean isInTerminal = false;
 	}
 
@@ -59,6 +61,8 @@ public class AbstractFSTParser {
 					+ exportedComposition + "]";
 		}
 	}
+
+	private HashMap<String, String> composeReplacements = new HashMap<String, String>();
 
 	private Stack<Context> currentContext = new Stack<Context>();
 
@@ -193,9 +197,24 @@ public class AbstractFSTParser {
 			cc().children.addAll(c.children);
 			if (first != null)
 				cc().children.add(new FSTTerminal(type, name, body, prefix,
-						compositionMechanism, mergingMechanism, first.beginLine, last.endLine));
+						compositionMechanism, mergingMechanism));
 		}
 		return new FSTInfo(type, exportName, compositionMechanism);
+	}
+
+	private String applyComposeReplacements(String compositionMechanism) {
+		if (compositionMechanism.length() > 0
+				&& compositionMechanism.charAt(0) == '{') {
+
+			for (String productionKey : composeReplacements.keySet()) {
+
+				compositionMechanism = compositionMechanism.replace("{"
+						+ productionKey + "}",
+						composeReplacements.get(productionKey));
+
+			}
+		}
+		return compositionMechanism;
 	}
 
 	private String stripWhitespace(String body) {

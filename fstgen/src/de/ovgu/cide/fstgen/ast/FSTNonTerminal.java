@@ -37,6 +37,12 @@ public class FSTNonTerminal extends FSTNode {
 	return children;
     }
 
+    /** replaces all children of this node <p>needed for FST processing
+     * @param newChildren - new children to set */
+    public void setChildren(List<FSTNode> newChildren) {
+        this.children = newChildren;
+    }
+
     public void addChild(FSTNode child) {
 	child.setParent(this);
 	children.add(child);
