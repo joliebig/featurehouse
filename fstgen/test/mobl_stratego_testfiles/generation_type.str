@@ -1,0 +1,50 @@
+module generation_type
+
+imports
+  include/MoBL
+  generation/emit
+  generation/ui
+  generation/action
+  generation/sql
+  lookup
+
+strategies
+
+  definition-to-js :
+    Type(_, qid, SimpleType(supert), def*) -> <emit>
+    $[[<qid-to-js> qid] = mobl.defineType('[<qid-to-js> qid]', [super-type], {[props]});
+      [methods]
+      ]
+    with methods := <filter(type-def-to-js(|qid))> def*
+       ; props := <filter(type-prop-to-js); separate-by(|",")> def*
+       ; if not(QId("mobl", "Object") := supert) then
+           super-type := <qid-to-js> qid
+         else
+           super-type := $[null]
+         end
+
+  type-def-to-js(|qid) :
+    fn@SyncFunction(_, x, _, _, _) -> $[[<qid-to-js> qid].prototype.[x] = [<function-to-js-exp> fn];
+]
+
+  type-def-to-js(|qid) :
+    fn@Function(_, x, _, _, _) -> $[[<qid-to-js> qid].prototype.[x] = [<function-to-js-exp> fn];
+]
+
+  type-def-to-js(|qid) :
+    fn@StaticSyncFunction(_, x, _, _, _) -> $[[<qid-to-js> qid].[x] = [<function-to-js-exp> fn];
+]
+
+  type-def-to-js(|qid) :
+    fn@StaticFunction(_, x, _, _, _) -> $[[<qid-to-js> qid].[x] = [<function-to-js-exp> fn];
+]
+
+  type-prop-to-js :
+    Property(_, x, GenericType(QId("mobl", "Array"), [SimpleType(qid)]), _) -> $[[x]: '$[$[<qid-to-js> qid]$]$']
+
+  type-prop-to-js :
+    Property(_, x, t@SimpleType(qid), _) -> $[[x]: '[<qid-to-js> qid]']
+    where <is-entity-type> t
+
+  type-prop-to-js :
+    Property(_, x, _, _) -> $[[x]: null]

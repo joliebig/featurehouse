@@ -1,0 +1,72 @@
+module exprlang
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/Exprlang
+  lib/editor-common.generated
+  check
+  generate
+  modifyAst
+  eval
+  simplify
+
+rules
+	 
+  /*
+  	Analysiert das aktuelle Programm und gibt ein Tupel zurück, das eventuelle 
+  	Fehler,	Warnungen und Notizen enthält.
+  */
+  editor-analyze:
+    (ast, path, project-path) -> (ast', errors, warnings, notes)
+    with
+      editor-init;
+      ast' := <analyze> ast;
+      errors   := <collect-all(constraint-error, conc)> ast';
+      warnings := <collect-all(constraint-warning, conc)> ast';      
+      notes    := <collect-all(constraint-note, conc)> ast'      
+  
+  // Transformiert den ausgewählten Programmteil in Java-Code.
+  generate-java:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"java")> path;
+      result   := <to-java> selected
+  
+  // Gibt den ausgewählten Programmteil als abstrakten Syntaxterm aus.
+  generate-aterm:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := selected
+  
+  /* 
+  	Gibt den ausgewählten Programmteil als abstrakten Syntaxterm mit
+  	Typinformationen aus 
+  */
+  generate-modified-aterm:
+  	(selected, position, ast, path, project-path) -> (filename, result)
+  	with
+  		filename := <guarantee-extension(|"aterm")> path;
+  		result   := <modify> selected
+  
+  editor-hover:
+    (target, position, ast, path, project-path) -> 
+    																$[Hover help: [<write-to-string> target]]
+  
+  editor-resolve:
+    (node, position, ast, path, project-path) -> target
+    where
+      <debug(!"Resolve: ")> node; 
+      Type(type) := node; 
+      target     := <GetVar> type  
+        
+  /*
+ 	editor-complete:
+    (node, position, ast, path, project-path) -> ["String", "Int" | proposals]
+    where
+    	if !node => Type(COMPLETION(prefix)) then
+    		proposals := <all-keys-GetAssign>
+    	end
+ */

@@ -1,0 +1,288 @@
+module generation/server
+
+/**
+ * Note: this module is very hacky right now, I just want to see if I can get this to work. Then I'll refactor it.
+ */
+
+imports
+  include/MoBL
+  analyze
+  declare
+  rename
+  desugar
+  mobl
+  lookup
+  type
+  editor/editor
+  generation/compile
+  generation/emit
+  generation/ui
+  generation/action
+  generation/cps-action
+  generation/cps-lift
+  generation/data
+  generation/script
+  generation/html
+  generation/service
+  generation/type
+  generation/util
+  include/MoBL
+  lib/editor-common
+  sync-analysis
+  util
+  pp
+
+strategies
+
+  compile =
+      (?ServerApplication(qid, setting*, def*); ?app <+ where(ServerContext); ?Module(qid, def*))
+      ; where(<debug(!"Now compiling: ")> <pp-mobl-qid> qid
+              ; rules ( Compiled : qid )
+              ; include-paths := <IncludePaths>)
+      ; with(
+        {| ServerContext, OutputPath, IncludePaths
+         : rules ( ServerContext := True()
+                   OutputPath    := <ServerOutputPath>
+                   IncludePaths := [<concat-strings> [<plugin-path>, "/stdlib-server-override"]|include-paths])
+         ; analyze
+         ; where(alltd(compile-import-module))
+         ; desugar-all
+         ; module-to-js
+         ; where(path := <qid-to-dot-path> qid
+                 ; js-filename   := <concat-strings> [<ServerOutputPath>, "/", path, ".js"]
+                 ; <dirname; ensure-existing-dir> js-filename)
+         ; fp := <fopen> (js-filename, "w")
+         ; if !app; <fetch(?DatabaseSetting(hostname, dbname, dbuser, dbpassword))> setting* then
+             db-setup := $[
+var persistenceStore = require('./js/persistence.store.mysql');
+persistenceStore.config(persistence, [hostname], [dbname], [dbuser], [dbpassword]);
+_ctx.session = persistenceStore.getSession();
+]
+           else
+             db-setup := ""
+           end
+         ; <fputs> ($[var [<qid-to-js-server> qid] = {}, _ctx = {};
+var persistence = require('./js/persistence').persistence;
+[<<not(fetch(?DebugSetting())); !"persistence.debug = false;"> setting* <+ !"">]
+[db-setup]
+], fp)
+         ; <fputs> (<get-all>, fp)
+         ; if !app then
+             if !hostname then
+               <fputs> ($[
+var _session = persistenceStore.getSession();
+_session.schemaSync(function() {
+  _session.close();
+});
+], fp)
+             end
+           else
+             <fputs> ($[exports.[<qid-to-js-server> qid] = [<qid-to-js-server> qid];
+], fp)
+           end
+         ; <fputs> (<get-all-tl-statements; (cps-list-all-expressions; cps-statements <+ debug(!"Could not cps tl statements: "); fail)>, fp)
+         ; if !app then
+             <fputs> ($[module.exports = global.app;
+], fp)
+           end
+        ; <fclose> fp
+        |})
+
+  compile-import-module :
+    QId(qid, _) -> <id>
+    where ServerContext
+    where path := <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+        ; if not(<Compiled> qid <+ <is-newer> (<concat-strings> [<OutputPath>, "/", <qid-to-dot-path> qid, ".js"], path)) then
+            <parse-file> path
+            ; compile
+          end
+
+  qid-to-js :
+    QId(qid, x) -> $[[qids].[x]]
+    where ServerContext
+    with qids := <qid-to-js-server> qid
+
+  qid-to-js-server :
+    QId(qid, x) -> $[[qids]__[x]]
+    with qids := <qid-to-js-server> qid
+
+  qid-to-js-server :
+    s -> s
+    where is-string
+
+  import-to-js :
+    qid -> <emit> $[var [<qid-to-js-server> qid] = require('./[<qid-to-dot-path> qid]').[<qid-to-js-server> qid];
+]
+  where ServerContext
+
+  definition-to-js :
+    Load(path@Path(part*)) -> <emit> $[var [ns] = require('./[<path-to-string> path]').[ns];
+]
+    where ServerContext
+    with path-str := <path-to-string> path
+       ; <cut-off-last-element; separate-by(|"/"); <concat-strings> [<OutputPath>, "/"|<id>]; ensure-existing-dir> part*
+       ; <copy-file> (<resolve-file> path-str, $[[<OutputPath>]/[path-str]])
+       ; ns := <at-last(?last); !last; ?[<id>]; string-tokenize(|<explode-string> "."); cut-off-last-element; separate-by(|"."); concat-strings> part*
+
+  definition-to-js :
+    MiddlewareUse(e) -> <emit> $[mobl__server__httpserver.addMiddleware([<expression-to-js> e]);
+]
+
+strategies
+
+  function-to-js :
+    fn@SyncFunction(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n", <expose-service> (type, uri, varname, True())]
+    where <fetch(?ServiceAnno(type, uri))> manno*
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  function-to-js :
+    fn@Function(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n", <expose-service> (type, uri, varname, False())]
+    where <fetch(?ServiceAnno(type, uri))> manno*
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  expose-service :
+    (GetMethod(), UriPath(part*), varname, is-sync) -> <expose-service-aux> ("get", part*, varname, is-sync)
+
+  expose-service :
+    (PostMethod(), UriPath(part*), varname, is-sync) -> <expose-service-aux> ("post", part*, varname, is-sync)
+
+  expose-service :
+    (PutMethod(), UriPath(part*), varname, is-sync) -> <expose-service-aux> ("put", part*, varname, is-sync)
+
+  expose-service :
+    (DeleteMethod(), UriPath(part*), varname, is-sync) -> <expose-service-aux> ("del", part*, varname, is-sync)
+
+  expose-service-aux :
+    (type, part*, varname, True()) -> $[global.app.[type]('/[<map(uri-part-to-string); separate-by(|"/")> part*]', function(req, resp) {
+                                  [varname](req, resp, req._ctx);
+                                });
+
+]
+
+  expose-service-aux :
+    (type, part*, varname, False()) -> $[global.app.[type]('/[<map(uri-part-to-string); separate-by(|"/")> part*]', function(req, resp) {
+                                  [varname](req, resp, null, req._ctx);
+                                });
+
+]
+
+rules
+
+  function-to-js :
+    fn@SyncFunction(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n", <add-socket-listener> (evt, qid)]
+    where <fetch(?SocketEventAnno(evt))> manno*
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  function-to-js :
+    fn@Function(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n", <add-socket-listener> (evt, qid)]
+    where <fetch(?SocketEventAnno(evt))> manno*
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  add-socket-listener :
+    (evt, qid) -> $[global.socketListeners$[$[evt]$]$.push([<qid-to-js> qid]);
+]
+
+rules
+
+  qid-to-dot-path :
+    s -> s
+    where is-string
+
+  qid-to-dot-path :
+    QId(qid, x) -> $[[<qid-to-dot-path> qid].[x]]
+
+strategies
+
+  function-to-js-exp :
+    SyncFunction(_, qid, farg*, rt, stat*) ->
+     $[function([args]) {
+         [stats]
+       }]
+    where ServerContext
+    with qids := <qid-to-js> qid
+       ; args := <map(farg-to-js); <concat> [<id>, ["_ctx"]]; separate-by(!", "); concat-strings> farg*
+       ; stats := <statements-to-js> stat*
+
+  function-to-js-exp :
+    Function(_, qid, farg*, rt, stats) ->
+    $[function([args]) {
+        [stats2]
+      }]
+    where ServerContext
+    with qids := <qid-to-js> qid
+       ; args := <filter(farg-to-js); <concat> [<id>, ["callback", "_ctx"]]; separate-by(!", "); concat-strings> farg*
+       ; stats2 := <cps-list-all-expressions; <concat> [<id>, [$[if(callback && callback.apply) callback(); return;]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> stats
+
+  spec-exp-to-js :
+    Call(qid, e*) -> $[[<qid-to-js> qid]([args])]
+    where ServerContext
+    where not(QId(QId("mobl", "server"), "enterContext") := qid)
+    where not(QId(QId("mobl", "server"), "leaveContext") := qid)
+    where not(<lookup-type> SimpleType(qid))
+    with args := <arguments-to-js; <concat> [<id>, ["_ctx"]]; separate-by(!", "); concat-strings> e*
+
+  cps-exp(|stat*) :
+    Call(qid, e*) -> <concat-strings> [<qid-to-js> qid, "(", args, ");"]
+    where ServerContext
+    where ExternalFunction(_, _, _, _) := <lookup-function> qid
+        ; not(<GetScreen> qid)
+    with args := <arguments-to-js; <concat> [<id>, [
+$[function(result__) {
+    [<cps-statements> stat*]
+  }], "_ctx"]]; separate-by(!", "); concat-strings> e*
+
+rules
+
+  spec-exp-to-js :
+    MethodCall(e, "all", []) -> $[[es].all(_ctx.session)]
+    where ServerContext
+    where GenericType(QId("mobl", "Type"), _) := <type-of> e
+    with es := <expression-to-js> e
+
+  spec-cps-exp(|stat*) :
+    MethodCall(e, "findBy", e*) -> <concat-strings> [<expression-to-js> e, ".findBy(_ctx.session, ", args, ");"]
+    where ServerContext
+    where GenericType(QId("mobl", "Type"), _) := <type-of> e
+    with arg-js := <map(expression-to-js)> e*
+    with args := <concat; separate-by(!", "); concat-strings> [arg-js, [
+$[function(result__) {
+    [<cps-statements> stat*]
+  }]]]
+
+  spec-cps-exp(|stat*) :
+    MethodCall(e, "fetch", e*) -> <concat-strings> [<expression-to-js> e, ".fetch(_ctx.session, ", args, ");"]
+    where ServerContext
+    where ExternalEntity(_, _, _, _) := <type-of; lookup-type> e
+    with arg-js := <map(expression-to-js)> e*
+    with args := <concat; separate-by(!", "); concat-strings> [arg-js, [
+$[function(result__) {
+    [<cps-statements> stat*]
+  }]]]
+
+  spec-exp-to-js :
+    Call(qid, named-e*) -> $[new [<qid-to-js> qid](_ctx.session, {[propvals]})]
+    where ServerContext
+    where ExternalEntity(_, _, _, _) := <lookup-type> SimpleType(qid)
+    with propvals := <map(\ NamedExp(x, e) -> $['[x]': [<expression-to-js> e]] \); separate-by(!", "); concat-strings> named-e*
+
+  spec-exp-to-js :
+    Call(QId(QId("mobl", "server"), "enterContext"), []) -> $[(function() { _ctx = {session: persistenceStore.getSession() } }())]
+
+  spec-exp-to-js :
+    Call(QId(QId("mobl", "server"), "leaveContext"), []) -> $[(function() { _ctx.session.flush(function() { _ctx.session.close(); }) }())]

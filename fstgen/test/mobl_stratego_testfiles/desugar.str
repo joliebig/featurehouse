@@ -1,0 +1,274 @@
+module desugar
+
+imports
+  include/MoBL
+  libstratego-lib
+  rename
+  type
+  lookup
+  ui-lift
+  style
+  mobl
+  generation/action
+
+strategies
+
+  external path-to-dataurl(|)
+
+  desugar-all =
+    capture-style-configs
+    ; innermost(desugar)
+    ; topdown(try(flatten-list))
+
+  desugar :
+    Assignment(LTuple(fst, rest*), e) -> result
+    with tmp := <newname> "tmp"
+       ; assign* := <map-with-index(\ (idx, lv) -> Assignment(lv, FieldAccess(Var(tmp), <concat-strings> ["_", <inc; int-to-string> idx])) \)> rest*
+       ; action-scope(
+           result := <rename-all> [VarDeclInferred(tmp, e), Assignment(fst, FieldAccess(Var(tmp), "_1")), assign*]
+         )
+
+  desugar :
+    ListInferred(lvalue, e, elem*) -> List(lvalue, t, e, elem*)
+    where e-t := <type-of> e
+        ; (
+            GenericType(_, [t]) := <type-of> e
+         <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+            ; t := SimpleType(QId("mobl", "Dynamic"))
+          )
+
+  desugar :
+    ForInferred(lvalue, e, elem*) -> For(lvalue, t, e, elem*)
+    where e-t := <type-of> e
+        ; (
+            GenericType(_, [t]) := <type-of> e
+         <+ <type-compatible> (SimpleType(QId("mobl", "Dynamic")), e-t)
+            ; t := SimpleType(QId("mobl", "Dynamic"))
+          )
+
+  desugar :
+    DeriveDeclInferred(x, e) -> DeriveDecl(x, <type-of> e, e)
+
+  desugar :
+    ControlCall(Var(qid), e*, elem*) -> ControlCall(Var(qid), e2*, elem*)
+    where ExternalControl(_, _, farg*) := <lookup-control> qid
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+  desugar :
+    Call(qid, e*) -> Call(qid, e2*)
+    where (ExternalFunction(_, _, farg*, _) := <lookup-function> qid
+        <+ ExternalSyncFunction(_, _, farg*, _) := <lookup-function> qid
+        <+ ExternalScreen(_, _, farg*, _) := <lookup-screen> qid
+          )
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+  desugar :
+    MethodCall(e, x, e*) -> MethodCall(e, x, e2*)
+    where (ExternalMethod(_, _, farg*, _) := <lookup-method> (<type-of> e, x)
+        <+ ExternalSyncMethod(_, _, farg*, _) := <lookup-method> (<type-of> e, x)
+          )
+        ; e2* := <resolve-fargs> (e*, <topdown(try(strip-annos))> farg*)
+        ; not(<eq> (e*, e2*))
+
+  //  Feature Async - Start
+  desugar :
+    mobl-elem|[ var x : t = async(e*) ]| -> mobl-elem*|[
+      var x : t = e_init
+      script {
+        async {
+          x = e;
+        }
+      }
+    ]|
+    where if <eq> (<length> e*, 2) then
+            [e, e_init] := e*
+          else
+            e := <Hd> e*
+            ; e_init := mobl-e|[ null ]|
+          end
+  desugar :
+    mobl-elem|[ var x  = async(e*) ]| -> mobl-elem*|[
+      var x = e_init
+      script {
+        async {
+          x = e;
+        }
+      }
+    ]|
+    where if <eq> (<length> e*, 2) then
+            [e, e_init] := e*
+          else
+            e := <Hd> e*
+            ; e_init := mobl-e|[ null ]|
+          end
+  //  Feature Async - Ende
+  
+rules
+
+  desugar :
+    SetComp(e, filter*) -> <add-one-filter(|filter*)> e
+
+  add-one-filter(|filter*) :
+    e -> e
+    where [] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|[WhereFilter(se2)|rest])> <add-one-filter(|[WhereFilter(se1)])> e
+    where [WhereFilter(SetAnd(se1, se2))|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetEq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetNotEq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["!="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetLt(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["<"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetLeq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["<="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetGt(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($[">"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetGeq(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($[">="])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetIn(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["in"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.filter(e_x, e_op, e2) ]|
+    where [WhereFilter(SetNotIn(x, e2))|rest] := filter*
+        ; e_x := String($["[x]"])
+        ; e_op := String($["not in"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.limit(e_l) ]|
+    where [LimitFilter(e_l)|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.skip(e_o) ]|
+    where [OffsetFilter(e_o)|rest] := filter*
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, true) ]|
+    where [OrderByFilter(OrderAscending(x))|rest] := filter*
+    with e_x := String($["[x]"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, false) ]|
+    where [OrderByFilter(OrderDescending(x))|rest] := filter*
+    with e_x := String($["[x]"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> <add-prefetch(|x*)> e
+    where [PrefetchFilter(x*)|rest] := filter*
+
+  add-prefetch(|xs) :
+    e -> e
+    where [] := xs
+
+  add-prefetch(|xs) :
+    e -> <add-prefetch(|rest)> mobl-e|[ e.prefetch(e_x) ]|
+    where [x|rest] := xs
+    with e_x := String($["[x]"])
+
+rules
+   resolve-fargs :
+    (arg*, []) -> <fail>
+    where not([] := arg*)
+        //; debug(!"This should never happen: ")
+
+  resolve-fargs :
+    ([], [FArgOptional(x, _, e)|rest]) -> [e|<resolve-fargs> ([], rest)]
+
+  resolve-fargs :
+    ([], []) -> []
+
+  resolve-fargs :
+    ([e|arg*], [farg|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    where not(NamedExp(_, _) := e)
+    //where debug(!"Case 1")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArgOptional(x, _, _)|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    //where debug(!"Case 2")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArg(x, _)|farg*]) -> [e|<resolve-fargs> (arg*, farg*)]
+    //where debug(!"Case 3")
+
+  resolve-fargs :
+    ([ne@NamedExp(x, e)|arg*], [farg@FArgOptional(y, _, default-e)|farg*]) -> <resolve-fargs> ([arg*, ne], [farg|farg*])
+    where not(<eq> (x, y))
+    where not([] := <filter(?NamedExp(y, _))> arg*)
+    //where debug(!"Case 4a")
+
+  resolve-fargs :
+    ([ne@NamedExp(x, e)|arg*], [farg@FArgOptional(y, _, default-e)|farg*]) -> [default-e|<resolve-fargs> ([ne|arg*], farg*)]
+    where not(<eq> (x, y))
+    where [] := <filter(?NamedExp(y, _))> arg*
+    //where debug(!"Case 4b")
+
+  resolve-fargs :
+    ([NamedExp(x, e)|arg*], [FArg(y, _)|farg*]) -> <fail>
+    where not(<eq> (x, y))
+    //where debug(!"Unmatched named exp: ")
+
+rules
+
+  desugar :
+    Application(qid, def*) -> Application(qid, def2*)
+    where def2* := <find-cond-control> def*
+    where not(<eq> (def*, def2*))
+
+  desugar :
+    Module(qid, def*) -> Module(qid, def2*)
+    where def2* := <find-cond-control> def*
+    where not(<eq> (def*, def2*))
+
+  find-cond-control :
+    [Control(manno*, qid, farg*, elem*)|rest*] -> [Control([], qid, farg*, [When(e, elem2*, elem*)])|<filter(not(?ctrl)); find-cond-control> rest*]
+    where [ctrl@Control(manno2*, _, _, elem2*)|_] := <filter(?Control(_, qid, _, _))> rest*
+    where <fetch-elem(?WhenAnno(e))> manno2*
+
+  find-cond-control :
+    [ctrl@Control(manno*, qid, farg*, elem*)|rest*] -> [ctrl|<find-cond-control> rest*]
+    where [] := <filter(?Control(_, qid, _, _))> rest*
+
+  find-cond-control :
+    [fst|rest*] -> [fst|<find-cond-control> rest*]
+    where not(Control(manno*, qid, farg*, elem*) := fst)
+
+  find-cond-control :
+    [] -> []
+
+rules
+
+  desugar :
+    ImportData(path) -> String($["[s]"])
+    with s := <path-to-string; resolve-file; path-to-dataurl> path

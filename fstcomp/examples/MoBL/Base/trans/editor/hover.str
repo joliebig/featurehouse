@@ -1,0 +1,38 @@
+module editor/hover
+
+imports
+  include/MoBL
+  analyze
+  mobl
+  lib/editor-common
+  lookup
+  declare
+  rename
+  type
+  pp
+
+rules
+
+  editor-hover:
+    (t@SimpleType(_), position, ast, path, project-path) -> <get-doc> <lookup-type> t2
+    where t2 := <lookup-node> (position, ast)
+
+  editor-hover:
+    (t@GenericType(_, _), position, ast, path, project-path) -> <get-doc> <lookup-type> t2
+    where t2 := <lookup-node> (position, ast)
+
+  editor-hover:
+    (c@Call(_, _), position, ast, path, project-path) -> <get-doc> <lookup-function> qid
+    where Call(qid, _) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (f@FieldAccess(_, _), position, ast, path, project-path) -> <get-doc> <lookup-property> (<type-of> e, x)
+    where FieldAccess(e, x) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (c@MethodCall(_, _, _), position, ast, path, project-path) -> <get-doc> <lookup-method> (<type-of> e, x)
+    where MethodCall(e, x, _) := <lookup-node> (position, ast)
+
+  editor-hover:
+    (e, position, ast, path, project-path) -> <pp-mobl-type> t
+    where t := <type-of> <lookup-node> (position, ast)

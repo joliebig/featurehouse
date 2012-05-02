@@ -1,0 +1,467 @@
+module generation/action
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/MoBL
+  lib/editor-common
+  desugar
+  generation/emit
+  generation/server
+  generation/ui
+  generation/cps-lift
+  generation/cps-action
+  generation/sql
+  generation/data
+  generation/compile
+  generation/server
+  rename
+  declare
+  lookup
+  util
+  editor/editor
+  mobl
+  optimize/optimize
+
+strategies
+
+  module-to-js =
+    (?Module(qid, def*) <+ ?Application(qid, def*) <+ ?ServerApplication(qid, _, def*))
+    ; entities := <filter(?Entity(_, _, _, _))> def*
+    ; rest := <filter(not(?Entity(_, _, _, _) <+ ?Import(_)))> def*
+    ; to-import := <concat; make-set> [<filter(not(?Import(_))); collect-om(?QId(<id>, _)); filter(not(?qid))> def*, <filter(?Import(<id>))> def*]
+    ; <map(import-to-js)> to-import
+    ; <filter(definition-to-js <+ where(?<id>#(_); not(string-starts-with(|"External"))); not(?MiddlewareUse(_) <+ ?DynamicImport(_) <+ ?Load(_) <+ ?Resource(_) <+ ?Mixin(_) <+ ?StyleVarDecl(_, _) <+ ?StyleMixin(_, _, _, _) <+ ?Style(_, _, _)); emit-tl-statement)> rest
+    ; <entities-to-js> entities
+
+strategies
+
+  import-to-js :
+    qid -> <id>
+  where not(ServerContext)
+
+  definition-to-js :
+    Load(path@Path(part*)) -> <id>
+    where not(ServerContext)
+    with path-str := <path-to-string> path
+    where not(OptimizedMode; <string-ends-with(|".js") <+ string-ends-with(|".css")> path-str; not(<string-starts-with(|"http://")> path-str))
+    with <cut-off-last-element; separate-by(|"/"); <concat-strings> [<OutputPath>, "/"|<id>]; ensure-existing-dir> part*
+       ; <copy-file> (<resolve-file> path-str, $[[<OutputPath>]/[path-str]])
+       ; <refresh-workspace-file> $[[<OutputPath>]/[path-str]]
+
+  definition-to-js :
+    Resource(path@Path(part*)) -> <id>
+    with path-str := <path-to-string> path
+    where not(OptimizedMode; <string-ends-with(|".js")> path-str; not(<string-starts-with(|"http://")> path-str))
+    with <cut-off-last-element; separate-by(|"/"); <concat-strings> [<OutputPath>, "/"|<id>]; ensure-existing-dir> part*
+       ; <copy-file> (<resolve-file> path-str, $[[<OutputPath>]/[path-str]])
+       ; <refresh-workspace-file> $[[<OutputPath>]/[path-str]]
+
+  path-to-string :
+    Path(s*) -> <separate-by(|"/"); concat-strings> s*
+
+  path-to-string :
+    QuotedPath(s) -> <un-double-quote> s
+
+  path-to-string :
+    AbsolutePath(s*) -> <separate-by(|"/"); !["/"|<id>]; concat-strings> s*
+
+  definition-to-js :
+    VarDecl(qid, t, e) -> <statement-to-js; emit>
+
+  definition-to-js :
+    VarDeclInferred(qid, e) -> <statement-to-js; emit>
+
+  definition-to-js =
+    function-to-js
+    ; emit
+
+  fargs-to-js =
+    filter(farg-to-js)
+    ; separate-by(!", ")
+    ; concat-strings
+
+  farg-to-js :
+    FArg(x, _) -> x
+
+  farg-to-js :
+    FArgOptional(x, _, _) -> x
+
+  fargs-to-init-js =
+    map(farg-to-init-js)
+    ; concat-strings
+
+  farg-to-init-js :
+    FArg(_, _) -> ""
+
+  // TODO: This assumes that the expressions are all synchronous, needs to be checked!
+
+  function-to-js :
+    fn@SyncFunction(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n\n"]
+    where not(<fetch(?ServiceAnno(_, _) <+ ?SocketEventAnno(_))> manno*)
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  function-to-js :
+    fn@Function(manno*, qid, _, _, _) -> <concat-strings> [varname, " = ", <function-to-js-exp> fn, ";\n\n"]
+    where not(<fetch(?ServiceAnno(_, _) <+ ?SocketEventAnno(_))> manno*)
+    with if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+
+  function-to-js-exp :
+    SyncFunction(_, qid, farg*, rt, stat*) ->
+     $[function([args]) {
+          var __this = this;
+         [stats]
+       }]
+    where not(ServerContext)
+    with qids := <qid-to-js> qid
+       ; args := <fargs-to-js> farg*
+       ; stats := <statements-to-js> stat*
+
+  function-to-js-exp :
+    Function(_, qid, farg*, rt, stats) ->
+    $[function([args]) {
+        var __this = this;
+        [stats2]
+      }]
+    where not(ServerContext)
+    with qids := <qid-to-js> qid
+       ; args := <filter(farg-to-js); <concat> [<id>, ["callback"]]; separate-by(!", "); concat-strings> farg*
+       ; stats2 := <cps-list-all-expressions; <concat> [<id>, [$[if(callback && callback.apply) callback(); return;]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> stats
+
+  function-to-js-exp :
+    AnonymousFunction(farg*, rt, stats) ->
+    $[function([args]) {
+        var __this = this;
+        [stats2]
+      }]
+    where not(ServerContext)
+    with args := <filter(farg-to-js); <concat> [<id>, ["callback"]]; separate-by(!", "); concat-strings> farg*
+       ; stats2 := <cps-list-all-expressions; <concat> [<id>, [$[if(callback && callback.apply) callback(); return;]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> stats
+
+  function-to-js-exp :
+    StaticSyncFunction(_, qid, farg*, rt, stat*) ->
+     $[function([args]) {
+         [stats]
+       }]
+    where not(ServerContext)
+    with qids := <qid-to-js> qid
+       ; args := <fargs-to-js> farg*
+       ; stats := <statements-to-js> stat*
+
+  function-to-js-exp :
+    StaticFunction(_, qid, farg*, rt, stats) ->
+    $[function([args]) {
+        [stats2]
+      }]
+    where not(ServerContext)
+    with qids := <qid-to-js> qid
+       ; args := <filter(farg-to-js); <concat> [<id>, ["callback"]]; separate-by(!", "); concat-strings> farg*
+       ; stats2 := <cps-list-all-expressions; <concat> [<id>, [$[if(callback && callback.apply) callback(); return;]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> stats
+
+rules // Statements
+
+  statements-to-js =
+    map(statement-to-js); separate-by(!"\n"); concat-strings
+
+  statement-to-js =
+    spec-stat-to-js <+ stat-to-js <+ debug(!"Could not translate statement: "); fail
+
+  spec-stat-to-js = fail
+
+  stat-to-js :
+    ExpStat(e) -> $[[es];]
+    with es := <expression-to-js> e
+
+  stat-to-js :
+    Return(e) -> $[return [es];]
+    with es := <expression-to-js> e
+
+  stat-to-js :
+    Return() -> $[return null;]
+
+  stat-to-js :
+    ScreenReturn(e) -> $[screenCallback([es]);
+                         return;]
+    with es := <expression-to-js> e
+
+  stat-to-js :
+    VarDecl(x, t, e) -> $[var [x] = [<expression-to-js> e];
+]
+    where <is-string> x
+
+  stat-to-js :
+    VarDeclInferred(x, e) -> $[var [x] = [<expression-to-js> e];
+]
+    where <is-string> x
+
+  // Globals
+  stat-to-js :
+    VarDecl(qid@QId(_, _), t, e) -> $[[<qid-to-js> qid] = mobl.ref([<expression-to-js> e]);
+]
+
+  stat-to-js :
+    VarDeclInferred(qid@QId(_, _), e) -> $[[<qid-to-js> qid] = mobl.ref([<expression-to-js> e]);
+]
+
+  stat-to-js :
+    Block(stat*) ->
+    $[{
+        [<statements-to-js> stat*]
+      }]
+
+  stat-to-js :
+    SyncFunction(_, _, _, _, _) -> <function-to-js>
+
+  stat-to-js :
+    Function(_, _, _, _, _) -> <function-to-js>
+
+  stat-to-js :
+    If(e, true-stat, false-stat) -> <concat-strings> ["if(", <expression-to-js> e, ") ", <statement-to-js> true-stat, " else ", <statement-to-js> false-stat]
+
+  stat-to-js :
+    For(lvalue, _, e, stat*) ->
+      $[var [coll] = [<expression-to-js> e];
+        var [length] = [coll].length;
+        for(var [i] = 0; [i] < [length]; [i]++) {
+          [vardecls]
+          [assigns]
+          [<statements-to-js> stat*]
+        }]
+    with coll := <newname> "coll"
+       ; length := <newname> "length"
+       ; i := <newname> "i"
+       ; vardecls := <map(!$[var [<id>]; ]); concat-strings> <lvalue-vars> lvalue
+       ; assigns := <desugar-all; (map(statement-to-js); concat-strings <+ statement-to-js)> Assignment(lvalue, MethodCall(Var(coll), "get", [Var(i)]))
+
+  stat-to-js :
+    While(e, stat*) ->
+      $[while([<expression-to-js> e]) {
+          (function() {
+            [<statements-to-js> stat*]
+          }());
+        }]
+
+  stat-to-js :
+    Assignment(qid, e) -> $[[<qid-to-js> qid].set([<expression-to-js> e]);]
+    where <is-ref> qid
+
+  stat-to-js :
+    Assignment(qid, e) -> $[[<qid-to-js> qid] = [<expression-to-js> e];]
+    where <is-string> qid
+    where not(<is-ref> qid)
+
+  stat-to-js :
+    Assignment(LFieldAccess(le, x), e) -> $[[<exp-to-js> le].[x] = [<expression-to-js> e];]
+
+  lvalue-to-js :
+    x -> x
+    where is-string
+
+  lvalue-to-js :
+    QId(_, _) -> <qid-to-js>
+
+  lvalue-to-js :
+    LFieldAccess(le, x) -> $[[<exp-to-js> le].[x]]
+
+rules // Expressions
+
+  expression-to-js =
+    spec-exp-to-js <+ exp-to-js <+ debug(!"Could not translate: "); fail
+
+  spec-exp-to-js = fail
+
+  ref-expression-to-js =
+    ref-exp-to-js <+ !$[mobl.ref([<expression-to-js>])]
+
+  exp-to-js :
+    String(s) -> s
+    where not(<string-starts-with(|"\"\"\"")> s)
+
+  exp-to-js =
+    ?String(<id>)
+    ; where(string-starts-with(|"\"\"\""))
+    ; string-replace(|"\n", "\\n")
+    ; string-replace(|"\"\"\"", "")
+    ; string-replace(|"\"", "\\\"")
+    ; <concat-strings> ["\"", <id>, "\""]
+
+  exp-to-js :
+    Num(n) -> n
+
+  exp-to-js :
+    True() -> $[true]
+
+  exp-to-js :
+    False() -> $[false]
+
+  exp-to-js :
+    This() -> $[__this]
+
+  exp-to-js :
+    Null() -> $[null]
+
+  exp-to-js :
+    Tuple(e, []) -> <concat-strings> ["new mobl.Tuple(", <expression-to-js> e, ")"]
+
+  exp-to-js :
+    Tuple(e, e*) -> <concat-strings> ["new mobl.Tuple(", <expression-to-js> e, ", ", <map(expression-to-js); separate-by(!", "); concat-strings> e*, ")"]
+    where not([] := e*)
+
+  exp-to-js :
+    List(e*) -> <concat-strings> ["[", <map(expression-to-js); separate-by(!", "); concat-strings> e*, "]"]
+
+  exp-to-js :
+    Not(e) -> $[![<expression-to-js> e]]
+
+  exp-to-js :
+    Var(qid) -> <qid-to-js> qid
+    where not(<is-ref> qid)
+
+  exp-to-js :
+    Var(qid) -> $[[<qid-to-js> qid].get()]
+    where <is-ref> qid
+
+  ref-exp-to-js :
+    Var(qid) -> <qid-to-js> qid
+    where <is-ref> qid
+
+  exp-to-js :
+    Var(qid) -> $[[<qid-to-js> qid].get()]
+    where <is-ref> qid
+
+  exp-to-js :
+    Call(qid, e*) -> $[[<qid-to-js> qid]([args])]
+    where not(<lookup-type> SimpleType(qid))
+    where not(<is-ref> qid)
+    with args := <arguments-to-js; separate-by(!", "); concat-strings> e*
+
+  exp-to-js :
+    Call(qid, e*) -> $[[<qid-to-js> qid].get()([args])]
+    where <is-ref> qid
+    with args := <arguments-to-js; separate-by(!", "); concat-strings> e*
+
+  exp-to-js :
+    Call(qid, named-e*) -> $[new [<qid-to-js> qid]({[propvals]})]
+    with propvals := <map(\ NamedExp(x, e) -> $['[x]': [<expression-to-js> e]] \); separate-by(!", "); concat-strings> named-e*
+
+  exp-to-js :
+    MethodCall(e, x, e*) -> $[[es].[x]([args])]
+    with args := <map(expression-to-js); separate-by(!", "); concat-strings> e*
+       ; es := <expression-to-js> e
+
+  ref-exp-to-js :
+    Indexer(e, idxe) -> $[mobl.ref([es], [idxes])]
+    with es := <ref-expression-to-js> e
+       ; idxes := <expression-to-js> idxe
+
+  exp-to-js :
+    Indexer(e, idxe) -> ${{es}[{idxes}]}
+    with es := <expression-to-js> e
+       ; idxes := <expression-to-js> idxe
+
+  exp-to-js :
+    CollectionCons(QId("mobl", "Collection"), _, e*) -> $[new persistence.LocalQueryCollection($[$[args]$]$)]
+    with args := <map(expression-to-js); separate-by(!", "); concat-strings> e*
+
+  exp-to-js :
+    CollectionCons(QId("mobl", "Array"), _, e*) -> $[$[$[args]$]$]
+    with args := <map(expression-to-js); separate-by(!", "); concat-strings> e*
+
+  exp-to-js :
+    CollectionCons(QId("mobl", "Map"), _, e*) -> $[new mobl.Map()]
+
+  exp-to-js :
+    EntityCons(SimpleType(qid), propval*) -> $[new [<qid-to-js> qid]({[propvals]})]
+    with propvals := <map(\ PropVal(x, e) -> $['[x]': [<expression-to-js> e]] \); separate-by(!", "); concat-strings> propval*
+
+  ref-exp-to-js :
+    FieldAccess(e, x) -> $[mobl.ref([es], '[x]')]
+    with es := <ref-expression-to-js> e
+
+  exp-to-js :
+    FieldAccess(e, x) -> $[[es].[x]]
+    with es := <expression-to-js> e
+
+  ref-exp-to-js :
+    Brackets(e) -> $[([es])]
+    with es := <ref-expression-to-js> e
+
+  exp-to-js :
+    Brackets(e) -> $[([es])]
+    with es := <expression-to-js> e
+
+  exp-to-js :
+    BinMethodCall(e1, op, e2) -> $[[e1s] [op] [e2s]]
+    with e1s := <expression-to-js> e1
+       ; e2s := <expression-to-js> e2
+
+  exp-to-js :
+    RegExp(r, mod) -> $[/[<pp-mobl-string; trim-whitespace> r]/[mod]]
+
+  exp-to-js :
+    Choice(e, e-true, e-false) -> $[[<expression-to-js> e] ? [<expression-to-js> e-true] : [<expression-to-js> e-false]]
+
+  exp-to-js :
+    Callback(stat*) -> $[function(event, callback) {
+                           if(event && event.stopPropagation) event.stopPropagation();
+                           [<cps-list-all-expressions; <concat> [<id>, [$[if(callback && callback.apply) callback(); return;]]]; cps-statements <+ debug(!"Could not translate to stats: "); fail> stat*]
+                         }]
+
+
+  exp-to-js :
+    AnonymousControl(farg*, elems) ->
+    $[function([fargs]) {
+        var [root] = $("<span>");
+        var subs__ = new mobl.CompSubscription();
+        [body]
+        return subs__;
+      }]
+    with {| InControl
+          : rules ( InControl := 1 )
+          ; root := <newname> "root"
+          ; fargs :=  <filter(farg-to-js); <concat> [<id>, ["elements", "callback"]]; separate-by(!", "); concat-strings> farg*
+          ; body := <elems-to-js-callback(|root)> elems
+          |}
+
+  exp-to-js :
+    AnonymousFunction(farg*, rt, stat*) -> <function-to-js-exp>
+
+
+strategies
+
+  arguments-to-js :
+    arg* -> <map(expression-to-js)> arg*
+    /*with
+      {| Arg
+       : normal-args := <filter(not(?NamedExp(_,_)); expression-to-js <+ rules ( Arg :+= <id>); fail )> arg*
+       ; named := <bagof-Arg>
+       |}
+       ; named-args := <map(\ NamedExp(x, e) -> $['[x]': [<expression-to-js> e]] \)> named*/
+
+  ref-arguments-to-js :
+    arg* -> <map(ref-expression-to-js)> arg*
+    /*with
+      {| Arg
+       : normal-args := <filter(not(?NamedExp(_,_)); ref-expression-to-js <+ rules ( Arg :+= <id>); fail )> arg*
+       ; named := <bagof-Arg>
+       |}
+       ; named-args := <map(\ NamedExp(x, e) -> $['[x]': [<ref-expression-to-js> e]] \)> named*/
+
+rules // util
+  qid-to-js :
+    s -> s
+    where is-string
+
+  qid-to-js :
+    QId(qid, x) -> $[[qids].[x]]
+    where not(ServerContext)
+    with qids := <qid-to-js> qid

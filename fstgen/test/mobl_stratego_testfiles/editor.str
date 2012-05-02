@@ -1,0 +1,175 @@
+module editor/editor
+
+imports
+  include/MoBL
+  analyze
+  mobl
+  check
+  desugar
+  pp
+  style
+  lib/editor-common
+  editor/resolve
+  editor/complete
+  editor/hover
+  generation/compile
+  generation/action
+  optimize/optimize
+  util
+
+rules
+
+
+  // Analyzes the current program, returning a tuple with errors, warnings, and notes;
+  // each a list of (term, message) tuples or simply (message) terms.
+  editor-analyze:
+    (ast, path, project-path) -> (ast2, errors, warnings, notes)
+    where not(Configuration(_) := ast)
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath := project-path
+              IsImported  : path )
+      ; if not(Configuration(_) := ast) then
+          setup-paths
+        end
+      ; ast2 := <analyze; capture-style-configs; store-result> ast
+      ; (Module(mod-name, _) := ast2 <+ Application(mod-name, _) := ast2 <+ ServerApplication(mod-name, _, _) := ast2 <+ Configuration(_) := ast2; mod-name := "")
+      ; rules ( CompilingModule := mod-name
+                CompilingFilename := path )
+      ; errors   := <collect-all(constraint-error, conc)> ast2
+      ; if not([] := errors) then
+          rules ( HasErrors := True() )
+          ; debug(!"Errors: ")
+        end
+      ; warnings := <collect-all(constraint-warning, conc)> ast2
+      ; notes    := <collect-all(constraint-note, conc)> ast2
+
+  editor-analyze:
+    (ast@Configuration(_), path, project-path) -> (ast, [], [], [])
+
+  // Prints the abstract syntax ATerm of a selection.
+  generate-aterm:
+    (selected, position, ast, path, project-path) -> (filename, result)
+    with
+      filename := <guarantee-extension(|"aterm")> path;
+      result   := selected // we just return the input term
+
+rules
+
+  editor-desugar :
+    (selected, position, ast, path, project-path) -> (filename, <desugar-all> ast2)
+    with
+            rules ( ProjectPath := project-path
+                    IsImported  : path )
+      ; setup-paths
+      ; ast2 := <analyze; store-result> ast
+      ; filename := <guarantee-extension(|"aterm")> "desugared"
+
+  format-code :
+    (selected, position, ast, path, project-path) -> (filename, <pp-mobl> selected)
+    with
+      filename := <guarantee-extension(|"mobl")> "formatted"
+
+rules
+
+  external deltree(|)
+  external confirm-dialog(|)
+
+  generate-artifacts:
+    (selected, position, ast, path, project-path) -> None() //(filename-html, result-html)
+    where not(HasErrors)
+    where not(Configuration(_) := ast)
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+      ; rules ( CompilingModule := mod-name )
+      ; <compile> ast
+
+  generate-artifacts:
+    (selected, position, Configuration(_), path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path )
+      ; setup-paths
+    where <readdir> project-path
+        ; list-loop(
+            if has-extension(|"mobl") then
+              where({ast:
+                ast := <parse-file> $[[project-path]/[<id>]]
+                ; if Application(_, _) := ast then
+                    <compile> ast
+                  end
+              })
+            end
+          )
+  generate-artifacts:
+    _ -> None() //(filename-html, result-html)
+    where HasErrors
+
+  editor-optimize :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+      ; rules ( CompilingModule := mod-name
+                OutputPath := <ReleaseOutputPath>)
+      ; <optimized-compile(|mod-name)> ast
+
+  editor-clean-project :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      rules ( ProjectPath := project-path )
+      ; setup-paths
+      ; try(
+          //<confirm-dialog> "Are you sure you want to clean the project, this will remove the output directories."
+          if <file-exists> <OutputPath> then
+              <deltree> <OutputPath>
+            end
+          ; if <file-exists> <ReleaseOutputPath> then
+              <deltree> <ReleaseOutputPath>
+            end
+          ; <refresh-workspace-file> <ProjectPath>
+       )
+
+  editor-rebuild-project :
+    (selected, position, ast, path, project-path) -> None()
+    with
+      // Ensure all dynamic rules are properly scoped
+      try(dr-scope-all-end)
+      ; dr-scope-all-start
+    with
+      rules ( ProjectPath     := project-path
+              CachedParseAst  : path -> ast )
+      ; setup-paths
+      ; if <file-exists> <OutputPath> then
+          <deltree> <OutputPath>
+        end
+    where <readdir> project-path
+        ; list-loop(
+            if has-extension(|"mobl") then
+              where({ast:
+                ast := <parse-file> $[[project-path]/[<id>]]
+                ; if Application(_, _) := ast then
+                    <compile> ast
+                  end
+              })
+            end
+          )

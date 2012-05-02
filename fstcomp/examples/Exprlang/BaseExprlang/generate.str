@@ -1,0 +1,210 @@
+module generate
+
+imports
+  libstratego-lib
+  libstratego-gpp
+  libstratego-aterm
+  include/Exprlang
+  lib/editor-common.generated
+  check
+
+rules
+
+  to-java:
+    Start(e*) -> 
+    $[package expression;
+
+      abstract class Expr {
+        // Feature Print
+        abstract String print();
+        // Feature Eval
+        abstract int eval();
+        // Feature Simplify
+        abstract int simplify();
+      }
+      
+      // Feature Val
+      class Val extends Expr {
+        int val;
+        Val(int n) {
+          val = n;
+        }
+        // Feature Print
+        String print() {
+          return String.valueOf(val);
+        }
+        // Feature Eval
+        int eval() {
+          return val;
+        }
+        // Feature Simplify
+        int simplify() {
+          return val;
+        }
+      }
+
+      // Feature Add
+      class Add extends Expr {
+        Expr a;
+        Expr b;
+        Add(Expr e1, Expr e2) {
+          a = e1;
+          b = e2;
+        }
+        // Feature Print
+        String print() {
+          return a.print() + "+" + b.print();
+        }
+        // Feature Eval
+        int eval() {
+          return a.eval() + b.eval();
+        }
+        // Feature Simplify
+        int simplify() {
+          if (a == 0) {
+            return b;
+          elseif (b == 0) {
+            return a;
+          }
+        }
+      }
+
+      // Feature Sub
+      class Sub extends Expr {
+        Expr a;
+        Expr b;
+        Sub(Expr e1, Expr e2) {
+          a = e1;
+          b = e2;
+        }
+        // Feature Print
+        String print() {
+          return a.print() + "-" + b.print();
+        }
+        // Feature Eval
+        int eval() {
+          return a.eval() - b.eval();
+        }
+        // Feature Simplify
+        int simplify() {
+          if (a == 0) {
+            return (-b);
+          elseif (b == 0) {
+            return a;
+          }
+        }
+      }
+
+      // Feature Mul
+      class Mul extends Expr {
+        Expr a;
+        Expr b;
+        Mul(Expr e1, Expr e2) {
+          a = e1;
+          b = e2;
+        }
+        // Feature Print
+        String print() {
+          return "(" + a.print() + "*" + b.print() + ")";
+        }
+        // Feature Eval
+        int eval() {
+          return a.eval() * b.eval();
+        }
+        // Feature Simplify
+        int simplify() {
+          if (a == 1) {
+            return b;
+          elseif (b == 1) {
+            return a;
+          }
+        }
+      }
+      
+      // Feature Div
+      class Div extends Expr {
+        Expr a;
+        Expr b;
+        Div(Expr e1, Expr e2) {
+          a = e1;
+          b = e2;
+        }
+        // Feature Print
+        String print() {
+          return a.print() + "/" + b.print();
+        }
+        // Feature Eval
+        int eval() {
+          return a.eval() / b.eval();
+        }
+        // Feature Simplify
+        int simplify() {
+          if (b == 1) {
+            return a;
+          } else {
+            return a / b;
+          }
+        }
+      }
+
+      // Feature Mod
+      class Mod extends Expr {
+        Expr a;
+        Expr b;
+        Mod(Expr e1, Expr e2) {
+          a = e1;
+          b = e2;
+        }
+        // Feature Print
+        String print() {
+          return a.print() + "%" + b.print();
+        }
+        // Feature Eval
+        int eval() {
+          return a.eval() % b.eval();
+        }
+        // Feature Simplify
+        int simplify() {
+          if (b == 1) {
+            return a;
+          } else {
+            return a % b;
+          }
+        }
+      }
+      
+      class Main {
+        static void main(String[a] args) {
+          [e'*]
+        }
+      }
+    ]
+    with
+      a := "[]";
+      e'* := <to-java> e*
+
+  to-java:
+    Assign(x, y*) -> $[Expr [x] = [y'*];
+    ]
+    with
+      y'* := <to-java> y*
+
+  to-java:
+    Int(i) -> $[new Int([i])]
+
+  to-java:
+    Type(t) -> t
+
+  to-java:
+    t* -> <map(to-java)> t*
+
+  to-java:
+    VarDec(x, Type(t)) -> $[]  
+
+  to-java:
+    String(s) -> $[new String([s])]
+
+  to-java:
+    Var(i) -> $[[i]]
+      where
+      <bagof-GetVar> i

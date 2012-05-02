@@ -1,0 +1,9 @@
+module generate
+
+rules
+
+  to-java:
+    Simplify(t*) -> $[System.out.println(([t'*]).simplify());
+    ]
+    with
+      t'* := <to-java> t*

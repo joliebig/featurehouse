@@ -179,6 +179,26 @@
 		</antcall>
 	</target>
 
+	<target name="testStratego">
+		<antcall target="testGrammar">
+			<param name="language" value="stratego" />
+			<param name="parserClass" value="StrategoParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.str" />
+		</antcall>
+	</target>
+
+	<target name="testSDF">
+		<antcall target="testGrammar">
+			<param name="language" value="sdf" />
+			<param name="parserClass" value="SDFParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.sdf" />
+		</antcall>
+	</target>
+
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
 

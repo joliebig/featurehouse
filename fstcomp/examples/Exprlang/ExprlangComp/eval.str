@@ -1,0 +1,19 @@
+module eval
+imports
+	 include/Exprlang
+	strategies 
+
+  eval =
+    innermost(EvalAdd) 
+
+  eval =
+    innermost(EvalSub) rules 
+
+  EvalAdd:
+    Add(Int(i), Int(j)) -> Int(<addS>(i,j)) 
+    
+  EvalAdd:
+    Add(String(i), String(j)) -> String(<conc-strings>(i,j)) 
+
+  EvalSub: 
+    Sub(Int(i), Int(j)) -> Int(<subtS>(i,j))

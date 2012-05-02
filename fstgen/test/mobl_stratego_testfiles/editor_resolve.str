@@ -1,0 +1,84 @@
+module editor_resolve
+
+imports
+  include/MoBL
+  analyze
+  mobl
+  lib/editor-common
+  lookup
+  normalize
+  declare
+  type
+  rename
+  generation/compile
+  util
+  style // fehlender Import
+
+rules
+
+  editor-resolve:
+    (Import(qid), position, ast, path, project-path) -> <parse-file> <resolve-file> <concat-strings> [<qid-to-path> qid, ".mobl"]
+
+  editor-resolve:
+    (t@SimpleType(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> t
+
+  editor-resolve:
+    (t@GenericType(qid, _), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> t
+
+  editor-resolve:
+    (Call(qid, _), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-function <+ lookup-screen|qid)> qid
+
+  editor-resolve:
+    (MethodCall(e, x, _), position, ast, path, project-path) -> target
+    where (   SimpleType(qid) := <type-of> e
+           <+ GenericType(qid, _) := <type-of> e)
+          ; ?t
+    where target := <ensure-origin(lookup-method|qid)> (t, x)
+
+  editor-resolve:
+    (FieldAccess(e, x), position, ast, path, project-path) -> target
+    where (   SimpleType(qid) := <type-of> e
+           <+ GenericType(qid, _) := <type-of> e)
+          ; ?t
+    where target := <ensure-origin(lookup-property|qid)> (t, x)
+
+  editor-resolve:
+    (QId(_, _), position, ast, path, project-path) -> <editor-resolve> (parent, <cut-off-last-element> position, ast, path, project-path)
+    where parent := <parent-at-position(|position)> ast
+
+  // For actual variables
+  editor-resolve:
+    (Var(x), position, ast, path, project-path) -> target
+    where target := <VarLookup> x
+
+  // For controls
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-control|qid)> qid
+
+  // For entities
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-type|qid)> SimpleType(qid)
+
+  // For entities
+  editor-resolve:
+    (Var(qid), position, ast, path, project-path) -> target
+    where target := <ensure-origin(lookup-style|qid)> qid
+
+rules
+
+  ensure-origin(lookup|qid) :
+    node -> target
+    where
+      lookup-target := <lookup> node
+      ; if QId(qid2, _) := qid; not(<origin-term> lookup-target) then
+          <parse-file; externalize-module> <resolve-file> $[[<qid-to-path> qid2].mobl]
+          ; <declare-all> Module(qid2, <id>)
+          ; target := <lookup> node
+        else
+          target := lookup-target
+        end

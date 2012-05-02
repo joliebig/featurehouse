@@ -1,0 +1,334 @@
+module generation/cps-lift
+
+imports
+  include/MoBL
+  rename
+  declare
+  lookup
+  type
+
+strategies
+
+  cps-list-all-expressions =
+    cps-lift-expressions
+    ; action-scope(rename-all)
+
+  cps-lift-expressions =
+       cps-lift-exprs
+    <+ ?[a|k]
+       ; ![a|<cps-lift-expressions> k]
+
+
+  cps-lift-expressions :
+    [] -> []
+
+  cps-lift-exprs :
+    [Return(e)|stats] -> <concat> [stats2, [Return(e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [ScreenReturn(e)|stats] -> <concat> [stats2, [ScreenReturn(e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [VarDecl(x, t, e)|stats] -> <concat> [stats2, [VarDecl(x, t, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [VarDeclInferred(x, e)|stats] -> <concat> [stats2, [VarDeclInferred(x, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [Assignment(lvalue, e)|stats] -> <concat> [stats2, [Assignment(lvalue, e2)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [ExpStat(e)|stats] -> <concat> [stats2, <cps-lift-expressions> stats]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  //  Feature Async - Start
+  cps-lift-exprs :
+    [Async(stat*)|stats] ->
+    [Async(<cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+  //  Feature Async - Ende
+  
+  cps-lift-exprs :
+    [If(e, true-stat, false-stat)|stats] ->
+    <concat> [stats2, [If(e2, Block(<cps-lift-expressions> [true-stat]), Block(<cps-lift-expressions> [false-stat]))|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [Block(stat*)|stats] ->
+    [Block(<cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+
+  cps-lift-exprs :
+    [For(x, t, e, stat*)|stats] ->
+    <concat> [stats2, [For(x, t, e2, <cps-lift-expressions> stat*)|<cps-lift-expressions> stats]]
+    where not(<is-sync> e)
+    with {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+
+  cps-lift-exprs :
+    [If(e, true-stat, false-stat)|stats] ->
+    [If(e, <cps-lift-expressions; ?[<id>]> [true-stat], <cps-lift-expressions; !Block(<id>)> [false-stat])|<cps-lift-expressions> stats]
+    where <is-sync> e
+
+  cps-lift-exprs :
+    [For(x, t, e, stat*)|stats] ->
+    [For(x, t, e, <cps-lift-expressions> stat*)|<cps-lift-expressions> stats]
+    where <is-sync> e
+
+rules
+
+  cps-lift-args :
+    e* -> (exps, <concat> stats)
+    where (exps, stats) := <map(cps-lift-expression-capture-exps); unzip> e*
+
+  cps-lift-expression-capture-exps :
+    e -> (exp, stats)
+    where	stats := <cps-lift-expression> e
+        ; exp := <Exp>
+
+rules
+
+  cps-lift-expression :
+    e -> []
+    where is-sync
+    with rules ( Exp := e)
+
+  cps-lift-expression :
+    NamedExp(x, e) -> stats
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; rules ( Exp := NamedExp(x, e2) )
+
+  cps-lift-expression :
+    e@Call(qid, e*) -> <concat> [stats, [VarDeclInferred(v, Call(qid, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    e@EntityCons(qid, propval*) -> <concat> [stats, [VarDeclInferred(v, EntityCons(qid, propval2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          //: stats := <map(?PropVal(_, <id>); cps-lift-expression); concat> propval*
+          : (e2*, stats) := <map(?PropVal(_, <id>)); cps-lift-args> propval*
+          ; propval2* := <zip(\ (prop, val) -> PropVal(prop, val) \)> (<map(?PropVal(<id>, _))> propval*, e2*)
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    MethodCall(e, x, e*) -> <concat> [stats2, stats, [VarDeclInferred(v, MethodCall(e2, x, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Tuple(e, e*) -> <concat> [stats2, stats, [VarDeclInferred(v, Tuple(e2, e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e
+          ; e2 := <Exp>
+          |}
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    List(e*) -> <concat> [stats, [VarDeclInferred(v, List(e2*))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    e@CollectionCons(gt, t, e*) -> <concat> [stats, [VarDeclInferred(v, CollectionCons(gt, t, e2*))]]
+    where not(is-sync)
+    with v := <newname> "tmp"
+       ; {| Exp
+          : (e2*, stats) := <cps-lift-args> e*
+          |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    BinMethodCall(e1, op, e2) -> <concat> [stats1, stats2, [VarDeclInferred(v, BinMethodCall(e3, op, e4))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e3 := <Exp>
+         |}
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e2
+          ; e4 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Choice(e1, e-true1, e-false1) -> <concat> [stats1, stats2, stats3, [VarDeclInferred(v, Choice(e2, e-true2, e-false2))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; {| Exp
+          : stats2 := <cps-lift-expression> e-true1
+          ; e-true2 := <Exp>
+         |}
+       ; {| Exp
+          : stats3 := <cps-lift-expression> e-false1
+          ; e-false2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    FieldAccess(e1, x) -> <concat> [stats1, [VarDeclInferred(v, FieldAccess(e2, x))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+  cps-lift-expression :
+    Not(e1) -> <concat> [stats1, [VarDeclInferred(v, Not(e2))]]
+    with v := <newname> "tmp"
+       ; {| Exp
+          : stats1 := <cps-lift-expression> e1
+          ; e2 := <Exp>
+         |}
+       ; rules ( Exp := Var(v) )
+
+strategies
+
+  is-sync = ?Num(_)
+  is-sync = ?True()
+  is-sync = ?Null()
+  is-sync = ?False()
+  is-sync = ?String(_)
+  is-sync = ?Var(_)
+  is-sync = ?Callback(_)
+  is-sync = ?AnonymousControl(_, _)
+  is-sync = ?AnonymousFunction(_, _, _)
+  is-sync = ?This()
+
+  is-sync =
+    ?BinMethodCall(e1, _, e2)
+    ; <is-sync> e1
+    ; <is-sync> e2
+
+  is-sync =
+    ?NamedExp(_, e)
+    ; <is-sync> e
+
+  is-sync =
+    ?FieldAccess(e, x)
+    ; <is-sync> e
+
+  is-sync =
+    ?Brackets(e)
+    ; <is-sync> e
+
+  is-sync =
+    ?Call(qid, e*)
+    ; (
+         ExternalSyncFunction(_, _, _, _) := <lookup-function> qid
+      <+ <lookup-type> SimpleType(qid)
+      )
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Tuple(e, e*)
+    ; <is-sync> e
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Choice(e, e-true, e-false)
+    ; <is-sync> e
+    ; <is-sync> e-true
+    ; <is-sync> e-false
+
+  is-sync = ?RegExp(_, _)
+
+  is-sync =
+    ?List(e*)
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?Not(e)
+    ; <is-sync> e
+
+  is-sync =
+    ?MethodCall(e, x, e*)
+    ; <is-sync> e
+    ; where(<map(is-sync)> e*)
+    ; <lookup-method> (<type-of> e, x)
+    ; ?ExternalSyncMethod(_, _, _, _)
+
+  is-sync =
+    ?CollectionCons(_, _, e*)
+    ; <map(is-sync)> e*
+
+  is-sync =
+    ?EntityCons(t, propval*)
+    ; <map(?PropVal(_, <id>); is-sync)> propval*
+
+  is-sync =	?Function(_, _, _, _, _)
+  is-sync =	?SyncFunction(_, _, _, _, _)
+
+  /*is-sync = ?Control(_, _, _, _)
+  is-sync = ?Screen(_, _, _, _, _)
+  is-sync =	?Entity(_, _, _, _)
+  is-sync =	?Service(_, _, _)
+  is-sync =	?Load(_)
+  is-sync =	?Resource(_)
+  is-sync =	?Javascript(_)
+  is-sync =	?Type(_, _, _, _)
+
+  is-sync =
+    ?c#(_)
+    ; where(<string-starts-with(|"External")> c)
+*/

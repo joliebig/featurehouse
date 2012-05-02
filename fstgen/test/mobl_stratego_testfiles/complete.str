@@ -1,0 +1,165 @@
+module editor/complete
+
+imports
+  include/MoBL
+  analyze
+  mobl
+  lib/editor-common
+  lookup
+  declare
+  rename
+  type
+  pp
+  normalize
+  desugar
+  style
+
+rules
+
+  editor-complete :
+    (t, position, ast, path, project-path) -> proposals
+    where ast' := <analyze; capture-style-configs> ast
+    where {| Proposals, CompletionVars, Parents
+           : rules ( Parents := [] )
+           ; <alltd({props, stack:
+                 editor-complete-proposal
+                 ; ?props
+                 ; rules ( Proposals := props )
+              <+ stack := [<id>|<Parents>]
+                 ; rules ( Parents := stack )
+                 ; fail
+             })> ast'
+           ; proposals := <Proposals>
+           |}
+
+  editor-complete-proposal :
+    SimpleType(COMPLETION(_)) -> proposals
+    where
+      all-types := <get-all-types>;
+      proposals    := <map(type-name-to-proposal); flatten-list> all-types
+
+  editor-complete-proposal :
+    FieldAccess(e, COMPLETION(_)) -> [prop*, method*]
+    where t := <type-of> e
+        ; method* := <get-all-methods; map(\ meth@c#([_, x, args|_]) -> (<concat> [[x, "("], <filter(?FArg(<id>, _)); separate-by(!", ")> args, [")"]], <get-doc> meth) \)> t
+        ; if GenericType(QId("mobl", "Type"), _) := t then
+            prop* := []
+          else
+            prop* := <get-all-properties; map(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> t
+          end
+
+  editor-complete-proposal :
+    Var(COMPLETION(_)) -> [type*, var*, function*, global-var*, styles*]
+    where var* := <CompletionVars>
+    where type* := <get-all-types; map(type-name-to-proposal); flatten-list>
+        ; function* := <get-all-functions; map(lookup-function; function-to-proposal); flatten-list>
+        ; global-var* := <get-all-global-vars; map(global-var-to-proposal); flatten-list>
+        ; styles* := <get-all-styles; map(global-var-to-proposal); flatten-list>
+
+  editor-complete-proposal :
+    QId(qid, COMPLETION(_)) -> [type*, function*]
+    where type* := <get-all-types; filter(?QId(qid, <id>)); map(type-name-to-proposal); flatten-list>
+        ; function* := <get-all-functions; filter(?QId(qid, _)); map(lookup-function; function-to-proposal-qid); flatten-list>
+
+  global-var-to-proposal :
+    QId(qid, x) -> [([<pp-mobl-qid> qid], ""), ([x], "")]
+
+  function-to-proposal :
+    f@ExternalFunction(_, qid@QId(_, x), args, _) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> f),
+      (<concat> [[x, "("], fargs2, [")"]], <get-doc> f),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs, [")"]], <get-doc> f),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs2, [")"]], <get-doc> f)
+    ]
+    with fargs := <filter(?FArg(_, _); farg-to-proposal); separate-by(!", ")> args
+    with fargs2 := <map(farg-to-proposal); separate-by(!", ")> args
+
+  function-to-proposal :
+    f@ExternalSyncFunction(manno*, qid, args, rt) -> <function-to-proposal> ExternalFunction(manno*, qid, args, rt)
+
+  function-to-proposal-qid :
+    f@ExternalFunction(_, qid@QId(_, x), args, _) -> (<concat> [[x, "("], fargs, [")"]], <get-doc> f)
+    with fargs := <map(farg-to-proposal); separate-by(!", ")> args
+
+  function-to-proposal-qid :
+    f@ExternalSyncFunction(manno*, qid, args, rt) -> <function-to-proposal-qid> ExternalFunction(manno*, qid, args, rt)
+
+  editor-complete-proposal :
+    StyleFieldAccess(_, COMPLETION(_)) -> [(["r"], "red component"), (["g"], "green component"), (["b"], "blue component")]
+    where
+      all-types := <get-all-types>;
+      proposals    := <map(type-name-to-proposal); flatten-list> all-types
+
+rules
+
+  editor-complete-proposal :
+    c#([COMPLETION(prefix), _]) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where <string-starts-with(|"Set")> c
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderAscending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderDescending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    OrderNonSpecific(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+  editor-complete-proposal :
+    PrefetchFilter(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
+    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
+        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
+
+rules
+
+  editor-complete-proposal :
+    MethodCall(e, COMPLETION(prefix), _) -> method*
+    where t := <type-of> e
+        ; method* := <get-all-methods; map(\ meth@c#([_, x|_]) -> ([x], <get-doc> meth) \)> t
+
+  // My guess is control call
+  editor-complete-proposal :
+    NOCONTEXT(COMPLETION(prefix)) -> control*
+    where control* := <get-all-controls; map(control-to-proposal <+ debug(!"Could not map to a proposal: "); fail); flatten-list>
+
+  control-to-proposal :
+    tpl@ExternalControl(_, qid@QId(_, x), args) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> tpl),
+      (<concat> [[x, "("], fargs2, [")"]], <get-doc> tpl),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs, [")"]], <get-doc> tpl),
+      (<concat> [[<pp-mobl-qid> qid, "("], fargs2, [")"]], <get-doc> tpl)
+    ]
+    with fargs := <filter(?FArg(_, _); farg-to-proposal); separate-by(!", ")> args
+    with fargs2 := <map(farg-to-proposal); separate-by(!", ")> args
+
+  control-to-proposal :
+    tpl@ExternalControl(_, x, args) -> [
+      (<concat> [[x, "("], fargs, [")"]], <get-doc> tpl)
+    ]
+    where <is-string> x
+    with fargs := <map(farg-to-proposal); separate-by(!", ")> args
+
+  farg-to-proposal :
+    FArg(x, _) -> x
+
+  farg-to-proposal :
+    FArgOptional(x, t, e) -> $[[x]=[<pp-mobl-exp> e]]
+    where not(SimpleType(QId("mobl", "Callback")) := t)
+
+  farg-to-proposal :
+    FArgOptional(x, SimpleType(QId("mobl", "Callback")), e) -> $[[x]={}]
+
+  type-name-to-proposal:
+    x -> ([x], "")
+    where is-string
+
+  type-name-to-proposal:
+    qid@QId(_, x) -> [([x], ""), ([<pp-mobl-qid> qid], "")]

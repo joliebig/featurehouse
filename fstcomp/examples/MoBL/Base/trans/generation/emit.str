@@ -1,0 +1,33 @@
+module generation/emit
+
+strategies
+
+  emit =
+    ?code
+    ; current := <Emitted <+ !"">
+    ; rules ( Emitted := <concat-strings> [current, code] )
+
+  emit-tl-statement =
+    ?stat
+    ; current := <EmittedStatements <+ ![]>
+    ; rules ( EmittedStatements := <concat> [current, [stat]] )
+
+  emit-css =
+    ?css
+    ; current := <EmittedCss <+ !"">
+    ; rules ( EmittedCss := <concat-strings> [current, css] )
+
+  get-all =
+       Emitted
+       ; rules ( Emitted := "")
+    <+ !""
+
+  get-all-css =
+       EmittedCss
+       ; rules ( EmittedCss := "")
+    <+ !""
+
+  get-all-tl-statements =
+       EmittedStatements
+       ; rules ( EmittedStatements := [])
+    <+ ![]

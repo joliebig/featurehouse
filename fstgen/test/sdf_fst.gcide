@@ -1,0 +1,413 @@
+options {
+	STATIC = false;
+	DEBUG_PARSER = false;
+}
+
+PARSER_BEGIN(SDFParser)
+package tmp.generated_sdf;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+public class SDFParser extends AbstractFSTParser
+{
+	public SDFParser(){}
+}
+
+PARSER_END(SDFParser)
+
+/*****************************************************************************
+ * DEFINITION OF THE LEXICAL ANALYZER                                        *
+ *****************************************************************************/
+/*****************************************************************************
+ * WHITE SPACE                                                               *
+ * These Tokens are ignored and not passed to the Parser                     *
+ *****************************************************************************/
+SPECIAL_TOKEN :
+	{ " " | "\t" | "\n" | "\r" | "\f" }
+/*****************************************************************************
+ * COMMENTS                                                                  *
+ *****************************************************************************/
+MORE :
+	{ "%%" : IN_SINGLE_LINE_COMMENT |
+	  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT |
+	  "/*" : IN_MULTI_LINE_COMMENT
+	}
+	<IN_SINGLE_LINE_COMMENT>
+		SPECIAL_TOKEN :
+			{ <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT }
+	<IN_FORMAL_COMMENT>
+		SPECIAL_TOKEN :
+			{ <FORMAL_COMMENT: "*/" > : DEFAULT }
+	<IN_MULTI_LINE_COMMENT>
+		SPECIAL_TOKEN :
+			{ <MULTI_LINE_COMMENT: "*/" > : DEFAULT }
+	<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+		MORE :
+			{ < ~[] > } /* matches any single character that is not in the
+						   empty set; it matches any single character */
+/*****************************************************************************
+ * RESERVED KEYWORDS AND LITERALS                                            *
+ *****************************************************************************/
+/*****************************************************************************
+ * MODULE DECLARATION                                                        *
+ * Keywords like "module" or "imports" are considered as Tokens and get a    *
+ * symbolic name like MODULE and IMPORTS                                     *
+ *****************************************************************************/
+TOKEN :
+	{ < MODULE: "module" > |
+	  < SPECIFICATION: "specification" > |
+	  < IMPORTS: "imports" > |
+	  < EXPORTS: "exports" > |
+	  < HIDDENS: "hiddens" >
+	}
+/*****************************************************************************
+ * GRAMMAR DECLARATION                                                       *
+ *****************************************************************************/
+TOKEN :
+	{ < SORTS: "sorts" > |
+	  < STARTSYMBOL: "context-free start-symbols" > |
+	  < CF: "CF" > |
+	  < LEX: "LEX" >
+	}
+/*****************************************************************************
+ * PRODUCTION DECLARATION                                                    *
+ *****************************************************************************/
+TOKEN :
+	{ < SYNTAX: "syntax" > |
+	  < VARIABLES: "variables" > |
+	  < LEXICALSYNTAX: "lexical syntax" > |
+	  < CFREESYNTAX: "context-free syntax"> |
+	  < LEXICALVARS: "lexical variables" > |
+	  < CONS: "cons" >
+	}
+/*****************************************************************************
+ * DISAMBIGUATION DECLARATION                                                *
+ *****************************************************************************/
+TOKEN :
+	{ < LEFT: "left" > |
+	  < ASSOC: "assoc" > |
+	  < AVOID: "avoid" > |
+	  < RIGHT: "right" > |
+	  < PREFER: "prefer" > |
+	  < BRACKET: "bracket" > |
+	  < REJECT: "reject" > |
+	  < NONASSOC: "non-assoc" > |
+	  < RECOVER: "recover" > |
+	  < DEPRECATED: "deprecated" > |
+	  < INDENTPADDING: "indentpadding" > |
+	  < PRIORITIES: "priorities" > |
+	  < CFREEPRIORITIES: "context-free priorities" > |
+	  < LEXICALRESTRICTIONS: "lexical restrictions" > |
+	  < CFREERESTRICTIONS: "context-free restrictions" >
+	}
+/*****************************************************************************
+ * LITERALS                                                                  *
+ *****************************************************************************/
+TOKEN :
+	{ < INTEGER_LITERAL:
+		<DECIMAL_LITERAL> (["l","L"])? |
+	  	<HEX_LITERAL> (["l","L"])? |
+	  	<OCTAL_LITERAL> (["l","L"])? > |
+	  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* > |
+	  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ > |
+	  < #OCTAL_LITERAL: "0" (["0"-"7"])* > |
+	  < FLOATING_POINT_LITERAL:
+    	(["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])? |
+    	"." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])? |
+    	(["0"-"9"])+ <EXPONENT> (["f","F","d","D"])? |
+    	(["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"] > |
+	  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ > |
+	  < CHARACTER_LITERAL:
+	  	"'" ( (~["'","\\","\n","\r"]) |
+			("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] |
+				  ["0"-"7"] ( ["0"-"7"] )? |
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) ) "'" > |
+	  < STRING_LITERAL:
+    	"\"" ( (~["\"","\\"]) |
+			 ("\\"
+				( ["n","t","b","r","f","u","\\","'","\""] |
+				  ["0"-"7"] ( ["0"-"7"] )? |
+				  ["0"-"3"] ["0"-"7"] ["0"-"7"] ) ) )* "\"" > |
+	  < CHARCLASS_LITERAL:
+		"\\" ( ["n","t","r"," ","\\","'","\""] |
+			   ["0"-"9"] ) >
+	}
+/*****************************************************************************
+ * IDENTIFIER                                                                *
+ * E.g. the regular expression ["a"-"z"] matches any lower characters        *
+ *****************************************************************************/
+TOKEN :
+	{ < IDENTIFIER: (<LETTER>|<DIGIT>)
+	                (<LETTER>|<DIGIT>|<MINUS>)* > |
+	  < LETTER: (<LCCHAR>|<UCCHAR>) > |
+	  < LCCHAR: [ "a"-"z" ] > |
+	  < UCCHAR: [ "A"-"Z" ] > |
+	  < DIGIT: [ "0"-"9" ] >
+	}
+/*****************************************************************************
+ * PARENTHESIS                                                               *
+ *****************************************************************************/
+TOKEN :
+	{ < LPAREN: "(" > |
+	  < RPAREN: ")" > |
+	  < LBRACE: "{" > |
+	  < RBRACE: "}" > |
+	  < LBRACKET: "[" > |
+	  < RBRACKET: "]" > |
+	  < DLBRACKET: "[[" > |
+	  < DRBRACKET: "]]" > |
+	  < LT: "<" > |
+	  < GT: ">" >
+	}
+/*****************************************************************************
+ * OPERATORS                                                                 *
+ *****************************************************************************/
+TOKEN :
+	{ < PLUS: "+" > |
+	  < MINUS: "-" > |
+	  < STAR: "*" > |
+	  < SLASH: "/" >
+	}
+/*****************************************************************************
+ * SEPARATORS                                                                *
+ *****************************************************************************/
+TOKEN :
+	{ < COMMA: "," > |
+	  < SEMICOLON: ";" > |
+	  < DDOT: ":" > |
+	  < DOT: "." > |
+	  < QUESTIONMARK: "?" > |
+	  < EXCLAMATIONMARK: "!" >
+	}
+/*****************************************************************************
+ * SPECIAL SIGNS                                                             *
+ *****************************************************************************/
+TOKEN :
+	{ < NUMBERSIGN: "#" > |
+	  < AT: "@" > |
+	  < DOLLAR: "$" > |
+	  < VERTICALLINE: "|" > |
+	  < TILDE: "~" > |
+	  < AMPERSAND: "&" > |
+	  < PERCENTAGE: "%" > |
+	  < CIRCUMFLEXACCENT: "^" > |
+	  < GRAVEACCENT: "`" > |
+	  < APOSTROPHE: "'" > |
+	  < ARROW: "->" > |
+	  < ASSIGN: "=" > |
+	  < NOTALLOWED: "-/-" > |
+	  < LOWLINE: "_" > |
+	  < QUOTATIONMARK: "\"" > |
+	  < BACKSLASH: "\\" >
+	}
+
+/*****************************************************************************
+ * THE SDF LANGUAGE GRAMMAR STARTS HERE                                      *
+ * DEFINITION OF THE PARSER                                                  *
+ *****************************************************************************/
+GRAMMARSTART
+
+/*****************************************************************************
+ * LITERALS                                                                  *
+ *****************************************************************************/
+NatInteger :
+	<INTEGER_LITERAL> ;
+
+RealDigit:
+	<INTEGER_LITERAL> "." <INTEGER_LITERAL> ;
+
+Int :
+	[<MINUS>] NatInteger ;
+
+Real :
+	[<MINUS>] RealDigit ;
+
+String :
+	<STRING_LITERAL> ;
+
+/*Char :
+	<CHARACTER_LITERAL> ;*/
+
+CharClassLiteral :
+	<CHARCLASS_LITERAL> ;
+
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id :
+	<IDENTIFIER> ;
+
+/*****************************************************************************
+ * MAIN PRODUCTION                                                           *
+ *****************************************************************************/
+@FSTNonTerminal(name="{ModuleDeclaration}")
+Module :
+	ModuleDeclaration @! @!
+	[ImportDeclaration] @-!
+	[ExportDeclaration]
+	[HiddenDeclaration]
+	<EOF> ;
+
+@FSTTerminal(name="{ModNamePart}")
+ModName :
+	ModNamePart [ModuleParameter] ;
+
+@FSTExportName("{Id}")
+ModNamePart :
+	Id (LOOK_AHEAD(2) "/" Id)* ;
+
+ModuleParameter :
+	"[" (ModuleSort)+ "]" ;
+
+ModuleSort :
+	Id |
+	"[[" Id "]]" ;
+
+@FSTTerminal(name="{ModName}")
+ModuleDeclaration :
+	"module" ModName ;
+
+@FSTNonTerminal(name="imports")
+ImportDeclaration :
+	"imports" @+ (ModName)+ @! ;
+
+@FSTNonTerminal(name="exports")
+ExportDeclaration :
+	"exports" @! @+! (Grammar)+ @-! ;
+
+@FSTNonTerminal(name="hiddens")
+HiddenDeclaration :
+	"hiddens" @! @+! (Grammar)+ @-!;
+
+/* Every syntax definition introduces names for the syntactical sorts of a
+language and needs to define one or more start symbols. */
+@FSTInline
+Grammar :
+	@FSTNonTerminal(name="sorts")
+	"sorts" @+ (Sort)+ @-! @! |
+	@FSTNonTerminal(name="context-free start-symbols")
+	"context-free start-symbols" @+ (Sort)+ |
+	@FSTNonTerminal(name="Productions {Productions}")
+	Productions |
+	@FSTNonTerminal(name="Disambiguations")
+	Disambiguations ;
+
+/* The actual syntax is defined in lexical and context-free syntax.
+   The lexical syntax defines the syntax of language constructs like literals,
+   comments, whitespace, and identifiers, or what is usally referred to as
+   terminals.
+   The context-free syntax defines the syntax of constructs like operators,
+   statements, or what is usually referred to as non-terminals */
+@FSTNonTerminal(name="{ProdPart}")
+Productions :
+	ProdPart @+ (Production)* @-! ;
+
+ProdPart :
+	@FSTExportName("syntax")
+	"syntax" <NONE> |
+	@FSTExportName("lexical syntax")
+	"lexical syntax" <NONE> |
+	@FSTExportName("context-free syntax")
+	"context-free syntax" <NONE> |
+	@FSTExportName("variables")
+	"variables" <NONE> |
+	@FSTExportName("lexical variables")
+	"lexical variables" <NONE> ;
+
+/* Constructs to define in a declarative way that certain kinds of derivations
+   are not allowed, also known as disambiguation filters */
+Disambiguations :
+	@FSTNonTerminal(name="context-free priorities")
+	"context-free priorities" (Priority)+ |
+	@FSTNonTerminal(name="lexical restrictions")
+	"lexical restrictions" (Restriction)+ |
+	@FSTNonTerminal(name="context-free restrictions")
+	"context-free restrictions" (Restriction)+ ;
+
+/* Productions have the form A1 ... An -> A0, where A0 is non-terminal and
+   A1 ... An is a string of terminals and non-terminals. */
+@FSTTerminal(name="{AUTO}")
+/*Production :
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;*/
+
+Production :
+	(Symbol)* "->" Symbol [LOOK_AHEAD("\"[[\" Symbol() \"]]\"") "[[" Symbol "]]"]
+	               [LOOK_AHEAD("\"{\" Attribute()") OptAttributes] ;
+
+
+/* There are three kinds of symbols: sorts, character classes and literals.
+   Sorts are names for language specific constructs.
+   A character class is set of characters. Character classes are specified
+   by single characters, character ranges, and can be combined using set
+   operators, such as complement, difference, union, intersection.
+   A literal is a String. */
+Symbol :
+	LOOK_AHEAD("\"(\" Symbol() \")\"") "(" Symbol ")" [SortOp] [AlternativeSymbol] |
+	Sort [AlternativeSymbol] |
+	CharacterClass [AlternativeSymbol] |
+	String [SortOp] [AlternativeSymbol] ;
+
+AlternativeSymbol :
+	"|" Symbol ;
+
+@FSTTerminal(name="{Id}")
+Sort :
+	"[[" Id "]]" |
+	"<" Id [SortOp] ["-" CFOrLEX] ">" |
+	Id [SortOp] |
+	"{" Id String "}" [SortOp] |
+	"(" (Sort)+ ")" [SortOp] ;
+
+SortOp :
+	"*" |
+	"+" |
+	"?" ;
+
+CFOrLEX :
+	"CF"<NONE> |
+	"LEX"<NONE> ;
+
+CharacterClass :
+	[<TILDE>] "[" (CharClass)* "]" [SortOp] ;
+
+CharClass :
+	"\\" SpecialSign |
+	Id |
+	Int |
+	CharClassLiteral ;
+
+SpecialSign :
+	"("<NONE> | ")"<NONE> | "{"<NONE> | "}"<NONE> | "["<NONE> | "]"<NONE> |
+	","<NONE> | "<"<NONE> | ">"<NONE> | ":"<NONE> | "."<NONE> | "?"<NONE> |
+	"!"<NONE> | "%"<NONE> | "_"<NONE> | "$"<NONE> | "@"<NONE> | "~"<NONE> |
+	"/"<NONE> | "#"<NONE> | "|"<NONE> | "+"<NONE> | "-"<NONE> | "*"<NONE> |
+	";"<NONE> | "`"<NONE> | "="<NONE> | "&"<NONE> | "^"<NONE> ;
+
+OptAttributes :
+	"{" Attribute (LOOK_AHEAD(2) "," Attribute)* "}" ;
+
+Attribute :
+	"bracket"<NONE> |
+	"prefer"<NONE> |
+	"avoid"<NONE> |
+	"left"<NONE> |
+	"right"<NONE> |
+	"non-assoc"<NONE> |
+	"assoc"<NONE> |
+	"reject"<NONE> |
+	"recover"<NONE> |
+	"indentpadding"<NONE> |
+	Constructor ;
+
+Constructor :
+	"cons" "(" String ")" |
+	"deprecated" "(" String ")" ;
+
+@FSTTerminal(name="{AUTO}")
+Priority :
+	LOOK_AHEAD(3) "{" [Attribute ":"] @! (Production)+ "}" [LOOK_AHEAD(2) ">" Priority] |
+	Production (LOOK_AHEAD(2) ">" Priority)* ;
+
+@FSTTerminal(name="{AUTO}")
+Restriction :
+	(Symbol)+ "-/-" CharacterClass (LOOK_AHEAD(2) "." CharacterClass)* ;
