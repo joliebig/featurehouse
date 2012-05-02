@@ -18,23 +18,23 @@ public class XMINode extends FSTNonTerminal {
 	 * XML node
 	 */
 	private Node node;
-	
+
 	/**
 	 * The root node
 	 */
 	private Element root;
-	
-	
+
+
 	/**
 	 * A map containing all node attributes.
 	 */
 	private Map<String, String> nodeAttributes = new HashMap<String, String>();
-	
+
 	/**
 	 * When this flag is set, the ID of a node won't be used for comparing.
 	 */
 	private boolean ignoreID;
-	
+
 	/**
 	 * When this flag is set, the id of a node won't be replaced through a new
 	 * identifier. The existing ID will be used.
@@ -61,7 +61,7 @@ public class XMINode extends FSTNonTerminal {
 		String type = "";
 		String id = "";
 		String ref = "";
-		
+
 
 		type = node.getNodeName();
 
@@ -89,49 +89,49 @@ public class XMINode extends FSTNonTerminal {
 					setNodeAttribute(nodeName, nodeValue);
 				}
 			}
-			
-			
-			
+
+
+
 
 			/*if (ignoreID && (!id.equals("")) && (!name.equals(""))) {
-				
+
 				System.out.println(type + " " + ignoreID);
-			} else*/ 
-			
+			} else*/
+
 			if (copyMode) {
 				if (!id.isEmpty()) {
 					setNodeAttribute("xmi.id", id);
 					setName(id);
 				}
-				
+
 				if (!name.isEmpty()) {
 					setNodeAttribute("name", name);
 				}
-				
+
 				if (!ref.isEmpty()) {
 					setNodeAttribute("xmi.idref", type + IdToElement(ref, type));
 				}
-				
+
 			} else {
-			
+
 			if (name.equals("")) {
 				if (!id.equals("")) {
 					if (!ignoreID) {
 						setNodeAttribute("xmi.id", id);
 						setName(id);
 					}
-					
+
 				}
 			} else {
 				setName(name);
 				setNodeAttribute("name", name);
-				if (type.equals("UML:Parameter") | type.equals("UML:Attribute") | type.equals("UML:Operation")) {
+				if (type.equals("UML:Parameter") || type.equals("UML:Attribute") || type.equals("UML:Operation")) {
 					//setNodeAttribute("xmi.id",  id);
 				} else if (ignoreID) {
-					
+
 				} else if (!id.equals("")) {
 					setNodeAttribute("xmi.id",  type + name);
-				} 
+				}
 			}
 
 			if (!ref.equals("")) {
@@ -142,21 +142,21 @@ public class XMINode extends FSTNonTerminal {
 					setNodeAttribute("xmi.idref", type + newRef);
 				}
 			}
-			
+
 			}
-			
+
 			if (type.equals("UML:Multiplicity") || type.equals("UML:MultiplicityRange")) {
 				setName("id");
 			}
-			
+
 			if (type.equals("UML:Association.connection") || type.equals("UML:ClassifierRole.multiplicity")) {
-				this.ignoreID = true;	
+				this.ignoreID = true;
 			}
-			
+
 			if (type.equals("UML:Collaboration.interaction")) {
 				this.copyMode = true;
 			}
-			
+
 		}
 
 	}
@@ -217,7 +217,7 @@ public class XMINode extends FSTNonTerminal {
 
 		return clone;
 	}
-	
+
 	/**
 	 * Sets an attribute of this node.
 	 * @param name the attribute identifier
@@ -226,14 +226,14 @@ public class XMINode extends FSTNonTerminal {
 	public void setNodeAttribute(String name, String value) {
 		nodeAttributes.put(name, value);
 	}
-	
+
 	/**
 	 * @return the whole node attribute map.
 	 */
 	public Map<String, String> getAttributes() {
 		return nodeAttributes;
 	}
-	
+
 	/**
 	 * Return the value of the specified attribute.
 	 * @param name the name of the attribute
@@ -242,21 +242,21 @@ public class XMINode extends FSTNonTerminal {
 	public String getNodeAttribute(String name) {
 		return nodeAttributes.get(name);
 	}
-	
+
 	/**
 	 * @return the current node
 	 */
 	public Element getNode() {
 		return (Element) node;
 	}
-	
+
 	/**
 	 * @return the root node
 	 */
 	public Element getRoot() {
 		return root;
 	}
-	
+
 	/**
 	 * Replaces the id through through the name the id refers to
 	 * @param id the id to resolve
