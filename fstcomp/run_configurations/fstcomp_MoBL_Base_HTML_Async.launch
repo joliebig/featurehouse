@@ -7,6 +7,6 @@
 <listEntry value="1"/>
 </listAttribute>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="composer.FSTGenComposer"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--expression examples/MoBL/MoBLComp_Base_Service_HTML.features"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--expression examples/MoBL/MoBLComp_Base_HTML_Async.features"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="fstcomp"/>
 </launchConfiguration>
