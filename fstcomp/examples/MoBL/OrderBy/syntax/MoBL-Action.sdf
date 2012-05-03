@@ -1,0 +1,9 @@
+module MoBL-Action
+
+exports
+
+  context-free syntax
+    "order" "by" OrderExp -> Filter {cons("OrderByFilter")}
+    ID                    -> OrderExp {cons("OrderNonSpecific")}
+    ID "asc"              -> OrderExp {cons("OrderAscending")}
+    ID "desc"             -> OrderExp {cons("OrderDescending")}
