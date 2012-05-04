@@ -1,10 +1,8 @@
 {
 	"features" : [
 		"Base",
-		"Async",
 		"HTML",
 		"Base",
-		"Async",
 		"HTML"
 	],
 	"roles": {

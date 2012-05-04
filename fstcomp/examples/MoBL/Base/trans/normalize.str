@@ -98,6 +98,3 @@ rules
 
   normalize :
     Assignment(LIndexer(e, e_idx), e_ass) -> ExpStat(MethodCall(e, "set", [e_idx, e_ass]))
-
-  normalize :
-    OrderNonSpecific(e) -> OrderAscending(e)

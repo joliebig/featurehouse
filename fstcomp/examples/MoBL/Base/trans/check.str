@@ -375,26 +375,6 @@ rules
                         ; not(ExternalEntity(_, _, _, _) := <lookup-type> pt) \})> x*
 
   set-comp-error(|t) :
-    OrderAscending(prop) -> (prop, $[[<pp-mobl-type> t] has no property '[prop]'])
-    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
-    where [] := <filter(?Property(_, prop, _, _))> prop*
-
-  set-comp-error(|t) :
-    OrderDescending(prop) -> (prop, $[[<pp-mobl-type> t] has no property '[prop]'])
-    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
-    where [] := <filter(?Property(_, prop, _, _))> prop*
-
-  set-comp-error(|t) :
-    OrderAscending(prop) -> (prop, $[Collection cannot be ordered on property '[prop]'])
-    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
-    where [] := <filter(?Property(_, prop, SimpleType(_), _))> prop*
-
-  set-comp-error(|t) :
-    OrderDescending(prop) -> (prop, $[Collection cannot be ordered on property '[prop]'])
-    where ExternalEntity(_, _, _, prop*) := <lookup-type> t
-    where [] := <filter(?Property(_, prop, SimpleType(_), _))> prop*
-
-  set-comp-error(|t) :
     term@c#([prop, _]) -> (term, $[[<pp-mobl-type> t] has no property '[prop]'])
     where <string-starts-with(|"Set")> c
     where <is-string> prop

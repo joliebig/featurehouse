@@ -73,13 +73,9 @@ exports
     "$data" "(" Path ")"           -> Exp {cons("ImportData")}
     LimitedExp Filter+                        -> Exp {cons("SetComp")}
     "where" SetExp                           -> Filter {cons("WhereFilter")}
-    "order" "by" OrderExp                    -> Filter {cons("OrderByFilter")}
     "prefetch" {ID ","}+                     -> Filter {cons("PrefetchFilter")}
     "limit" Exp                              -> Filter {cons("LimitFilter")}
     "offset" Exp                             -> Filter {cons("OffsetFilter")}
-    ID                                       -> OrderExp {cons("OrderNonSpecific")}
-    ID "asc"                                 -> OrderExp {cons("OrderAscending")}
-    ID "desc"                                -> OrderExp {cons("OrderDescending")}
     ID "==" LimitedSetExp                        -> SetExp {cons("SetEq")}
     ID "!=" LimitedSetExp                        -> SetExp {cons("SetNotEq")}
     ID "<" LimitedSetExp                         -> SetExp {cons("SetLt")}

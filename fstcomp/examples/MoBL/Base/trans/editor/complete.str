@@ -97,21 +97,6 @@ rules
         ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
 
   editor-complete-proposal :
-    OrderAscending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
-    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
-        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
-
-  editor-complete-proposal :
-    OrderDescending(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
-    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
-        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
-
-  editor-complete-proposal :
-    OrderNonSpecific(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
-    where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
-        ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
-
-  editor-complete-proposal :
     PrefetchFilter(COMPLETION(_)) -> <filter(\ prop@Property(_, x, _, _) -> ([x], <get-doc> prop) \)> prop*
     where SetComp(e, _) := <fetch-elem(?SetComp(_, _))> <Parents>
         ; ExternalEntity(_, _, _, prop*) := <type-of; ?GenericType(QId("mobl", "Collection"), [<id>]); lookup-type> e
