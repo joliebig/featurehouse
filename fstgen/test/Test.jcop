@@ -16,11 +16,3 @@ public layer CountLayer {
  
 }
 
-public staticactive contextclass CountContext {
-	Layer countLayer = new CountLayer();
-	
-	when (GlobalState.isActive()) :
-		with (countLayer);
-	
-}
-

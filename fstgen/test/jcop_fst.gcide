@@ -542,9 +542,8 @@ ContextClassBodyDeclaration:
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers CFieldDeclaration :: FieldDecl
 |
-	@FSTTerminal(name="{AUTO}")
-	LOOK_AHEAD(2)
-	WhenStatement :: WhenDecl
+	@FSTTerminal(name="{AUTO}", compose="Replacement")
+	PointcutStatement :: PointcutDecl
 |
 	@FSTTerminal(name="{AUTO}")
 	";" <NONE> :: EmptyDecl
@@ -1056,7 +1055,11 @@ Statement:
 | 
   WithStatement{Statement} @!
 |
+  WithoutStatement{Statement} @!
+|
   WhenStatement{Statement} @!
+|
+  PointcutStatement{Statement} @!
 ;
 
 AssertStatement:
@@ -1208,13 +1211,37 @@ TryStatementEnd:
      "finally" Block 
 ;
 
+PointcutStatement:
+  InStatement{Statement} @!
+|
+  WithStatement{Statement} @!
+|
+  WithoutStatement{Statement} @!
+|
+  WhenStatement{Statement} @!
+;
+
+InStatement:
+  "in" "(" Expression ")" ":" @! @+ Statement! @-
+;
+
 WithStatement:
-  "with" "(" Expression ")" ";"
+  "with" Arguments ";"
 
 ;
 
+WithoutStatement:
+  "without" Arguments ";"
+;
+
 WhenStatement:
-  "when" "(" Expression ")" ":" @! @+ Statement! @- 
+  "when" "(" Expression ")" SingleOrManyWithsStatements 
+;
+
+SingleOrManyWithsStatements:
+":" @! @+ Statement! @- 
+|
+"{" @! @+ Statement! @- "}"
 ;
 
 CatchBlock:
