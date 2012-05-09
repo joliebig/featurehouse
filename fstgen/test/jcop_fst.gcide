@@ -314,7 +314,7 @@ GRAMMARSTART
 
 //grammar
 /*****************************************
- * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
+ * THE JCop LANGUAGE GRAMMAR STARTS HERE *
  *****************************************/
 
 /*
@@ -387,10 +387,6 @@ TypeDeclaration:
   	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
   	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
 |
-	@FSTNonTerminal(name="{ContextClassDeclaration}")
-	LOOK_AHEAD("Modifiers() \"contextclass\"")
-	Modifiers ContextClassDeclaration :: ContextClassDeclaration
-|
 	@FSTNonTerminal(name="{AUTO}")
 	LOOK_AHEAD(2)
   	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
@@ -421,10 +417,6 @@ ExtendsList:
 @FSTNonTerminal(name="{Id}")
 LayerDeclaration:
 		"layer" Id LayerBody;
-
-@FSTNonTerminal(name="{Id}")
-ContextClassDeclaration:
-		"contextclass" Id ContextClassBody;
 
 @FSTTerminal(compose="ImplementsListMerging")
 ImplementsList:
@@ -522,55 +514,6 @@ LayerBodyDeclaration:
 |
 	@FSTTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
-;
-
-@FSTInline
-ContextClassBody:
-     "{" @+ @! ( ContextClassBodyDeclaration @! @! )* @- @! "}"
-;
-
-ContextClassBodyDeclaration:
-	@FSTTerminal(name="{AUTO}")
-	LOOK_AHEAD(2)
-	Initializer :: InitializerDecl
-|
-    @FSTNonTerminal(name="{Id}")
-	LOOK_AHEAD("Modifiers() \"context\"")
-	Modifiers ContextClassDeclaration :: InnerContextDecl
-|
-	@FSTTerminal(name="{CFieldDeclaration}",compose="FieldOverriding")
-    LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
-	Modifiers CFieldDeclaration :: FieldDecl
-|
-	@FSTTerminal(name="{AUTO}", compose="Replacement")
-	PointcutStatement :: PointcutDecl
-|
-	@FSTTerminal(name="{AUTO}")
-	";" <NONE> :: EmptyDecl
-;
-
-@FSTExportName("{CVariableDeclarator}")
-CFieldDeclaration:
-  Type CVariableDeclarator ( "," CVariableDeclarator )* ";"
-;
-
-@FSTExportName("{CVariableDeclaratorId}")
-CVariableDeclarator:
-  CVariableDeclaratorId [ "=" CVariableInitializer ]
-;
-
-@FSTExportName("{<IDENTIFIER>}")
-CVariableDeclaratorId:
-  <IDENTIFIER> ( "[" "]" <NONE> )*
-;
-
-
-CVariableInitializer:
-  ArrayInitializer
-|
-  Expression
-|
-  WhenStatement
 ;
 
 
@@ -1055,11 +998,7 @@ Statement:
 | 
   WithStatement{Statement} @!
 |
-  WithoutStatement{Statement} @!
-|
   WhenStatement{Statement} @!
-|
-  PointcutStatement{Statement} @!
 ;
 
 AssertStatement:
@@ -1211,37 +1150,13 @@ TryStatementEnd:
      "finally" Block 
 ;
 
-PointcutStatement:
-  InStatement{Statement} @!
-|
-  WithStatement{Statement} @!
-|
-  WithoutStatement{Statement} @!
-|
-  WhenStatement{Statement} @!
-;
-
-InStatement:
-  "in" "(" Expression ")" ":" @! @+ Statement! @-
-;
-
 WithStatement:
-  "with" Arguments ";"
+  "with" "(" Expression ")" ";"
 
-;
-
-WithoutStatement:
-  "without" Arguments ";"
 ;
 
 WhenStatement:
-  "when" "(" Expression ")" SingleOrManyWithsStatements 
-;
-
-SingleOrManyWithsStatements:
-":" @! @+ Statement! @- 
-|
-"{" @! @+ Statement! @- "}"
+  "when" "(" Expression ")" ":" @! @+ Statement! @- 
 ;
 
 CatchBlock:
