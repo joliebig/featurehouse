@@ -8,128 +8,116 @@ public interface JCopParserConstants {
   int FORMAL_COMMENT = 10;
   int MULTI_LINE_COMMENT = 11;
   int ABSTRACT = 13;
-  int AFTER = 14;
-  int ASSERT = 15;
-  int BEFORE = 16;
-  int BOOLEAN = 17;
-  int BREAK = 18;
-  int BYTE = 19;
-  int CALL = 20;
-  int CASE = 21;
-  int CATCH = 22;
-  int CHAR = 23;
-  int CLASS = 24;
-  int CONST = 25;
-  int CONTEXT = 26;
-  int CONTINUE = 27;
-  int _DEFAULT = 28;
-  int DO = 29;
-  int DOUBLE = 30;
-  int ELSE = 31;
-  int ENUM = 32;
-  int EXTENDS = 33;
-  int FALSE = 34;
-  int FINAL = 35;
-  int FINALLY = 36;
-  int FLOAT = 37;
-  int FOR = 38;
-  int GOTO = 39;
-  int IF = 40;
-  int IMPLEMENTS = 41;
-  int IMPORT = 42;
-  int IN = 43;
-  int INSTANCEOF = 44;
-  int INT = 45;
-  int INTERFACE = 46;
-  int LAYER = 47;
-  int LONG = 48;
-  int NATIVE = 49;
-  int NEW = 50;
-  int NULL = 51;
-  int ON = 52;
-  int PACKAGE = 53;
-  int PRIVATE = 54;
-  int PROCEED = 55;
-  int PROTECTED = 56;
-  int PUBLIC = 57;
-  int RETURN = 58;
-  int SHORT = 59;
-  int STATIC = 60;
-  int STATICACTIVE = 61;
-  int STRICTFP = 62;
-  int SUBJECT = 63;
-  int SUPER = 64;
-  int SWITCH = 65;
-  int SYNCHRONIZED = 66;
-  int THIS = 67;
-  int THROW = 68;
-  int THROWS = 69;
-  int TRANSIENT = 70;
-  int TRUE = 71;
-  int TRY = 72;
-  int VOID = 73;
-  int VOLATILE = 74;
-  int WHEN = 75;
-  int WHILE = 76;
-  int WITH = 77;
-  int WITHOUT = 78;
-  int INTEGER_LITERAL = 79;
-  int DECIMAL_LITERAL = 80;
-  int HEX_LITERAL = 81;
-  int OCTAL_LITERAL = 82;
-  int FLOATING_POINT_LITERAL = 83;
-  int EXPONENT = 84;
-  int CHARACTER_LITERAL = 85;
-  int STRING_LITERAL = 86;
-  int LPAREN = 87;
-  int RPAREN = 88;
-  int LBRACE = 89;
-  int RBRACE = 90;
-  int LBRACKET = 91;
-  int RBRACKET = 92;
-  int SEMICOLON = 93;
-  int COMMA = 94;
-  int DOT = 95;
-  int AT = 96;
-  int IDENTIFIER = 97;
-  int LETTER = 98;
-  int DIGIT = 99;
-  int ASSIGN = 100;
-  int LT = 101;
-  int BANG = 102;
-  int TILDE = 103;
-  int HOOK = 104;
-  int COLON = 105;
-  int EQ = 106;
-  int LE = 107;
-  int GE = 108;
-  int NE = 109;
-  int SC_OR = 110;
-  int SC_AND = 111;
-  int INCR = 112;
-  int DECR = 113;
-  int PLUS = 114;
-  int MINUS = 115;
-  int STAR = 116;
-  int SLASH = 117;
-  int BIT_AND = 118;
-  int BIT_OR = 119;
-  int XOR = 120;
-  int REM = 121;
-  int LSHIFT = 122;
-  int PLUSASSIGN = 123;
-  int MINUSASSIGN = 124;
-  int STARASSIGN = 125;
-  int SLASHASSIGN = 126;
-  int ANDASSIGN = 127;
-  int ORASSIGN = 128;
-  int XORASSIGN = 129;
-  int REMASSIGN = 130;
-  int LSHIFTASSIGN = 131;
-  int RSIGNEDSHIFTASSIGN = 132;
-  int RUNSIGNEDSHIFTASSIGN = 133;
-  int ELLIPSIS = 134;
-  int GT = 135;
+  int ASSERT = 14;
+  int BOOLEAN = 15;
+  int BREAK = 16;
+  int BYTE = 17;
+  int CASE = 18;
+  int CATCH = 19;
+  int CHAR = 20;
+  int CLASS = 21;
+  int CONST = 22;
+  int CONTINUE = 23;
+  int _DEFAULT = 24;
+  int DO = 25;
+  int DOUBLE = 26;
+  int ELSE = 27;
+  int ENUM = 28;
+  int EXTENDS = 29;
+  int FALSE = 30;
+  int FINAL = 31;
+  int FINALLY = 32;
+  int FLOAT = 33;
+  int FOR = 34;
+  int GOTO = 35;
+  int IF = 36;
+  int IMPLEMENTS = 37;
+  int IMPORT = 38;
+  int INSTANCEOF = 39;
+  int INT = 40;
+  int INTERFACE = 41;
+  int LONG = 42;
+  int LAYER = 43;
+  int NATIVE = 44;
+  int NEW = 45;
+  int NULL = 46;
+  int PACKAGE = 47;
+  int PRIVATE = 48;
+  int PROTECTED = 49;
+  int PUBLIC = 50;
+  int RETURN = 51;
+  int SHORT = 52;
+  int STATIC = 53;
+  int STRICTFP = 54;
+  int SUPER = 55;
+  int SWITCH = 56;
+  int SYNCHRONIZED = 57;
+  int THIS = 58;
+  int THROW = 59;
+  int THROWS = 60;
+  int TRANSIENT = 61;
+  int TRUE = 62;
+  int TRY = 63;
+  int VOID = 64;
+  int VOLATILE = 65;
+  int WHILE = 66;
+  int INTEGER_LITERAL = 67;
+  int DECIMAL_LITERAL = 68;
+  int HEX_LITERAL = 69;
+  int OCTAL_LITERAL = 70;
+  int FLOATING_POINT_LITERAL = 71;
+  int EXPONENT = 72;
+  int CHARACTER_LITERAL = 73;
+  int STRING_LITERAL = 74;
+  int IDENTIFIER = 75;
+  int LETTER = 76;
+  int DIGIT = 77;
+  int LPAREN = 78;
+  int RPAREN = 79;
+  int LBRACE = 80;
+  int RBRACE = 81;
+  int LBRACKET = 82;
+  int RBRACKET = 83;
+  int SEMICOLON = 84;
+  int COMMA = 85;
+  int DOT = 86;
+  int AT = 87;
+  int ASSIGN = 88;
+  int LT = 89;
+  int BANG = 90;
+  int TILDE = 91;
+  int HOOK = 92;
+  int COLON = 93;
+  int EQ = 94;
+  int LE = 95;
+  int GE = 96;
+  int NE = 97;
+  int SC_OR = 98;
+  int SC_AND = 99;
+  int INCR = 100;
+  int DECR = 101;
+  int PLUS = 102;
+  int MINUS = 103;
+  int STAR = 104;
+  int SLASH = 105;
+  int BIT_AND = 106;
+  int BIT_OR = 107;
+  int XOR = 108;
+  int REM = 109;
+  int LSHIFT = 110;
+  int PLUSASSIGN = 111;
+  int MINUSASSIGN = 112;
+  int STARASSIGN = 113;
+  int SLASHASSIGN = 114;
+  int ANDASSIGN = 115;
+  int ORASSIGN = 116;
+  int XORASSIGN = 117;
+  int REMASSIGN = 118;
+  int LSHIFTASSIGN = 119;
+  int RSIGNEDSHIFTASSIGN = 120;
+  int RUNSIGNEDSHIFTASSIGN = 121;
+  int ELLIPSIS = 122;
+  int GT = 123;
 
   int DEFAULT = 0;
   int IN_SINGLE_LINE_COMMENT = 1;
@@ -151,19 +139,15 @@ public interface JCopParserConstants {
     "\"*/\"",
     "<token of kind 12>",
     "\"abstract\"",
-    "\"after\"",
     "\"assert\"",
-    "\"before\"",
     "\"boolean\"",
     "\"break\"",
     "\"byte\"",
-    "\"call\"",
     "\"case\"",
     "\"catch\"",
     "\"char\"",
     "\"class\"",
     "\"const\"",
-    "\"contextclass\"",
     "\"continue\"",
     "\"default\"",
     "\"do\"",
@@ -180,27 +164,22 @@ public interface JCopParserConstants {
     "\"if\"",
     "\"implements\"",
     "\"import\"",
-    "\"in\"",
     "\"instanceof\"",
     "\"int\"",
     "\"interface\"",
-    "\"layer\"",
     "\"long\"",
+    "\"layer\"",
     "\"native\"",
     "\"new\"",
     "\"null\"",
-    "\"on\"",
     "\"package\"",
     "\"private\"",
-    "\"proceed\"",
     "\"protected\"",
     "\"public\"",
     "\"return\"",
     "\"short\"",
     "\"static\"",
-    "\"staticactive\"",
     "\"strictfp\"",
-    "\"subject\"",
     "\"super\"",
     "\"switch\"",
     "\"synchronized\"",
@@ -212,10 +191,7 @@ public interface JCopParserConstants {
     "\"try\"",
     "\"void\"",
     "\"volatile\"",
-    "\"when\"",
     "\"while\"",
-    "\"with\"",
-    "\"without\"",
     "<INTEGER_LITERAL>",
     "<DECIMAL_LITERAL>",
     "<HEX_LITERAL>",
@@ -224,6 +200,9 @@ public interface JCopParserConstants {
     "<EXPONENT>",
     "<CHARACTER_LITERAL>",
     "<STRING_LITERAL>",
+    "<IDENTIFIER>",
+    "<LETTER>",
+    "<DIGIT>",
     "\"(\"",
     "\")\"",
     "\"{\"",
@@ -234,9 +213,6 @@ public interface JCopParserConstants {
     "\",\"",
     "\".\"",
     "\"@\"",
-    "<IDENTIFIER>",
-    "<LETTER>",
-    "<DIGIT>",
     "\"=\"",
     "\"<\"",
     "\"!\"",
@@ -273,7 +249,6 @@ public interface JCopParserConstants {
     "\">>>=\"",
     "\"...\"",
     "\">\"",
-    "\"context\"",
   };
 
 }

@@ -1,4 +1,5 @@
 
+
 options {
   JAVA_UNICODE_ESCAPE = true;
   ERROR_REPORTING = true;
@@ -17,6 +18,10 @@ import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 
 
+/**
+ * Grammar to parse JCop
+ * @author Dean Kramer
+ */
 public class JCopParser extends AbstractFSTParser
 {
  	public JCopParser(){}
@@ -75,19 +80,15 @@ MORE :
 TOKEN :
 {
   < ABSTRACT: "abstract" >
-| < AFTER: "after">
 | < ASSERT: "assert" >
-| < BEFORE: "before" >
 | < BOOLEAN: "boolean" >
 | < BREAK: "break" >
 | < BYTE: "byte" >
-| < CALL: "call" >
 | < CASE: "case" >
 | < CATCH: "catch" >
 | < CHAR: "char" >
 | < CLASS: "class" >
 | < CONST: "const" >
-| < CONTEXT: "contextclass" >
 | < CONTINUE: "continue" >
 | < _DEFAULT: "default" >
 | < DO: "do" >
@@ -104,27 +105,22 @@ TOKEN :
 | < IF: "if" >
 | < IMPLEMENTS: "implements" >
 | < IMPORT: "import" >
-| < IN: "in" >
 | < INSTANCEOF: "instanceof" >
 | < INT: "int" >
 | < INTERFACE: "interface" >
-| < LAYER: "layer" >
 | < LONG: "long" >
+| < LAYER: "layer" >
 | < NATIVE: "native" >
 | < NEW: "new" >
 | < NULL: "null" >
-| < ON: "on" >
 | < PACKAGE: "package">
 | < PRIVATE: "private" >
-| < PROCEED: "proceed" >
 | < PROTECTED: "protected" >
 | < PUBLIC: "public" >
 | < RETURN: "return" >
 | < SHORT: "short" >
 | < STATIC: "static" >
-| < STATICACTIVE: "staticactive" >
 | < STRICTFP: "strictfp" >
-| < SUBJECT: "subject" >
 | < SUPER: "super" >
 | < SWITCH: "switch" >
 | < SYNCHRONIZED: "synchronized" >
@@ -136,10 +132,7 @@ TOKEN :
 | < TRY: "try" >
 | < VOID: "void" >
 | < VOLATILE: "volatile" >
-| < WHEN: "when" >
 | < WHILE: "while" >
-| < WITH: "with" >
-| < WITHOUT: "without" >
 }
 
 /* LITERALS */
@@ -194,22 +187,6 @@ TOKEN :
   >
 }
 
-/* SEPARATORS */
-
-TOKEN :
-{
-  < LPAREN: "(" >
-| < RPAREN: ")" >
-| < LBRACE: "{" >
-| < RBRACE: "}" >
-| < LBRACKET: "[" >
-| < RBRACKET: "]" >
-| < SEMICOLON: ";" >
-| < COMMA: "," >
-| < DOT: "." >
-| < AT: "@" >
-}
-
 /* IDENTIFIERS */
 
 TOKEN :
@@ -253,6 +230,22 @@ TOKEN :
        "\u1040"-"\u1049"
       ]
   >
+}
+
+/* SEPARATORS */
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COMMA: "," >
+| < DOT: "." >
+| < AT: "@" >
 }
 
 /* OPERATORS */
@@ -321,7 +314,7 @@ GRAMMARSTART
  * Program structuring syntax follows.
  */
 
-@FSTNonTerminal()
+@FSTNonTerminal(name="{TypeDeclaration}")
 CompilationUnit:
   [ PackageDeclaration ]
   ( ImportDeclaration )*
@@ -329,16 +322,16 @@ CompilationUnit:
   <EOF>
 ;
 
-@FSTTerminal(name="{TOSTRING}")
 PackageDeclaration:
   "package" Name ";" @!
 ;
 
-@FSTTerminal(name="{TOSTRING}")
+@FSTTerminal(name="{Name}{ImportPackage}")
 ImportDeclaration:
   "import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
 ;
 
+@FSTExportName(".*")
 ImportPackage:
 	<NONE> "." "*" ;
 
@@ -352,8 +345,6 @@ Modifier:
    "public" <NONE>
   |
    "static" <NONE>
-  |
-   "staticactive" <NONE>
   |
    "protected"<NONE>
   |
@@ -383,18 +374,17 @@ TypeDeclaration:
 	@FSTTerminal(name="{AUTO}")	
 	";"<NONE> :: EmptyTypeDecl
 |
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
   	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
 |
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD(2)
   	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
 |
-	@FSTNonTerminal(name="{LayerDeclaration}")
+	@FSTNonTerminal(name="{Id}")
 	LOOK_AHEAD(2)
 	Modifiers LayerDeclaration :: LayerDeclaration
-
 |
 	@FSTNonTerminal(name="{Id}")
   	LOOK_AHEAD(2)
@@ -410,13 +400,13 @@ ClassOrInterfaceDeclaration:
 
 ClassOrInterface: "class"<NONE> | "interface"<NONE>;
 
+@FSTInline
+LayerDeclaration:
+		"layer" Id LayerBody;
+
 ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
 ;
-
-@FSTNonTerminal(name="{Id}")
-LayerDeclaration:
-		"layer" Id LayerBody;
 
 @FSTTerminal(compose="ImplementsListMerging")
 ImplementsList:
@@ -461,6 +451,28 @@ TypeBound:
 ;
 
 @FSTInline
+LayerBody:
+  "{" @+ @! ( LayerBodyDeclaration @! @! )*  @- @! "}"
+;
+
+LayerBodyDeclaration:
+	@FSTTerminal(name="{AUTO}")
+	LOOK_AHEAD(2)
+	Initializer :: InitializerDecl
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() \"layer\"")
+  	Modifiers  LayerDeclaration :: InnerLayerDecl
+|
+  	@FSTTerminal(name="{PMethodDeclaration}",compose="JavaMethodOverriding")
+	LOOK_AHEAD(2)
+  	Modifiers PMethodDeclaration :: PMethodDecl
+|
+	@FSTTerminal(name="{AUTO}")
+  	";" <NONE> :: EmptyDecl
+;	  
+
+@FSTInline
 ClassOrInterfaceBody:
   "{" @+ @! ( ClassOrInterfaceBodyDeclaration @! @! )*  @- @! "}"
 ;
@@ -494,29 +506,6 @@ ClassOrInterfaceBodyDeclaration:
   	";" <NONE> :: EmptyDecl
 ;
 
-@FSTInline
-LayerBody:
-     "{" @+ @! ( LayerBodyDeclaration @! @! )* @- @! "}"
-;
-
-LayerBodyDeclaration:
-	@FSTTerminal(name="{Initializer}")
-	LOOK_AHEAD(2)
-	Initializer :: InitializerDecl
-|
-	@FSTNonTerminal(name="{LayerDeclaration}")
-	LOOK_AHEAD("Modifiers() \"layer\"")
-	Modifiers LayerDeclaration :: InnerLayerDecl
-|
-	@FSTTerminal(name="{PMethodDeclaration}",compose="JavaMethodOverriding")
-	LOOK_AHEAD(2)
-  	Modifiers PMethodDeclaration :: PMethodDecl
-|
-	@FSTTerminal(name="{AUTO}")
-  	";" <NONE> :: EmptyDecl
-;
-
-
 @FSTExportName("{VariableDeclarator}")
 FieldDeclaration:
   Type VariableDeclarator ( "," VariableDeclarator )* ";"
@@ -547,20 +536,6 @@ ArrayInitializer:
 ArrayInitializerInternal: 
 VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
 
-@FSTTerminal(name="{PMethodDeclarator}")
-PMethodDeclaration:
-  [ TypeParameters ]
-  ResultType
-  PMethodDeclarator [ "throws" NameList ]
-  PMethodDeclarationBody
-;
-
-PMethodDeclarationBody: Block | ";"<NONE>;
-
-@FSTExportName("{Name}({FormalParameters})")
-PMethodDeclarator:
-	Name FormalParameters ( "[" "]"<NONE> )*
-;
 
 @FSTExportName("{MethodDeclarator}")
 MethodDeclaration:
@@ -575,6 +550,21 @@ MethodDeclarationBody: Block | ";"<NONE>;
 @FSTExportName("{<IDENTIFIER>}({FormalParameters})")
 MethodDeclarator:
   <IDENTIFIER> FormalParameters ( "[" "]"<NONE> )*
+;
+
+@FSTExportName("{PMethodDeclarator}")
+PMethodDeclaration:
+  [ TypeParameters ]
+  ResultType
+  PMethodDeclarator [ "throws" NameList ]
+  PMethodDeclarationBody
+;
+
+PMethodDeclarationBody: Block | ";"<NONE>; 
+
+@FSTExportName("{Name}({PMFormalParameters})")
+PMethodDeclarator:
+  Name FormalParameters ( "[" "]"<NONE> )*
 ;
 
 @FSTExportName("{FormalParametersInternal}")
@@ -837,7 +827,7 @@ CastLookahead:
 ;
 
 CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "new"<NONE> |
-	 <IDENTIFIER> | "proceed" <NONE>
+	 <IDENTIFIER> |
 	 Literal;
 
 PostfixExpression:
@@ -866,8 +856,6 @@ PrimaryPrefix:
 |
   "this"<NONE>
 |
-  "proceed"<NONE>
-|
   "super" "." <IDENTIFIER>
 |
   "(" Expression ")"
@@ -883,8 +871,6 @@ PrimaryPrefix:
 PrimarySuffix:
   LOOK_AHEAD(2)
   "." "this"<NONE>
-|
-  "proceed"<NONE>
 |
   LOOK_AHEAD(2)
   "." "super"<NONE>
@@ -995,10 +981,6 @@ Statement:
   SynchronizedStatement{Statement} @!
 |
   TryStatement{Statement} @!
-| 
-  WithStatement{Statement} @!
-|
-  WhenStatement{Statement} @!
 ;
 
 AssertStatement:
@@ -1022,6 +1004,8 @@ BlockStatement:
 	Annotation
 |
   Modifiers  ClassOrInterfaceDeclaration
+|
+  Modifiers	 LayerDeclaration
 ;
 
 LocalVariableDeclaration:
@@ -1148,15 +1132,6 @@ TryStatementEnd:
   	(CatchBlock )+ ["finally" Block ]
   |
      "finally" Block 
-;
-
-WithStatement:
-  "with" "(" Expression ")" ";"
-
-;
-
-WhenStatement:
-  "when" "(" Expression ")" ":" @! @+ Statement! @- 
 ;
 
 CatchBlock:
