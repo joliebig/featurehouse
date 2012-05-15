@@ -53,6 +53,8 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.jcop"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.jcop"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.binary"/>
