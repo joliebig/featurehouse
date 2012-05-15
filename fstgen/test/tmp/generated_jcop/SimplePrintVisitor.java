@@ -118,7 +118,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("layer");
+			{
+				FSTNode v=getChild(nonTerminal, "Layer");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			{
 				FSTNode v=getChild(nonTerminal, "Id");
 				if (v!=null) {
@@ -185,35 +190,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			for (FSTNode v : getChildren(nonTerminal,"ClassOrInterfaceBodyDeclaration")) {
 				v.accept(this);
 			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("InnerLayerDecl")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "Modifiers");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printToken("layer");
-			{
-				FSTNode v=getChild(nonTerminal, "Id");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printToken("{");
-			hintIncIndent();
-			hintNewLine();
-			for (FSTNode v : getChildren(nonTerminal,"LayerBodyDeclaration")) {
-				v.accept(this);
-				hintNewLine();
-				hintNewLine();
-			}
-			hintDecIndent();
-			hintNewLine();
-			printToken("}");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -521,8 +497,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("MemberValue2") && expectedType.equals("MemberValue")) return true;
 		if (type.equals("PrimarySuffix4") && expectedType.equals("PrimarySuffix")) return true;
 		if (type.equals("UnaryExpression4") && expectedType.equals("UnaryExpression")) return true;
-		if (type.equals("CastLAOp2") && expectedType.equals("CastLAOp")) return true;
 		if (type.equals("MultiplicativeOp2") && expectedType.equals("MultiplicativeOp")) return true;
+		if (type.equals("CastLAOp2") && expectedType.equals("CastLAOp")) return true;
 		if (type.equals("EnumConstant2") && expectedType.equals("EnumConstant")) return true;
 		if (type.equals("AssignmentOperator11") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("AssignmentOperator6") && expectedType.equals("AssignmentOperator")) return true;
@@ -542,7 +518,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("EmptyDecl") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;
 		if (type.equals("ForStatementInternal2") && expectedType.equals("ForStatementInternal")) return true;
 		if (type.equals("PrimarySuffix2") && expectedType.equals("PrimarySuffix")) return true;
-		if (type.equals("InnerLayerDecl") && expectedType.equals("LayerBodyDeclaration")) return true;
 		if (type.equals("Literal4") && expectedType.equals("Literal")) return true;
 		if (type.equals("Statement7") && expectedType.equals("Statement")) return true;
 		if (type.equals("MemberValue3") && expectedType.equals("MemberValue")) return true;
@@ -600,8 +575,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("PrimaryPrefix3") && expectedType.equals("PrimaryPrefix")) return true;
 		if (type.equals("CastLAOp6") && expectedType.equals("CastLAOp")) return true;
 		if (type.equals("AssignmentOperator7") && expectedType.equals("AssignmentOperator")) return true;
-		if (type.equals("ExplicitConstructorInvocation2") && expectedType.equals("ExplicitConstructorInvocation")) return true;
 		if (type.equals("PrimitiveType4") && expectedType.equals("PrimitiveType")) return true;
+		if (type.equals("ExplicitConstructorInvocation2") && expectedType.equals("ExplicitConstructorInvocation")) return true;
 		if (type.equals("Modifier9") && expectedType.equals("Modifier")) return true;
 		if (type.equals("ConditionalExpression1") && expectedType.equals("ConditionalExpression")) return true;
 		if (type.equals("Modifier11") && expectedType.equals("Modifier")) return true;

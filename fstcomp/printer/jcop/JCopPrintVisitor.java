@@ -6,7 +6,8 @@ import java.io.PrintStream;
 
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_java15.SimplePrintVisitor;
+import tmp.generated_jcop.SimplePrintVisitor;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
