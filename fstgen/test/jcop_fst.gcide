@@ -498,7 +498,7 @@ ClassOrInterfaceBodyDeclaration:
 |
   	@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
 	LOOK_AHEAD(2)
-  	Modifiers PMethodDeclaration :: MethodDecl
+  	Modifiers MethodDeclaration :: MethodDecl
 |
 	@FSTTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
