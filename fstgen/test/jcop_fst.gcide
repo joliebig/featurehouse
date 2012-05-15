@@ -340,8 +340,8 @@ Modifiers:
   (LL(2) Modifier)*
 ;
 
-Modifier: 
-  
+Modifier:
+
    "public" <NONE>
   |
    "static" <NONE>
@@ -371,7 +371,7 @@ Modifier:
 Id: <IDENTIFIER>;
 
 TypeDeclaration:
-	@FSTTerminal(name="{AUTO}")	
+	@FSTTerminal(name="{AUTO}")
 	";"<NONE> :: EmptyTypeDecl
 |
 	@FSTNonTerminal(name="{Id}")
@@ -395,7 +395,7 @@ TypeDeclaration:
 AnnotationTypeDeclaration: "@" "interface" Id AnnotationTypeBody;
 
 @FSTInline
-ClassOrInterfaceDeclaration: 
+ClassOrInterfaceDeclaration:
 		ClassOrInterface Id [ TypeParameters ] [ ExtendsList ] [ ImplementsList ]  ClassOrInterfaceBody;
 
 ClassOrInterface: "class"<NONE> | "interface"<NONE>;
@@ -414,7 +414,7 @@ ImplementsList:
 ;
 
 
-@FSTInline 
+@FSTInline
 EnumDeclaration:
   "enum" Id
   [ ImplementsList ]
@@ -470,7 +470,7 @@ LayerBodyDeclaration:
 |
 	@FSTTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
-;	  
+;
 
 @FSTInline
 ClassOrInterfaceBody:
@@ -500,7 +500,7 @@ ClassOrInterfaceBodyDeclaration:
 |
   	@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
 	LOOK_AHEAD(2)
-  	Modifiers MethodDeclaration :: MethodDecl
+  	Modifiers PMethodDeclaration :: MethodDecl
 |
 	@FSTTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
@@ -533,7 +533,7 @@ ArrayInitializer:
   "{" [ ArrayInitializerInternal ] [ ","<NONE> ] "}"
 ;
 
-ArrayInitializerInternal: 
+ArrayInitializerInternal:
 VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
 
 
@@ -545,7 +545,7 @@ MethodDeclaration:
   MethodDeclarationBody
 ;
 
-MethodDeclarationBody: Block | ";"<NONE>; 
+MethodDeclarationBody: Block | ";"<NONE>;
 
 @FSTExportName("{<IDENTIFIER>}({FormalParameters})")
 MethodDeclarator:
@@ -560,7 +560,7 @@ PMethodDeclaration:
   PMethodDeclarationBody
 ;
 
-PMethodDeclarationBody: Block | ";"<NONE>; 
+PMethodDeclarationBody: Block | ";"<NONE>;
 
 @FSTExportName("{Name}({PMFormalParameters})")
 PMethodDeclarator:
@@ -706,15 +706,15 @@ AssignmentOperator:
   "="<NONE> | "*="<NONE> | "/="<NONE> | "%="<NONE> | "+="<NONE> | "-="<NONE> | "<<=" <NONE>| ">>="<NONE>| ">>>="<NONE> | "&="<NONE> | "^="<NONE> | "|="<NONE>
 ;
 
-ConditionalExpression: 
-		LOOK_AHEAD("ConditionalOrExpression() \"?\"") 
+ConditionalExpression:
+		LOOK_AHEAD("ConditionalOrExpression() \"?\"")
 		ConditionalExpressionFull{Expression}
 	|
 		ConditionalOrExpression
 ;
 
 ConditionalExpressionFull:
-  ConditionalOrExpression "?" Expression! ":" Expression 
+  ConditionalOrExpression "?" Expression! ":" Expression
 ;
 
 ConditionalOrExpression:
@@ -984,7 +984,7 @@ Statement:
 ;
 
 AssertStatement:
-  "assert" Expression [ ":" Expression ] ";" 
+  "assert" Expression [ ":" Expression ] ";"
 ;
 
 LabeledStatement:
@@ -1028,7 +1028,7 @@ StatementExpression
   | PrimaryExpression [ StatementExpressionAssignment ]
 ;
 
-StatementExpressionAssignment: 
+StatementExpressionAssignment:
 	"++"<NONE> |
 	"--"<NONE> |
 	AssignmentOperator Expression
@@ -1069,16 +1069,16 @@ DoStatement:
 ForStatement:
   "for" "("
   ForStatementInternal
-   
+
   ")" @! @+ Statement! @-
 ;
 
 ForStatementInternal:
    LOOK_AHEAD("Type() <IDENTIFIER> \":\"")
-      [ FINAL_T ] Type <IDENTIFIER> ":" Expression 
+      [ FINAL_T ] Type <IDENTIFIER> ":" Expression
     |
    LOOK_AHEAD("FINAL_T() Type() <IDENTIFIER> \":\"")
-      FINAL_T Type <IDENTIFIER> ":" Expression 
+      FINAL_T Type <IDENTIFIER> ":" Expression
     |
      [ ForInit ] ";" [ Expression ] ";" [ ForUpdate ]
   ;
@@ -1131,11 +1131,11 @@ TryStatement:
 TryStatementEnd:
   	(CatchBlock )+ ["finally" Block ]
   |
-     "finally" Block 
+     "finally" Block
 ;
 
 CatchBlock:
-   "catch" "(" FormalParameter ")" Block 
+   "catch" "(" FormalParameter ")" Block
 ;
 
 /* We use productions to match >>>, >> and > so that we can keep the
@@ -1209,7 +1209,7 @@ AnnotationTypeMemberDeclaration:
  	Modifiers   AnnotationTypeDeclaration :: AnnotationInnerAnnotation
 |
 	@FSTNonTerminal(name="{Id}")
-	LOOK_AHEAD(1) 
+	LOOK_AHEAD(1)
   	Modifiers  ClassOrInterfaceDeclaration :: AnnotationInnerClass
 |
 	@FSTNonTerminal(name="{Id}")
@@ -1218,7 +1218,7 @@ AnnotationTypeMemberDeclaration:
 |
 	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
   	LOOK_AHEAD(1)
- 	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
+ 	Modifiers  FieldDeclaration ::AnnotationFieldDecl
  |
 	@FSTTerminal(name="{AUTO}")
    	";" <NONE> :: AnnoationEmptyDecl
