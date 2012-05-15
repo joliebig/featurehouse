@@ -1,3 +1,10 @@
 package edu.ucdavis.cs.mobile.cop.benchmark; 
 
-import edu.ucdavis.cs.mobile.cop.benchmark.Main;
+import edu.ucdavis.cs.mobile.cop.benchmark.Main; public   class  CountLayer {
+	
+	public String edu.ucdavis.cs.mobile.cop.benchmark.Main.doSomethingProceed  () {
+		return "*" + proceed() + "*";
+	}
+
+
+}
