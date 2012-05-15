@@ -402,7 +402,9 @@ ClassOrInterface: "class"<NONE> | "interface"<NONE>;
 
 @FSTInline
 LayerDeclaration:
-		"layer" Id LayerBody;
+		Layer Id LayerBody;
+
+Layer: "layer"<NONE>;
 
 ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
@@ -456,19 +458,15 @@ LayerBody:
 ;
 
 LayerBodyDeclaration:
-	@FSTTerminal(name="{AUTO}")
-	LOOK_AHEAD(2)
-	Initializer :: InitializerDecl
-|
-	@FSTNonTerminal(name="{Id}")
-  	LOOK_AHEAD("Modifiers() \"layer\"")
-  	Modifiers  LayerDeclaration :: InnerLayerDecl
+  	@FSTTerminal(name="{AUTO}")
+  	LOOK_AHEAD(2)
+  	Initializer :: InitializerDecl
 |
   	@FSTTerminal(name="{PMethodDeclaration}",compose="JavaMethodOverriding")
-	LOOK_AHEAD(2)
+  	LOOK_AHEAD(2)
   	Modifiers PMethodDeclaration :: PMethodDecl
 |
-	@FSTTerminal(name="{AUTO}")
+  	@FSTTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
 ;
 

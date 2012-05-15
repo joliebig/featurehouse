@@ -2,7 +2,7 @@ package edu.ucdavis.cs.mobile.cop.benchmark;
 
 import edu.ucdavis.cs.mobile.cop.benchmark.Main;
 
-public class CountLayer {
+public layer CountLayer {
 
 	public int edu.ucdavis.cs.mobile.cop.benchmark.Main.countCOP(int k) {
 		int j = 1; // Count from 1

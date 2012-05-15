@@ -4,9 +4,6 @@
 		"Refinement01"
 	],
 	"roles": {
-		"{MethodDeclaration}": {
-			"Refinement01": "{MethodDeclaration}"
-		}
 	}
 
 }

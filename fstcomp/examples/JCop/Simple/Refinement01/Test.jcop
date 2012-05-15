@@ -1,4 +1,4 @@
-public class CountLayer {
+public layer CountLayer {
 	public String edu.ucdavis.cs.mobile.cop.benchmark.Main.doSomethingProceed() {
 		return "*" + proceed() + "*";
 	}

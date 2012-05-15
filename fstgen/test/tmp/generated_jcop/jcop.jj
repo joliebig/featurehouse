@@ -368,7 +368,7 @@ FSTInfo TypeDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} n=ClassOrInterface(inTerminal){ replaceName(n);} n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=TypeParameters(inTerminal){ replaceName(n);}] [n=ExtendsList(inTerminal){ replaceName(n);}] [n=ImplementsList(inTerminal){ replaceName(n);}] "{" (n=ClassOrInterfaceBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("ClassDeclaration","{Id}","{Id}");}
  |
-	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} "layer" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("LayerDeclaration","{Id}","{Id}");}
+	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} n=Layer(inTerminal){ replaceName(n);} n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("LayerDeclaration","{Id}","{Id}");}
  |
 	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} "enum" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=ImplementsList(inTerminal){ replaceName(n);}] "{" n=EnumConstant(inTerminal){ replaceName(n);} ("," n=EnumConstant(inTerminal){ replaceName(n);})* [n=EnumBodyInternal(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("EnumDecl","{Id}","{Id}");}
 
@@ -396,7 +396,13 @@ FSTInfo ClassOrInterface(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo LayerDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"layer" n=Id(true){ replaceName(n);} n=LayerBody(true){ replaceName(n);} {return productionEndTerminal("LayerDeclaration","-","-","Replacement","Default",first,token);}
+	n=Layer(true){ replaceName(n);} n=Id(true){ replaceName(n);} n=LayerBody(true){ replaceName(n);} {return productionEndTerminal("LayerDeclaration","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Layer(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"layer"  {return productionEndTerminal("Layer","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -465,8 +471,6 @@ FSTInfo LayerBody(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 FSTInfo LayerBodyDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(2) n=Initializer(true){ replaceName(n);} {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
- |
-	LOOKAHEAD(Modifiers() "layer") n=Modifiers(inTerminal){ replaceName(n);} "layer" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=LayerBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("InnerLayerDecl","{Id}","{Id}");}
  |
 	LOOKAHEAD(2) n=Modifiers(true){ replaceName(n);} n=PMethodDeclaration(true){ replaceName("PMethodDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("PMethodDecl","{PMethodDeclaration}","{PMethodDeclaration}","JavaMethodOverriding","Default",first,token);}
  |
