@@ -1,0 +1,21 @@
+Load measurement requires the CAN’s
+key-value space to consist of only a single partition. Otherwise,
+the load measurement does not calculate the average load
+correctly since it relies on the standard routing mechanism,
+which cannot route between multiple partitions. The assertion (feature-based
+specification) in feature LoadMeasurement allows the AlloyAnalyzer to detect
+the problem.
+
+Furthermore, the load-measurement feature and the maliciouspeers
+feature interact such that we had to adjust a function
+that calculates the overall number of data items. 
+The reason is that malicious peers do not respond to queries even
+though they own data items of interest. So, to calculate the
+correct number of data items, we have to ignore malicious
+peers. A similar interaction occurs between the item-retrieval
+feature and the malicious-peers feature. We
+have implemented two derivatives to resolve the interactions.
+FeatureAlloy helped in both cases: interactions are detected
+with assertions and derivatives are modeled in distinct units.
+The assertions are not feature-based as they have knowledge of both
+features involved in the interaction.
