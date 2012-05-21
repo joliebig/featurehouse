@@ -1,0 +1,15 @@
+POSIXFileSystem : Partition :: _POSIXFileSystem ;
+
+Partition : Filesystem [Blocks] :: _Partition ;
+
+Filesystem : [Create] [List] [Move] [Remove] [Symlinks] :: _Filesystem ;
+
+Symlinks : [DerivativeSymlinksAndList] :: _Symlinks ;
+
+Blocks : [DerivativeBlocksAndFilesystem] :: _Blocks ;
+
+%%
+
+DerivativeSymlinksAndList iff Symlinks and List ;
+DerivativeBlocksAndFilesystem iff Blocks and Filesystem ;
+
