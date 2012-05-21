@@ -1,0 +1,24 @@
+module Exprlang
+
+imports
+	Common
+
+exports
+
+  sorts
+    Type Stat Exp Var
+
+  context-free start-symbols
+    Start
+
+  context-free syntax
+    Stat*                 -> Start {cons("Start")}    
+    Var ":=" Exp ";"      -> Stat {cons("Assign")}    
+    "var" ID ":" Type ";" -> Stat {cons("VarDec")}
+    ID                    -> Type {cons("Type")}    
+    ID                    -> Var
+    "-" Exp               -> Exp {cons("UnaryMinus")}
+    INT                   -> Exp {cons("Int")}
+    Var                   -> Exp {cons("Var")}    
+    STRING                -> Exp {cons("String")}   
+    "(" Exp ")"           -> Exp {bracket}    

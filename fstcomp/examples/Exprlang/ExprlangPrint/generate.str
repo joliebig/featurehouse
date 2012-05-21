@@ -1,0 +1,9 @@
+module generate
+
+rules
+
+  to-java:
+    Print(t*) -> $[System.out.println(([t'*]).print());
+    ]
+    with
+      t'* := <to-java> t*

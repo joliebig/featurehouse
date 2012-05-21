@@ -1,0 +1,9 @@
+module generate
+
+rules
+
+  to-java:
+    Sub(x*, y*) -> $[new Sub([x'*],[y'*])]
+    with
+      x'* := <to-java> x*;
+      y'* := <to-java> y*

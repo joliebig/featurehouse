@@ -321,7 +321,7 @@ GRAMMARSTART
  * Program structuring syntax follows.
  */
 
-@FSTNonTerminal(name="{TypeDeclaration}")
+@FSTNonTerminal()
 CompilationUnit:
   [ PackageDeclaration ]
   ( ImportDeclaration )*
@@ -329,16 +329,16 @@ CompilationUnit:
   <EOF>
 ;
 
+@FSTTerminal(name="{TOSTRING}")
 PackageDeclaration:
   "package" Name ";" @!
 ;
 
-@FSTTerminal(name="{Name}{ImportPackage}")
+@FSTTerminal(name="{TOSTRING}")
 ImportDeclaration:
   "import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
 ;
 
-@FSTExportName(".*")
 ImportPackage:
 	<NONE> "." "*" ;
 
@@ -387,7 +387,7 @@ TypeDeclaration:
   	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
   	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
 |
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{ContextClassDeclaration}")
 	LOOK_AHEAD("Modifiers() \"contextclass\"")
 	Modifiers ContextClassDeclaration :: ContextClassDeclaration
 |
@@ -395,7 +395,7 @@ TypeDeclaration:
 	LOOK_AHEAD(2)
   	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
 |
-	@FSTNonTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{LayerDeclaration}")
 	LOOK_AHEAD(2)
 	Modifiers LayerDeclaration :: LayerDeclaration
 
@@ -418,11 +418,11 @@ ExtendsList:
    "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
 ;
 
-@FSTInline
+@FSTNonTerminal(name="{Id}")
 LayerDeclaration:
 		"layer" Id LayerBody;
 
-@FSTInline
+@FSTNonTerminal(name="{Id}")
 ContextClassDeclaration:
 		"contextclass" Id ContextClassBody;
 
@@ -508,11 +508,11 @@ LayerBody:
 ;
 
 LayerBodyDeclaration:
-	@FSTTerminal(name="{AUTO}")
+	@FSTTerminal(name="{Initializer}")
 	LOOK_AHEAD(2)
 	Initializer :: InitializerDecl
 |
-	@FSTNonTerminal(name="{Id}")
+	@FSTNonTerminal(name="{LayerDeclaration}")
 	LOOK_AHEAD("Modifiers() \"layer\"")
 	Modifiers LayerDeclaration :: InnerLayerDecl
 |
@@ -538,9 +538,13 @@ ContextClassBodyDeclaration:
 	LOOK_AHEAD("Modifiers() \"context\"")
 	Modifiers ContextClassDeclaration :: InnerContextDecl
 |
-	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
+	@FSTTerminal(name="{CFieldDeclaration}",compose="FieldOverriding")
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
 	Modifiers CFieldDeclaration :: FieldDecl
+|
+	@FSTTerminal(name="{AUTO}")
+	LOOK_AHEAD(2)
+	WhenStatement :: WhenDecl
 |
 	@FSTTerminal(name="{AUTO}")
 	";" <NONE> :: EmptyDecl
@@ -601,7 +605,7 @@ ArrayInitializer:
 ArrayInitializerInternal: 
 VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
 
-@FSTExportName("{PMethodDeclarator}")
+@FSTTerminal(name="{PMethodDeclarator}")
 PMethodDeclaration:
   [ TypeParameters ]
   ResultType
@@ -611,7 +615,7 @@ PMethodDeclaration:
 
 PMethodDeclarationBody: Block | ";"<NONE>;
 
-@FSTExportName("{<Name>}({FormalParameters})")
+@FSTExportName("{Name}({FormalParameters})")
 PMethodDeclarator:
 	Name FormalParameters ( "[" "]"<NONE> )*
 ;
@@ -891,7 +895,7 @@ CastLookahead:
 ;
 
 CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "new"<NONE> |
-	 <IDENTIFIER> |
+	 <IDENTIFIER> | "proceed" <NONE>
 	 Literal;
 
 PostfixExpression:
@@ -920,6 +924,8 @@ PrimaryPrefix:
 |
   "this"<NONE>
 |
+  "proceed"<NONE>
+|
   "super" "." <IDENTIFIER>
 |
   "(" Expression ")"
@@ -935,6 +941,8 @@ PrimaryPrefix:
 PrimarySuffix:
   LOOK_AHEAD(2)
   "." "this"<NONE>
+|
+  "proceed"<NONE>
 |
   LOOK_AHEAD(2)
   "." "super"<NONE>

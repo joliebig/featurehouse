@@ -22,7 +22,9 @@ public class CmdLineParser {
      * Base class for exceptions that may be thrown when options are parsed
      */
     public static abstract class OptionException extends Exception {
-        OptionException(String msg) { super(msg); }
+		private static final long serialVersionUID = -4609911649009006496L;
+
+		OptionException(String msg) { super(msg); }
     }
 
     /**
@@ -32,7 +34,8 @@ public class CmdLineParser {
      * English).
      */
     public static class UnknownOptionException extends OptionException {
-        UnknownOptionException( String optionName ) {
+		private static final long serialVersionUID = 1049017246266324946L;
+		UnknownOptionException( String optionName ) {
             this(optionName, "Unknown option '" + optionName + "'");
         }
 
@@ -57,7 +60,8 @@ public class CmdLineParser {
      */
     public static class UnknownSuboptionException
         extends UnknownOptionException {
-        private char suboption;
+		private static final long serialVersionUID = 5243389696053413968L;
+		private char suboption;
 
         UnknownSuboptionException( String option, char suboption ) {
             super(option, "Illegal option: '"+suboption+"' in '"+option+"'");
@@ -74,7 +78,8 @@ public class CmdLineParser {
      * @author Vidar Holen
      */
     public static class NotFlagException extends UnknownOptionException {
-        private char notflag;
+		private static final long serialVersionUID = -8337263214223715308L;
+		private char notflag;
 
         NotFlagException( String option, char unflaggish ) {
             super(option, "Illegal option: '"+option+"', '"+
@@ -95,7 +100,8 @@ public class CmdLineParser {
      * English).
      */
     public static class IllegalOptionValueException extends OptionException {
-        public IllegalOptionValueException( Option opt, String value ) {
+		private static final long serialVersionUID = -2822461129813559941L;
+		public IllegalOptionValueException( Option opt, String value ) {
             super("Illegal value '" + value + "' for option " +
                   (opt.shortForm() != null ? "-" + opt.shortForm() + "/" : "") +
                   "--" + opt.longForm());
@@ -458,17 +464,17 @@ public class CmdLineParser {
                     for(int i=1; i<curArg.length(); i++) {
                         Option opt=(Option)this.options.get
                             ("-"+curArg.charAt(i));
-                        if(opt==null) throw new 
+                        if(opt==null) throw new
                             UnknownSuboptionException(curArg,curArg.charAt(i));
                         if(opt.wantsValue()) throw new
                             NotFlagException(curArg,curArg.charAt(i));
                         addValue(opt, opt.getValue(null,locale));
-                        
+
                     }
                     position++;
                     continue;
                 }
-                
+
                 Option opt = (Option)this.options.get(curArg);
                 if ( opt == null ) {
                     throw new UnknownOptionException(curArg);

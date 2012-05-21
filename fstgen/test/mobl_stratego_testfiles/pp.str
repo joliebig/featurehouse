@@ -1,0 +1,423 @@
+module pp
+
+imports
+  include/MoBL
+
+strategies
+
+  pp-mobl-qid :
+    QId(qid, x) -> $[[<pp-mobl-qid> qid]::[x]]
+
+  pp-mobl-qid :
+    s -> s
+    where is-string
+
+  pp-mobl :
+    Application(qid, def*) ->
+    $[application [<pp-mobl-qid> qid]["\n"]
+      [<map(pp-mobl-def); separate-by(|"\n\n"); concat-strings> def*]]
+
+  pp-mobl :
+    ServerApplication(qid, setting*, def*) ->
+    $[server [<pp-mobl-qid> qid]["\n"]
+      [<map(pp-mobl-setting); separate-by(|"\n"); concat-strings> setting*]
+      [<map(pp-mobl-def); separate-by(|"\n\n"); concat-strings> def*]]
+
+  pp-mobl :
+    Module(qid, def*) ->
+    $[module [<pp-mobl-qid> qid]["\n"]
+      [<map(pp-mobl-def); separate-by(|"\n\n"); concat-strings> def*]]
+
+  pp-mobl-setting:
+    DatabaseSetting(s) -> $[database [s]]
+
+  pp-mobl-setting:
+    TitleSetting(s) -> $[title [s]]
+
+  pp-mobl-doc :
+    DocAnno(s) -> $[@doc [s]
+]
+
+  pp-mobl-def :
+    Import(qid) -> $[import [<pp-mobl-qid> qid]]
+
+  pp-mobl-def :
+    Load(s) -> $[load [s]]
+
+  pp-mobl-def :
+    Screen(doc*, qid, farg*, rt, elem*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]screen [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt] {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-def :
+    ScreenNoReturnType(doc*, qid, farg*, elem*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]screen [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-def :
+    Control(doc*, qid, farg*, elem*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]control [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-def :
+    EntityNoSuper(doc*, qid, prop*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]entity [<pp-mobl-qid> qid] {
+        [<map(pp-mobl-prop(|width)); separate-by(|"\n"); concat-strings> prop*]
+      }]
+    where width := <add> (<map(pp-prop-len); foldr(!0, max)> prop*, 1)
+
+  pp-prop-len :
+    Property(_, x, _, _) -> <strlen> x
+
+  pp-prop-len :
+    PropertyNoAnnos(_, x, _) -> <strlen> x
+
+  pp-mobl-def :
+    Entity(doc*, qid, t, prop*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]entity [<pp-mobl-qid> qid] : [<pp-mobl-type> t] {
+        [<map(pp-mobl-prop(|width)); separate-by(|"\n"); concat-strings> prop*]
+      }]
+    where width := <add> (<map(pp-prop-len); foldr(!0, max)> prop*, 1)
+
+  pp-build-string :
+    n -> ""
+    where <lt> (n, 1)
+
+  pp-build-string :
+    n -> <concat-strings> [" ", <pp-build-string> <subt> (n, 1)]
+    where not(0 := n)
+
+  pp-mobl-prop(|width) :
+    Property(doc*, x, t, anno*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*][x][<pp-build-string> <subt> (width, <strlen> x)]: [<pp-mobl-type> t] ([<map(pp-mobl-anno); separate-by(|", "); concat-strings> anno*])]
+
+  pp-mobl-prop(|width) :
+    PropertyNoAnnos(doc*, x, t) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*][x][<pp-build-string> <subt> (width, <strlen> x)]: [<pp-mobl-type> t]]
+
+  pp-mobl-anno :
+    InverseAnno(inv) -> $[inverse: [inv]]
+
+  pp-mobl-type :
+    SimpleType(qid) -> <pp-mobl-qid> qid
+
+  pp-mobl-type :
+    GenericType(qid, t*) -> $[[<pp-mobl-qid> qid]<[<map(pp-mobl-type); separate-by(|", "); concat-strings> t*]>]
+
+  pp-mobl-farg :
+    FArg(x, t) -> $[[x] : [<pp-mobl-type> t]]
+
+  pp-mobl-farg :
+    FArgOptional(x, t, e) -> $[[x] : [<pp-mobl-type> t] = [<pp-mobl-exp> e]]
+
+strategies // UI
+
+  pp-mobl-elem :
+    ScreenString(s) -> s
+
+  pp-mobl-elem :
+    VarDecl(x, t, e) -> $[var [x] : [<pp-mobl-type> t] = [<pp-mobl-exp> e]]
+
+  pp-mobl-elem :
+    VarDeclInferred(x, e) -> $[var [x] = [<pp-mobl-exp> e]]
+
+  pp-mobl-elem :
+    DeriveDecl(x, t, e) -> $[derive [x] : [<pp-mobl-type> t] <- [<pp-mobl-exp> e]]
+
+  pp-mobl-elem :
+    DeriveDeclInferred(x, e) -> $[derive [x] <- [<pp-mobl-exp> e]]
+
+  pp-mobl-elem :
+    Script(stat*) ->
+    $[script {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  // Feature HTML - Start
+  pp-mobl-elem :
+    Html(tag, html-arg*, elem*, closeTag) ->
+    $[<[tag][<map(pp-mobl-tag-arg); concat-strings> html-arg*]>
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      </[closeTag]>]
+  pp-mobl-elem :
+    HtmlShort(tag, html-arg*) -> $[<[tag][<map(pp-mobl-tag-arg); concat-strings> html-arg*] />]
+  pp-mobl-tag-arg :
+    HtmlArg(x, e) -> <concat-strings> [" ", x, "=", <pp-mobl-exp> e]
+  pp-mobl-tag-arg :
+    HtmlDatabindArg(e) -> <concat-strings> [" databind=", <pp-mobl-exp> e]
+  // Feature HTML - Ende
+  
+  pp-mobl-elem :
+    ControlCall(e, arg*, elem*) ->
+    $[[<concat-strings> [<pp-mobl-exp> e, "(", <map(pp-mobl-exp); separate-by(|", "); concat-strings> arg*]]) {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-elem :
+    ControlCallNoBody(e, arg*) -> <concat-strings> [<pp-mobl-exp> e, "(", <map(pp-mobl-exp); separate-by(|", "); concat-strings> arg*, ")"]
+
+  pp-mobl-elem :
+    ControlCallNoArgs(e, elem*) ->
+    $[[<pp-mobl-exp> e] {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-elem :
+    List(lval, t, e, elem*) ->
+    $[list([<pp-mobl-lvalue> lval] : [<pp-mobl-type> t] in [<pp-mobl-exp> e]) {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-elem :
+    ListInferred(lval, e, elem*) ->
+    $[list([<pp-mobl-lvalue> lval] in [<pp-mobl-exp> e]) {
+        [<map(pp-mobl-elem); separate-by(|"\n"); concat-strings> elem*]
+      }]
+
+  pp-mobl-elem = pp-mobl-def
+
+  pp-mobl-elem =
+    debug(!"Could not translate elem: "); fail
+
+strategies // statements
+
+  pp-mobl-def :
+    Function(doc*, qid, farg*, rt, stat*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt] {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-def :
+    FunctionNoReturnType(doc*, qid, farg*, stat*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-def :
+    SyncFunction(doc*, qid, farg*, rt, stat*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]sync function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt] {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-def :
+    SyncFunctionNoReturnType(doc*, qid, farg*, stat*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]sync function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-stat :
+    VarDecl(x, t, e) -> $[var [x] : [<pp-mobl-type> t] = [<pp-mobl-exp> e];]
+
+  pp-mobl-stat :
+    VarDeclInferred(x, e) -> $[var [x] = [<pp-mobl-exp> e];]
+
+  pp-mobl-stat :
+    ScreenReturn(e) -> $[screen return [<pp-mobl-exp> e];]
+
+  pp-mobl-stat :
+    ScreenReturn() -> $[screen return;]
+
+  pp-mobl-stat :
+    Return(e) -> $[return [<pp-mobl-exp> e];]
+
+  pp-mobl-stat :
+    Return() -> $[return;]
+
+  pp-mobl-stat :
+    Assignment(lval, e) -> $[[<pp-mobl-lvalue> lval] = [<pp-mobl-exp> e];]
+
+  pp-mobl-lvalue = pp-mobl-qid
+
+  pp-mobl-lvalue :
+    FieldAccess(e, x) -> $[[<pp-mobl-exp> e].[x]]
+
+  pp-mobl-lvalue :
+    LTuple(fst, rest*) -> $[([<pp-mobl-lvalue> fst], [<map(pp-mobl-lvalue); separate-by(|", "); concat-strings> rest*])]
+
+  pp-mobl-stat :
+    If(e, true-stat*, false-stat*) ->
+    $[if([<pp-mobl-exp> e]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> true-stat*]
+      } else {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> false-stat*]
+      }]
+
+  pp-mobl-stat :
+    IfNoElse(e, true-stat*) ->
+    $[if([<pp-mobl-exp> e]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> true-stat*]
+      }]
+
+  pp-mobl-stat :
+    For(lval, t, e, stat*) ->
+    $[for([<pp-mobl-lvalue> lval] : [<pp-mobl-type> t] in [<pp-mobl-exp> e]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  pp-mobl-stat :
+    ForInferred(lval, e, stat*) ->
+    $[for([<pp-mobl-lvalue> lval] in [<pp-mobl-exp> e]) {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+
+  //  Feature Async - Start
+  pp-mobl-stat :
+    Async(stat*) ->
+    $[async {
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+  //  Feature Async - Ende
+  
+  pp-mobl-stat :
+    ExpStat(e) -> $[[<pp-mobl-exp> e];]
+
+  pp-mobl-stat =
+    debug;
+    !$[statement;]
+
+strategies // expressions
+
+  pp-mobl-exp :
+    NamedExp(x, e) -> <concat-strings> [x, "=", <pp-mobl-exp> e]
+
+  pp-mobl-exp :
+    Brackets(e) -> $[([<pp-mobl-exp> e])]
+
+  pp-mobl-exp :
+    Callback(stat*) ->
+    $[{
+        [<map(pp-mobl-stat); separate-by(|"\n"); concat-strings> stat*]
+      }]
+    where [_,_|_] := stat*
+
+  pp-mobl-exp :
+    Callback([]) -> $[{}]
+
+  pp-mobl-exp :
+    Callback([stat]) -> $[{ [<pp-mobl-stat> stat] }]
+
+  pp-mobl-exp :
+    Var(qid) -> <pp-mobl-qid> qid
+
+  pp-mobl-exp :
+    FieldAccess(e, x) -> $[[<pp-mobl-exp> e].[x]]
+
+  pp-mobl-exp :
+    MethodCall(e, x, arg*) -> $[[<pp-mobl-exp> e].[x]([<map(pp-mobl-exp); separate-by(|", "); concat-strings> arg*])]
+
+  pp-mobl-exp :
+    BinMethodCall(e1, op, e2) -> $[[<pp-mobl-exp> e1] [op] [<pp-mobl-exp> e2]]
+
+  pp-mobl-exp :
+    Call(qid, arg*) -> $[[<pp-mobl-qid> qid]([<map(pp-mobl-exp); separate-by(|", "); concat-strings> arg*])]
+
+  pp-mobl-exp :
+    EntityCons(t, propval*) -> $[[<pp-mobl-type> t]{[<map(pp-mobl-propval); separate-by(|", "); concat-strings> propval*]}]
+
+  pp-mobl-propval :
+    PropVal(x, e) -> $[[x] = [<pp-mobl-exp> e]]
+
+  pp-mobl-exp :
+    CollectionCons(qid, t, e*) -> $[[<pp-mobl-qid> qid]<[<pp-mobl-type> t]>([<map(pp-mobl-exp); separate-by(|", "); concat-strings> e*])]
+
+  pp-mobl-exp :
+    List(e*) -> $[$[$[<map(pp-mobl-exp); separate-by(|", "); concat-strings> e*]$]$]
+
+  pp-mobl-exp :
+    Choice(e, e1, e2) -> $[[<pp-mobl-exp> e] ? [<pp-mobl-exp> e1] : [<pp-mobl-exp> e2]]
+
+  pp-mobl-exp :
+    Indexer(e, e1) -> $[[<pp-mobl-exp> e]$[$[<pp-mobl-exp> e1]$]$]
+
+  pp-mobl-exp :
+    Tuple(fst, rest*) -> $[([<pp-mobl-exp> fst], [<map(pp-mobl-exp); separate-by(|", "); concat-strings> rest*])]
+
+  pp-mobl-exp :
+    String(s) -> s
+
+  pp-mobl-exp :
+    Num(s) -> s
+
+  pp-mobl-exp :
+    True() -> $[true]
+
+  pp-mobl-exp :
+    False() -> $[false]
+
+  pp-mobl-exp :
+    Null() -> $[null]
+
+  pp-mobl-exp :
+    e -> $[someExp]
+
+strategies // externals
+
+  pp-mobl-def :
+    ExternalEntity(doc*, qid, t, prop*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external entity [<pp-mobl-qid> qid] : [<pp-mobl-type> t] {
+        [<map(pp-mobl-prop(|20)); separate-by(|"\n"); concat-strings> prop*]
+      }]
+
+  pp-mobl-def :
+    ExternalFunction(doc*, qid, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-def :
+    ExternalSyncFunction(doc*, qid, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external sync function [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-def :
+    ExternalGenericType(doc*, qid, x*, decl*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external type [<pp-mobl-qid> qid]<[<separate-by(|", "); concat-strings> x*]> {
+        [<map(pp-mobl-ext(|20)); separate-by(|"\n"); concat-strings> decl*]
+      }]
+
+  pp-mobl-ext(|width) :
+    ExternalMethod(doc*, x, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]function [x]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-ext(|width) :
+    ExternalStaticMethod(doc*, x, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]static function [x]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-ext(|width) :
+    ExternalSyncMethod(doc*, x, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]sync function [x]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-ext(|width) :
+    ExternalStaticSyncMethod(doc*, x, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]static sync function [x]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-ext(|width) = pp-mobl-prop(|width)
+
+  pp-mobl-def :
+    ExternalTypeNoSuper(doc*, qid, decl*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external type [<pp-mobl-qid> qid] {
+        [<map(pp-mobl-ext(|width)); separate-by(|"\n"); concat-strings> decl*]
+      }]
+    where width := <add> (<filter(pp-prop-len); foldr(!0, max)> decl*, 1)
+
+  pp-mobl-def :
+    ExternalType(doc*, qid, t, decl*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external type [<pp-mobl-qid> qid] : [<pp-mobl-type> t] {
+        [<map(pp-mobl-ext(|width)); separate-by(|"\n"); concat-strings> decl*]
+      }]
+    where width := <add> (<filter(pp-prop-len); foldr(!0, max)> decl*, 1)
+
+  pp-mobl-def :
+    ExternalScreen(doc*, qid, farg*, rt) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external screen [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*]) : [<pp-mobl-type> rt]]
+
+  pp-mobl-def :
+    ExternalControl(doc*, qid, farg*) ->
+    $[[<map(pp-mobl-doc); concat-strings> doc*]external control [<pp-mobl-qid> qid]([<map(pp-mobl-farg); separate-by(|", "); concat-strings> farg*])]
+
+  pp-mobl-def :
+    //Javascript(part*) -> <concat-strings> ["<script>\n", <map(?JSString(<id>)); concat-strings> part*, "</script>"]
+    Javascript(s) -> <concat-strings> ["<script>\n", s, "</script>"]
+
+  pp-mobl-def =
+    debug(!"Could not translate def: "); fail

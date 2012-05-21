@@ -1,0 +1,9 @@
+module generate
+
+rules
+
+  to-java:
+    Mod(x*, y*) -> $[new Mod([x'*],[y'*])]
+    with
+      x'* := <to-java> x*;
+      y'* := <to-java> y*

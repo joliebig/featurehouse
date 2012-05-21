@@ -1,0 +1,13 @@
+module desugar
+
+strategies
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, true) ]|
+    where [OrderByFilter(OrderAscending(x))|rest] := filter*
+    with e_x := String($["[x]"])
+
+  add-one-filter(|filter*) :
+    e -> <add-one-filter(|rest)> mobl-e|[ e.order(e_x, false) ]|
+    where [OrderByFilter(OrderDescending(x))|rest] := filter*
+    with e_x := String($["[x]"])

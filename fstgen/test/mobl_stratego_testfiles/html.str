@@ -1,0 +1,123 @@
+module generation/html
+
+imports
+  include/MoBL
+  generation/action
+  generation/compile
+  pp
+
+strategies
+
+  generate-index-html(|res*, setting*) :
+    Application(qid, _) -> $[
+<!DOCTYPE html>
+<html [html-manifest]>
+    <head>
+        <title>[<!<un-double-quote> title <+ <qid-to-js> qid>]</title>
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    </head>
+    <body>
+    <div id="mobl-loading">
+      [loading-html]
+    </div>
+    <script src="js/jquery-1.4.min.js" type="application/x-javascript" charset="utf-8"></script>
+    <script src="js/persistence.js" type="application/x-javascript" charset="utf-8"></script>
+    <script src="js/persistence.store.sql.js" type="application/x-javascript" charset="utf-8"></script>
+    <script src="js/persistence.store.websql.js" type="application/x-javascript" charset="utf-8"></script>
+    <script src="js/persistence.store.memory.js" type="application/x-javascript" charset="utf-8"></script>
+    <script src="js/persistence.search.js" type="application/x-javascript" charset="utf-8"></script>
+    <script type="application/x-javascript" charset="utf-8">
+    if (window && window.google && google.gears || window.openDatabase) {
+      try {
+        persistence.store.websql.config(persistence, '[<!<un-double-quote> dbname <+ <qid-to-js> qid>]', 'mobl database', 1024 * 1024, '1.0');
+      } catch(e) {
+        alert("Could not connect to the database, sometimes a refresh helps.");
+      }
+
+      persistence.search.config(persistence, persistence.store.websql.sqliteDialect);
+    } else {
+      persistence.store.memory.config(persistence);
+    }
+    </script>
+    [<filter(res-to-script-html)> res*]
+    <script type="application/x-javascript" charset="utf-8">
+    mobl.icon = "[<<path-to-string> icon <+ !"img/default-icon.png">]";
+    $(function(){
+      persistence.schemaSync(function(tx) {
+        if(persistence.loadFromLocalStorage) {
+          persistence.loadFromLocalStorage();
+        }
+        $("#mobl-loading").remove();
+        mobl.call("[<qid-to-js> qid].root", $[$mobl.ref(false), mobl.ref("none")$]$, function() {});
+      });
+    });
+    </script>
+  </body>
+</html>
+    ]
+    with <filter(?TitleSetting(title))> setting*
+       ; <filter(?DatabaseSetting(dbname))> setting*
+       ; <filter(?IconSetting(icon))> setting*
+       ; html-manifest := <fetch(?OfflineSetting()); !$[manifest="[<qid-to-path> qid].manifest"] <+ !""> setting*
+       ; loading-html := <filter(?LoadingHtmlSetting(html)); ?[LoadingHtmlSetting(<string-to-html>)|_] <+ !$[Loading... <img src="data:image/gif;base64,R0lGODlhCgAKAJEDAMzMzP9mZv8AAP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAAADACwAAAAACgAKAAACF5wncgaAGgJzJ647cWua4sOBFEd62VEAACH5BAUAAAMALAEAAAAIAAMAAAIKnBM2IoMDAFMQFAAh+QQFAAADACwAAAAABgAGAAACDJwHMBGofKIRItJYAAAh+QQFAAADACwAAAEAAwAIAAACChxgOBPBvpYQYxYAIfkEBQAAAwAsAAAEAAYABgAAAgoEhmPJHOGgEGwWACH5BAUAAAMALAEABwAIAAMAAAIKBIYjYhOhRHqpAAAh+QQFAAADACwEAAQABgAGAAACDJwncqi7EQYAA0p6CgAh+QQJAAADACwHAAEAAwAIAAACCpRmoxoxvQAYchQAOw==" width="10" height="10"><p>(If this message still shows after a few seconds, probably something went wrong. Does your browser support Javascript?)</p>]> setting*
+
+
+  string-to-html =
+    where(not(string-starts-with(|"\"\"\"")))
+    ; un-double-quote
+    ; unescape
+
+  string-to-html =
+    where(string-starts-with(|"\"\"\""))
+    ; string-replace(|"\n", "\\n")
+    ; string-replace(|"\"\"\"", "")
+    ; string-replace(|"\"", "\\\"")
+    ; unescape
+
+
+  generate-chrome-manifest(|res*, setting*) :
+    Application(qid, _) -> $[
+{
+  "name": "[<!<un-double-quote> title <+ <qid-to-js> qid>]",
+  "version": "[<!<un-double-quote> version <+ !"1">]",
+  "app": {
+    "launch": {
+      "local_path": "[<qid-to-path> qid].html"
+    }
+  },
+  "icons": {
+    "24": "[<<path-to-string> icon <+ !"img/default-icon.png">]",
+    "128": "[<<path-to-string> icon <+ !"img/default-icon.png">]"
+  },
+  "permissions": $[$
+    "unlimited_storage",
+    "geolocation",
+    "notifications"
+  $]$
+}
+    ]
+    with <filter(?TitleSetting(title))> setting*
+       ; <filter(?IconSetting(icon))> setting*
+       ; <filter(?VersionSetting(version))> setting*
+
+  res-to-script-html :
+    filename -> $[<script src="[filename]" type="application/x-javascript" charset="utf-8"></script>
+]
+    where <string-ends-with(|".js")> filename
+
+  res-to-script-html :
+    filename -> $[<link rel="stylesheet" type="text/css" href="[filename]"/>
+]
+    where <string-ends-with(|".css")> filename
+
+  generate-manifest :
+    res* -> $[CACHE MANIFEST
+              # Something random: [<newname> "random"]
+              [<flatten-list; separate-by(|"\n")> res*]
+
+              NETWORK:
+              *
+              ]

@@ -1,0 +1,61 @@
+module sync-analysis
+
+imports include/MoBL
+        generation/cps-lift
+        type
+        declare
+
+strategies
+
+  analyze-sync =
+    topdown(try(mark-all-sync))
+    ; declare-all
+    //; debug
+    ; repeat(analyze-sync-code)
+
+  mark-all-sync :
+    Function(anno*, qid, arg*, rt, stat*) -> SyncFunction(anno*, qid, arg*, rt, stat*)
+
+  mark-all-sync :
+    StaticFunction(anno*, qid, arg*, rt, stat*) -> StaticSyncFunction(anno*, qid, arg*, rt, stat*)
+
+  analyze-sync-code =
+    ?t-before
+    ; alltd(analyze-sync-function)
+    ; not(?t-before)
+    ; declare-all
+
+  analyze-sync-function :
+    SyncFunction(anno*, qid, arg*, rt, stat*) -> <try(declare)> Function(anno*, qid, arg*, rt, stat*)
+    where not([] := <collect(async-exp)> stat*)
+        //; <debug(!"Marking as async: ")> qid
+
+  analyze-sync-function :
+    Function(anno*, qid, arg*, rt, stat*) -> <try(declare)> SyncFunction(anno*, qid, arg*, rt, stat*)
+    where [] := <collect(async-exp)> stat*
+        //; <debug(!"Marking as sync: ")> qid
+
+  analyze-sync-function :
+    StaticSyncFunction(anno*, qid, arg*, rt, stat*) -> StaticFunction(anno*, qid, arg*, rt, stat*)
+    where not([] := <collect(async-exp)> stat*)
+        //; <debug(!"Marking as async: ")> qid
+
+  analyze-sync-function :
+    StaticFunction(anno*, qid, arg*, rt, stat*) -> StaticSyncFunction(anno*, qid, arg*, rt, stat*)
+    where [] := <collect(async-exp)> stat*
+        //; <debug(!"Marking as sync: ")> qid
+
+  async-exp :
+    Call(_, _) -> <not(is-sync)>
+
+  async-exp :
+    MethodCall(_, _, _) -> <not(is-sync)>
+
+
+  async-exp :
+    ForInferred(_, e, _) -> <id>
+    where GenericType(QId("mobl", "Collection"), _) := <type-of> e
+
+  async-exp :
+    For(_, _, e, _) -> <id>
+    where GenericType(QId("mobl", "Collection"), _) := <type-of> e

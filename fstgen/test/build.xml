@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- ====================================================================== 
-     13.03.2008 18:00:55                                                        
+<!-- ======================================================================
+     13.03.2008 18:00:55
 
-     test_fstgen    
+     test_fstgen
      description
-                   
-     ckaestne                                                                
+
+     ckaestne
      ====================================================================== -->
 <project name="test_fstgen" default="testAlloy">
 	<echo>${java.class.path}</echo>
@@ -27,7 +27,14 @@
 			<pathelement path="${astgen_dir}" />
 		</classpath>
 	</taskdef>
-	
+	<taskdef name="fstgenWithJMLPostprocessing" classname="de.ovgu.cide.fstgen.FSTgenTaskWithJMLPostprocessing">
+		<classpath>
+			<pathelement path="${fstgen_dir}/bin" />
+			<pathelement path="${ast_dir}" />
+			<pathelement path="${astgen_dir}" />
+		</classpath>
+	</taskdef>
+
 	<target name="all" depends="testFJ,testJava,testJavaMerge,testJak,testCSharp,testC,testHaskell,testJavaCC,testAlloy"></target>
 
 	<target name="testFJ">
@@ -38,7 +45,7 @@
 			<param name="directory" value="${fstgen_dir}/test" />
 			<param name="testFile" value="Complex.fj" />
 		</antcall>
-	</target>	
+	</target>
 
 	<target name="testJava">
 		<antcall target="testGrammar">
@@ -49,7 +56,7 @@
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
-	
+
 	<target name="testJavaMerge">
 		<antcall target="testGrammar">
 			<param name="language" value="java15_merge" />
@@ -59,7 +66,7 @@
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
-	
+
 	<target name="testJak">
 		<antcall target="testGrammar">
 			<param name="language" value="jak" />
@@ -79,7 +86,7 @@
 			<param name="testFile" value="Test.cs" />
 		</antcall>
 	</target>
-	
+
 	<target name="testCSharpMerge">
 		<antcall target="testGrammar">
 			<param name="language" value="csharp_merge" />
@@ -89,7 +96,7 @@
 			<param name="testFile" value="Test_Merge.cs" />
 		</antcall>
 	</target>
-	
+
 	<target name="testC">
 			<antcall target="testGrammar">
 				<param name="language" value="capprox" />
@@ -99,7 +106,7 @@
 				<param name="testFile" value="Test.c" />
 			</antcall>
 	</target>
-	
+
 	<target name="testPython">
 			<antcall target="testGrammar">
 				<param name="language" value="python" />
@@ -119,7 +126,7 @@
 				<param name="testFile" value="Test.py" />
 			</antcall>
 	</target>
-	
+
 	<target name="testHaskell">
 			<antcall target="testGrammar">
 				<param name="language" value="haskell" />
@@ -139,17 +146,7 @@
 			<param name="testFile" value="C.jj" />
 		</antcall>
 	</target>
-	
-	<target name="testJCop">
-		<antcall target="testGrammar">
-			<param name="language" value="jcop" />
-			<param name="parserClass" value="JCopParser" />
-			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.jcop" />
-		</antcall>
-	</target>
-	
+
 	<target name="testAlloy">
 		<antcall target="testGrammar">
 			<param name="language" value="alloy" />
@@ -159,9 +156,49 @@
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
-	
 
-	
+    <target name="testJCop">
+		<antcall target="testGrammar">
+        	<param name="language" value="jcop" />
+        	<param name="parserClass" value="JCopParser" />
+        	<param name="mainProduction" value="CompilationUnit" />
+    	    <param name="directory" value="${fstgen_dir}/test" />
+	        <param name="testFile" value="Test.jcop" />
+        </antcall>
+    </target>
+
+
+	<target name="testJavaJML">
+		<antcall target="testGrammarWithPostprocessing">
+			<param name="language" value="javaJML" />
+			<param name="parserClass" value="JavaJMLParser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="TestJML.java" />
+			<param name="fstProcessorClassName" value="FSTprocessorJML" />
+		</antcall>
+	</target>
+
+	<target name="testStratego">
+		<antcall target="testGrammar">
+			<param name="language" value="stratego" />
+			<param name="parserClass" value="StrategoParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.str" />
+		</antcall>
+	</target>
+
+	<target name="testSDF">
+		<antcall target="testGrammar">
+			<param name="language" value="sdf" />
+			<param name="parserClass" value="SDFParser" />
+			<param name="mainProduction" value="Module" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.sdf" />
+		</antcall>
+	</target>
+
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/tmp/generated_${language}" />
 
@@ -180,5 +217,27 @@
 			</classpath>
 		</java>
 	</target>
+
+
+	<target name="testGrammarWithPostprocessing" description="Same as testGrammar, but with a postprocessing step">
+		<mkdir dir="${directory}/tmp/generated_${language}" />
+
+		<fstgenWithJMLPostprocessing grammarFileName="${directory}/${language}_fst.gcide" targetJJFile="${directory}/tmp/generated_${language}/${language}.jj" targetPackage="tmp.generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
+		<jcc grammarFileName="${directory}/tmp/generated_${language}/${language}.jj" targetDirectory="${directory}/tmp/generated_${language}" />
+		<eclipse.refreshLocal resource="fstgen" depth="infinite" />
+		<eclipse.incrementalBuild project="fstgen" />
+		<java classname="de.ovgu.cide.fstgen.GenericPostprocessingParserStarter">
+			<arg value="tmp.generated_${language}.${parserClass}" />
+			<arg value="${mainProduction}" />
+			<arg value="${fstgen_dir}/test/${testFile}" />
+			<arg value="de.ovgu.cide.fstgen.fstProcessing.FSTprocessorJML" />
+			<classpath>
+				<pathelement path="${fstgen_dir}/bin" />
+				<pathelement path="${ast_dir}" />
+				<pathelement path="${astgen_dir}" />
+			</classpath>
+		</java>
+	</target>
+
 
 </project>

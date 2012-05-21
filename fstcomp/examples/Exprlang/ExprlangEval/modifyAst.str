@@ -1,0 +1,8 @@
+module modifyAst
+
+rules
+
+  modifyAst:
+    Eval(e)	-> Eval(e){Type("Int")}
+    where
+      <typeof> e => Type("Int")

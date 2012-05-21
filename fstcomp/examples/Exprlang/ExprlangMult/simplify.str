@@ -1,0 +1,14 @@
+module simplify
+
+strategies
+
+  simplify =
+    innermost(MulOne)
+
+rules
+
+  MulOne:
+    Mul(e, Int("1")) -> e
+    
+  MulOne:
+    Mul(Int("1"), e) -> e

@@ -642,7 +642,7 @@ FSTInfo Import(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ImportFrom(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) n=dotted_name(true){ replaceName(n);} <IMPORT> n=ImportFromEnd(true){ replaceName(n);} {return productionEndTerminal("ImportFrom1","-","-","Replacement","Default",first,token);}
+	n=dotted_name(true){ replaceName(n);} <IMPORT> n=ImportFromEnd(true){ replaceName(n);} {return productionEndTerminal("ImportFrom1","-","-","Replacement","Default",first,token);}
  |
 	("." )+ n=ImportFrom_End(true){ replaceName(n);} {return productionEndTerminal("ImportFrom2","-","-","Replacement","Default",first,token);}
 

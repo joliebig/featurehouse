@@ -1,0 +1,11 @@
+module eval
+
+strategies
+
+  eval =
+    innermost(EvalMul)
+
+rules
+
+  EvalMul:
+    Mul(Int(i), Int(j)) -> Int(<mulS>(i,j))

@@ -1,0 +1,10 @@
+module rename
+
+rules
+
+  rename :
+    Resource(manno*, x, farg*, rt, body) -> Resource(manno*, x, farg2*, rt, body2)
+    with action-scope(
+           farg2* := <map(rename-farg)> farg*
+           ; body2 := <prename-functions; rename-all> body
+         )

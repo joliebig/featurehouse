@@ -1,0 +1,137 @@
+module check
+
+imports
+  libstratego-lib
+  include/Exprlang
+  lib/editor-common.generated
+  modifyAst
+
+rules
+
+	/*
+		Der abstrakte Syntaxbaum wird mit Hilfe der topdown-Strategie durchlaufen.
+		Dabei werden die Zuweisungen und Variablendeklarationen jeweils in einer 
+		Symboltabelle gespeichert.
+		Danach werden die Knoten mit Typinformationen annotiert, wenn ein 
+		eindeutiger Typ bestimmbar ist.
+	*/
+  analyze:
+    t -> t'
+    with
+    	<topdown(try(record-program))> t;
+    	t' := <modify> t    	
+  
+  // Feature Expr - Start -----------------------------------------------------
+  /*   	 
+     Für jede Zuweisung wird die entsprechende Variable in die Symboltabelle
+     GetAssign eingefügt 
+  */ 
+  record-program:
+    Assign(x, e) -> Assign(x, e)
+    with      
+      rules(
+        GetAssign :+ x -> x        
+      )
+  // Feature Expr - Ende ------------------------------------------------------
+  
+  // Feature Var - Start ------------------------------------------------------
+  /*  	 
+  	 Für jede Variablendeklaration wird die entsprechende Variable in die 
+  	 Symboltabelle GetVar und der zugehörige Typ in der Symboltabelle 
+  	 GetVarType eingefügt. 
+  */    
+  record-program:
+  	VarDec(x, Type(t)) -> VarDec(x, Type(t))
+  	with  		
+  		rules(
+  			GetVar :+ x -> x  			
+  			GetVarType :+ x -> Type(t)
+  	  )
+  // Feature Var - Ende -------------------------------------------------------	  	    
+      
+rules
+  
+  /*
+  	 Mit Hilfe dieser Regeln wird überprüft, ob der Programmcode korrekt ist.
+  	 (Stimmen die Typen, sind alle Variablen deklariert)
+  */
+  
+  // Feature Expr - Start -----------------------------------------------------  
+  constraint-error:
+    Assign(x, _) -> (x, $[Die Variable [x] ist nicht definiert])
+    where    	
+      not(<GetVar> x)
+            
+  constraint-error:
+  	Assign(x, e) -> (e, $[Für [x] kann kein eindeutiger Typ ermittelt werden])
+  	where
+  	 	not(<typeof> e)
+    
+  constraint-error:
+  	Assign(x, e){t} -> (x, $[[x] hat den Typ [t'], der ermittelte Typ ist aber [t'']])
+  	where
+  		<bagof-GetVar> x => [_];
+  	 	t' := <getType > (<fetch-elem(id)> (<bagof-GetVarType> x));
+  	 	t'' := <getType> t;
+  	 	not(!t' => t'')
+  	 	// not(<bagof-GetVarType> x; fetch-elem(id) => t) 	 	       
+  	 	// not(<bagof-GetVarType> x);
+    
+  constraint-warning:
+  	Assign(x, _) -> (x, $[Die Variable der Zuweisung muss mit Großbuchstabe beginnen])  
+    where
+      not(<string-starts-with-capital> x)
+  // Feature Expr - Ende ------------------------------------------------------
+  
+  // Feature Var - Start ------------------------------------------------------ 
+  constraint-error:
+    VarDec(x, Type(type)) -> (type, $[Der Typ [type] ist nicht definiert])
+    where
+      not(!type => "String"); 
+      not(!type => "Int")
+  
+  constraint-error:
+    VarDec(x, _) -> (x, $[Die Variable [x] ist mehrfach deklariert])
+    where
+      not(<bagof-GetVar> x => [_])
+  
+  constraint-note:
+    VarDec(x, t) -> (x, $[Deklarationsanweisung])
+  
+  constraint-error:
+  	Var(x) -> (x, $[Die Variable [x] ist nicht definiert])
+  	where
+  		not(<GetVar> x)
+  // Feature Var - Ende -------------------------------------------------------		
+        
+  // Feature Eval - Start -----------------------------------------------------   
+  constraint-error:
+  	Eval(e) -> (e, $[Erwarteter Typ für eval(): Int; Erhaltener Typ: String])
+  	where
+  		<typeof> e => Type("String")
+  
+  constraint-error:
+  	Eval(e) -> (e, $[Erwarteter Typ für eval(): Int; Erhaltener Typ: undefiniert])
+  	where
+  		not(<typeof> e)
+  // Feature Eval - Ende ------------------------------------------------------
+  
+  // Feature Print - Start ----------------------------------------------------
+  constraint-error:
+  	Print(e) -> (e, $[Erwarteter Typ für print(): int oder String; Erhaltener Typ: undefiniert])
+  	where
+  		not(<typeof> e)
+  // Feature Print - Ende -----------------------------------------------------		
+  
+  // Feature Simplify - Start -------------------------------------------------
+  constraint-error:
+  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: String])
+  	where
+  		<typeof> e => Type("String")  		
+  		
+  constraint-error:
+  	Simplify(e) -> (e, $[Erwarteter Typ für simplify(): Int; Erhaltener Typ: undefiniert])
+  	where  		
+  		not(<typeof> e)
+  // Feature Simplify - Ende --------------------------------------------------		  		     		    		    
+  

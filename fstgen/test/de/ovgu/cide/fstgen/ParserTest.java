@@ -24,7 +24,7 @@ public class ParserTest extends TestCase{
 	public void testParser() throws ParseException, FileNotFoundException {
 		SlimJJParser parser = new SlimJJParser(new FileInputStream(
 				"test/fj.gcide"));
-		NGrammar grammar = parser.Grammar();
+		parser.Grammar();
 	}
 
 	@Test
@@ -52,7 +52,7 @@ public class ParserTest extends TestCase{
 	public void testParserFST() throws ParseException, FileNotFoundException {
 		SlimJJParser parser = new SlimJJParser(new FileInputStream(
 				"test/fj_fst.gcide"));
-		NGrammar grammar = parser.Grammar();
+		parser.Grammar();
 	}
 
 	private NGrammar parse(String t) throws ParseException,

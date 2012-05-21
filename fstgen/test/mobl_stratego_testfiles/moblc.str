@@ -1,0 +1,113 @@
+module moblc
+
+imports
+  libstratego-lib
+  libstratego-xtc
+  libstratego-tool-doc
+  generation/compile
+  generation/action
+  editor-common
+  include/MoBL
+  analyze
+  check
+  style
+  util
+  optimize/optimize
+
+strategies
+
+  main =
+    init-moblc-options
+  ; xtc-io-wrap(
+        moblc-options
+      , moblc-usage
+      , moblc-about
+      , ![] // xtc dependencies
+      , moblc-main
+    )
+
+  moblc-main = id
+    ; filename := <get-config> "-i"
+    ; rules ( Standalone := 1 )
+    ; ast := <parse-file> filename
+    ; output-path := $[[<getcwd>]/[<OutputPath <+ !"www">]]
+    ; include-param* := <get-config>"-I"
+    ; cwd := <getcwd>
+    ; rules ( ProjectPath       := cwd )
+    ; setting* := <get-configuration>
+    ; <filter(\ StyleVarSetting(StyleVar(x), e) -> <id>  where rules ( StyleVar : x -> e ) \)> setting*
+    ; if <fetch-elem(?StdLibSetting(stdlib-p))> setting* then
+         stdlib-path := <path-to-string> stdlib-p
+      else
+        stdlib-path := <<Hd> include-param* <+ !"./stdlib">
+      end
+    ; path* := <filter(\ LibSetting(p) -> <path-to-string> p \)> setting*
+    ; rules(
+        IncludePaths      := [cwd, stdlib-path, include-param*, path*]
+        ServerOutputPath  := <concat-strings> [<ProjectPath>, "/server"]
+        CachedParseAst    : filename -> ast
+        StdLibPath        := stdlib-path
+        CompilingFilename := filename
+        OutputPath        := output-path)
+    ; (Module(mod-name, _)  := ast <+ Application(mod-name, _) := ast <+ ServerApplication(mod-name, _, _) := ast)
+    ; rules ( CompilingModule := mod-name )
+    ; ast2 := <analyze> ast
+    ; errors   := <collect-all(constraint-error, conc); map(?(_, <id>); <concat-strings> ["Error: ", <id>])> ast2
+    ; warnings := <collect-all(constraint-warning, conc); map(?(_, <id>); <concat-strings> ["Warning: ", <id>])> ast2
+    ; notes    := <collect-all(constraint-note, conc); map(?(_, <id>); <concat-strings> ["Note: ", <id>])> ast2
+    ; <concat; map(debug)> [errors, warnings, notes]
+    ; if [] := errors; not(OptimizationLevel) then
+        <compile> ast
+        ; <exit> 0
+      else
+        if OptimizationLevel then
+          <optimized-compile(|mod-name)> ast
+        ; <exit> 0
+        else
+          <exit> 1
+        end
+      end
+
+  init-moblc-options =
+    where(<set-config>("-I",[]))
+
+  moblc-options =
+    ArgOption("-d"
+    , ?path; rules( OutputPath := path )
+    , !HelpString("-d path", "Relative path to desired output directory")
+    )
+
+  moblc-options =
+    Option("-O"
+    , rules( OptimizationLevel := 1 )
+    , !HelpString("-O", "Enable optimization mode")
+    )
+
+  moblc-options =
+    ArgOption("-I" + "--Include"
+    , where(<post-extend-config>("-I", [<id>])); !()
+    , !HelpString("-I d | --Include d", "Include modules from directory d")
+    )
+
+  moblc-usage =
+    <tool-doc>
+      [ Usage("moblc -i foo.mobl [OPTIONS]")
+      , Summary("Generates an application from a mobl definition")
+      , OptionUsage()
+      , AutoReportBugs()
+      ]
+
+  moblc-about =
+    <tool-doc>
+      [ AutoProgram()
+      , Program("mobl compiler")
+      , Author(Person("Zef Hemel", "zef@zefhemel.com"))
+      , GNU_LGPL("2010", "Zef Hemel <zef@zefhemel>")
+      //, WebHome("http://www.webdsl.org")
+      ]
+
+    /*
+    ; pil-info(|<pp-pil-to-string> <id>)
+    ; ![]
+    */
+    //; output-pil-to-file(|<get-config <+ !"rewritten.pil"> "-o")

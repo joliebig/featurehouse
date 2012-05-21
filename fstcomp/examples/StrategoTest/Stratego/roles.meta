@@ -1,0 +1,10 @@
+{
+	"features" : [
+		"Base",
+		"Base",
+		"Feature_A"
+	],
+	"roles": {
+	}
+
+}

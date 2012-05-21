@@ -1,0 +1,146 @@
+module optimize/optimize
+
+imports
+  libstratego-lib
+  include/MoBL
+  lib/editor-common
+  mobl
+  analyze
+  generation/compile
+  generation/action
+  generation/html
+  util
+  desugar
+  optimize/dead-code
+
+rules
+
+  external uglify(|)
+
+  optimized-compile(|mod-name) :
+    ast -> ast
+    with {| Inlined, OptimizedMode
+          : <analyze> ast
+          ; rules ( OptimizedMode := True()
+                    Inlined : mod-name )
+          ; topdown(try(inline-import))
+          ; topdown(try(flatten-list))
+          ; eliminate-dead-code
+          ; ?ast2
+          ; where(
+              loaded-resources := <collect(?Load(<path-to-string>))>
+              ; resource* := <collect(?Resource(<path-to-string; not(string-ends-with(|".js"))>))> ast2
+              ; js-filename := <concat-strings> [<OutputPath>, "/", <qid-to-path> mod-name, ".js"]
+              ; css-filename := <concat-strings> [<OutputPath>, "/", <qid-to-path> mod-name, ".css"]
+              ; html-filename := <concat-strings> [<OutputPath>, "/", <qid-to-path> mod-name, ".html"]
+              ; manifest-filename   := <concat-strings; guarantee-extension(|"manifest")> [<OutputPath>, "/", <qid-to-path> mod-name]
+              ; all-js* := <filter(string-ends-with(|".js"))> loaded-resources
+              ; inlinable-js* := <filter(not(string-starts-with(|"http://")))> all-js*
+              ; script-tag-js* := <filter(string-starts-with(|"http://"))> all-js*
+              ; all-css* := <filter(string-ends-with(|".css"))> loaded-resources
+              ; inlinable-css* := <filter(not(string-starts-with(|"http://")))> all-css*
+              ; style-tag-css* := <filter(string-starts-with(|"http://"))> all-css*
+              ; cachable-resource* := [$[[<qid-to-path> mod-name].js], $[[<qid-to-path> mod-name].css], resource*, script-tag-js*, style-tag-css*]
+            )
+          ; compile
+          ; special-js* := ["js/jquery-1.4.min.js", "js/persistence.js", "js/persistence.store.sql.js", "js/persistence.store.websql.js", "js/persistence.store.memory.js", "js/persistence.search.js"]
+          ; all-js1 := <read-files-and-concat> special-js*
+          ; all-js2 := <read-files-and-concat> [inlinable-js*, js-filename]
+          ; setting* := <get-configuration>
+          ; all-js := <uglify> (<StdLibPath>, <concat-strings> [all-js1, <generate-db-init-code(|setting*)> ast, all-js2])
+          //; all-js := <concat-strings> [all-js1, <generate-db-init-code(|setting*)> ast, all-js2]
+          ; if <file-exists> css-filename then
+              all-css := <read-files-and-concat> [inlinable-css*, css-filename]
+            else
+              all-css := <read-files-and-concat> inlinable-css*
+            end
+          ; fp := <fopen> (js-filename, "w")
+          ; <fputs> (all-js, fp)
+          ; <fclose> fp
+          ; fp-css := <fopen> (css-filename, "w")
+          ; <fputs> (all-css, fp-css)
+          ; <fclose> fp-css
+          ; if <fetch-elem(?HtmlSetting(index-html-setting))> setting* then
+              index-html-filename := <concat-strings> [<OutputPath>, "/", index-html-setting]
+            else
+              index-html-filename := html-filename
+            end
+          ; fp2 := <fopen> (index-html-filename, "w")
+          ; <fputs> (<generate-optimized-index-html(|[script-tag-js*, style-tag-css*, $[[<qid-to-path> mod-name].js], $[[<qid-to-path> mod-name].css]], setting*)> ast, fp2)
+          ; <fclose> fp2
+          ; if <fetch(?OfflineSetting())> setting* then
+              fp3 := <fopen <+ debug(!"Could not open file: "); fail> (manifest-filename, "w")
+              ; {| ResourceProcessed
+                 : <fputs> (<generate-manifest <+ debug(!"Could not generate index.manifest")> cachable-resource*, fp3)
+                 |}
+              ; <fclose> fp3
+              ; <refresh-workspace-file> manifest-filename
+            end
+
+          //; <map(<concat-strings> [<OutputPath>, "/", <id>]; remove-file <+ debug(!"Could not remove file: "))> [special-js*, inlinable-css*, inlinable-js*]
+          ; <map(refresh-workspace-file)> [js-filename, css-filename, html-filename]
+          |}
+
+  read-files-and-concat :
+    file* -> <concat-strings> <map(resolve-file; read-text-file <+ debug(!"Could not read file: "); fail)> file*
+
+  inline-import :
+    Import(qid) -> defs
+    where not(<Inlined> qid)
+    where rules( Inlined : qid)
+    where _#([_, defs|_]) := <qid-to-path; <concat-strings> [<id>, ".mobl"]; resolve-file; parse-file; analyze; desugar-all> qid
+
+  inline-import :
+    Import(qid) -> []
+    where <Inlined> qid
+
+  generate-db-init-code(|setting*) :
+    Application(qid, _) -> $[
+    if (window && window.google && google.gears || window.openDatabase) {
+      try {
+        persistence.store.websql.config(persistence, '[<!<un-double-quote> dbname <+ <qid-to-js> qid>]', 'mobl database', 1024 * 1024, '1.0');
+      } catch(e) {
+        alert("Could not connect to the database, sometimes a refresh helps.");
+      }
+      persistence.search.config(persistence, persistence.store.websql.sqliteDialect);
+    } else {
+      persistence.store.memory.config(persistence);
+    }
+]
+    with <filter(?DatabaseSetting(dbname))> setting*
+
+  generate-optimized-index-html(|res*, setting*) :
+    Application(qid, _) -> $[
+<!DOCTYPE html>
+<html [html-manifest]>
+    <head>
+        <title>[<!<un-double-quote> title <+ <qid-to-js> qid>]</title>
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    </head>
+    <body>
+    <div id="mobl-loading">
+      [loading-html]
+    </div>
+    [<filter(res-to-script-html)> res*]
+    <script type="application/x-javascript" charset="utf-8">
+    mobl.icon = "[<<path-to-string> icon <+ !"img/default-icon.png">]";
+    $(function(){
+      persistence.schemaSync(function(tx) {
+        if(persistence.loadFromLocalStorage) {
+          persistence.loadFromLocalStorage();
+        }
+        $("#mobl-loading").remove();
+        mobl.call("[<qid-to-js> qid].root", $[$mobl.ref(false), mobl.ref("none")$]$, function() {});
+      });
+    });
+    </script>
+  </body>
+</html>
+    ]
+    with <filter(?TitleSetting(title))> setting*
+       ; <filter(?IconSetting(icon))> setting*
+       ; html-manifest := <fetch(?OfflineSetting()); !$[manifest="[<qid-to-path> qid].manifest"] <+ !""> setting*
+       ; loading-html := <filter(?LoadingHtmlSetting(html)); ?[LoadingHtmlSetting(<string-to-html>)|_] <+ !$[Loading... <img src="data:image/gif;base64,R0lGODlhCgAKAJEDAMzMzP9mZv8AAP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAAADACwAAAAACgAKAAACF5wncgaAGgJzJ647cWua4sOBFEd62VEAACH5BAUAAAMALAEAAAAIAAMAAAIKnBM2IoMDAFMQFAAh+QQFAAADACwAAAAABgAGAAACDJwHMBGofKIRItJYAAAh+QQFAAADACwAAAEAAwAIAAACChxgOBPBvpYQYxYAIfkEBQAAAwAsAAAEAAYABgAAAgoEhmPJHOGgEGwWACH5BAUAAAMALAEABwAIAAMAAAIKBIYjYhOhRHqpAAAh+QQFAAADACwEAAQABgAGAAACDJwncqi7EQYAA0p6CgAh+QQJAAADACwHAAEAAwAIAAACCpRmoxoxvQAYchQAOw==" width="10" height="10"><p>(If this message still shows after a few seconds, probably something went wrong. Does your browser support Javascript?)</p>]> setting*

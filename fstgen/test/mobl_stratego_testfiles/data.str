@@ -1,0 +1,93 @@
+module generation/data
+
+imports
+  include/MoBL
+  generation/emit
+  generation/ui
+  generation/action
+  generation/sql
+  generation/util
+  lookup
+
+strategies
+  entities-to-js =
+    {| OneToMany, SearchableProperties
+     : map(entity-to-js)
+     ; <map(one-to-many-to-js)> <bagof-OneToMany>
+     ; <map(one-to-one-to-js)> <bagof-OneToOne>
+     ; <map(searchable-to-js)> <bagof-SearchableProperties>
+     |}
+
+  entity-to-js :
+    Entity(manno*, qid, super, prop*) -> <emit> $[
+    [varname] = persistence.define('[<qid-to-html> qid]', {
+      [props]
+    });
+    [sync-code]
+    [methods]
+    ]
+    with props := <filter(property-to-js(|qid)); separate-by(!",\n"); concat-strings> prop*
+       ; if <is-string> qid then
+           varname := $[var [qid]]
+         else
+           varname := <qid-to-js> qid
+         end
+       ; if <fetch(?SyncEntityAnno(UriPath(part*)))> manno* then
+           sync-code := $[[varname].enableSync('[<map(uri-part-to-string); separate-by(|"/")> part*]');]
+         else
+           sync-code := ""
+         end
+       ; methods := <filter(method-to-js(|qid)); separate-by(|"\n")> prop*
+
+  property-to-js(|ent) :
+    Property(_, x, t@SimpleType(_), anno*) -> $['[x]': '[sqlType]']
+    where not(<is-entity-type> t)
+    with sqlType := <sql-type <+ debug(!"Could not convert to SQL: "); fail> t
+       ; if [_] := <filter(?SimpleAnno("searchable"))> anno* then
+           rules ( SearchableProperties :+= (ent, x) )
+         end
+
+  property-to-js(|ent) :
+    Property(_, x, GenericType(coll, [t]), anno*) -> <fail>
+    where <filter(?InverseAnno(inv))> anno*
+        ; rules ( OneToMany :+= (SimpleType(ent), x, t, inv) )
+
+  property-to-js(|ent) :
+    Property(_, x, t@SimpleType(_), anno*) -> <fail>
+    where <is-entity-type> t
+    where [] := <filter(?InverseAnno(_))> anno*
+        ; rules ( OneToOne :+= (SimpleType(ent), x, t) )
+
+  property-to-js(|ent) :
+    Property(_, x, t@SimpleType(_), anno*) -> <fail>
+    where <is-entity-type> t
+    where [InverseAnno(prop)] := <filter(?InverseAnno(_))> anno*
+        ; rules ( OneToOne :+= (SimpleType(ent), x, t, prop) )
+
+  method-to-js(|ent) :
+    fn@SyncFunction(_, x, _, _, _) -> $[[<qid-to-js> ent].prototype.[x] = [<function-to-js-exp> fn];]
+
+  method-to-js(|ent) :
+    fn@Function(_, x, _, _, _) -> $[[<qid-to-js> ent].prototype.[x] = [<function-to-js-exp> fn];]
+
+  method-to-js(|ent) :
+    fn@StaticSyncFunction(_, x, _, _, _) -> $[[<qid-to-js> ent].[x] = [<function-to-js-exp> fn];]
+
+  method-to-js(|ent) :
+    fn@StaticFunction(_, x, _, _, _) -> $[[<qid-to-js> ent].[x] = [<function-to-js-exp> fn];]
+
+  one-to-many-to-js :
+    (SimpleType(from), field, SimpleType(to), invField) -> <emit> $[[<qid-to-js> from].hasMany('[field]', [<qid-to-js> to], '[invField]');
+]
+
+  one-to-one-to-js :
+    (SimpleType(from), field, SimpleType(to)) -> <emit> $[[<qid-to-js> from].hasOne('[field]', [<qid-to-js> to]);
+]
+
+  one-to-one-to-js :
+    (SimpleType(from), field, SimpleType(to), inverse) -> <emit> $[[<qid-to-js> from].hasOne('[field]', [<qid-to-js> to], '[inverse]');
+]
+
+  searchable-to-js :
+    (ent, field) -> <emit> $[[<qid-to-js> ent].textIndex('[field]');
+]

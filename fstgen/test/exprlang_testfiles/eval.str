@@ -1,0 +1,45 @@
+/* 
+   Das Modul muss die Signatur der Sprache importieren, die die Konstruktoren
+   der abstrakten Syntax definiert.
+   Dieses Modul definiert Rewrite-Regeln zur Evaluierung von (teilweise) 
+   konstanten Konstrukten, z.B.: 
+      - die Addition von zwei Integer-Konstanten kann zu einer 
+        Integer-Konstanten ihrer Summe reduziert werden
+*/
+module eval
+
+	imports include/Exprlang
+
+strategies
+	eval =
+    innermost(EvalAdd <+ EvalSub <+ EvalMul <+ EvalDiv <+ EvalMod)
+	
+rules
+	
+	// Feature Add - Start ------------------------------------------------------
+	EvalAdd:
+    Add(Int(i), Int(j)) -> Int(<addS>(i,j))
+    
+  EvalAdd:
+    Add(String(i), String(j)) -> String(<conc-strings>(i,j))
+  // Feature Add - Ende -------------------------------------------------------    
+
+  // Feature Sub - Start ------------------------------------------------------
+  EvalSub: 
+    Sub(Int(i), Int(j)) -> Int(<subtS>(i,j)) 
+  // Feature Sub - Ende -------------------------------------------------------   
+  	
+  // Feature Mul - Start ------------------------------------------------------
+  EvalMul:
+    Mul(Int(i), Int(j)) -> Int(<mulS>(i,j))
+  // Feature Mul - Ende -------------------------------------------------------  
+      
+  // Feature Div - Start ------------------------------------------------------
+  EvalDiv:
+    Div(Int(i), Int(j)) -> Int(<divS>(i,j))
+  // Feature Div - Ende -------------------------------------------------------
+    
+  // Feature Mod - Start ------------------------------------------------------
+  EvalMod:
+    Mod(Int(i), Int(j)) -> Int(<modS>(i,j))
+  // Feature Mod - Ende -------------------------------------------------------   

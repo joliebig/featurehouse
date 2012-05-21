@@ -1,0 +1,9 @@
+module generate
+
+rules
+
+  to-java:
+    Div(x*, y*) -> $[new Div([x'*],[y'*])]
+    with
+      x'* := <to-java> x*;
+      y'* := <to-java> y*

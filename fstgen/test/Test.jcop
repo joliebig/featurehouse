@@ -4,7 +4,7 @@ import edu.ucdavis.cs.mobile.cop.benchmark.Main;
 
 public layer CountLayer {
 	
-	public int edu.ucdavis.cs.mobile.cop.benchmark.Main.countCOP() {
+	public int edu.ucdavis.cs.mobile.cop.benchmark.Main.countCOP(int k) {
 		int j = 1; // Count from 1
 		for (int i = 0; i < 10; i++) { j++; }
 		return j;

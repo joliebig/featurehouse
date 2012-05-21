@@ -1,0 +1,14 @@
+module eval
+
+strategies
+
+  eval =
+    innermost(EvalAdd)
+	
+rules
+
+  EvalAdd:
+    Add(Int(i), Int(j)) -> Int(<addS>(i,j))
+    
+  EvalAdd:
+    Add(String(i), String(j)) -> String(<conc-strings>(i,j))

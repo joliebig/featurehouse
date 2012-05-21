@@ -153,7 +153,12 @@ public class CreateFSTVisitor extends NVisitor {
 		return errorMsg;
 	}
 
+	/**
+	 * call this getter only after this visitor was accepted by a grammar.
+	 * @return FST node types
+	 */
 	public Set<FSTNodeType> getFSTNodeTypes() {
 		return fstNodeTypes;
 	}
+	
 }
