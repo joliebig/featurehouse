@@ -1,7 +1,12 @@
 package composer.rules.rtcomp.java;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
+
 import composer.rules.CompositionRule;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -31,15 +36,26 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 			terminalComp3.setBody(newBody);
 			terminalComp3.setName(roleFunctionName);
 			
-			String newBody2 = replaceFunctionName(beforeFunctionName, sigB.name, terminalComp2.getBody());			
+			String newBody2 = replaceFunctionName(beforeFunctionName, sigB.name, terminalComp2.getBody());
 			terminalComp2.setBody(newBody2);
 			terminalComp2.setName(beforeFunctionName);
 			
 			System.out.println(terminalA.getName());
 			String switchIdentifier = "verificationClasses.FeatureSwitches.__SELECTED_FEATURE_" + featureName;
 			String newBody3 = "";
+			String exceptions = "";
+			if (! sigB.exceptions.isEmpty()) {
+				exceptions = " throws ";
+				for (int i = 0; i < sigB.exceptions.size(); i++) {
+					if (i == sigB.exceptions.size()-1)
+						exceptions += sigB.exceptions.get(i);
+					else
+						exceptions += sigB.exceptions.get(i)+ ", ";
+				}
+				
+			}
 			if (sigB.returnType.trim().endsWith("void")) {
-				newBody3 = sigB.toString() + " {\n" +
+				newBody3 = sigB.toString() + exceptions + " {\n" +
 					"    if (" + switchIdentifier + ") {\n" +
 					"        " + roleFunctionName + sigB.arglist + ";\n" + 
 					"    } else {\n" +
@@ -47,7 +63,7 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 					"    }\n" +
 					"}\n\n";
 			} else {
-				newBody3 = sigB.toString() + " {\n" +
+				newBody3 = sigB.toString() + exceptions + " {\n" +
 					"    if (" + switchIdentifier + ") {\n" +
 					"        return " + roleFunctionName + sigB.arglist + ";\n" + 
 					"    } else {\n" +
@@ -116,11 +132,13 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 		public String name;
 		public String paramlist;
 		public String arglist;
+		public List<String> exceptions;
 		
-		public Signature(String returnType, String name, String paramlist) {
+		public Signature(String returnType, String name, String paramlist, List<String> exceptions) {
 			this.returnType = returnType;
 			this.name = name;
 			this.paramlist = paramlist;
+			this.exceptions = exceptions;
 			parseArgs();
 		}
 		
@@ -145,12 +163,14 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 			}
 			arglist += ")";
 			this.arglist = arglist;
+			
 		}
 		
 		public static Signature fromString(String src) {
 			String name = src;
 			String returnType = "";
 			String paramlist = "()";
+			List<String> exceptions = new ArrayList<String>();
 			
 			StringTokenizer st = new StringTokenizer(name, "(");
 			if (st.hasMoreTokens()) {
@@ -175,12 +195,17 @@ public class JavaRuntimeFunctionRefinement implements CompositionRule {
 				}
 			}
 			
-			if (name.startsWith("*")) {
-				name = name.substring(1);
-				returnType += "*";
+			// this will not work well if the methodName or some parameter contains the String "throws "
+			if (src.contains("throws ")) {
+				String exs = src.substring(src.indexOf("throws ")+"throws".length());
+				exs = exs.substring(0, exs.indexOf("{"));
+				String[] exArr = exs.split(",");
+				for (String s : exArr) {
+					exceptions.add(s.trim());
+				}
 			}
-			
-			return new Signature(returnType, name, paramlist);
+			if (exceptions.isEmpty()) exceptions = Collections.emptyList();
+			return new Signature(returnType, name, paramlist, exceptions);
 		}
 	}
 	
