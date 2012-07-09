@@ -122,7 +122,7 @@ public class CRuntimeFeatureSelection {
 		cnf = cnf.replaceAll("\\(", "( ");
 		cnf = cnf.replaceAll("\\)", " )");
 		
-	    Pattern varsRegEx = Pattern.compile("[a-zA-Z_]+");
+	    Pattern varsRegEx = Pattern.compile("[a-zA-Z_]+[a-zA-Z0-9_]+");
 		Matcher matcher = varsRegEx.matcher(cnf);
 
 		Set<String> variables = new HashSet<String>();
