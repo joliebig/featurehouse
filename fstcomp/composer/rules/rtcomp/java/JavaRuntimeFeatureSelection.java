@@ -100,10 +100,11 @@ public class JavaRuntimeFeatureSelection {
 		cnf = cnf.replaceAll("//[^\\n]*", ""); //strip comments
 		cnf = cnf.replaceAll("xor ", "^ ");
 		cnf = cnf.replaceAll("and ", "&& ");
-		cnf = cnf.replaceAll("and\\n", "&& ");
-		cnf = cnf.replaceAll("or ", "|| ");				
+		cnf = cnf.replaceAll("or ", "|| ");
 		cnf = cnf.replaceAll("not ", "! ");
-		cnf = cnf.replaceAll("\\n", "");
+		cnf = cnf.replaceAll(" \\n", " ");
+		cnf = cnf.replaceAll("\\n", " ");
+		cnf = cnf.replaceAll(" \\r", "");
 		cnf = cnf.replaceAll("\\r", "");
 		cnf = cnf.replaceAll("\\(", "( ");
 		cnf = cnf.replaceAll("\\)", " )");
