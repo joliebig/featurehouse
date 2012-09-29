@@ -11,15 +11,15 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaMethodOverriding extends AbstractCompositionRule {
-	
-	//TODO: Ich weiss nicht ob das richtig ist.
+
+	// TODO: Ich weiss nicht ob das richtig ist.
 	public final static String COMPOSITION_RULE_NAME = FSTTerminal.defaultCompositionMechanism;
-	
+
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
-		
+
 		specializeModifiers(terminalA, terminalB);
 
 		if (!terminalA.getBody().matches("(?s).*\\s*original\\s*.*")) {
@@ -41,11 +41,12 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			while (st.hasMoreTokens()) {
 				oldMethodName = st.nextToken();
 			}
-			
 
 			String toReplace = "original\\s*\\(";
-			String newMethodName = oldMethodName + "__wrappee__" + getFeatureName(terminalB);
-			String newBody = terminalComp.getBody().replaceAll(toReplace, newMethodName + "(");
+			String newMethodName = oldMethodName + "__wrappee__"
+					+ getFeatureName(terminalB);
+			String newBody = terminalComp.getBody().replaceAll(toReplace,
+					newMethodName + "(");
 			terminalComp.setBody(newBody);
 
 			String auxBody = "";
@@ -53,10 +54,12 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			if (st.hasMoreTokens()) {
 				auxBody = st.nextToken();
 			}
-			
-			meta.putMapping(oldMethodName, getFeatureName(terminalB), newMethodName);
-			meta.putMapping(oldMethodName, getFeatureName(terminalA), oldMethodName);
-		
+
+			meta.putMapping(oldMethodName, getFeatureName(terminalB),
+					newMethodName);
+			meta.putMapping(oldMethodName, getFeatureName(terminalA),
+					oldMethodName);
+
 			st = new StringTokenizer(auxBody);
 			String prefix = "";
 			boolean found = false;
@@ -84,16 +87,19 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 
 			modPrefix = modPrefix.trim();
 
-			//System.err.println("-------" + prefix);
-			//System.err.println("#######" + terminalComp2.getBody());
-			//System.err.println("+++++++" + terminalComp2.getBody().replaceFirst(modPrefix, ""));
-			
+			// System.err.println("-------" + prefix);
+			// System.err.println("#######" + terminalComp2.getBody());
+			// System.err.println("+++++++" +
+			// terminalComp2.getBody().replaceFirst(modPrefix, ""));
+
 			prefix = prefix.replaceFirst("public", "private");
 			prefix = prefix.replaceFirst("protected", "private");
-			if(!prefix.contains("private") && !isC(nonterminalParent))
+			if (!prefix.contains("private") && !isC(nonterminalParent))
 				prefix = "private " + prefix;
-			
-			terminalComp2.setBody(prefix + terminalComp2.getBody().replaceFirst(modPrefix, "").replaceFirst(oldMethodName, newMethodName));
+
+			terminalComp2.setBody(prefix
+					+ terminalComp2.getBody().replaceFirst(modPrefix, "")
+							.replaceFirst(oldMethodName, newMethodName));
 			terminalComp2.setName(newMethodName);
 		}
 	}
@@ -110,21 +116,22 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			return true;
 		} else {
 			FSTNode parent = node.getParent();
-			if(parent != null) {
+			if (parent != null) {
 				return isC(parent);
 			} else {
 				return false;
 			}
 		}
-			
+
 	}
 
-	
-	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
+	private static void specializeModifiers(FSTTerminal terminalA,
+			FSTTerminal terminalB) {
 
-		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
+		if (terminalA.getBody().contains("@")
+				|| terminalB.getBody().contains("@"))
 			return;
-		
+
 		StringTokenizer stA = new StringTokenizer(terminalA.getBody(), "(");
 		StringTokenizer stB = new StringTokenizer(terminalB.getBody(), "(");
 
@@ -139,16 +146,15 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			while (stB.hasMoreTokens()) {
 				modifierSetB.add(stB.nextToken());
 			}
-
 			String[] modifierArrayA = new String[modifierSetA.size()];
 			modifierSetA.toArray(modifierArrayA);
 
 			String[] modifierArrayB = new String[modifierSetB.size()];
 			modifierSetB.toArray(modifierArrayB);
 
-			if(modifierArrayA.length <=1 || modifierArrayB.length <= 1) 
+			if (modifierArrayA.length <= 1 || modifierArrayB.length <= 1)
 				return;
-			
+
 			if (!modifierArrayA[modifierArrayA.length - 2]
 					.equals(modifierArrayB[modifierArrayB.length - 2])) {
 				System.err.println("Warning: return types of the two methods `"
@@ -159,22 +165,27 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			}
 
 			String removedDuplicates = new String();
-			String[] modifierArrayRes = new String[modifierArrayA.length + modifierArrayB.length - 2];
-			System.arraycopy(modifierArrayB, 0, modifierArrayRes, 0, modifierArrayB.length - 2);
-			System.arraycopy(modifierArrayA, 0, modifierArrayRes, modifierArrayB.length - 2, modifierArrayA.length);
+			String[] modifierArrayRes = new String[modifierArrayA.length
+					+ modifierArrayB.length - 2];
+			System.arraycopy(modifierArrayB, 0, modifierArrayRes, 0,
+					modifierArrayB.length - 2);
+			System.arraycopy(modifierArrayA, 0, modifierArrayRes,
+					modifierArrayB.length - 2, modifierArrayA.length);
 
 			boolean isPublic = false;
 			boolean isProtected = false;
 			boolean isPrivate = false;
 			boolean isAbstract = false;
+			boolean isFinal = false;
 			LinkedList<String> otherModifiers = new LinkedList<String>();
-			
 			for (int i = 0; i < modifierArrayRes.length; i++) {
 				String modifier = modifierArrayRes[i].trim();
-				if (modifier.equals("private") && !isPublic && !isProtected && !isPrivate) {
+				if (modifier.equals("private") && !isPublic && !isProtected
+						&& !isPrivate) {
 					isPrivate = true;
 					removedDuplicates += modifier + " ";
-				} else if (modifier.equals("protected") && !isPublic && !isProtected ) {
+				} else if (modifier.equals("protected") && !isPublic
+						&& !isProtected) {
 					isProtected = true;
 					removedDuplicates = removedDuplicates.replaceAll("private",
 							"");
@@ -194,30 +205,37 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 						removedDuplicates = removedDuplicates.replaceAll(
 								"final", "");
 						removedDuplicates += modifier + " ";
-					} else if (modifier.equals("final") && !isAbstract) {
+					} else if (modifier.equals("final") && !isAbstract
+							&& !isFinal) {
 						removedDuplicates += modifier + " ";
+						isFinal = true;
 					} else if (!modifier.equals("abstract")
 							&& !modifier.equals("final")) {
-						
+
 						boolean in = false;
-						for(String otherModifier : otherModifiers) {
-							if(otherModifier.equals(modifier))
+						for (String otherModifier : otherModifiers) {
+							if (otherModifier.equals(modifier))
 								in = true;
 						}
-						if(!in) {
+						if (!in) {
 							removedDuplicates += modifier + " ";
 							otherModifiers.add(modifier);
 						}
 					}
 				}
 			}
+			if (terminalA.getBody().contains("("))
+				terminalA.setBody(removedDuplicates
+						+ " "
+						+ terminalA.getBody().substring(
+								terminalA.getBody().indexOf("(")));
 
-			if(terminalA.getBody().contains("("))
-				terminalA.setBody(removedDuplicates + " " + terminalA.getBody().substring(terminalA.getBody().indexOf("(")));
-			
-			if(terminalB.getBody().contains("("))
-				terminalB.setBody(removedDuplicates + " " + terminalB.getBody().substring(terminalB.getBody().indexOf("(")));
-			
+			if (terminalB.getBody().contains("("))
+				terminalB.setBody(removedDuplicates
+						+ " "
+						+ terminalB.getBody().substring(
+								terminalB.getBody().indexOf("(")));
+
 		}
 	}
 }
