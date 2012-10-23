@@ -40,15 +40,24 @@ public class CRuntimeFunctionRefinement implements CompositionRule {
 			System.out.println(terminalA.getName());
 			
 			String switchIdentifier = "__SELECTED_FEATURE_" + featureName;
-			
-			String newBody3 = sigB.toString() + " {\n" +
-				"    if (" + switchIdentifier + ") {\n" +
-				"        return " + roleFunctionName + sigB.arglist + ";\n" + 
-				"    } else {\n" +
-				"        return " + beforeFunctionName + sigB.arglist + ";\n" +
-				"    }\n" +
-				"}\n\n";
-			
+			String newBody3 = "";
+			if (sigB.returnType.trim().equals("void")) {
+				newBody3 = sigB.toString() + " {\n" +
+					"    if (" + switchIdentifier + ") {\n" +
+					"        " + roleFunctionName + sigB.arglist + ";\n" + 
+					"    } else {\n" +
+					"        " + beforeFunctionName + sigB.arglist + ";\n" +
+					"    }\n" +
+					"}\n\n";
+			} else {
+				newBody3 = sigB.toString() + " {\n" +
+					"    if (" + switchIdentifier + ") {\n" +
+					"        return " + roleFunctionName + sigB.arglist + ";\n" + 
+					"    } else {\n" +
+					"        return " + beforeFunctionName + sigB.arglist + ";\n" +
+					"    }\n" +
+					"}\n\n";
+			}
 			terminalComp.setBody(newBody3);
 				
 	}
