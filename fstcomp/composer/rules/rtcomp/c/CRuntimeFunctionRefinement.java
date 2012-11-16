@@ -2,13 +2,13 @@ package composer.rules.rtcomp.c;
 
 import java.util.StringTokenizer;
 
-import composer.rules.CompositionRule;
+import composer.rules.AbstractCompositionRule;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class CRuntimeFunctionRefinement implements CompositionRule {
+public class CRuntimeFunctionRefinement extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,

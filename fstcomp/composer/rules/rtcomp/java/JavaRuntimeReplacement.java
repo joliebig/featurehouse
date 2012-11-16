@@ -1,10 +1,11 @@
 package composer.rules.rtcomp.java;
 
-import composer.rules.CompositionRule;
+import composer.rules.AbstractCompositionRule;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class JavaRuntimeReplacement implements CompositionRule {
+public class JavaRuntimeReplacement extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,

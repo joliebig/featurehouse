@@ -60,7 +60,7 @@ public class FSTTerminal extends FSTNode {
 	public FSTNode getDeepClone() {
 		return new FSTTerminal(getType(), getName(), getBody(),
 				getSpecialTokenPrefix(), getCompositionMechanism(),
-				getMergingMechanism());
+				getMergingMechanism(), beginLine, endLine);
 	}
 
 	public void setBody(String b) {
@@ -110,6 +110,14 @@ public class FSTTerminal extends FSTNode {
 
 	public void setMergingMechanism(String mergingMechanism) {
 		merge = mergingMechanism;
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 	}
 
 }

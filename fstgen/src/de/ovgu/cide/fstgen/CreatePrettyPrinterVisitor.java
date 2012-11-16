@@ -117,6 +117,10 @@ public class CreatePrettyPrinterVisitor extends NCreateFileVisitor {
 			println("hintNewLine();", indent);
 		if (hint.indexOf('s') > 0)
 			println("hintSingleSpace();", indent);
+		if (hint.indexOf('%') > 0)
+			println("printToken(\"/*@\");", indent);
+		if (hint.indexOf('&') > 0)
+			println("printToken(\"@*/\");", indent);
 	}
 
 	void visitUnit(NNonTerminal unit) {

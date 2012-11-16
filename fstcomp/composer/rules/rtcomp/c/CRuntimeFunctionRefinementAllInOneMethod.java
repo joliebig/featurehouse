@@ -2,13 +2,13 @@ package composer.rules.rtcomp.c;
 
 import java.util.StringTokenizer;
 
-import composer.rules.CompositionRule;
+import composer.rules.AbstractCompositionRule;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class CRuntimeFunctionRefinementAllInOneMethod implements CompositionRule {
+public class CRuntimeFunctionRefinementAllInOneMethod extends AbstractCompositionRule {
 
 	/*
 	 * This method is very wrong!

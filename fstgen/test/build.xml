@@ -7,7 +7,7 @@
 
      ckaestne
      ====================================================================== -->
-<project name="test_fstgen" default="testAlloy">
+<project name="test_fstgen" default="testJMLContracts">
 	<echo>${java.class.path}</echo>
 	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
@@ -56,7 +56,15 @@
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
-
+	<target name="testJMLContracts">
+		<antcall target="testGrammar">
+			<param name="language" value="jml_contract_composition" />
+			<param name="parserClass" value="JMLParser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="testFile" value="Test.java" />
+		</antcall>
+	</target>
 	<target name="testJavaMerge">
 		<antcall target="testGrammar">
 			<param name="language" value="java15_merge" />
