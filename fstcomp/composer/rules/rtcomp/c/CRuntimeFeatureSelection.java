@@ -112,9 +112,11 @@ public class CRuntimeFeatureSelection {
 		scanner.close();
 		
 		cnf = cnf.replaceAll("//[^\\n]*", ""); //strip comments
+		cnf = cnf.replaceAll(" \\n", " ");
+		cnf = cnf.replaceAll("\\n", " ");
 		cnf = cnf.replaceAll("xor ", "^ ");
 		cnf = cnf.replaceAll("and ", "&& ");
-		cnf = cnf.replaceAll("or ", "|| ");				
+		cnf = cnf.replaceAll("or ", "|| ");
 		cnf = cnf.replaceAll("not ", "! ");
 		cnf = cnf.replaceAll(" \\n", " ");
 		cnf = cnf.replaceAll("\\n", " ");
