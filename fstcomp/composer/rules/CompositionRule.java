@@ -28,5 +28,16 @@ public interface CompositionRule {
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent);
 	
+	/**
+	 * This method is called on the given terminal node before composition. 
+	 * @param terminal
+	 */
+	public void preCompose(FSTTerminal terminal);
+
+	/**
+	 * This method is called on the given terminal node after composition. 
+	 * @param terminal
+	 */
+	public void postCompose(FSTTerminal terminal);
 	
 }

@@ -6,7 +6,6 @@ import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -22,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import builder.ArtifactBuilderInterface;
 import cide.gparser.ParseException;
+import cide.gparser.TokenMgrError;
 
 public class FileLoader {
 
@@ -201,6 +201,9 @@ public class FileLoader {
 							} catch (ParseException e) {
 								composer.getErrorFiles().add(files[i]);
 								composer.fireParseErrorOccured(e);
+							} catch (TokenMgrError e) {
+								composer.getErrorFiles().add(files[i]);
+								throw(e);
 							}
 							// builder.processFile(files[i]);
 						}
