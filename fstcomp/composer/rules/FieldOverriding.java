@@ -9,7 +9,9 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class FieldOverriding extends AbstractCompositionRule {
 	public final static String COMPOSITION_RULE_NAME = "FieldOverriding";
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-
+		if (terminalB == null) {
+			return;
+		}
 		specializeModifiers(terminalA, terminalB);
 
 		String bodyA = terminalA.getBody();
@@ -33,7 +35,7 @@ public class FieldOverriding extends AbstractCompositionRule {
 		}
 	}
 	
-	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
+	protected static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
 		if(terminalA.getBody().contains("@") || terminalB.getBody().contains("@"))
 			return;

@@ -6,7 +6,9 @@ import java.io.PrintStream;
 
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_java15.SimplePrintVisitor;
+
+import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
+import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
@@ -21,9 +23,15 @@ public class JavaPrintVisitor extends ArtifactPrintVisitor {
 			for(FSTNode child : nonterminal.getChildren()) {
 				String fileName = folderPath.getPath() + File.separator + nonterminal.getName();
 
-				SimplePrintVisitor visitor;
+				AbstractFSTPrintVisitor visitor;
 				try {
-					visitor = new SimplePrintVisitor(new PrintStream(fileName));
+					if(CommandLineParameterHelper.isJML()){
+						visitor = new tmp.generated_jml_contract_composition.SimplePrintVisitor(new PrintStream(fileName));
+					}
+					else{
+						visitor = new tmp.generated_java15.SimplePrintVisitor(new PrintStream(fileName));
+					}
+					
 					visitor.visit((FSTNonTerminal)child);
 					visitor.getResult();
 				} catch (FileNotFoundException e) {
