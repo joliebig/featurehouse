@@ -21,7 +21,7 @@ public class ConstructorConcatenation extends AbstractCompositionRule {
 		terminalComp.setBody(constructorB + constructorA);
 	}
 	
-	private static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
+	protected static void specializeModifiers(FSTTerminal terminalA, FSTTerminal terminalB) {
 
 		StringTokenizer stA = new StringTokenizer(terminalA.getBody(), "(");
 		StringTokenizer stB = new StringTokenizer(terminalB.getBody(), "(");

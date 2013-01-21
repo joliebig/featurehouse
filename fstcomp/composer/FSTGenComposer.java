@@ -13,16 +13,18 @@ import builder.ArtifactBuilderInterface;
 import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
 
-import composer.rules.CompositionRule;
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
+import composer.rules.CompositionRule;
 import composer.rules.ConstructorConcatenation;
+import composer.rules.ContractComposition;
 import composer.rules.ExpansionOverriding;
 import composer.rules.FieldOverriding;
 import composer.rules.ImplementsListMerging;
 import composer.rules.JavaMethodOverriding;
 import composer.rules.ModifierListSpecialization;
 import composer.rules.Replacement;
+import composer.rules.StringConcatenation;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
@@ -31,7 +33,7 @@ import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
 import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
-import composer.rules.StringConcatenation;
+
 import counter.Counter;
 
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
@@ -41,12 +43,12 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenComposer extends FSTGenProcessor {
 
-	private CmdLineInterpreter cmd = new CmdLineInterpreter();
+	protected CmdLineInterpreter cmd = new CmdLineInterpreter();
 	
-	private CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
-	private List<CompositionRule> compositionRules;
-	private CRuntimeSubtreeIntegration subtreeRewriterC = null;
-	private JavaRuntimeSubtreeIntegration subtreeRewriterJava = null;
+	protected CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
+	protected List<CompositionRule> compositionRules;
+	protected CRuntimeSubtreeIntegration subtreeRewriterC = null;
+	protected JavaRuntimeSubtreeIntegration subtreeRewriterJava = null;
 	
 	public FSTGenComposer() {
 		super();
@@ -97,6 +99,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 		} else {
 			compositionRules.add(new Replacement());
 			compositionRules.add(new JavaMethodOverriding());
+			compositionRules.add(new ContractComposition(cmd.contract_style));
 		}
 		compositionRules.add(new StringConcatenation());
 		compositionRules.add(new ImplementsListMerging());
@@ -197,79 +200,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 		}
 	}
 	
-	/**
-	 * Builds the full FST of the project without composition.
-	 * @param args Default build parameters
-	 * @param featuresArg An array containing all features of the project
-	 */
-	public void buildFullFST(String[] args, String[] featuresArg) {
-		meta.clearFeatures();
-		cmd.parseCmdLineArguments(args);
-		//select the composition rules
-		compositionRules = new ArrayList<CompositionRule>();
-		if (cmd.lifting) {
-			if (cmd.lifting_language.equals("c")) { 
-				compositionRules.add(new CRuntimeReplacement());
-				compositionRules.add(new CRuntimeFunctionRefinement());			
-				subtreeRewriterC = new CRuntimeSubtreeIntegration();
-			} else if (cmd.lifting_language.equals("java")) {
-				compositionRules.add(new JavaRuntimeReplacement());
-				compositionRules.add(new JavaRuntimeFunctionRefinement());
-				subtreeRewriterJava = new JavaRuntimeSubtreeIntegration();
-			} else {
-				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
-			}
-		} else {
-			compositionRules.add(new Replacement());
-			compositionRules.add(new JavaMethodOverriding());
-		}
-		compositionRules.add(new StringConcatenation());
-		compositionRules.add(new ImplementsListMerging());
-		compositionRules.add(new CSharpMethodOverriding());
-		compositionRules.add(new ConstructorConcatenation());
-		compositionRules.add(new ModifierListSpecialization());
-		compositionRules.add(new FieldOverriding());
-		compositionRules.add(new ExpansionOverriding());
-		compositionRules.add(new CompositionError());
-		
-		try {
-			try {
-				fileLoader.loadFiles(cmd.equationFileName, cmd.equationBaseDirectoryName, cmd.isAheadEquationFile, featuresArg);
-			} catch (cide.gparser.ParseException e1) {
-				System.out.println("error");
-				fireParseErrorOccured(e1);
-				e1.printStackTrace();
-			}
-			String outputDir = cmd.equationBaseDirectoryName;
-			if (cmd.outputDirectoryName != null)
-				outputDir = cmd.outputDirectoryName;
-
-			if (outputDir.endsWith(File.separator))
-				outputDir = outputDir.substring(0, outputDir.length()-1);
-				
-			featureVisitor.setWorkingDir(outputDir);
-			featureVisitor.setExpressionName(cmd.equationFileName);
-			
-			for (ArtifactBuilderInterface builder : getArtifactBuilders()) {
-				LinkedList<FSTNonTerminal> features = builder.getFeatures();
-
-				if(cmd.isCount && (builder instanceof JavaBuilder || builder instanceof CApproxBuilder)) {
-					Counter counter = new Counter();
-					for (FSTNonTerminal feature : features) {
-						counter.collect(feature);
-					}
-					if(features.size() > 0)
-						counter.writeFile(new File(cmd.equationFileName + ".rsf"));
-				}
-				
-				for (FSTNonTerminal feature : features) {
-					meta.addFeature(feature.getName());
-				}
-			}
-			setFstnodes(AbstractFSTParser.fstnodes);
-		} catch (FileNotFoundException e1) {
-		}
-	}
 
 	public static void main(String[] args) {
 		FSTGenComposer composer = new FSTGenComposer();
@@ -427,4 +357,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 		} else
 			return null;
 	}
+	
+
 }

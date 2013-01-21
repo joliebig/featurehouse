@@ -1,5 +1,7 @@
 package composer.rules;
 
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
+
 /**
  * 
  * @author Hendrik Speidel <speidel@fim.uni-passau.de>
@@ -21,5 +23,14 @@ abstract public class AbstractCompositionRule implements CompositionRule {
 	public String getRuleName() {		
 		return getClass().getSimpleName();
 	}
+	
+	@Override
+	public void preCompose(FSTTerminal terminalA) {
+		// does nothing
+	}
 
+	@Override
+	public void postCompose(FSTTerminal child) {
+		// does nothing
+	}
 }
