@@ -1,0 +1,10 @@
+class TestCase extends Object {
+	TestCase() {
+		super();
+	}
+	
+	A foo() { 
+		return new A();
+	}
+	
+}

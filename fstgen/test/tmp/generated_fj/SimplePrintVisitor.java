@@ -1,10 +1,13 @@
 package tmp.generated_fj;
 
+import java.util.*;
+import cide.gast.*;
+
 import java.io.PrintStream;
 
-import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
-import de.ovgu.cide.fstgen.ast.FSTNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import cide.languages.*;
+
+import de.ovgu.cide.fstgen.ast.*;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
@@ -15,6 +18,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
 		if (nonTerminal.getType().equals("TypeDeclaration")) {
+			printFeatures(nonTerminal,true);
 			printToken("class");
 			{
 				FSTNode v=getChild(nonTerminal, "Name");
@@ -43,6 +47,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				v.accept(this);
 			}
 			printToken("}");
+			printFeatures(nonTerminal,false);
 			return false;
 		}
 		throw new RuntimeException("Unknown Non Terminal in FST "+nonTerminal);

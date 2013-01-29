@@ -43,7 +43,7 @@
 			<param name="parserClass" value="FJParser" />
 			<param name="mainProduction" value="TypeDeclaration" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Complex.fj" />
+			<param name="testFile" value="TestCase.fj" />
 		</antcall>
 	</target>
 

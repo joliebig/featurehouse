@@ -12,6 +12,7 @@ import printer.binary.BinaryPrintVisitor;
 import printer.capprox.CApproxHeaderPrintVisitor;
 import printer.capprox.CApproxPrintVisitor;
 import printer.csharp.CSharpPrintVisitor;
+import printer.fj.FJPrintVisitor;
 import printer.haskell.HaskellPrintVisitor;
 import printer.java.JavaPrintVisitor;
 import printer.javacc.JavaCCPrintVisitor;
@@ -26,6 +27,7 @@ import builder.alloy.AlloyBuilder;
 import builder.binary.BinaryBuilder;
 import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;
+import builder.fj.FJBuilder;
 import builder.haskell.HaskellBuilder;
 import builder.java.JavaBuilder;
 import builder.javacc.JavaCCBuilder;
@@ -48,6 +50,7 @@ public class FSTGenProcessor {
 	private ArrayList<FSTNode> fstnodes;
 
 	public FSTGenProcessor() {
+		registerArtifactBuilder(new FJBuilder());
 		registerArtifactBuilder(new AlloyBuilder());
 		registerArtifactBuilder(new JavaBuilder());
 		registerArtifactBuilder(new CSharpBuilder());
@@ -64,7 +67,8 @@ public class FSTGenProcessor {
 		registerArtifactBuilder(new BinaryBuilder(".gif"));
 		registerArtifactBuilder(new BinaryBuilder(".png"));
 		registerArtifactBuilder(new BinaryBuilder(".wav"));
-		registerArtifactBuilder(new BinaryBuilder(".aj"));		
+		registerArtifactBuilder(new BinaryBuilder(".aj"));
+		registerPrintVisitor(new FJPrintVisitor());
 		registerPrintVisitor(new AlloyPrintVisitor());
 		registerPrintVisitor(new JavaPrintVisitor());
 		registerPrintVisitor(new JCopPrintVisitor());

@@ -173,6 +173,7 @@ ExtendedType :
 @FSTTerminal(name="{<IDENTIFIER>}")
 VarDeclaration : Type <IDENTIFIER> ";";
 
+@FSTTerminal(name="{Type}")
 ClassConstructor : 
 	Type "(" ( FormalParameterList )? ")" "{" "super"
 	"(" ( ExpressionList )? ")" ";" ( FieldAssign )* "}";
@@ -198,7 +199,8 @@ FormalParameter :
 	
 FormalParameterRest : 
 	"," FormalParameter;
-	
+
+@FSTExportName("{<IDENTIFIER>}")	
 Type : 
 	"int"
 	| <IDENTIFIER>
