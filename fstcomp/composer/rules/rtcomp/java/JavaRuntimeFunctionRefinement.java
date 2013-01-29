@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import composer.rules.AbstractCompositionRule;
 import composer.rules.CompositionRule;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
-public class JavaRuntimeFunctionRefinement implements CompositionRule {
+public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
