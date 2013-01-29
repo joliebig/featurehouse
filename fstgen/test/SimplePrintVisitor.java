@@ -9,6 +9,7 @@ import java.util.Iterator;
 import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 	public SimplePrintVisitor(PrintStream out) {
