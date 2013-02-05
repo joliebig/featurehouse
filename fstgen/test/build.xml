@@ -62,7 +62,7 @@
 			<param name="parserClass" value="JMLParser" />
 			<param name="mainProduction" value="CompilationUnit" />
 			<param name="directory" value="${fstgen_dir}/test" />
-			<param name="testFile" value="Test.java" />
+			<param name="testFile" value="TestJMLContracts.java" />
 		</antcall>
 	</target>
 	<target name="testJavaMerge">
