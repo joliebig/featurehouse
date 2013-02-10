@@ -2,6 +2,7 @@ package composer.rules.meta;
 
 import java.util.List;
 
+import composer.FSTGenComposerExtension;
 import composer.rules.JavaMethodOverriding;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -73,6 +74,7 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 		
 		String start = specCaseSeq.getBody().substring(0, index);
 		String end = specCaseSeq.getBody().substring(index);
+		featureName = featureName + (FSTGenComposerExtension.key ? "" : "()"); 
 		specCaseSeq.setBody(start + "\r\n\t @ \\nreq !FeatureModel." + featureName + ";\r\n\t @ " + end);	
 	}
 
@@ -101,11 +103,14 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 
 	private String getParameterNames(FSTTerminal terminalA) {
 		String parameter = terminalA.getBody().substring(
-				terminalA.getBody().indexOf('(') + 1, terminalA.getBody().indexOf(')'));
+				terminalA.getBody().indexOf('(') + 1, terminalA.getBody().indexOf(')')).trim();
 		String parameterNames = "";
 		String[] p = parameter.split("[,]");
 		for (int i = 0; i < p.length; i++) {
-			String[] split = p[i].split("[ ]");
+			String[] split = p[i].trim().split("[ ]");
+			if (split.length < 2) {
+				continue;
+			}
 			parameterNames += split[split.length-1];
 			if (i < p.length - 1) {
 				parameterNames += ", ";
@@ -129,7 +134,7 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 	}
 	
 	private String getLowFeatureName(FSTNode node) {
-		return getFeatureName(node).toLowerCase();
+		return getFeatureName(node).toLowerCase() + (FSTGenComposerExtension.key ? "" : "()");
 	}
 
 }

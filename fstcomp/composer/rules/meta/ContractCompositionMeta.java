@@ -4,6 +4,7 @@ package composer.rules.meta;
 
 import java.util.regex.Matcher;
 
+import composer.FSTGenComposerExtension;
 import composer.rules.ContractComposition;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -31,7 +32,6 @@ public class ContractCompositionMeta extends ContractComposition {
 			for (String clauseB : clasesB) {
 				if (!clauseB.trim().isEmpty()) {
 					if (clauseB.contains(ORIGINAL_OR)) {
-						// TODO experimental;
 						orOriginal = clauseB.substring(clauseB.indexOf("\\req "));
 						orOriginal = orOriginal.replaceAll("\\\\req ", "");
 						clauseB = clauseB.substring(0, clauseB.indexOf("\\req "));
@@ -66,13 +66,12 @@ public class ContractCompositionMeta extends ContractComposition {
 				result.append(" @ ");
 			}
 		}
-		// TODO experimental;
 		return result.toString().replace(ORIGINAL_OR, " || " + orOriginal.replaceAll("@", ""));
 	}
 	
 	private static String getFeatureName(FSTNode node) {
 		if ("Feature".equals(node.getType()))
-			return node.getName().toLowerCase();
+			return node.getName().toLowerCase() + (FSTGenComposerExtension.key ? "" : "()");
 		else
 			return getFeatureName(node.getParent());
 	}
@@ -139,10 +138,6 @@ public class ContractCompositionMeta extends ContractComposition {
 			}
 			body = result;
 		}
-//		if (!addedReq) {
-//			body = body + "\r\n\t @ \\req FeatureModel." + getFeatureName(terminal) + ORIGINAL_OR + ";";
-//		
-//		}
 	
 		int ensuresIndex = body.indexOf("ensures ");
 		int requiresIndex = body.indexOf("requires ");
@@ -168,8 +163,7 @@ public class ContractCompositionMeta extends ContractComposition {
 	@Override
 	public void postCompose(FSTTerminal terminal) {
 		String body = terminal.getBody();
-		// TODO experimental;
-		if (body.replaceAll("@", "").replaceAll("\\\\[req,nreq][^;]*;", "").trim().isEmpty()) {
+		if (FSTGenComposerExtension.key && body.replaceAll("@", "").replaceAll("\\\\[req,nreq][^;]*;", "").trim().isEmpty()) {
 			terminal.setBody("");
 			return;
 		}
@@ -178,7 +172,12 @@ public class ContractCompositionMeta extends ContractComposition {
 		body = body.replaceAll("\\\\nreq", "requires");
 		body = body.replaceAll("\\" + ORIGINAL_OR, "");
 		body = body.replaceAll("\\" + ORIGINAL_KEYWORD, "true");
-		body = "\r\n\t @ " + body;
+		if (FSTGenComposerExtension.key) {
+			body = "\r\n\t @ requires FeatureModel.fm();\r\n\t @ " + body;
+		} else {
+			body = "\r\n\t @ " + body;
+		}
+		
 		if (!body.endsWith("\r\n\t")) {
 			body = body + "\r\n\t";
 		}

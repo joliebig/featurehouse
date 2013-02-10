@@ -42,6 +42,8 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class FSTGenComposerExtension extends FSTGenComposer {
 	
+	public static boolean key = false;
+	
 	public FSTGenComposerExtension() {
 		super();
 	}
@@ -220,7 +222,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 
 	private static String getFeatureName(FSTNode node) {
 		if (node.getType().equals("Feature"))
-			return node.getName().toLowerCase();
+			return node.getName().toLowerCase() + (key ? "" : "()");
 		else
 			return getFeatureName(node.getParent());
 	}

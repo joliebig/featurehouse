@@ -1,5 +1,6 @@
 package composer.rules.meta;
 
+import composer.FSTGenComposerExtension;
 import composer.rules.AbstractCompositionRule;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -30,7 +31,7 @@ public class InvariantCompositionMeta extends AbstractCompositionRule {
 
 	private static String getFeatureName(FSTNode node) {
 		if (node.getType().equals("Feature"))
-			return node.getName();
+			return node.getName() + (FSTGenComposerExtension.key ? "" : "()");
 		else
 			return getFeatureName(node.getParent()).toLowerCase();
 	}

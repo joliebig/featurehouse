@@ -1,5 +1,6 @@
 package composer.rules.meta;
 
+import composer.FSTGenComposerExtension;
 import composer.rules.FieldOverriding;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -94,7 +95,7 @@ public class FieldOverridingMeta extends FieldOverriding {
 
 	private static String getFeatureName(FSTNode node) {
 		if (node.getType().equals("Feature"))
-			return node.getName().toLowerCase();
+			return node.getName().toLowerCase() + (FSTGenComposerExtension.key ? "" : "()");
 		else
 			return getFeatureName(node.getParent());
 	}
