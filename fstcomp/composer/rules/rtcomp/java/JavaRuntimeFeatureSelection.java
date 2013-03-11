@@ -98,6 +98,7 @@ public class JavaRuntimeFeatureSelection {
 		scanner.close();
 		
 		cnf = cnf.replaceAll("//[^\\n]*", ""); //strip comments
+		cnf = cnf.replaceAll(" \\r", " ");
 		cnf = cnf.replaceAll(" \\n", " ");
 		cnf = cnf.replaceAll("\\n", " ");
 		cnf = cnf.replaceAll("xor ", "^ ");
