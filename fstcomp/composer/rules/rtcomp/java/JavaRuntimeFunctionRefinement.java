@@ -51,7 +51,6 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 			terminalComp2.setBody(newBody2);
 			terminalComp2.setName(beforeFunctionName);
 			
-			System.out.println(terminalA.getName());
 			String switchIdentifier = "verificationClasses.FeatureSwitches.__SELECTED_FEATURE_" + featureName;
 			String newBody3 = "";
 			String exceptions = "";
@@ -132,7 +131,8 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 				modPrefix += String.valueOf(c);
 		}
 
-		modPrefix = modPrefix.trim();
+		modPrefix = modPrefix.trim().replace(" ", "\\s+");
+		// the \s+ guarantees that prefixes with multiple whitespaces between modifiers and returntype declaration are also matched
 		return prefix + body.replaceFirst(modPrefix, "").replaceFirst(oldname, newname);
 	}
 
