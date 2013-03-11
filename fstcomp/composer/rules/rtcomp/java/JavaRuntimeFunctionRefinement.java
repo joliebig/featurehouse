@@ -17,6 +17,17 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			
+			boolean aIsAbstract = !terminalA.getBody().contains("{");
+			boolean bIsAbstract = !terminalB.getBody().contains("{");
+			if(aIsAbstract && bIsAbstract) {
+				// this is necessary, for example, if you want to combine conditional methods in interfaces (we must not generate bodies for switching code)
+				terminalComp = terminalA;
+				return;
+			} else if (aIsAbstract != bIsAbstract) {
+				throw new RuntimeException("Trying to combine an abstract method with a concrete one! (" + terminalA.getName() + ")");
+			}
+				
 		
 			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			FSTTerminal terminalComp3 = (FSTTerminal) terminalB.getDeepClone();
@@ -30,7 +41,6 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 			String featureName = getFeatureName(terminalA);
 			String beforeFunctionName = sigB.name + "__before__" + featureName;
 			String roleFunctionName = sigB.name + "__role__" + featureName;
-			
 			
 			String newBody = terminalComp.getBody().replaceAll(toReplace, beforeFunctionName + "(");
 			newBody = replaceFunctionName(roleFunctionName, sigB.name, newBody);
