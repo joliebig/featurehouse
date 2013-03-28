@@ -1,6 +1,0 @@
-module type
-
-strategies
-
-  eq-type-of :
-    AsyncCall([e|_]) -> <type-of> e

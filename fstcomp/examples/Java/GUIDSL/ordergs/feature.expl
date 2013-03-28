@@ -1,6 +1,0 @@
-
-ordergs is a utility layer that assigns primitive tokens (layers)
-in a linear order.
-
-This layer should be optional.
-

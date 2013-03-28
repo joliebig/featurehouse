@@ -1,6 +1,0 @@
-module rename
-
-strategies
-
-  rename :
-    NamedHtml(name, tag, args, body, ct) -> NamedHtml(<rename-var> (name, SimpleType(QId("mobl", "JQuery"))), tag, <rename-all> args, <rename-all> body, ct)

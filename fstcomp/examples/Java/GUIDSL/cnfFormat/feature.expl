@@ -1,9 +1,0 @@
-this layer does the following: it displays a Satsolver GUI
-that will allow users to run satisfiability tests on the model.
-(The Gui is in ModelDebuggerGui.jak).  The model predicate
-is converted into a CNF format, along with the additional
-clauses of the satisfiability tests.  The sat4j solver is
-invoked, and the output is displayed in the GUI window.
-
-Most of the files define extensions to bexpr to convert
-a node expression into a cnf format.

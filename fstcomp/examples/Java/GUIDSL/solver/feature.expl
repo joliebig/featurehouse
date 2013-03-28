@@ -1,3 +1,0 @@
-This layer invokes the sat4j solver given the name (really path) of 
-a .cnf file.  To see how to invoke the solver, see the launcher
-in solverTest.

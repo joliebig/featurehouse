@@ -1,8 +1,0 @@
-.m grammars require tokens to have all uppercase names.
-Most layers in AHEAD do not satisfy this requirement.
-This layer is invoked if the -m command-line option is selected.
-It scans the model directory looking for layer names.  If
-an uppercase conversion of this name matches that of a token,
-the token's display name will be that of a layer.  Further,
-if there is a help.html or feature.expl file in that layer,
-the helpfile or help string will be assigned to this token.

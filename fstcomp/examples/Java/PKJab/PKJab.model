@@ -1,7 +1,0 @@
-PKJab : Base ContactListSource+ [XEP0085] [History] [Timestamps] [XEP0092] [ThemeSelection] :: _PKJab ;
-
-ContactListSource : ServerRoster ;
-
-XEP0085 : Composing [SendComposing] :: _XEP0085 ;
-
-XEP0092 : [SendVersion] :: _XEP0092 ;

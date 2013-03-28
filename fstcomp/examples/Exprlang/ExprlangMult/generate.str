@@ -1,9 +1,0 @@
-module generate
-
-rules
-
-  to-java:
-    Mul(x*, y*) -> $[new Mul([x'*],[y'*])]
-    with
-      x'* := <to-java> x*;
-      y'* := <to-java> y*

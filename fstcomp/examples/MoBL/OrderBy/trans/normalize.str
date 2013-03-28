@@ -1,6 +1,0 @@
-module normalize
-
-rules
-
-  normalize :
-    OrderNonSpecific(e) -> OrderAscending(e)

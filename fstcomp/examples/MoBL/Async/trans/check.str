@@ -1,6 +1,0 @@
-module check
-
-rules
-
-  constraint-error :
-    e@AsyncCall(_){} -> (e, $[async call is only allowed as a top-level call in variable declarations in controls and screens.])

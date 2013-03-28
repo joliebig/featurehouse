@@ -1,6 +1,0 @@
-formgs defines the code that converts a gspec representation
-of a grammar into a set of propositional logic formulas (ala
-bexpr), one per pattern and one per production.  thus, the 
-propositional formula for a grammar is the conjuction of
-all formulas in the Ptable (production table) and the Ttable
-(patTern table) and the (root=true) formula.

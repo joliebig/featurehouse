@@ -1,7 +1,0 @@
-package tmp;
-
-public class Test {
-  static Exp e;
-  public static void main(  String args[]){
-  }
-}

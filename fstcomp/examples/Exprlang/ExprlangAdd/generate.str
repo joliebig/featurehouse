@@ -1,9 +1,0 @@
-module generate
-
-rules
-
-  to-java:
-    Add(x*, y*) -> $[new Add([x'*],[y'*])]
-    with
-      x'* := <to-java> x*;
-      y'* := <to-java> y*

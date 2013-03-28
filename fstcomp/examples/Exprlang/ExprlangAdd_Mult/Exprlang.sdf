@@ -1,7 +1,0 @@
-module Exprlang
-
-exports
-
-  context-free priorities
-    Exp "*" Exp -> Exp
-  > Exp "+" Exp -> Exp 

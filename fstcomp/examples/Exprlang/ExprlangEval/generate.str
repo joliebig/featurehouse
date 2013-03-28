@@ -1,9 +1,0 @@
-module generate
-
-rules
-
-  to-java:
-    Eval(t*) -> $[System.out.println(([t'*]).eval());
-    ]
-    with
-      t'* := <to-java> t*

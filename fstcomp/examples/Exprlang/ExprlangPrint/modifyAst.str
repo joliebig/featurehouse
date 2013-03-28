@@ -1,8 +1,0 @@
-module modifyAst
-
-rules
-
-  modifyAst:
-    Print(e)	-> Print(e){t}
-    where
-      <typeof> e => t
