@@ -2,6 +2,7 @@ package composer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -35,7 +36,6 @@ import composer.rules.rtcomp.java.JavaRuntimeReplacement;
 import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
 
 import counter.Counter;
-
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -82,6 +82,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 	public void run(String[] args) {
 		meta.clearFeatures();
 		cmd.parseCmdLineArguments(args);
+		JavaMethodOverriding.setFeatureAnnotation(cmd.featureAnnotation);
+		JavaRuntimeFunctionRefinement.setFeatureAnnotation(cmd.featureAnnotation);
+		
 		//select the composition rules
 		compositionRules = new ArrayList<CompositionRule>();
 		if (cmd.lifting) {
@@ -168,11 +171,17 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 			}
 			setFstnodes(AbstractFSTParser.fstnodes);
+		
+			String equationName = new File(cmd.equationFileName).getName();
+			equationName = equationName.substring(0, equationName.length() - 4);
+		
+			if (cmd.featureAnnotation) {
+				File srcDir = new File(outputDir + File.separator + equationName+ File.separator);
+				saveFeatureAnnotationFile(srcDir);
+			}
 			try {
 				//System.out.println(outputDir + "features/roles.meta");
 				
-				String exp = new File(cmd.equationFileName).getName();
-				exp = exp.substring(0, exp.length() - 4);
 				//was passiert hier?!
 				// outputDir: /home/rhein/FeatureHouseWS/Test_Features/features
 				// equationFileName: Selection.features
@@ -200,6 +209,28 @@ public class FSTGenComposer extends FSTGenProcessor {
 		}
 	}
 	
+	private void saveFeatureAnnotationFile(File srcDir) {
+		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureAnnotation.java");
+		f.getParentFile().mkdirs();
+		System.out.println("writing FeatureAnnotation to file " +  f.getAbsolutePath());
+		try (FileWriter fw = new FileWriter(f)) {
+			String contents =
+				"package featureHouse;\n"+
+				"import java.lang.annotation.ElementType;\n" +
+				"import java.lang.annotation.Retention;\n" +
+				"import java.lang.annotation.RetentionPolicy;\n" +
+				"import java.lang.annotation.Target;\n" +
+	
+				"@Retention(RetentionPolicy.RUNTIME)\n" +
+				"@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})\n" +
+				"public @interface FeatureAnnotation {\n" +
+				"	String name();\n" +
+				"}";
+			fw.write(contents);
+		} catch (IOException e) {
+			System.err.println("Could not write FeatureAnnotation.java " + e.getMessage());
+		}
+	}
 
 	public static void main(String[] args) {
 		FSTGenComposer composer = new FSTGenComposer();
@@ -211,10 +242,31 @@ public class FSTGenComposer extends FSTGenProcessor {
 		for (FSTNode current : tl) {
 			if (composed != null) {
 				composed = compose(current, composed);
-			} else
+			} else {
+				if (cmd.featureAnnotation) {
+					addAnnotationToChildrenMethods(current, JavaMethodOverriding.getFeatureName(current));
+				}
 				composed = current;
+			}
 		}
 		return composed;
+	}
+	private void addAnnotationToChildrenMethods(FSTNode current,
+			String featureName) {
+		if (current instanceof FSTNonTerminal) {
+			for (FSTNode child : ((FSTNonTerminal)current).getChildren())
+				addAnnotationToChildrenMethods(child, featureName);
+		} else if (current instanceof FSTTerminal) {
+			if ("MethodDecl".equals(current.getType()) || 
+					"ConstructorDecl".equals(current.getType())) {
+				String body = ((FSTTerminal)current).getBody();
+				((FSTTerminal)current).setBody("@featureHouse.FeatureAnnotation(name=\""+ featureName +"\")\n" + body);
+			}
+		} else {
+			throw new RuntimeException("Somebody has introduced a subclass of FSTNode \"" + 
+				current.getClass().getName() 
+				+ "\" that is not considered by the annotation option.");
+		}
 	}
 
 	public FSTNode compose(FSTNode nodeA, FSTNode nodeB) {
@@ -255,7 +307,21 @@ public class FSTGenComposer extends FSTGenProcessor {
 					if (childB == null) {
 						// no compatible child, FST-node only in A
 						//nonterminalComp.addChild(childA.getDeepClone());
-						nonterminalComp.addChild(rewriteSubtree(childA));
+						FSTNode newChildA = rewriteSubtree(childA);
+						if (cmd.featureAnnotation) {
+							if (newChildA instanceof FSTNonTerminal) {
+								addAnnotationToChildrenMethods(newChildA, JavaMethodOverriding.getFeatureName(childA));
+							} else if (newChildA instanceof FSTTerminal) {
+								if ("MethodDecl".equals(newChildA.getType()) ||
+										"ConstructorDecl".equals(newChildA.getType())) {
+									FSTTerminal termNewChildA = (FSTTerminal) newChildA;
+									String body = termNewChildA.getBody();
+									String feature = JavaMethodOverriding.getFeatureName(childA);
+									termNewChildA.setBody("@featureHouse.FeatureAnnotation(name=\""+ feature +"\")\n" + body);
+								}
+							}
+						}
+						nonterminalComp.addChild(newChildA);
 					}
 				}
 				return nonterminalComp;

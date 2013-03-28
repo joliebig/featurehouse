@@ -33,6 +33,8 @@ public class CmdLineInterpreter {
 	public static final String INPUT_OPTION_COUNT = "--count";
 
 	public static final String INPUT_OPTION_LIFTING = "--lift";
+	
+	public static final String INPUT_OPTION_ANNOTATION = "--featureAnnotationJava";
 
 	public boolean verbose = false;
 
@@ -63,6 +65,8 @@ public class CmdLineInterpreter {
 	public boolean lifting = false;
 
 	public String lifting_language = "";
+	
+	public boolean featureAnnotation = false;
 
 	public void parseCmdLineArguments(String[] args) {
 		boolean jml = false;
@@ -122,6 +126,8 @@ public class CmdLineInterpreter {
 					showSum = true;
 				} else if (args[i].equals(INPUT_OPTION_AHEAD_EQUATION_FILE)) {
 					isAheadEquationFile = true;
+				} else if (args[i].equals(INPUT_OPTION_ANNOTATION)) {
+					featureAnnotation = true;
 				} else if (args[i].startsWith(INPUT_OPTION_LIFTING)) {
 					lifting = true;
 					lifting_language = args[i]
