@@ -6,13 +6,19 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import composer.rules.AbstractCompositionRule;
-import composer.rules.CompositionRule;
+import composer.rules.JavaMethodOverriding;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
+	
+	private final String SWITCH_METHOD_ANNOTATION = "@featureHouse.FeatureAnnotation(name=\"featureSwitch\")\n";
+	private static boolean addFeatureAnnotations = false;
+	public static void setFeatureAnnotation(boolean addFeatureAnnotation) {
+		JavaRuntimeFunctionRefinement.addFeatureAnnotations=addFeatureAnnotation;
+	}
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
@@ -27,23 +33,36 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 			} else if (aIsAbstract != bIsAbstract) {
 				throw new RuntimeException("Trying to combine an abstract method with a concrete one! (" + terminalA.getName() + ")");
 			}
-				
 		
 			FSTTerminal terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 			FSTTerminal terminalComp3 = (FSTTerminal) terminalB.getDeepClone();
 			nonterminalParent.addChild(terminalComp2);
 			nonterminalParent.addChild(terminalComp3);
 			
+			int annotationEndB = JavaMethodOverriding.extractMethodAnnotationsEnd(terminalB.getBody());
+			terminalB.setBody(terminalB.getBody().substring(annotationEndB));
+			
 			Signature sigB = Signature.fromString(terminalB.getBody());
 
 			String toReplace = "original\\s*\\(";
 			
-			String featureName = getFeatureName(terminalA);
+			String featureName = JavaMethodOverriding.getFeatureName(terminalA);
 			String beforeFunctionName = sigB.name + "__before__" + featureName;
 			String roleFunctionName = sigB.name + "__role__" + featureName;
 			
 			String newBody = terminalComp.getBody().replaceAll(toReplace, beforeFunctionName + "(");
 			newBody = replaceFunctionName(roleFunctionName, sigB.name, newBody);
+			
+			if (addFeatureAnnotations) {
+				//split the body of terminalComp2 in its major components; modify them seperately
+				int methodNamePosition = JavaMethodOverriding.extractMethodPrefixEnd(newBody, sigB.name);
+				int annotationsEnd = JavaMethodOverriding.extractMethodAnnotationsEnd(newBody);
+				String prefix = newBody.substring(annotationsEnd, methodNamePosition);
+				String restOfBody = newBody.substring(methodNamePosition);
+				// replace old, copied annotations
+				newBody = "@featureHouse.FeatureAnnotation(name=\"" + featureName + "\")\n" +
+						prefix + restOfBody;
+			}
 			terminalComp3.setBody(newBody);
 			terminalComp3.setName(roleFunctionName);
 			
@@ -54,6 +73,7 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 			String switchIdentifier = "verificationClasses.FeatureSwitches.__SELECTED_FEATURE_" + featureName;
 			String newBody3 = "";
 			String exceptions = "";
+			
 			if (! sigB.exceptions.isEmpty()) {
 				exceptions = " throws ";
 				for (int i = 0; i < sigB.exceptions.size(); i++) {
@@ -64,6 +84,7 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 				}
 				
 			}
+			
 			if (sigB.returnType.trim().endsWith("void")) {
 				newBody3 = sigB.toString() + exceptions + " {\n" +
 					"    if (" + switchIdentifier + ") {\n" +
@@ -81,18 +102,12 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 					"    }\n" +
 					"}\n\n";
 			}
-			
+			if (addFeatureAnnotations) {
+				newBody3 = SWITCH_METHOD_ANNOTATION + newBody3;
+			}
 			terminalComp.setBody(newBody3);
 				
 	}
-	
-	public static String getFeatureName(FSTNode node) {
-		if (node.getType().equals("Feature"))
-			return node.getName();
-		else
-			return getFeatureName(node.getParent());
-	}
-	
 
 	@Override
 	public String getRuleName() {
