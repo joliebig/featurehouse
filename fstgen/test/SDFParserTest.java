@@ -122,17 +122,4 @@ public class SDFParserTest {
 			cide.gparser.ParseException, ParseException {
 		parseFile(loadFile("test/mobl_sdf_testfiles/Stratego-MoBL.sdf"));
 	}
-	
-	@Test
-	public void testFile_exprlang_common() throws FileNotFoundException,
-			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/common.sdf"));
-	}
-	
-	@Test
-	public void testFile_exprlang() throws FileNotFoundException,
-			cide.gparser.ParseException, ParseException {
-		parseFile(loadFile("test/exprlang_testdateien/exprlang.sdf"));
-	}
-
 }
