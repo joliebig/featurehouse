@@ -1,0 +1,3 @@
+[submodule "fstcomp/examples"]
+	path = fstcomp/examples
+	url = git@github.com:joliebig/featurehouse_fstcomp_examples.git
