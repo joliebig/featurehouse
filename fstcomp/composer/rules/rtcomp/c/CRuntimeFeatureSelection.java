@@ -150,10 +150,16 @@ public class CRuntimeFeatureSelection {
 	            replacement = "__GUIDSL_NON_TERMINAL_" + var;
 	            nonterminals.add(replacement);
 	        }
-	        cnf = cnf.replaceAll(' ' + var + ' ', ' ' + replacement + ' ');
-	        
+	    	// replace feature variables in string
+	    	if (cnf.matches(".*" + "\\s" + var)) {
+	        	cnf = cnf + " "; // this causes the next line to find the feature variable
+	        }
+	        cnf = cnf.replaceAll("\\s" + var + "\\s", ' ' + replacement + ' ');
+	        // if the first letter is the start of a feature variable, we can use replaceFirst
+	        if (cnf.matches(var + "\\s" + ".*")) {
+	        	cnf = cnf.replaceFirst(var + "\\s", replacement + ' ');
+	        }
 	    }
-	    
 	    //cosmetics
 	    cnf = cnf.replaceAll("\\) \\)","))");
 	    cnf = cnf.replaceAll("\\( \\(","((");
