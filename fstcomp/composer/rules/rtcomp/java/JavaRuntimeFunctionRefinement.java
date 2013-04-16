@@ -15,6 +15,9 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 	
 	private final String SWITCH_METHOD_ANNOTATION = "@featureHouse.FeatureAnnotation(name=\"featureSwitch\")\n";
+	private final String SWITCH_ID_ANNOTATION = "@featureHouse.FeatureSwitchID(id=";
+	private static int generatedSwitchMethods = 0;
+	
 	private static boolean addFeatureAnnotations = false;
 	public static void setFeatureAnnotation(boolean addFeatureAnnotation) {
 		JavaRuntimeFunctionRefinement.addFeatureAnnotations=addFeatureAnnotation;
@@ -103,10 +106,14 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 					"}\n\n";
 			}
 			if (addFeatureAnnotations) {
-				newBody3 = SWITCH_METHOD_ANNOTATION + newBody3;
+				newBody3 = getSwitchMethodAnnotation() + newBody3;
 			}
 			terminalComp.setBody(newBody3);
-				
+	}
+
+	private String getSwitchMethodAnnotation() {
+		return SWITCH_METHOD_ANNOTATION +
+				SWITCH_ID_ANNOTATION + (generatedSwitchMethods++) + ")\n";
 	}
 
 	@Override

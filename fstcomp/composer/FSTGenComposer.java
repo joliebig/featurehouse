@@ -178,6 +178,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 			if (cmd.featureAnnotation) {
 				File srcDir = new File(outputDir + File.separator + equationName+ File.separator);
 				saveFeatureAnnotationFile(srcDir);
+				if (cmd.lifting && "java".equals(cmd.lifting_language.toLowerCase())) {
+					saveSwitchIDAnnotationFile(srcDir);
+				}
 			}
 			try {
 				//System.out.println(outputDir + "features/roles.meta");
@@ -229,6 +232,29 @@ public class FSTGenComposer extends FSTGenProcessor {
 			fw.write(contents);
 		} catch (IOException e) {
 			System.err.println("Could not write FeatureAnnotation.java " + e.getMessage());
+		}
+	}
+	
+	private void saveSwitchIDAnnotationFile(File srcDir) {
+		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureSwitchID.java");
+		f.getParentFile().mkdirs();
+		System.out.println("writing FeatureSwitchID to file " +  f.getAbsolutePath());
+		try (FileWriter fw = new FileWriter(f)) {
+			String contents =
+				"package featureHouse;\n"+
+				"import java.lang.annotation.ElementType;\n" +
+				"import java.lang.annotation.Retention;\n" +
+				"import java.lang.annotation.RetentionPolicy;\n" +
+				"import java.lang.annotation.Target;\n" +
+	
+				"@Retention(RetentionPolicy.RUNTIME)\n" +
+				"@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})\n" +
+				"public @interface FeatureSwitchID {\n" +
+				"	int id();\n" +
+				"}";
+			fw.write(contents);
+		} catch (IOException e) {
+			System.err.println("Could not write FeatureSwitchID.java " + e.getMessage());
 		}
 	}
 
