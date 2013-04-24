@@ -195,9 +195,11 @@ public class AbstractFSTParser {
 							FSTInfoType.NAME);
 
 			cc().children.addAll(c.children);
-			if (first != null)
+			if (first != null) {
+				/** do not remove parameters beginLine and endLine, this is necessary @ FeatureIDE **/
 				cc().children.add(new FSTTerminal(type, name, body, prefix,
-						compositionMechanism, mergingMechanism));
+						compositionMechanism, mergingMechanism, first.beginLine, last.endLine));
+			}
 		}
 		return new FSTInfo(type, exportName, compositionMechanism);
 	}
