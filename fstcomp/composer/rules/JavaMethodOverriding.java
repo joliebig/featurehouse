@@ -13,6 +13,8 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class JavaMethodOverriding extends AbstractCompositionRule {
 
 	private static boolean addFeatureAnnotations = false;
+
+	public static final String featureAnnotationPrefix = "@featureHouse.FeatureAnnotation(name=\"";
 	
 	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
 	
@@ -65,7 +67,7 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			String newBody = getNewBody(terminalA, terminalB, terminalComp,
 					oldMethodName).replaceAll(toReplace, newMethodName + "(");
 			if (addFeatureAnnotations) {
-				newBody = "@featureHouse.FeatureAnnotation(name=\"" + getFeatureName(terminalA) + "\")\n" + newBody;
+				newBody = JavaMethodOverriding.featureAnnotationPrefix + getFeatureName(terminalA) + "\")\n" + newBody;
 			}
 			terminalComp.setBody(newBody);
 

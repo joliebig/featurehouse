@@ -251,6 +251,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 				"@Target({ElementType.METHOD, ElementType.CONSTRUCTOR})\n" +
 				"public @interface FeatureSwitchID {\n" +
 				"	int id();\n" +
+				"	String thenFeature();\n" +
+				"	String elseFeature();\n" +
 				"}";
 			fw.write(contents);
 		} catch (IOException e) {
@@ -286,7 +288,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 			if ("MethodDecl".equals(current.getType()) || 
 					"ConstructorDecl".equals(current.getType())) {
 				String body = ((FSTTerminal)current).getBody();
-				((FSTTerminal)current).setBody("@featureHouse.FeatureAnnotation(name=\""+ featureName +"\")\n" + body);
+				((FSTTerminal)current).setBody(JavaMethodOverriding.featureAnnotationPrefix + featureName +"\")\n" + body);
 			}
 		} else {
 			throw new RuntimeException("Somebody has introduced a subclass of FSTNode \"" + 
@@ -343,7 +345,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 									FSTTerminal termNewChildA = (FSTTerminal) newChildA;
 									String body = termNewChildA.getBody();
 									String feature = JavaMethodOverriding.getFeatureName(childA);
-									termNewChildA.setBody("@featureHouse.FeatureAnnotation(name=\""+ feature +"\")\n" + body);
+									termNewChildA.setBody(JavaMethodOverriding.featureAnnotationPrefix + feature +"\")\n" + body);
 								}
 							}
 						}

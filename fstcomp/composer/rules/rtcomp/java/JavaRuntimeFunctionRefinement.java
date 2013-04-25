@@ -14,7 +14,7 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 	
-	private final String SWITCH_METHOD_ANNOTATION = "@featureHouse.FeatureAnnotation(name=\"featureSwitch\")\n";
+	private final String SWITCH_METHOD_ANNOTATION = JavaMethodOverriding.featureAnnotationPrefix + "featureSwitch\")\n";
 	private final String SWITCH_ID_ANNOTATION = "@featureHouse.FeatureSwitchID(id=";
 	private static int generatedSwitchMethods = 0;
 	
@@ -49,9 +49,10 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 
 			String toReplace = "original\\s*\\(";
 			
-			String featureName = JavaMethodOverriding.getFeatureName(terminalA);
-			String beforeFunctionName = sigB.name + "__before__" + featureName;
-			String roleFunctionName = sigB.name + "__role__" + featureName;
+			String featureNameTermA = JavaMethodOverriding.getFeatureName(terminalA);
+			
+			String beforeFunctionName = sigB.name + "__before__" + featureNameTermA;
+			String roleFunctionName = sigB.name + "__role__" + featureNameTermA;
 			
 			String newBody = terminalComp.getBody().replaceAll(toReplace, beforeFunctionName + "(");
 			newBody = replaceFunctionName(roleFunctionName, sigB.name, newBody);
@@ -63,7 +64,7 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 				String prefix = newBody.substring(annotationsEnd, methodNamePosition);
 				String restOfBody = newBody.substring(methodNamePosition);
 				// replace old, copied annotations
-				newBody = "@featureHouse.FeatureAnnotation(name=\"" + featureName + "\")\n" +
+				newBody = JavaMethodOverriding.featureAnnotationPrefix + featureNameTermA + "\")\n" +
 						prefix + restOfBody;
 			}
 			terminalComp3.setBody(newBody);
@@ -73,7 +74,7 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 			terminalComp2.setBody(newBody2);
 			terminalComp2.setName(beforeFunctionName);
 			
-			String switchIdentifier = "verificationClasses.FeatureSwitches.__SELECTED_FEATURE_" + featureName;
+			String switchIdentifier = "verificationClasses.FeatureSwitches.__SELECTED_FEATURE_" + featureNameTermA;
 			String newBody3 = "";
 			String exceptions = "";
 			
@@ -106,14 +107,30 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 					"}\n\n";
 			}
 			if (addFeatureAnnotations) {
-				newBody3 = getSwitchMethodAnnotation() + newBody3;
+				// featureNameTermB is not equal to JavaMethodOverriding.getFeatureName(terminalB), because this is the newest included feature; the method might come from an older one
+				String featureNameTermB=extractMethodOriginFeature(newBody2);
+				newBody3 = getSwitchMethodAnnotation(featureNameTermA, featureNameTermB) + newBody3;
 			}
 			terminalComp.setBody(newBody3);
 	}
 
-	private String getSwitchMethodAnnotation() {
+	private String extractMethodOriginFeature(String signature) {
+		int annotationEnd = JavaMethodOverriding.extractMethodAnnotationsEnd(signature);
+		signature = signature.replaceAll("\\s+\\(", "("); // removing all whitespace chars before opening parenthese
+		int featureAnnotationBegin=signature.substring(0,annotationEnd).indexOf(JavaMethodOverriding.featureAnnotationPrefix);
+		int featureNameBegin = featureAnnotationBegin+JavaMethodOverriding.featureAnnotationPrefix.length();
+		int featureNameEnd = signature.substring(featureNameBegin, annotationEnd).indexOf("\"") + featureNameBegin;
+		assert featureNameBegin < featureNameEnd;
+		return signature.substring(featureNameBegin, featureNameEnd);
+	}
+
+	private String getSwitchMethodAnnotation(String thenFeature, String elseFeature) {
 		return SWITCH_METHOD_ANNOTATION +
-				SWITCH_ID_ANNOTATION + (generatedSwitchMethods++) + ")\n";
+				SWITCH_ID_ANNOTATION + 
+				(generatedSwitchMethods++) + 
+				", thenFeature=\"" + thenFeature + "\""+ 
+				", elseFeature=\"" + elseFeature + "\""+
+				")\n";
 	}
 
 	@Override
