@@ -34,38 +34,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("ImportDeclarationWr1")) {
-			printFeatures(nonTerminal,true);
-			printToken("/*@");
-			{
-				FSTNode v=getChild(nonTerminal, "ModelKeyword");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printToken("@*/");
-			hintNewLine();
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("ImportDeclarationWr2")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			hintNewLine();
-			printFeatures(nonTerminal,false);
-			return false;
-		}
 		if (nonTerminal.getType().equals("Modifiers")) {
 			printFeatures(nonTerminal,true);
 			{
