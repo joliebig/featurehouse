@@ -69,8 +69,8 @@ SPECIAL_TOKEN :
 //#if JML
 SKIP :
 {
-  "//@" : IN_JML_SINGLE_LINE
-|
+ // "//@" : IN_JML_SINGLE_LINE
+//|
   "/*@" :  IN_JML_MULTI_LINE
 }
 //#endif
@@ -548,15 +548,15 @@ FSTInfo PackageDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ImportDeclarationWr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=ModelKeyword(inTerminal){ replaceName(n);} n=ImportDeclaration(inTerminal){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ImportDeclarationWr1","{ImportDeclaration}","{ImportDeclaration}");}
+	n=ModelKeyword(true){ replaceName(n);} n=ImportDeclaration(true){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ImportDeclarationWr1","{ImportDeclaration}","{ImportDeclaration}","Replacement","Default",first,token);}
  |
-	n=ImportDeclaration(inTerminal){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ImportDeclarationWr2","{ImportDeclaration}","{ImportDeclaration}");}
+	n=ImportDeclaration(true){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ImportDeclarationWr2","{ImportDeclaration}","{ImportDeclaration}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
+	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","-","{Name}{ImportPackage}","Replacement","Default",first,token);}
 
  )  }
 
