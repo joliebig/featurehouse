@@ -1,3 +1,6 @@
+import test.imp;
+/*@ model @*/ import test.imp; 
+
 public /*@pure@*/  interface Complex {
 	/*@ ensures JMLDouble.approximatelyEqualTo(
                  magnitude()*StrictMath.cos(angle()),

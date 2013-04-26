@@ -69,8 +69,8 @@ SPECIAL_TOKEN :
 //#if JML
 SKIP :
 {
-  "//@" : IN_JML_SINGLE_LINE
-|
+ // "//@" : IN_JML_SINGLE_LINE
+//|
   "/*@" :  IN_JML_MULTI_LINE
 }
 //#endif
@@ -561,14 +561,14 @@ PackageDeclaration:
   "package" Name ";" @!
 ;
 
-@FSTNonTerminal(name="{ImportDeclaration}")
+@FSTTerminal(name="{ImportDeclaration}")
 ImportDeclarationWr:
 @% ModelKeyword  ImportDeclaration @& @!
 |
 ImportDeclaration @!
 ;
 
-@FSTTerminal(name="{Name}{ImportPackage}")
+@FSTExportName("{Name}{ImportPackage}") 
 ImportDeclaration:
 "import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
 ;
