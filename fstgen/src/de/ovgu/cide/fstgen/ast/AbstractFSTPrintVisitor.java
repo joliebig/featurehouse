@@ -203,7 +203,6 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	}
 
 	private String handleJMLModifierMethod(String in) {
-		System.out.println("methodin "+in);
 		List<String> JMLModifiers = new ArrayList<String>();
 		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
 		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
@@ -234,7 +233,6 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		}
 		
 		out = out + in.substring(in.indexOf(")"));
-		System.out.println("method "+out);
 		return out;
 	}
 
@@ -271,7 +269,6 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@ " + mod + " @*/ ");
 			}
 		}
-		System.out.println("field "+out);
 		return out;
 	}
 
@@ -300,7 +297,6 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		for (String mod : JMLModifiers) {
 			out = out.replaceAll("(^|\\W)"+mod+"(\\s|\\z)", " /*@" + mod + "@*/ ");
 		}
-		System.out.println("class "+out);
 		return out;
 	}
 
