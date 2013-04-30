@@ -24,7 +24,6 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 
 		specializeModifiers(terminalA, terminalB);
@@ -37,15 +36,16 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			FSTTerminal terminalComp2 = null;
 			FSTNonTerminal terminalParentComp2 = null;
 			if (CommandLineParameterHelper.isJML()) {
-				System.out.println("A");
 				terminalParentComp2 = (FSTNonTerminal) (((FSTTerminal) terminalB)
 						.getParent()).getDeepClone();
 				((FSTNonTerminal) ((FSTNonTerminal) terminalComp.getParent())
 						.getParent()).addChild(terminalParentComp2);
-				terminalComp2 = (FSTTerminal) terminalParentComp2.getChildren()
+				if(terminalParentComp2.getChildren().size()>2)terminalComp2 = (FSTTerminal) terminalParentComp2.getChildren()
 						.get(2);
+				else terminalComp2 = (FSTTerminal) terminalParentComp2.getChildren()
+						.get(1);
+					
 			} else {
-				System.out.println("B");
 				terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 				nonterminalParent.addChild(terminalComp2);
 			}
@@ -197,7 +197,6 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 
 	private static void specializeModifiers(FSTTerminal terminalA,
 			FSTTerminal terminalB) {
-
 		if (terminalA.getBody().contains("@")
 				|| terminalB.getBody().contains("@"))
 			return;

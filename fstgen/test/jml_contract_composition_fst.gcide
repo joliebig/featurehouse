@@ -26,7 +26,7 @@ options {
   ERROR_REPORTING = true;
   STATIC = false;
   //#if JML
-  LOOKAHEAD = 4;
+  LOOKAHEAD = 44;
   //#endif
 }
 
@@ -53,7 +53,7 @@ public class JMLParser extends AbstractFSTParser
 PARSER_END(JMLParser)
 
 /* WHITE SPACE */
-<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+<DEFAULT, IN_JML_MULTI_LINE>
 SPECIAL_TOKEN :
 {
   " "
@@ -66,14 +66,13 @@ SPECIAL_TOKEN :
 /* COMMENTS */
 
 
-//#if JML
+
 SKIP :
 {
- // "//@" : IN_JML_SINGLE_LINE
-//|
   "/*@" :  IN_JML_MULTI_LINE
+  
 }
-//#endif
+
 
 <IN_JML_MULTI_LINE>
 SKIP :
@@ -81,7 +80,7 @@ SKIP :
   <JML_MULTI_LINE_END: "@*/" > : DEFAULT
 | <REG_MULTI_LINE_END: "*/" > : DEFAULT
 }
-//#if JML
+
 
 
 <IN_JML_MULTI_LINE>
@@ -89,15 +88,21 @@ SKIP :
 {
   <JML_AT: " @" ~["*"]>
 }
-//#endif
 
-<IN_SINGLE_LINE_COMMENT, IN_JML_SINGLE_LINE>
+MORE :
+{
+"//@" : IN_JML_SINGLE_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_JML_SINGLE_LINE_COMMENT>
 SPECIAL_TOKEN :
 {
   <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
 }
 
-MORE :
+
+
+SKIP :
 {
   "//" : IN_SINGLE_LINE_COMMENT
 |
@@ -108,23 +113,27 @@ MORE :
 
 
 <IN_FORMAL_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <FORMAL_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_MULTI_LINE_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <MULTI_LINE_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
-MORE :
+SKIP :
 {
   < ~[] >
 }
-
+<IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  < ~[] >
+}
 /* RESERVED WORDS AND LITERALS */
 <DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
 TOKEN :
@@ -551,7 +560,7 @@ OriginalCaseKeyword:
 CompilationUnit:
 
   [ PackageDeclaration ]
-  ( ImportDeclarationWr )*
+  ( ImportDeclaration )*
   ( TypeDeclaration )*
   <EOF>
   
@@ -561,17 +570,15 @@ PackageDeclaration:
   "package" Name ";" @!
 ;
 
-@FSTTerminal(name="{ImportDeclaration}")
-ImportDeclarationWr:
-@% ModelKeyword  ImportDeclaration @& @!
+
+ImportDeclaration:
+@FSTTerminal(name="{Name}{ImportPackage}")
+@% ModelKeyword  "import" [ "static" <NONE> ] Name [ImportPackage] ";" @& @!
 |
-ImportDeclaration @!
+@FSTTerminal(name="{Name}{ImportPackage}")
+"import" [ "static" <NONE> ] Name [ImportPackage] ";"  @!
 ;
 
-@FSTExportName("{Name}{ImportPackage}") 
-ImportDeclaration:
-"import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
-;
 
 ModelKeyword:
  <MODEL> 
@@ -624,7 +631,7 @@ Modifier:
 Id: <IDENTIFIER>;
 
 TypeDeclaration:
-	@FSTTerminal(name="{AUTO}")	
+	@FSTNonTerminal(name="{AUTO}")	
 	";"<NONE> :: EmptyTypeDecl
 |
 	@FSTNonTerminal(name="{Id}")
@@ -707,7 +714,7 @@ ClassOrInterfaceBodyDeclaration:
 	@% JMLDeclaration @&
 	
 |
-  	@FSTTerminal(name="{AUTO}")
+  	@FSTNonTerminal(name="{AUTO}")
   	LOOK_AHEAD(2)
   	Initializer :: InitializerDecl
 |
@@ -724,23 +731,23 @@ ClassOrInterfaceBodyDeclaration:
 //	ConstructorDecl :: ConstructorDeclarationWithoutSpec
 //|
   	@FSTNonTerminal(name="{ConstructorDecl}")
-    LOOK_AHEAD("MethodSpecification() ConstructorDecl()")
-	MethodSpecification  @! @!ConstructorDecl :: ConstructorDeclarationWithSpec
+    LOOK_AHEAD(" [MethodSpecification()] Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
+	[MethodSpecification]   ConstructorDecl :: ConstructorDeclarationWithSpec
 |
   	@FSTNonTerminal(name="{ModFieldDeclaration}")
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
-	ModFieldDeclaration ::FieldDecl
+	 ModFieldDeclaration ::FieldDecl
 |
   	@FSTNonTerminal(name="{MethodDecl}")
 	LOOK_AHEAD(2)
-     MethodSpecification @! @! MethodDecl :: MethodDeclarationWithSpec
+    [MethodSpecification]   MethodDecl :: MethodDeclarationWithSpec
 |
 
-	@FSTTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{AUTO}")
   	";" <NONE> :: EmptyDecl
 ;
 
-@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
+@FSTNonTerminal(name="{FieldDeclaration}")
 ModFieldDeclaration:
 Modifiers FieldDeclaration
 ;
@@ -948,14 +955,11 @@ AssignmentOperator:
 ;
 
 ConditionalExpression: 
-		LOOK_AHEAD("ConditionalOrExpression() \"?\"") 
-		ConditionalExpressionFull{Expression}
+LOOK_AHEAD("ConditionalOrExpression() \"?\"") 
+	ConditionalExpressionFull{Expression}
 	|	
-//#if JML
 	EquivalenceExpr
-//#else
-//@	ConditionalOrExpression
-//#endif
+
 ;
 
 //#if JML
@@ -1032,7 +1036,7 @@ RelationalExpression:
 
 RelationalExpressionIntern:RelationalOp ShiftExpression;
 
-RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> ;
+RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> | "<:"<NONE>;
 
 ShiftExpression:
   AdditiveExpression ( LL(2) ShiftExpressionRight )*
@@ -1094,7 +1098,7 @@ UnaryOp: "~" <NONE>| "!"<NONE>;
 // below are not used, but they are there just to indicate that we know about
 // this.
 CastLookahead:
-  LOOK_AHEAD(2)
+  LOOK_AHEAD(22)
   "(" PrimitiveType
 |
   LOOK_AHEAD("\"(\" Type() \"[\"")
@@ -1145,6 +1149,7 @@ PrimaryPrefix:
   Name
 //#if JML
 |
+  LOOK_AHEAD("JmlPrimary()" )
 JmlPrimary
 //#endif
 ;
@@ -1512,7 +1517,7 @@ AnnotationTypeBody:
 ;
 
 AnnotationTypeMemberDeclaration:
-	@FSTTerminal(name="{<IDENTIFIER>}")
+	@FSTNonTerminal(name="{<IDENTIFIER>}")
    	LOOK_AHEAD("Modifiers() Type() <IDENTIFIER> \"(\"")
 	Modifiers   Type <IDENTIFIER> "(" ")" [ DefaultValue ] ";" ::AnnotationMethodDecl
 |
@@ -1528,11 +1533,11 @@ AnnotationTypeMemberDeclaration:
   	LOOK_AHEAD(2)
  	Modifiers   EnumDeclaration	::AnnotationInnerEnum
 |
-	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
+	@FSTNonTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
   	LOOK_AHEAD(1)
  	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
  |
-	@FSTTerminal(name="{AUTO}")
+	@FSTNonTerminal(name="{AUTO}")
    	";" <NONE> :: AnnoationEmptyDecl
 ;
 
@@ -1622,7 +1627,7 @@ SpecArrayRefExpr: SpecExpression
 
 
 
-@FSTTerminal(name="{Predicate}",compose="InvariantComposition")
+@FSTNonTerminal(name="{Predicate}",compose="InvariantComposition")
 Invariant: InvariantKeyword Predicate <SEMICOLON>
 ;
 
@@ -1632,22 +1637,22 @@ Invariant: InvariantKeyword Predicate <SEMICOLON>
 
 @FSTNonTerminal()
 MethodSpecification:
- [LOOK_AHEAD("AlsoKeyword()") @% AlsoKeyword @&] [Specification]
+@% [LOOK_AHEAD("AlsoKeyword()")  AlsoKeyword] SpecCaseSeq @! @&
 ;	
 
-@FSTNonTerminal()
+
 AlsoKeyword:
  <ALSO> 
 ;
 
-@FSTNonTerminal()
-Specification:
-@% SpecCaseSeq [ RedundantSpec ] @&
+@FSTTerminal(compose="ContractComposition")
+SpecCaseSeq:
+SpecCaseSeq2 [ RedundantSpec ] 
 ;
 
 
-@FSTTerminal(compose="ContractComposition")
-SpecCaseSeq:
+
+SpecCaseSeq2:
 SpecCase (LOOK_AHEAD(3) AlsoSpecCase )*
 ;
 
@@ -1656,7 +1661,7 @@ AlsoSpecCase:
 <ALSO> SpecCase
 ;
 
-
+@FSTNonTerminal()
 SpecCase:
 
 LightweightSpecCase 
@@ -1668,7 +1673,7 @@ LightweightSpecCase
  ModelProgram
 ;
 
-@FSTInline()
+@FSTNonTerminal()
 LightweightSpecCase:
 GenericSpecCase
 ;
@@ -1680,7 +1685,7 @@ OriginalCaseKeyword
 | [ SpecVarDecls ] GenericSpecBody
 ;
 
-
+@FSTNonTerminal()
 GenericSpecBody: 
   SimpleSpecBody
 | <LBRACE><BIT_OR> GenericSpecCaseSeq <BIT_OR> <RBRACE>
@@ -1688,17 +1693,17 @@ GenericSpecBody:
 
 
 
-
+@FSTNonTerminal()
 RedundantSpec:
 Implications //[ Examples ] | Examples
 ;
 
-
+@FSTNonTerminal()
 Implications: 
-<IMPLIES_THAT> SpecCaseSeq
+<IMPLIES_THAT> SpecCaseSeq2
 ;
 
-
+@FSTNonTerminal()
 HeavyWeightSpecCase: BehaviorSpecCase
         | ExceptionalBehaviorSpecCase
         | NormalBehaviorSpecCase
@@ -1712,13 +1717,13 @@ BehaviorSpecCase: [ Privacy ] [ <CODE> ] BehaviorKeyword
 
 BehaviorKeyword: <BEHAVIOR> | <BEHAVIOUR>
 ;
-
+@FSTNonTerminal()
 NormalBehaviorSpecCase: [ Privacy ] [ <CODE> ] NormalBehaviorKeyword
                               NormalSpecCase
 ;
                             
 NormalBehaviorKeyword: <NORMAL_BEHAVIOR> | <NORMAL_BEHAVIOUR>;
-
+@FSTNonTerminal()
 NormalSpecCase: GenericSpecCase
 ;
 
@@ -1754,10 +1759,10 @@ RequiresClause: RequiresKeyword PredOrNot <SEMICOLON>
 RequiresKeyword: <REQUIRES> | <PRE> 
         | <REQUIRES_REDUNDANTLY> | <PRE_REDUNDANTLY>
 ;
-
+@FSTNonTerminal()
 PredOrNot: Predicate | <NOT_SPECIFIED> 
 ;
-
+@FSTNonTerminal()
 EnsuresClause: EnsuresKeyword PredOrNot <SEMICOLON>
 ;
 
@@ -1971,26 +1976,26 @@ Privacy: <PUBLIC> | <PROTECTED> | <PRIVATE>
 
 
 
-
+@FSTNonTerminal()
 GenericSpecCaseSeq: 
  GenericSpecCase ( AlsoGenericSpecCase )*
 ;
 
-
+@FSTNonTerminal()
 AlsoGenericSpecCase:
 <ALSO> GenericSpecCase
 ;
 
-
+@FSTNonTerminal()
 SpecHeader:  RequiresClause ( RequiresClause )*
 ;
 
-
+@FSTNonTerminal()
 SimpleSpecBody: SimpleSpecBodyClause
                      ( SimpleSpecBodyClause )*
 ;
 
-
+@FSTNonTerminal()
 SimpleSpecBodyClause: DivergesClause
         | AssignableClause | AccessibleClause
         | CapturesClause | CallableClause
@@ -2032,7 +2037,7 @@ BreaksKeyword: <BREAKS> | <BREAKS_REDUNDANTLY>
 BoundVarModifiers: <NON_NULL> | <NULLABLE>
 ;
 
-@FSTTerminal(name="{SpecExpression}")
+@FSTNonTerminal(name="{SpecExpression}")
 Predicate:
 SpecExpression
 ;
@@ -2045,7 +2050,7 @@ CommaSpecExpression:
 <COMMA> SpecExpression
 ;
 
-@FSTTerminal(name="{TOSTRING}")
+@FSTNonTerminal(name="{TOSTRING}")
 SpecExpression: Expression 
 ; 
 
@@ -2299,7 +2304,7 @@ LOOK_AHEAD("SpecQuantifiedExpr()")
 		  SpecQuantifiedExpr
 ;        
         
-ResultExpression: <RESULT>
+ResultExpression: <RESULT> | CastExpression <RESULT>
 ;
 
 OldExpression: <OLD> <LPAREN> SpecExpression [ CommaIdent ] <RPAREN>

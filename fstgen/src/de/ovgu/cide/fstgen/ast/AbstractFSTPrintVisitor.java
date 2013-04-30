@@ -154,13 +154,9 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	@Override
 	public boolean visit(FSTTerminal terminal) {
 		printFeatures(terminal, true);
-		if(CommandLineParameterHelper.isJML()){
+	//if(CommandLineParameterHelper.isJML())
 		handleJMLReplacements(terminal);
-		printToken(terminal.getBody());
-		}
-		else{
 		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
-		}
 		printFeatures(terminal, false);
 		// hintNewLine();
 		return false;
@@ -169,7 +165,11 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	private void handleJMLReplacements(FSTTerminal terminal) {
 		if (terminal.getType().equals("MethodDecl")) {
 
-			terminal.setBody(handleAsserts(handleJMLModifierMethod(terminal.getBody())));
+			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
+		}
+		if (terminal.getType().equals("ConstructorDecl")) {
+
+			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
 		}
 		if (terminal.getType().equals("ModFieldDeclaration")) {
 
@@ -183,7 +183,12 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
 			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
 		}
-	
+		if (terminal.getType().equals("ParamModifier")) {
+			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+		}
+		if( terminal.getType().equals("ImportDeclaration1")){
+			terminal.setBody("/*@" + terminal.getBody() + "@*/");
+		}
 		if (terminal.getType().equals("AssertStatement")
 				|| terminal.getType().equals("JMLAnnotationStatement ")
 				|| terminal.getType().equals("ModelProgStatement ")) {
@@ -192,16 +197,12 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		}
 	}
 
-	private String handleAsserts(String text) {
-	return 	text.replaceAll("(^|\\W)assume\\s","//@ assume").replaceAll("(^|\\W)assert\\s", "//@  assert ");
-	} 
 
 	protected void printFeatures(FSTNode node, boolean b) {
 		// used only in subclasses		
 	}
 
 	private String handleJMLModifierMethod(String in) {
-
 		List<String> JMLModifiers = new ArrayList<String>();
 		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
 		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
@@ -232,12 +233,11 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		}
 		
 		out = out + in.substring(in.indexOf(")"));
-
 		return out;
 	}
 
 	private String handleJMLModifierField(String in) {
-		
+
 		List<String> JMLModifiers = new ArrayList<String>();
 		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
 		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
@@ -269,16 +269,14 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@ " + mod + " @*/ ");
 			}
 		}
-
 		return out;
 	}
 
 	private String handleJMLModifierClass(String in) {
-
 		List<String> JMLModifiers = new ArrayList<String>();
 		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
 		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
-		JMLModifiers.add("MODEL".toLowerCase());
+	//	JMLModifiers.add("MODEL".toLowerCase());
 		JMLModifiers.add("GHOST".toLowerCase());
 		JMLModifiers.add("PURE".toLowerCase());
 		JMLModifiers.add("HELPER".toLowerCase());
@@ -297,9 +295,8 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
 		String out = in;
 		for (String mod : JMLModifiers) {
-			out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
+			out = out.replaceAll("(^|\\W)"+mod+"(\\s|\\z)", " /*@" + mod + "@*/ ");
 		}
-
 		return out;
 	}
 

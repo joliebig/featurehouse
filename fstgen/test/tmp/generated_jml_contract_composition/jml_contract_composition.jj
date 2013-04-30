@@ -26,7 +26,7 @@ options {
   ERROR_REPORTING = true;
   STATIC = false;
   //#if JML
-  LOOKAHEAD = 4;
+  LOOKAHEAD = 44;
   //#endif
 }
 
@@ -53,7 +53,7 @@ public class JMLParser extends AbstractFSTParser
 PARSER_END(JMLParser)
 
 /* WHITE SPACE */
-<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+<DEFAULT, IN_JML_MULTI_LINE>
 SPECIAL_TOKEN :
 {
   " "
@@ -66,14 +66,13 @@ SPECIAL_TOKEN :
 /* COMMENTS */
 
 
-//#if JML
+
 SKIP :
 {
- // "//@" : IN_JML_SINGLE_LINE
-//|
   "/*@" :  IN_JML_MULTI_LINE
+  
 }
-//#endif
+
 
 <IN_JML_MULTI_LINE>
 SKIP :
@@ -81,7 +80,7 @@ SKIP :
   <JML_MULTI_LINE_END: "@*/" > : DEFAULT
 | <REG_MULTI_LINE_END: "*/" > : DEFAULT
 }
-//#if JML
+
 
 
 <IN_JML_MULTI_LINE>
@@ -89,15 +88,21 @@ SKIP :
 {
   <JML_AT: " @" ~["*"]>
 }
-//#endif
 
-<IN_SINGLE_LINE_COMMENT, IN_JML_SINGLE_LINE>
+MORE :
+{
+"//@" : IN_JML_SINGLE_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_JML_SINGLE_LINE_COMMENT>
 SPECIAL_TOKEN :
 {
   <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
 }
 
-MORE :
+
+
+SKIP :
 {
   "//" : IN_SINGLE_LINE_COMMENT
 |
@@ -108,23 +113,27 @@ MORE :
 
 
 <IN_FORMAL_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <FORMAL_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_MULTI_LINE_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <MULTI_LINE_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
-MORE :
+SKIP :
 {
   < ~[] >
 }
-
+<IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  < ~[] >
+}
 /* RESERVED WORDS AND LITERALS */
 <DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
 TOKEN :
@@ -536,7 +545,7 @@ FSTInfo OriginalCaseKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclarationWr(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName("TypeDeclaration", n);}{ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
+	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclaration(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName("TypeDeclaration", n);}{ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
 
  )  }
 
@@ -546,17 +555,11 @@ FSTInfo PackageDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
-FSTInfo ImportDeclarationWr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=ModelKeyword(true){ replaceName(n);} n=ImportDeclaration(true){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ImportDeclarationWr1","{ImportDeclaration}","{ImportDeclaration}","Replacement","Default",first,token);}
- |
-	n=ImportDeclaration(true){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ImportDeclarationWr2","{ImportDeclaration}","{ImportDeclaration}","Replacement","Default",first,token);}
-
- )  }
-
 FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","-","{Name}{ImportPackage}","Replacement","Default",first,token);}
+	n=ModelKeyword(true){ replaceName(n);} "import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration1","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
+ |
+	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration2","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
 
  )  }
 
@@ -622,7 +625,7 @@ FSTInfo Id(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo TypeDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	";"  {return productionEndTerminal("EmptyTypeDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	";"  {return productionEndNonTerminal("EmptyTypeDecl","{AUTO}","{AUTO}");}
  |
 	LOOKAHEAD(Modifiers() "@" "interface") n=Modifiers(inTerminal){ replaceName(n);} "@" "interface" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=AnnotationTypeMemberDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("AnnotationTypeDeclaration","{Id}","{Id}");}
  |
@@ -718,25 +721,25 @@ FSTInfo ClassOrInterfaceBodyDeclaration(boolean inTerminal) : { Token first=null
 } { {first=getToken(1); productionStart(inTerminal); } (
 	LOOKAHEAD(JMLDeclaration()) n=JMLDeclaration(inTerminal){ replaceName(n);} {return productionEndNonTerminal("ClassOrInterfaceBodyDeclaration1","{AUTO}","{AUTO}");}
  |
-	LOOKAHEAD(2) n=Initializer(true){ replaceName(n);} {return productionEndTerminal("InitializerDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	LOOKAHEAD(2) n=Initializer(inTerminal){ replaceName(n);} {return productionEndNonTerminal("InitializerDecl","{AUTO}","{AUTO}");}
  |
 	LOOKAHEAD(Modifiers() ClassOrInterface()) n=Modifiers(inTerminal){ replaceName(n);} n=ClassOrInterface(inTerminal){ replaceName(n);} n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=TypeParameters(inTerminal){ replaceName(n);}] [n=ExtendsList(inTerminal){ replaceName(n);}] [n=ImplementsList(inTerminal){ replaceName(n);}] "{" (n=ClassOrInterfaceBodyDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("InnerClassDecl","{Id}","{Id}");}
  |
 	LOOKAHEAD(Modifiers() "enum") n=Modifiers(inTerminal){ replaceName(n);} "enum" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=ImplementsList(inTerminal){ replaceName(n);}] "{" n=EnumConstant(inTerminal){ replaceName(n);} ("," n=EnumConstant(inTerminal){ replaceName(n);})* [n=EnumBodyInternal(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("InnerEnumDecl","{Id}","{Id}");}
  |
-	LOOKAHEAD(MethodSpecification() ConstructorDecl()) n=MethodSpecification(inTerminal){ replaceName(n);} n=ConstructorDecl(inTerminal){ replaceName("ConstructorDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("ConstructorDeclarationWithSpec","{ConstructorDecl}","{ConstructorDecl}");}
+	LOOKAHEAD( [MethodSpecification()] Modifiers() [ TypeParameters() ] <IDENTIFIER> "(") [n=MethodSpecification(inTerminal){ replaceName(n);}] n=ConstructorDecl(inTerminal){ replaceName("ConstructorDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("ConstructorDeclarationWithSpec","{ConstructorDecl}","{ConstructorDecl}");}
  |
 	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> ( "[" "]" )* ( "," | "=" | ";" ) ) n=ModFieldDeclaration(inTerminal){ replaceName("ModFieldDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("FieldDecl","{ModFieldDeclaration}","{ModFieldDeclaration}");}
  |
-	LOOKAHEAD(2) n=MethodSpecification(inTerminal){ replaceName(n);} n=MethodDecl(inTerminal){ replaceName("MethodDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("MethodDeclarationWithSpec","{MethodDecl}","{MethodDecl}");}
+	LOOKAHEAD(2) [n=MethodSpecification(inTerminal){ replaceName(n);}] n=MethodDecl(inTerminal){ replaceName("MethodDecl", n);}{ replaceName(n);} {return productionEndNonTerminal("MethodDeclarationWithSpec","{MethodDecl}","{MethodDecl}");}
  |
-	";"  {return productionEndTerminal("EmptyDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	";"  {return productionEndNonTerminal("EmptyDecl","{AUTO}","{AUTO}");}
 
  )  }
 
 FSTInfo ModFieldDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Modifiers(true){ replaceName(n);} n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("ModFieldDeclaration","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding","Default",first,token);}
+	n=Modifiers(inTerminal){ replaceName(n);} n=FieldDeclaration(inTerminal){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ModFieldDeclaration","{FieldDeclaration}","{FieldDeclaration}");}
 
  )  }
 
@@ -1125,6 +1128,8 @@ FSTInfo RelationalOp(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"<="  {return productionEndTerminal("RelationalOp3","-","-","Replacement","Default",first,token);}
  |
 	">="  {return productionEndTerminal("RelationalOp4","-","-","Replacement","Default",first,token);}
+ |
+	"<:"  {return productionEndTerminal("RelationalOp5","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1236,7 +1241,7 @@ FSTInfo UnaryOp(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo CastLookahead(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(2) "(" n=PrimitiveType(true){ replaceName(n);} {return productionEndTerminal("CastLookahead1","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(22) "(" n=PrimitiveType(true){ replaceName(n);} {return productionEndTerminal("CastLookahead1","-","-","Replacement","Default",first,token);}
  |
 	LOOKAHEAD("(" Type() "[") "(" n=Type(true){ replaceName(n);} "[" "]" {return productionEndTerminal("CastLookahead2","-","-","Replacement","Default",first,token);}
  |
@@ -1314,7 +1319,7 @@ FSTInfo PrimaryPrefix(boolean inTerminal) : { Token first=null,t;FSTInfo n;
  |
 	n=Name(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix7","-","-","Replacement","Default",first,token);}
  |
-	n=JmlPrimary(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix8","-","-","Replacement","Default",first,token);}
+	LOOKAHEAD(JmlPrimary()) n=JmlPrimary(true){ replaceName(n);} {return productionEndTerminal("PrimaryPrefix8","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1766,7 +1771,7 @@ FSTInfo AnnotationTypeBody(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> "(") n=Modifiers(true){ replaceName(n);} n=Type(true){ replaceName(n);} t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "(" ")" [n=DefaultValue(true){ replaceName(n);}] ";" {return productionEndTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement","Default",first,token);}
+	LOOKAHEAD(Modifiers() Type() <IDENTIFIER> "(") n=Modifiers(inTerminal){ replaceName(n);} n=Type(inTerminal){ replaceName(n);} t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "(" ")" [n=DefaultValue(inTerminal){ replaceName(n);}] ";" {return productionEndNonTerminal("AnnotationMethodDecl","{<IDENTIFIER>}","{<IDENTIFIER>}");}
  |
 	LOOKAHEAD(Modifiers() "@" "interface") n=Modifiers(inTerminal){ replaceName(n);} "@" "interface" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=AnnotationTypeMemberDeclaration(inTerminal){ replaceName(n);})* "}" {return productionEndNonTerminal("AnnotationInnerAnnotation","{Id}","{Id}");}
  |
@@ -1774,9 +1779,9 @@ FSTInfo AnnotationTypeMemberDeclaration(boolean inTerminal) : { Token first=null
  |
 	LOOKAHEAD(2) n=Modifiers(inTerminal){ replaceName(n);} "enum" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} [n=ImplementsList(inTerminal){ replaceName(n);}] "{" n=EnumConstant(inTerminal){ replaceName(n);} ("," n=EnumConstant(inTerminal){ replaceName(n);})* [n=EnumBodyInternal(inTerminal){ replaceName(n);}] "}" {return productionEndNonTerminal("AnnotationInnerEnum","{Id}","{Id}");}
  |
-	LOOKAHEAD(1) n=Modifiers(true){ replaceName(n);} n=FieldDeclaration(true){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}","FieldOverriding","Default",first,token);}
+	LOOKAHEAD(1) n=Modifiers(inTerminal){ replaceName(n);} n=FieldDeclaration(inTerminal){ replaceName("FieldDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("AnnotationFieldDecl","{FieldDeclaration}","{FieldDeclaration}");}
  |
-	";"  {return productionEndTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}","Replacement","Default",first,token);}
+	";"  {return productionEndNonTerminal("AnnoationEmptyDecl","{AUTO}","{AUTO}");}
 
  )  }
 
@@ -1956,31 +1961,31 @@ FSTInfo SpecArrayRefExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Invariant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=InvariantKeyword(true){ replaceName(n);} n=Predicate(true){ replaceName("Predicate", n);}{ replaceName(n);} <SEMICOLON> {return productionEndTerminal("Invariant","{Predicate}","{Predicate}","InvariantComposition","Default",first,token);}
+	n=InvariantKeyword(inTerminal){ replaceName(n);} n=Predicate(inTerminal){ replaceName("Predicate", n);}{ replaceName(n);} <SEMICOLON> {return productionEndNonTerminal("Invariant","{Predicate}","{Predicate}");}
 
  )  }
 
 FSTInfo MethodSpecification(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[LOOKAHEAD(AlsoKeyword()) n=AlsoKeyword(inTerminal){ replaceName(n);}] [n=Specification(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("MethodSpecification","-","-");}
+	[LOOKAHEAD(AlsoKeyword()) n=AlsoKeyword(inTerminal){ replaceName(n);}] n=SpecCaseSeq(inTerminal){ replaceName(n);} {return productionEndNonTerminal("MethodSpecification","-","-");}
 
  )  }
 
 FSTInfo AlsoKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<ALSO> {return productionEndNonTerminal("AlsoKeyword","-","-");}
-
- )  }
-
-FSTInfo Specification(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecCaseSeq(inTerminal){ replaceName(n);} [n=RedundantSpec(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("Specification","-","-");}
+	<ALSO> {return productionEndTerminal("AlsoKeyword","-","-","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo SpecCaseSeq(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecCase(true){ replaceName(n);} (LOOKAHEAD(3) n=AlsoSpecCase(true){ replaceName(n);})* {return productionEndTerminal("SpecCaseSeq","-","-","ContractComposition","Default",first,token);}
+	n=SpecCaseSeq2(true){ replaceName(n);} [n=RedundantSpec(true){ replaceName(n);}] {return productionEndTerminal("SpecCaseSeq","-","-","ContractComposition","Default",first,token);}
+
+ )  }
+
+FSTInfo SpecCaseSeq2(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SpecCase(true){ replaceName(n);} (LOOKAHEAD(3) n=AlsoSpecCase(true){ replaceName(n);})* {return productionEndTerminal("SpecCaseSeq2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1992,17 +1997,17 @@ FSTInfo AlsoSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo SpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=LightweightSpecCase(true){ replaceName(n);} {return productionEndTerminal("SpecCase1","-","-","Replacement","Default",first,token);}
+	n=LightweightSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SpecCase1","-","-");}
  |
-	n=HeavyWeightSpecCase(true){ replaceName(n);} {return productionEndTerminal("SpecCase2","-","-","Replacement","Default",first,token);}
+	n=HeavyWeightSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SpecCase2","-","-");}
  |
-	n=ModelProgram(true){ replaceName(n);} {return productionEndTerminal("SpecCase3","-","-","Replacement","Default",first,token);}
+	n=ModelProgram(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SpecCase3","-","-");}
 
  )  }
 
 FSTInfo LightweightSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=GenericSpecCase(true){ replaceName(n);} {return productionEndTerminal("LightweightSpecCase","-","-","Replacement","Default",first,token);}
+	n=GenericSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("LightweightSpecCase","-","-");}
 
  )  }
 
@@ -2018,31 +2023,31 @@ FSTInfo GenericSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo GenericSpecBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SimpleSpecBody(true){ replaceName(n);} {return productionEndTerminal("GenericSpecBody1","-","-","Replacement","Default",first,token);}
+	n=SimpleSpecBody(inTerminal){ replaceName(n);} {return productionEndNonTerminal("GenericSpecBody1","-","-");}
  |
-	<LBRACE> <BIT_OR> n=GenericSpecCaseSeq(true){ replaceName(n);} <BIT_OR> <RBRACE> {return productionEndTerminal("GenericSpecBody2","-","-","Replacement","Default",first,token);}
+	<LBRACE> <BIT_OR> n=GenericSpecCaseSeq(inTerminal){ replaceName(n);} <BIT_OR> <RBRACE> {return productionEndNonTerminal("GenericSpecBody2","-","-");}
 
  )  }
 
 FSTInfo RedundantSpec(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Implications(true){ replaceName(n);} {return productionEndTerminal("RedundantSpec","-","-","Replacement","Default",first,token);}
+	n=Implications(inTerminal){ replaceName(n);} {return productionEndNonTerminal("RedundantSpec","-","-");}
 
  )  }
 
 FSTInfo Implications(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IMPLIES_THAT> n=SpecCaseSeq(true){ replaceName(n);} {return productionEndTerminal("Implications","-","-","Replacement","Default",first,token);}
+	<IMPLIES_THAT> n=SpecCaseSeq2(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Implications","-","-");}
 
  )  }
 
 FSTInfo HeavyWeightSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=BehaviorSpecCase(true){ replaceName(n);} {return productionEndTerminal("HeavyWeightSpecCase1","-","-","Replacement","Default",first,token);}
+	n=BehaviorSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("HeavyWeightSpecCase1","-","-");}
  |
-	n=ExceptionalBehaviorSpecCase(true){ replaceName(n);} {return productionEndTerminal("HeavyWeightSpecCase2","-","-","Replacement","Default",first,token);}
+	n=ExceptionalBehaviorSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("HeavyWeightSpecCase2","-","-");}
  |
-	n=NormalBehaviorSpecCase(true){ replaceName(n);} {return productionEndTerminal("HeavyWeightSpecCase3","-","-","Replacement","Default",first,token);}
+	n=NormalBehaviorSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("HeavyWeightSpecCase3","-","-");}
 
  )  }
 
@@ -2062,7 +2067,7 @@ FSTInfo BehaviorKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo NormalBehaviorSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=Privacy(true){ replaceName(n);}] [<CODE>] n=NormalBehaviorKeyword(true){ replaceName(n);} n=NormalSpecCase(true){ replaceName(n);} {return productionEndTerminal("NormalBehaviorSpecCase","-","-","Replacement","Default",first,token);}
+	[n=Privacy(inTerminal){ replaceName(n);}] [<CODE>] n=NormalBehaviorKeyword(inTerminal){ replaceName(n);} n=NormalSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("NormalBehaviorSpecCase","-","-");}
 
  )  }
 
@@ -2076,7 +2081,7 @@ FSTInfo NormalBehaviorKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo
 
 FSTInfo NormalSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=GenericSpecCase(true){ replaceName(n);} {return productionEndTerminal("NormalSpecCase","-","-","Replacement","Default",first,token);}
+	n=GenericSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("NormalSpecCase","-","-");}
 
  )  }
 
@@ -2152,15 +2157,15 @@ FSTInfo RequiresKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo PredOrNot(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Predicate(true){ replaceName(n);} {return productionEndTerminal("PredOrNot1","-","-","Replacement","Default",first,token);}
+	n=Predicate(inTerminal){ replaceName(n);} {return productionEndNonTerminal("PredOrNot1","-","-");}
  |
-	<NOT_SPECIFIED> {return productionEndTerminal("PredOrNot2","-","-","Replacement","Default",first,token);}
+	<NOT_SPECIFIED> {return productionEndNonTerminal("PredOrNot2","-","-");}
 
  )  }
 
 FSTInfo EnsuresClause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=EnsuresKeyword(true){ replaceName(n);} n=PredOrNot(true){ replaceName(n);} <SEMICOLON> {return productionEndTerminal("EnsuresClause","-","-","Replacement","Default",first,token);}
+	n=EnsuresKeyword(inTerminal){ replaceName(n);} n=PredOrNot(inTerminal){ replaceName(n);} <SEMICOLON> {return productionEndNonTerminal("EnsuresClause","-","-");}
 
  )  }
 
@@ -2586,53 +2591,53 @@ FSTInfo Privacy(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo GenericSpecCaseSeq(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=GenericSpecCase(true){ replaceName(n);} (n=AlsoGenericSpecCase(true){ replaceName(n);})* {return productionEndTerminal("GenericSpecCaseSeq","-","-","Replacement","Default",first,token);}
+	n=GenericSpecCase(inTerminal){ replaceName(n);} (n=AlsoGenericSpecCase(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("GenericSpecCaseSeq","-","-");}
 
  )  }
 
 FSTInfo AlsoGenericSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<ALSO> n=GenericSpecCase(true){ replaceName(n);} {return productionEndTerminal("AlsoGenericSpecCase","-","-","Replacement","Default",first,token);}
+	<ALSO> n=GenericSpecCase(inTerminal){ replaceName(n);} {return productionEndNonTerminal("AlsoGenericSpecCase","-","-");}
 
  )  }
 
 FSTInfo SpecHeader(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=RequiresClause(true){ replaceName(n);} (n=RequiresClause(true){ replaceName(n);})* {return productionEndTerminal("SpecHeader","-","-","Replacement","Default",first,token);}
+	n=RequiresClause(inTerminal){ replaceName(n);} (n=RequiresClause(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("SpecHeader","-","-");}
 
  )  }
 
 FSTInfo SimpleSpecBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SimpleSpecBodyClause(true){ replaceName(n);} (n=SimpleSpecBodyClause(true){ replaceName(n);})* {return productionEndTerminal("SimpleSpecBody","-","-","Replacement","Default",first,token);}
+	n=SimpleSpecBodyClause(inTerminal){ replaceName(n);} (n=SimpleSpecBodyClause(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("SimpleSpecBody","-","-");}
 
  )  }
 
 FSTInfo SimpleSpecBodyClause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=DivergesClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause1","-","-","Replacement","Default",first,token);}
+	n=DivergesClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause1","-","-");}
  |
-	n=AssignableClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause2","-","-","Replacement","Default",first,token);}
+	n=AssignableClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause2","-","-");}
  |
-	n=AccessibleClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause3","-","-","Replacement","Default",first,token);}
+	n=AccessibleClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause3","-","-");}
  |
-	n=CapturesClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause4","-","-","Replacement","Default",first,token);}
+	n=CapturesClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause4","-","-");}
  |
-	n=CallableClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause5","-","-","Replacement","Default",first,token);}
+	n=CallableClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause5","-","-");}
  |
-	n=WhenClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause6","-","-","Replacement","Default",first,token);}
+	n=WhenClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause6","-","-");}
  |
-	n=WorkingSpaceClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause7","-","-","Replacement","Default",first,token);}
+	n=WorkingSpaceClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause7","-","-");}
  |
-	n=DurationClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause8","-","-","Replacement","Default",first,token);}
+	n=DurationClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause8","-","-");}
  |
-	n=EnsuresClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause9","-","-","Replacement","Default",first,token);}
+	n=EnsuresClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause9","-","-");}
  |
-	n=SignalsOnlyClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause10","-","-","Replacement","Default",first,token);}
+	n=SignalsOnlyClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause10","-","-");}
  |
-	n=SignalsClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause11","-","-","Replacement","Default",first,token);}
+	n=SignalsClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause11","-","-");}
  |
-	n=MeasuredClause(true){ replaceName(n);} {return productionEndTerminal("SimpleSpecBodyClause12","-","-","Replacement","Default",first,token);}
+	n=MeasuredClause(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SimpleSpecBodyClause12","-","-");}
 
  )  }
 
@@ -2700,7 +2705,7 @@ FSTInfo BoundVarModifiers(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Predicate(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecExpression(true){ replaceName("SpecExpression", n);}{ replaceName(n);} {return productionEndTerminal("Predicate","{SpecExpression}","{SpecExpression}","Replacement","Default",first,token);}
+	n=SpecExpression(inTerminal){ replaceName("SpecExpression", n);}{ replaceName(n);} {return productionEndNonTerminal("Predicate","{SpecExpression}","{SpecExpression}");}
 
  )  }
 
@@ -2718,7 +2723,7 @@ FSTInfo CommaSpecExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo SpecExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=Expression(true){ replaceName(n);} {return productionEndTerminal("SpecExpression","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
+	n=Expression(inTerminal){ replaceName(n);} {return productionEndNonTerminal("SpecExpression","{TOSTRING}","{TOSTRING}");}
 
  )  }
 
@@ -3078,7 +3083,9 @@ FSTInfo JmlPrimary(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo ResultExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<RESULT> {return productionEndTerminal("ResultExpression","-","-","Replacement","Default",first,token);}
+	<RESULT> {return productionEndTerminal("ResultExpression1","-","-","Replacement","Default",first,token);}
+ |
+	n=CastExpression(true){ replaceName(n);} <RESULT> {return productionEndTerminal("ResultExpression2","-","-","Replacement","Default",first,token);}
 
  )  }
 
