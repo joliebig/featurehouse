@@ -34,6 +34,38 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
+		if (nonTerminal.getType().equals("ImportDeclarationWr1")) {
+			printFeatures(nonTerminal,true);
+			printToken("/*@");
+			{
+				FSTNode v=getChild(nonTerminal, "ModelKeyword");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("@*/");
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ImportDeclarationWr2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		if (nonTerminal.getType().equals("Modifiers")) {
 			printFeatures(nonTerminal,true);
 			{
@@ -42,6 +74,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("EmptyTypeDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken(";");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -183,6 +221,17 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
+		if (nonTerminal.getType().equals("InitializerDecl")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Initializer");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		if (nonTerminal.getType().equals("InnerClassDecl")) {
 			printFeatures(nonTerminal,true);
 			{
@@ -283,8 +332,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			hintNewLine();
-			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "ConstructorDecl");
 				if (v!=null) {
@@ -313,14 +360,61 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			hintNewLine();
-			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "MethodDecl");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("EmptyDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken(";");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("ModFieldDeclaration")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Modifiers");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "FieldDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("AnnotationMethodDecl")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Modifiers");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Type");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken("(");
+			printToken(")");
+			{
+				FSTNode v=getChild(nonTerminal, "DefaultValue");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printToken(";");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -437,6 +531,29 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			printToken("}");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("AnnotationFieldDecl")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Modifiers");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "FieldDeclaration");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("AnnoationEmptyDecl")) {
+			printFeatures(nonTerminal,true);
+			printToken(";");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -580,14 +697,30 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
+		if (nonTerminal.getType().equals("Invariant")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "InvariantKeyword");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Predicate");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		if (nonTerminal.getType().equals("MethodSpecification")) {
 			printFeatures(nonTerminal,true);
+			printToken("/*@");
 			{
 				FSTNode v=getChild(nonTerminal, "AlsoKeyword");
 				if (v!=null) {
-					printToken("/*@");
 					v.accept(this);
-					printToken("@*/");
 				}
 			}
 			{
@@ -596,17 +729,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("AlsoKeyword")) {
-			printFeatures(nonTerminal,true);
+			hintNewLine();
+			printToken("@*/");
 			printFeatures(nonTerminal,false);
 			return false;
 		}
 		if (nonTerminal.getType().equals("Specification")) {
 			printFeatures(nonTerminal,true);
-			printToken("/*@");
 			{
 				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
 				if (v!=null) {
@@ -619,7 +748,50 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printToken("@*/");
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SpecCase1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "LightweightSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SpecCase2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "HeavyWeightSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SpecCase3")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ModelProgram");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("LightweightSpecCase")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "GenericSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -667,6 +839,357 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			{
 				FSTNode v=getChild(nonTerminal, "GenericSpecBody");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("GenericSpecBody1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SimpleSpecBody");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("GenericSpecBody2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "GenericSpecCaseSeq");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("RedundantSpec")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Implications");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Implications")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("HeavyWeightSpecCase1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "BehaviorSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("HeavyWeightSpecCase2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "ExceptionalBehaviorSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("HeavyWeightSpecCase3")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "NormalBehaviorSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("NormalBehaviorSpecCase")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Privacy");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "NormalBehaviorKeyword");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "NormalSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("NormalSpecCase")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "GenericSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("PredOrNot1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Predicate");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("PredOrNot2")) {
+			printFeatures(nonTerminal,true);
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("EnsuresClause")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "EnsuresKeyword");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "PredOrNot");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("GenericSpecCaseSeq")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "GenericSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"AlsoGenericSpecCase")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("AlsoGenericSpecCase")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "GenericSpecCase");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SpecHeader")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "RequiresClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"RequiresClause")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBody")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SimpleSpecBodyClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"SimpleSpecBodyClause")) {
+				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause1")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "DivergesClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause2")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "AssignableClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause3")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "AccessibleClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause4")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "CapturesClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause5")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "CallableClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause6")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "WhenClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause7")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "WorkingSpaceClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause8")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "DurationClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause9")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "EnsuresClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause10")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SignalsOnlyClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause11")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SignalsClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SimpleSpecBodyClause12")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "MeasuredClause");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Predicate")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "SpecExpression");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("SpecExpression")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "Expression");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -758,6 +1281,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("JMLModifier14") && expectedType.equals("JMLModifier")) return true;
 		if (type.equals("SimpleSpecBodyClause5") && expectedType.equals("SimpleSpecBodyClause")) return true;
 		if (type.equals("JMLDeclaration8") && expectedType.equals("JMLDeclaration")) return true;
+		if (type.equals("ResultExpression2") && expectedType.equals("ResultExpression")) return true;
 		if (type.equals("ConstrainedList2") && expectedType.equals("ConstrainedList")) return true;
 		if (type.equals("JMLAnnotationStatement4") && expectedType.equals("JMLAnnotationStatement")) return true;
 		if (type.equals("ClassOrInterface1") && expectedType.equals("ClassOrInterface")) return true;
@@ -773,6 +1297,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AnnotationTypeDeclaration") && expectedType.equals("TypeDeclaration")) return true;
 		if (type.equals("OldExpression1") && expectedType.equals("OldExpression")) return true;
 		if (type.equals("JMLModifier17") && expectedType.equals("JMLModifier")) return true;
+		if (type.equals("ResultExpression1") && expectedType.equals("ResultExpression")) return true;
 		if (type.equals("ImpliesExpr1") && expectedType.equals("ImpliesExpr")) return true;
 		if (type.equals("SimpleSpecStatementClause13") && expectedType.equals("SimpleSpecStatementClause")) return true;
 		if (type.equals("Modifier12") && expectedType.equals("Modifier")) return true;
