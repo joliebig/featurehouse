@@ -38,7 +38,12 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 			List<FSTNode> children = ((FSTNonTerminal)nonterminalParent.getParent()).getChildren();
 			for (FSTNode child : children) {
 				if (child.getType().equals("MethodDeclarationWithSpec")) {
-					FSTTerminal terminal = (FSTTerminal)((FSTNonTerminal)child).getChildren().get(2);
+					FSTTerminal terminal;
+					//number of children depends on whether there is a specification
+				if(((FSTNonTerminal) child).getChildren().size()>2)
+					 terminal = (FSTTerminal)((FSTNonTerminal)child).getChildren().get(2);
+				else
+					 terminal = (FSTTerminal)((FSTNonTerminal)child).getChildren().get(1);
 					if (terminal.getName().equals(terminalA.getName())) {
 						setNotFeature(child, getFeatureName(terminalA));
 					}
