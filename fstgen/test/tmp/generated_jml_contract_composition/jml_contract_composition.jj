@@ -545,7 +545,7 @@ FSTInfo OriginalCaseKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclarationWr(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName("TypeDeclaration", n);}{ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
+	[n=PackageDeclaration(inTerminal){ replaceName(n);}] (n=ImportDeclaration(inTerminal){ replaceName(n);})* (n=TypeDeclaration(inTerminal){ replaceName("TypeDeclaration", n);}{ replaceName(n);})* <EOF> {return productionEndNonTerminal("CompilationUnit","{TypeDeclaration}","{TypeDeclaration}");}
 
  )  }
 
@@ -555,17 +555,11 @@ FSTInfo PackageDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
-FSTInfo ImportDeclarationWr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
-} { {first=getToken(1); productionStart(inTerminal); } (
-	n=ModelKeyword(inTerminal){ replaceName(n);} n=ImportDeclaration(inTerminal){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ImportDeclarationWr1","{ImportDeclaration}","{ImportDeclaration}");}
- |
-	n=ImportDeclaration(inTerminal){ replaceName("ImportDeclaration", n);}{ replaceName(n);} {return productionEndNonTerminal("ImportDeclarationWr2","{ImportDeclaration}","{ImportDeclaration}");}
-
- )  }
-
 FSTInfo ImportDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration","-","{Name}{ImportPackage}","Replacement","Default",first,token);}
+	n=ModelKeyword(true){ replaceName(n);} "import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration1","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
+ |
+	"import" ["static" ] n=Name(true){ replaceName("Name", n);}{ replaceName(n);} [n=ImportPackage(true){ replaceName("ImportPackage", n);}{ replaceName(n);}] ";" {return productionEndTerminal("ImportDeclaration2","{Name}{ImportPackage}","{Name}{ImportPackage}","Replacement","Default",first,token);}
 
  )  }
 
@@ -1134,6 +1128,8 @@ FSTInfo RelationalOp(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	"<="  {return productionEndTerminal("RelationalOp3","-","-","Replacement","Default",first,token);}
  |
 	">="  {return productionEndTerminal("RelationalOp4","-","-","Replacement","Default",first,token);}
+ |
+	"<:"  {return productionEndTerminal("RelationalOp5","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1971,7 +1967,7 @@ FSTInfo Invariant(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo MethodSpecification(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[LOOKAHEAD(AlsoKeyword()) n=AlsoKeyword(inTerminal){ replaceName(n);}] n=Specification(inTerminal){ replaceName(n);} {return productionEndNonTerminal("MethodSpecification","-","-");}
+	[LOOKAHEAD(AlsoKeyword()) n=AlsoKeyword(inTerminal){ replaceName(n);}] n=SpecCaseSeq(inTerminal){ replaceName(n);} {return productionEndNonTerminal("MethodSpecification","-","-");}
 
  )  }
 
@@ -1981,15 +1977,15 @@ FSTInfo AlsoKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
-FSTInfo Specification(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+FSTInfo SpecCaseSeq(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecCaseSeq(inTerminal){ replaceName(n);} [n=RedundantSpec(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("Specification","-","-");}
+	n=SpecCaseSeq2(true){ replaceName(n);} [n=RedundantSpec(true){ replaceName(n);}] {return productionEndTerminal("SpecCaseSeq","-","-","ContractComposition","Default",first,token);}
 
  )  }
 
-FSTInfo SpecCaseSeq(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+FSTInfo SpecCaseSeq2(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecCase(true){ replaceName(n);} (LOOKAHEAD(3) n=AlsoSpecCase(true){ replaceName(n);})* {return productionEndTerminal("SpecCaseSeq","-","-","ContractComposition","Default",first,token);}
+	n=SpecCase(true){ replaceName(n);} (LOOKAHEAD(3) n=AlsoSpecCase(true){ replaceName(n);})* {return productionEndTerminal("SpecCaseSeq2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -2041,7 +2037,7 @@ FSTInfo RedundantSpec(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Implications(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IMPLIES_THAT> n=SpecCaseSeq(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Implications","-","-");}
+	<IMPLIES_THAT> n=SpecCaseSeq2(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Implications","-","-");}
 
  )  }
 

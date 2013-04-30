@@ -560,7 +560,7 @@ OriginalCaseKeyword:
 CompilationUnit:
 
   [ PackageDeclaration ]
-  ( ImportDeclarationWr )*
+  ( ImportDeclaration )*
   ( TypeDeclaration )*
   <EOF>
   
@@ -570,17 +570,15 @@ PackageDeclaration:
   "package" Name ";" @!
 ;
 
-@FSTNonTerminal(name="{ImportDeclaration}")
-ImportDeclarationWr:
-@% ModelKeyword  ImportDeclaration @& @!
+
+ImportDeclaration:
+@FSTTerminal(name="{Name}{ImportPackage}")
+@% ModelKeyword  "import" [ "static" <NONE> ] Name [ImportPackage] ";" @& @!
 |
-ImportDeclaration @!
+@FSTTerminal(name="{Name}{ImportPackage}")
+"import" [ "static" <NONE> ] Name [ImportPackage] ";"  @!
 ;
 
-@FSTExportName("{Name}{ImportPackage}") 
-ImportDeclaration:
-"import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
-;
 
 ModelKeyword:
  <MODEL> 
@@ -1038,7 +1036,7 @@ RelationalExpression:
 
 RelationalExpressionIntern:RelationalOp ShiftExpression;
 
-RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> ;
+RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> | "<:"<NONE>;
 
 ShiftExpression:
   AdditiveExpression ( LL(2) ShiftExpressionRight )*
@@ -1639,7 +1637,7 @@ Invariant: InvariantKeyword Predicate <SEMICOLON>
 
 @FSTNonTerminal()
 MethodSpecification:
-@% [LOOK_AHEAD("AlsoKeyword()")  AlsoKeyword] Specification @! @&
+@% [LOOK_AHEAD("AlsoKeyword()")  AlsoKeyword] SpecCaseSeq @! @&
 ;	
 
 
@@ -1647,14 +1645,14 @@ AlsoKeyword:
  <ALSO> 
 ;
 
-@FSTNonTerminal()
-Specification:
-SpecCaseSeq [ RedundantSpec ] 
+@FSTTerminal(compose="ContractComposition")
+SpecCaseSeq:
+SpecCaseSeq2 [ RedundantSpec ] 
 ;
 
 
-@FSTTerminal(compose="ContractComposition")
-SpecCaseSeq:
+
+SpecCaseSeq2:
 SpecCase (LOOK_AHEAD(3) AlsoSpecCase )*
 ;
 
@@ -1702,7 +1700,7 @@ Implications //[ Examples ] | Examples
 
 @FSTNonTerminal()
 Implications: 
-<IMPLIES_THAT> SpecCaseSeq
+<IMPLIES_THAT> SpecCaseSeq2
 ;
 
 @FSTNonTerminal()

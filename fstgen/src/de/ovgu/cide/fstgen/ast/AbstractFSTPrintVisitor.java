@@ -4,6 +4,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
@@ -152,14 +154,154 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	@Override
 	public boolean visit(FSTTerminal terminal) {
 		printFeatures(terminal, true);
+	//if(CommandLineParameterHelper.isJML())
+		handleJMLReplacements(terminal);
 		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
 		printFeatures(terminal, false);
 		// hintNewLine();
 		return false;
 	}
-	
+
+	private void handleJMLReplacements(FSTTerminal terminal) {
+		if (terminal.getType().equals("MethodDecl")) {
+
+			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
+		}
+		if (terminal.getType().equals("ConstructorDecl")) {
+
+			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
+		}
+		if (terminal.getType().equals("ModFieldDeclaration")) {
+
+			terminal.setBody(handleJMLModifierField(terminal.getBody()));
+		}
+		if (terminal.getType().equals("Modifiers2")) {
+
+			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+		}
+		if (terminal.getType().equals("Modifiers")) {
+
+			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+		}
+		if (terminal.getType().equals("ParamModifier")) {
+			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+		}
+		if( terminal.getType().equals("ImportDeclaration1")){
+			terminal.setBody("/*@" + terminal.getBody() + "@*/");
+		}
+		if (terminal.getType().equals("AssertStatement")
+				|| terminal.getType().equals("JMLAnnotationStatement ")
+				|| terminal.getType().equals("ModelProgStatement ")) {
+			
+			terminal.setBody("/*@" + terminal.getBody() + "@*/");
+		}
+	}
+
+
 	protected void printFeatures(FSTNode node, boolean b) {
 		// used only in subclasses		
 	}
-	
+
+	private String handleJMLModifierMethod(String in) {
+		System.out.println("methodin "+in);
+		List<String> JMLModifiers = new ArrayList<String>();
+		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
+		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
+		JMLModifiers.add("MODEL".toLowerCase());
+		JMLModifiers.add("GHOST".toLowerCase());
+		JMLModifiers.add("PURE".toLowerCase());
+		JMLModifiers.add("HELPER".toLowerCase());
+		JMLModifiers.add("INSTANCE".toLowerCase());
+		JMLModifiers.add("UNINITIALIZED".toLowerCase());
+		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("NON_NULL".toLowerCase());
+		JMLModifiers.add("NULLABLE".toLowerCase());
+		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
+		JMLModifiers.add("EXTRACT".toLowerCase());
+
+		String out = in.substring(0, in.indexOf(")"));
+		   Pattern p = Pattern.compile("\\smodel\\s"); 
+		    Matcher m = p.matcher(in); 
+		if (m.find())
+			return out = "/*@" + in + "@*/";
+		for (String mod : JMLModifiers) {
+			out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
+		}
+		
+		out = out + in.substring(in.indexOf(")"));
+		System.out.println("method "+out);
+		return out;
 	}
+
+	private String handleJMLModifierField(String in) {
+
+		List<String> JMLModifiers = new ArrayList<String>();
+		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
+		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
+		JMLModifiers.add("MODEL".toLowerCase());
+		JMLModifiers.add("GHOST".toLowerCase());
+		JMLModifiers.add("PURE".toLowerCase());
+		JMLModifiers.add("HELPER".toLowerCase());
+		JMLModifiers.add("INSTANCE".toLowerCase());
+		JMLModifiers.add("UNINITIALIZED".toLowerCase());
+		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("NON_NULL".toLowerCase());
+		JMLModifiers.add("NULLABLE".toLowerCase());
+		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
+		JMLModifiers.add("EXTRACT".toLowerCase());
+
+		String out = null;
+		   Pattern p = Pattern.compile("\\smodel\\s"); 
+		    Matcher m = p.matcher(in); 
+		if (m.find())
+			out = "/*@" + in + "@*/";
+		else {
+			out = in;
+			for (String mod : JMLModifiers) {
+				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@ " + mod + " @*/ ");
+			}
+		}
+		System.out.println("field "+out);
+		return out;
+	}
+
+	private String handleJMLModifierClass(String in) {
+		List<String> JMLModifiers = new ArrayList<String>();
+		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
+		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
+	//	JMLModifiers.add("MODEL".toLowerCase());
+		JMLModifiers.add("GHOST".toLowerCase());
+		JMLModifiers.add("PURE".toLowerCase());
+		JMLModifiers.add("HELPER".toLowerCase());
+		JMLModifiers.add("INSTANCE".toLowerCase());
+		JMLModifiers.add("UNINITIALIZED".toLowerCase());
+		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
+		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
+		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
+		JMLModifiers.add("NON_NULL".toLowerCase());
+		JMLModifiers.add("NULLABLE".toLowerCase());
+		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
+		JMLModifiers.add("EXTRACT".toLowerCase());
+
+		String out = in;
+		for (String mod : JMLModifiers) {
+			out = out.replaceAll("(^|\\W)"+mod+"(\\s|\\z)", " /*@" + mod + "@*/ ");
+		}
+		System.out.println("class "+out);
+		return out;
+	}
+
+}

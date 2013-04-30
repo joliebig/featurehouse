@@ -25,44 +25,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			for (FSTNode v : getChildren(nonTerminal,"ImportDeclarationWr")) {
+			for (FSTNode v : getChildren(nonTerminal,"ImportDeclaration")) {
 				v.accept(this);
 			}
 			for (FSTNode v : getChildren(nonTerminal,"TypeDeclaration")) {
 				v.accept(this);
 			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("ImportDeclarationWr1")) {
-			printFeatures(nonTerminal,true);
-			printToken("/*@");
-			{
-				FSTNode v=getChild(nonTerminal, "ModelKeyword");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printToken("@*/");
-			hintNewLine();
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("ImportDeclarationWr2")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "ImportDeclaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -724,30 +692,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			{
-				FSTNode v=getChild(nonTerminal, "Specification");
+				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
 				if (v!=null) {
 					v.accept(this);
 				}
 			}
 			hintNewLine();
 			printToken("@*/");
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("Specification")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "RedundantSpec");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -882,7 +833,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (nonTerminal.getType().equals("Implications")) {
 			printFeatures(nonTerminal,true);
 			{
-				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
+				FSTNode v=getChild(nonTerminal, "SpecCaseSeq2");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -1255,8 +1206,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("HenceByKeyword2") && expectedType.equals("HenceByKeyword")) return true;
 		if (type.equals("TypeArgument2") && expectedType.equals("TypeArgument")) return true;
 		if (type.equals("PrimarySuffix3") && expectedType.equals("PrimarySuffix")) return true;
-		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("StoreRefList1") && expectedType.equals("StoreRefList")) return true;
+		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("Statement18") && expectedType.equals("Statement")) return true;
 		if (type.equals("Type1") && expectedType.equals("Type")) return true;
 		if (type.equals("PrimaryPrefix2") && expectedType.equals("PrimaryPrefix")) return true;
@@ -1332,6 +1283,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("GenericSpecStatementCase2") && expectedType.equals("GenericSpecStatementCase")) return true;
 		if (type.equals("Modifier2") && expectedType.equals("Modifier")) return true;
 		if (type.equals("ForInit1") && expectedType.equals("ForInit")) return true;
+		if (type.equals("ImportDeclaration1") && expectedType.equals("ImportDeclaration")) return true;
 		if (type.equals("GenericSpecStatementCase1") && expectedType.equals("GenericSpecStatementCase")) return true;
 		if (type.equals("AssignableKeyword2") && expectedType.equals("AssignableKeyword")) return true;
 		if (type.equals("AllocationExpressionInit2") && expectedType.equals("AllocationExpressionInit")) return true;
@@ -1517,6 +1469,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("ConditionalExpression2") && expectedType.equals("ConditionalExpression")) return true;
 		if (type.equals("JMLModifier5") && expectedType.equals("JMLModifier")) return true;
 		if (type.equals("StoreRefName1") && expectedType.equals("StoreRefName")) return true;
+		if (type.equals("ImportDeclaration2") && expectedType.equals("ImportDeclaration")) return true;
 		if (type.equals("MethodDeclarationBody1") && expectedType.equals("MethodDeclarationBody")) return true;
 		if (type.equals("JmlPrimary2") && expectedType.equals("JmlPrimary")) return true;
 		if (type.equals("ClassOrInterfaceBodyDeclaration1") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;
@@ -1531,6 +1484,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("MeasuredByKeyword1") && expectedType.equals("MeasuredByKeyword")) return true;
 		if (type.equals("JMLModifier6") && expectedType.equals("JMLModifier")) return true;
 		if (type.equals("ConditionalExpression1") && expectedType.equals("ConditionalExpression")) return true;
+		if (type.equals("RelationalOp5") && expectedType.equals("RelationalOp")) return true;
 		if (type.equals("JmlPrimary1") && expectedType.equals("JmlPrimary")) return true;
 		if (type.equals("SignalsOnlyClause1") && expectedType.equals("SignalsOnlyClause")) return true;
 		if (type.equals("ForStatementInternal3") && expectedType.equals("ForStatementInternal")) return true;
@@ -1591,7 +1545,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("ContinuesKeyword2") && expectedType.equals("ContinuesKeyword")) return true;
 		if (type.equals("SimpleSpecBodyClause8") && expectedType.equals("SimpleSpecBodyClause")) return true;
 		if (type.equals("EnumConstant1") && expectedType.equals("EnumConstant")) return true;
-		if (type.equals("ImportDeclarationWr2") && expectedType.equals("ImportDeclarationWr")) return true;
 		if (type.equals("AdditiveOp2") && expectedType.equals("AdditiveOp")) return true;
 		if (type.equals("JmlPrimary23") && expectedType.equals("JmlPrimary")) return true;
 		if (type.equals("Quantifier2") && expectedType.equals("Quantifier")) return true;
@@ -1610,7 +1563,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("Quantifier1") && expectedType.equals("Quantifier")) return true;
 		if (type.equals("PrimaryPrefix8") && expectedType.equals("PrimaryPrefix")) return true;
 		if (type.equals("JmlPrimary22") && expectedType.equals("JmlPrimary")) return true;
-		if (type.equals("ImportDeclarationWr1") && expectedType.equals("ImportDeclarationWr")) return true;
 		if (type.equals("JMLModifier2") && expectedType.equals("JMLModifier")) return true;
 		if (type.equals("UnaryExpression4") && expectedType.equals("UnaryExpression")) return true;
 		if (type.equals("MethodDeclarationWithSpec") && expectedType.equals("ClassOrInterfaceBodyDeclaration")) return true;
