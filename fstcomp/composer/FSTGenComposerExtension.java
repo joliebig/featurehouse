@@ -43,6 +43,8 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class FSTGenComposerExtension extends FSTGenComposer {
 	
 	public static boolean key = false;
+	public static boolean metaproduct = false;
+	
 	
 	public FSTGenComposerExtension() {
 		super();
@@ -54,10 +56,12 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	 * @param featuresArg An array containing all features of the project
 	 */
 	public void buildFullFST(String[] args, String[] featuresArg) {
+		metaproduct = false;
 		build(args, featuresArg, false);
 	}
 	
 	public void buildMetaProduct(String[] args, String[] featuresArg) {
+		metaproduct = true;
 		build(args, featuresArg, true);
 	}
 
@@ -164,31 +168,25 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	private FSTNode composeMeta(List<FSTNonTerminal> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {
-			preProcessSubtree(current);
+			if (metaproduct) {
+				preProcessSubtree(current);
+			}
 			if (composed != null) {
 				composed = compose(current, composed);
 			} else
 				composed = current;
 		}
-		postProcess(composed);
+		if (metaproduct) {
+			postProcess(composed);
+		}
 		return composed;
 	}
 	
 	private void preProcessSubtree(FSTNode child) {
 		if (child instanceof FSTNonTerminal) {
-			if (child.getType().equals("ClassDeclaration")) {
-				// TODO wann und warum ist das nötig (siehe Stack)
-//				FSTNonTerminal cOrIDeclaration = new FSTNonTerminal("ClassOrInterfaceBodyDeclaration1", "FeatureModel");
-//				((FSTNonTerminal) child).getChildren().add(0, cOrIDeclaration);
-//				FSTNonTerminal jmlDeclaration = new FSTNonTerminal("JMLDeclaration1", "FeatureModel.fm()");
-//				cOrIDeclaration.addChild(jmlDeclaration);
-//				FSTTerminal invariant = new FSTTerminal("Invariant", "-", "static invariant FeatureModel.fm();", "");
-//				jmlDeclaration.addChild(invariant);
-			} 
 			if (child.getType().equals("MethodSpecification") && ((FSTNonTerminal) child).getChildren().isEmpty()) {
 				FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
 				((FSTNonTerminal) child).addChild(spec);
-				// TODO Experimental
 				(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "\\req FeatureModel." + getFeatureName(spec) + "\\or_original;", "", "ContractComposition"));
 			} else {
 				for (FSTNode node : ((FSTNonTerminal) child).getChildren()) {
