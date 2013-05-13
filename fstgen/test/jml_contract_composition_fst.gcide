@@ -51,9 +51,8 @@ public class JMLParser extends AbstractFSTParser
 }
 
 PARSER_END(JMLParser)
-
 /* WHITE SPACE */
-<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+<DEFAULT, IN_JML_MULTI_LINE>
 SPECIAL_TOKEN :
 {
   " "
@@ -66,14 +65,13 @@ SPECIAL_TOKEN :
 /* COMMENTS */
 
 
-//#if JML
+
 SKIP :
 {
- // "//@" : IN_JML_SINGLE_LINE
-//|
-  "/*@" :  IN_JML_MULTI_LINE
+  "/*@" : IN_JML_MULTI_LINE
+  
 }
-//#endif
+
 
 <IN_JML_MULTI_LINE>
 SKIP :
@@ -81,7 +79,7 @@ SKIP :
   <JML_MULTI_LINE_END: "@*/" > : DEFAULT
 | <REG_MULTI_LINE_END: "*/" > : DEFAULT
 }
-//#if JML
+
 
 
 <IN_JML_MULTI_LINE>
@@ -89,15 +87,21 @@ SKIP :
 {
   <JML_AT: " @" ~["*"]>
 }
-//#endif
 
-<IN_SINGLE_LINE_COMMENT, IN_JML_SINGLE_LINE>
+
+
+<IN_SINGLE_LINE_COMMENT,IN_JML_SINGLE_LINE_COMMENT>
 SPECIAL_TOKEN :
 {
   <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
 }
 
 MORE :
+{
+"//@" : IN_JML_SINGLE_LINE_COMMENT
+}
+
+SKIP :
 {
   "//" : IN_SINGLE_LINE_COMMENT
 |
@@ -108,23 +112,27 @@ MORE :
 
 
 <IN_FORMAL_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <FORMAL_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_MULTI_LINE_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <MULTI_LINE_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
-MORE :
+SKIP :
 {
   < ~[] >
 }
-
+<IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  < ~[] >
+}
 /* RESERVED WORDS AND LITERALS */
 <DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
 TOKEN :
@@ -568,7 +576,7 @@ ImportDeclarationWr:
 ImportDeclaration @!
 ;
 
-@FSTExportName("{Name}{ImportPackage}") 
+@FSTExportName("{Name}{ImportPackage}")  
 ImportDeclaration:
 "import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
 ;
@@ -725,7 +733,7 @@ ClassOrInterfaceBodyDeclaration:
 //|
   	@FSTNonTerminal(name="{ConstructorDecl}")
     LOOK_AHEAD("MethodSpecification() ConstructorDecl()")
-	MethodSpecification  @! @!ConstructorDecl :: ConstructorDeclarationWithSpec
+	MethodSpecification  @!ConstructorDecl :: ConstructorDeclarationWithSpec
 |
   	@FSTNonTerminal(name="{ModFieldDeclaration}")
     LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
@@ -733,7 +741,7 @@ ClassOrInterfaceBodyDeclaration:
 |
   	@FSTNonTerminal(name="{MethodDecl}")
 	LOOK_AHEAD(2)
-     MethodSpecification @! @! MethodDecl :: MethodDeclarationWithSpec
+     MethodSpecification  @! MethodDecl :: MethodDeclarationWithSpec
 |
 
 	@FSTTerminal(name="{AUTO}")
@@ -1635,7 +1643,6 @@ MethodSpecification:
  [LOOK_AHEAD("AlsoKeyword()") @% AlsoKeyword @&] [Specification]
 ;	
 
-@FSTNonTerminal()
 AlsoKeyword:
  <ALSO> 
 ;
@@ -2368,7 +2375,7 @@ LblposExpression:<LPAREN> <LBLPOS> Id SpecExpression <RPAREN>
 
 SpecQuantifiedExpr:<LPAREN> Quantifier QuantifiedVarDecls <SEMICOLON>
 
-                           [ PredicateSemicolon ]
+                           [ LOOK_AHEAD( "PredicateSemicolon()" ) PredicateSemicolon ]
 
                            SpecExpression <RPAREN>
 ;

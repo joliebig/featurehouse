@@ -51,9 +51,8 @@ public class JMLParser extends AbstractFSTParser
 }
 
 PARSER_END(JMLParser)
-
 /* WHITE SPACE */
-<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+<DEFAULT, IN_JML_MULTI_LINE>
 SPECIAL_TOKEN :
 {
   " "
@@ -66,14 +65,13 @@ SPECIAL_TOKEN :
 /* COMMENTS */
 
 
-//#if JML
+
 SKIP :
 {
- // "//@" : IN_JML_SINGLE_LINE
-//|
-  "/*@" :  IN_JML_MULTI_LINE
+  "/*@" : IN_JML_MULTI_LINE
+  
 }
-//#endif
+
 
 <IN_JML_MULTI_LINE>
 SKIP :
@@ -81,7 +79,7 @@ SKIP :
   <JML_MULTI_LINE_END: "@*/" > : DEFAULT
 | <REG_MULTI_LINE_END: "*/" > : DEFAULT
 }
-//#if JML
+
 
 
 <IN_JML_MULTI_LINE>
@@ -89,15 +87,21 @@ SKIP :
 {
   <JML_AT: " @" ~["*"]>
 }
-//#endif
 
-<IN_SINGLE_LINE_COMMENT, IN_JML_SINGLE_LINE>
+
+
+<IN_SINGLE_LINE_COMMENT,IN_JML_SINGLE_LINE_COMMENT>
 SPECIAL_TOKEN :
 {
   <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
 }
 
 MORE :
+{
+"//@" : IN_JML_SINGLE_LINE_COMMENT
+}
+
+SKIP :
 {
   "//" : IN_SINGLE_LINE_COMMENT
 |
@@ -108,23 +112,27 @@ MORE :
 
 
 <IN_FORMAL_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <FORMAL_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_MULTI_LINE_COMMENT>
-SPECIAL_TOKEN :
+SKIP :
 {
   <MULTI_LINE_COMMENT: "*/" > : DEFAULT
 }
 
 <IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
-MORE :
+SKIP :
 {
   < ~[] >
 }
-
+<IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  < ~[] >
+}
 /* RESERVED WORDS AND LITERALS */
 <DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
 TOKEN :
@@ -1968,7 +1976,7 @@ FSTInfo MethodSpecification(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo AlsoKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<ALSO> {return productionEndNonTerminal("AlsoKeyword","-","-");}
+	<ALSO> {return productionEndTerminal("AlsoKeyword","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -3224,7 +3232,7 @@ FSTInfo LblposExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo SpecQuantifiedExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<LPAREN> n=Quantifier(true){ replaceName(n);} n=QuantifiedVarDecls(true){ replaceName(n);} <SEMICOLON> [n=PredicateSemicolon(true){ replaceName(n);}] n=SpecExpression(true){ replaceName(n);} <RPAREN> {return productionEndTerminal("SpecQuantifiedExpr","-","-","Replacement","Default",first,token);}
+	<LPAREN> n=Quantifier(true){ replaceName(n);} n=QuantifiedVarDecls(true){ replaceName(n);} <SEMICOLON> [LOOKAHEAD(PredicateSemicolon()) n=PredicateSemicolon(true){ replaceName(n);}] n=SpecExpression(true){ replaceName(n);} <RPAREN> {return productionEndTerminal("SpecQuantifiedExpr","-","-","Replacement","Default",first,token);}
 
  )  }
 

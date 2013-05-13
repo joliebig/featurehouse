@@ -4111,7 +4111,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
                                             Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(ALSO);
-                {if (true) return productionEndNonTerminal("AlsoKeyword","-","-");}
+                {if (true) return productionEndTerminal("AlsoKeyword","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -7059,16 +7059,16 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     n = QuantifiedVarDecls(true);
                                                                                   replaceName(n);
     jj_consume_token(SEMICOLON);
-    if (jj_2_642(4)) {
+    if (jj_2_642(2147483647)) {
       n = PredicateSemicolon(true);
-                                                                                                                                            replaceName(n);
+                                                                                                                                                                            replaceName(n);
     } else {
       ;
     }
     n = SpecExpression(true);
-                                                                                                                                                                                      replaceName(n);
+                                                                                                                                                                                                                      replaceName(n);
     jj_consume_token(RPAREN);
-                                                                                                                                                                                                                 {if (true) return productionEndTerminal("SpecQuantifiedExpr","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                                                                                                 {if (true) return productionEndTerminal("SpecQuantifiedExpr","-","-","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -11819,63 +11819,6 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     finally { jj_save(655, xla); }
   }
 
-  final private boolean jj_3R_420() {
-    if (jj_3R_354()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_625() {
-    if (jj_3R_350()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_419() {
-    if (jj_3R_353()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_624() {
-    if (jj_3R_349()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_418() {
-    if (jj_3R_328()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_131() {
-    if (jj_scan_token(LBRACE)) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3_269()) { jj_scanpos = xsp; break; }
-    }
-    if (jj_scan_token(RBRACE)) return true;
-    return false;
-  }
-
-  final private boolean jj_3_623() {
-    if (jj_3R_348()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_233() {
-    if (jj_scan_token(LBRACKET)) return true;
-    if (jj_scan_token(RBRACKET)) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_417() {
-    if (jj_3R_352()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_622() {
-    if (jj_3R_347()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_416() {
     if (jj_3R_351()) return true;
     return false;
@@ -13097,7 +13040,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_487() {
+  final private boolean jj_3R_488() {
     if (jj_3R_174()) return true;
     if (jj_scan_token(DOT)) return true;
     if (jj_scan_token(CLASS)) return true;
@@ -13199,7 +13142,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     jj_scanpos = xsp;
     if (jj_3_205()) {
     jj_scanpos = xsp;
-    if (jj_3R_487()) {
+    if (jj_3R_488()) {
     jj_scanpos = xsp;
     if (jj_3_207()) {
     jj_scanpos = xsp;
@@ -13288,7 +13231,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_495() {
+  final private boolean jj_3R_496() {
     if (jj_scan_token(LPAREN)) return true;
     if (jj_3R_122()) return true;
     if (jj_scan_token(RPAREN)) return true;
@@ -13304,10 +13247,10 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_489() {
+  final private boolean jj_3R_490() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_495()) {
+    if (jj_3R_496()) {
     jj_scanpos = xsp;
     if (jj_3_199()) return true;
     }
@@ -13597,7 +13540,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_401() {
-    if (jj_3R_489()) return true;
+    if (jj_3R_490()) return true;
     return false;
   }
 
@@ -14167,7 +14110,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_488() {
+  final private boolean jj_3R_489() {
     if (jj_3R_396()) return true;
     Token xsp;
     while (true) {
@@ -14198,7 +14141,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_393() {
-    if (jj_3R_488()) return true;
+    if (jj_3R_489()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_158()) jj_scanpos = xsp;
@@ -14270,7 +14213,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_484() {
+  final private boolean jj_3R_485() {
     if (jj_3R_135()) return true;
     return false;
   }
@@ -14472,7 +14415,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_492() {
+  final private boolean jj_3R_493() {
     if (jj_3R_146()) return true;
     if (jj_scan_token(HOOK)) return true;
     if (jj_3R_128()) return true;
@@ -14748,7 +14691,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_435() {
-    if (jj_3R_492()) return true;
+    if (jj_3R_493()) return true;
     return false;
   }
 
@@ -15735,12 +15678,12 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     xsp = jj_scanpos;
     if (jj_3_92()) jj_scanpos = xsp;
     if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_3R_483()) return true;
+    if (jj_3R_484()) return true;
     xsp = jj_scanpos;
     if (jj_3_93()) jj_scanpos = xsp;
     if (jj_scan_token(LBRACE)) return true;
     xsp = jj_scanpos;
-    if (jj_3R_484()) jj_scanpos = xsp;
+    if (jj_3R_485()) jj_scanpos = xsp;
     while (true) {
       xsp = jj_scanpos;
       if (jj_3_95()) { jj_scanpos = xsp; break; }
@@ -15907,7 +15850,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_483() {
+  final private boolean jj_3R_484() {
     if (jj_scan_token(LPAREN)) return true;
     Token xsp;
     xsp = jj_scanpos;
@@ -15933,9 +15876,9 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_485() {
+  final private boolean jj_3R_486() {
     if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_3R_483()) return true;
+    if (jj_3R_484()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
@@ -15979,7 +15922,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_497() {
+  final private boolean jj_3R_498() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_81()) {
@@ -16014,10 +15957,10 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     xsp = jj_scanpos;
     if (jj_3_79()) jj_scanpos = xsp;
     if (jj_3R_174()) return true;
-    if (jj_3R_485()) return true;
+    if (jj_3R_486()) return true;
     xsp = jj_scanpos;
     if (jj_3_80()) jj_scanpos = xsp;
-    if (jj_3R_497()) return true;
+    if (jj_3R_498()) return true;
     return false;
   }
 
@@ -16212,7 +16155,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_481() {
+  final private boolean jj_3R_482() {
     if (jj_3R_122()) return true;
     if (jj_3R_125()) return true;
     Token xsp;
@@ -16284,11 +16227,11 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
       if (jj_3R_123()) { jj_scanpos = xsp; break; }
     }
     xsp = jj_scanpos;
-    if (jj_scan_token(242)) {
+    if (jj_scan_token(244)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(245)) {
+    if (jj_scan_token(247)) {
     jj_scanpos = xsp;
-    if (jj_scan_token(241)) return true;
+    if (jj_scan_token(243)) return true;
     }
     }
     return false;
@@ -16326,9 +16269,9 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_482() {
+  final private boolean jj_3R_483() {
     if (jj_3R_110()) return true;
-    if (jj_3R_481()) return true;
+    if (jj_3R_482()) return true;
     return false;
   }
 
@@ -16362,7 +16305,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_379() {
-    if (jj_3R_482()) return true;
+    if (jj_3R_483()) return true;
     return false;
   }
 
@@ -17895,7 +17838,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     if (jj_3R_440()) return true;
     if (jj_3R_441()) return true;
     if (jj_scan_token(INTO)) return true;
-    if (jj_3R_494()) return true;
+    if (jj_3R_495()) return true;
     if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
@@ -17941,7 +17884,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_494() {
+  final private boolean jj_3R_495() {
     if (jj_3R_442()) return true;
     Token xsp;
     while (true) {
@@ -17961,7 +17904,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_493() {
+  final private boolean jj_3R_494() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_366()) {
@@ -17977,8 +17920,8 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_439() {
-    if (jj_3R_493()) return true;
     if (jj_3R_494()) return true;
+    if (jj_3R_495()) return true;
     return false;
   }
 
@@ -18227,6 +18170,11 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
+  final private boolean jj_3_642() {
+    if (jj_3R_364()) return true;
+    return false;
+  }
+
   final private boolean jj_3_335() {
     if (jj_scan_token(UNINITIALIZED)) return true;
     return false;
@@ -18263,7 +18211,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3_642() {
+  final private boolean jj_3R_479() {
     if (jj_3R_364()) return true;
     return false;
   }
@@ -18369,7 +18317,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
 
   final private boolean jj_3R_374() {
     if (jj_3R_110()) return true;
-    if (jj_3R_481()) return true;
+    if (jj_3R_482()) return true;
     return false;
   }
 
@@ -18603,7 +18551,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_480() {
+  final private boolean jj_3R_481() {
     if (jj_scan_token(AT)) return true;
     if (jj_3R_144()) return true;
     if (jj_scan_token(LPAREN)) return true;
@@ -18651,7 +18599,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     xsp = jj_scanpos;
     if (jj_3R_219()) {
     jj_scanpos = xsp;
-    if (jj_scan_token(236)) return true;
+    if (jj_scan_token(238)) return true;
     }
     return false;
   }
@@ -18666,7 +18614,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_479() {
+  final private boolean jj_3R_480() {
     if (jj_scan_token(AT)) return true;
     if (jj_3R_144()) return true;
     if (jj_scan_token(LPAREN)) return true;
@@ -18693,7 +18641,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_370() {
-    if (jj_3R_480()) return true;
+    if (jj_3R_481()) return true;
     return false;
   }
 
@@ -18708,7 +18656,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_369() {
-    if (jj_3R_479()) return true;
+    if (jj_3R_480()) return true;
     return false;
   }
 
@@ -18813,7 +18761,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     if (jj_scan_token(SEMICOLON)) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3_642()) jj_scanpos = xsp;
+    if (jj_3R_479()) jj_scanpos = xsp;
     if (jj_3R_243()) return true;
     if (jj_scan_token(RPAREN)) return true;
     return false;
@@ -18829,7 +18777,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_496() {
+  final private boolean jj_3R_497() {
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_208()) return true;
     return false;
@@ -18968,7 +18916,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   final private boolean jj_3_294() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(35)) jj_scanpos = xsp;
+    if (jj_scan_token(37)) jj_scanpos = xsp;
     if (jj_3R_122()) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
@@ -19003,7 +18951,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_434() {
-    if (jj_3R_486()) return true;
+    if (jj_3R_487()) return true;
     return false;
   }
 
@@ -19082,7 +19030,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_491() {
+  final private boolean jj_3R_492() {
     if (jj_3R_214()) return true;
     if (jj_3R_122()) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
@@ -19104,7 +19052,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_490() {
+  final private boolean jj_3R_491() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_287()) jj_scanpos = xsp;
@@ -19126,9 +19074,9 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   final private boolean jj_3R_429() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_490()) {
-    jj_scanpos = xsp;
     if (jj_3R_491()) {
+    jj_scanpos = xsp;
+    if (jj_3R_492()) {
     jj_scanpos = xsp;
     if (jj_3_293()) return true;
     }
@@ -19215,7 +19163,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     if (jj_3R_208()) return true;
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_3R_496()) jj_scanpos = xsp;
+    if (jj_3R_497()) jj_scanpos = xsp;
     return false;
   }
 
@@ -19451,7 +19399,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   final private boolean jj_3_270() {
     Token xsp;
     xsp = jj_scanpos;
-    if (jj_scan_token(35)) jj_scanpos = xsp;
+    if (jj_scan_token(37)) jj_scanpos = xsp;
     if (jj_3R_122()) return true;
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
@@ -19467,7 +19415,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
-  final private boolean jj_3R_486() {
+  final private boolean jj_3R_487() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_274()) jj_scanpos = xsp;
@@ -19537,7 +19485,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
   }
 
   final private boolean jj_3R_388() {
-    if (jj_3R_486()) return true;
+    if (jj_3R_487()) return true;
     if (jj_scan_token(SEMICOLON)) return true;
     return false;
   }
@@ -19593,6 +19541,63 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
     return false;
   }
 
+  final private boolean jj_3R_420() {
+    if (jj_3R_354()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_625() {
+    if (jj_3R_350()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_419() {
+    if (jj_3R_353()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_624() {
+    if (jj_3R_349()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_418() {
+    if (jj_3R_328()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_131() {
+    if (jj_scan_token(LBRACE)) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3_269()) { jj_scanpos = xsp; break; }
+    }
+    if (jj_scan_token(RBRACE)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_623() {
+    if (jj_3R_348()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_233() {
+    if (jj_scan_token(LBRACKET)) return true;
+    if (jj_scan_token(RBRACKET)) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_417() {
+    if (jj_3R_352()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_622() {
+    if (jj_3R_347()) return true;
+    return false;
+  }
+
   public JMLParserTokenManager token_source;
   public Token token, jj_nt;
   private int jj_ntk;
@@ -19625,16 +19630,16 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
       jj_la1_9();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x80000000,0x2020000,0x412a0000,};
+      jj_la1_0 = new int[] {0x0,0x8080000,0x4a80000,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0x0,0x1338a008,0x13b8d028,};
+      jj_la1_1 = new int[] {0x2,0x4ce28020,0x4ee340a1,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x0,0xfef7f011,0xfef7f011,};
+      jj_la1_2 = new int[] {0x0,0xfbdfc044,0xfbdfc044,};
    }
    private static void jj_la1_3() {
-      jj_la1_3 = new int[] {0x0,0x0,0x0,};
+      jj_la1_3 = new int[] {0x0,0x3,0x3,};
    }
    private static void jj_la1_4() {
       jj_la1_4 = new int[] {0x0,0x0,0x0,};
@@ -19646,7 +19651,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
       jj_la1_6 = new int[] {0x0,0x0,0x0,};
    }
    private static void jj_la1_7() {
-      jj_la1_7 = new int[] {0x0,0x100000,0x100100,};
+      jj_la1_7 = new int[] {0x0,0x400000,0x400400,};
    }
    private static void jj_la1_8() {
       jj_la1_8 = new int[] {0x0,0x0,0x0,};
@@ -19801,8 +19806,8 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
 
   public ParseException generateParseException() {
     jj_expentries.removeAllElements();
-    boolean[] la1tokens = new boolean[293];
-    for (int i = 0; i < 293; i++) {
+    boolean[] la1tokens = new boolean[295];
+    for (int i = 0; i < 295; i++) {
       la1tokens[i] = false;
     }
     if (jj_kind >= 0) {
@@ -19845,7 +19850,7 @@ public class JMLParser extends AbstractFSTParser implements JMLParserConstants {
         }
       }
     }
-    for (int i = 0; i < 293; i++) {
+    for (int i = 0; i < 295; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

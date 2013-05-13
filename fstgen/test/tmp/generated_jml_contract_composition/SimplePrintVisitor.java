@@ -284,7 +284,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			hintNewLine();
-			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "ConstructorDecl");
 				if (v!=null) {
@@ -313,7 +312,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			hintNewLine();
 			hintNewLine();
 			{
 				FSTNode v=getChild(nonTerminal, "MethodDecl");
@@ -596,11 +594,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 					v.accept(this);
 				}
 			}
-			printFeatures(nonTerminal,false);
-			return false;
-		}
-		if (nonTerminal.getType().equals("AlsoKeyword")) {
-			printFeatures(nonTerminal,true);
 			printFeatures(nonTerminal,false);
 			return false;
 		}
