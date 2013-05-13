@@ -154,22 +154,19 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	@Override
 	public boolean visit(FSTTerminal terminal) {
 		printFeatures(terminal, true);
-		if(CommandLineParameterHelper.isJML()){
-		handleJMLReplacements(terminal);
-		printToken(terminal.getBody());
-		}
-		else{
+		if(CommandLineParameterHelper.isJML())
+			handleJMLReplacements(terminal);
 		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
-		}
 		printFeatures(terminal, false);
 		// hintNewLine();
 		return false;
 	}
 
 	private void handleJMLReplacements(FSTTerminal terminal) {
-		if (terminal.getType().equals("MethodDecl")) {
 
-			terminal.setBody(handleAsserts(handleJMLModifierMethod(terminal.getBody())));
+		if (terminal.getType().equals("MethodDecl")||terminal.getType().equals("ConstructorDecl")) {
+
+			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
 		}
 		if (terminal.getType().equals("ModFieldDeclaration")) {
 
@@ -187,14 +184,12 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		if (terminal.getType().equals("AssertStatement")
 				|| terminal.getType().equals("JMLAnnotationStatement ")
 				|| terminal.getType().equals("ModelProgStatement ")) {
-			
+	
 			terminal.setBody("/*@" + terminal.getBody() + "@*/");
 		}
 	}
 
-	private String handleAsserts(String text) {
-	return 	text.replaceAll("(^|\\W)assume\\s","//@ assume").replaceAll("(^|\\W)assert\\s", "//@  assert ");
-	} 
+
 
 	protected void printFeatures(FSTNode node, boolean b) {
 		// used only in subclasses		
@@ -266,7 +261,7 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		else {
 			out = in;
 			for (String mod : JMLModifiers) {
-				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@ " + mod + " @*/ ");
+				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
 			}
 		}
 
@@ -297,7 +292,7 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
 		String out = in;
 		for (String mod : JMLModifiers) {
-			out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
+			out = out.replaceAll("(^|\\W)"+mod+"(\\s|\\z)", " /*@" + mod + "@*/ ");
 		}
 
 		return out;
