@@ -37,7 +37,6 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			FSTTerminal terminalComp2 = null;
 			FSTNonTerminal terminalParentComp2 = null;
 			if (CommandLineParameterHelper.isJML()) {
-				System.out.println("A");
 				terminalParentComp2 = (FSTNonTerminal) (((FSTTerminal) terminalB)
 						.getParent()).getDeepClone();
 				((FSTNonTerminal) ((FSTNonTerminal) terminalComp.getParent())
@@ -45,7 +44,6 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 				terminalComp2 = (FSTTerminal) terminalParentComp2.getChildren()
 						.get(2);
 			} else {
-				System.out.println("B");
 				terminalComp2 = (FSTTerminal) terminalB.getDeepClone();
 				nonterminalParent.addChild(terminalComp2);
 			}
@@ -81,6 +79,8 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			int annotationsEnd = extractMethodAnnotationsEnd(terminalComp2.getBody());
 			
 			String annotations = terminalComp2.getBody().substring(0, annotationsEnd);
+			// remove override annotation from original method
+			annotations = annotations.replaceAll("@Override", "");
 			String prefix = terminalComp2.getBody().substring(annotationsEnd, methodNamePosition);
 			String restOfBody = terminalComp2.getBody().substring(methodNamePosition);
 			// prefix is the header from end of annotations to begin of method name
