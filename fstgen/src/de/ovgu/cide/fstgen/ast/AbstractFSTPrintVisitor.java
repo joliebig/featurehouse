@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.tools.ant.BuildException;
-
 public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
 	private final StringBuffer buffer = new StringBuffer();
