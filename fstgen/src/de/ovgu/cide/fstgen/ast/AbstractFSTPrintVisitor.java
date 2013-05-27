@@ -1,6 +1,9 @@
 package de.ovgu.cide.fstgen.ast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +17,11 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 
 	private List<String> tokensInCurrentLine = new ArrayList<String>();
 	private int indentInCurrentLine = 0;
+	private static String[] JMLModifiers = { "spec_public", "spec_protected",
+			"model", "ghost", "pure", "helper", "instance", "uninitialized",
+			"spec_java_math", "spec_safe_math", "code_java_math",
+			"code_safe_math", "code_bigint_math", "non_null", "nullable",
+			"nullable_by_default", "extract" };
 
 	public AbstractFSTPrintVisitor(PrintStream out) {
 		this.outputStream = out;
@@ -144,7 +152,11 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		if (result.size() > 1) {
 			throw new RuntimeException(
 					"Cannot handle multple FST nodes of type " + childType
-							+ " here (" + result.get(0).getName() + ":" + result.get(0).getType() + " and " + result.get(1).getName() + ":" + result.get(0).getType() + " parent: " + nonTerminal.toString() +  ")");
+							+ " here (" + result.get(0).getName() + ":"
+							+ result.get(0).getType() + " and "
+							+ result.get(1).getName() + ":"
+							+ result.get(0).getType() + " parent: "
+							+ nonTerminal.toString() + ")");
 		}
 		if (result.size() == 1)
 			return result.get(0);
@@ -154,17 +166,44 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 	@Override
 	public boolean visit(FSTTerminal terminal) {
 		printFeatures(terminal, true);
-		if(CommandLineParameterHelper.isJML())
+		if (CommandLineParameterHelper.isJML()) {
 			handleJMLReplacements(terminal);
-		printToken(terminal.getSpecialTokenPrefix()+terminal.getBody());
+			try {
+				printToken(removeBlanks(terminal.getSpecialTokenPrefix())
+						+ terminal.getBody());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			printToken(terminal.getSpecialTokenPrefix() + terminal.getBody());
+		}
+
 		printFeatures(terminal, false);
 		// hintNewLine();
 		return false;
 	}
 
-	private void handleJMLReplacements(FSTTerminal terminal) {
+	static String removeBlanks(String input) throws IOException {
+		BufferedReader br = new BufferedReader(new StringReader(input));
+		StringBuffer result = new StringBuffer();
 
-		if (terminal.getType().equals("MethodDecl")||terminal.getType().equals("ConstructorDecl")) {
+		String line;
+
+		while ((line = br.readLine()) != null) {
+			line = line.trim(); // remove leading and trailing whitespace
+			if (!line.equals("")) // don't write out blank lines
+			{
+				result.append(line + "\n");
+			}
+		}
+
+		return result.toString();
+	}
+
+	private static void handleJMLReplacements(FSTTerminal terminal) {
+
+		if (terminal.getType().equals("MethodDecl")
+				|| terminal.getType().equals("ConstructorDecl")) {
 
 			terminal.setBody(handleJMLModifierMethod(terminal.getBody()));
 		}
@@ -174,127 +213,60 @@ public abstract class AbstractFSTPrintVisitor extends FSTVisitor {
 		}
 		if (terminal.getType().equals("Modifiers2")) {
 
-			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+			terminal.setBody(replaceModifiers(terminal.getBody()));
 		}
 		if (terminal.getType().equals("Modifiers")) {
 
-			terminal.setBody(handleJMLModifierClass(terminal.getBody()));
+			terminal.setBody(replaceModifiers(terminal.getBody()));
 		}
-	
+
 		if (terminal.getType().equals("AssertStatement")
 				|| terminal.getType().equals("JMLAnnotationStatement ")
 				|| terminal.getType().equals("ModelProgStatement ")) {
-	
+
 			terminal.setBody("/*@" + terminal.getBody() + "@*/");
 		}
 	}
 
-
-
 	protected void printFeatures(FSTNode node, boolean b) {
-		// used only in subclasses		
+		// used only in subclasses
 	}
 
-	private String handleJMLModifierMethod(String in) {
-
-		List<String> JMLModifiers = new ArrayList<String>();
-		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
-		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
-		JMLModifiers.add("MODEL".toLowerCase());
-		JMLModifiers.add("GHOST".toLowerCase());
-		JMLModifiers.add("PURE".toLowerCase());
-		JMLModifiers.add("HELPER".toLowerCase());
-		JMLModifiers.add("INSTANCE".toLowerCase());
-		JMLModifiers.add("UNINITIALIZED".toLowerCase());
-		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("NON_NULL".toLowerCase());
-		JMLModifiers.add("NULLABLE".toLowerCase());
-		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
-		JMLModifiers.add("EXTRACT".toLowerCase());
+	private static String handleJMLModifierMethod(String in) {
 
 		String out = in.substring(0, in.indexOf(")"));
-		   Pattern p = Pattern.compile("\\smodel\\s"); 
-		    Matcher m = p.matcher(in); 
+		Pattern p = Pattern.compile("\\smodel\\s");
+		Matcher m = p.matcher(in);
 		if (m.find())
 			return out = "/*@" + in + "@*/";
-		for (String mod : JMLModifiers) {
-			out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
-		}
-		
+		out = replaceModifiers(out);
 		out = out + in.substring(in.indexOf(")"));
-
 		return out;
 	}
 
-	private String handleJMLModifierField(String in) {
-		
-		List<String> JMLModifiers = new ArrayList<String>();
-		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
-		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
-		JMLModifiers.add("MODEL".toLowerCase());
-		JMLModifiers.add("GHOST".toLowerCase());
-		JMLModifiers.add("PURE".toLowerCase());
-		JMLModifiers.add("HELPER".toLowerCase());
-		JMLModifiers.add("INSTANCE".toLowerCase());
-		JMLModifiers.add("UNINITIALIZED".toLowerCase());
-		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("NON_NULL".toLowerCase());
-		JMLModifiers.add("NULLABLE".toLowerCase());
-		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
-		JMLModifiers.add("EXTRACT".toLowerCase());
+	private static String handleJMLModifierField(String in) {
 
 		String out = null;
-		   Pattern p = Pattern.compile("\\smodel\\s"); 
-		    Matcher m = p.matcher(in); 
+		Pattern p = Pattern.compile("\\smodel\\s");
+		Matcher m = p.matcher(in);
 		if (m.find())
 			out = "/*@" + in + "@*/";
 		else {
-			out = in;
-			for (String mod : JMLModifiers) {
-				out = out.replaceAll("(^|\\W)"+mod+"\\s", " /*@" + mod + "@*/ ");
-			}
+			out = replaceModifiers(in);
 		}
 
 		return out;
 	}
 
-	private String handleJMLModifierClass(String in) {
-
-		List<String> JMLModifiers = new ArrayList<String>();
-		JMLModifiers.add("SPEC_PUBLIC".toLowerCase());
-		JMLModifiers.add("SPEC_PROTECTED".toLowerCase());
-		JMLModifiers.add("MODEL".toLowerCase());
-		JMLModifiers.add("GHOST".toLowerCase());
-		JMLModifiers.add("PURE".toLowerCase());
-		JMLModifiers.add("HELPER".toLowerCase());
-		JMLModifiers.add("INSTANCE".toLowerCase());
-		JMLModifiers.add("UNINITIALIZED".toLowerCase());
-		JMLModifiers.add("SPEC_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("SPEC_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("CODE_JAVA_MATH".toLowerCase());
-		JMLModifiers.add("CODE_SAFE_MATH".toLowerCase());
-		JMLModifiers.add("CODE_BIGINT_MATH".toLowerCase());
-		JMLModifiers.add("NON_NULL".toLowerCase());
-		JMLModifiers.add("NULLABLE".toLowerCase());
-		JMLModifiers.add("NULLABLE_BY_DEFAULT".toLowerCase());
-		JMLModifiers.add("EXTRACT".toLowerCase());
-
-		String out = in;
+	/**
+	 * @param out
+	 * @return
+	 */
+	private static String replaceModifiers(String out) {
 		for (String mod : JMLModifiers) {
-			out = out.replaceAll("(^|\\W)"+mod+"(\\s|\\z)", " /*@" + mod + "@*/ ");
+			out = out.replaceAll("(^|\\W)" + mod + "(\\s|\\z)", " /*@" + mod
+					+ "@*/ ");
 		}
-
 		return out;
 	}
 
