@@ -173,7 +173,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		body = body.replaceAll("\\" + ORIGINAL_OR, "");
 		body = body.replaceAll("\\" + ORIGINAL_KEYWORD, "true");
 		if (FSTGenComposerExtension.key) {
-			body = "\r\n\t @ requires FeatureModel.fm();\r\n\t @ " + body;
+			body = "\r\n\t @ requires FeatureModel.valid();\r\n\t @ " + body;
 		} else {
 			body = "\r\n\t @ " + body;
 		}
