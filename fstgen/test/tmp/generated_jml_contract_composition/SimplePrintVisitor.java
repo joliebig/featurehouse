@@ -601,6 +601,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,true);
 			printToken("/*@");
 			{
+				FSTNode v=getChild(nonTerminal, "ContractCompKey");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
 				FSTNode v=getChild(nonTerminal, "SpecCaseSeq");
 				if (v!=null) {
 					v.accept(this);
@@ -725,8 +731,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("HenceByKeyword2") && expectedType.equals("HenceByKeyword")) return true;
 		if (type.equals("TypeArgument2") && expectedType.equals("TypeArgument")) return true;
 		if (type.equals("PrimarySuffix3") && expectedType.equals("PrimarySuffix")) return true;
-		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("StoreRefList1") && expectedType.equals("StoreRefList")) return true;
+		if (type.equals("StatementExpressionAssignment1") && expectedType.equals("StatementExpressionAssignment")) return true;
 		if (type.equals("Statement18") && expectedType.equals("Statement")) return true;
 		if (type.equals("Type1") && expectedType.equals("Type")) return true;
 		if (type.equals("PrimaryPrefix2") && expectedType.equals("PrimaryPrefix")) return true;
@@ -792,6 +798,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("StoreRefKeyword2") && expectedType.equals("StoreRefKeyword")) return true;
 		if (type.equals("AllocationExpressionInit1") && expectedType.equals("AllocationExpressionInit")) return true;
 		if (type.equals("OriginalCaseKeyword1") && expectedType.equals("OriginalCaseKeyword")) return true;
+		if (type.equals("ContractCompKeyList3") && expectedType.equals("ContractCompKeyList")) return true;
 		if (type.equals("ReferenceTypeP2") && expectedType.equals("ReferenceTypeP")) return true;
 		if (type.equals("JMLDeclaration4") && expectedType.equals("JMLDeclaration")) return true;
 		if (type.equals("AssignmentOperator10") && expectedType.equals("AssignmentOperator")) return true;
@@ -805,6 +812,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("AllocationExpressionInit2") && expectedType.equals("AllocationExpressionInit")) return true;
 		if (type.equals("OriginalCaseKeyword2") && expectedType.equals("OriginalCaseKeyword")) return true;
 		if (type.equals("WorkingSpaceKeyword2") && expectedType.equals("WorkingSpaceKeyword")) return true;
+		if (type.equals("ContractCompKeyList2") && expectedType.equals("ContractCompKeyList")) return true;
 		if (type.equals("ReferenceTypeP1") && expectedType.equals("ReferenceTypeP")) return true;
 		if (type.equals("JMLDeclaration3") && expectedType.equals("JMLDeclaration")) return true;
 		if (type.equals("PredOrNot2") && expectedType.equals("PredOrNot")) return true;
@@ -818,6 +826,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("RepresentsKeyword2") && expectedType.equals("RepresentsKeyword")) return true;
 		if (type.equals("ForInit2") && expectedType.equals("ForInit")) return true;
 		if (type.equals("Modifier4") && expectedType.equals("Modifier")) return true;
+		if (type.equals("ContractCompKeyList1") && expectedType.equals("ContractCompKeyList")) return true;
 		if (type.equals("Statement9") && expectedType.equals("Statement")) return true;
 		if (type.equals("SimpleSpecStatementClause8") && expectedType.equals("SimpleSpecStatementClause")) return true;
 		if (type.equals("EquivalenceOp2") && expectedType.equals("EquivalenceOp")) return true;
@@ -829,9 +838,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("MultiplicativeOp3") && expectedType.equals("MultiplicativeOp")) return true;
 		if (type.equals("RepresentsKeyword1") && expectedType.equals("RepresentsKeyword")) return true;
 		if (type.equals("WorkingSpaceClause2") && expectedType.equals("WorkingSpaceClause")) return true;
+		if (type.equals("MethodName2") && expectedType.equals("MethodName")) return true;
 		if (type.equals("AssignmentOperator12") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("JMLDeclaration7") && expectedType.equals("JMLDeclaration")) return true;
-		if (type.equals("MethodName2") && expectedType.equals("MethodName")) return true;
 		if (type.equals("MethodDeclarationBody2") && expectedType.equals("MethodDeclarationBody")) return true;
 		if (type.equals("JMLDeclaration5") && expectedType.equals("JMLDeclaration")) return true;
 		if (type.equals("DivergesKeyword1") && expectedType.equals("DivergesKeyword")) return true;
@@ -847,9 +856,9 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("SimpleSpecBodyClause10") && expectedType.equals("SimpleSpecBodyClause")) return true;
 		if (type.equals("RequiresKeyword4") && expectedType.equals("RequiresKeyword")) return true;
 		if (type.equals("MultiplicativeOp2") && expectedType.equals("MultiplicativeOp")) return true;
+		if (type.equals("MethodName1") && expectedType.equals("MethodName")) return true;
 		if (type.equals("AssignmentOperator11") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("JMLDeclaration6") && expectedType.equals("JMLDeclaration")) return true;
-		if (type.equals("MethodName1") && expectedType.equals("MethodName")) return true;
 		if (type.equals("AssignmentOperator6") && expectedType.equals("AssignmentOperator")) return true;
 		if (type.equals("BlockStatement3") && expectedType.equals("BlockStatement")) return true;
 		if (type.equals("CastLAOp7") && expectedType.equals("CastLAOp")) return true;
@@ -877,6 +886,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("BlockStatement1") && expectedType.equals("BlockStatement")) return true;
 		if (type.equals("JmlPrimary7") && expectedType.equals("JmlPrimary")) return true;
 		if (type.equals("CastLAOp5") && expectedType.equals("CastLAOp")) return true;
+		if (type.equals("ContractCompKeyList5") && expectedType.equals("ContractCompKeyList")) return true;
 		if (type.equals("ResultType1") && expectedType.equals("ResultType")) return true;
 		if (type.equals("EnsuresKeyword2") && expectedType.equals("EnsuresKeyword")) return true;
 		if (type.equals("AssignmentOperator8") && expectedType.equals("AssignmentOperator")) return true;
@@ -896,6 +906,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("EnsuresKeyword1") && expectedType.equals("EnsuresKeyword")) return true;
 		if (type.equals("SimpleSpecStatementClause5") && expectedType.equals("SimpleSpecStatementClause")) return true;
 		if (type.equals("Modifier9") && expectedType.equals("Modifier")) return true;
+		if (type.equals("ContractCompKeyList4") && expectedType.equals("ContractCompKeyList")) return true;
 		if (type.equals("JMLDeclaration1") && expectedType.equals("JMLDeclaration")) return true;
 		if (type.equals("AssignableKeyword1") && expectedType.equals("AssignableKeyword")) return true;
 		if (type.equals("BooleanLiteral1") && expectedType.equals("BooleanLiteral")) return true;
@@ -1029,8 +1040,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("UnaryExpression3") && expectedType.equals("UnaryExpression")) return true;
 		if (type.equals("PostfixOp1") && expectedType.equals("PostfixOp")) return true;
 		if (type.equals("GenericSpecBody2") && expectedType.equals("GenericSpecBody")) return true;
-		if (type.equals("MapsKeyword2") && expectedType.equals("MapsKeyword")) return true;
 		if (type.equals("SpecInitializer2") && expectedType.equals("SpecInitializer")) return true;
+		if (type.equals("MapsKeyword2") && expectedType.equals("MapsKeyword")) return true;
 		if (type.equals("OldExpression2") && expectedType.equals("OldExpression")) return true;
 		if (type.equals("JMLModifier18") && expectedType.equals("JMLModifier")) return true;
 		if (type.equals("StoreRefKeyword1") && expectedType.equals("StoreRefKeyword")) return true;

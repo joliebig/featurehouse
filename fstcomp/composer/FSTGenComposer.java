@@ -19,6 +19,7 @@ import composer.rules.CompositionError;
 import composer.rules.CompositionRule;
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ContractComposition;
+import composer.rules.ContractKeywordComposition;
 import composer.rules.ExpansionOverriding;
 import composer.rules.FieldOverriding;
 import composer.rules.ImplementsListMerging;
@@ -103,6 +104,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 			compositionRules.add(new Replacement());
 			compositionRules.add(new JavaMethodOverriding());
 			compositionRules.add(new ContractComposition(cmd.contract_style));
+			compositionRules.add(new ContractKeywordComposition(cmd.contract_style));
 		}
 		compositionRules.add(new StringConcatenation());
 		compositionRules.add(new ImplementsListMerging());

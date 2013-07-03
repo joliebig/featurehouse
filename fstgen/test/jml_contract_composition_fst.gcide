@@ -199,6 +199,11 @@ TOKEN :
 |<ORIGINAL_CASE: "\\original_case">
 |<ORIGINAL_CLAUSE: "\\original_clause">
 |<ORIGINAL: "\\original">
+|<FINAL_CONTRACT: "\\final_contract">
+|<FINAL_METHOD: "\\final_method">
+|<CONSECUTIVE_CONTRACT: "\\consecutive_contract">
+|<CONJUNCTIVE_CONTRACT: "\\conjunctive_contract">
+|<CUMULATIVE_CONTRACT: "\\cumulative_contract">
 |<HENCE_BY: "hence_by">
 |<HENCE_BY_REDUNDANTLY: "hence_by_redundantly">
 | < MODEL: "model" >
@@ -1649,9 +1654,21 @@ AlsoKeyword:
 
 @FSTNonTerminal()
 Specification:
-@% SpecCaseSeq [ RedundantSpec ] @&
+@% ContractCompKey SpecCaseSeq [ RedundantSpec ] @&
 ;
 
+@FSTTerminal(compose="ContractKeywordComposition")
+ContractCompKey:
+  [ContractCompKeyList]
+; 
+
+ContractCompKeyList:
+  <FINAL_CONTRACT>
+ |<FINAL_METHOD>
+ |<CONSECUTIVE_CONTRACT>
+ |<CUMULATIVE_CONTRACT>
+ |<CONJUNCTIVE_CONTRACT>
+; 
 
 @FSTTerminal(compose="ContractComposition")
 SpecCaseSeq:

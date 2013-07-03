@@ -2,14 +2,16 @@ import test.imp;
 /*@ model @*/ import test.imp; 
 
 public /*@pure@*/  interface Complex {
-	/*@ ensures JMLDouble.approximatelyEqualTo(
+	/*@ \final_contract
+	 ensures JMLDouble.approximatelyEqualTo(
                  magnitude()*StrictMath.cos(angle()),
                  \result,
                  tolerance); @*/
 
 	double realPart();
 
-	/*@ requires ( !Double.isNaN(this.magnitude() * b.magnitude()) ) && ( !Double.isNaN(this.angle()) && !Double.isNaN(b.angle()) );  
+	/*@ \final_method
+	   requires ( !Double.isNaN(this.magnitude() * b.magnitude()) ) && ( !Double.isNaN(this.angle()) && !Double.isNaN(b.angle()) );  
        requires_redundantly ( b != null ); 
        ensures ( JMLDouble.approximatelyEqualTo(
                    this.magnitude() * b.magnitude(),
@@ -24,7 +26,8 @@ public /*@pure@*/  interface Complex {
 
 	Complex mul  (Complex b);
 
-	/*@ ensures JMLDouble.approximatelyEqualTo(
+	/*@ \consecutive_contract 
+	 ensures JMLDouble.approximatelyEqualTo(
                  StrictMath.sqrt(realPart()*realPart()
                            + imaginaryPart()*imaginaryPart()),
                  \result,
@@ -32,7 +35,8 @@ public /*@pure@*/  interface Complex {
 
 	double magnitude  ();
 
-	/*@ requires_redundantly ( b != null ); 
+	/*@ \cumulative_contract
+	 requires_redundantly ( b != null ); 
      ensures_redundantly ( \result != null );
      ensures ( JMLDouble.approximatelyEqualTo(
                  this.realPart() + b.realPart(),
@@ -45,7 +49,8 @@ public /*@pure@*/  interface Complex {
 
 	Complex add  (Complex b);
 
-	/*@ requires_redundantly ( b != null ); 
+	/*@ \conjunctive_contract
+	 requires_redundantly ( b != null ); 
      ensures_redundantly ( \result != null );
      ensures ( JMLDouble.approximatelyEqualTo(
                  this.realPart() - b.realPart(),

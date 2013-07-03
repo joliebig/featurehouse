@@ -1,7 +1,5 @@
 package composer.rules;
 
-
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,20 +9,21 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 public class ContractComposition extends AbstractCompositionRule {
 
 	public final static String COMPOSITION_RULE_NAME = "ContractComposition";
-	
+
 	private static final String PLAIN_CONTRACTING = "plain_contracting";
 	private static final String CONSECUTIVE_CONTRACTING = "consecutive_contracting";
 	private static final String EXPLICIT_CONTRACTING = "explicit_contracting";
 	private static final String CONTRACT_OVERRIDING = "contract_overriding";
-	
+	private static final String METHOD_BASED_COMPOSITION = "method_based";
+
 	protected static final String ORIGINAL_KEYWORD_CLAUSE = "\\original_clause";
 	protected static final String ORIGINAL_SPEC_KEYWORD = "\\original_spec";
 	protected static final String ORIGINAL_CASE_KEYWORD = "\\original_case";
 	protected static final String ORIGINAL_KEYWORD = "\\original";
 	protected static final String ORIGINAL_OR = "\\or_original";
-	
-	private String contractStyle = PLAIN_CONTRACTING;
 
+	private String contractStyle = PLAIN_CONTRACTING;
+	
 	public ContractComposition(String contract_style) {
 		if (contract_style != null) {
 			contractStyle = contract_style.trim();
@@ -34,16 +33,165 @@ public class ContractComposition extends AbstractCompositionRule {
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+		// Check Composition style
 		if (contractStyle.equals(PLAIN_CONTRACTING)) {
-			terminalComp.setBody(terminalB.getBody());
+			plainContracting(terminalA, terminalB, terminalComp);
 		} else if (contractStyle.equals(CONTRACT_OVERRIDING)) {
-			terminalComp.setBody(terminalA.getBody());
+			contractOverriding(terminalA, terminalB, terminalComp);
 		} else if (contractStyle.equals(EXPLICIT_CONTRACTING)) {
-			terminalComp.setBody(getReplacementString(terminalA, terminalB));
+			explicitContracting(terminalA, terminalB, terminalComp);
 		} else if (contractStyle.equals(CONSECUTIVE_CONTRACTING)) {
-			terminalComp.setBody(terminalB.getBody() + "\nalso\n"
-					+ terminalA.getBody());
+			consecutiveContracting(terminalA, terminalB, terminalComp);
+		} else if (contractStyle.equals(METHOD_BASED_COMPOSITION)) {
+			compositionByKeywords(terminalA, terminalB, terminalComp);
 		}
+	}
+
+	// Check Keywords in Method-Based Contract Composition
+	private void compositionByKeywords(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		FSTNonTerminal parrentB = (FSTNonTerminal) terminalB.getParent();
+		FSTTerminal keyB = (FSTTerminal) parrentB.getChildren().get(0);
+		String compositionKey = keyB.getBody();
+		
+		System.out.println("#### Contract Reader: ###");
+		System.out.println("Contract body: " + terminalA.getBody());
+		ContractReader reader = new ContractReader(terminalA);
+		System.out.println("Requires claues: " + reader.getRequiresClauses().size());
+		System.out.println("Ensures clauses: " + reader.getEnsuresClauses().size());
+		for(FSTTerminal term: reader.getRequiresClauses()) {
+			System.out.println("Requires Clause: " + term.getBody());
+		}
+		for(FSTTerminal term: reader.getEnsuresClauses()) {
+			System.out.println("Ensures Clause: " + term.getBody());
+		}
+		System.out.println("#### Ende Reader: ###");
+		
+		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
+				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD)) {
+			plainContracting(terminalA, terminalB, terminalComp);
+		} else if (compositionKey
+				.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel())) {
+			consecutiveContracting(terminalA, terminalB, terminalComp);
+		} else {
+			explicitContracting(terminalA, terminalB, terminalComp);
+		}
+
+	}
+
+	private void plainContracting(FSTTerminal terminalA, FSTTerminal terminalB,
+			FSTTerminal terminalComp) {
+		terminalComp.setBody(terminalB.getBody());
+	}
+
+	private void contractOverriding(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		terminalComp.setBody(terminalA.getBody());
+	}
+
+	private void explicitContracting(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		terminalComp.setBody(getReplacementString(terminalA, terminalB));
+	}
+
+	private void consecutiveContracting(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		terminalComp.setBody(terminalB.getBody() + "\nalso\n"
+				+ terminalA.getBody());
+	}
+
+	@SuppressWarnings("unused")
+	private void conjunctiveContracting(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		String bodyA = terminalA.getBody();
+		String bodyB = terminalB.getBody();
+
+		String requiresComposition = "requires (" + extractRequires(bodyB)
+				+ ") && (" + extractRequires(bodyA) + ");";
+		
+		terminalComp.setBody(requiresComposition);
+	}
+
+	private String extractRequires(String body) {
+		Pattern REQUIRES_PATTERN = Pattern.compile(Pattern.quote("requires")
+				+ "(.*?)" + Pattern.quote(";"));
+		Matcher matcher = REQUIRES_PATTERN.matcher(body);
+		// while (matcher.find()) {
+		return matcher.group(1).trim();
+		// }
+	}
+
+	private String extractEnsures(String body) {
+		Pattern ENSURES_PATTERN = Pattern.compile(Pattern.quote("ensures")
+				+ "(.*?)" + Pattern.quote(";"));
+		Matcher matcher = ENSURES_PATTERN.matcher(body);
+		// while (matcher.find()) {
+		return matcher.group(1).trim();
+		// }
+	}
+
+	public static void main(String args[]) {
+		String contract = "requires a != null;\n" + "requires c != null;\n"
+				+ "ensures b != null;\nensures b != null;";
+		System.out.println(contract);
+		Pattern ENSURES_PATTERN = Pattern.compile(Pattern.quote("ensures")
+				+ "(.*?)" + Pattern.quote(";"));
+		Matcher matcher = ENSURES_PATTERN.matcher(contract);
+		while (matcher.find()) {
+			System.out.println(matcher.group(1).trim());
+		}
+	}
+
+	// TODO Multiple Spec Cases / Multiple PRE / POST Cond
+	@SuppressWarnings("unused")
+	private String getCumulativeComposition(FSTTerminal terminalA,
+			FSTTerminal terminalB) {
+		String bodyA = terminalA.getBody();
+		String bodyB = terminalB.getBody();
+		System.out.println("Body B " + bodyB);
+		System.out.println("Body A " + bodyA);
+
+		String requires = "requires (";
+		String ensures = "ensures ";
+
+		for (String str : bodyB.trim().split(";")) {
+			if (str.trim().startsWith("requires")) {
+				requires += str.trim().replace("requires ", "") + " && ";
+				System.out.println("requires in for loop: \n\t" + requires);
+			}
+			if (str.trim().startsWith("ensures")) {
+				ensures += str.trim().replace("ensures ", "") + " && ";
+				System.out.println("ensures in forloop: \n\t" + ensures);
+			}
+		}
+
+		StringBuilder b = new StringBuilder(requires);
+		b.replace(requires.lastIndexOf(" && "),
+				requires.lastIndexOf(" && ") + 4, ") || (");
+		requires = b.toString();
+
+		for (String str : bodyA.trim().split(";")) {
+			if (str.trim().startsWith("requires")) {
+				requires += str.trim().replace("requires ", "") + " && ";
+				System.out.println("requires in for loop: \n\t" + requires);
+			}
+			if (str.trim().startsWith("ensures")) {
+				ensures += str.trim().replace("ensures ", "") + " && ";
+				System.out.println("ensures in forloop: \n\t" + ensures);
+			}
+		}
+
+		b = new StringBuilder(requires);
+		b.replace(requires.lastIndexOf(" && "),
+				requires.lastIndexOf(" && ") + 4, ");");
+		requires = b.toString();
+
+		b = new StringBuilder(ensures);
+		b.replace(ensures.lastIndexOf(" && "), ensures.lastIndexOf(" && ") + 4,
+				";");
+		ensures = b.toString();
+
+		return requires + "\n" + ensures;
 	}
 
 	protected String getReplacementString(FSTTerminal terminalA,
@@ -62,11 +210,11 @@ public class ContractComposition extends AbstractCompositionRule {
 		if (isExtendingSpec)
 			result.append("also\n");
 		result.append("\t");
-		
+
 		String[] casesA = terminalA.getBody().trim().split("also");
 
 		for (int j = 0; j < casesA.length; j++) {
-			
+
 			String[] clausesA = casesA[j].trim().split(";");
 
 			for (int i = 0; i < clausesA.length; i++) {
@@ -75,9 +223,16 @@ public class ContractComposition extends AbstractCompositionRule {
 				}
 			}
 			for (int i = 0; i < clausesA.length; i++) {
-				if (clausesA[i].contains(ORIGINAL_KEYWORD)|| clausesA[i].contains(ORIGINAL_KEYWORD_CLAUSE)||clausesA[i].contains(ORIGINAL_CASE_KEYWORD)||clausesA[i].contains(ORIGINAL_SPEC_KEYWORD)) {
-					result.append(replaceOriginal(baseCases, clausesA[i], j,
-							clausesA[i].replaceAll("@", "").trim().split(" ")[0]).replace(";;", ";"));
+				if (clausesA[i].contains(ORIGINAL_KEYWORD)
+						|| clausesA[i].contains(ORIGINAL_KEYWORD_CLAUSE)
+						|| clausesA[i].contains(ORIGINAL_CASE_KEYWORD)
+						|| clausesA[i].contains(ORIGINAL_SPEC_KEYWORD)) {
+					result.append(replaceOriginal(
+							baseCases,
+							clausesA[i],
+							j,
+							clausesA[i].replaceAll("@", "").trim().split(" ")[0])
+							.replace(";;", ";"));
 				} else {
 					// no original in this clause
 					result.append(clausesA[i]);
@@ -93,13 +248,12 @@ public class ContractComposition extends AbstractCompositionRule {
 		return result.toString().trim();
 	}
 
-
 	private String replaceOriginal(String[] baseCases, String string,
 			int caseId, String prefix) {
 		String orig_repl = getOriginalReplacement(baseCases, caseId, prefix);
 		if (orig_repl.isEmpty()) {
-			// case: no original clause 
-//			TODO @Fabian is das richtig 
+			// case: no original clause
+			// TODO @Fabian is das richtig
 			orig_repl = "true";
 		}
 		String orig_case_repl = getOriginalCaseReplacement(baseCases, caseId);
@@ -111,89 +265,85 @@ public class ContractComposition extends AbstractCompositionRule {
 	}
 
 	private String getOriginalSpecReplacement(String[] baseCases) {
-			StringBuffer buf = new StringBuffer();
-			boolean append = false;
-			for(String s:baseCases){
-				buf.append(s);
-				buf.append("\talso");
-				append=true;
-			}
-			if (append)
-				buf.setLength(buf.length() - 5);
-			return buf.toString();
+		StringBuffer buf = new StringBuffer();
+		boolean append = false;
+		for (String s : baseCases) {
+			buf.append(s);
+			buf.append("\talso");
+			append = true;
 		}
+		if (append)
+			buf.setLength(buf.length() - 5);
+		return buf.toString();
+	}
 
 	private String getOriginalCaseReplacement(String[] baseCases, int caseId) {
-	
+
 		return baseCases[caseId];
 	}
 
 	private String getOriginalReplacement(String[] baseCases, int caseId,
 			String prefix) {
-		
+
 		StringBuffer result = new StringBuffer();
 		if (caseId >= baseCases.length)
 			throw new RuntimeException(
 					"Original() reference cannot be satisfied, specification case: # "
 							+ caseId);
-	
 
 		String[] prefixes = new String[baseCases.length];
-		for(int i=0;i<baseCases.length;i++)
-		{
-		
-		prefixes[i]=prefixes[i]+"behavior ";
-		
-		String baseCase= baseCases[i].replaceAll("@", "").trim();
-		
-		if(baseCase.startsWith("public ")){
-			prefixes[i]="public ";
-			baseCase=baseCase.substring(7);
+		for (int i = 0; i < baseCases.length; i++) {
+
+			prefixes[i] = prefixes[i] + "behavior ";
+
+			String baseCase = baseCases[i].replaceAll("@", "").trim();
+
+			if (baseCase.startsWith("public ")) {
+				prefixes[i] = "public ";
+				baseCase = baseCase.substring(7);
+			} else if (baseCase.startsWith("private ")) {
+				prefixes[i] = "private ";
+				baseCase = baseCase.substring(8);
+			} else if (baseCase.startsWith("protected ")) {
+				prefixes[i] = "protected ";
+				baseCase = baseCase.substring(10);
+			}
+
+			if (baseCase.startsWith("behavior ")) {
+				prefixes[i] = prefixes[i] + "behavior ";
+				baseCase = baseCase.substring(9);
+			} else if (baseCase.startsWith("normal_behavior ")) {
+				prefixes[i] = prefixes[i] + "normal_behavior  ";
+				baseCase = baseCase.substring(16);
+			} else if (baseCase.startsWith("exceptional_behavior ")) {
+				prefixes[i] = prefixes[i] + "exceptional_behavior  ";
+				baseCase = baseCase.substring(21);
+			}
+
+			baseCases[caseId] = baseCase;
 		}
-		else if(baseCase.startsWith("private ")){
-			prefixes[i]="private ";
-			baseCase=baseCase.substring(8);
-		}	
-		else if(baseCase.startsWith("protected ")){
-			prefixes[i]="protected ";
-			baseCase=baseCase.substring(10);
-		}
-		
-		if(baseCase.startsWith("behavior ")){
-			prefixes[i]=prefixes[i]+"behavior ";
-			baseCase=baseCase.substring(9);
-		}
-		else if(baseCase.startsWith("normal_behavior ")){
-			prefixes[i]=prefixes[i]+"normal_behavior  ";
-			baseCase=baseCase.substring(16);
-		}	
-		else if(baseCase.startsWith("exceptional_behavior ")){
-			prefixes[i]=prefixes[i]+"exceptional_behavior  ";
-			baseCase=baseCase.substring(21);
-		}
-		
-		baseCases[caseId]=baseCase;
-		}
-	
-	
-		System.out.println("baseCases(id)= "+baseCases[caseId]);
-		Pattern p = Pattern.compile(".*\\(\\\\(forall|exists|max|min|num_of|product|sum).*(;).*(;).*\\).*",Pattern.DOTALL);
-		
+
+		System.out.println("baseCases(id)= " + baseCases[caseId]);
+		Pattern p = Pattern
+				.compile(
+						".*\\(\\\\(forall|exists|max|min|num_of|product|sum).*(;).*(;).*\\).*",
+						Pattern.DOTALL);
+
 		Matcher m = p.matcher(baseCases[caseId]);
-		
-		while(m.find()){
-		for(int i = 2; i<=m.groupCount();i++){
-			StringBuilder sb = new StringBuilder(baseCases[caseId]);
-			sb.setCharAt(m.start(i), '€');
-			baseCases[caseId]=sb.toString();
-		}
-		System.out.println("XX "+baseCases[caseId]);
+
+		while (m.find()) {
+			for (int i = 2; i <= m.groupCount(); i++) {
+				StringBuilder sb = new StringBuilder(baseCases[caseId]);
+				sb.setCharAt(m.start(i), '€');
+				baseCases[caseId] = sb.toString();
+			}
+			System.out.println("XX " + baseCases[caseId]);
 		}
 		String[] clausesA = baseCases[caseId].trim().split(";");
 
 		boolean append = false;
 		for (int i = 0; i < clausesA.length; i++) {
-			
+
 			if (clausesA[i].trim().startsWith(prefix + " ")) {
 				result.append("(" + clausesA[i].trim().replaceFirst(prefix, "")
 						+ " )");
@@ -205,7 +355,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		}
 		if (append)
 			result.setLength(result.length() - 4);
-		
+
 		return result.toString().replaceAll("€", ";");
 	}
 
@@ -213,6 +363,5 @@ public class ContractComposition extends AbstractCompositionRule {
 	public String getRuleName() {
 		return COMPOSITION_RULE_NAME;
 	}
-	
 
 }

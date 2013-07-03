@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
 <jardesc>
-    <jar path="fstcomp/lib/FeatureHouse.jar"/>
+    <jar path="de.ovgu.featureide.core.featurehouse/lib/FeatureHouse.jar"/>
     <options buildIfNeeded="true" compress="true" descriptionLocation="/fstcomp/FeatureHouse.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="true" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
@@ -12,42 +12,50 @@
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
         <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
-        <folder path="/fstcomp/.settings"/>
+        <folder path="/CIDE2_ast/META-INF"/>
+        <javaElement handleIdentifier="=fstgen/test"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.javam"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.pythonm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.csharp"/>
+        <file path="/fstgen/.cvsignore"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.javacc"/>
-        <folder path="/fstcomp/run_configurations"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.alloy"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
+        <file path="/fstgen/.project"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;processor.capprox"/>
-        <javaElement handleIdentifier="=CIDE_generateAST"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.rtcomp.c"/>
+        <file path="/fstmerge/.project"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.haskell"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
         <javaElement handleIdentifier="=fstcomp/&lt;metadata"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.textm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.sdf"/>
-        <file path="/fstcomp/.cvsignore"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.C"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser"/>
-        <file path="/fstcomp/.classpath"/>
+        <javaElement handleIdentifier="=CIDE_generateAST/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.fj"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.sdf"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.meta"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.meta"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.textm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.STR"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.csharpm"/>
+        <file path="/fstgen/.classpath"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer"/>
-        <file path="/fstcomp/.project"/>
+        <file path="/fstmerge/.classpath"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables"/>
-        <file path="/fstcomp/FeatureHouse.jardesc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.jcop"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.str"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.fj"/>
@@ -55,19 +63,20 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.text"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.str"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.rtcomp.java"/>
-        <javaElement handleIdentifier="=CIDE2_ast"/>
-        <javaElement handleIdentifier="=fstgen"/>
-        <javaElement handleIdentifier="=fstmerge"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.javam"/>
+        <javaElement handleIdentifier="=CIDE2_ast/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.pythonm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.SDF"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.jcop"/>
+        <javaElement handleIdentifier="=fstgen/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.alloy"/>
     </selectedElements>
 </jardesc>

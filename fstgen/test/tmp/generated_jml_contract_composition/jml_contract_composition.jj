@@ -199,6 +199,11 @@ TOKEN :
 |<ORIGINAL_CASE: "\\original_case">
 |<ORIGINAL_CLAUSE: "\\original_clause">
 |<ORIGINAL: "\\original">
+|<FINAL_CONTRACT: "\\final_contract">
+|<FINAL_METHOD: "\\final_method">
+|<CONSECUTIVE_CONTRACT: "\\consecutive_contract">
+|<CONJUNCTIVE_CONTRACT: "\\conjunctive_contract">
+|<CUMULATIVE_CONTRACT: "\\cumulative_contract">
 |<HENCE_BY: "hence_by">
 |<HENCE_BY_REDUNDANTLY: "hence_by_redundantly">
 | < MODEL: "model" >
@@ -1982,7 +1987,27 @@ FSTInfo AlsoKeyword(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Specification(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=SpecCaseSeq(inTerminal){ replaceName(n);} [n=RedundantSpec(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("Specification","-","-");}
+	n=ContractCompKey(inTerminal){ replaceName(n);} n=SpecCaseSeq(inTerminal){ replaceName(n);} [n=RedundantSpec(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("Specification","-","-");}
+
+ )  }
+
+FSTInfo ContractCompKey(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[n=ContractCompKeyList(true){ replaceName(n);}] {return productionEndTerminal("ContractCompKey","-","-","ContractKeywordComposition","Default",first,token);}
+
+ )  }
+
+FSTInfo ContractCompKeyList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<FINAL_CONTRACT> {return productionEndTerminal("ContractCompKeyList1","-","-","Replacement","Default",first,token);}
+ |
+	<FINAL_METHOD> {return productionEndTerminal("ContractCompKeyList2","-","-","Replacement","Default",first,token);}
+ |
+	<CONSECUTIVE_CONTRACT> {return productionEndTerminal("ContractCompKeyList3","-","-","Replacement","Default",first,token);}
+ |
+	<CUMULATIVE_CONTRACT> {return productionEndTerminal("ContractCompKeyList4","-","-","Replacement","Default",first,token);}
+ |
+	<CONJUNCTIVE_CONTRACT> {return productionEndTerminal("ContractCompKeyList5","-","-","Replacement","Default",first,token);}
 
  )  }
 
