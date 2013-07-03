@@ -1,0 +1,2407 @@
+/*
+ * Copyright © 2002 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
+ * California 95054, U.S.A. All rights reserved.  Sun Microsystems, Inc. has
+ * intellectual property rights relating to technology embodied in the product
+ * that is described in this document. In particular, and without limitation,
+ * these intellectual property rights may include one or more of the U.S.
+ * patents listed at http://www.sun.com/patents and one or more additional
+ * patents or pending patent applications in the U.S. and in other countries.
+ * U.S. Government Rights - Commercial software. Government users are subject
+ * to the Sun Microsystems, Inc. standard license agreement and applicable
+ * provisions of the FAR and its supplements.  Use is subject to license terms.
+ * Sun,  Sun Microsystems,  the Sun logo and  Java are trademarks or registered
+ * trademarks of Sun Microsystems, Inc. in the U.S. and other countries.  This
+ * product is covered and controlled by U.S. Export Control laws and may be
+ * subject to the export or import laws in other countries.  Nuclear, missile,
+ * chemical biological weapons or nuclear maritime end uses or end users,
+ * whether direct or indirect, are strictly prohibited.  Export or reexport
+ * to countries subject to U.S. embargo or to entities identified on U.S.
+ * export exclusion lists, including, but not limited to, the denied persons
+ * and specially designated nationals lists is strictly prohibited.
+ */
+
+options {
+  JAVA_UNICODE_ESCAPE = true;
+  ERROR_REPORTING = true;
+  STATIC = false;
+  //#if JML
+  LOOKAHEAD = 4;
+  //#endif
+}
+
+
+PARSER_BEGIN(ContractParser)
+package tmp.generated_contract;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+
+/**
+ * Grammar to parse Java version 1.5
+ * @author Sreenivasa Viswanadha - Simplified and enhanced for 1.5
+ */
+public class ContractParser extends AbstractFSTParser
+{
+ 	public ContractParser(){}
+}
+
+PARSER_END(ContractParser)
+/* WHITE SPACE */
+<DEFAULT>
+SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+/* COMMENTS */
+
+
+
+
+<DEFAULT>
+SKIP :
+{
+  <JML_AT: " @" ~["*"]>
+}
+
+
+
+<IN_SINGLE_LINE_COMMENT,IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+MORE :
+{
+"//@" : IN_JML_SINGLE_LINE_COMMENT
+}
+
+SKIP :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+
+<IN_FORMAL_COMMENT>
+SKIP :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SKIP :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+SKIP :
+{
+  < ~[] >
+}
+<IN_JML_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  < ~[] >
+}
+/* RESERVED WORDS AND LITERALS */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+  < ABSTRACT: "abstract" >
+| < ASSERT: "assert" >
+| < BOOLEAN: "boolean" >
+| < BREAK: "break" >
+| < BYTE: "byte" >
+| < CASE: "case" >
+| < CATCH: "catch" >
+| < CHAR: "char" >
+| < CLASS: "class" >
+| < CONST: "const" >
+| < CONTINUE: "continue" >
+| < _DEFAULT: "default" >
+| < DO: "do" >
+| < DOUBLE: "double" >
+| < ELSE: "else" >
+| < ENUM: "enum" >
+| < EXTENDS: "extends" >
+| < FALSE: "false" >
+| < FINAL: "final" >
+| < FINALLY: "finally" >
+| < FLOAT: "float" >
+| < FOR: "for" >
+| < GOTO: "goto" >
+| < IF: "if" >
+| < IMPLEMENTS: "implements" >
+| < IMPORT: "import" >
+| < INSTANCEOF: "instanceof" >
+| < INT: "int" >
+| < INTERFACE: "interface" >
+| < LONG: "long" >
+| < NATIVE: "native" >
+| < NEW: "new" >
+| < NULL: "null" >
+| < PACKAGE: "package">
+| < PRIVATE: "private" >
+| < PROTECTED: "protected" >
+| < PUBLIC: "public" >
+| < RETURN: "return" >
+| < SHORT: "short" >
+| < STATIC: "static" >
+| < STRICTFP: "strictfp" >
+| < SUPER: "super" >
+| < SWITCH: "switch" >
+| < SYNCHRONIZED: "synchronized" >
+| < THIS: "this" >
+| < THROW: "throw" >
+| < THROWS: "throws" >
+| < TRANSIENT: "transient" >
+| < TRUE: "true" >
+| < TRY: "try" >
+| < VOID: "void" >
+| < VOLATILE: "volatile" >
+| < WHILE: "while" >
+}
+//#if JML
+
+TOKEN :
+{
+<ORIGINAL_SPEC: "\\original_spec">
+|<ORIGINAL_CASE: "\\original_case">
+|<ORIGINAL_CLAUSE: "\\original_clause">
+|<ORIGINAL: "\\original">
+|<HENCE_BY: "hence_by">
+|<HENCE_BY_REDUNDANTLY: "hence_by_redundantly">
+| < MODEL: "model" >
+| < SPEC_PROTECTED: "spec_protected" > 
+| < GHOST: "ghost" >
+| < PURE: "pure" >
+| < INSTANCE: "instance" >
+| < HELPER: "helper" >
+| < UNINITIALIZED: "uninitialized" >
+| < JAVA_MATH: "\\java_math" >
+| < SPEC_JAVA_MATH: "spec_java_math" > //JML keywords start here 
+| < SPEC_SAFE_MATH: "spec_safe_math" >  
+| < CODE_JAVA_MATH: "code_java_math" >  
+| < CODE_SAFE_MATH: "code_safe_math" >   
+| < ALSO: "also" >
+| < SPEC_PUBLIC: "spec_public" >  
+| < SPEC_BIGINT_MATH: "spec_bigint_math" >  
+| < CODE_BIGINT_MATH: "code_bigint_math" >   
+| < NON_NULL: "non_null" >    
+| < NULLABLE: "nullable" >   
+| < NULLABLE_BY_DEFAULT: "nullable_by_default" >  
+| < EXTRACT: "extract" >    
+| < METHOD: "method" > 
+| < CONSTRUCTOR: "constructor" > 
+| < TYPE: "\\TYPE" >
+| < IN: "in" >
+| < IN_REDUNDANTLY: "in_redundantly" >
+| < INTO: "\\into" >
+| < MAPS: "maps" >
+| < MAPS_REDUNDANTLY: "maps_redundantly" >
+| < STATIC_INITIALIZER: "static_initializer" >
+| < MAINTAINING: "maintaining" >
+| < MAINTAINING_REDUNDANTLY: "maintaining_redundantly" >
+| < LOOP_INVARIANT: "loop_invariant" >
+| < LOOP_INVARIANT_REDUNDANTLY: "loop_invariant_redundantly" >
+| < DECREASING: "decreasing" >
+| < DECREASING_REDUNDANTLY: "decreasing_redundantly" >
+| < DECREASES: "decreases" >
+| < DECREASES_REDUNDANTLY: "decreases_redundantly" >
+| < ASSUME: "assume" >
+| < ASSUME_REDUNDANTLY: "assume_redundantly" >   
+| < SET: "set" >
+| < REFINING: "refining" >
+| < UNREACHABLE: "unreachable" >
+| < DEBUG: "debug" >
+| < HENCEBY: "henceby" >
+| < HENCEBY_REDUNDANTLY: "henceby_redundantly" >
+| < INVARIANT: "invariant" >
+| < INVARIANT_REDUNDANTLY: "invariant_redundantly" >
+| < CONSTRAINT: "constraint" >
+| < CONSTRAINT_REDUNDANTLY: "constraint_redundantly" >
+| < EVERYTHING: "\\everything" >
+| < SUCH_THAT: "\\such_that" >
+| < REPRESENTS: "represents" >
+| < REPRESENTS_REDUNDANTLY: "represents_redundantly" >
+| < INITIALLY: "initially" >
+| < READABLE: "readable" >
+| < WRITABLE: "writable" >
+| < MONITORS_FOR: "monitors_for" >
+| < CHOOSE: "choose" >
+| < OR: "or">
+| < CHOOSE_IF: "choose_if" >
+| < ABRUPT_BEHAVIOR: "abrupt_behavior" >
+| < ABRUPT_BEHAVIOUR: "abrupt_behaviour" >
+| < CONTINUES: "continues" >
+| < CONTINUES_REDUNDANTLY: "continues_redundantly" >
+| < BREAKS: "breaks" >
+| < BREAKS_REDUNDANTLY: "breaks_redundantly" >
+| < RETURNS: "returns" >
+| < RETURNS_REDUNDANTLY: "returns_redundantly" >
+| < RESULT: "\\result" >
+| < OLD: "\\old" >
+| < PRE: "\\pre" >
+| < NOT_ASSIGNED: "\\not_assigned" >
+| < NOT_MODIFIED: "\\not_modified" >
+| < ONLY_ACCESSED: "\\only_accessed" >
+| < ONLY_CAPTURED: "\\only_captured" >
+| < ONLY_CALLED: "\\only_called" >
+| < FRESH: "\\fresh" >
+| < REACH: "\\reach" >
+| < DURATION: "\\duration" >
+| < SPACE: "space" >
+| < WORKING_SPACE: "\\working_space" >
+| < NONNULLELEMENTS: "\\nonnullelements" >
+| < TYPEOF: "\\typeof" >
+| < ELEMTYPE: "\\elemtype" >
+| < LOCKSET: "lockset" >
+| < MAX: "\\max" >
+| < IS_INITIALIZED: "\\is_initialized" >
+| < INVARIANT_FOR: "\\invariant_for" >
+| < LBLNEG: "\\lblneg" >
+| < FORALL: "\\forall" >
+| < EXISTS: "\\exists" >
+| < MIN: "\\min" >
+| < NUM_OF: "\\num_of" >
+| < PRODUCT: "\\product" >
+| < SUM: "\\sum" >
+| < NOTHING: "\\nothing" >
+| < NOT_SPECIFIED: "\\not_specified" >
+| < LBLPOS: "\\lblpos" >
+| < ONLY_ASSIGNED: "\\only_assigned" >
+| < BEHAVIOR: "behavior" >
+| < BEHAVIOUR: "behaviour" >
+| < NORMAL_BEHAVIOR: "normal_behavior" >
+| < NORMAL_BEHAVIOUR: "normal_behaviour" >
+| < EXCEPTIONAL_BEHAVIOR: "exceptional_behavior" >
+| < EXCEPTIONAL_BEHAVIOUR: "exceptional_behaviour" >
+| < SAME: "same" >
+| < REQUIRES: "requires" >
+| < REQUIRES_REDUNDANTLY: "requires_redundantly" >
+| < PRE_REDUNDANTLY: "pre_redundantly" >
+| < ENSURES: "ensures" >
+| < POST: "post" >
+| < ENSURES_REDUNDANTLY: "ensures_redundantly" >
+| < POST_REDUNDANTLY: "post_redundantly" >
+| < SIGNALS: "signals" >
+| < SIGNALS_REDUNDANTLY: "signals_redundantly" >
+| < EXSURES: "exsures" >
+| < EXSURES_REDUNDANTLY: "exsures_redundantly" >
+| < SIGNALS_ONLY: "signals_only" >
+| < SIGNALS_ONLY_REDUNDANTLY: "signals_only_redundantly" >
+| < DIVERGES: "diverges" >
+| < DIVERGES_REDUNDANTLY: "diverges_redundantly" >
+| < WHEN: "when" >
+| < WHEN_REDUNDANTLY: "when_redundantly" >
+| < ASSIGNABLE: "assignable" >
+| < ASSIGNABLE_REDUNDANTLY: "assignable_redundantly" >
+| < MODIFIABLE: "modifiable" >
+| < MODIFIABLE_REDUNDANTLY: "modifiable_redundantly" >
+| < CALLABLE: "callable" >
+| < CALLABLE_REDUNDANTLY: "callable_redundantly" >
+| < MEASURED_BY: "measured_by" >
+| < MEASURED_BY_REDUNDANTLY: "measured_by_redundantly" >
+| < CAPTURES: "captures" >
+| < CAPTURES_REDUNDANTLY: "captures_redundantly" >
+| < WORKING_SPACE_REDUNDANTLY: "working_space_redundantly" >
+| < DURATION_REDUNDANTLY: "duration_redundantly" >
+| < MODIFIES: "modifies" >
+| < MODIFIES_REDUNDANTLY: "modifies_redundantly" >
+| < CODE: "code" >
+| < ASSERT_REDUNDANTLY: "assert_redundantly" >
+| < AXIOM: "axiom" >
+| < ACCESSIBLE: "accessible" >
+| < ACCESSIBLE_REDUNDANTLY: "accessible_redundantly" >
+| < IMPLIES_THAT: "implies_that" >
+| < FOR_EXAMPLE: "for_example" >
+| < EXCEPTIONAL_EXAMPLE: "exceptional_example" >
+| < NORMAL_EXAMPLE: "normal_example" >
+| < MODEL_PROGRAM: "model_program" >
+}
+//#endif
+/* LITERALS */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+      | <OCTAL_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < #OCTAL_LITERAL: "0" (["0"-"7"])* >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+|
+  < CHARACTER_LITERAL:
+      "'"
+      (   (~["'","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","u","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )
+      "'"
+  >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","u","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+            )
+          )
+      )*
+      "\""     
+  >
+|  < BOOLEAN_LITERAL: "true" | "false" >
+}
+
+/* IDENTIFIERS */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a",
+       "\u00c0"-"\u00d6",
+       "\u00d8"-"\u00f6",
+       "\u00f8"-"\u00ff",
+       "\u0100"-"\u1fff",
+       "\u3040"-"\u318f",
+       "\u3300"-"\u337f",
+       "\u3400"-"\u3d2d",
+       "\u4e00"-"\u9fff",
+       "\uf900"-"\ufaff"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039",
+       "\u0660"-"\u0669",
+       "\u06f0"-"\u06f9",
+       "\u0966"-"\u096f",
+       "\u09e6"-"\u09ef",
+       "\u0a66"-"\u0a6f",
+       "\u0ae6"-"\u0aef",
+       "\u0b66"-"\u0b6f",
+       "\u0be7"-"\u0bef",
+       "\u0c66"-"\u0c6f",
+       "\u0ce6"-"\u0cef",
+       "\u0d66"-"\u0d6f",
+       "\u0e50"-"\u0e59",
+       "\u0ed0"-"\u0ed9",
+       "\u1040"-"\u1049"
+      ]
+  >
+}
+
+/* SEPARATORS */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COMMA: "," >
+| < DOT: "." >
+| < AT: "@" >
+}
+
+/* OPERATORS */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+ < ASSIGN: "=" >
+
+| < LT: "<" >
+| < BANG: "!" >
+| < TILDE: "~" >
+| < HOOK: "?" >
+| < COLON: ":" >
+| < EQ: "==" >
+| < LE: "<=" >
+| < GE: ">=" >
+| < NE: "!=" >
+| < SC_OR: "||" >
+| < SC_AND: "&&" >
+| < INCR: "++" >
+| < DECR: "--" >
+| < PLUS: "+" >
+| < MINUS: "-" >
+| < STAR: "*" >
+| < SLASH: "/" >
+| < BIT_AND: "&" >
+| < BIT_OR: "|" >
+| < XOR: "^" >
+| < REM: "%" >
+| < LSHIFT: "<<" >
+| < PLUSASSIGN: "+=" >
+| < MINUSASSIGN: "-=" >
+| < STARASSIGN: "*=" >
+| < SLASHASSIGN: "/=" >
+| < ANDASSIGN: "&=" >
+| < ORASSIGN: "|=" >
+| < XORASSIGN: "^=" >
+| < REMASSIGN: "%=" >
+| < LSHIFTASSIGN: "<<=" >
+| < RSIGNEDSHIFTASSIGN: ">>=" >
+| < RUNSIGNEDSHIFTASSIGN: ">>>=" >
+| < ELLIPSIS: "..." >
+//#if JML
+| < LARROW: "<-" >
+| < BSLASH: "\\" >
+| < RARROW: "->" >
+| < RLONGARROW: "==>" >
+| < LLONGARROW: "<==" >
+| < JMLEQUAL: "<==>" >
+| < JMLNOTEQUAL: "<=!=>" >
+| < LTCOLON: "<:" >
+//#endif
+}
+
+/* >'s need special attention due to generics syntax. */
+<DEFAULT, IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+TOKEN :
+{
+  < RUNSIGNEDSHIFT: ">>>" >
+| < RSIGNEDSHIFT: ">>" >
+| < GT: ">" >
+| <INF_DESC_START: "(*" >
+| <INF_DESC_END: "*)" >
+}
+
+
+
+
+
+GRAMMARSTART
+
+
+
+//grammar
+/*****************************************
+ * THE JAVA LANGUAGE GRAMMAR STARTS HERE *
+ *****************************************/
+
+/*
+ * Program structuring syntax follows.
+ */
+OriginalClauseKeyword:
+<ORIGINAL_CLAUSE>
+|
+<ORIGINAL>
+;
+
+OriginalCaseKeyword:
+
+<ORIGINAL_SPEC>
+|
+<ORIGINAL_CASE>
+;
+@FSTNonTerminal(name="{TypeDeclaration}")
+CompilationUnit:
+
+  [ PackageDeclaration ]
+  ( ImportDeclarationWr )*
+  ( TypeDeclaration )*
+  <EOF>
+  
+;
+
+PackageDeclaration:
+  "package" Name ";" @!
+;
+
+@FSTTerminal(name="{ImportDeclaration}")
+ImportDeclarationWr:
+@% ModelKeyword  ImportDeclaration @& @!
+|
+ImportDeclaration @!
+;
+
+@FSTExportName("{Name}{ImportPackage}")  
+ImportDeclaration:
+"import" [ "static" <NONE> ] Name [ImportPackage] ";" @!
+;
+
+ModelKeyword:
+ <MODEL> 
+;
+
+@FSTExportName(".*")
+ImportPackage:
+	<NONE> "." "*" ;
+
+@FSTNonTerminal
+Modifiers:
+Modifiers2 
+;
+
+
+Modifiers2:
+(LL(2) Modifier)*
+;
+
+Modifier: 
+  
+   "public" <NONE>
+  |
+   "static" <NONE>
+  |
+   "protected"<NONE>
+  |
+   "private" <NONE>
+  |
+   "final" <NONE>
+  |
+   "abstract" <NONE>
+  |
+   "synchronized" <NONE>
+  |
+   "native" <NONE>
+  |
+   "transient"<NONE>
+  |
+   "volatile" <NONE>
+  |
+   "strictfp" <NONE>
+  |
+   Annotation
+  |
+  JMLModifier
+;
+
+@FSTTerminal(name="{<IDENTIFIER>}")
+Id: <IDENTIFIER>;
+
+TypeDeclaration:
+	@FSTTerminal(name="{AUTO}")	
+	";"<NONE> :: EmptyTypeDecl
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
+  	Modifiers AnnotationTypeDeclaration :: AnnotationTypeDeclaration
+|
+	@FSTNonTerminal(name="{Id}")
+	LOOK_AHEAD(2)
+  	Modifiers  ClassOrInterfaceDeclaration  :: ClassDeclaration
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD(2)
+   	Modifiers    "enum" Id [ ImplementsList ]  EnumBody :: EnumDecl
+;
+
+@FSTInline
+AnnotationTypeDeclaration: "@" "interface" Id AnnotationTypeBody;
+
+@FSTInline
+ClassOrInterfaceDeclaration: 
+		ClassOrInterface Id [ TypeParameters ] [ ExtendsList ] [ ImplementsList ]  ClassOrInterfaceBody;
+
+ClassOrInterface: "class"<NONE> | "interface"<NONE>;
+
+ExtendsList:
+   "extends" &LI  ClassOrInterfaceType  ( "," &LI  ClassOrInterfaceType )*
+;
+
+@FSTTerminal(compose="ImplementsListMerging")
+ImplementsList:
+   "implements" &LI ClassOrInterfaceType  ( "," &LI ClassOrInterfaceType )*
+;
+
+
+@FSTInline 
+EnumDeclaration:
+  "enum" Id
+  [ ImplementsList ]
+  EnumBody
+;
+
+@FSTInline
+EnumBody:
+   "{"
+   &LI EnumConstant ( "," &LI EnumConstant )*
+   [ EnumBodyInternal ]
+   "}"
+;
+
+@FSTNonTerminal(name="")
+EnumBodyInternal: ";" ( ClassOrInterfaceBodyDeclaration )* ;
+
+EnumConstant:
+  <IDENTIFIER> [ Arguments ] [ ClassOrInterfaceBody ]
+    |
+  <NONE>
+;
+
+TypeParameters:
+   "<" &LI TypeParameter ( "," &LI TypeParameter )* ">"
+;
+
+TypeParameter:
+   <IDENTIFIER> [ TypeBound ]
+;
+
+TypeBound:
+   "extends" ClassOrInterfaceType ( "&" ClassOrInterfaceType )*
+;
+
+@FSTInline
+ClassOrInterfaceBody:
+  "{" @+ @! ( ClassOrInterfaceBodyDeclaration @! @! )*  @- @! "}"
+;
+
+
+ClassOrInterfaceBodyDeclaration:
+	@FSTNonTerminal(name="{AUTO}")
+	LOOK_AHEAD("JMLDeclaration()")
+	@% JMLDeclaration @&
+	
+|
+  	@FSTTerminal(name="{AUTO}")
+  	LOOK_AHEAD(2)
+  	Initializer :: InitializerDecl
+|
+  	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() ClassOrInterface()")
+  	Modifiers  ClassOrInterfaceDeclaration :: InnerClassDecl
+|
+  	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD("Modifiers() \"enum\"")
+  	Modifiers EnumDeclaration :: InnerEnumDecl
+|
+//  	@FSTNonTerminal(name="{ConstructorDecl}")
+//    LOOK_AHEAD(" Modifiers() [ TypeParameters() ] <IDENTIFIER> \"(\"" )
+//	ConstructorDecl :: ConstructorDeclarationWithoutSpec
+//|
+  	@FSTNonTerminal(name="{ConstructorDecl}")
+    LOOK_AHEAD("MethodSpecification() ConstructorDecl()")
+	MethodSpecification  @!ConstructorDecl :: ConstructorDeclarationWithSpec
+|
+  	@FSTNonTerminal(name="{ModFieldDeclaration}")
+    LOOK_AHEAD( "Modifiers() Type() <IDENTIFIER> ( \"[\" \"]\" )* ( \",\" | \"=\" | \";\" ) " )
+	ModFieldDeclaration ::FieldDecl
+|
+  	@FSTNonTerminal(name="{MethodDecl}")
+	LOOK_AHEAD(2)
+     MethodSpecification  @! MethodDecl :: MethodDeclarationWithSpec
+|
+
+	@FSTTerminal(name="{AUTO}")
+  	";" <NONE> :: EmptyDecl
+;
+
+@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
+ModFieldDeclaration:
+Modifiers FieldDeclaration
+;
+
+@FSTTerminal(name="{MethodDeclaration}",compose="JavaMethodOverriding")
+MethodDecl:
+Modifiers MethodDeclaration
+;
+
+
+@FSTTerminal(name="{ConstructorDeclaration}",compose="ConstructorConcatenation")
+ConstructorDecl:
+Modifiers ConstructorDeclaration
+;
+
+@FSTTerminal(name="{VariableDeclarator}",compose="FieldOverriding")
+FieldDeclaration:
+  Type VariableDeclarator ( "," VariableDeclarator )* ";"
+;
+
+
+@FSTExportName("{VariableDeclaratorId}")
+VariableDeclarator:
+  VariableDeclaratorId [ "=" VariableInitializer ]
+;
+
+@FSTExportName("{<IDENTIFIER>}")
+VariableDeclaratorId:
+  <IDENTIFIER> ( "[" "]" <NONE> )*
+;
+
+
+VariableInitializer:
+  ArrayInitializer
+|
+  Expression
+;
+
+ArrayInitializer:
+  "{" [ ArrayInitializerInternal ] [ ","<NONE> ] "}"
+;
+
+ArrayInitializerInternal: 
+VariableInitializer ( LOOK_AHEAD(2) "," VariableInitializer )*;
+
+
+@FSTExportName("{MethodDeclarator}")
+MethodDeclaration:
+  [ TypeParameters ]
+  ResultType
+  MethodDeclarator [ "throws" NameList ]
+  MethodDeclarationBody
+;
+
+MethodDeclarationBody: Block | ";"<NONE>; 
+
+@FSTExportName("{<IDENTIFIER>}({FormalParameters})")
+MethodDeclarator:
+  <IDENTIFIER> FormalParameters ( "[" "]"<NONE> )*
+;
+
+@FSTExportName("{FormalParametersInternal}")
+FormalParameters:
+  "(" [ FormalParametersInternal ] ")"
+;
+
+@FSTExportName("{FormalParameter}^-")
+FormalParametersInternal:
+&LI FormalParameter ( "," &LI FormalParameter )*;
+
+@FSTExportName("{Type}")
+FormalParameter:
+  [ LOOK_AHEAD("Annotation()") Annotation ] (ParamModifier)* Type [ "..."<NONE> ] VariableDeclaratorId
+;
+
+ParamModifier:
+<FINAL>
+//#if JML
+|<NON_NULL>|<NULLABLE>
+//#endif
+;
+@FSTInline @FSTExportName("{<IDENTIFIER>}({FormalParameters})")
+ConstructorDeclaration:
+  [ TypeParameters ]
+  <IDENTIFIER> FormalParameters [ "throws" NameList ]
+  "{"
+    [ LOOK_AHEAD("ExplicitConstructorInvocation()") ExplicitConstructorInvocation ]
+    ( BlockStatement )*
+  "}"
+;
+
+ExplicitConstructorInvocation:
+  LOOK_AHEAD("\"this\" Arguments() \";\"")
+  "this" Arguments ";" @!
+|
+  [ LOOK_AHEAD(2) PrimaryExpression "." ] "super" Arguments ";" @!
+;
+
+Initializer:
+  [ "static"<NONE> ] Block
+;
+
+
+/*
+ * Type, name and expression syntax follows.
+ */
+
+@FSTExportName("{TOSTRING}")
+Type:
+   LOOK_AHEAD(2) ReferenceTypeP
+ |
+   PrimitiveType
+;
+
+ReferenceTypeP:
+   PrimitiveType ( LOOK_AHEAD(2) "[" "]" <NONE> )+
+  |
+   ClassOrInterfaceType ( LOOK_AHEAD(2) "[" "]" <NONE> )*
+;
+
+ClassOrInterfaceType:
+  <IDENTIFIER> [ LOOK_AHEAD(2) TypeArguments ]
+  ( LOOK_AHEAD(2) ClassOrInterfaceTypeIntern )*
+;
+
+ClassOrInterfaceTypeIntern:
+ "." <IDENTIFIER> [ LOOK_AHEAD(2) TypeArguments ]
+;
+
+TypeArguments:
+   "<" TypeArgument ( "," TypeArgument )* ">"
+;
+
+TypeArgument:
+   ReferenceTypeP
+ |
+   "?" [ WildcardBounds ]
+;
+
+WildcardBounds:
+   "extends" ReferenceTypeP
+ |
+   "super" ReferenceTypeP
+;
+
+
+PrimitiveType:
+  "boolean"<NONE>
+|
+  "char"<NONE>
+|
+  "byte"<NONE>
+|
+  "short"<NONE>
+|
+  "int"<NONE>
+|
+  "long"<NONE>
+|
+  "float"<NONE>
+|
+  "double"<NONE>
+;
+
+ResultType:
+  "void"<NONE>
+|
+  Type
+;
+
+@FSTExportName("{<IDENTIFIER>}^.")
+Name:
+  <IDENTIFIER>
+  ( LOOK_AHEAD(2) "." <IDENTIFIER> )*
+;
+
+NameList:
+  &LI Name ( "," &LI Name )*
+;
+
+
+/*
+ * Expression syntax follows.
+ */
+
+/*
+ * This expansion has been written this way instead of:
+ *   Assignment | ConditionalExpression
+ * for performance reasons.
+ * However, it is a weakening of the grammar for it allows the LHS of
+ * assignments to be any conditional expression whereas it can only be
+ * a primary expression.  Consider adding a semantic predicate to work
+ * around this.
+ */
+Expression:
+  	ConditionalExpression [ LOOK_AHEAD(2) AssignExp ]
+;
+
+AssignExp :
+	AssignmentOperator Expression
+;
+
+AssignmentOperator:
+  "="<NONE> | "*="<NONE> | "/="<NONE> | "%="<NONE> | "+="<NONE> | "-="<NONE> | "<<=" <NONE>| ">>="<NONE>| ">>>="<NONE> | "&="<NONE> | "^="<NONE> | "|="<NONE>
+;
+
+ConditionalExpression: 
+		LOOK_AHEAD("ConditionalOrExpression() \"?\"") 
+		ConditionalExpressionFull{Expression}
+	|	
+//#if JML
+	EquivalenceExpr
+//#else
+//@	ConditionalOrExpression
+//#endif
+;
+
+//#if JML
+EquivalenceExpr: ImpliesExpr
+                     ( EquivalenceOpImpliesExpr )*
+;
+
+EquivalenceOpImpliesExpr:
+EquivalenceOp ImpliesExpr
+;
+
+EquivalenceOp:
+ <JMLEQUAL> | <JMLNOTEQUAL>
+;
+
+ImpliesExpr: ConditionalOrExpression
+             [ RLongArrowImpliesNonBackwardExpr ]
+        | ConditionalOrExpression <LLONGARROW> ConditionalOrExpression
+             (LLongArrowConditionalOrExpression )*
+;
+
+ImpliesNonBackwardExpr: ConditionalOrExpression
+             [ RLongArrowImpliesNonBackwardExpr ]
+;
+
+RLongArrowImpliesNonBackwardExpr:
+ <RLONGARROW> ImpliesNonBackwardExpr
+;
+
+LLongArrowConditionalOrExpression:
+<LLONGARROW> ConditionalOrExpression
+;
+//#endif
+
+ConditionalExpressionFull:
+  ConditionalOrExpression "?" Expression! ":" Expression 
+;
+
+ConditionalOrExpression:
+  ConditionalAndExpression ( "||" ConditionalAndExpression )*
+;
+
+ConditionalAndExpression:
+  InclusiveOrExpression ( "&&" InclusiveOrExpression )*
+;
+
+InclusiveOrExpression:
+  ExclusiveOrExpression ( "|" ExclusiveOrExpression )*
+;
+
+ExclusiveOrExpression:
+  AndExpression ( "^" AndExpression )*
+;
+
+AndExpression:
+  EqualityExpression ( "&" EqualityExpression )*
+;
+
+EqualityExpression:
+  InstanceOfExpression ( EqualityExpressionIntern )*
+;
+
+EqualityExpressionIntern: EqualityOp InstanceOfExpression;
+
+EqualityOp:  "=="<NONE> | "!="<NONE>;
+
+InstanceOfExpression:
+  RelationalExpression [ "instanceof" Type ]
+;
+
+RelationalExpression:
+  ShiftExpression ( RelationalExpressionIntern )*
+;
+
+RelationalExpressionIntern:RelationalOp ShiftExpression;
+
+RelationalOp: "<"<NONE> | ">"<NONE> | "<=" <NONE>| ">="<NONE> ;
+
+ShiftExpression:
+  AdditiveExpression ( LL(2) ShiftExpressionRight )*
+;
+
+
+ShiftExpressionRight:
+	ShiftOp AdditiveExpression
+;
+
+ShiftOp: "<<"<NONE> | LOOK_AHEAD(3) ">" ">" ">"   <NONE> | LL(2) ">" ">"  <NONE>;
+
+
+AdditiveExpression:
+  MultiplicativeExpression (AdditiveExpressionIntern )*
+;
+
+AdditiveExpressionIntern:AdditiveOp MultiplicativeExpression ;
+
+AdditiveOp: "+"<NONE> | "-"<NONE>;
+
+MultiplicativeExpression:
+  UnaryExpression (MultiplicativeExpressionIntern)*
+;
+
+MultiplicativeExpressionIntern:  MultiplicativeOp UnaryExpression ;
+MultiplicativeOp: "*" <NONE>| "/" <NONE>| "%"<NONE>;
+
+UnaryExpression:
+  AdditiveOp UnaryExpression
+|
+  PreIncrementExpression
+|
+  PreDecrementExpression
+|
+  UnaryExpressionNotPlusMinus
+;
+
+PreIncrementExpression:
+  "++" PrimaryExpression
+;
+
+PreDecrementExpression:
+  "--" PrimaryExpression
+;
+
+UnaryExpressionNotPlusMinus:
+  UnaryOp UnaryExpression
+|
+  LOOK_AHEAD( "CastLookahead()" )
+  CastExpression
+|
+  PostfixExpression
+;
+
+UnaryOp: "~" <NONE>| "!"<NONE>;
+
+// This production is to determine LOOK_AHEAD only.  The LOOK_AHEAD specifications
+// below are not used, but they are there just to indicate that we know about
+// this.
+CastLookahead:
+  LOOK_AHEAD(2)
+  "(" PrimitiveType
+|
+  LOOK_AHEAD("\"(\" Type() \"[\"")
+  "(" Type "[" "]"
+|
+   "(" Type ")" CastLAOp
+;
+
+CastLAOp: "~"<NONE> | "!"<NONE> | "(" <NONE>| "this"<NONE> | "super"<NONE> | "new"<NONE> |
+	 <IDENTIFIER> |
+	 Literal;
+
+PostfixExpression:
+  PrimaryExpression [ PostfixOp ]
+;
+
+PostfixOp: "++"<NONE> | "--"<NONE>;
+
+CastExpression:
+  LOOK_AHEAD("\"(\" PrimitiveType()")
+  "(" Type ")" UnaryExpression
+|
+  "(" Type ")" UnaryExpressionNotPlusMinus
+;
+
+PrimaryExpression:
+  PrimaryPrefix ( LOOK_AHEAD(2) PrimarySuffix )*
+;
+
+MemberSelector:
+  "." TypeArguments <IDENTIFIER>
+;
+
+PrimaryPrefix:
+  Literal
+|
+  "this"<NONE>
+|
+  "super" "." <IDENTIFIER>
+|
+  "(" Expression ")"
+|
+  AllocationExpression
+|
+  LOOK_AHEAD(" ResultType() \".\" \"class\"" )
+  ResultType "." "class"
+|
+  Name
+//#if JML
+|
+JmlPrimary
+//#endif
+;
+
+PrimarySuffix:
+  LOOK_AHEAD(2)
+  "." "this"<NONE>
+|
+  LOOK_AHEAD(2)
+  "." "super"<NONE>
+|
+  LOOK_AHEAD(2)
+  "." AllocationExpression
+|
+  LOOK_AHEAD(3)
+  MemberSelector
+|
+  "[" Expression "]"
+|
+  "." <IDENTIFIER>
+|
+  Arguments
+;
+
+Literal:
+  <INTEGER_LITERAL>
+|
+  <FLOATING_POINT_LITERAL>
+|
+  <CHARACTER_LITERAL>
+|
+  <STRING_LITERAL>
+|
+  BooleanLiteral
+|
+  NullLiteral
+;
+
+BooleanLiteral:
+  "true"<NONE>
+|
+  "false"<NONE>
+;
+
+NullLiteral:
+  "null"<NONE>
+;
+
+Arguments:
+  "(" [ ArgumentList ] ")"
+;
+
+ArgumentList:
+  Expression ( "," Expression )*
+;
+
+AllocationExpression:
+  LOOK_AHEAD(2)
+  "new" PrimitiveType ArrayDimsAndInits
+|
+  "new" ClassOrInterfaceType [ TypeArguments ] AllocationExpressionInit
+;
+
+AllocationExpressionInit:
+      ArrayDimsAndInits
+    |
+      Arguments [ ClassOrInterfaceBody ]
+;
+
+
+/*
+ * The third LOOK_AHEAD specification below is to parse to PrimarySuffix
+ * if there is an expression between the "[...]".
+ */
+ArrayDimsAndInits:
+  LOOK_AHEAD(2) "[" Expression "]" ( LOOK_AHEAD(2) "[" Expression "]" )* ( LOOK_AHEAD(2) "[" "]" <NONE> )*
+|
+  ( "[" "]"<NONE> )+ ArrayInitializer
+;
+
+
+/*
+ * Statement syntax follows.
+ */
+Statement:
+  LOOK_AHEAD(2)
+  LabeledStatement
+|
+  AssertStatement @!
+|
+  Block
+|
+  EmptyStatement
+|
+  StatementExpression ";" @!
+|
+  SwitchStatement @!
+|
+  IfStatement{Statement} @!
+|
+  WhileStatement{Statement} @!
+|
+  DoStatement{Statement} @!
+|
+  ForStatement{Statement} @!
+|
+  BreakStatement @!
+|
+  ContinueStatement @!
+|
+  ReturnStatement @!
+|
+  ThrowStatement @!
+|
+  SynchronizedStatement{Statement} @!
+|
+  TryStatement{Statement} @!
+| 
+ @% AssertStatement @& @!
+|
+ @% JMLAnnotationStatement @& @!
+| 
+@% ModelProgStatement @& @! 
+;
+
+AssertRedundantlyStatement: <ASSERT_REDUNDANTLY> Predicate
+                                 [ ColonExpression ] ;
+                                 
+JMLAnnotationStatement: AssertRedundantlyStatement
+        | AssumeStatement
+        | HenceByStatement
+        | SetStatement
+        | RefiningStatement
+        | UnreachableStatement
+        | DebugStatement
+;
+
+
+
+SetStatement: <SET> Expression ;
+
+RefiningStatement: <REFINING> SpecStatement Statement
+        | <REFINING> GenericSpecStatementCase Statement
+;
+
+UnreachableStatement: <UNREACHABLE> ;
+DebugStatement: <DEBUG> Expression ;
+
+HenceByStatement: HenceByKeyword Predicate ;
+HenceByKeyword: <HENCE_BY> | <HENCE_BY_REDUNDANTLY>
+;
+
+AssertStatement:
+  "assert" Expression [ ":" Expression ] ";" 
+;
+
+LabeledStatement:
+  <IDENTIFIER> ":" Statement
+;
+
+Block:
+  "{" @+  @! ( BlockStatement )* @- "}" @!
+;
+
+BlockStatement:
+  LOOK_AHEAD("[ \"final\" ] Type() <IDENTIFIER>")
+  LocalVariableDeclaration ";"
+|
+  Statement
+|
+	Annotation
+|
+  Modifiers  ClassOrInterfaceDeclaration
+;
+
+LocalVariableDeclaration:
+  [ "final"<NONE> ] Type VariableDeclarator ( "," VariableDeclarator )*
+;
+
+EmptyStatement:
+  ";"<NONE>
+;
+
+StatementExpression
+:/*
+ * The last expansion of this production accepts more than the legal
+ * Java expansions for StatementExpression.  This expansion does not
+ * use PostfixExpression for performance reasons.
+ */
+
+  PreIncrementExpression
+  | PreDecrementExpression
+  | PrimaryExpression [ StatementExpressionAssignment ]
+;
+
+StatementExpressionAssignment: 
+	"++"<NONE> |
+	"--"<NONE> |
+	AssignmentOperator Expression
+;
+
+
+SwitchStatement:
+  "switch" "(" Expression ")" "{" @+ @!
+    ( SwitchStatementLabel )*
+  @- "}" @!
+;
+
+SwitchStatementLabel :SwitchLabel ( BlockStatement )*;
+
+SwitchLabel:
+  "case" Expression ":"
+|
+  "default" ":"<NONE>
+;
+
+IfStatement:
+/*
+ * The disambiguating algorithm of JavaCC automatically binds dangling
+ * else's to the innermost if statement.  The LOOK_AHEAD specification
+ * is to tell JavaCC that we know what we are doing.
+ */
+  "if" "(" Expression ")" @! @+ Statement! @- [ LOOK_AHEAD(1) "else" @! @+ Statement @- ]
+;
+
+WhileStatement:
+  "while" "(" Expression ")" @! @+ Statement! @-
+;
+
+DoStatement:
+  "do" @! @+ Statement! @- "while" "(" Expression ")" ";"
+;
+
+ForStatement:
+  "for" "("
+  ForStatementInternal
+   
+  ")" @! @+ Statement! @-
+;
+
+ForStatementInternal:
+   LOOK_AHEAD("Type() <IDENTIFIER> \":\"")
+      [ FINAL_T ] Type <IDENTIFIER> ":" Expression 
+    |
+   LOOK_AHEAD("FINAL_T() Type() <IDENTIFIER> \":\"")
+      FINAL_T Type <IDENTIFIER> ":" Expression 
+    |
+     [ ForInit ] ";" [ Expression ] ";" [ ForUpdate ]
+  ;
+
+FINAL_T : "final";
+
+ForInit:
+  LOOK_AHEAD( "[ \"final\" ] Type() <IDENTIFIER>" )
+  LocalVariableDeclaration
+|
+  StatementExpressionList
+;
+
+StatementExpressionList:
+  StatementExpression ( "," StatementExpression )*
+;
+
+ForUpdate:
+  StatementExpressionList
+;
+
+BreakStatement:
+  "break" [ <IDENTIFIER> ] ";"
+;
+
+ContinueStatement:
+  "continue" [ <IDENTIFIER> ] ";"
+;
+
+ReturnStatement:
+  "return" [ Expression ] ";"
+;
+
+ThrowStatement:
+  "throw" Expression ";"
+;
+
+SynchronizedStatement:
+  "synchronized" "(" Expression ")" Block!
+;
+
+TryStatement:
+/*
+ * Semantic check required here to make sure that at least one
+ * finally/catch is present.
+ */
+  "try" Block! TryStatementEnd
+;
+
+TryStatementEnd:
+  	(CatchBlock )+ ["finally" Block ]
+  |
+     "finally" Block 
+;
+
+CatchBlock:
+   "catch" "(" FormalParameter ")" Block 
+;
+
+/* We use productions to match >>>, >> and > so that we can keep the
+ * type declaration syntax with generics clean
+ */
+
+
+/* Annotation syntax follows. */
+
+Annotation:
+   LOOK_AHEAD( "\"@\" Name() \"(\" ( <IDENTIFIER> \"=\" | \")\" )")
+   NormalAnnotation
+ |
+   LOOK_AHEAD( "\"@\" Name() \"(\"" )
+   SingleMemberAnnotation
+ |
+   MarkerAnnotation
+;
+
+NormalAnnotation:
+   "@" Name "(" [ MemberValuePairs ] ")" @!
+;
+
+MarkerAnnotation:
+  "@" Name @!
+;
+
+SingleMemberAnnotation:
+  "@" Name "(" MemberValue ")" @!
+;
+
+MemberValuePairs:
+   MemberValuePair ( "," MemberValuePair )*
+;
+
+MemberValuePair:
+    <IDENTIFIER> "=" MemberValue
+;
+
+MemberValue:
+   Annotation
+ |
+   MemberValueArrayInitializer
+ |
+   ConditionalExpression
+ |
+	<NONE>
+;
+
+MemberValueArrayInitializer:
+  "{" MemberValue ( LOOK_AHEAD(2) "," MemberValue )* [ ","<NONE> ] "}"
+;
+
+
+/* Annotation Types. */
+
+
+
+@FSTInline
+AnnotationTypeBody:
+  "{" ( AnnotationTypeMemberDeclaration )* "}"
+;
+
+AnnotationTypeMemberDeclaration:
+	@FSTTerminal(name="{<IDENTIFIER>}")
+   	LOOK_AHEAD("Modifiers() Type() <IDENTIFIER> \"(\"")
+	Modifiers   Type <IDENTIFIER> "(" ")" [ DefaultValue ] ";" ::AnnotationMethodDecl
+|
+	@FSTNonTerminal(name="{Id}")
+	LOOK_AHEAD("Modifiers() \"@\" \"interface\"")
+ 	Modifiers   AnnotationTypeDeclaration :: AnnotationInnerAnnotation
+|
+	@FSTNonTerminal(name="{Id}")
+	LOOK_AHEAD(1) 
+  	Modifiers  ClassOrInterfaceDeclaration :: AnnotationInnerClass
+|
+	@FSTNonTerminal(name="{Id}")
+  	LOOK_AHEAD(2)
+ 	Modifiers   EnumDeclaration	::AnnotationInnerEnum
+|
+	@FSTTerminal(name="{FieldDeclaration}",compose="FieldOverriding")
+  	LOOK_AHEAD(1)
+ 	Modifiers  FieldDeclaration ::AnnotationFieldDecl 
+ |
+	@FSTTerminal(name="{AUTO}")
+   	";" <NONE> :: AnnoationEmptyDecl
+;
+
+DefaultValue:
+  "default" MemberValue
+;
+//#if JML
+
+JMLModifier:
+ <SPEC_PUBLIC> | <SPEC_PROTECTED>
+        | <MODEL> | <GHOST> | <PURE>
+        | <INSTANCE> | <HELPER>
+        | <UNINITIALIZED>
+        | <SPEC_JAVA_MATH> | <SPEC_SAFE_MATH> | <SPEC_BIGINT_MATH>
+        | <CODE_JAVA_MATH> | <CODE_SAFE_MATH> | <CODE_BIGINT_MATH>
+        | <NON_NULL> | <NULLABLE> | <NULLABLE_BY_DEFAULT> 
+        | <EXTRACT>
+;
+
+@FSTNonTerminal(name="{Invariant}")
+JMLDeclaration:
+ (Modifier)* Invariant 
+|
+(Modifier)* HistoryConstraint
+|
+(Modifier)* RepresentsClause
+|
+(Modifier)* InitiallyClause
+|
+(Modifier)* MonitorsForClause
+| 
+(Modifier)* ReadableIfClause
+|
+(Modifier)* WritableIfClause
+|
+(Modifier)* AxiomClause
+|
+(Modifier)* DataGroupClause
+|
+(Modifier)* MapsIntoClause
+;    
+
+DataGroupClause:
+InGroupClause <SEMICOLON>
+;
+ 	
+
+InGroupClause: InKeyword GroupList ;
+ 
+InKeyword: <IN> | <IN_REDUNDANTLY>;
+
+GroupList: GroupName (CommaGroupName)*;
+
+CommaGroupName:
+ <COMMA> GroupName
+ ;
+
+GroupName: [ GroupNamePrefix ] <IDENTIFIER>;
+GroupNamePrefix: <SUPER> <COLON> | <THIS> <COLON> 
+;
+
+
+MapsIntoClause: MapsKeyword MemberFieldRef <INTO> GroupList <SEMICOLON>; 
+
+MapsKeyword: <MAPS> | <MAPS_REDUNDANTLY>;
+
+
+MemberFieldRef: <IDENTIFIER> <DOT> MapsMemberRefExpr
+
+          | MapsArrayRefExpr [  DotMapsMemberRefExpr ]
+;
+
+DotMapsMemberRefExpr:
+<DOT> MapsMemberRefExpr
+;
+MapsMemberRefExpr: <IDENTIFIER> | <STAR>; 
+MapsArrayRefExpr: <IDENTIFIER> MapsSpecArrayDim
+                        (MapsSpecArrayDim)*;
+                         
+MapsSpecArrayDim: <LBRACKET> SpecArrayRefExpr <RBRACKET>;
+
+
+SpecArrayRefExpr: SpecExpression
+        | SpecExpression <DOT> <DOT> SpecExpression
+        | <STAR>
+;
+
+
+
+@FSTTerminal(name="{Predicate}",compose="InvariantComposition")
+Invariant: InvariantKeyword Predicate <SEMICOLON>
+;
+
+
+//JML
+//MethodSpecifications
+
+@FSTNonTerminal()
+MethodSpecification:
+ [LOOK_AHEAD("AlsoKeyword()") @% AlsoKeyword @&] [Specification]
+;	
+
+AlsoKeyword:
+ <ALSO> 
+;
+
+@FSTNonTerminal()
+Specification:
+@% SpecCaseSeq [ RedundantSpec ] @&
+;
+
+
+@FSTNonTerminal()
+SpecCaseSeq:
+SpecCase (LOOK_AHEAD(3) AlsoSpecCase )*
+;
+
+@FSTNonTerminal()
+AlsoSpecCase:
+<ALSO> SpecCase
+;
+
+@FSTNonTerminal()
+SpecCase:
+
+LightweightSpecCase 
+|
+
+ HeavyWeightSpecCase
+|
+
+ ModelProgram
+;
+
+@FSTNonTerminal()
+LightweightSpecCase:
+GenericSpecCase
+;
+
+@FSTNonTerminal()
+GenericSpecCase:
+OriginalCaseKeyword
+|  [ SpecVarDecls ] SpecHeader [ GenericSpecBody ]
+| [ SpecVarDecls ] GenericSpecBody
+;
+
+@FSTNonTerminal()
+GenericSpecBody: 
+  SimpleSpecBody
+| <LBRACE><BIT_OR> GenericSpecCaseSeq <BIT_OR> <RBRACE>
+;
+
+
+
+@FSTNonTerminal()
+RedundantSpec:
+Implications //[ Examples ] | Examples
+;
+
+@FSTNonTerminal()
+Implications: 
+<IMPLIES_THAT> SpecCaseSeq
+;
+
+@FSTNonTerminal()
+HeavyWeightSpecCase: BehaviorSpecCase
+        | ExceptionalBehaviorSpecCase
+        | NormalBehaviorSpecCase
+;
+
+@FSTNonTerminal()
+BehaviorSpecCase: [ Privacy ] [ <CODE> ] BehaviorKeyword
+                       GenericSpecCase
+;
+
+@FSTNonTerminal()
+BehaviorKeyword: <BEHAVIOR> | <BEHAVIOUR>
+;
+@FSTNonTerminal()
+NormalBehaviorSpecCase: [ Privacy ] [ <CODE> ] NormalBehaviorKeyword
+                              NormalSpecCase
+;
+          @FSTNonTerminal()                  
+NormalBehaviorKeyword: <NORMAL_BEHAVIOR> | <NORMAL_BEHAVIOUR>;
+@FSTNonTerminal()
+NormalSpecCase: GenericSpecCase
+;
+@FSTNonTerminal()
+ExceptionalBehaviorSpecCase: [ Privacy ] [ <CODE> ] ExceptionalBehaviorKeyword
+                                   ExceptionalSpecCase
+;
+@FSTNonTerminal()
+ExceptionalBehaviorKeyword: <EXCEPTIONAL_BEHAVIOR> | <EXCEPTIONAL_BEHAVIOUR>
+;
+@FSTNonTerminal()
+ExceptionalSpecCase: GenericSpecCase;
+@FSTNonTerminal()
+SpecVarDecls: ForallVarDecls [ OldVarDecls ]
+        | OldVarDecls
+;
+@FSTNonTerminal()
+ForallVarDecls: ForallVarDeclarator ( ForallVarDeclarator )*
+;
+ @FSTNonTerminal()
+ForallVarDeclarator: <FORALL> [ BoundVarModifiers ] TypeSpec QuantifiedVarDeclarator <SEMICOLON>
+;
+@FSTNonTerminal()
+OldVarDecls: OldVarDeclarator ( OldVarDeclarator )*;
+@FSTNonTerminal()
+OldVarDeclarator: <OLD> [ BoundVarModifiers ] TypeSpec SpecVariableDeclarators <SEMICOLON>
+;
+
+@FSTTerminal()
+RequiresClause: RequiresKeyword PredOrNot <SEMICOLON>
+	//  | RequiresKeyword <SAME> <SEMICOLON>
+;
+
+RequiresKeyword: <REQUIRES> | <PRE> 
+        | <REQUIRES_REDUNDANTLY> | <PRE_REDUNDANTLY>
+;
+
+PredOrNot: Predicate | <NOT_SPECIFIED> 
+;
+@FSTTerminal()
+EnsuresClause: EnsuresKeyword PredOrNot <SEMICOLON>
+;
+
+EnsuresKeyword: <ENSURES> | <POST>
+        | <ENSURES_REDUNDANTLY> | <POST_REDUNDANTLY>
+;
+@FSTTerminal()
+SignalsClause: SignalsKeyword <LPAREN> ReferenceTypeP[ Id ] <RPAREN>
+                   [ PredOrNot ] <SEMICOLON>
+;                   
+                   
+SignalsKeyword: <SIGNALS> | <SIGNALS_REDUNDANTLY>
+        | <EXSURES> | <EXSURES_REDUNDANTLY>
+;
+
+SignalsOnlyClause: SignalsOnlyKeyword ReferenceTypeP( CommaReferenceType)* <SEMICOLON>
+        | SignalsOnlyKeyword <NOTHING> <SEMICOLON>
+;
+
+CommaReferenceType:
+<COMMA> ReferenceTypeP
+;
+
+SignalsOnlyKeyword: <SIGNALS_ONLY> | <SIGNALS_ONLY_REDUNDANTLY>
+;
+
+@FSTTerminal()
+DivergesClause: DivergesKeyword PredOrNot <SEMICOLON>
+;
+
+DivergesKeyword: <DIVERGES> | <DIVERGES_REDUNDANTLY>
+;
+@FSTTerminal()
+WhenClause: WhenKeyword PredOrNot <SEMICOLON>
+;
+
+WhenKeyword: <WHEN> | <WHEN_REDUNDANTLY>
+;
+@FSTTerminal()
+AssignableClause: AssignableKeyword StoreRefList <SEMICOLON>
+;
+
+AssignableKeyword: <ASSIGNABLE> | <ASSIGNABLE_REDUNDANTLY>
+        | <MODIFIABLE> | <MODIFIABLE_REDUNDANTLY>
+        | <MODIFIES> | <MODIFIES_REDUNDANTLY>
+;
+@FSTTerminal()
+AccessibleClause: AccessibleKeyword StoreRefList <SEMICOLON>
+;
+
+AccessibleKeyword: <ACCESSIBLE> | <ACCESSIBLE_REDUNDANTLY>
+;
+@FSTTerminal()
+CallableClause: CallableKeyword CallableMethodsList <SEMICOLON>
+;
+
+CallableKeyword: <CALLABLE> | <CALLABLE_REDUNDANTLY>
+;
+CallableMethodsList: MethodNameList | StoreRefKeyword
+;
+@FSTTerminal()
+MeasuredClause: MeasuredByKeyword <NOT_SPECIFIED> <SEMICOLON>
+        | MeasuredByKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
+;
+
+IfPredicate:
+<IF> Predicate
+;
+MeasuredByKeyword: <MEASURED_BY> | <MEASURED_BY_REDUNDANTLY>
+
+;
+@FSTTerminal()
+CapturesClause: CapturesKeyword StoreRefList <SEMICOLON>
+;
+
+CapturesKeyword: <CAPTURES> | <CAPTURES_REDUNDANTLY>
+;
+@FSTTerminal()
+WorkingSpaceClause: WorkingSpaceKeyword <NOT_SPECIFIED> <SEMICOLON>
+        | WorkingSpaceKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
+;
+WorkingSpaceKeyword: <WORKING_SPACE> | <WORKING_SPACE_REDUNDANTLY>
+;
+@FSTTerminal()
+DurationClause: DurationKeyword <NOT_SPECIFIED> <SEMICOLON>
+        | DurationKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
+;
+DurationKeyword: <DURATION> | <DURATION_REDUNDANTLY>
+;
+
+ModelProgram:
+ [ Privacy ] [ <CODE> ] <MODEL_PROGRAM> 
+                  JmlCompoundStatement
+;
+
+JmlCompoundStatement: Statement
+;
+
+JmlStatement:
+Statement
+;
+
+ModelProgStatement: NondeterministicChoice
+        | NondeterministicIf
+        | SpecStatement
+        | Invariant
+;
+
+NondeterministicChoice: <CHOOSE> AlternativeStatements
+;
+
+AlternativeStatements:
+JmlCompoundStatement ( OrJmlCompoundStatement )*
+;
+
+OrJmlCompoundStatement:
+<OR> JmlCompoundStatement
+;
+
+NondeterministicIf: <CHOOSE_IF> GuardedStatements
+             [ ElseJmlCompoundStatement ]
+;
+
+ElseJmlCompoundStatement:
+<ELSE> JmlCompoundStatement
+;
+
+GuardedStatements: GuardedStatement
+             ( OrGuardedStatement )*
+;
+
+OrGuardedStatement:
+<OR> GuardedStatement
+;
+
+GuardedStatement: <LBRACE>
+             AssumeStatement
+             JmlStatement ( JmlStatement )*
+;             
+
+
+//JML-KEYWORDS
+MethodOrConstructorKeyword:
+<METHOD> | <CONSTRUCTOR>
+;
+
+SpecStatement: [ Privacy ] BehaviorKeyword
+                   GenericSpecStatementCase
+        | [ Privacy ] ExceptionalBehaviorKeyword
+          ExceptionalSpecCase
+        | [ Privacy ] NormalBehaviorKeyword
+          NormalSpecCase
+        | [ Privacy ] AbruptBehaviorKeyword
+          AbruptSpecCase
+;
+
+GenericSpecStatementCase: [ SpecVarDecls ]
+                                GenericSpecStatementBody
+        | [ SpecVarDecls ]
+          SpecHeader
+          [ GenericSpecStatementBody ]
+;
+
+// {| GenericSpecStatementCaseSeq |}
+
+GenericSpecStatementBody: SimpleSpecStatementBody
+        | <LBRACE> GenericSpecStatementCaseSeq <RBRACE>
+;
+
+GenericSpecStatementCaseSeq: GenericSpecStatementCase
+             ( AlsoGenericSpecStatementCase )*
+
+;
+
+AlsoGenericSpecStatementCase:
+<ALSO> GenericSpecStatementCase
+;
+
+SimpleSpecStatementBody: SimpleSpecStatementClause
+                               ( SimpleSpecStatementClause)*
+;
+ 
+SimpleSpecStatementClause: 
+	DivergesClause
+        | AssignableClause | AccessibleClause 
+        | CapturesClause | CallableClause
+        | WhenClause | WorkingSpaceClause | DurationClause
+        | EnsuresClause | SignalsOnlyClause | SignalsClause
+        | MeasuredClause
+        | ContinuesClause | BreaksClause | ReturnsClause
+;        
+
+AbruptBehaviorKeyword:
+ <ABRUPT_BEHAVIOR> | <ABRUPT_BEHAVIOUR>
+;
+
+AbruptSpecCase: GenericSpecStatementCase
+;
+
+ContinuesClause: ContinuesKeyword [ TargetLabel ]
+                     [ PredOrNot ] <SEMICOLON>
+;
+
+ContinuesKeyword:  <CONTINUES> | <CONTINUES_REDUNDANTLY>
+;
+
+StoreRefKeyword: <NOTHING> | <EVERYTHING> | <NOT_SPECIFIED>;
+
+
+Privacy: <PUBLIC> | <PROTECTED> | <PRIVATE>
+;
+
+
+
+
+GenericSpecCaseSeq: 
+ GenericSpecCase ( AlsoGenericSpecCase )*
+;
+
+
+AlsoGenericSpecCase:
+<ALSO> GenericSpecCase
+;
+
+
+SpecHeader:  RequiresClause ( RequiresClause )*
+;
+
+@FSTNonTerminal()
+SimpleSpecBody: SimpleSpecBodyClause
+                     ( SimpleSpecBodyClause )*
+;
+
+@FSTNonTerminal()
+SimpleSpecBodyClause: DivergesClause
+        | AssignableClause | AccessibleClause
+        | CapturesClause | CallableClause
+        | WhenClause | WorkingSpaceClause
+        | DurationClause | EnsuresClause
+        | SignalsOnlyClause | SignalsClause
+        | MeasuredClause 
+;
+        
+TypeSpec: 
+Type [ Dims ]
+         | <TYPE> [ Dims ]
+;
+
+Dims:
+BracketPair ( BracketPair )*
+;
+
+BracketPair:
+<LBRACKET> <RBRACKET>
+;
+
+TargetLabel: <RARROW> <LPAREN> Id <RPAREN>
+;
+
+ReturnsClause: ReturnsKeyword [ PredOrNot ] <SEMICOLON>
+;
+
+ReturnsKeyword: <RETURNS> | <RETURNS_REDUNDANTLY>
+;
+
+BreaksClause: BreaksKeyword [ TargetLabel ]
+                  [ PredOrNot ] <SEMICOLON>
+;
+
+BreaksKeyword: <BREAKS> | <BREAKS_REDUNDANTLY>
+;
+
+BoundVarModifiers: <NON_NULL> | <NULLABLE>
+;
+
+@FSTTerminal(name="{SpecExpression}")
+Predicate:
+SpecExpression
+;
+
+SpecExpressionList:
+SpecExpression ( CommaSpecExpression )*
+;
+
+CommaSpecExpression:
+<COMMA> SpecExpression
+;
+
+@FSTTerminal(name="{TOSTRING}")
+SpecExpression: Expression 
+; 
+
+AssumeStatement: AssumeKeyword Predicate
+                     [ ColonExpression ] <SEMICOLON>
+;
+
+AssumeKeyword:
+ <ASSUME> | <ASSUME_REDUNDANTLY>
+;
+
+
+
+InvariantKeyword:
+ <INVARIANT> 
+| <INVARIANT_REDUNDANTLY>
+;
+
+ColonExpression:
+<COLON> Expression
+;
+
+SpecVariableDeclarators: 
+SpecVariableDeclarator ( CommaSpecVariableDeclarator )*
+;
+
+CommaSpecVariableDeclarator:
+<COMMA> SpecVariableDeclarator
+;
+
+SpecVariableDeclarator: Id [ Dims ]
+
+                             [ AssignSpecInitializer ]
+;
+
+AssignSpecInitializer:
+<ASSIGN> SpecInitializer
+;
+
+SpecInitializer:SpecExpression
+
+        | SpecArrayInitializer
+;
+
+SpecArrayInitializer:<LBRACE> [ SpecInitializerCommaSpecInitializer ] <RBRACE>
+;
+
+
+SpecInitializerCommaSpecInitializer:
+SpecInitializer ( CommaSpecInitializer )* [ <COMMA> ]
+;
+
+CommaSpecInitializer:
+<COMMA> SpecInitializer
+;
+
+MethodNameList: MethodName ( CommaMethodName )*
+;
+
+CommaMethodName:
+<COMMA> MethodName
+;
+
+MethodName: MethodRef [LParenParamDisambigListRParen ] | MethodRefStart <DOT> <STAR> 
+;
+
+StoreRefList: StoreRefKeyword | StoreRef ( CommaStoreRef )*
+
+;
+
+CommaStoreRef:
+<COMMA> StoreRef 
+;
+
+StoreRef: 
+    StoreRefExpression
+  | InformalDescription 
+
+;
+StoreRefExpression:StoreRefName ( StoreRefNameSuffix )*
+;
+
+StoreRefName: Id | <SUPER> | <THIS>
+;
+
+StoreRefNameSuffix: <DOT> Id | <DOT> <THIS>  | <LBRACKET> SpecArrayRefExpr <RBRACKET> | <DOT> <STAR> 
+;
+
+QuantifiedVarDeclarator: 
+Id [ Dims ]
+;
+
+MethodRef:
+ MethodRefStart ( DotMethodRefRest )*
+        | <NEW> ReferenceTypeP
+;
+
+DotMethodRefRest:
+<DOT> MethodRefRest
+;
+MethodRefStart:  <SUPER> | <THIS> | Id
+;
+
+MethodRefRest:  <THIS> | Id
+;
+
+LParenParamDisambigListRParen:
+<LPAREN> [ ParamDisambigList ] <RPAREN>
+;
+
+ParamDisambigList: ParamDisambig ( CommaParamDisambig )*
+;
+
+CommaParamDisambig:
+<COMMA> ParamDisambig
+;
+
+ParamDisambig: TypeSpec [ IdOptDims ]
+;
+
+IdOptDims:
+Id [ OptDims ]
+;
+
+OptDims:
+ Dims 
+;
+
+HistoryConstraint:
+ConstraintKeyword Predicate
+              [ ForConstrainedList ] <SEMICOLON>
+;
+
+ForConstrainedList:
+<FOR> ConstrainedList
+;
+
+ConstraintKeyword: 
+<CONSTRAINT> | <CONSTRAINT_REDUNDANTLY>
+;
+
+ConstrainedList: MethodNameList | <EVERYTHING>
+;
+
+
+
+
+RepresentsClause: 
+RepresentsKeyword StoreRefExpression <LARROW> SpecExpression <SEMICOLON>
+|RepresentsKeyword StoreRefExpression <ASSIGN> SpecExpression <SEMICOLON>
+        | RepresentsKeyword StoreRefExpression <SUCH_THAT> Predicate <SEMICOLON>
+;
+
+RepresentsKeyword:
+ <REPRESENTS> | <REPRESENTS_REDUNDANTLY>
+;
+
+InitiallyClause: <INITIALLY> Predicate <SEMICOLON>
+;
+
+AxiomClause: <AXIOM> Predicate <SEMICOLON>
+;
+
+ReadableIfClause: <READABLE> Id <IF> Predicate <SEMICOLON>
+;
+
+WritableIfClause: <WRITABLE> Id <IF> Predicate <SEMICOLON>
+;
+
+MonitorsForClause: <MONITORS_FOR> Id
+;
+
+JmlPrimary:
+LOOK_AHEAD("OriginalClauseKeyword()")
+OriginalClauseKeyword
+|
+
+LOOK_AHEAD("ResultExpression()")
+		  ResultExpression
+        | 
+LOOK_AHEAD("OldExpression()")
+		  OldExpression
+        | 
+LOOK_AHEAD("NotAssignedExpression()")
+		  NotAssignedExpression
+        | 
+LOOK_AHEAD("NotModifiedExpression()")
+		  NotModifiedExpression
+        | 
+LOOK_AHEAD("OnlyAccessedExpression()")
+		  OnlyAccessedExpression
+        | 
+LOOK_AHEAD("OnlyAssignedExpression()")
+		  OnlyAssignedExpression
+        | 
+LOOK_AHEAD("OnlyCalledExpression()")
+		  OnlyCalledExpression
+        | 
+LOOK_AHEAD("OnlyCapturedExpression()")
+		  OnlyCapturedExpression
+        | 
+LOOK_AHEAD("FreshExpression()")
+		  FreshExpression
+        | 
+LOOK_AHEAD("ReachExpression()")
+		  ReachExpression
+        | 
+LOOK_AHEAD("DurationExpression()")
+		  DurationExpression
+        | 
+LOOK_AHEAD("SpaceExpression()")
+		  SpaceExpression
+        | 
+LOOK_AHEAD("WorkingSpaceExpression()")
+		  WorkingSpaceExpression
+        | 
+LOOK_AHEAD("NonnullelementsExpression()")
+		  NonnullelementsExpression
+        | 
+LOOK_AHEAD("InformalDescription()")
+		  InformalDescription
+        | 
+LOOK_AHEAD("TypeofExpression()")
+		  TypeofExpression
+        | 
+LOOK_AHEAD("ElemtypeExpression()")
+		  ElemtypeExpression
+        | 
+LOOK_AHEAD("TypeExpression()")
+		  TypeExpression
+        | 
+LOOK_AHEAD("LocksetExpression()")
+		  LocksetExpression
+        | 
+LOOK_AHEAD("MaxExpression()")
+		  MaxExpression
+        | 
+LOOK_AHEAD("IsInitializedExpression()")
+		  IsInitializedExpression
+        | 
+LOOK_AHEAD("InvariantForExpression()")
+		  InvariantForExpression
+        | 
+LOOK_AHEAD("LblnegExpression()")
+		  LblnegExpression
+        | 
+LOOK_AHEAD("LblposExpression()")
+		  LblposExpression
+        | 
+LOOK_AHEAD("SpecQuantifiedExpr()")
+		  SpecQuantifiedExpr
+;        
+        
+ResultExpression: <RESULT>
+;
+
+OldExpression: <OLD> <LPAREN> SpecExpression [ CommaIdent ] <RPAREN>
+        | <PRE> <LPAREN> SpecExpression <RPAREN>
+;
+
+CommaIdent:
+<COMMA> <IDENTIFIER>
+;
+
+NotAssignedExpression: <NOT_ASSIGNED> <LPAREN> StoreRefList <RPAREN>
+;
+
+NotModifiedExpression: <NOT_MODIFIED> <LPAREN> StoreRefList <RPAREN>
+;
+
+OnlyAccessedExpression: <ONLY_ACCESSED> <LPAREN> StoreRefList <RPAREN>
+;
+OnlyAssignedExpression: <ONLY_ASSIGNED> <LPAREN> StoreRefList <RPAREN>
+;
+OnlyCalledExpression: <ONLY_CALLED> <LPAREN> MethodNameList <RPAREN>
+;
+OnlyCapturedExpression: <ONLY_CAPTURED> <LPAREN> StoreRefList <RPAREN>
+;
+FreshExpression: <FRESH> <LPAREN> SpecExpressionList <RPAREN>
+;
+ReachExpression: <REACH> <LPAREN> SpecExpression <RPAREN>
+;
+DurationExpression: <DURATION> <LPAREN> Expression <RPAREN>
+;
+SpaceExpression: <SPACE> <LPAREN> SpecExpression <RPAREN>
+;
+WorkingSpaceExpression:<WORKING_SPACE> <LPAREN> Expression <RPAREN>
+;
+NonnullelementsExpression:<NONNULLELEMENTS> <LPAREN> SpecExpression <RPAREN>
+;
+
+
+TypeofExpression:<TYPEOF> <LPAREN> SpecExpression <RPAREN>
+;
+
+
+ElemtypeExpression:<ELEMTYPE> <LPAREN> SpecExpression <RPAREN>
+;
+TypeExpression:<TYPE> <LPAREN> Type <RPAREN>
+;
+
+LocksetExpression:<LOCKSET>
+;
+MaxExpression:<MAX> <LPAREN> SpecExpression <RPAREN>
+;
+
+IsInitializedExpression: <IS_INITIALIZED> <LPAREN> ReferenceType <RPAREN>
+;
+
+InvariantForExpression: <INVARIANT_FOR> <LPAREN> SpecExpression <RPAREN>
+;
+
+LblnegExpression:<LPAREN> <LBLNEG> Id SpecExpression <RPAREN>
+;
+LblposExpression:<LPAREN> <LBLPOS> Id SpecExpression <RPAREN>
+;
+
+
+
+
+SpecQuantifiedExpr:<LPAREN> Quantifier QuantifiedVarDecls <SEMICOLON>
+
+                           [ LOOK_AHEAD( "PredicateSemicolon()" ) PredicateSemicolon ]
+
+                           SpecExpression <RPAREN>
+;
+
+PredicateSemicolon:
+[ Predicate ] <SEMICOLON>
+;
+
+
+
+Quantifier:<FORALL> | <EXISTS>
+
+        | <MAX> | <MIN>
+
+        | <NUM_OF> | <PRODUCT> | <SUM>
+
+;
+QuantifiedVarDecls:[ BoundVarModifiers ] TypeSpec QuantifiedVarDeclarator
+
+                         ( CommaQuantifiedVarDeclarator )*
+
+;
+
+CommaQuantifiedVarDeclarator:
+<COMMA> QuantifiedVarDeclarator
+;
+
+ReferenceType:
+Name
+;
+
+InformalDescription: <INF_DESC_START> NonStarsClose ( NonStarsClose )* <INF_DESC_END>
+;
+
+NonStarsClose: <CHARACTER_LITERAL>
+        | StarsNonClose
+;
+
+StarsNonClose: <STAR> ( <STAR> )* <CHARACTER_LITERAL>
+;
+
+Keyword:
+<IDENTIFIER>
+;
