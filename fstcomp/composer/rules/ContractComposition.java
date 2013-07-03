@@ -1,8 +1,10 @@
 package composer.rules;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -23,7 +25,8 @@ public class ContractComposition extends AbstractCompositionRule {
 	protected static final String ORIGINAL_OR = "\\or_original";
 
 	private String contractStyle = PLAIN_CONTRACTING;
-	
+	private ContractReader contractReader;
+
 	public ContractComposition(String contract_style) {
 		if (contract_style != null) {
 			contractStyle = contract_style.trim();
@@ -43,29 +46,18 @@ public class ContractComposition extends AbstractCompositionRule {
 		} else if (contractStyle.equals(CONSECUTIVE_CONTRACTING)) {
 			consecutiveContracting(terminalA, terminalB, terminalComp);
 		} else if (contractStyle.equals(METHOD_BASED_COMPOSITION)) {
-			compositionByKeywords(terminalA, terminalB, terminalComp);
+			compositionByKeywords(terminalA, terminalB, terminalComp, nonterminalParent);
 		}
 	}
 
 	// Check Keywords in Method-Based Contract Composition
 	private void compositionByKeywords(FSTTerminal terminalA,
-			FSTTerminal terminalB, FSTTerminal terminalComp) {
-		FSTNonTerminal parrentB = (FSTNonTerminal) terminalB.getParent();
-		FSTTerminal keyB = (FSTTerminal) parrentB.getChildren().get(0);
-		String compositionKey = keyB.getBody();
+			FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+		String compositionKey = "";
 		
-		System.out.println("#### Contract Reader: ###");
-		System.out.println("Contract body: " + terminalA.getBody());
-		ContractReader reader = new ContractReader(terminalA);
-		System.out.println("Requires claues: " + reader.getRequiresClauses().size());
-		System.out.println("Ensures clauses: " + reader.getEnsuresClauses().size());
-		for(FSTTerminal term: reader.getRequiresClauses()) {
-			System.out.println("Requires Clause: " + term.getBody());
-		}
-		for(FSTTerminal term: reader.getEnsuresClauses()) {
-			System.out.println("Ensures Clause: " + term.getBody());
-		}
-		System.out.println("#### Ende Reader: ###");
+		for(FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren()) 
+			if(n.getType().equals("ContractCompKey")) 
+				compositionKey = ((FSTTerminal)n).getContractCompose();
 		
 		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
 				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD)) {
@@ -73,6 +65,9 @@ public class ContractComposition extends AbstractCompositionRule {
 		} else if (compositionKey
 				.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel())) {
 			consecutiveContracting(terminalA, terminalB, terminalComp);
+		} else if (compositionKey
+				.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel())) {
+			conjunctiveContracting(terminalA, terminalB, terminalComp);
 		} else {
 			explicitContracting(terminalA, terminalB, terminalComp);
 		}
@@ -96,102 +91,38 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	private void consecutiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
-		terminalComp.setBody(terminalB.getBody() + "\nalso\n"
+		terminalComp.setBody(terminalB.getBody() + "\n\talso\n\t "
 				+ terminalA.getBody());
 	}
 
 	@SuppressWarnings("unused")
 	private void conjunctiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
-		String bodyA = terminalA.getBody();
-		String bodyB = terminalB.getBody();
+		StringBuilder requiresBuilder = new StringBuilder("requires (");
+		for (FSTTerminal terminal : getRequiresClauses(terminalB))
+			requiresBuilder.append(terminalB.getBody());
 
-		String requiresComposition = "requires (" + extractRequires(bodyB)
-				+ ") && (" + extractRequires(bodyA) + ");";
-		
+		String requiresComposition = "requires;";
+
 		terminalComp.setBody(requiresComposition);
-	}
-
-	private String extractRequires(String body) {
-		Pattern REQUIRES_PATTERN = Pattern.compile(Pattern.quote("requires")
-				+ "(.*?)" + Pattern.quote(";"));
-		Matcher matcher = REQUIRES_PATTERN.matcher(body);
-		// while (matcher.find()) {
-		return matcher.group(1).trim();
-		// }
-	}
-
-	private String extractEnsures(String body) {
-		Pattern ENSURES_PATTERN = Pattern.compile(Pattern.quote("ensures")
-				+ "(.*?)" + Pattern.quote(";"));
-		Matcher matcher = ENSURES_PATTERN.matcher(body);
-		// while (matcher.find()) {
-		return matcher.group(1).trim();
-		// }
-	}
-
-	public static void main(String args[]) {
-		String contract = "requires a != null;\n" + "requires c != null;\n"
-				+ "ensures b != null;\nensures b != null;";
-		System.out.println(contract);
-		Pattern ENSURES_PATTERN = Pattern.compile(Pattern.quote("ensures")
-				+ "(.*?)" + Pattern.quote(";"));
-		Matcher matcher = ENSURES_PATTERN.matcher(contract);
-		while (matcher.find()) {
-			System.out.println(matcher.group(1).trim());
-		}
 	}
 
 	// TODO Multiple Spec Cases / Multiple PRE / POST Cond
 	@SuppressWarnings("unused")
 	private String getCumulativeComposition(FSTTerminal terminalA,
 			FSTTerminal terminalB) {
-		String bodyA = terminalA.getBody();
-		String bodyB = terminalB.getBody();
-		System.out.println("Body B " + bodyB);
-		System.out.println("Body A " + bodyA);
 
-		String requires = "requires (";
-		String ensures = "ensures ";
+		return null;
+	}
 
-		for (String str : bodyB.trim().split(";")) {
-			if (str.trim().startsWith("requires")) {
-				requires += str.trim().replace("requires ", "") + " && ";
-				System.out.println("requires in for loop: \n\t" + requires);
-			}
-			if (str.trim().startsWith("ensures")) {
-				ensures += str.trim().replace("ensures ", "") + " && ";
-				System.out.println("ensures in forloop: \n\t" + ensures);
-			}
-		}
+	private List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {
+		contractReader = new ContractReader(terminal);
+		return contractReader.getRequiresClauses();
+	}
 
-		StringBuilder b = new StringBuilder(requires);
-		b.replace(requires.lastIndexOf(" && "),
-				requires.lastIndexOf(" && ") + 4, ") || (");
-		requires = b.toString();
-
-		for (String str : bodyA.trim().split(";")) {
-			if (str.trim().startsWith("requires")) {
-				requires += str.trim().replace("requires ", "") + " && ";
-				System.out.println("requires in for loop: \n\t" + requires);
-			}
-			if (str.trim().startsWith("ensures")) {
-				ensures += str.trim().replace("ensures ", "") + " && ";
-				System.out.println("ensures in forloop: \n\t" + ensures);
-			}
-		}
-
-		b = new StringBuilder(requires);
-		b.replace(requires.lastIndexOf(" && "),
-				requires.lastIndexOf(" && ") + 4, ");");
-		requires = b.toString();
-
-		b = new StringBuilder(ensures);
-		b.replace(ensures.lastIndexOf(" && "), ensures.lastIndexOf(" && ") + 4,
-				";");
-		ensures = b.toString();
-
-		return requires + "\n" + ensures;
+	private List<FSTTerminal> getEnsuresClauses(FSTTerminal terminal) {
+		contractReader = new ContractReader(terminal);
+		return contractReader.getEnsuresClauses();
 	}
 
 	protected String getReplacementString(FSTTerminal terminalA,

@@ -9,7 +9,8 @@ public class FSTTerminal extends FSTNode {
 
 	private String compose = defaultCompositionMechanism;
 	private String merge = defaultMergingMechanism;
-
+	private String contractCompose;
+	
 	private String prefix;
 
 	public int beginLine = -1;
@@ -111,5 +112,15 @@ public class FSTTerminal extends FSTNode {
 	public void setMergingMechanism(String mergingMechanism) {
 		merge = mergingMechanism;
 	}
+
+	public String getContractCompose() {
+		return contractCompose;
+	}
+
+	public void setContractCompose(String contractCompose) {
+		this.contractCompose = contractCompose;
+	}
+	
+	
 
 }

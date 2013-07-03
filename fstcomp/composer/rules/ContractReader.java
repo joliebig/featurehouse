@@ -66,11 +66,9 @@ public class ContractReader {
 			FSTTerminal t = (FSTTerminal) node;
 			System.out.println("Type of node: " + t.getType());
 			if(t.getType().equals("EnsuresClause")){
-				System.out.println("Ensures Clause Found: Adding to list");
 				ensuresClauses.add(t);
 			}
 			if(t.getType().equals("RequiresClause") || t.getType().equals("SpecHeader")){
-				System.out.println("Requires Clause Found: Adding to list");
 				requiresClauses.add(t);
 			}
 			if(t.getType().equals("AssignableClause")){
