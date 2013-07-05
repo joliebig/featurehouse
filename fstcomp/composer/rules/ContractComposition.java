@@ -108,39 +108,8 @@ public class ContractComposition extends AbstractCompositionRule {
 		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
 		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
-		StringBuilder requiresBuilder = new StringBuilder("");
-		StringBuilder ensuresBuilder = new StringBuilder("");
-
-		// precondintions
-		if (reqClaB.size() > 0 && reqClaA.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaB, "requires", "&&"))
-					.append(") && (")
-					.append(joinClause(reqClaA, "requires", "&&")).append(");");
-		} else if (reqClaB.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaB, "requires", "&&")).append(");");
-		} else if (reqClaA.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaA, "requires", "&&")).append(");");
-		}
-
-		// postconditions
-		if (ensClaB.size() > 0 && ensClaA.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaB, "ensures", "&&"))
-					.append(") && (")
-					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
-		} else if (ensClaB.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaB, "ensures", "&&")).append(");");
-		} else if (ensClaA.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
-		}
-
-		terminalComp.setBody(requiresBuilder.toString() + "\n\t "
-				+ ensuresBuilder.toString());
+		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "&&")+ "\n\t "
+				+ joinClauses(ensClaB, ensClaA, "ensures", "&&"));
 	}
 
 	// TODO: Multiple Spec Cases umschreiben
@@ -151,45 +120,38 @@ public class ContractComposition extends AbstractCompositionRule {
 		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
 		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
-		StringBuilder requiresBuilder = new StringBuilder("");
-		StringBuilder ensuresBuilder = new StringBuilder("");
-
-		// precondintions
-		if (reqClaB.size() > 0 && reqClaA.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaB, "requires", "&&"))
-					.append(") || (")
-					.append(joinClause(reqClaA, "requires", "&&")).append(");");
-		} else if (reqClaB.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaB, "requires", "&&")).append(");");
-		} else if (reqClaA.size() > 0) {
-			requiresBuilder.append("requires (")
-					.append(joinClause(reqClaA, "requires", "&&")).append(");");
-		}
-
-		// postconditions
-		if (ensClaB.size() > 0 && ensClaA.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaB, "ensures", "&&"))
-					.append(") && (")
-					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
-		} else if (ensClaB.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaB, "ensures", "&&")).append(");");
-		} else if (ensClaA.size() > 0) {
-			ensuresBuilder.append("ensures (")
-					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
-		}
-
-		terminalComp.setBody(requiresBuilder.toString() + "\n\t "
-				+ ensuresBuilder.toString());
+		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "||")+ "\n\t "
+				+ joinClauses(ensClaB, ensClaA, "ensures", "&&"));
 	}
 
-	private String joinClause(List<FSTTerminal> clauses, String clauseType,
+	// joins Either Requires or Ensures clauses (claustaype)
+	// joins them using the operationtype (&& or ||)
+	private String joinClauses(List<FSTTerminal> reqOrEnsClaB,
+			List<FSTTerminal> reqOrEnsClaA, String clauseType,
 			String operationType) {
+		operationType = ")\n\t\t " + operationType + " (";
 		StringBuilder builder = new StringBuilder("");
-		operationType = " " + operationType + " ";
+
+		if (reqOrEnsClaB.size() > 0 && reqOrEnsClaA.size() > 0) {
+			builder.append(clauseType).append(" (")
+					.append(joinClause(reqOrEnsClaB, clauseType))
+					.append(operationType)
+					.append(joinClause(reqOrEnsClaA, clauseType)).append(");");
+		} else if (reqOrEnsClaB.size() > 0) {
+			builder.append(clauseType).append(" (")
+					.append(joinClause(reqOrEnsClaB, clauseType)).append(");");
+		} else if (reqOrEnsClaA.size() > 0) {
+			builder.append(clauseType).append(" (")
+					.append(joinClause(reqOrEnsClaA, clauseType)).append(");");
+		}
+
+		return builder.toString();
+	}
+
+	// Joins all Pre or Post conditions with an AND Operator of one contract
+	private String joinClause(List<FSTTerminal> clauses, String clauseType) {
+		StringBuilder builder = new StringBuilder("");
+		String operationType = " && ";
 		for (FSTTerminal cl : clauses)
 			builder.append(
 					cl.getBody().substring(0, cl.getBody().lastIndexOf(";"))
