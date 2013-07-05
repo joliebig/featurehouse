@@ -46,19 +46,21 @@ public class ContractComposition extends AbstractCompositionRule {
 		} else if (contractStyle.equals(CONSECUTIVE_CONTRACTING)) {
 			consecutiveContracting(terminalA, terminalB, terminalComp);
 		} else if (contractStyle.equals(METHOD_BASED_COMPOSITION)) {
-			compositionByKeywords(terminalA, terminalB, terminalComp, nonterminalParent);
+			compositionByKeywords(terminalA, terminalB, terminalComp,
+					nonterminalParent);
 		}
 	}
 
 	// Check Keywords in Method-Based Contract Composition
 	private void compositionByKeywords(FSTTerminal terminalA,
-			FSTTerminal terminalB, FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			FSTTerminal terminalB, FSTTerminal terminalComp,
+			FSTNonTerminal nonterminalParent) {
 		String compositionKey = "";
-		
-		for(FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren()) 
-			if(n.getType().equals("ContractCompKey")) 
-				compositionKey = ((FSTTerminal)n).getContractCompose();
-		
+
+		for (FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren())
+			if (n.getType().equals("ContractCompKey"))
+				compositionKey = ((FSTTerminal) n).getContractCompose();
+
 		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
 				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD)) {
 			plainContracting(terminalA, terminalB, terminalComp);
@@ -68,6 +70,10 @@ public class ContractComposition extends AbstractCompositionRule {
 		} else if (compositionKey
 				.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel())) {
 			conjunctiveContracting(terminalA, terminalB, terminalComp);
+			// } else if
+			// (compositionKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT
+			// .getLabel())) {
+			// cumulativeContracting(terminalA, terminalB, terminalComp);
 		} else {
 			explicitContracting(terminalA, terminalB, terminalComp);
 		}
@@ -95,8 +101,56 @@ public class ContractComposition extends AbstractCompositionRule {
 				+ terminalA.getBody());
 	}
 
-	@SuppressWarnings("unused")
 	private void conjunctiveContracting(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
+		List<FSTTerminal> reqClaA = getRequiresClauses(terminalA);
+		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
+		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
+
+		StringBuilder requiresBuilder = new StringBuilder("");
+		StringBuilder ensuresBuilder = new StringBuilder("ensures ");
+
+		if (reqClaB.size() > 0 && reqClaA.size() > 0) {
+			requiresBuilder.append("requires ")
+					.append(joinClause(reqClaB, "requires", "&&"))
+					.append(" && ")
+					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+		} else if (reqClaB.size() > 0) {
+			requiresBuilder.append("requires ")
+					.append(joinClause(reqClaB, "requires", "&&")).append(";");
+		} else if (reqClaA.size() > 0) {
+			requiresBuilder.append("requires ")
+					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+		}
+
+		if (ensClaB.size() > 0 && ensClaA.size() > 0) {
+			ensuresBuilder.append("ensures ")
+					.append(joinClause(reqClaB, "requires", "&&"))
+					.append(" && ")
+					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+		}
+		for (FSTTerminal ensures : getEnsuresClauses(terminalB))
+			ensuresBuilder.append(ensures.getBody()
+					.substring(0, ensures.getBody().lastIndexOf(";"))
+					.replace("ensures ", "")
+					+ " && ");
+
+		for (FSTTerminal ensures : getEnsuresClauses(terminalA))
+			ensuresBuilder.append(ensures.getBody()
+					.substring(0, ensures.getBody().lastIndexOf(";"))
+					.replace("ensures ", "")
+					+ " && ");
+
+		ensuresBuilder.replace(ensuresBuilder.lastIndexOf(" && "),
+				ensuresBuilder.lastIndexOf(" && ") + 4, ";");
+
+		terminalComp.setBody(requiresBuilder.toString() + "\n\t "
+				+ ensuresBuilder);
+	}
+
+	@SuppressWarnings("unused")
+	private void cumulativeContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		StringBuilder requiresBuilder = new StringBuilder("requires (");
 		for (FSTTerminal terminal : getRequiresClauses(terminalB))
@@ -107,12 +161,18 @@ public class ContractComposition extends AbstractCompositionRule {
 		terminalComp.setBody(requiresComposition);
 	}
 
-	// TODO Multiple Spec Cases / Multiple PRE / POST Cond
-	@SuppressWarnings("unused")
-	private String getCumulativeComposition(FSTTerminal terminalA,
-			FSTTerminal terminalB) {
-
-		return null;
+	private String joinClause(List<FSTTerminal> clauses, String clauseType,
+			String operationType) {
+		StringBuilder builder = new StringBuilder("");
+		operationType = " " + operationType + " ";
+		for (FSTTerminal cl : clauses)
+			builder.append(
+					cl.getBody().substring(0, cl.getBody().lastIndexOf(";"))
+							.replace(clauseType + " ", "")).append(
+					operationType);
+		builder.replace(builder.lastIndexOf(operationType),
+				builder.lastIndexOf(operationType) + 4, "");
+		return builder.toString();
 	}
 
 	private List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {

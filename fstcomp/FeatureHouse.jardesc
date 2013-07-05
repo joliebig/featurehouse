@@ -11,8 +11,8 @@
         </sealing>
     </manifest>
     <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
-        <folder path="/CIDE2_ast/META-INF"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.xmlParser"/>
+        <folder path="/CIDE2_ast/META-INF"/>
         <javaElement handleIdentifier="=fstgen/test"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.javam"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.pythonm"/>
@@ -22,8 +22,8 @@
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.alloy"/>
         <file path="/fstgen/.project"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
@@ -34,34 +34,34 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
-        <javaElement handleIdentifier="=fstmerge/&lt;builder.textm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;metadata"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.textm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.sdf"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.C"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.java"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser"/>
         <javaElement handleIdentifier="=CIDE_generateAST/src"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.fj"/>
-        <javaElement handleIdentifier="=fstmerge/&lt;builder.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.sdf"/>
-        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;builder.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.meta"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.textm"/>
-        <javaElement handleIdentifier="=fstmerge/&lt;printer.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.STR"/>
+        <javaElement handleIdentifier="=fstmerge/&lt;printer.csharpm"/>
         <file path="/fstgen/.classpath"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer"/>
         <file path="/fstmerge/.classpath"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;composer.rules"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;composer.rules"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.jcop"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.str"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.fj"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
-        <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.java"/>

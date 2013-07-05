@@ -2590,7 +2590,7 @@ FSTInfo AlsoGenericSpecCase(boolean inTerminal) : { Token first=null,t;FSTInfo n
 
 FSTInfo SpecHeader(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=RequiresClause(true){ replaceName(n);} (n=RequiresClause(true){ replaceName(n);})* {return productionEndTerminal("SpecHeader","-","-","Replacement","Default",first,token);}
+	n=RequiresClause(inTerminal){ replaceName(n);} (n=RequiresClause(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("SpecHeader","-","-");}
 
  )  }
 

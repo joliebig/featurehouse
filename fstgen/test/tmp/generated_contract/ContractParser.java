@@ -5622,8 +5622,8 @@ public class ContractParser extends AbstractFSTParser implements ContractParserC
   final public FSTInfo SpecHeader(boolean inTerminal) throws ParseException {
                                            Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    n = RequiresClause(true);
-                                replaceName(n);
+    n = RequiresClause(inTerminal);
+                                      replaceName(n);
     label_80:
     while (true) {
       if (jj_2_531(4)) {
@@ -5631,10 +5631,10 @@ public class ContractParser extends AbstractFSTParser implements ContractParserC
       } else {
         break label_80;
       }
-      n = RequiresClause(true);
-                                                                          replaceName(n);
+      n = RequiresClause(inTerminal);
+                                                                                      replaceName(n);
     }
-                                                                                              {if (true) return productionEndTerminal("SpecHeader","-","-","Replacement","Default",first,token);}
+                                                                                                          {if (true) return productionEndNonTerminal("SpecHeader","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -14182,6 +14182,11 @@ public class ContractParser extends AbstractFSTParser implements ContractParserC
     return false;
   }
 
+  final private boolean jj_3_531() {
+    if (jj_3R_311()) return true;
+    return false;
+  }
+
   final private boolean jj_3_153() {
     if (jj_scan_token(XOR)) return true;
     if (jj_3R_154()) return true;
@@ -14207,11 +14212,6 @@ public class ContractParser extends AbstractFSTParser implements ContractParserC
   final private boolean jj_3_151() {
     if (jj_scan_token(SC_AND)) return true;
     if (jj_3R_152()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_531() {
-    if (jj_3R_311()) return true;
     return false;
   }
 

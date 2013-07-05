@@ -68,7 +68,7 @@ public class ContractReader {
 			if(t.getType().equals("EnsuresClause")){
 				ensuresClauses.add(t);
 			}
-			if(t.getType().equals("RequiresClause") || t.getType().equals("SpecHeader")){
+			if(t.getType().equals("RequiresClause")){
 				requiresClauses.add(t);
 			}
 			if(t.getType().equals("AssignableClause")){

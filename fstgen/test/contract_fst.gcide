@@ -1973,7 +1973,7 @@ AlsoGenericSpecCase:
 <ALSO> GenericSpecCase
 ;
 
-
+@FSTNonTerminal()
 SpecHeader:  RequiresClause ( RequiresClause )*
 ;
 
