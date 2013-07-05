@@ -28,9 +28,9 @@ public class ContractComposition extends AbstractCompositionRule {
 	private ContractReader contractReader;
 
 	public ContractComposition(String contract_style) {
-		if (contract_style != null) {
+		if (contract_style != null)
 			contractStyle = contract_style.trim();
-		}
+
 	}
 
 	@Override
@@ -70,10 +70,9 @@ public class ContractComposition extends AbstractCompositionRule {
 		} else if (compositionKey
 				.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel())) {
 			conjunctiveContracting(terminalA, terminalB, terminalComp);
-			// } else if
-			// (compositionKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT
-			// .getLabel())) {
-			// cumulativeContracting(terminalA, terminalB, terminalComp);
+		} else if (compositionKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT
+				.getLabel())) {
+			cumulativeContracting(terminalA, terminalB, terminalComp);
 		} else {
 			explicitContracting(terminalA, terminalB, terminalComp);
 		}
@@ -101,6 +100,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				+ terminalA.getBody());
 	}
 
+	// TODO: Multiple Spec Cases umschreiben
 	private void conjunctiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
@@ -109,56 +109,81 @@ public class ContractComposition extends AbstractCompositionRule {
 		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
 		StringBuilder requiresBuilder = new StringBuilder("");
-		StringBuilder ensuresBuilder = new StringBuilder("ensures ");
+		StringBuilder ensuresBuilder = new StringBuilder("");
 
+		// precondintions
 		if (reqClaB.size() > 0 && reqClaA.size() > 0) {
-			requiresBuilder.append("requires ")
+			requiresBuilder.append("requires (")
 					.append(joinClause(reqClaB, "requires", "&&"))
-					.append(" && ")
-					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+					.append(") && (")
+					.append(joinClause(reqClaA, "requires", "&&")).append(");");
 		} else if (reqClaB.size() > 0) {
-			requiresBuilder.append("requires ")
-					.append(joinClause(reqClaB, "requires", "&&")).append(";");
+			requiresBuilder.append("requires (")
+					.append(joinClause(reqClaB, "requires", "&&")).append(");");
 		} else if (reqClaA.size() > 0) {
-			requiresBuilder.append("requires ")
-					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+			requiresBuilder.append("requires (")
+					.append(joinClause(reqClaA, "requires", "&&")).append(");");
 		}
 
+		// postconditions
 		if (ensClaB.size() > 0 && ensClaA.size() > 0) {
-			ensuresBuilder.append("ensures ")
-					.append(joinClause(reqClaB, "requires", "&&"))
-					.append(" && ")
-					.append(joinClause(reqClaA, "requires", "&&")).append(";");
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaB, "ensures", "&&"))
+					.append(") && (")
+					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
+		} else if (ensClaB.size() > 0) {
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaB, "ensures", "&&")).append(");");
+		} else if (ensClaA.size() > 0) {
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
 		}
-		for (FSTTerminal ensures : getEnsuresClauses(terminalB))
-			ensuresBuilder.append(ensures.getBody()
-					.substring(0, ensures.getBody().lastIndexOf(";"))
-					.replace("ensures ", "")
-					+ " && ");
-
-		for (FSTTerminal ensures : getEnsuresClauses(terminalA))
-			ensuresBuilder.append(ensures.getBody()
-					.substring(0, ensures.getBody().lastIndexOf(";"))
-					.replace("ensures ", "")
-					+ " && ");
-
-		ensuresBuilder.replace(ensuresBuilder.lastIndexOf(" && "),
-				ensuresBuilder.lastIndexOf(" && ") + 4, ";");
 
 		terminalComp.setBody(requiresBuilder.toString() + "\n\t "
-				+ ensuresBuilder);
+				+ ensuresBuilder.toString());
 	}
 
-	@SuppressWarnings("unused")
+	// TODO: Multiple Spec Cases umschreiben
 	private void cumulativeContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
-		StringBuilder requiresBuilder = new StringBuilder("requires (");
-		for (FSTTerminal terminal : getRequiresClauses(terminalB))
-			requiresBuilder.append(terminalB.getBody());
+		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
+		List<FSTTerminal> reqClaA = getRequiresClauses(terminalA);
+		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
+		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
-		String requiresComposition = "requires;";
+		StringBuilder requiresBuilder = new StringBuilder("");
+		StringBuilder ensuresBuilder = new StringBuilder("");
 
-		terminalComp.setBody(requiresComposition);
+		// precondintions
+		if (reqClaB.size() > 0 && reqClaA.size() > 0) {
+			requiresBuilder.append("requires (")
+					.append(joinClause(reqClaB, "requires", "&&"))
+					.append(") || (")
+					.append(joinClause(reqClaA, "requires", "&&")).append(");");
+		} else if (reqClaB.size() > 0) {
+			requiresBuilder.append("requires (")
+					.append(joinClause(reqClaB, "requires", "&&")).append(");");
+		} else if (reqClaA.size() > 0) {
+			requiresBuilder.append("requires (")
+					.append(joinClause(reqClaA, "requires", "&&")).append(");");
+		}
+
+		// postconditions
+		if (ensClaB.size() > 0 && ensClaA.size() > 0) {
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaB, "ensures", "&&"))
+					.append(") && (")
+					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
+		} else if (ensClaB.size() > 0) {
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaB, "ensures", "&&")).append(");");
+		} else if (ensClaA.size() > 0) {
+			ensuresBuilder.append("ensures (")
+					.append(joinClause(ensClaA, "ensures", "&&")).append(");");
+		}
+
+		terminalComp.setBody(requiresBuilder.toString() + "\n\t "
+				+ ensuresBuilder.toString());
 	}
 
 	private String joinClause(List<FSTTerminal> clauses, String clauseType,
