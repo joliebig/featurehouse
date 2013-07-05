@@ -103,25 +103,71 @@ public class ContractComposition extends AbstractCompositionRule {
 	// TODO: Multiple Spec Cases umschreiben
 	private void conjunctiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		if(terminalB.getBody().contains("also"))
+			desugarAlso(terminalB);
+		if(terminalA.getBody().contains("also"))
+		desugarAlso(terminalA);
 		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
 		List<FSTTerminal> reqClaA = getRequiresClauses(terminalA);
 		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
 		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
-		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "&&")+ "\n\t "
-				+ joinClauses(ensClaB, ensClaA, "ensures", "&&"));
+		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "&&")
+				+ "\n\t " + joinClauses(ensClaB, ensClaA, "ensures", "&&"));
 	}
 
 	// TODO: Multiple Spec Cases umschreiben
 	private void cumulativeContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
+		if(terminalB.getBody().contains("also"))
+			desugarAlso(terminalB);
+		if(terminalA.getBody().contains("also"))
+		desugarAlso(terminalA);
+
 		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
 		List<FSTTerminal> reqClaA = getRequiresClauses(terminalA);
 		List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
 		List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
 
-		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "||")+ "\n\t "
-				+ joinClauses(ensClaB, ensClaA, "ensures", "&&"));
+		terminalComp.setBody(joinClauses(reqClaB, reqClaA, "requires", "||")
+				+ "\n\t " + joinClauses(ensClaB, ensClaA, "ensures", "&&"));
+	}
+
+	private void desugarAlso(FSTTerminal terminal) {
+		String[] baseCases = terminal.getBody().trim().split("also");
+
+		System.out.println("Cases:");
+		StringBuilder reqBuilder = new StringBuilder("requires (");
+		StringBuilder ensBuilder = new StringBuilder("ensures (");
+		for (String ca : baseCases) {
+			System.out.println("\t: " + ca);
+			FSTTerminal temp = new FSTTerminal(terminal.getType(),
+					terminal.getName(), ca, "");
+			List<FSTTerminal> reqCla = getRequiresClauses(temp);
+			List<FSTTerminal> ensCla = getEnsuresClauses(temp);
+
+			if (reqCla.size() > 0 && ensCla.size() > 0) {
+				String reqTemp = "(" + joinClause(reqCla, "requires") + ")";
+				reqBuilder.append(reqTemp).append(" || ");
+				ensBuilder.append("(\\old").append(reqTemp)
+						.append("\n\t\t ==> (")
+						.append(joinClause(getEnsuresClauses(temp), "ensures"))
+						.append(")) && ");
+
+			} else if (reqCla.size() > 0) {
+				reqBuilder.append("(")
+						.append(joinClause(reqCla, "requires")).append(") || ");
+			} else if (ensCla.size() > 0) {
+				ensBuilder.append("(")
+						.append(joinClause(getEnsuresClauses(temp), "ensures"))
+						.append(") && ");
+			}
+		}
+		reqBuilder.replace(reqBuilder.lastIndexOf(" || "),
+				reqBuilder.lastIndexOf(" || ") + 4, ");");
+		ensBuilder.replace(ensBuilder.lastIndexOf(" && "),
+				ensBuilder.lastIndexOf(" && ") + 4, ");");
+		terminal.setBody(reqBuilder.toString() +"\n\t" + ensBuilder.toString());
 	}
 
 	// joins Either Requires or Ensures clauses (claustaype)
@@ -148,7 +194,8 @@ public class ContractComposition extends AbstractCompositionRule {
 		return builder.toString();
 	}
 
-	// Joins all Pre or Post conditions with an AND Operator of one contract
+	// Joins all Requires or Ensures clauses with an AND Operator of one
+	// contract
 	private String joinClause(List<FSTTerminal> clauses, String clauseType) {
 		StringBuilder builder = new StringBuilder("");
 		String operationType = " && ";
