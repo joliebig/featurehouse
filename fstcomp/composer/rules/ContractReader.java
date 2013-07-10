@@ -64,7 +64,6 @@ public class ContractReader {
 		}
 		else if(node instanceof FSTTerminal){
 			FSTTerminal t = (FSTTerminal) node;
-			System.out.println("Type of node: " + t.getType());
 			if(t.getType().equals("EnsuresClause")){
 				ensuresClauses.add(t);
 			}
