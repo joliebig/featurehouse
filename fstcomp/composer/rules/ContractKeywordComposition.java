@@ -33,7 +33,7 @@ public class ContractKeywordComposition extends AbstractCompositionRule {
 				terminalComp.setContractCompose(keywordA);
 				terminalComp.setBody("\n\t");
 			} else if (!isValidOrder(keywordA, keywordB)) {
-				// TODO throw ParseException
+				// TODO throw Composition Exception
 				System.out.println("Overriding Keyword " + keywordB + " with "
 						+ keywordA + " is not allowed!");
 				terminalComp.setContractCompose(keywordB);

@@ -142,11 +142,9 @@ public class ContractComposition extends AbstractCompositionRule {
 	private void desugarAlso(FSTTerminal terminal) {
 		String[] baseCases = terminal.getBody().trim().split("also");
 
-		System.out.println("Cases:");
 		StringBuilder reqBuilder = new StringBuilder("requires (");
 		StringBuilder ensBuilder = new StringBuilder("ensures (");
 		for (String ca : baseCases) {
-			System.out.println("\t: " + ca);
 			FSTTerminal temp = new FSTTerminal(terminal.getType(),
 					terminal.getName(), ca, "");
 			List<FSTTerminal> reqCla = getRequiresClauses(temp);
@@ -217,7 +215,7 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	public void checkContainsOriginal(FSTTerminal terminal) {
 		String body = terminal.getBody();
-		// TODO: Throw Composition Exception
+		// TODO throw Composition Exception
 		if (body.contains(ORIGINAL_CASE_KEYWORD)
 				|| body.contains(ORIGINAL_KEYWORD_CLAUSE)
 				|| body.contains(ORIGINAL_SPEC_KEYWORD)
