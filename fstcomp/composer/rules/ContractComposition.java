@@ -68,10 +68,12 @@ public class ContractComposition extends AbstractCompositionRule {
 
 		for (FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren())
 			if (n.getType().equals("ContractCompKey"))
-				compositionKey = ((FSTTerminal) n).getContractCompose();
+				compositionKey = ((FSTTerminal) n).getContractCompKey();
 
 		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
-				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD)) {
+				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD
+						.getLabel())) {
+			System.out.println("Do Plain Contraxting");
 			plainContracting(terminalA, terminalB, terminalComp);
 		} else if (compositionKey
 				.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel())) {
@@ -142,8 +144,8 @@ public class ContractComposition extends AbstractCompositionRule {
 	private void desugarAlso(FSTTerminal terminal) {
 		String[] baseCases = terminal.getBody().trim().split("also");
 
-		StringBuilder reqBuilder = new StringBuilder("requires (");
-		StringBuilder ensBuilder = new StringBuilder("ensures (");
+		StringBuilder reqBuilder = new StringBuilder("requires ");
+		StringBuilder ensBuilder = new StringBuilder("ensures ");
 		for (String ca : baseCases) {
 			FSTTerminal temp = new FSTTerminal(terminal.getType(),
 					terminal.getName(), ca, "");
@@ -151,26 +153,26 @@ public class ContractComposition extends AbstractCompositionRule {
 			List<FSTTerminal> ensCla = getEnsuresClauses(temp);
 
 			if (reqCla.size() > 0 && ensCla.size() > 0) {
-				String reqTemp = "(" + joinClause(reqCla, "requires") + ")";
+				String reqTemp = joinClause(reqCla, "requires");
 				reqBuilder.append(reqTemp).append(" || ");
 				ensBuilder.append("(\\old").append(reqTemp)
-						.append("\n\t\t ==> (")
-						.append(joinClause(getEnsuresClauses(temp), "ensures"))
-						.append(")) && ");
-
-			} else if (reqCla.size() > 0) {
-				reqBuilder.append("(").append(joinClause(reqCla, "requires"))
-						.append(") || ");
-			} else if (ensCla.size() > 0) {
-				ensBuilder.append("(")
+						.append("\n\t\t ==> ")
 						.append(joinClause(getEnsuresClauses(temp), "ensures"))
 						.append(") && ");
+
+			} else if (reqCla.size() > 0) {
+				reqBuilder.append(joinClause(reqCla, "requires"))
+						.append(" || ");
+			} else if (ensCla.size() > 0) {
+				ensBuilder
+						.append(joinClause(getEnsuresClauses(temp), "ensures"))
+						.append(" && ");
 			}
 		}
 		reqBuilder.replace(reqBuilder.lastIndexOf(" || "),
-				reqBuilder.lastIndexOf(" || ") + 4, ");");
+				reqBuilder.lastIndexOf(" || ") + 4, ";");
 		ensBuilder.replace(ensBuilder.lastIndexOf(" && "),
-				ensBuilder.lastIndexOf(" && ") + 4, ");");
+				ensBuilder.lastIndexOf(" && ") + 4, ";");
 		terminal.setBody(reqBuilder.toString() + "\n\t" + ensBuilder.toString());
 	}
 
@@ -179,20 +181,20 @@ public class ContractComposition extends AbstractCompositionRule {
 	private String joinClauses(List<FSTTerminal> reqOrEnsClaB,
 			List<FSTTerminal> reqOrEnsClaA, String clauseType,
 			String operationType) {
-		operationType = ")\n\t\t " + operationType + " (";
+		operationType = "\n\t\t " + operationType + " ";
 		StringBuilder builder = new StringBuilder("");
 
 		if (reqOrEnsClaB.size() > 0 && reqOrEnsClaA.size() > 0) {
-			builder.append(clauseType).append(" (")
+			builder.append(clauseType).append(" ")
 					.append(joinClause(reqOrEnsClaB, clauseType))
 					.append(operationType)
-					.append(joinClause(reqOrEnsClaA, clauseType)).append(");");
+					.append(joinClause(reqOrEnsClaA, clauseType)).append(";");
 		} else if (reqOrEnsClaB.size() > 0) {
-			builder.append(clauseType).append(" (")
-					.append(joinClause(reqOrEnsClaB, clauseType)).append(");");
+			builder.append(clauseType).append(" ")
+					.append(joinClause(reqOrEnsClaB, clauseType)).append(";");
 		} else if (reqOrEnsClaA.size() > 0) {
-			builder.append(clauseType).append(" (")
-					.append(joinClause(reqOrEnsClaA, clauseType)).append(");");
+			builder.append(clauseType).append(" ")
+					.append(joinClause(reqOrEnsClaA, clauseType)).append(";");
 		}
 
 		return builder.toString();
@@ -203,13 +205,19 @@ public class ContractComposition extends AbstractCompositionRule {
 	private String joinClause(List<FSTTerminal> clauses, String clauseType) {
 		StringBuilder builder = new StringBuilder("");
 		String operationType = " && ";
+
 		for (FSTTerminal cl : clauses)
-			builder.append(
-					cl.getBody().substring(0, cl.getBody().lastIndexOf(";"))
-							.replace(clauseType + " ", "")).append(
-					operationType);
+			builder.append("(")
+					.append(cl.getBody()
+							.substring(0, cl.getBody().lastIndexOf(";"))
+							.replace(clauseType + " ", "")).append(")")
+					.append(operationType);
 		builder.replace(builder.lastIndexOf(operationType),
 				builder.lastIndexOf(operationType) + 4, "");
+		if (clauses.size() > 1) {
+			builder.insert(0, "(");
+			builder.append(")");
+		}
 		return builder.toString();
 	}
 
@@ -217,10 +225,8 @@ public class ContractComposition extends AbstractCompositionRule {
 		String body = terminal.getBody();
 		// TODO throw Composition Exception
 		if (body.contains(ORIGINAL_CASE_KEYWORD)
-				|| body.contains(ORIGINAL_KEYWORD_CLAUSE)
 				|| body.contains(ORIGINAL_SPEC_KEYWORD)
-				|| body.contains(ORIGINAL_KEYWORD)
-				|| body.contains(ORIGINAL_OR))
+				|| body.contains(ORIGINAL_KEYWORD))
 			System.out
 					.println("Terminal contains one of the original keywords after composition!");
 	}

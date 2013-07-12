@@ -37,24 +37,30 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 		return null;
 	}
 
-	private void checkFinalMethod(FSTTerminal terminalB) {
-		FSTNonTerminal parrentB = (FSTNonTerminal) terminalB.getParent();
-		FSTTerminal contractCompKey = (FSTTerminal)getContractCompositionKeyword(parrentB);
-		if(contractCompKey != null && contractCompKey.getContractCompose().equals("\\final_method")) {
-			//TODO throw Composition Exception
-			System.out.println("Method overriding using keyword \\final_method is not allowed!");
-		}
+	private boolean isFinalContractMethod(FSTTerminal terminalB) {
+		FSTTerminal contractCompKey = (FSTTerminal) getContractCompositionKeyword(terminalB
+				.getParent());
+		if (contractCompKey.getContractCompKey() != null
+				&& contractCompKey.getContractCompKey()
+						.equals("\\final_method"))
+			return true;
+		return false;
 	}
-	
+
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-		
-		checkFinalMethod(terminalB);
-		
+		if (isFinalContractMethod(terminalB)) {
+			// TODO throw Composition Exception
+			System.out
+					.println("Method overriding using keyword \\final_method is not allowed!");
+			terminalComp = terminalB;
+			return;
+		}
+
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 
 		specializeModifiers(terminalA, terminalB);
-		System.out.println(nonterminalParent.getName());
+
 		if (!replaceOriginal(terminalA)) {
 			terminalComp.setBody(terminalA.getBody());
 			String funcName = meta.getMethodName(terminalA);

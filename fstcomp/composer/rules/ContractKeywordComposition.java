@@ -14,34 +14,23 @@ public class ContractKeywordComposition extends AbstractCompositionRule {
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
-		if (terminalB.getContractCompose() == null) {
-			terminalB.setContractCompose(terminalB.getBody());
-			terminalB.setBody("\n\t");
-		}
-		if (terminalA.getContractCompose() == null) {
-			terminalA.setContractCompose(terminalA.getBody());
-			terminalA.setBody("\n\t");
-		}
-		String keywordA = terminalA.getContractCompose();
-		String keywordB = terminalB.getContractCompose();
+		String keywordA = terminalA.getContractCompKey();
+		String keywordB = terminalB.getContractCompKey();
 
 		if (METHOD_BASED_COMPOSITION.equals(contract_style)) {
 			if (keywordA.equals("")) {
-				terminalComp.setContractCompose(keywordB);
-				terminalComp.setBody("\n\t");
+				terminalComp.setContractCompKey(keywordB);
 			} else if (keywordB.equals("") || isValidOrder(keywordA, keywordB)) {
-				terminalComp.setContractCompose(keywordA);
-				terminalComp.setBody("\n\t");
+				terminalComp.setContractCompKey(keywordA);
 			} else if (!isValidOrder(keywordA, keywordB)) {
 				// TODO throw Composition Exception
 				System.out.println("Overriding Keyword " + keywordB + " with "
 						+ keywordA + " is not allowed!");
-				terminalComp.setContractCompose(keywordB);
-				terminalComp.setBody("\n\t");
+				terminalComp.setContractCompKey(keywordB);
 			}
-		} else {
-			terminalComp.setBody("\n\t");
 		}
+		
+		terminalComp.setBody("\n\t");
 	}
 
 	// test, if key overriding is allowed. (rank order)
