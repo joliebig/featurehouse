@@ -9,8 +9,8 @@ public class FSTTerminal extends FSTNode {
 
 	private String compose = defaultCompositionMechanism;
 	private String merge = defaultMergingMechanism;
-	private String contractCompose;
-	
+	private String contractCompKey;
+
 	private String prefix;
 
 	public int beginLine = -1;
@@ -20,6 +20,10 @@ public class FSTTerminal extends FSTNode {
 		super(type, name);
 		this.body = body;
 		this.prefix = prefix;
+		if (type.equals("ContractCompKey")) {
+			this.contractCompKey = body;
+			this.body = "\n\t";
+		}
 	}
 
 	public FSTTerminal(String type, String name, String body, String prefix,
@@ -35,7 +39,8 @@ public class FSTTerminal extends FSTNode {
 	}
 
 	public FSTTerminal(String type, String name, String body, String prefix,
-			String compositionMechanism, String mergingMechanism, int beginLine, int endLine) {
+			String compositionMechanism, String mergingMechanism,
+			int beginLine, int endLine) {
 		this(type, name, body, prefix, compositionMechanism);
 		this.merge = mergingMechanism;
 		this.beginLine = beginLine;
@@ -46,9 +51,9 @@ public class FSTTerminal extends FSTNode {
 		return prefix;
 	}
 
-    public void setSpecialTokenPrefix(String prefix) {
-        this.prefix = prefix;
-    }
+	public void setSpecialTokenPrefix(String prefix) {
+		this.prefix = prefix;
+	}
 
 	@Override
 	public FSTNode getShallowClone() {
@@ -113,14 +118,12 @@ public class FSTTerminal extends FSTNode {
 		merge = mergingMechanism;
 	}
 
-	public String getContractCompose() {
-		return contractCompose;
+	public String getContractCompKey() {
+		return contractCompKey;
 	}
 
-	public void setContractCompose(String contractCompose) {
-		this.contractCompose = contractCompose;
+	public void setContractCompKey(String contractCompKey) {
+		this.contractCompKey = contractCompKey;
 	}
-	
-	
 
 }
