@@ -1,5 +1,7 @@
 package composer.rules;
 
+import composer.CompositionException;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -13,7 +15,7 @@ public class ContractKeywordComposition extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException {
 		String keywordA = terminalA.getContractCompKey();
 		String keywordB = terminalB.getContractCompKey();
 
@@ -23,13 +25,12 @@ public class ContractKeywordComposition extends AbstractCompositionRule {
 			} else if (keywordB.equals("") || isValidOrder(keywordA, keywordB)) {
 				terminalComp.setContractCompKey(keywordA);
 			} else if (!isValidOrder(keywordA, keywordB)) {
-				// TODO throw Composition Exception
-				System.out.println("Overriding Keyword " + keywordB + " with "
+				throw new CompositionException(terminalA, terminalB, "Overriding Keyword " + keywordB + " with "
 						+ keywordA + " is not allowed!");
-				terminalComp.setContractCompKey(keywordB);
+//				terminalComp.setContractCompKey(keywordB);
 			}
 		}
-		
+
 		terminalComp.setBody("\n\t");
 	}
 

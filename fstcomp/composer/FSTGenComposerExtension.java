@@ -15,7 +15,6 @@ import builder.java.JavaBuilder;
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.CompositionRule;
-import composer.rules.ContractKeywordComposition;
 import composer.rules.ExpansionOverriding;
 import composer.rules.ImplementsListMerging;
 import composer.rules.ModifierListSpecialization;

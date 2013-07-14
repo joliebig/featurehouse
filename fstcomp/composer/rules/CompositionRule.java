@@ -1,5 +1,7 @@
 package composer.rules;
 
+import composer.CompositionException;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -24,9 +26,10 @@ public interface CompositionRule {
 	 * @param terminalB
 	 * @param terminalComp
 	 * @param nonterminalParent
+	 * @throws Exception 
 	 */
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent);
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException;
 	
 	/**
 	 * This method is called on the given terminal node before composition. 

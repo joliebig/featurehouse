@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import metadata.CompositionMetadataStore;
+
+import composer.CompositionException;
+
 import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -40,7 +43,8 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 	private boolean isFinalContractMethod(FSTTerminal terminalB) {
 		FSTTerminal contractCompKey = (FSTTerminal) getContractCompositionKeyword(terminalB
 				.getParent());
-		if (contractCompKey.getContractCompKey() != null
+		if (contractCompKey != null
+				&& contractCompKey.getContractCompKey() != null
 				&& contractCompKey.getContractCompKey()
 						.equals("\\final_method"))
 			return true;
@@ -48,13 +52,11 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 	}
 
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException {
 		if (isFinalContractMethod(terminalB)) {
-			// TODO throw Composition Exception
-			System.out
-					.println("Method overriding using keyword \\final_method is not allowed!");
+			
 			terminalComp = terminalB;
-			return;
+			throw new CompositionException(terminalA,terminalB,"Method overriding using keyword \\final_method is not allowed!");
 		}
 
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();

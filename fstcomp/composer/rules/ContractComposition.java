@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import composer.CompositionException;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -37,7 +39,7 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException {
 		// Check Composition style
 		if (contractStyle.equals(PLAIN_CONTRACTING)) {
 			plainContracting(terminalA, terminalB, terminalComp);
@@ -221,14 +223,12 @@ public class ContractComposition extends AbstractCompositionRule {
 		return builder.toString();
 	}
 
-	public void checkContainsOriginal(FSTTerminal terminal) {
+	public void checkContainsOriginal(FSTTerminal terminal) throws CompositionException {
 		String body = terminal.getBody();
-		// TODO throw Composition Exception
 		if (body.contains(ORIGINAL_CASE_KEYWORD)
 				|| body.contains(ORIGINAL_SPEC_KEYWORD)
 				|| body.contains(ORIGINAL_KEYWORD))
-			System.out
-					.println("Terminal contains one of the original keywords after composition!");
+			throw new CompositionException(terminal, null, "Terminal contains one of the original keywords after composition!");
 	}
 
 	private List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {
