@@ -39,7 +39,8 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	@Override
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException {
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent)
+			throws CompositionException {
 		// Check Composition style
 		if (contractStyle.equals(PLAIN_CONTRACTING)) {
 			plainContracting(terminalA, terminalB, terminalComp);
@@ -59,7 +60,11 @@ public class ContractComposition extends AbstractCompositionRule {
 		}
 
 		// Does the composition contains non jml keywords?
-		checkContainsOriginal(terminalComp);
+		if (checkContainsOriginal(terminalComp))
+			throw new CompositionException(
+					terminalA,
+					terminalB,
+					"Contract still contains the keyword \\original, \\original_case or \\original_spec after composition!");
 	}
 
 	// Check Keywords in Method-Based Contract Composition
@@ -75,7 +80,6 @@ public class ContractComposition extends AbstractCompositionRule {
 		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
 				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD
 						.getLabel())) {
-			System.out.println("Do Plain Contraxting");
 			plainContracting(terminalA, terminalB, terminalComp);
 		} else if (compositionKey
 				.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel())) {
@@ -166,9 +170,9 @@ public class ContractComposition extends AbstractCompositionRule {
 				reqBuilder.append(joinClause(reqCla, "requires"))
 						.append(" || ");
 			} else if (ensCla.size() > 0) {
-				ensBuilder
-						.append(joinClause(getEnsuresClauses(temp), "ensures"))
-						.append(" && ");
+				ensBuilder.append(
+						joinClause(getEnsuresClauses(temp), "ensures")).append(
+						" && ");
 			}
 		}
 		reqBuilder.replace(reqBuilder.lastIndexOf(" || "),
@@ -223,12 +227,12 @@ public class ContractComposition extends AbstractCompositionRule {
 		return builder.toString();
 	}
 
-	public void checkContainsOriginal(FSTTerminal terminal) throws CompositionException {
+	public boolean checkContainsOriginal(FSTTerminal terminal) {
 		String body = terminal.getBody();
-		if (body.contains(ORIGINAL_CASE_KEYWORD)
-				|| body.contains(ORIGINAL_SPEC_KEYWORD)
-				|| body.contains(ORIGINAL_KEYWORD))
-			throw new CompositionException(terminal, null, "Terminal contains one of the original keywords after composition!");
+		return (body.contains(ORIGINAL_CASE_KEYWORD)
+				|| body.contains(ORIGINAL_SPEC_KEYWORD) || body
+					.contains(ORIGINAL_KEYWORD));
+
 	}
 
 	private List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {

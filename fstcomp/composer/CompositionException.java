@@ -23,7 +23,7 @@ public class CompositionException extends Exception {
 	public FSTTerminal getTerminalB() {
 		return terminalB;
 	}
-	
+
 	@Override
 	public String getMessage() {
 		return message;

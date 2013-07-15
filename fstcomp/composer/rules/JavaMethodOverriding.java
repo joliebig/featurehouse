@@ -52,12 +52,13 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 	}
 
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) throws CompositionException {
-		if (isFinalContractMethod(terminalB)) {
-			
-			terminalComp = terminalB;
-			throw new CompositionException(terminalA,terminalB,"Method overriding using keyword \\final_method is not allowed!");
-		}
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent)
+			throws CompositionException {
+		if (isFinalContractMethod(terminalB))
+			throw new CompositionException(
+					null,
+					terminalA,
+					"Previously you used the keyword \\final_method. Thus you can't refine this method or contract!");
 
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 
