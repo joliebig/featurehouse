@@ -5,6 +5,9 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 
 import metadata.CompositionMetadataStore;
+
+import composer.CompositionException;
+
 import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -15,15 +18,47 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 	private static boolean addFeatureAnnotations = false;
 
 	public static final String featureAnnotationPrefix = "@featureHouse.FeatureAnnotation(name=\"";
-	
+
 	public final static String COMPOSITION_RULE_NAME = "JavaMethodOverriding";
-	
+
 	public static void setFeatureAnnotation(boolean addFeatureAnnotation) {
-		JavaMethodOverriding.addFeatureAnnotations=addFeatureAnnotation;
+		JavaMethodOverriding.addFeatureAnnotations = addFeatureAnnotation;
+	}
+
+	private FSTNode getContractCompositionKeyword(FSTNode node) {
+		if (node.getType().equals("ContractCompKey"))
+			return node;
+
+		if (node instanceof FSTNonTerminal) {
+			for (FSTNode child : ((FSTNonTerminal) node).getChildren()) {
+				FSTNode result = getContractCompositionKeyword(child);
+				if (result != null)
+					return result;
+			}
+		}
+
+		return null;
+	}
+
+	private boolean isFinalContractMethod(FSTTerminal terminalB) {
+		FSTTerminal contractCompKey = (FSTTerminal) getContractCompositionKeyword(terminalB
+				.getParent());
+		if (contractCompKey != null
+				&& contractCompKey.getContractCompKey() != null
+				&& contractCompKey.getContractCompKey()
+						.equals("\\final_method"))
+			return true;
+		return false;
 	}
 
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
-			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
+			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent)
+			throws CompositionException {
+		if (isFinalContractMethod(terminalB))
+			throw new CompositionException(
+					null,
+					terminalA,
+					"Previously you used the keyword \\final_method. Thus you can't refine this method or contract!");
 
 		CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 
@@ -65,7 +100,8 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			String newBody = getNewBody(terminalA, terminalB, terminalComp,
 					oldMethodName).replaceAll(toReplace, newMethodName + "(");
 			if (addFeatureAnnotations) {
-				newBody = JavaMethodOverriding.featureAnnotationPrefix + getFeatureName(terminalA) + "\")\n" + newBody;
+				newBody = JavaMethodOverriding.featureAnnotationPrefix
+						+ getFeatureName(terminalA) + "\")\n" + newBody;
 			}
 			terminalComp.setBody(newBody);
 
@@ -74,18 +110,25 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			meta.putMapping(oldMethodName, getFeatureName(terminalA),
 					oldMethodName);
 
-			//split the body of terminalComp2 in its major components; modify them seperately
-			int methodNamePosition = extractMethodPrefixEnd(terminalComp2.getBody(), oldMethodName);
-			int annotationsEnd = extractMethodAnnotationsEnd(terminalComp2.getBody());
-			
-			String annotations = terminalComp2.getBody().substring(0, annotationsEnd);
+			// split the body of terminalComp2 in its major components; modify
+			// them seperately
+			int methodNamePosition = extractMethodPrefixEnd(
+					terminalComp2.getBody(), oldMethodName);
+			int annotationsEnd = extractMethodAnnotationsEnd(terminalComp2
+					.getBody());
+
+			String annotations = terminalComp2.getBody().substring(0,
+					annotationsEnd);
 			// remove override annotation from original method
 			annotations = annotations.replaceAll("@Override", "");
-			String prefix = terminalComp2.getBody().substring(annotationsEnd, methodNamePosition);
-			String restOfBody = terminalComp2.getBody().substring(methodNamePosition);
-			// prefix is the header from end of annotations to begin of method name
+			String prefix = terminalComp2.getBody().substring(annotationsEnd,
+					methodNamePosition);
+			String restOfBody = terminalComp2.getBody().substring(
+					methodNamePosition);
+			// prefix is the header from end of annotations to begin of method
+			// name
 
-			//Modify prefix
+			// Modify prefix
 			prefix = prefix.replaceFirst("public", "private");
 			prefix = prefix.replaceFirst("protected", "private");
 			if (!prefix.contains("private") && !isC(nonterminalParent)) {
@@ -94,68 +137,86 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			// modify the method name (is at beginning of restOfBody)
 			restOfBody = restOfBody.replaceFirst(oldMethodName, newMethodName);
 			// join the components
-			terminalComp2.setBody(annotations + " " + prefix + " " + restOfBody);
+			terminalComp2
+					.setBody(annotations + " " + prefix + " " + restOfBody);
 			terminalComp2.setName(newMethodName);
 			if (terminalParentComp2 != null)
 				terminalParentComp2.setName(newMethodName);
 		}
 	}
 
-	/** Extracts the position of the first letter after the annotations of this method declaration.
-	 * (Defined as the first non-whitespace letter that is not an @ or immediately after an @, and not enclosed in parentheses.)
-	 * @featureHouse.FeatureAnnotation(name="verify") static void verify(Client client, Email msg)
-	 * Would return the position of the whitespace before "static".
+	/**
+	 * Extracts the position of the first letter after the annotations of this
+	 * method declaration. (Defined as the first non-whitespace letter that is
+	 * not an @ or immediately after an @, and not enclosed in parentheses.)
+	 * 
+	 * @featureHouse.FeatureAnnotation(name="verify") static void verify(Client
+	 *                                                client, Email msg) Would
+	 *                                                return the position of the
+	 *                                                whitespace before
+	 *                                                "static".
 	 */
 	public static int extractMethodAnnotationsEnd(String mBody) {
 		int parenthesisLvl = 0;
 		char[] auxArray = mBody.toCharArray();
 		for (int i = 0; i < auxArray.length; i++) {
-			if (auxArray[i] == '\\' && 
-					auxArray.length > i+1 &&
-					(auxArray[i] == '(' || auxArray[i+1] == ')')) {
+			if (auxArray[i] == '\\' && auxArray.length > i + 1
+					&& (auxArray[i] == '(' || auxArray[i + 1] == ')')) {
 				i++;
 			} else if (auxArray[i] == '(') {
 				parenthesisLvl++;
-			}
-			else if (auxArray[i] == ')') {
+			} else if (auxArray[i] == ')') {
 				parenthesisLvl--;
-			} else if (parenthesisLvl==0 && 
-					(i == 0 || auxArray[i-1] == ' ' || auxArray[i-1] == '\t' || auxArray[i-1] == '\n'|| auxArray[i-1] == ')') &&
-					auxArray[i] != '@' && ! Character.isWhitespace(auxArray[i])) {
+			} else if (parenthesisLvl == 0
+					&& (i == 0 || auxArray[i - 1] == ' '
+							|| auxArray[i - 1] == '\t'
+							|| auxArray[i - 1] == '\n' || auxArray[i - 1] == ')')
+					&& auxArray[i] != '@'
+					&& !Character.isWhitespace(auxArray[i])) {
 				return i;
 			}
 		}
-		throw new InternalError("Could not properly extract the position of the end of the annotations from method " + mBody);
+		throw new InternalError(
+				"Could not properly extract the position of the end of the annotations from method "
+						+ mBody);
 	}
-	/** Extracts the position of the first letter of the methodName in this method Body.
-	 * (Defined as the first occurence of the methodName that is not enclosed in parentheses.
-	 * It could be enclosed in parentheses for example in annotations.)
-	 * @featureHouse.FeatureAnnotation(name="verify") static void verify(Client client, Email msg)
-	 * Would return the position of the second "verify" in the string.
+
+	/**
+	 * Extracts the position of the first letter of the methodName in this
+	 * method Body. (Defined as the first occurence of the methodName that is
+	 * not enclosed in parentheses. It could be enclosed in parentheses for
+	 * example in annotations.)
+	 * 
+	 * @featureHouse.FeatureAnnotation(name="verify") static void verify(Client
+	 *                                                client, Email msg) Would
+	 *                                                return the position of the
+	 *                                                second "verify" in the
+	 *                                                string.
 	 */
 	public static int extractMethodPrefixEnd(String auxBody, String methodName) {
 		int parenthesisLvl = 0;
 		int mNameLen = methodName.length();
 		char[] auxArray = auxBody.toCharArray();
-		for (int i = 0; i <= auxArray.length-mNameLen; i++) {
-			if (auxArray[i] == '\\' && 
-					auxArray.length > i+1 &&
-					(auxArray[i] == '(' || auxArray[i+1] == ')')) {
+		for (int i = 0; i <= auxArray.length - mNameLen; i++) {
+			if (auxArray[i] == '\\' && auxArray.length > i + 1
+					&& (auxArray[i] == '(' || auxArray[i + 1] == ')')) {
 				i++;
 			} else if (auxArray[i] == '(') {
 				parenthesisLvl++;
-			}
-			else if (auxArray[i] == ')') {
+			} else if (auxArray[i] == ')') {
 				parenthesisLvl--;
-			} else if (parenthesisLvl==0 && 
-					(i == 0 || auxArray[i-1] == ' ' || auxArray[i-1] == '\t' || auxArray[i-1] == '\n') &&
-					methodName.equals(auxBody.substring(i, i + mNameLen))) {
+			} else if (parenthesisLvl == 0
+					&& (i == 0 || auxArray[i - 1] == ' '
+							|| auxArray[i - 1] == '\t' || auxArray[i - 1] == '\n')
+					&& methodName.equals(auxBody.substring(i, i + mNameLen))) {
 				return i;
 			}
 		}
-		throw new InternalError("Could not properly extract the position of the methodName from method " + methodName);
+		throw new InternalError(
+				"Could not properly extract the position of the methodName from method "
+						+ methodName);
 	}
-	
+
 	protected String getNewBody(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, String oldMethodName) {
 		return terminalComp.getBody();

@@ -1,4 +1,3 @@
-
 /*
  * Copyright © 2002 Sun Microsystems, Inc., 4150 Network Circle, Santa Clara,
  * California 95054, U.S.A. All rights reserved.  Sun Microsystems, Inc. has
@@ -31,8 +30,8 @@ options {
 }
 
 
-PARSER_BEGIN(JMLParser)
-package tmp.generated_jml_contract_composition;
+PARSER_BEGIN(ContractParser)
+package tmp.generated_contract;
 
 import java.io.*;
 import java.util.*;
@@ -45,14 +44,14 @@ import de.ovgu.cide.fstgen.ast.*;
  * Grammar to parse Java version 1.5
  * @author Sreenivasa Viswanadha - Simplified and enhanced for 1.5
  */
-public class JMLParser extends AbstractFSTParser
+public class ContractParser extends AbstractFSTParser
 {
- 	public JMLParser(){}
+ 	public ContractParser(){}
 }
 
-PARSER_END(JMLParser)
+PARSER_END(ContractParser)
 /* WHITE SPACE */
-<DEFAULT, IN_JML_MULTI_LINE>
+<DEFAULT>
 SPECIAL_TOKEN :
 {
   " "
@@ -66,23 +65,8 @@ SPECIAL_TOKEN :
 
 
 
-SKIP :
-{
-  "/*@" : IN_JML_MULTI_LINE
-  
-}
 
-
-<IN_JML_MULTI_LINE>
-SKIP :
-{
-  <JML_MULTI_LINE_END: "@*/" > : DEFAULT
-| <REG_MULTI_LINE_END: "*/" > : DEFAULT
-}
-
-
-
-<IN_JML_MULTI_LINE>
+<DEFAULT>
 SKIP :
 {
   <JML_AT: " @" ~["*"]>
@@ -192,18 +176,13 @@ TOKEN :
 | < WHILE: "while" >
 }
 //#if JML
-<IN_JML_SINGLE_LINE, IN_JML_MULTI_LINE>
+
 TOKEN :
 {
 <ORIGINAL_SPEC: "\\original_spec">
 |<ORIGINAL_CASE: "\\original_case">
 |<ORIGINAL_CLAUSE: "\\original_clause">
 |<ORIGINAL: "\\original">
-|<FINAL_CONTRACT: "\\final_contract">
-|<FINAL_METHOD: "\\final_method">
-|<CONSECUTIVE_CONTRACT: "\\consecutive_contract">
-|<CONJUNCTIVE_CONTRACT: "\\conjunctive_contract">
-|<CUMULATIVE_CONTRACT: "\\cumulative_contract">
 |<HENCE_BY: "hence_by">
 |<HENCE_BY_REDUNDANTLY: "hence_by_redundantly">
 | < MODEL: "model" >
@@ -599,7 +578,7 @@ Modifiers:
 Modifiers2 
 ;
 
-@FSTTerminal(compose="ModifierListSpecialization")
+
 Modifiers2:
 (LL(2) Modifier)*
 ;
@@ -1654,33 +1633,21 @@ AlsoKeyword:
 
 @FSTNonTerminal()
 Specification:
-@% ContractCompKey SpecCaseSeq [ RedundantSpec ] @&
+@% SpecCaseSeq [ RedundantSpec ] @&
 ;
 
-@FSTTerminal(compose="ContractKeywordComposition")
-ContractCompKey:
-  [ContractCompKeyList]
-; 
 
-ContractCompKeyList:
-  <FINAL_CONTRACT>
- |<FINAL_METHOD>
- |<CONSECUTIVE_CONTRACT>
- |<CUMULATIVE_CONTRACT>
- |<CONJUNCTIVE_CONTRACT>
-; 
-
-@FSTTerminal(compose="ContractComposition")
+@FSTNonTerminal()
 SpecCaseSeq:
 SpecCase (LOOK_AHEAD(3) AlsoSpecCase )*
 ;
 
-
+@FSTNonTerminal()
 AlsoSpecCase:
 <ALSO> SpecCase
 ;
 
-
+@FSTNonTerminal()
 SpecCase:
 
 LightweightSpecCase 
@@ -1692,19 +1659,19 @@ LightweightSpecCase
  ModelProgram
 ;
 
-@FSTInline()
+@FSTNonTerminal()
 LightweightSpecCase:
 GenericSpecCase
 ;
 
-@FSTNonTerminal(name="{SpecHeader){GenericSpecBody}")
+@FSTNonTerminal()
 GenericSpecCase:
 OriginalCaseKeyword
 |  [ SpecVarDecls ] SpecHeader [ GenericSpecBody ]
 | [ SpecVarDecls ] GenericSpecBody
 ;
 
-
+@FSTNonTerminal()
 GenericSpecBody: 
   SimpleSpecBody
 | <LBRACE><BIT_OR> GenericSpecCaseSeq <BIT_OR> <RBRACE>
@@ -1712,67 +1679,67 @@ GenericSpecBody:
 
 
 
-
+@FSTNonTerminal()
 RedundantSpec:
 Implications //[ Examples ] | Examples
 ;
 
-
+@FSTNonTerminal()
 Implications: 
 <IMPLIES_THAT> SpecCaseSeq
 ;
 
-
+@FSTNonTerminal()
 HeavyWeightSpecCase: BehaviorSpecCase
         | ExceptionalBehaviorSpecCase
         | NormalBehaviorSpecCase
 ;
 
-
+@FSTNonTerminal()
 BehaviorSpecCase: [ Privacy ] [ <CODE> ] BehaviorKeyword
                        GenericSpecCase
 ;
 
-
+@FSTNonTerminal()
 BehaviorKeyword: <BEHAVIOR> | <BEHAVIOUR>
 ;
-
+@FSTNonTerminal()
 NormalBehaviorSpecCase: [ Privacy ] [ <CODE> ] NormalBehaviorKeyword
                               NormalSpecCase
 ;
-                            
+          @FSTNonTerminal()                  
 NormalBehaviorKeyword: <NORMAL_BEHAVIOR> | <NORMAL_BEHAVIOUR>;
-
+@FSTNonTerminal()
 NormalSpecCase: GenericSpecCase
 ;
-
+@FSTNonTerminal()
 ExceptionalBehaviorSpecCase: [ Privacy ] [ <CODE> ] ExceptionalBehaviorKeyword
                                    ExceptionalSpecCase
 ;
-
+@FSTNonTerminal()
 ExceptionalBehaviorKeyword: <EXCEPTIONAL_BEHAVIOR> | <EXCEPTIONAL_BEHAVIOUR>
 ;
-
+@FSTNonTerminal()
 ExceptionalSpecCase: GenericSpecCase;
-
+@FSTNonTerminal()
 SpecVarDecls: ForallVarDecls [ OldVarDecls ]
         | OldVarDecls
 ;
-
+@FSTNonTerminal()
 ForallVarDecls: ForallVarDeclarator ( ForallVarDeclarator )*
 ;
- 
+ @FSTNonTerminal()
 ForallVarDeclarator: <FORALL> [ BoundVarModifiers ] TypeSpec QuantifiedVarDeclarator <SEMICOLON>
 ;
-
+@FSTNonTerminal()
 OldVarDecls: OldVarDeclarator ( OldVarDeclarator )*;
-
+@FSTNonTerminal()
 OldVarDeclarator: <OLD> [ BoundVarModifiers ] TypeSpec SpecVariableDeclarators <SEMICOLON>
 ;
 
-
+@FSTTerminal()
 RequiresClause: RequiresKeyword PredOrNot <SEMICOLON>
-      //  | RequiresKeyword <SAME> <SEMICOLON>
+	//  | RequiresKeyword <SAME> <SEMICOLON>
 ;
 
 RequiresKeyword: <REQUIRES> | <PRE> 
@@ -1781,14 +1748,14 @@ RequiresKeyword: <REQUIRES> | <PRE>
 
 PredOrNot: Predicate | <NOT_SPECIFIED> 
 ;
-
+@FSTTerminal()
 EnsuresClause: EnsuresKeyword PredOrNot <SEMICOLON>
 ;
 
 EnsuresKeyword: <ENSURES> | <POST>
         | <ENSURES_REDUNDANTLY> | <POST_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 SignalsClause: SignalsKeyword <LPAREN> ReferenceTypeP[ Id ] <RPAREN>
                    [ PredOrNot ] <SEMICOLON>
 ;                   
@@ -1808,19 +1775,19 @@ CommaReferenceType:
 SignalsOnlyKeyword: <SIGNALS_ONLY> | <SIGNALS_ONLY_REDUNDANTLY>
 ;
 
-
+@FSTTerminal()
 DivergesClause: DivergesKeyword PredOrNot <SEMICOLON>
 ;
 
 DivergesKeyword: <DIVERGES> | <DIVERGES_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 WhenClause: WhenKeyword PredOrNot <SEMICOLON>
 ;
 
 WhenKeyword: <WHEN> | <WHEN_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 AssignableClause: AssignableKeyword StoreRefList <SEMICOLON>
 ;
 
@@ -1828,13 +1795,13 @@ AssignableKeyword: <ASSIGNABLE> | <ASSIGNABLE_REDUNDANTLY>
         | <MODIFIABLE> | <MODIFIABLE_REDUNDANTLY>
         | <MODIFIES> | <MODIFIES_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 AccessibleClause: AccessibleKeyword StoreRefList <SEMICOLON>
 ;
 
 AccessibleKeyword: <ACCESSIBLE> | <ACCESSIBLE_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 CallableClause: CallableKeyword CallableMethodsList <SEMICOLON>
 ;
 
@@ -1842,7 +1809,7 @@ CallableKeyword: <CALLABLE> | <CALLABLE_REDUNDANTLY>
 ;
 CallableMethodsList: MethodNameList | StoreRefKeyword
 ;
-
+@FSTTerminal()
 MeasuredClause: MeasuredByKeyword <NOT_SPECIFIED> <SEMICOLON>
         | MeasuredByKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
 ;
@@ -1853,18 +1820,19 @@ IfPredicate:
 MeasuredByKeyword: <MEASURED_BY> | <MEASURED_BY_REDUNDANTLY>
 
 ;
+@FSTTerminal()
 CapturesClause: CapturesKeyword StoreRefList <SEMICOLON>
 ;
 
 CapturesKeyword: <CAPTURES> | <CAPTURES_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 WorkingSpaceClause: WorkingSpaceKeyword <NOT_SPECIFIED> <SEMICOLON>
         | WorkingSpaceKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
 ;
 WorkingSpaceKeyword: <WORKING_SPACE> | <WORKING_SPACE_REDUNDANTLY>
 ;
-
+@FSTTerminal()
 DurationClause: DurationKeyword <NOT_SPECIFIED> <SEMICOLON>
         | DurationKeyword SpecExpression [ IfPredicate ] <SEMICOLON>
 ;
@@ -2005,16 +1973,16 @@ AlsoGenericSpecCase:
 <ALSO> GenericSpecCase
 ;
 
-
+@FSTNonTerminal()
 SpecHeader:  RequiresClause ( RequiresClause )*
 ;
 
-
+@FSTNonTerminal()
 SimpleSpecBody: SimpleSpecBodyClause
                      ( SimpleSpecBodyClause )*
 ;
 
-
+@FSTNonTerminal()
 SimpleSpecBodyClause: DivergesClause
         | AssignableClause | AccessibleClause
         | CapturesClause | CallableClause
@@ -2437,5 +2405,3 @@ StarsNonClose: <STAR> ( <STAR> )* <CHARACTER_LITERAL>
 Keyword:
 <IDENTIFIER>
 ;
-
-//#endif

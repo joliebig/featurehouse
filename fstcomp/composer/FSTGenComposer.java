@@ -13,12 +13,12 @@ import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
 import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
-
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.CompositionRule;
 import composer.rules.ConstructorConcatenation;
 import composer.rules.ContractComposition;
+import composer.rules.ContractKeywordComposition;
 import composer.rules.ExpansionOverriding;
 import composer.rules.FieldOverriding;
 import composer.rules.ImplementsListMerging;
@@ -34,7 +34,6 @@ import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
 import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
-
 import counter.Counter;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -103,6 +102,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 			compositionRules.add(new Replacement());
 			compositionRules.add(new JavaMethodOverriding());
 			compositionRules.add(new ContractComposition(cmd.contract_style));
+			compositionRules.add(new ContractKeywordComposition(cmd.contract_style));
 		}
 		compositionRules.add(new StringConcatenation());
 		compositionRules.add(new ImplementsListMerging());
@@ -437,7 +437,11 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 				if (applicableRule != null) {
 					//apply composition rule
-					applicableRule.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					try {
+						applicableRule.compose(terminalA, terminalB, terminalComp, nonterminalParent);
+					} catch (CompositionException e) {
+						fireCompositionErrorOccured(e);
+					}
 				} else {
 					System.err
 							.println("Error: don't know how to compose terminals: "

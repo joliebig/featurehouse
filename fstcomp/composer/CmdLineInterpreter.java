@@ -153,9 +153,9 @@ public class CmdLineInterpreter {
 							|| contract_style.equals("explicit_contracting")
 							|| contract_style.equals("contract_overriding")
 							|| contract_style.equals("consecutive_contracting") || contract_style
-								.equals("none"))) {
+								.equals("none") || contract_style.equals("method_based"))) {
 						throw new IllegalArgumentException(
-								"Unknown contract style. Please choose from: plain_contracting, explicit_contracting, consecutive_contracting");
+								"Unknown contract style. Please choose from: plain_contracting, explicit_contracting, consecutive_contracting, method_based");
 					}
 				}
 
