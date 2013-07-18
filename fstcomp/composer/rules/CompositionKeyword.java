@@ -4,7 +4,7 @@ public enum CompositionKeyword {
 	FINAL_CONTRACT("\\final_contract", 1), FINAL_METHOD("\\final_method", 0), CUMULATIVE_CONTRACT(
 			"\\cumulative_contract", 2), CONSECUTIVE_CONTRACT(
 			"\\consecutive_contract", 3), CONJUNCTIVE_CONTRACT(
-			"\\conjunctive_contract", 4);
+			"\\conjunctive_contract", 4), EXPLICIT_CONTRACT("",5);
 	private String label;
 	private int rank;
 
@@ -36,11 +36,11 @@ public enum CompositionKeyword {
 	
 	public static CompositionKeyword getCompositionKeyword(String label) {
 		for (CompositionKeyword key : values()) {
-	        if (key.getLabel().equals(label)) {
+	        if (key.getLabel().equals(label.trim())) {
 	            return key;
 	        }
 	    }
 		
-		return null;
+		return EXPLICIT_CONTRACT;
 	}
 }
