@@ -78,11 +78,13 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (nonTerminal.getType().equals("HiddenDeclaration")) {
 			printFeatures(nonTerminal,true);
 			printToken("hiddens");
+			hintNewLine();
 			hintIncIndent();
 			hintNewLine();
 			for (FSTNode v : getChildren(nonTerminal,"Grammar")) {
 				v.accept(this);
 			}
+			hintDecIndent();
 			hintNewLine();
 			printFeatures(nonTerminal,false);
 			return false;

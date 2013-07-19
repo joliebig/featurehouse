@@ -147,6 +147,25 @@ public class FSTGenProcessor {
 		e1.printStackTrace();
 	}
 	
+	private LinkedList<ICompositionErrorListener> compositionErrorListeners = new LinkedList<ICompositionErrorListener>();
+
+	public void addCompositionErrorListener(ICompositionErrorListener listener) {
+		if (!compositionErrorListeners.contains(listener)) {
+			compositionErrorListeners.add(listener);
+		}
+	}
+
+	public void removeCompositionErrorListener(ICompositionErrorListener listener) {
+		compositionErrorListeners.remove(listener);
+	}
+
+	public void fireCompositionErrorOccured(CompositionException e) {
+		for (ICompositionErrorListener listener : compositionErrorListeners) {
+			listener.parseErrorOccured(e);
+		}
+		e.printStackTrace();
+	}
+	
 	public void registerFSTVisitor(FSTVisitor visitor) {
 	    fstVisitors.add(visitor);
 	}
