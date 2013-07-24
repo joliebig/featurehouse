@@ -24,7 +24,7 @@ public class InvariantCompositionMeta extends AbstractCompositionRule {
 	@Override
 	public void preCompose(FSTTerminal terminalA) {
 		String body = terminalA.getBody();
-		body = body.replaceAll("invariant ", "invariant FeatureModel." + getFeatureName(terminalA) + " ==> (");
+		body = body.replaceAll("invariant ", "invariant FM.FeatureModel." + getFeatureName(terminalA) + " ==> (");
 		body = body.replaceAll(";", ");");
 		terminalA.setBody(body);
 	}

@@ -155,7 +155,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 					if (cmd.lifting_language.equals("c")) {
 						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
 					} else if (cmd.lifting_language.equals("java")) {
-						new JavaRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator);
+						new JavaRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + cmd.equationFileName + File.separator);
 					}
 				}
 			} catch (IOException e) {			

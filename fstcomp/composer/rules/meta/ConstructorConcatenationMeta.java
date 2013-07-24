@@ -31,7 +31,7 @@ public class ConstructorConcatenationMeta extends ConstructorConcatenation {
 		String head = constructorA.substring(0, constructorA.indexOf("{") + 1);
 		String body = constructorA.substring(constructorA.indexOf("{") + 1, constructorA.lastIndexOf("}"));
 		body = body.replaceAll("\\n", "\n\t");
-		terminalA.setBody(head + "\r\n\t\tif (FeatureModel." + getFeatureName(terminalA).toLowerCase() + ") {" + body + "\t\t}\r\n\t}");
+		terminalA.setBody(head + "\r\n\t\tif (FM.FeatureModel." + getFeatureName(terminalA).toLowerCase() + ") {" + body + "\t\t}\r\n\t}");
 //		terminalA.setBody(head + "\r\n\t\tif (FeatureModel." + getFeatureName(terminalA).toLowerCase() + ") {" + body + "\r\n\t\t//entry\r\n\t\t} else {\r\n\t\t//entry\r\n\t\t}\r\n\t}");
 	}
 	

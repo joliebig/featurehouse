@@ -37,8 +37,8 @@ public class ContractCompositionMeta extends ContractComposition {
 						clauseB = clauseB.substring(0, clauseB.indexOf("\\req "));
 						res += clauseB;
 					} else {
-						clauseB = clauseB.replaceAll("requires ", "requires !FeatureModel." + getFeatureName(terminalA) + " ==> ");
-						clauseB = clauseB.replaceAll("ensures ", "ensures !FeatureModel." + getFeatureName(terminalA) + " ==> ");
+						clauseB = clauseB.replaceAll("requires ", "requires !FM.FeatureModel." + getFeatureName(terminalA) + " ==> ");
+						clauseB = clauseB.replaceAll("ensures ", "ensures !FM.FeatureModel." + getFeatureName(terminalA) + " ==> ");
 						if (clauseB.contains("requires ")) {
 							res = res.replaceFirst("requires ", Matcher.quoteReplacement(clauseB) + ";\nrequires ");
 						} else if (clauseB.contains("ensures ")) {
@@ -101,7 +101,7 @@ public class ContractCompositionMeta extends ContractComposition {
 					if (added) {
 						result += ";";
 					}
-					result = result + s.replace("ensures ", "ensures FeatureModel." + getFeatureName(terminal) + " ==> (");
+					result = result + s.replace("ensures ", "ensures FM.FeatureModel." + getFeatureName(terminal) + " ==> (");
 					open = true;
 				} else if (s.contains("requires ")) {
 					if (open) {
@@ -111,7 +111,7 @@ public class ContractCompositionMeta extends ContractComposition {
 					if (added) {
 						result += ";";
 					}
-					result = result + s.replace("requires ", "requires FeatureModel." + getFeatureName(terminal) + " ==> (");
+					result = result + s.replace("requires ", "requires FM.FeatureModel." + getFeatureName(terminal) + " ==> (");
 					open = true;
 				} else if (s.contains("assignable ")) {
 					if (open) {
@@ -154,7 +154,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		
 		String start = body.substring(0, index);
 		String end = body.substring(index);
-		terminal.setBody(start + "\\req FeatureModel." + getFeatureName(terminal) + ORIGINAL_OR + ";\r\n\t @ " + end);
+		terminal.setBody(start + "\\req FM.FeatureModel." + getFeatureName(terminal) + ORIGINAL_OR + ";\r\n\t @ " + end);
 	}
 	 
 	/**
@@ -173,7 +173,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		body = body.replaceAll("\\" + ORIGINAL_OR, "");
 		body = body.replaceAll("\\" + ORIGINAL_KEYWORD, "true");
 		if (FSTGenComposerExtension.key) {
-			body = "\r\n\t @ requires FeatureModel.valid();\r\n\t @ " + body;
+			body = "\r\n\t @ requires FM.FeatureModel.valid();\r\n\t @ " + body;
 		} else {
 			body = "\r\n\t @ " + body;
 		}

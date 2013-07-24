@@ -45,15 +45,15 @@ public class FieldOverridingMeta extends FieldOverriding {
 		
 		FSTTerminal invariant = findInvariant("#" + fieldName, terminalComp);
 		if (invariant != null) {
-			String oldInvariant = invariant.getBody().substring(invariant.getBody().indexOf("FeatureModel.") - 2, invariant.getBody().length() - 1);
-			String newInavariant = "invariant (FeatureModel." + getFeatureName(terminalA) + " ==> " + fieldName + " == " + fieldA + 
-					") && (!FeatureModel." + getFeatureName(terminalA) + " ==> (" + oldInvariant + ");";
+			String oldInvariant = invariant.getBody().substring(invariant.getBody().indexOf("FM.FeatureModel.") - 2, invariant.getBody().length() - 1);
+			String newInavariant = "invariant (FM.FeatureModel." + getFeatureName(terminalA) + " ==> " + fieldName + " == " + fieldA + 
+					") && (!FM.FeatureModel." + getFeatureName(terminalA) + " ==> (" + oldInvariant + ");";
 			invariant.setBody(newInavariant);
 		} else if (bodyA.contains("final ")) {
 			String fieldB = bodyB.substring(bodyB.indexOf('=') + 1).replace(";", "").trim();
 			String prefix = " ==> (" + fieldName + " == " + fieldB + ")";
-			String newPrefix = "invariant (FeatureModel." + getFeatureName(terminalA) + " ==> " + fieldName + " == " + fieldA + 
-					") && (!FeatureModel." + getFeatureName(terminalA) + prefix + ");";
+			String newPrefix = "invariant (FM.FeatureModel." + getFeatureName(terminalA) + " ==> " + fieldName + " == " + fieldA + 
+					") && (!FM.FeatureModel." + getFeatureName(terminalA) + prefix + ");";
 			if (bodyA.contains("static ")) {
 				newPrefix = "static " + newPrefix;
 			}
@@ -66,7 +66,7 @@ public class FieldOverridingMeta extends FieldOverriding {
 		
 		
 		
-		return bodyA.substring(0, bodyB.indexOf('=') + 1) + " FeatureModel." + getFeatureName(terminalA) +
+		return bodyA.substring(0, bodyB.indexOf('=') + 1) + " FM.FeatureModel." + getFeatureName(terminalA) +
 				   " ? " + bodyA.substring(bodyA.indexOf('=') + 1).replaceAll(";", "") + " : " + bodyB.substring(bodyB.indexOf('=') + 1);
 	}
 	

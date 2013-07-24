@@ -76,7 +76,7 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 		String start = specCaseSeq.getBody().substring(0, index);
 		String end = specCaseSeq.getBody().substring(index);
 		featureName = featureName + (FSTGenComposerExtension.key ? "" : "()"); 
-		specCaseSeq.setBody(start + "\r\n\t @ \\nreq !FeatureModel." + featureName + ";\r\n\t @ " + end);	
+		specCaseSeq.setBody(start + "\r\n\t @ \\nreq !FM.FeatureModel." + featureName + ";\r\n\t @ " + end);	
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class JavaMethodOverridingMeta extends JavaMethodOverriding {
 			FSTTerminal terminalComp, String name) {
 		String parameterNames = getParameterNames(terminalA);
 		String returnType = getReturnType(terminalA.getBody(), name);
-		return terminalComp.getBody().replaceFirst("\\{", "{\n\t\tif (!FeatureModel."+ getLowFeatureName(terminalA) +
+		return terminalComp.getBody().replaceFirst("\\{", "{\n\t\tif (!FM.FeatureModel."+ getLowFeatureName(terminalA) +
 				(returnType.isEmpty() ? ") {\n\t\t\toriginal("+parameterNames+");\n\t\t\treturn;\n\t\t}" : 
 				")\n\t\t\treturn original("+ parameterNames +");"));
 	}
