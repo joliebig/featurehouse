@@ -216,7 +216,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureAnnotation.java");
 		f.getParentFile().mkdirs();
 		System.out.println("writing FeatureAnnotation to file " +  f.getAbsolutePath());
-		try (FileWriter fw = new FileWriter(f)) {
+		FileWriter fw = null;
+		try  {
+			fw = new FileWriter(f);
 			String contents =
 				"package featureHouse;\n"+
 				"import java.lang.annotation.ElementType;\n" +
@@ -232,6 +234,14 @@ public class FSTGenComposer extends FSTGenProcessor {
 			fw.write(contents);
 		} catch (IOException e) {
 			System.err.println("Could not write FeatureAnnotation.java " + e.getMessage());
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -239,7 +249,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureSwitchID.java");
 		f.getParentFile().mkdirs();
 		System.out.println("writing FeatureSwitchID to file " +  f.getAbsolutePath());
-		try (FileWriter fw = new FileWriter(f)) {
+		FileWriter fw = null; 
+		try {
+			fw = new FileWriter(f);
 			String contents =
 				"package featureHouse;\n"+
 				"import java.lang.annotation.ElementType;\n" +
@@ -257,6 +269,14 @@ public class FSTGenComposer extends FSTGenProcessor {
 			fw.write(contents);
 		} catch (IOException e) {
 			System.err.println("Could not write FeatureSwitchID.java " + e.getMessage());
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

@@ -73,9 +73,12 @@ public class ContractComposition extends AbstractCompositionRule {
 			FSTNonTerminal nonterminalParent) {
 		String compositionKey = "";
 
-		for (FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren())
-			if (n.getType().equals("ContractCompKey"))
+		for (FSTNode n : ((FSTNonTerminal) terminalB.getParent()).getChildren()) {
+			if (n.getType().equals("ContractCompKey")) {
 				compositionKey = ((FSTTerminal) n).getContractCompKey();
+				break;
+			}
+		}	
 
 		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())
 				|| compositionKey.equals(CompositionKeyword.FINAL_METHOD
