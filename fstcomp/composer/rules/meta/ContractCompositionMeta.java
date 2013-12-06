@@ -2,6 +2,8 @@ package composer.rules.meta;
 
 
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.regex.Matcher;
 
 import composer.FSTGenComposerExtension;
@@ -17,8 +19,35 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
  */
 public class ContractCompositionMeta extends ContractComposition {
 
+	private FeatureModelInfo modelInfo;
+	
+	public void setFeatureModelInfo(FeatureModelInfo model){
+		this.modelInfo = model;
+	}
+	
 	public ContractCompositionMeta(String contract_style) {
 		super(contract_style);
+	}
+	
+	public ContractCompositionMeta(String contract_style, FeatureModelInfo model){
+		super(contract_style);
+		this.modelInfo = model;
+	}
+	
+	// TODO: folgende 2 Methoden evtl. als Statische Methoden in eine Utils-Klasse
+	private List<String> getSelectedFeatures(String clause){
+		LinkedList<String> result = new LinkedList<String>();
+		// TODO: Alle Features ermitteln
+		//       Form: <kein "!">FM.FeatureModel.<FeatureName><space>
+		//				(Achtung es gibt auch !FM.FeatureModel.<FeatureName>)
+		return result;
+	}
+	
+	private List<String> getRejectedFeatures(String clause){
+		LinkedList<String> result = new LinkedList<String>();
+		// TODO: Alle Features ermitteln
+		//       Form: !FM.FeatureModel.<FeatureName><space>
+		return result;
 	}
 
 	@Override
