@@ -22,6 +22,7 @@ import composer.rules.Replacement;
 import composer.rules.StringConcatenation;
 import composer.rules.meta.ConstructorConcatenationMeta;
 import composer.rules.meta.ContractCompositionMeta;
+import composer.rules.meta.FeatureModelInfo;
 import composer.rules.meta.FieldOverridingMeta;
 import composer.rules.meta.InvariantCompositionMeta;
 import composer.rules.meta.JavaMethodOverridingMeta;
@@ -44,10 +45,16 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	
 	public static boolean key = false;
 	public static boolean metaproduct = false;
+	private FeatureModelInfo modelInfo;
 	
-	
+
 	public FSTGenComposerExtension() {
 		super();
+	}
+
+	public FSTGenComposerExtension(FeatureModelInfo modelInfo) {
+		super();
+		this.modelInfo = modelInfo;
 	}
 	
 	/**
@@ -87,7 +94,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			compositionRules.add(new JavaMethodOverridingMeta());
 		}
 		compositionRules.add(new InvariantCompositionMeta());
-		compositionRules.add(new ContractCompositionMeta(cmd.contract_style));
+		compositionRules.add(new ContractCompositionMeta(cmd.contract_style,modelInfo));
 		compositionRules.add(new StringConcatenation());
 		compositionRules.add(new ImplementsListMerging());
 		compositionRules.add(new CSharpMethodOverriding());
@@ -185,9 +192,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	private void preProcessSubtree(FSTNode child) {
 		if (child instanceof FSTNonTerminal) {
 			if (child.getType().equals("MethodSpecification") && ((FSTNonTerminal) child).getChildren().isEmpty()) {
-				FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
-				((FSTNonTerminal) child).addChild(spec);
-				(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "\\req FM.FeatureModel." + getFeatureName(spec) + "\\or_original;", "", "ContractComposition"));
+				//FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
+				//((FSTNonTerminal) child).addChild(spec);
+				//(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "\\req FM.FeatureModel." + getFeatureName(spec) + "\\or_original;", "", "ContractComposition"));
 			} else {
 				for (FSTNode node : ((FSTNonTerminal) child).getChildren()) {
 					preProcessSubtree(node);
