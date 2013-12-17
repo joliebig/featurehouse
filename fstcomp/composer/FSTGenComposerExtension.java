@@ -57,6 +57,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 		this.modelInfo = modelInfo;
 	}
 	
+	public void setModelInfo(FeatureModelInfo infoObject){
+		this.modelInfo = infoObject;
+	}
 	/**
 	 * Builds the full FST of the project without composition.
 	 * @param args Default build parameters
