@@ -14,13 +14,13 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	public final static String COMPOSITION_RULE_NAME = "ContractComposition";
 
-	private static final String PLAIN_CONTRACTING = "plain_contracting";
-	private static final String CONSECUTIVE_CONTRACTING = "consecutive_contracting";
-	private static final String EXPLICIT_CONTRACTING = "explicit_contracting";
-	private static final String CONTRACT_OVERRIDING = "contract_overriding";
-	private static final String CUMULATIVE_CONTRACTING = "cumulative_contracting";
-	private static final String CONJUNCTIVE_CONTRACTING = "conjunctive_contracting";
-	private static final String METHOD_BASED_COMPOSITION = "method_based";
+	protected static final String PLAIN_CONTRACTING = "plain_contracting";
+	protected static final String CONSECUTIVE_CONTRACTING = "consecutive_contracting";
+	protected static final String EXPLICIT_CONTRACTING = "explicit_contracting";
+	protected static final String CONTRACT_OVERRIDING = "contract_overriding";
+	protected static final String CUMULATIVE_CONTRACTING = "cumulative_contracting";
+	protected static final String CONJUNCTIVE_CONTRACTING = "conjunctive_contracting";
+	protected static final String METHOD_BASED_COMPOSITION = "method_based";
 
 	protected static final String ORIGINAL_KEYWORD_CLAUSE = "\\original_clause";
 	protected static final String ORIGINAL_SPEC_KEYWORD = "\\original_spec";
@@ -28,7 +28,7 @@ public class ContractComposition extends AbstractCompositionRule {
 	protected static final String ORIGINAL_KEYWORD = "\\original";
 	protected static final String ORIGINAL_OR = "\\or_original";
 
-	private String contractStyle = PLAIN_CONTRACTING;
+	protected String contractStyle = PLAIN_CONTRACTING;
 	private ContractReader contractReader;
 
 	public ContractComposition(String contract_style) {
@@ -380,7 +380,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		System.out.println("baseCases(id)= " + baseCases[caseId]);
 		Pattern p = Pattern
 				.compile(
-						".*\\(\\\\(forall|exists|max|min|num_of|product|sum).*(;).*(;).*\\).*",
+						".*\\(\\\\(forall|exists|max|min|num_of|product|sum)[^;]*(;)[^;]*(;).*\\).*",
 						Pattern.DOTALL);
 
 		Matcher m = p.matcher(baseCases[caseId]);
@@ -391,6 +391,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				sb.setCharAt(m.start(i), '€');
 				baseCases[caseId] = sb.toString();
 			}
+			m = p.matcher(baseCases[caseId]);
 			System.out.println("XX " + baseCases[caseId]);
 		}
 		String[] clausesA = baseCases[caseId].trim().split(";");

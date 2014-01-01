@@ -26,6 +26,7 @@ import composer.rules.meta.FeatureModelInfo;
 import composer.rules.meta.FieldOverridingMeta;
 import composer.rules.meta.InvariantCompositionMeta;
 import composer.rules.meta.JavaMethodOverridingMeta;
+import composer.rules.meta.MinimalFeatureModelInfo;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
@@ -45,7 +46,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	
 	public static boolean key = false;
 	public static boolean metaproduct = false;
-	private FeatureModelInfo modelInfo;
+	private FeatureModelInfo modelInfo = new MinimalFeatureModelInfo();
 	
 
 	public FSTGenComposerExtension() {
@@ -140,6 +141,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 				for (FSTNonTerminal feature : features) {
 					meta.addFeature(feature.getName());
 				}
+				modelInfo.clearFeatureNodes();
+				if (features.size() > 0)
+					modelInfo.addFeatureNodes(features);
 				
 				if (compose) {
 					FSTNode composition = composeMeta(features);
