@@ -22,6 +22,8 @@ import org.xml.sax.SAXException;
 import builder.ArtifactBuilderInterface;
 import cide.gparser.ParseException;
 import cide.gparser.TokenMgrError;
+import de.ovgu.cide.fstgen.ast.FSTFeatureNode;
+import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class FileLoader {
 
@@ -72,10 +74,10 @@ public class FileLoader {
 		parseEquationFile(equationFileName, equationBaseDirectoryName,
 				aheadEquation);
 	}
-	
+
 	public void loadFiles(String equationFileName,
-			String equationBaseDirectoryName, boolean aheadEquation, String[] features)
-			throws FileNotFoundException, ParseException {
+			String equationBaseDirectoryName, boolean aheadEquation,
+			String[] features) throws FileNotFoundException, ParseException {
 		parseEquationFile(equationFileName, equationBaseDirectoryName,
 				aheadEquation, features);
 	}
@@ -83,12 +85,13 @@ public class FileLoader {
 	private void parseEquationFile(String equationFileName,
 			String equationBaseDirectoryName, boolean aheadEquation)
 			throws FileNotFoundException, ParseException {
-		parseEquationFile(equationFileName, equationBaseDirectoryName, aheadEquation, null);
+		parseEquationFile(equationFileName, equationBaseDirectoryName,
+				aheadEquation, null);
 	}
-	
+
 	private void parseEquationFile(String equationFileName,
-			String equationBaseDirectoryName, boolean aheadEquation, String[] features)
-			throws FileNotFoundException, ParseException {
+			String equationBaseDirectoryName, boolean aheadEquation,
+			String[] features) throws FileNotFoundException, ParseException {
 		if (equationFileName == null || equationFileName.length() == 0)
 			throw new FileNotFoundException();
 		File equationFile = new File(equationFileName);
@@ -96,8 +99,7 @@ public class FileLoader {
 		String equationFileContent = "";
 		BufferedReader fileReader = null;
 		try {
-			fileReader = new BufferedReader(new FileReader(
-					equationFile));
+			fileReader = new BufferedReader(new FileReader(equationFile));
 			String line = fileReader.readLine();
 			while (line != null) {
 				if (!line.startsWith("#")) {
@@ -146,12 +148,29 @@ public class FileLoader {
 				if (features[i].trim().length() > 0) {
 					File feature = new File(equationBaseDirectoryName
 							+ features[i]);
+					
+					// Initialize each ArtifactBuilder with the current feature features[i].
+					// If we do not initialize it FSTGenMerger fails, because a feature might
+					// be empty and does not contain any code artifacts for merging.
+					Iterator<ArtifactBuilderInterface> biter = builderList.iterator();
+					
+					while (biter.hasNext()) {
+						biter.next().addFeature(new FSTFeatureNode(features[i]));
+					}
+
 					parseDirectory(feature, !aheadEquation);
 				}
 			}
 		}
 	}
 
+	/**
+	 * 
+	 * @param directory -- name of the directory we are currently looking at
+	 * @param recursive ??
+	 * @throws FileNotFoundException
+	 * @throws ParseException
+	 */
 	void parseDirectory(File directory, boolean recursive)
 			throws FileNotFoundException, ParseException {
 		if (directory.getName().equals(MODIFICATION_FOLDER_TAG)) {
@@ -203,9 +222,8 @@ public class FileLoader {
 								composer.fireParseErrorOccured(e);
 							} catch (TokenMgrError e) {
 								composer.getErrorFiles().add(files[i]);
-								throw(e);
+								throw (e);
 							}
-							// builder.processFile(files[i]);
 						}
 					}
 				}

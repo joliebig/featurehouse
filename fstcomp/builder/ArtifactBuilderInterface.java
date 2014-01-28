@@ -12,6 +12,8 @@ public interface ArtifactBuilderInterface {
 	public abstract boolean acceptFile(File inputFile);
 
 	public abstract LinkedList<FSTNonTerminal> getFeatures();
+	
+	public abstract void addFeature(FSTNonTerminal feature);
 
 	public abstract void setBaseDirectoryName(String baseDirectoryName);
 

@@ -57,6 +57,10 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 	public LinkedList<FSTNonTerminal> getFeatures() {
 		return featureNodes;
 	}
+	
+	public void addFeature(FSTNonTerminal feature) {
+		featureNodes.add(feature);
+	}
 
 	public abstract void processNode(FSTNonTerminal parent, StringTokenizer st,
 			File inputFile) throws FileNotFoundException, ParseException;
@@ -79,21 +83,20 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 	public String getBaseDirectoryName() {
 		return this.baseDirectoryName;
 	}
-
+	
 	/**
 	 * Return the Feature Tree corresponding to the given Name. Constructs a new
 	 * Feature if none matches.
 	 * 
-	 * @param name
-	 *            the name of a feature
+	 * @param featureName the name of a feature
 	 * @return matching Feature Tree
 	 */
-	private FSTNonTerminal getFeatureNodeByName(String name) {
+	private FSTNonTerminal getFeatureTree(String featureName) {
 		for (FSTNonTerminal featureNode : featureNodes) {
-			if (featureNode.getName().equals(name))
+			if (featureNode.getName().equals(featureName))
 				return featureNode;
 		}
-		FSTNonTerminal newFeatureNode = new FSTFeatureNode(name);
+		FSTNonTerminal newFeatureNode = new FSTFeatureNode(featureName);
 		featureNodes.add(newFeatureNode);
 		return newFeatureNode;
 	}
@@ -134,7 +137,7 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 			String featureName = st.nextToken(); // the name of the feature must
 													// be the next token
 			// get the correct Feature tree
-			parent = getFeatureNodeByName(featureName);
+			parent = getFeatureTree(featureName);
 
 			// memorize the feature to which the nodes belong
 			AbstractFSTParser.fstnodes.add(new FSTNonTerminal("Feature", parent

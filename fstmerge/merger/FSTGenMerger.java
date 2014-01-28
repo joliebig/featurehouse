@@ -140,8 +140,12 @@ public class FSTGenMerger extends FSTGenProcessor {
 				LinkedList<FSTNonTerminal> features = builder.getFeatures();
 
 				if (!quietval)
-					for(FSTNonTerminal feature : features)
-						System.out.println(feature.toString());
+					for(FSTNonTerminal feature : features){
+						String ftos = feature.toString();
+						if (! ftos.isEmpty())
+							System.out.println(feature.toString());
+					}
+						
 				
 				FSTNode merged;
 				
@@ -150,8 +154,12 @@ public class FSTGenMerger extends FSTGenProcessor {
 					
 					mergeVisitor.visit(merged);
 					
-					if (!quietval)
-						System.err.println(merged.toString());
+					if (!quietval) {
+						String mtos = merged.toString();
+						if (! mtos.isEmpty())
+							System.err.println(merged.toString());
+					}
+						
 					
 					try {
 						featureVisitor.visit((FSTNonTerminal) merged);
