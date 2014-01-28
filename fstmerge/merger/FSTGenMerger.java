@@ -84,9 +84,9 @@ public class FSTGenMerger extends FSTGenProcessor {
 	
 	public void printUsage() {
 		System.err.println(
-"Usage: FSTGenMerger [-h, --help] [-o, --output-directory] " +
-"                    [-b, --base-directory] [-p, --preprocess-files] " +
-"                    <-e, --expression>|<-f, --filemerge> myfile parentfile yourfile");
+"Usage: FSTGenMerger [-h, --help] [-o, --output-directory] \n" +
+"                    [-b, --base-directory] [-p, --preprocess-files] \n" +
+"                    <-e, --expression>|<-f, --filemerge> myfile parentfile yourfile \n");
 	}
 	
 	public void run(String[] args) {
@@ -96,7 +96,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		CmdLineParser.Option expression = cmdparser.addStringOption('e', "expression");
 		CmdLineParser.Option basedir = cmdparser.addStringOption('b', "base-directory");
 		@SuppressWarnings("unused")
-		CmdLineParser.Option help = cmdparser.addStringOption('h', "help");
+		CmdLineParser.Option help = cmdparser.addBooleanOption('h', "help");
 		CmdLineParser.Option preprocessfiles = cmdparser.addBooleanOption('p', "preprocess-files");
 		CmdLineParser.Option quiet = cmdparser.addBooleanOption('q', "quiet");
 		CmdLineParser.Option filemerge = cmdparser.addBooleanOption('f', "filemerge");
@@ -113,7 +113,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		fileLoader.setPreprocessFiles(preprocessfilesval);
 		Boolean filemergeval = (Boolean)cmdparser.getOptionValue(filemerge);
 		String expressionval = (String)cmdparser.getOptionValue(expression);
-		if (null == expressionval && filemergeval) {
+		if (null == expressionval && null == filemergeval) {
 			printUsage();
 			System.exit(2);
 		}
