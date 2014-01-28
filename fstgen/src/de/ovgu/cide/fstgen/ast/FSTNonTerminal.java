@@ -62,6 +62,8 @@ public class FSTNonTerminal extends FSTNode {
 
     @Override
     public String toString() {
+    	if (getType().equals("Feature") && children.isEmpty())
+    		return "";
 	String shortS = toStringShort();
 	return shortS + printChildrenList();
     }
@@ -80,7 +82,7 @@ public class FSTNonTerminal extends FSTNode {
 	    result += children.get(idx).toString();
 	}
 	level--;
-	return result + "]";
+	return result;
     }
 
     public String printFST(int indent) {
