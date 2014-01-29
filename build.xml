@@ -1,0 +1,38 @@
+<project name="FeatureHouse" default="dist" basedir=".">
+<description>
+FeatureHouse: Automatic, language-independent software composition and merging
+</description>
+
+  <property name="srcfstcomp" location="./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
+  <property name="srcfstmerge" location="./fstmerge:./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
+  <property name="build" location="build"/>
+  <property name="dist" location="lib"/>
+
+  <presetdef name="javac">
+    <javac includeantruntime="false" />
+  </presetdef>
+
+  <tstamp>
+    <format property="current.time" pattern="yyyMMdd" />
+  </tstamp>
+
+  <target name="fstcomp">
+    <mkdir dir="${build}"/>
+    <javac sourcepath="${srcfstcomp}" destdir="${build}" srcdir="./fstcomp/composer/"/>
+  </target>
+
+  <target name="fstmerge">
+     <mkdir dir="${build}"/>
+     <javac sourcepath="${srcfstmerge}" destdir="${build}" srcdir="./fstmerge/merger/"/>
+  </target>
+
+  <target name="jar" depends="fstcomp,fstmerge" description="generate featurehouse.jar" >
+    <mkdir dir="${dist}"/>
+    <jar jarfile="${dist}/featurehouse_${current.time}.jar" basedir="${build}"/>
+  </target>
+
+  <target name="clean" description="clean up" >
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+  </target>
+</project>
