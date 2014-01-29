@@ -28,7 +28,11 @@ FeatureHouse: Automatic, language-independent software composition and merging
 
   <target name="jar" depends="fstcomp,fstmerge" description="generate featurehouse.jar" >
     <mkdir dir="${dist}"/>
-    <jar jarfile="${dist}/featurehouse_${current.time}.jar" basedir="${build}"/>
+    <jar jarfile="${dist}/featurehouse_${current.time}.jar" basedir="${build}">
+      <manifest>
+        <attribute name="Main-Class" value="composer.FSTGenComposer" />
+      </manifest>
+    </jar>
   </target>
 
   <target name="clean" description="clean up" >
