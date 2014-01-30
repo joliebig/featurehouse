@@ -35,6 +35,9 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </jar>
   </target>
 
+  <target name="test">
+  </target>
+
   <target name="clean" description="clean up" >
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
