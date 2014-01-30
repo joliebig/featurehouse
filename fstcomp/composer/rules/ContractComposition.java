@@ -388,7 +388,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		while (m.find()) {
 			for (int i = 2; i <= m.groupCount(); i++) {
 				StringBuilder sb = new StringBuilder(baseCases[caseId]);
-				sb.setCharAt(m.start(i), '€');
+				sb.setCharAt(m.start(i), '#');
 				baseCases[caseId] = sb.toString();
 			}
 			System.out.println("XX " + baseCases[caseId]);
@@ -410,7 +410,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		if (append)
 			result.setLength(result.length() - 4);
 
-		return result.toString().replaceAll("€", ";");
+		return result.toString().replaceAll("#", ";");
 	}
 
 	@Override
