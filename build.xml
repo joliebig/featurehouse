@@ -1,4 +1,4 @@
-<project name="FeatureHouse" default="dist" basedir=".">
+<project name="FeatureHouse" default="jar" basedir=".">
 <description>
 FeatureHouse: Automatic, language-independent software composition and merging
 </description>
@@ -6,7 +6,6 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <property name="srcfstcomp" location="./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
   <property name="srcfstmerge" location="./fstmerge:./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
   <property name="build" location="build"/>
-  <property name="dist" location="lib"/>
 
   <presetdef name="javac">
     <javac includeantruntime="false" />
