@@ -67,12 +67,12 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 		if (!replaceOriginal(terminalA)) {
 			terminalComp.setBody(terminalA.getBody());
 			String funcName = meta.getMethodName(terminalA);
-			meta.putMapping(funcName, getFeatureName(terminalA), funcName);
+			meta.putMapping(funcName, (terminalA.getOriginalFeatureName()), funcName);
 		} else {
 			FSTTerminal terminalComp2 = null;
 			FSTNonTerminal terminalParentComp2 = null;
 			if (CommandLineParameterHelper.isJML()) {
-				terminalParentComp2 = (FSTNonTerminal) (((FSTTerminal) terminalB)
+				terminalParentComp2 = (FSTNonTerminal) (terminalB
 						.getParent()).getDeepClone();
 				((FSTNonTerminal) ((FSTNonTerminal) terminalComp.getParent())
 						.getParent()).addChild(terminalParentComp2);
@@ -96,35 +96,31 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 
 			String toReplace = "original\\s*\\(";
 			String newMethodName = oldMethodName + "__wrappee__"
-					+ getFeatureName(terminalB);
+					+ (terminalB.getOriginalFeatureName());
 			String newBody = getNewBody(terminalA, terminalB, terminalComp,
 					oldMethodName).replaceAll(toReplace, newMethodName + "(");
 			if (addFeatureAnnotations) {
 				newBody = JavaMethodOverriding.featureAnnotationPrefix
-						+ getFeatureName(terminalA) + "\")\n" + newBody;
+						+ (terminalA.getOriginalFeatureName()) + "\")\n" + newBody;
 			}
 			terminalComp.setBody(newBody);
 
-			meta.putMapping(oldMethodName, getFeatureName(terminalB),
+			meta.putMapping(oldMethodName, (terminalB.getOriginalFeatureName()),
 					newMethodName);
-			meta.putMapping(oldMethodName, getFeatureName(terminalA),
+			meta.putMapping(oldMethodName, (terminalA.getOriginalFeatureName()),
 					oldMethodName);
 
 			// split the body of terminalComp2 in its major components; modify
 			// them seperately
 			int methodNamePosition = extractMethodPrefixEnd(
 					terminalComp2.getBody(), oldMethodName);
-			int annotationsEnd = extractMethodAnnotationsEnd(terminalComp2
-					.getBody());
+			int annotationsEnd = extractMethodAnnotationsEnd(terminalComp2.getBody());
 
-			String annotations = terminalComp2.getBody().substring(0,
-					annotationsEnd);
+			String annotations = terminalComp2.getBody().substring(0, annotationsEnd);
 			// remove override annotation from original method
 			annotations = annotations.replaceAll("@Override", "");
-			String prefix = terminalComp2.getBody().substring(annotationsEnd,
-					methodNamePosition);
-			String restOfBody = terminalComp2.getBody().substring(
-					methodNamePosition);
+			String prefix = terminalComp2.getBody().substring(annotationsEnd,methodNamePosition);
+			String restOfBody = terminalComp2.getBody().substring(methodNamePosition);
 			// prefix is the header from end of annotations to begin of method
 			// name
 
@@ -137,8 +133,7 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 			// modify the method name (is at beginning of restOfBody)
 			restOfBody = restOfBody.replaceFirst(oldMethodName, newMethodName);
 			// join the components
-			terminalComp2
-					.setBody(annotations + " " + prefix + " " + restOfBody);
+			terminalComp2.setBody(annotations + " " + prefix + " " + restOfBody);
 			terminalComp2.setName(newMethodName);
 			if (terminalParentComp2 != null)
 				terminalParentComp2.setName(newMethodName);
@@ -233,13 +228,6 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 	@Override
 	public String getRuleName() {
 		return COMPOSITION_RULE_NAME;
-	}
-
-	public static String getFeatureName(FSTNode node) {
-		if (node.getType().equals("Feature"))
-			return node.getName();
-		else
-			return getFeatureName(node.getParent());
 	}
 
 	private static boolean isC(FSTNode node) {

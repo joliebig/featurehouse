@@ -288,17 +288,36 @@ public class FSTGenComposer extends FSTGenProcessor {
 	private FSTNode compose(List<FSTNonTerminal> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {
+			setOriginalFeatureName((FSTNonTerminal)current, "");
 			if (composed != null) {
 				composed = compose(current, composed);
 			} else {
 				if (cmd.featureAnnotation) {
-					addAnnotationToChildrenMethods(current, JavaMethodOverriding.getFeatureName(current));
+					addAnnotationToChildrenMethods(current, "");
 				}
 				composed = current;
 			}
 		}
 		return composed;
 	}
+	
+	/**
+	 * Set the original feature of FSTTerminals, because the tree is composed and this
+	 * information would be lost.
+	 */
+	private void setOriginalFeatureName(FSTNonTerminal node, String feature) {
+		if (node.getType().equals("Feature")) {
+			feature = node.getName();
+		}
+		for (FSTNode child : node.getChildren()) {
+			if (child instanceof FSTNonTerminal) {
+				setOriginalFeatureName((FSTNonTerminal) child, feature);
+			} else if (child instanceof FSTTerminal) {
+				((FSTTerminal)child).setOriginalFeatureName(feature);
+			}
+		}
+	}
+	
 	private void addAnnotationToChildrenMethods(FSTNode current,
 			String featureName) {
 		if (current instanceof FSTNonTerminal) {
@@ -358,13 +377,13 @@ public class FSTGenComposer extends FSTGenProcessor {
 						FSTNode newChildA = rewriteSubtree(childA);
 						if (cmd.featureAnnotation) {
 							if (newChildA instanceof FSTNonTerminal) {
-								addAnnotationToChildrenMethods(newChildA, JavaMethodOverriding.getFeatureName(childA));
+								addAnnotationToChildrenMethods(newChildA, childA.getFeatureName());
 							} else if (newChildA instanceof FSTTerminal) {
 								if ("MethodDecl".equals(newChildA.getType()) ||
 										"ConstructorDecl".equals(newChildA.getType())) {
 									FSTTerminal termNewChildA = (FSTTerminal) newChildA;
 									String body = termNewChildA.getBody();
-									String feature = JavaMethodOverriding.getFeatureName(childA);
+									String feature = termNewChildA.getOriginalFeatureName();
 									termNewChildA.setBody(JavaMethodOverriding.featureAnnotationPrefix + feature +"\")\n" + body);
 								}
 							}
@@ -475,6 +494,4 @@ public class FSTGenComposer extends FSTGenProcessor {
 		} else
 			return null;
 	}
-	
-
 }
