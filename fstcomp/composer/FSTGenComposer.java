@@ -293,7 +293,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				composed = compose(current, composed);
 			} else {
 				if (cmd.featureAnnotation) {
-					addAnnotationToChildrenMethods(current, "");
+					addAnnotationToChildrenMethods(current, current.getFeatureName());
 				}
 				composed = current;
 			}
