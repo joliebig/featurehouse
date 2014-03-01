@@ -1,0 +1,817 @@
+options {
+  STATIC = false;
+}
+
+PARSER_BEGIN(CApproxParser)
+
+package de.ovgu.cide.fstgen.parsers.generated_capprox;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+public class CApproxParser extends AbstractFSTParser {
+
+	public CApproxParser() {}
+
+    // Run the parser
+    public static void main ( String args [ ] ) {
+      CApproxParser parser ;
+
+  	
+      if(args.length == 0){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Reading from standard input . . .");
+        parser = new CApproxParser(new OffsetCharStream(System.in));
+      }
+      else if(args.length == 1){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Reading from file " + args[0] + " . . ." );
+      try {
+        parser = new CApproxParser(new OffsetCharStream(new java.io.FileInputStream(args[0])));
+      }
+      catch(java.io.FileNotFoundException e){
+        System.out.println("C (approx) Parser Version 0.1:  File " + args[0] + " not found.");
+        return ;
+        }
+      }
+      else {
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Usage is one of:");
+        System.out.println("         java CParser < inputfile");
+        System.out.println("OR");
+        System.out.println("         java CParser inputfile");
+        return ;
+      }
+      try {
+        parser.TranslationUnit(false);
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Java program parsed successfully.");
+      }
+      catch(ParseException e){
+        System.out.println("C (approx) Parser Version 0.1Alpha:  Encountered errors during parse.");
+        e.printStackTrace();
+      }
+    }
+
+        
+         /**
+     * Append the given {@link Token} and any preceding special tokens to a
+     * given {@link StringBuffer}.
+     *
+     * @param token the given JavaCC {@link Token} object
+     * @param buffer the buffer to which to append <code>token</code>
+     **/
+    final private static void accumulate (Token token, StringBuffer buffer) {
+
+	// Append preceding special tokens to <code>buffer</code>:
+	//
+	Token special = firstSpecial (token) ;
+	if (special != token)
+	    while (special != null) {
+		buffer.append (special.toString ()) ;
+		special = special.next ;
+	    }
+
+	// Finally, append the token itself:
+	//
+	buffer.append (token.toString ()) ;
+    }
+      
+    /**
+     * Accumulate {@list Token} objects from the token stream, respecting
+     * nested code inside <code>open</code> and <code>close</code> pairs,
+     * until an unmatched <code>close</code> is the next token in the stream.
+     * This method assumes that an <code>open</code> token has just been read
+     * from the stream so the initial nesting level is 1.  The method returns
+     * when a matching <code>close</code> token is the next token in the token
+     * stream.  <em>The <code>close</code> token is left in the stream!</em>
+     *
+     * @return the accumulated tokens as a {@link String}.
+     *
+     * @throws ParseException
+     * if an end-of-file is found before an unmatched <code>close</code> token.
+     **/
+    final private Token accumulateNestedRegion (int open, int close)
+    throws ParseException {
+
+	StringBuffer buffer = new StringBuffer () ;
+
+	// Initialize result with known information (starting position, etc.):
+	//
+	Token result = Token.newToken (OTHER) ;
+	result.specialToken = null ;
+
+	Token startToken = firstSpecial (getToken (1)) ;
+	result.beginColumn = startToken.beginColumn ;
+	result.beginLine = startToken.beginLine ;
+
+	// Accumulate tokens until a <code>close</code> token is found:
+	//
+	for (int nesting = 1 ; nesting > 0 ; ) {
+
+	    getNextToken () ;
+
+	    // Update information in result:
+	    //
+	    result.endColumn = token.endColumn ;
+	    result.endLine = token.endLine ;
+	    result.next = token.next ;
+
+	    if (token.kind == EOF)
+		throw new ParseException (
+		    "accumulating from line "
+		    + result.beginLine
+		    + " at column "
+		    + result.beginColumn
+		    + ": EOF reached before ending "
+		    + tokenImage [close]
+		    + " found"
+		) ;
+
+		accumulate (token, buffer) ;
+	    if (token.kind == open)
+			++ nesting ;
+	    else if (token.kind == close) {
+			if (nesting == 1)
+		    	break ;
+			-- nesting ;
+	    }
+
+	    
+	    
+	}
+
+	result.image = buffer.toString () ;
+	return result ;
+    }
+
+    /**
+     * Accumulate {@link Token} objects from the token stream until a token
+     * matching <code>tokenKind</code> is consumed from the stream.  The
+     * tokens are accumulated in <code>buffer</code>, including the terminating
+     * token.
+     *
+     * @return a {@link Token}
+     * formed by concatenating all intervening tokens and special tokens.
+     **/
+    final private Token accumulateUntilToken (int tokenKind)
+    throws ParseException {
+
+	StringBuffer buffer = new StringBuffer () ;
+	Token token = getNextToken () ;
+
+	// Initialize result with known information (starting position, etc.):
+	//
+	Token result = Token.newToken (OTHER) ;
+	result.specialToken = null ;
+
+	Token startToken = firstSpecial (token) ;
+	result.beginColumn = startToken.beginColumn ;
+	result.beginLine = startToken.beginLine ;
+
+	// Accumulate tokens until a <code>tokenKind</code> token is found:
+	//
+	while (token.kind != tokenKind) {
+
+	    // Update information in result:
+	    //
+	    result.endColumn = token.endColumn ;
+	    result.endLine = token.endLine ;
+	    result.next = token.next ;
+
+	    if (token.kind == EOF)
+		throw new ParseException (
+		    "from line "
+		    + result.beginLine
+		    + " at column "
+		    + result.beginColumn
+		    + ": EOF reached before "
+		    + tokenImage [tokenKind]
+		    + " found"
+		) ;
+
+	    accumulate (token, buffer) ;
+	    token = getNextToken () ;
+	}
+
+	accumulate (token, buffer) ;
+
+	result.image = buffer.toString () ;
+	return result ;
+    }
+	/**
+	 * finds the end of the current line for preprocessor instructions. handles
+	 * also multiline makros ending with \
+	 * 
+	 * @return
+	 * @throws ParseException
+	 */
+	final private Token accumulateUntilLineEnd() throws ParseException {
+		StringBuffer buffer = new StringBuffer();
+		Token nextToken = peekNext();
+
+		// Initialize result with known information (starting position, etc.):
+		//
+		Token result = Token.newToken(OTHER);
+		result.specialToken = null;
+
+		Token startToken = firstSpecial(nextToken);
+		result.beginColumn = startToken.beginColumn;
+		result.beginLine = startToken.beginLine;
+
+		// Accumulate tokens until a <code>tokenKind</code> token is found:
+		//
+		while (!preceededByLinebreak(nextToken) || token.image.equals("\\")) {
+			getNextToken();
+
+			// Update information in result:
+			//
+			result.endColumn = token.endColumn;
+			result.endLine = token.endLine;
+			result.next = token.next;
+
+			if (token.kind == EOF)
+				throw new ParseException("from line " + result.beginLine
+						+ " at column " + result.beginColumn
+						+ ": EOF reached before special token" + " found");
+
+			accumulate(token, buffer);
+			nextToken = peekNext();
+		}
+
+		result.image = buffer.toString();
+		return result;
+	}
+
+	private boolean preceededByLinebreak(Token t) {
+		assert t != null;
+		Token specialToken = t.specialToken;
+		while (specialToken != null) {
+			if (specialToken.image.indexOf('\n')>=0)
+				return true;
+			specialToken = specialToken.specialToken;
+		}
+		return false;
+	}
+	private Token peekNext() {
+		if (token.next == null)
+			token.next = token_source.getNextToken();
+		return token.next;
+	}	
+    /**
+     * Finds the first token, special or otherwise, in the list of special
+     * tokens preceding this {@link Token}.  If this list is non-empty, the
+     * result will be a special token.  Otherwise, it will be the starting
+     * token.
+     *
+     * @param token the given {@link Token}.
+     * @return the first special token preceding <code>token</code>.
+     **/
+    final private static Token firstSpecial (Token token) {
+
+	while (token.specialToken != null)
+	    token = token.specialToken ;
+
+	return token ;
+    }
+  }
+
+PARSER_END(CApproxParser)
+
+SPECIAL_TOKEN : {
+ " "
+|  "\t"
+|  "\r"
+|  "\n"
+|  <"//" (~["\n","\r"])* ("\n" | "\r" | "\r\n")>
+|  <"/*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "/">
+| <"__attribute__((" (~[")"])* "))">
+| <"__attribute__((format(" (~[")"])* ")))">
+}
+
+
+TOKEN : {
+	<LITERAL: <INTEGER_LITERAL> | <FLOATING_POINT_LITERAL> | <STRING_LITERAL>|<CHARACTER_LITERAL>>
+|  <#INTEGER_LITERAL: <DECIMAL_LITERAL> (["l","L"])? | <HEX_LITERAL> (["l","L"])? | <OCTAL_LITERAL> (["l","L"])?>
+|  <#DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])*>
+|  <#HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+>
+|  <#OCTAL_LITERAL: "0" (["0"-"7"])*>
+|  <#FLOATING_POINT_LITERAL: (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])? | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])? | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])? | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]>
+|  <#EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+>
+|  <#CHARACTER_LITERAL: "\'" (~["\'","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"])) "\'">
+|  <#STRING_LITERAL: "\"" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])?  | ["0"-"3"] ["0"-"7"] ["0"-"7"] | ( ["\n","\r"] | "\r\n")))* "\"">
+}
+
+TOKEN : {
+	<INCLUDE: "include"> 
+|	<DEFINE: "define"> 
+|	<IFDEF: "ifdef"> 
+|	<IFNDEF: "ifndef"> 
+|	<ENDIF: "endif"> 
+|	<ELIF: "elif"> 
+|	<ELSIF: "elsif"> 
+|	<PPLINE: "line"> 
+|	<PPUNDEF: "undef"> 
+|	<PPPRAGMA: "pragma"> 
+|	<PPERROR: "error"> 
+|	<TYPEDEF: "typedef"> 
+//|	<LONG: "long"> 
+//|	<STRUCT: "struct"> 
+|	<ENUM: "enum"> 
+|	<EXTERN: "extern"> 
+|	<UNSIGNED: "unsigned"> 
+|	<CONST: "const"> 
+|	<STATIC: "static"> 
+|	<STRUCT: "struct"> 
+|	<INLINE: "inline"> 
+|	<INLINE2: "__inline__">
+|	<INLINE3: "__inline">
+|	<WEIREDSTUFF1: "__regbank">
+|	<WEIREDSTUFF2: "__TIPOFUNC__">
+|	<IF: "if"> 
+|	<ELSE: "else"> 
+|	<FOR: "for"> 
+|	<WHILE: "while"> 
+|	<DO: "do"> 
+|	<SWITCH: "switch"> 
+|	<CASE: "case"> 
+|	<SWDEFAULT: "default"> 
+|	<SEMI: ";"> 
+|	<COLON: ":"> 
+|	<COMMA: ","> 
+|	<LT: "<"> 
+|	<GT: ">"> 
+|	<OB: "("> 
+|	<CB: ")"> 
+|	<OCB: "{"> 
+|	<CCB: "}"> 
+|	<STAR: "*"> 
+|	<EQ: "="> 
+|	<HASH: "#"> 
+| 	<PIPE: "|">
+}
+
+TOKEN : {
+ <IDENTIFIER: <LETTER> (<LETTER> | <DIGIT>)* | "long long">
+|  <#LETTER: ["$","A"-"Z","_","a"-"z"]>
+|  <#DIGIT: ["0"-"9"]>
+| <OTHER: ~[]>
+}
+
+JAVACODE
+Token findEndGT () {
+    return accumulateNestedRegion (LT, GT) ;
+}
+JAVACODE
+Token findLineEnd () {
+    return accumulateUntilLineEnd() ;
+}
+JAVACODE
+Token findEndCB () {
+    return accumulateNestedRegion(OB, CB) ;
+}
+JAVACODE
+Token findEndCCB () {
+    return accumulateNestedRegion(OCB, CCB) ;
+}
+FSTInfo TranslationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Sequence_CodeUnit_TopLevel(inTerminal){ replaceName(n);} <EOF> {return productionEndNonTerminal("TranslationUnit","-","-");}
+
+ )  }
+
+FSTInfo Sequence_CodeUnit_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(LOOKAHEAD(2) n=CodeUnit_TopLevel(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Sequence_CodeUnit_TopLevel","-","-");}
+
+ )  }
+
+FSTInfo CodeUnit_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) n=PPIncludeStatement(true){ replaceName("PPIncludeStatement", n);}{ replaceName(n);} {return productionEndTerminal("Include","{PPIncludeStatement}","{PPIncludeStatement}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) n=PPDefineStatement(true){ replaceName("PPDefineStatement", n);}{ replaceName(n);} {return productionEndTerminal("Define","{PPDefineStatement}","{PPDefineStatement}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) n=PPIfDef_TopLevel(true){ replaceName("PPIfDef_TopLevel", n);}{ replaceName(n);} {return productionEndTerminal("IfDefTL","{PPIfDef_TopLevel}","{PPIfDef_TopLevel}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) "#" n=PPOtherIgnore(true){ replaceName("PPOtherIgnore", n);}{ replaceName(n);} findLineEnd() {return productionEndTerminal("Preprocessor","{PPOtherIgnore}","{PPOtherIgnore}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(FunctionHeader()) n=Function(true){ replaceName("Function", n);}{ replaceName(n);} {return productionEndTerminal("Func","{Function}","{Function}","JavaMethodOverriding","Default",first,token);}
+ |
+	n=TypeDef(true){ replaceName("TypeDef", n);}{ replaceName(n);} {return productionEndTerminal("TypeDef_","{TypeDef}","{TypeDef}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(3) n=ExternDecl(true){ replaceName("ExternDecl", n);}{ replaceName(n);} {return productionEndTerminal("ExternDec","{ExternDecl}","{ExternDecl}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(3) "struct" n=Id(inTerminal){ replaceName("Id", n);}{ replaceName(n);} "{" (n=Statement(inTerminal){ replaceName(n);})* "}" ";" {return productionEndNonTerminal("StructDec","{Id}","{Id}");}
+ |
+	n=Statement(true){ replaceName("Statement", n);}{ replaceName(n);} {return productionEndTerminal("StmtTL","{Statement}","{Statement}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Id(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} {return productionEndTerminal("Id","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CodeUnit_InBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) n=PPIfDef_BlockLevel(true){ replaceName(n);} {return productionEndTerminal("IfDefBL","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) n=PPIncludeStatement(true){ replaceName(n);} {return productionEndTerminal("IncludeBL","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) n=PPDefineStatement(true){ replaceName(n);} {return productionEndTerminal("DefineBL","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) "#" n=PPOtherIgnore(true){ replaceName(n);} findLineEnd() {return productionEndTerminal("PreprocessorBL","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=IfStatement(true){ replaceName(n);} {return productionEndTerminal("If","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=ForStatement(true){ replaceName(n);} {return productionEndTerminal("For","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=WhileStatement(true){ replaceName(n);} {return productionEndTerminal("While","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=DoStatement(true){ replaceName(n);} {return productionEndTerminal("Do","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=SwitchStatement(true){ replaceName(n);} {return productionEndTerminal("Switch","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) n=GotoLabel(true){ replaceName(n);} {return productionEndTerminal("CodeUnit_InBlock10","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=Block(true){ replaceName(n);} {return productionEndTerminal("Blck","-","-","Replacement","Default",first,token);}
+ |
+	n=Statement(true){ replaceName(n);} {return productionEndTerminal("Stmt","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Statement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=AnyStmtToken(true){ replaceName(n);})* ";" {return productionEndTerminal("Statement","{TOSTRING}","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"if" "(" findEndCB() n=BlockOrSingleStatement(true){ replaceName(n);} [LOOKAHEAD(1) n=ElseBlock(true){ replaceName(n);}] {return productionEndTerminal("IfStatement","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ElseBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"else"  {return productionEndTerminal("ElseBlock","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ForStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"for" "(" findEndCB() n=BlockOrSingleStatement(true){ replaceName(n);} {return productionEndTerminal("ForStatement","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo WhileStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"while" "(" findEndCB() n=BlockOrSingleStatement(true){ replaceName(n);} {return productionEndTerminal("WhileStatement","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DoStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"do" n=BlockOrSingleStatement(true){ replaceName(n);} "while" "(" findEndCB() ";" {return productionEndTerminal("DoStatement","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SwitchStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"switch" "(" findEndCB() "{" (n=SwCase(true){ replaceName(n);})* "}" {return productionEndTerminal("SwitchStatement","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SwCase(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"default" ":" n=Sequence_CodeUnit_InBlock(true){ replaceName(n);} {return productionEndTerminal("SwCase1","-","-","Replacement","Default",first,token);}
+ |
+	"case" [LOOKAHEAD(1) "(" <IDENTIFIER> ")"] n=SwCaseLabel(true){ replaceName(n);} (n=MoreSwCaseLabel(true){ replaceName(n);})* ":" n=Sequence_CodeUnit_InBlock(true){ replaceName(n);} {return productionEndTerminal("SwCase2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SwCaseLabel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IDENTIFIER> {return productionEndTerminal("SwCaseLabel1","-","-","Replacement","Default",first,token);}
+ |
+	[<OTHER>] <LITERAL> {return productionEndTerminal("SwCaseLabel2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MoreSwCaseLabel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"|" n=SwCaseLabel(true){ replaceName(n);} {return productionEndTerminal("MoreSwCaseLabel","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExternDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"extern" <LITERAL> n=Block(true){ replaceName(n);} {return productionEndTerminal("ExternDecl","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PPIncludeStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"#" "include" findLineEnd() {return productionEndTerminal("PPIncludeStatement","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PPDefineStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) "#" "define" findLineEnd() {return productionEndTerminal("PPDefineStatement1","-","{TOSTRING}","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) "#" "undef" findLineEnd() {return productionEndTerminal("PPDefineStatement2","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PPIfDef_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=IfDefLine(true){ replaceName(n);} n=Sequence_CodeUnit_TopLevel(true){ replaceName(n);} (LOOKAHEAD(2) n=IfElseIf_TopLevel(true){ replaceName(n);})* [LOOKAHEAD(2) "#" "else" n=Sequence_CodeUnit_TopLevel(true){ replaceName(n);}] "#" "endif" {return productionEndTerminal("PPIfDef_TopLevel","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PPIfDef_BlockLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=IfDefLine(true){ replaceName(n);} n=Sequence_CodeUnit_InBlock(true){ replaceName(n);} (LOOKAHEAD(2) n=IfElseIf_BlockLevel(true){ replaceName(n);})* [LOOKAHEAD(2) "#" "else" n=Sequence_CodeUnit_InBlock(true){ replaceName(n);}] "#" "endif" {return productionEndTerminal("PPIfDef_BlockLevel","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PPOtherIgnore(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"line"  {return productionEndTerminal("PPOtherIgnore1","-","{TOSTRING}","Replacement","Default",first,token);}
+ |
+	"pragma"  {return productionEndTerminal("PPOtherIgnore2","-","{TOSTRING}","Replacement","Default",first,token);}
+ |
+	"error"  {return productionEndTerminal("PPOtherIgnore3","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfDefLine(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) "#" "ifdef" <IDENTIFIER> {return productionEndTerminal("IfDefLine1","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(2) "#" "ifndef" <IDENTIFIER> {return productionEndTerminal("IfDefLine2","-","-","Replacement","Default",first,token);}
+ |
+	"#" "if" findLineEnd() {return productionEndTerminal("IfDefLine3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfElseIf(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) "#" "elif"  {return productionEndTerminal("IfElseIf1","-","-","Replacement","Default",first,token);}
+ |
+	"#" "elsif"  {return productionEndTerminal("IfElseIf2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfElseIf_BlockLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=IfElseIf(true){ replaceName(n);} findLineEnd() n=Sequence_CodeUnit_InBlock(true){ replaceName(n);} {return productionEndTerminal("IfElseIf_BlockLevel","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfElseIf_TopLevel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=IfElseIf(true){ replaceName(n);} findLineEnd() n=Sequence_CodeUnit_TopLevel(true){ replaceName(n);} {return productionEndTerminal("IfElseIf_TopLevel","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Function(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=FunctionHeader(true){ replaceName("FunctionHeader", n);}{ replaceName(n);} [n=FunctionParameterList(true){ replaceName("FunctionParameterList", n);}{ replaceName(n);}] ")" n=BlockOrSemi(true){ replaceName(n);} {return productionEndTerminal("Function","-","{FunctionHeader}({FunctionParameterList})","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionHeader(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=Modifier(true){ replaceName(n);})* n=FunctionReturnType(true){ replaceName(n);} ["*" ] [LOOKAHEAD(1) n=FunctionExoticStuff(true){ replaceName(n);}] t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} "(" {return productionEndTerminal("FunctionHeader","-","{<IDENTIFIER>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionReturnType(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	["const" ] ["struct" ] ["unsigned" ] <IDENTIFIER> {return productionEndTerminal("FunctionReturnType","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Modifier(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"static"  {return productionEndTerminal("Modifier1","-","-","Replacement","Default",first,token);}
+ |
+	"inline"  {return productionEndTerminal("Modifier2","-","-","Replacement","Default",first,token);}
+ |
+	"__inline__"  {return productionEndTerminal("Modifier3","-","-","Replacement","Default",first,token);}
+ |
+	"__inline"  {return productionEndTerminal("Modifier4","-","-","Replacement","Default",first,token);}
+ |
+	"extern"  {return productionEndTerminal("Modifier5","-","-","Replacement","Default",first,token);}
+ |
+	"__TIPOFUNC__"  {return productionEndTerminal("Modifier6","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionExoticStuff(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"__regbank" "(" <LITERAL> ")" {return productionEndTerminal("FunctionExoticStuff","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionParameterList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=FunctionParameter(true){ replaceName(n);} ("," n=FunctionParameter(true){ replaceName(n);})* {return productionEndTerminal("FunctionParameterList","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionParameter(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=VarDeclToken(true){ replaceName(n);})+ {return productionEndTerminal("FunctionParameter","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Block(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" n=Sequence_CodeUnit_InBlock(true){ replaceName(n);} "}" {return productionEndTerminal("Block","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo GotoLabel(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IDENTIFIER> ":" {return productionEndTerminal("GotoLabel","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Sequence_CodeUnit_InBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(LOOKAHEAD(2) n=CodeUnit_InBlock(true){ replaceName(n);})* {return productionEndTerminal("Sequence_CodeUnit_InBlock","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BlockOrSemi(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(1) ";"  {return productionEndTerminal("BlockOrSemi1","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(1) n=Block(true){ replaceName(n);} {return productionEndTerminal("BlockOrSemi2","-","-","Replacement","Default",first,token);}
+ |
+	(n=VarDecl(true){ replaceName(n);})+ n=Block(true){ replaceName(n);} {return productionEndTerminal("BlockOrSemi3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BlockOrSingleStatement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(1) n=Block(true){ replaceName(n);} {return productionEndTerminal("BlockOrSingleStatement1","-","-","Replacement","Default",first,token);}
+ |
+	n=CodeUnit_InBlock(true){ replaceName(n);} {return productionEndTerminal("BlockOrSingleStatement2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TypeDef(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(2) "typedef" "enum" (n=AnyTypeDefToken(true){ replaceName(n);})* ";" {return productionEndTerminal("TypeDef1","-","{TOSTRING}","Replacement","Default",first,token);}
+ |
+	"typedef" (n=AnyStmtToken(true){ replaceName(n);})* ";" {return productionEndTerminal("TypeDef2","-","{TOSTRING}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BlockAssignment(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"=" [n=Cast(true){ replaceName(n);}] "{" findEndCCB() {return productionEndTerminal("BlockAssignment","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo EnumBlock(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"enum" [<IDENTIFIER>] "{" findEndCCB() {return productionEndTerminal("EnumBlock","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Cast(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=FunctionReturnType(true){ replaceName(n);} ")" {return productionEndTerminal("Cast","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AnyTypeDefToken(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	LOOKAHEAD(1) "{"  {return productionEndTerminal("AnyTypeDefToken1","-","-","Replacement","Default",first,token);}
+ |
+	"}"  {return productionEndTerminal("AnyTypeDefToken2","-","-","Replacement","Default",first,token);}
+ |
+	n=AnyStmtToken(true){ replaceName(n);} {return productionEndTerminal("AnyTypeDefToken3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AnyStmtToken(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IDENTIFIER> {return productionEndTerminal("AnyStmtToken1","-","-","Replacement","Default",first,token);}
+ |
+	<LITERAL> {return productionEndTerminal("AnyStmtToken2","-","-","Replacement","Default",first,token);}
+ |
+	<OTHER> {return productionEndTerminal("AnyStmtToken3","-","-","Replacement","Default",first,token);}
+ |
+	","  {return productionEndTerminal("AnyStmtToken4","-","-","Replacement","Default",first,token);}
+ |
+	"|"  {return productionEndTerminal("AnyStmtToken5","-","-","Replacement","Default",first,token);}
+ |
+	"<"  {return productionEndTerminal("AnyStmtToken6","-","-","Replacement","Default",first,token);}
+ |
+	">"  {return productionEndTerminal("AnyStmtToken7","-","-","Replacement","Default",first,token);}
+ |
+	"("  {return productionEndTerminal("AnyStmtToken8","-","-","Replacement","Default",first,token);}
+ |
+	")"  {return productionEndTerminal("AnyStmtToken9","-","-","Replacement","Default",first,token);}
+ |
+	n=Block(true){ replaceName(n);} {return productionEndTerminal("AnyStmtToken10","-","-","Replacement","Default",first,token);}
+ |
+	"if"  {return productionEndTerminal("AnyStmtToken11","-","-","Replacement","Default",first,token);}
+ |
+	"else"  {return productionEndTerminal("AnyStmtToken12","-","-","Replacement","Default",first,token);}
+ |
+	"for"  {return productionEndTerminal("AnyStmtToken13","-","-","Replacement","Default",first,token);}
+ |
+	"while"  {return productionEndTerminal("AnyStmtToken14","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD(3) n=EnumBlock(true){ replaceName(n);} {return productionEndTerminal("AnyStmtToken15","-","-","Replacement","Default",first,token);}
+ |
+	"enum"  {return productionEndTerminal("AnyStmtToken16","-","-","Replacement","Default",first,token);}
+ |
+	"*"  {return productionEndTerminal("AnyStmtToken17","-","-","Replacement","Default",first,token);}
+ |
+	LOOKAHEAD("=" [Cast()]"{") n=BlockAssignment(true){ replaceName(n);} {return productionEndTerminal("AnyStmtToken18","-","-","Replacement","Default",first,token);}
+ |
+	"="  {return productionEndTerminal("AnyStmtToken19","-","-","Replacement","Default",first,token);}
+ |
+	":"  {return productionEndTerminal("AnyStmtToken20","-","-","Replacement","Default",first,token);}
+ |
+	n=Modifier(true){ replaceName(n);} {return productionEndTerminal("AnyStmtToken21","-","-","Replacement","Default",first,token);}
+ |
+	"ifdef"  {return productionEndTerminal("AnyStmtToken22","-","-","Replacement","Default",first,token);}
+ |
+	"ifndef"  {return productionEndTerminal("AnyStmtToken23","-","-","Replacement","Default",first,token);}
+ |
+	"define"  {return productionEndTerminal("AnyStmtToken24","-","-","Replacement","Default",first,token);}
+ |
+	"include"  {return productionEndTerminal("AnyStmtToken25","-","-","Replacement","Default",first,token);}
+ |
+	"elif"  {return productionEndTerminal("AnyStmtToken26","-","-","Replacement","Default",first,token);}
+ |
+	"elsif"  {return productionEndTerminal("AnyStmtToken27","-","-","Replacement","Default",first,token);}
+ |
+	n=PPOtherIgnore(true){ replaceName(n);} {return productionEndTerminal("AnyStmtToken28","-","-","Replacement","Default",first,token);}
+ |
+	"const"  {return productionEndTerminal("AnyStmtToken29","-","-","Replacement","Default",first,token);}
+ |
+	"struct"  {return productionEndTerminal("AnyStmtToken30","-","-","Replacement","Default",first,token);}
+ |
+	"unsigned"  {return productionEndTerminal("AnyStmtToken31","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VarDecl(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=VarDeclTokenOrComma(true){ replaceName(n);})* ";" {return productionEndTerminal("VarDecl","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VarDeclTokenOrComma(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VarDeclToken(true){ replaceName(n);} {return productionEndTerminal("VarDeclTokenOrComma1","-","-","Replacement","Default",first,token);}
+ |
+	","  {return productionEndTerminal("VarDeclTokenOrComma2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VarDeclToken(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IDENTIFIER> {return productionEndTerminal("VarDeclToken1","-","-","Replacement","Default",first,token);}
+ |
+	<LITERAL> {return productionEndTerminal("VarDeclToken2","-","-","Replacement","Default",first,token);}
+ |
+	"*"  {return productionEndTerminal("VarDeclToken3","-","-","Replacement","Default",first,token);}
+ |
+	<OTHER> {return productionEndTerminal("VarDeclToken4","-","-","Replacement","Default",first,token);}
+ |
+	"|"  {return productionEndTerminal("VarDeclToken5","-","-","Replacement","Default",first,token);}
+ |
+	"const"  {return productionEndTerminal("VarDeclToken6","-","-","Replacement","Default",first,token);}
+ |
+	"struct"  {return productionEndTerminal("VarDeclToken7","-","-","Replacement","Default",first,token);}
+ |
+	"unsigned"  {return productionEndTerminal("VarDeclToken8","-","-","Replacement","Default",first,token);}
+ |
+	"enum"  {return productionEndTerminal("VarDeclToken9","-","-","Replacement","Default",first,token);}
+ |
+	n=PPOtherIgnore(true){ replaceName(n);} {return productionEndTerminal("VarDeclToken10","-","-","Replacement","Default",first,token);}
+ |
+	n=Modifier(true){ replaceName(n);} {return productionEndTerminal("VarDeclToken11","-","-","Replacement","Default",first,token);}
+ |
+	"(" findEndCB() {return productionEndTerminal("VarDeclToken12","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Literal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<LITERAL> {return productionEndTerminal("Literal","-","-","Replacement","Default",first,token);}
+
+ )  }
+
