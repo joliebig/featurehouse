@@ -29,7 +29,7 @@ options {
 
 
 PARSER_BEGIN(Java15MergeParser)
-package tmp.generated_java15_merge;
+package de.ovgu.cide.fstgen.parsers.generated_java15_merge;
 
 import java.io.*;
 import java.util.*;

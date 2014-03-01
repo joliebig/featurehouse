@@ -5,12 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-import tmp.generated_jcop.JCopParser;
 
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_jcop.JCopParser;
 
 public class JCopBuilder extends ArtifactBuilder {
 	public JCopBuilder() {

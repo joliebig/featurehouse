@@ -5,7 +5,7 @@ options {
 
 
 PARSER_BEGIN(JavaCCParser)
-package tmp.generated_javacc;
+package de.ovgu.cide.fstgen.parsers.generated_javacc;
 
 import java.io.*;
 import java.util.*;

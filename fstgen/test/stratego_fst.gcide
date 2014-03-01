@@ -4,7 +4,7 @@ options {
 }
 
 PARSER_BEGIN(StrategoParser)
-package tmp.generated_stratego;
+package de.ovgu.cide.fstgen.parsers.generated_stratego;
 import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;

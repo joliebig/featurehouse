@@ -26,10 +26,10 @@ public class JavaPrintVisitor extends ArtifactPrintVisitor {
 				AbstractFSTPrintVisitor visitor;
 				try {
 					if(CommandLineParameterHelper.isJML()){
-						visitor = new tmp.generated_jml_contract_composition.SimplePrintVisitor(new PrintStream(fileName));
+						visitor = new de.ovgu.cide.fstgen.parsers.generated_jml_contract_composition.SimplePrintVisitor(new PrintStream(fileName));
 					}
 					else{
-						visitor = new tmp.generated_java15.SimplePrintVisitor(new PrintStream(fileName));
+						visitor = new de.ovgu.cide.fstgen.parsers.generated_java15.SimplePrintVisitor(new PrintStream(fileName));
 					}
 					
 					visitor.visit((FSTNonTerminal)child);

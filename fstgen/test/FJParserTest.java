@@ -3,9 +3,9 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import tmp.generated_fj.FJParser;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
+import de.ovgu.cide.fstgen.parsers.generated_fj.FJParser;
 
 public class FJParserTest {
 	@Test

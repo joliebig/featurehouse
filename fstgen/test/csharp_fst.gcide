@@ -5,7 +5,7 @@ options {
 
 PARSER_BEGIN(CSharpParser)
 
-package tmp.generated_csharp;
+package de.ovgu.cide.fstgen.parsers.generated_csharp;
 import java.io.*;
 import java.util.*;
 import cide.gast.*;

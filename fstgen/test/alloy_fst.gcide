@@ -3,7 +3,7 @@ options {
 }
 
 PARSER_BEGIN(AlloyParser)
-package tmp.generated_alloy;
+package de.ovgu.cide.fstgen.parsers.generated_alloy;
 import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;

@@ -42,7 +42,7 @@
 			<param name="language" value="fj" />
 			<param name="parserClass" value="FJParser" />
 			<param name="mainProduction" value="TypeDeclaration" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="TestCase.fj" />
 		</antcall>
 	</target>
@@ -52,7 +52,7 @@
 			<param name="language" value="java15" />
 			<param name="parserClass" value="Java15Parser" />
 			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
@@ -61,7 +61,7 @@
 			<param name="language" value="jml_contract_composition" />
 			<param name="parserClass" value="JMLParser" />
 			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="TestJMLContracts.java" />
 		</antcall>
 	</target>
@@ -70,7 +70,7 @@
 			<param name="language" value="java15_merge" />
 			<param name="parserClass" value="Java15MergeParser" />
 			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.java" />
 		</antcall>
 	</target>
@@ -80,7 +80,7 @@
 			<param name="language" value="jak" />
 			<param name="parserClass" value="JakParser" />
 			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.jak" />
 		</antcall>
 	</target>
@@ -90,7 +90,7 @@
 			<param name="language" value="csharp" />
 			<param name="parserClass" value="CSharpParser" />
 			<param name="mainProduction" value="compilation_unit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.cs" />
 		</antcall>
 	</target>
@@ -100,7 +100,7 @@
 			<param name="language" value="csharp_merge" />
 			<param name="parserClass" value="CSharpMergeParser" />
 			<param name="mainProduction" value="compilation_unit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test_Merge.cs" />
 		</antcall>
 	</target>
@@ -110,7 +110,7 @@
 				<param name="language" value="capprox" />
 				<param name="parserClass" value="CApproxParser" />
 				<param name="mainProduction" value="TranslationUnit" />
-				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 				<param name="testFile" value="Test.c" />
 			</antcall>
 	</target>
@@ -120,7 +120,7 @@
 				<param name="language" value="python" />
 				<param name="parserClass" value="PythonParser" />
 				<param name="mainProduction" value="file_input" />
-				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 				<param name="testFile" value="Test.py" />
 			</antcall>
 	</target>
@@ -130,7 +130,7 @@
 				<param name="language" value="python_cleanup" />
 				<param name="parserClass" value="PythonParserCleanup" />
 				<param name="mainProduction" value="file_input" />
-				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 				<param name="testFile" value="Test.py" />
 			</antcall>
 	</target>
@@ -140,7 +140,7 @@
 				<param name="language" value="haskell" />
 				<param name="parserClass" value="HaskellParser" />
 				<param name="mainProduction" value="module" />
-				<param name="directory" value="${fstgen_dir}/test" />
+				<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 				<param name="testFile" value="Test.hs" />
 			</antcall>
 		</target>
@@ -150,7 +150,7 @@
 			<param name="language" value="javacc" />
 			<param name="parserClass" value="JavaCCParser" />
 			<param name="mainProduction" value="javacc_input" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="C.jj" />
 		</antcall>
 	</target>
@@ -160,7 +160,7 @@
 			<param name="language" value="alloy" />
 			<param name="parserClass" value="AlloyParser" />
 			<param name="mainProduction" value="Specification" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.als" />
 		</antcall>
 	</target>
@@ -170,7 +170,7 @@
         	<param name="language" value="jcop" />
         	<param name="parserClass" value="JCopParser" />
         	<param name="mainProduction" value="CompilationUnit" />
-    	    <param name="directory" value="${fstgen_dir}/test" />
+    	    <param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 	        <param name="testFile" value="Test.jcop" />
         </antcall>
     </target>
@@ -180,7 +180,7 @@
 			<param name="language" value="contract" />
 			<param name="parserClass" value="ContractParser" />
 			<param name="mainProduction" value="SpecCaseSeq" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="TestContract.java" />
 		</antcall>
 	</target>
@@ -191,7 +191,7 @@
 			<param name="language" value="javaJML" />
 			<param name="parserClass" value="JavaJMLParser" />
 			<param name="mainProduction" value="CompilationUnit" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="TestJML.java" />
 			<param name="fstProcessorClassName" value="FSTprocessorJML" />
 		</antcall>
@@ -202,7 +202,7 @@
 			<param name="language" value="stratego" />
 			<param name="parserClass" value="StrategoParser" />
 			<param name="mainProduction" value="Module" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.str" />
 		</antcall>
 	</target>
@@ -212,20 +212,20 @@
 			<param name="language" value="sdf" />
 			<param name="parserClass" value="SDFParser" />
 			<param name="mainProduction" value="Module" />
-			<param name="directory" value="${fstgen_dir}/test" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
 			<param name="testFile" value="Test.sdf" />
 		</antcall>
 	</target>
 
 	<target name="testGrammar" description="--> description">
-		<mkdir dir="${directory}/tmp/generated_${language}" />
+		<mkdir dir="${directory}/generated_${language}" />
 
-		<fstgen grammarFileName="${directory}/${language}_fst.gcide" targetJJFile="${directory}/tmp/generated_${language}/${language}.jj" targetPackage="tmp.generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
-		<jcc grammarFileName="${directory}/tmp/generated_${language}/${language}.jj" targetDirectory="${directory}/tmp/generated_${language}" />
+		<fstgen grammarFileName="${fstgen_dir}/test/${language}_fst.gcide" targetJJFile="${directory}/generated_${language}/${language}.jj" targetPackage="de.ovgu.cide.fstgen.parsers.generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
+		<jcc grammarFileName="${directory}/generated_${language}/${language}.jj" targetDirectory="${directory}/generated_${language}" />
 		<eclipse.refreshLocal resource="fstgen" depth="infinite" />
 		<eclipse.incrementalBuild project="fstgen" />
 		<java classname="de.ovgu.cide.fstgen.GenericParserStarter">
-			<arg value="tmp.generated_${language}.${parserClass}" />
+			<arg value="de.ovgu.cide.fstgen.parsers.generated_${language}.${parserClass}" />
 			<arg value="${mainProduction}" />
 			<arg value="${fstgen_dir}/test/${testFile}" />
 			<classpath>
@@ -238,14 +238,14 @@
 
 
 	<target name="testGrammarWithPostprocessing" description="Same as testGrammar, but with a postprocessing step">
-		<mkdir dir="${directory}/tmp/generated_${language}" />
+		<mkdir dir="${directory}/generated_${language}" />
 
-		<fstgenWithJMLPostprocessing grammarFileName="${directory}/${language}_fst.gcide" targetJJFile="${directory}/tmp/generated_${language}/${language}.jj" targetPackage="tmp.generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
-		<jcc grammarFileName="${directory}/tmp/generated_${language}/${language}.jj" targetDirectory="${directory}/tmp/generated_${language}" />
+		<fstgenWithJMLPostprocessing grammarFileName="${directory}/${language}_fst.gcide" targetJJFile="${directory}/generated_${language}/${language}.jj" targetPackage="generated_${language}" autoSpacingPrettyPrinter="${autoSpacingPrettyPrinter}" />
+		<jcc grammarFileName="${directory}/generated_${language}/${language}.jj" targetDirectory="${directory}/generated_${language}" />
 		<eclipse.refreshLocal resource="fstgen" depth="infinite" />
 		<eclipse.incrementalBuild project="fstgen" />
 		<java classname="de.ovgu.cide.fstgen.GenericPostprocessingParserStarter">
-			<arg value="tmp.generated_${language}.${parserClass}" />
+			<arg value="de.ovgu.cide.fstgen.parsers.generated_${language}.${parserClass}" />
 			<arg value="${mainProduction}" />
 			<arg value="${fstgen_dir}/test/${testFile}" />
 			<arg value="de.ovgu.cide.fstgen.fstProcessing.FSTprocessorJML" />

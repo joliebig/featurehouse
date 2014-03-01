@@ -8,10 +8,10 @@ import java.io.FileNotFoundException;
 
 import modification.content.InvalidFSTTraversalException;
 import modification.content.Parseables.ParseableFile;
-import tmp.generated_csharp.CSharpParser;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_csharp.CSharpParser;
 
 /**
  * @author Boxleitner Stefan

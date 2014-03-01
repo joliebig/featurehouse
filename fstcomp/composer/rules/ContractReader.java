@@ -4,7 +4,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import tmp.generated_contract.ContractParser;
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
@@ -12,6 +11,7 @@ import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_contract.ContractParser;
 
 /**
  * A reader for contracts.

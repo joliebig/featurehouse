@@ -4,7 +4,7 @@ options {
 
 PARSER_BEGIN(CApproxParser)
 
-package tmp.generated_capprox;
+package de.ovgu.cide.fstgen.parsers.generated_capprox;
 
 import java.io.*;
 import java.util.*;

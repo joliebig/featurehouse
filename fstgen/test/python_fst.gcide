@@ -11,7 +11,7 @@ options {
 
 PARSER_BEGIN(PythonParser)
 
-package tmp.generated_python;
+package de.ovgu.cide.fstgen.parsers.generated_python;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;
 

@@ -6,9 +6,9 @@ import java.io.PrintStream;
 
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-import tmp.generated_capprox.SimplePrintVisitor;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_capprox.SimplePrintVisitor;
 
 public class CApproxPrintVisitor extends ArtifactPrintVisitor {
 

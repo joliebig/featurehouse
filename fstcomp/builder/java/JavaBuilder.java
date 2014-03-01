@@ -5,13 +5,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-import tmp.generated_java15.Java15Parser;
-import tmp.generated_jml_contract_composition.JMLParser;
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_java15.Java15Parser;
+import de.ovgu.cide.fstgen.parsers.generated_jml_contract_composition.JMLParser;
 
 public class JavaBuilder extends ArtifactBuilder {
 	public JavaBuilder() {

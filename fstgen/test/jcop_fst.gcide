@@ -8,7 +8,7 @@ options {
 
 
 PARSER_BEGIN(JCopParser)
-package tmp.generated_jcop;
+package de.ovgu.cide.fstgen.parsers.generated_jcop;
 
 import java.io.*;
 import java.util.*;

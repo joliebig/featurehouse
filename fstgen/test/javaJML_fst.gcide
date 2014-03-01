@@ -29,7 +29,7 @@ options {
 
 
 PARSER_BEGIN(JavaJMLParser)
-package tmp.generated_javaJML;
+package de.ovgu.cide.fstgen.parsers.generated_javaJML;
 
 import java.io.*;
 import java.util.*;

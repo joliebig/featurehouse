@@ -32,7 +32,7 @@ options {
 
 
 PARSER_BEGIN(JMLParser)
-package tmp.generated_jml_contract_composition;
+package de.ovgu.cide.fstgen.parsers.generated_jml_contract_composition;
 
 import java.io.*;
 import java.util.*;

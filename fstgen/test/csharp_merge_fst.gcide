@@ -7,7 +7,7 @@ options {
 
 PARSER_BEGIN(CSharpMergeParser)									// adapted from csharp_fst.gcide
 
-package tmp.generated_csharp_merge;								// adapted from csharp_fst.gcide
+package de.ovgu.cide.fstgen.parsers.generated_csharp_merge;								// adapted from csharp_fst.gcide
 import java.io.*;
 import java.util.*;
 import cide.gast.*;

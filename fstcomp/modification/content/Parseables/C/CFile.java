@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import modification.content.Parseables.ParseableFile;
-import tmp.generated_capprox.CApproxParser;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_capprox.CApproxParser;
 
 /**
  * 

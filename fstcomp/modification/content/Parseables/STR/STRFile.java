@@ -3,11 +3,11 @@ package modification.content.Parseables.STR;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import tmp.generated_stratego.StrategoParser;
 
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_stratego.StrategoParser;
 import modification.content.InvalidFSTTraversalException;
 import modification.content.Parseables.ParseableFile;
 

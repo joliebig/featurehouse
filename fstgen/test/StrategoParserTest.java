@@ -5,11 +5,11 @@ import java.io.FileNotFoundException;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import tmp.generated_stratego.StrategoParser;
 
 import cide.astgen.nparser.parser.ParseException;
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
+import de.ovgu.cide.fstgen.parsers.generated_stratego.StrategoParser;
 
 public class StrategoParserTest {
 

@@ -3,7 +3,7 @@ options {
 }
 
 PARSER_BEGIN(FJParser)
-package tmp.generated_fj;
+package de.ovgu.cide.fstgen.parsers.generated_fj;
 import java.io.*;
 import java.util.*;
 import cide.gast.*;

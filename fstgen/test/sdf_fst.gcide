@@ -4,7 +4,7 @@ options {
 }
 
 PARSER_BEGIN(SDFParser)
-package tmp.generated_sdf;
+package de.ovgu.cide.fstgen.parsers.generated_sdf;
 import cide.gast.*;
 import cide.gparser.*;
 import de.ovgu.cide.fstgen.ast.*;

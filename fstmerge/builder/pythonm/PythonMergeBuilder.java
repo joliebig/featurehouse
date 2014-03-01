@@ -6,13 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.StringTokenizer;
 
-import tmp.generated_python.PythonParser;
-import tmp.generated_python.SimplePrintVisitor;
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_python.PythonParser;
+import de.ovgu.cide.fstgen.parsers.generated_python.SimplePrintVisitor;
 
 public class PythonMergeBuilder extends ArtifactBuilder {
 	public PythonMergeBuilder() {

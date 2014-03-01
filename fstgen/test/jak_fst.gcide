@@ -29,7 +29,7 @@ options {
 
 
 PARSER_BEGIN(JakParser)
-package tmp.generated_jak;
+package de.ovgu.cide.fstgen.parsers.generated_jak;
 
 import java.io.*;
 import java.util.*;

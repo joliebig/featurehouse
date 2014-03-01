@@ -31,7 +31,7 @@ options {
 
 
 PARSER_BEGIN(ContractParser)
-package tmp.generated_contract;
+package de.ovgu.cide.fstgen.parsers.generated_contract;
 
 import java.io.*;
 import java.util.*;

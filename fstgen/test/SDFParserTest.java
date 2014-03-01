@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 
 import org.junit.Test;
 
-import tmp.generated_sdf.SDFParser;
 import cide.astgen.nparser.parser.ParseException;
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
+import de.ovgu.cide.fstgen.parsers.generated_sdf.SDFParser;
 
 public class SDFParserTest {
 

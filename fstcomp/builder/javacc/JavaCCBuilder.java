@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-import tmp.generated_javacc.JavaCCParser;
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_javacc.JavaCCParser;
 
 public class JavaCCBuilder extends ArtifactBuilder {
 	public JavaCCBuilder() {

@@ -5,7 +5,7 @@ options {
 
 PARSER_BEGIN(HaskellParser)
 
-package tmp.generated_haskell;
+package de.ovgu.cide.fstgen.parsers.generated_haskell;
 
 import java.io.*;
 import java.util.*;

@@ -5,11 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-import tmp.generated_sdf.SDFParser;
 
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.parsers.generated_sdf.SDFParser;
 import builder.ArtifactBuilder;
 
 public class SDFBuilder extends ArtifactBuilder {
