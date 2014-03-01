@@ -3,9 +3,12 @@
 FeatureHouse: Automatic, language-independent software composition and merging
 </description>
 
-  <property name="srcfstcomp" location="./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
-  <property name="srcfstmerge" location="./fstmerge:./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src"/>
-  <property name="build" location="build"/>
+  <property name="srcfstgen" location="./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src" />
+  <property name="srcfstcomp" location="./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src" />
+  <property name="srcfstmerge" location="./fstmerge:./fstcomp:./fstgen/src:./fstgen/test:./CIDE2_ast/src:./CIDE_generateAST/src" />
+  <property name="build-dir" location="build" />
+  <property name="test-dir" location="test" />
+  <property name="result-dir" location="result" />
 
   <presetdef name="javac">
     <javac includeantruntime="false" />
@@ -16,29 +19,50 @@ FeatureHouse: Automatic, language-independent software composition and merging
   </tstamp>
 
   <target name="fstcomp">
-    <mkdir dir="${build}"/>
+    <mkdir dir="${build-dir}"/>
     <javac sourcepath="${srcfstcomp}" destdir="${build}" srcdir="./fstcomp/composer/"/>
   </target>
 
   <target name="fstmerge">
-     <mkdir dir="${build}"/>
+     <mkdir dir="${build-dir}"/>
      <javac sourcepath="${srcfstmerge}" destdir="${build}" srcdir="./fstmerge/merger/"/>
   </target>
 
   <target name="jar" depends="fstcomp,fstmerge" description="generate featurehouse.jar" >
-    <mkdir dir="${dist}"/>
-    <jar jarfile="${dist}/featurehouse_${current.time}.jar" basedir="${build}">
+    <mkdir dir="${jar-dir}"/>
+    <jar jarfile="${jar-dir}/featurehouse_${current.time}.jar" basedir="${build}">
       <manifest>
         <attribute name="Main-Class" value="composer.FSTGenComposer" />
       </manifest>
     </jar>
   </target>
 
+  <target name="test-compile">
+    <mkdir dir="${test-dir}" />
+    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}" srcdir="./fstgen/test/" />
+  </target>
+
   <target name="test">
+    <mkdir dir="${result-dir}" />
+    <junit printsummary="yes" haltonfailure="yes">
+      <classpath>
+        <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
+        <pathelement location="${project.class.path}"/>
+        <pathelement location="${build.tests}" />
+        <pathelement path="${java.class.path}" />
+      </classpath>
+
+      <test name="SDFParserTest" haltonfailure="no" outfile="out">
+        <formatter type="plain"/>
+        <formatter type="xml"/>
+      </test>
+    </junit>
   </target>
 
   <target name="clean" description="clean up" >
-    <delete dir="${build}"/>
-    <delete dir="${dist}"/>
+    <delete dir="${build-dir}"/>
+    <delete dir="${jar-dir}"/>
+    <delete dir="${test-dir}"/>
+    <delete dir="${result-dir}"/>
   </target>
 </project>
