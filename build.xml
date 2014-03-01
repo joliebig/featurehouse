@@ -20,17 +20,17 @@ FeatureHouse: Automatic, language-independent software composition and merging
 
   <target name="fstcomp">
     <mkdir dir="${build-dir}"/>
-    <javac sourcepath="${srcfstcomp}" destdir="${build}" srcdir="./fstcomp/composer/"/>
+    <javac sourcepath="${srcfstcomp}" destdir="${build-dir}" srcdir="./fstcomp/composer/"/>
   </target>
 
   <target name="fstmerge">
      <mkdir dir="${build-dir}"/>
-     <javac sourcepath="${srcfstmerge}" destdir="${build}" srcdir="./fstmerge/merger/"/>
+     <javac sourcepath="${srcfstmerge}" destdir="${build-dir}" srcdir="./fstmerge/merger/"/>
   </target>
 
   <target name="jar" depends="fstcomp,fstmerge" description="generate featurehouse.jar" >
     <mkdir dir="${jar-dir}"/>
-    <jar jarfile="${jar-dir}/featurehouse_${current.time}.jar" basedir="${build}">
+    <jar jarfile="${jar-dir}/featurehouse_${current.time}.jar" basedir="${build-dir}">
       <manifest>
         <attribute name="Main-Class" value="composer.FSTGenComposer" />
       </manifest>
