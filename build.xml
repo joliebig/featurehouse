@@ -41,16 +41,21 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-compile">
     <mkdir dir="${test-dir}" />
     <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}" srcdir="./fstgen/test/" />
+
+    <copy todir="${test-dir}">
+      <fileset dir="./fstgen/test/">
+        <include name="*testfiles/**" />
+      </fileset>
+    </copy>
   </target>
 
   <target name="test">
+  
     <mkdir dir="${result-dir}" />
     <junit printsummary="yes" haltonfailure="yes">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
-        <pathelement location="${project.class.path}"/>
-        <pathelement location="${build.tests}" />
-        <pathelement path="${java.class.path}" />
+        <pathelement location="${test-dir}" />
       </classpath>
 
       <test name="SDFParserTest" haltonfailure="no" outfile="out">
