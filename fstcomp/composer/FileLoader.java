@@ -23,7 +23,6 @@ import builder.ArtifactBuilderInterface;
 import cide.gparser.ParseException;
 import cide.gparser.TokenMgrError;
 import de.ovgu.cide.fstgen.ast.FSTFeatureNode;
-import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public class FileLoader {
 

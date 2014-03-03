@@ -45,4 +45,12 @@ public abstract class FSTNode {
 	public abstract String printFST(int i) ;
 	
 	public abstract void accept(FSTVisitor visitor);
+	
+	public String getFeatureName() {
+		if (getType().equals("Feature")) {
+			return getName();
+		} else {
+			return getParent().getFeatureName();
+		}
+	}
 }

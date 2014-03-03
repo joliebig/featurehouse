@@ -1,7 +1,7 @@
 package composer.rules.rtcomp.java;
 
 import composer.rules.AbstractCompositionRule;
-import composer.rules.CompositionRule;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
