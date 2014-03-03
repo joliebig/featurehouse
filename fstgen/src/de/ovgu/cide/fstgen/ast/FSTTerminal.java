@@ -15,6 +15,7 @@ public class FSTTerminal extends FSTNode {
 
 	public int beginLine = -1;
 	public int endLine = -1;
+	private String feature;
 
 	public FSTTerminal(String type, String name, String body, String prefix) {
 		super(type, name);
@@ -47,6 +48,12 @@ public class FSTTerminal extends FSTNode {
 		this.endLine = endLine;
 	}
 
+	private FSTTerminal(String type, String name, String body, String prefix,
+			String compositionMechanism, String mergingMechanism, String feature) {
+		this(type, name, body, prefix, compositionMechanism, mergingMechanism);
+		setOriginalFeatureName(feature);
+	}
+
 	public String getSpecialTokenPrefix() {
 		return prefix;
 	}
@@ -59,14 +66,14 @@ public class FSTTerminal extends FSTNode {
 	public FSTNode getShallowClone() {
 		return new FSTTerminal(getType(), getName(), getBody(),
 				getSpecialTokenPrefix(), getCompositionMechanism(),
-				getMergingMechanism());
+				getMergingMechanism(), getOriginalFeatureName());
 	}
 
 	@Override
 	public FSTNode getDeepClone() {
 		return new FSTTerminal(getType(), getName(), getBody(),
 				getSpecialTokenPrefix(), getCompositionMechanism(),
-				getMergingMechanism());
+				getMergingMechanism(), getOriginalFeatureName());
 	}
 
 	public void setBody(String b) {
@@ -126,4 +133,11 @@ public class FSTTerminal extends FSTNode {
 		this.contractCompKey = contractCompKey;
 	}
 
+	public void setOriginalFeatureName(final String feature) {
+		this.feature = feature;
+	}
+	
+	public String getOriginalFeatureName() {
+		return feature;
+	}
 }

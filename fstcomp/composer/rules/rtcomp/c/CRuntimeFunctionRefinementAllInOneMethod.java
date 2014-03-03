@@ -3,7 +3,6 @@ package composer.rules.rtcomp.c;
 import java.util.StringTokenizer;
 
 import composer.rules.AbstractCompositionRule;
-import composer.rules.CompositionRule;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;

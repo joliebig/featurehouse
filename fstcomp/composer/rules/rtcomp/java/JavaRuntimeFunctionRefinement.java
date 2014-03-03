@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 import composer.rules.AbstractCompositionRule;
 import composer.rules.JavaMethodOverriding;
 
-import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -49,7 +48,7 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 
 			String toReplace = "original\\s*\\(";
 			
-			String featureNameTermA = JavaMethodOverriding.getFeatureName(terminalA);
+			String featureNameTermA = terminalA.getOriginalFeatureName();
 			
 			String beforeFunctionName = sigB.name + "__before__" + featureNameTermA;
 			String roleFunctionName = sigB.name + "__role__" + featureNameTermA;
