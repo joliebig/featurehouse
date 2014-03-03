@@ -49,7 +49,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </copy>
   </target>
 
-  <target name="test">
+  <target name="test" depends="test-compile">
   
     <mkdir dir="${result-dir}" />
     <junit printsummary="yes" haltonfailure="yes">
@@ -58,10 +58,13 @@ FeatureHouse: Automatic, language-independent software composition and merging
         <pathelement location="${test-dir}" />
       </classpath>
 
-      <test name="SDFParserTest" haltonfailure="no" outfile="out">
-        <formatter type="plain"/>
-        <formatter type="xml"/>
-      </test>
+      <formatter type="plain"/>
+
+      <batchtest fork="yes" todir="${result-dir}">
+        <fileset dir="${test-dir}" >
+	  <include name="*Test.class" />
+	</fileset>
+      </batchtest>
     </junit>
   </target>
 
