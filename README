@@ -10,4 +10,5 @@ called FSTMerge, and a plug-in and generation mechanism for integrating new
 languages automatically, called FSTGenerator. FeatureHouse can be used with the
 visual development environment FeatureIDE.
 
-Please see the website http://fosd.net/fh for more information.
+For more information consult the project's wiki here on github or the project's
+website at the University of Passau (http://fosd.net/fh).
