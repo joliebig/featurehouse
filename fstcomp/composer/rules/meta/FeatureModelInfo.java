@@ -8,25 +8,12 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
 public interface FeatureModelInfo {
 
-	public boolean isObligatory(String featureName,boolean useSelection);
-	public boolean isObligatory(String featureName);
+	public boolean isCoreFeature(String featureName,boolean useSelection);
+	public boolean isCoreFeature(String featureName);
 
-	public boolean isObligatoryForMethod(String className, String methodName, String featureName,boolean useSelection);
+	public boolean isMethodCoreFeature(String className, String methodName, String featureName,boolean useSelection);
 	
-	public boolean isObligatoryForMethod(String className, String methodName, String featureName);
-	
-	/*
-	
-	@Deprecated
-	public boolean hasValidProduct(List<String> selectedFeatures, List<String> rejectedFeatures);
-	
-	@Deprecated
-	public boolean isFeatureImplied(String featureName, List<String> selectedFeatures, List<String> rejectedFeatures);
-	
-	@Deprecated
-	public boolean isNotFeatureImplied(String featureName, List<String> selectedFeatures, List<String> rejectedFeatures);
-	
-	*/
+	public boolean isMethodCoreFeature(String className, String methodName, String featureName);
 	
 	public void addFeatureNodes(List<FSTNonTerminal> features);
 	
@@ -34,21 +21,23 @@ public interface FeatureModelInfo {
 	
 	public void selectFeature(String featureName);
 	
-	public void rejectFeature(String featureName);
+	public void eliminateFeature(String featureName);
 	
 	public void resetSelections();
 	
-	public void resetRejections();
+	public void resetEliminations();
 	
 	public void reset();
 	
 	public boolean isValidSelection();
 	
-	public boolean isSelectable(String featureName);
+	public boolean canBeSelected(String featureName);
 	
-	public boolean isRejectable(String featureName);
+	public boolean canBeEliminated(String featureName);
 	
-	public boolean isSelectionImplied(String featureName);
+	public boolean isAlwaysSelected(String featureName);
 	
-	public boolean isRejectionImplied(String featureName);
+	public boolean isAlwaysEliminated(String featureName);
+	
+	public String getValidClause();
 }

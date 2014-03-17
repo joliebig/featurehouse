@@ -24,7 +24,7 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 	
 	public void setRejected(String featureName){
 		rejected.add(featureName);
-		original.rejectFeature(featureName);
+		original.eliminateFeature(featureName);
 	}
 	
 	public void clear(){
@@ -34,43 +34,43 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 	}
 	
 	@Override
-	public boolean isObligatory(String featureName) {
+	public boolean isCoreFeature(String featureName) {
 		if (selected.contains(featureName))
 			return true;
 		if (rejected.contains(featureName))
 			return false;
 		reset();
-		return original.isObligatory(featureName,true);
+		return original.isCoreFeature(featureName,true);
 	}
 	
 	@Override
-	public boolean isObligatory(String featureName,boolean useSelection) {
+	public boolean isCoreFeature(String featureName,boolean useSelection) {
 		if (selected.contains(featureName))
 			return true;
 		if (rejected.contains(featureName))
 			return false;
-		return original.isObligatory(featureName,useSelection);
+		return original.isCoreFeature(featureName,useSelection);
 	}
 
 	@Override
-	public boolean isObligatoryForMethod(String className, String methodName,
+	public boolean isMethodCoreFeature(String className, String methodName,
 			String featureName) {
 		if (selected.contains(featureName))
 			return true;
 		if (rejected.contains(featureName))
 			return false;
 		reset();
-		return original.isObligatoryForMethod(className, methodName, featureName, true);
+		return original.isMethodCoreFeature(className, methodName, featureName, true);
 	}
 
 	@Override
-	public boolean isObligatoryForMethod(String className, String methodName,
+	public boolean isMethodCoreFeature(String className, String methodName,
 			String featureName,boolean useSelection) {
 		if (selected.contains(featureName))
 			return true;
 		if (rejected.contains(featureName))
 			return false;
-		return original.isObligatoryForMethod(className, methodName, featureName, useSelection);
+		return original.isMethodCoreFeature(className, methodName, featureName, useSelection);
 	}
 
 	@Override
@@ -91,10 +91,10 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 	}
 
 	@Override
-	public void rejectFeature(String featureName) {
+	public void eliminateFeature(String featureName) {
 		if (selected.contains(featureName))
 			invalidRejection = true;
-		original.rejectFeature(featureName);
+		original.eliminateFeature(featureName);
 		
 	}
 
@@ -107,10 +107,10 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 	}
 
 	@Override
-	public void resetRejections() {
+	public void resetEliminations() {
 		original.resetSelections();
 		for (String feature : rejected)
-			original.rejectFeature(feature);
+			original.eliminateFeature(feature);
 		invalidRejection = false;
 	}
 
@@ -120,7 +120,7 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 		for (String feature : selected)
 			original.selectFeature(feature);
 		for (String feature : rejected)
-			original.rejectFeature(feature);
+			original.eliminateFeature(feature);
 		invalidSelection = false;
 		invalidRejection = false;
 	}
@@ -133,35 +133,40 @@ public class MethodBasedModelInfoWrapper implements FeatureModelInfo {
 	}
 
 	@Override
-	public boolean isSelectable(String featureName) {
+	public boolean canBeSelected(String featureName) {
 		if (invalidSelection || invalidRejection)
 			return false;
 		if (rejected.contains(featureName))
 			return true;
-		return original.isSelectable(featureName);
+		return original.canBeSelected(featureName);
 	}
 
 	@Override
-	public boolean isRejectable(String featureName) {
+	public boolean canBeEliminated(String featureName) {
 		if (invalidSelection || invalidRejection)
 			return false;
 		if (selected.contains(featureName))
 			return true;
-		return original.isRejectable(featureName);
+		return original.canBeEliminated(featureName);
 	}
 
 	@Override
-	public boolean isSelectionImplied(String featureName) {
+	public boolean isAlwaysSelected(String featureName) {
 		if (selected.contains(featureName))
 			return true;
-		return original.isSelectionImplied(featureName);
+		return original.isAlwaysSelected(featureName);
 	}
 
 	@Override
-	public boolean isRejectionImplied(String featureName) {
+	public boolean isAlwaysEliminated(String featureName) {
 		if (rejected.contains(featureName))
 			return true;
-		return original.isRejectable(featureName);
+		return original.isAlwaysEliminated(featureName);
+	}
+
+	@Override
+	public String getValidClause() {
+		return "FM.FeatureModel.valid()";
 	}
 
 }

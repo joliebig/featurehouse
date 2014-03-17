@@ -7,12 +7,12 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 public class MinimalFeatureModelInfo implements FeatureModelInfo {
 
 	@Override
-	public boolean isObligatory(String featureName) {
+	public boolean isCoreFeature(String featureName) {
 		return false;
 	}
 
 	@Override
-	public boolean isObligatoryForMethod(String className, String methodName,
+	public boolean isMethodCoreFeature(String className, String methodName,
 			String featureName) {
 		return false;
 	}
@@ -33,7 +33,7 @@ public class MinimalFeatureModelInfo implements FeatureModelInfo {
 	}
 
 	@Override
-	public void rejectFeature(String featureName) {
+	public void eliminateFeature(String featureName) {
 		
 	}
 
@@ -43,7 +43,7 @@ public class MinimalFeatureModelInfo implements FeatureModelInfo {
 	}
 
 	@Override
-	public void resetRejections() {
+	public void resetEliminations() {
 		
 	}
 
@@ -58,34 +58,39 @@ public class MinimalFeatureModelInfo implements FeatureModelInfo {
 	}
 
 	@Override
-	public boolean isSelectable(String featureName) {
+	public boolean canBeSelected(String featureName) {
 		return true;
 	}
 
 	@Override
-	public boolean isRejectable(String featureName) {
+	public boolean canBeEliminated(String featureName) {
 		return true;
 	}
 
 	@Override
-	public boolean isSelectionImplied(String featureName) {
+	public boolean isAlwaysSelected(String featureName) {
 		return false;
 	}
 
 	@Override
-	public boolean isRejectionImplied(String featureName) {
+	public boolean isAlwaysEliminated(String featureName) {
 		return false;
 	}
 
 	@Override
-	public boolean isObligatory(String featureName, boolean useSelection) {
+	public boolean isCoreFeature(String featureName, boolean useSelection) {
 		return false;
 	}
 
 	@Override
-	public boolean isObligatoryForMethod(String className, String methodName,
+	public boolean isMethodCoreFeature(String className, String methodName,
 			String featureName, boolean useSelection) {
 		return false;
+	}
+
+	@Override
+	public String getValidClause() {
+		return "FM.FeatureModel.valid()";
 	}
 
 }

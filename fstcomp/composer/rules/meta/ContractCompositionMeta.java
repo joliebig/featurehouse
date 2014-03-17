@@ -3,9 +3,11 @@ package composer.rules.meta;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -27,7 +29,9 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
  *
  */
 public class ContractCompositionMeta extends ContractComposition {
-
+	
+	// xyz
+	// Platzhalter in den Klauseln
 	private static final String REQUIRE_OR_ORIGINAL = "FM.Features.OrOriginal";
 	private static final String FINAL_CONTRACT = "requires FM.Contract.finalContract;";
 	private static final String COMPOSITION_EXPLICIT = "FM.CompositionExplicit";
@@ -35,6 +39,8 @@ public class ContractCompositionMeta extends ContractComposition {
 	private static final String COMPOSITION_CONSECUTIVE = "FM.CompositionConsecutive";
 	private static final String COMPOSITION_CUMULATIVE = "FM.CompositionCumulative";
 	private static final String COMPOSITION_PLAIN = "FM.CompositionPlain";
+	
+	
 	private FeatureModelInfo modelInfo;
 	private CompositionMetadataStore metadata = CompositionMetadataStore.getInstance();
 		
@@ -51,6 +57,12 @@ public class ContractCompositionMeta extends ContractComposition {
 		this.modelInfo = model;
 	}
 	
+	/**
+	 * Translates selectionstate of feature into feature-name.
+	 * 
+	 * @param state selectionsstate of Features 
+	 * @return name of Features
+	 */
 	private String stateToFeatureName(String state){
 		List<String> features = metadata.getFeatures();
 		state = state.replaceAll("()","");
@@ -61,35 +73,44 @@ public class ContractCompositionMeta extends ContractComposition {
 		return state;
 	}
 
-	//private List<String> getSelectedFeatures(String clause){
+	/**
+	 * Selects all features in modelInfo, that are marked as selected ( FeatureModel.&lt;FeatureState&lt; without leading !) 
+	 * @param clause clause with implications
+	 */
 	private void selectFeaturesFromClause(String clause){
 		Pattern featurePattern = Pattern.compile("[^!]FM\\.FeatureModel\\.([\\w]+)" + (FSTGenComposerExtension.key ? "" : "\\(\\)") +" ==>");
 		Matcher featureMatcher = featurePattern.matcher(" " + clause);
-		//List<String> featureList = new ArrayList<String>();
 		while (featureMatcher.find()){
 			modelInfo.selectFeature(stateToFeatureName(featureMatcher.group(1)));
-			//featureList.add(stateToFeatureName(featureMatcher.group(1)));
 		}
-		//return featureList;
 	}
 	
-	//private List<String> getRejectedFeatures(String clause){
+	/**
+	 * Unselects all features in modelInfo, that ar marked as unselected ( !FeatureModel.&lt;FeatureState&lt; ) 
+	 * @param clause clause with implications
+	 */	 
 	private void rejectFeaturesFromClause(String clause){
 		Pattern featurePattern = Pattern.compile("!FM\\.FeatureModel\\.([\\w]+)" + (FSTGenComposerExtension.key ? "" : "\\(\\)") +" ==>");
 		Matcher featureMatcher = featurePattern.matcher(clause);
-		//List<String> featureList = new ArrayList<String>();
 		while (featureMatcher.find()){
-			modelInfo.rejectFeature(stateToFeatureName(featureMatcher.group(1)));
-			//featureList.add(stateToFeatureName(featureMatcher.group(1)));
+			modelInfo.eliminateFeature(stateToFeatureName(featureMatcher.group(1)));
 		}
-		//return featureList;
 	}
 
-
+	/**
+	 * Calculates the name of the feature-state for a given {@link FSTNode} below the feature-node (without "FeatureModel.")
+	 * @param node the {@link FSTNOde}
+	 * @return name of the selection-state of the feature 
+	 */
 	private static String getFeatureState(FSTNode node) {
 		return getFeatureName(node).toLowerCase() + (FSTGenComposerExtension.key ? "" : "()");
 	}
 	
+	/**
+	 * Returns the name of the Feature for a {@link FSTNode} below the feature node
+	 * @param node the {@link FSTNode}
+	 * @return name of the Feature
+	 */
 	private static String getFeatureName(FSTNode node) {
 		if ("Feature".equals(node.getType()))
 			return node.getName();
@@ -97,17 +118,31 @@ public class ContractCompositionMeta extends ContractComposition {
 			return getFeatureName(node.getParent());
 	}
 	
+	/**
+	 * adds additional selection state to disjunction of features
+	 * @param oldRequiresClause old clause with disjunction of features
+	 * @param featureState selectionstate to add
+	 * @return new clause with added selectionstate
+	 */
 	private String getNewReqOrOriginal(String oldRequiresClause, String featureState){
-		String clauseBody = oldRequiresClause.replaceAll(REQUIRE_OR_ORIGINAL, "FM.FeatureModel." + featureState + " || " + REQUIRE_OR_ORIGINAL);
-		//clauseBody = clauseBody.replace("requires  || ", "requires ");
-		
+		String clauseBody = oldRequiresClause.replaceAll(REQUIRE_OR_ORIGINAL, "FM.FeatureModel." + featureState + " || " + REQUIRE_OR_ORIGINAL);		
 		return clauseBody + ";";
 	}
 	
+	/**
+	 * Removes clause with disjunction of selection states from specification body
+	 * @param body specification body
+	 * @return specification body without disjunction of selection states
+	 */
 	private String removeRequireOrOriginal(String body){
 		return body.replaceAll("requires FM.FeatureModel.[\\w]+" + (FSTGenComposerExtension.key ? "" : "\\(\\)") +" \\|\\| " + REQUIRE_OR_ORIGINAL + ";","");
 	}
 	
+	/**
+	 * Determines the method name for a {@link FSTNode} of a method specification 
+	 * @param node specification node
+	 * @return method name
+	 */
 	private String getMethodName(FSTNode node){
 		if (node == null)
 			return "";
@@ -121,6 +156,11 @@ public class ContractCompositionMeta extends ContractComposition {
 		return getMethodName(node.getParent());
 	}
 	
+	/**
+	 * Determines the class name for a {@link FSTNode} of a method specification 
+	 * @param node specification node
+	 * @return class name
+	 */
 	private String getClassName(FSTNode node){
 		if (node == null)
 			return "";
@@ -129,8 +169,13 @@ public class ContractCompositionMeta extends ContractComposition {
 		return getClassName(node.getParent());
 	}
 	
+	/**
+	 * Calculates if original clauses must be fulfilled to fulfill new clauses. Removes original in that case
+	 * @param clauses clauses that may contain original
+	 * @param clauseType type of clauses ("requires" or "ensures")
+	 * @return true, if original clauses must be fulfilled
+	 */
 	private boolean removeAndOriginal(List<FSTTerminal> clauses, String clauseType){
-		// TODO 
 		boolean result = false;
 		for (FSTTerminal clause : clauses){
 			String body = clause.getBody();
@@ -170,6 +215,11 @@ public class ContractCompositionMeta extends ContractComposition {
 		return result;
 	}
 	
+	/**
+	 * Simplifies Clauses. Removes implications if the selectionstate is already implied by an other selectionstate (or combination of selectionstates)  
+	 * @param clause clause to simplify
+	 * @return simplified clause
+	 */
 	private String simplifyImplications(String clause){
 		String simplifiedClause = clause;
 		Pattern pat = Pattern.compile("FM\\.FeatureModel\\.([\\w]+)" + (FSTGenComposerExtension.key ? "" : "\\(\\)") +" ==>");
@@ -179,12 +229,12 @@ public class ContractCompositionMeta extends ContractComposition {
 			String featureName = stateToFeatureName(match.group(1));
 			char prefChar = match.start() > 0 ? clause.charAt(match.start()-1) : ' ';
 			if (prefChar == '!'){
-				if (modelInfo.isRejectionImplied(featureName))
+				if (modelInfo.isAlwaysEliminated(featureName))
 					simplifiedClause = simplifiedClause.replaceAll("!FM.FeatureModel." + match.group(1).replaceAll("\\(\\)","") + "\\(?\\)? ==> ", "");
 				else
-					modelInfo.rejectFeature(featureName);
+					modelInfo.eliminateFeature(featureName);
 			} else {
-				if (modelInfo.isSelectionImplied(featureName))
+				if (modelInfo.isAlwaysSelected(featureName))
 					simplifiedClause = simplifiedClause.replaceAll("([^!])FM.FeatureModel." + match.group(1).replaceAll("\\(\\)","") + "\\(?\\)? ==> ", "$1");
 				else
 					modelInfo.selectFeature(featureName);
@@ -194,6 +244,12 @@ public class ContractCompositionMeta extends ContractComposition {
 		return simplifiedClause;
 	}
 	
+	/**
+	 * Calculates all selectionsstates of features that occur in the given clauses
+	 * @param clauses clauses to check for selectionsstates
+	 * @param clauseType type of clauses ("requires" or "ensures")
+	 * @return Set of selectionsstates of features
+	 */
 	private Set<String> getFeatures(List<FSTTerminal> clauses, String clauseType){
 		HashSet<String> result = new HashSet<String>();
 		
@@ -212,6 +268,11 @@ public class ContractCompositionMeta extends ContractComposition {
 		return result;
 	}
 	
+	/**
+	 * Calculates the compositions-keyword for a {@link FSTNode} of a specification
+	 * @param terminal specification node
+	 * @return composition-keyword
+	 */
 	private String getCompositionKey(FSTTerminal terminal){
 		String compKey = "";
 		for (FSTNode n : ((FSTNonTerminal) terminal.getParent()).getChildren()) {
@@ -223,6 +284,16 @@ public class ContractCompositionMeta extends ContractComposition {
 		return compKey;
 	}
 	
+	/**
+	 * Calculates informations for composition for method-based Contract Refinement
+	 * @param clause clause with compostions informatiuons (syntax: "&lt;clausetype&gt; &lt;composition-type&gt;(&lt;list of featurestates&gt;)" )
+	 * @param type type of clauses ("requires" or "ensures")
+	 * @return String-Array with 4 elements:
+	 * <br>0 composition-type
+	 * <br>1 list of featurestates (&lt;featurestate1&gt;,...,&lt;featurestaten&gt;)
+	 * <br>2 resulting prefix in specification
+	 * <br>3 resulting suffix in specification
+	 */
 	private String[] extractCompositionInformation(String clause,String type){
 		String[] result = {"","","",""}; //Composition-Type, Parameters, resulting prefix, resulting suffix
 		Pattern p = Pattern.compile(
@@ -236,13 +307,48 @@ public class ContractCompositionMeta extends ContractComposition {
 		if (m.find()){
 			result[0] = m.group(1);
 			result[1] = m.group(2);
-			Pattern pf = Pattern.compile(",(!?[\\w]+\\(?\\)?),");
-			Matcher mf = pf.matcher(","+result[1]+",");
-			while (mf.find()){
-				if (mf.group(1).charAt(0) == '!')
-					result[2] += "!FM.FeatureModel." + mf.group(1).substring(1) + " ==> (";
+			for (String status : result[1].split(",")){
+				if (status.isEmpty())
+					continue;
+				if (status.charAt(0) == '!')
+					result[2] += "!FM.FeatureModel." + status.substring(1) + " ==> (";
 				else
-					result[2] += "FM.FeatureModel." + mf.group(1) + " ==> (";
+					result[2] += "FM.FeatureModel." + status + " ==> (";
+				result[3] += ")";
+			}			
+		}
+			
+		return result;
+	}
+	
+	/**
+	 * Calculates informations for composition for method-based Contract Refinement
+	 * @param clause clause with compostions informatiuons (syntax: "&lt;composition-type&gt;(&lt;list of featurestates&gt;)" )
+	 * @return String-Array with 4 elements:
+	 * <br>0 composition-type
+	 * <br>1 list of featurestates (&lt;featurestate1&gt;,...,&lt;featurestaten&gt;)
+	 * <br>2 resulting prefix in specification
+	 * <br>3 resulting suffix in specification
+	 */
+	private String[] extractCompositionInformation(String clause){
+		String[] result = {"","","",""}; //Composition-Type, Parameters, resulting prefix, resulting suffix
+		Pattern p = Pattern.compile(
+					"(" + COMPOSITION_CONJUNCTIVE + "|" + COMPOSITION_CONSECUTIVE + "|" + COMPOSITION_CUMULATIVE + "|"
+						+ COMPOSITION_EXPLICIT + "|" + COMPOSITION_PLAIN + ")\\("
+				+	"((!?[\\w]+\\(?\\)?)?(,(!?[\\w]+\\(?\\)?))*)"
+				+ 	"\\)"
+				);
+		Matcher m = p.matcher(clause);
+		if (m.find()){
+			result[0] = m.group(1);
+			result[1] = m.group(2);
+			for (String status : result[1].split(",")){
+				if (status.isEmpty())
+					continue;
+				if (status.charAt(0) == '!')
+					result[2] += "!FM.FeatureModel." + status.substring(1) + " ==> (";
+				else
+					result[2] += "FM.FeatureModel." + status + " ==> (";
 				result[3] += ")";
 			}
 			
@@ -251,6 +357,12 @@ public class ContractCompositionMeta extends ContractComposition {
 		return result;
 	}
 	
+	/**
+	 * Creates a new composition information array for method based contract composition
+	 * @param compKey composition-type
+	 * @param featureState featurestate
+	 * @return composition-information array
+	 */
 	private String[] createCompositionInfo(String compKey, String featureState){
 		String[] result = new String[4];
 		if (compKey.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT))
@@ -269,14 +381,22 @@ public class ContractCompositionMeta extends ContractComposition {
 		return result;
 	}
 	
+	/**
+	 * Calculates new Clauses for method-based contract composition for a set of clauses for the given composition information 
+	 * @param terminalA {@link FSTTerminal} mit neuen Klauseln
+	 * @param terminalB altes {@link FSTTerminal}
+	 * @param terminalComp ziel {@link FSTTerminal}
+	 * @param compInfo composition information array
+	 * @param clausesB clauses of terminalB to compose
+	 * @param resultingRequires resulting requires-clauses
+	 * @param resultingEnsures resulting ensures-clauses
+	 * @param withCompInfoPrefix if true, the resulting clauses will contain the prefix and suffix defined in compInfo
+	 */
 	private void getNewClauses(FSTTerminal terminalA,FSTTerminal terminalB, FSTTerminal terminalComp,
 			String[] compInfo, List<FSTTerminal> clausesB,List<FSTTerminal> resultingRequires,List<FSTTerminal> resultingEnsures, boolean withCompInfoPrefix){
 		
 		if (clausesB == null)
 			return;
-		
-		//if (clausesB.size() == 0)
-		//	return;
 		
 		if (compInfo == null)
 			return;
@@ -322,35 +442,24 @@ public class ContractCompositionMeta extends ContractComposition {
 		
 	}
 	
-	private String getCompInfoForTerminal(FSTTerminal terminalB){
-		if (!contractStyle.equals(METHOD_BASED_COMPOSITION))
-			return "";
-		String compKey = getCompositionKey(terminalB);
-		if (compKey.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel()))
-			return "\r\n\trequires " + COMPOSITION_CONJUNCTIVE + "();";
-		if (compKey.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel()))
-			return "\r\n\trequires " + COMPOSITION_CONSECUTIVE + "();";
-		if (compKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT.getLabel()))
-			return "\r\n\trequires " + COMPOSITION_CUMULATIVE + "();";
-		if (compKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())|| compKey.equals(CompositionKeyword.FINAL_METHOD.getLabel()))
-			return "\r\n\trequires " + COMPOSITION_PLAIN + "();";
-		return "\r\n\trequires " + COMPOSITION_EXPLICIT + "();";
-	}
-	
+	/**
+	 * selects/unselects Features in a {@link FeatureModelInfo} from a composition information array
+	 * @param specialModelInfo object of {@link FeatureModelInfo} to select/unselect features
+	 * @param compInfo composition information array
+	 */
 	private void setSelectedRejectedFromCompInfo(MethodBasedModelInfoWrapper specialModelInfo,String[] compInfo){
 		specialModelInfo.clear();
 		if (compInfo == null)
 			return;
 		
-		Pattern pf = Pattern.compile(",(!?[\\w]+\\(?\\)?),");
-		Matcher mf = pf.matcher(","+compInfo[1]+",");
-		while (mf.find()){
-			if (mf.group(1).charAt(0) == '!')
-				specialModelInfo.setRejected(stateToFeatureName(mf.group(1).substring(1)));
+		for (String status : compInfo[1].split(",")){
+			if (status.isEmpty())
+				continue;
+			if (status.charAt(0) == '!')
+				specialModelInfo.setRejected(stateToFeatureName(status.substring(1)));
 			else
-				specialModelInfo.setSelected(stateToFeatureName(mf.group(1)));
+				specialModelInfo.setSelected(stateToFeatureName(status));
 		}
-		
 	}
 	
 	@Override
@@ -407,14 +516,18 @@ public class ContractCompositionMeta extends ContractComposition {
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent)
 			throws CompositionException {
 		
+		// compose the first specification with an empty one 
 		if (terminalB.getBody().contains("\\not_composed\r\n")){
 			FSTTerminal newComp = (FSTTerminal)terminalB.getDeepClone();
 			FSTTerminal newB = (FSTTerminal)terminalB.getDeepClone();
 			newComp.setParent(terminalB.getParent());
 			newB.setParent(terminalB.getParent());
-			newB.setBody("\r\n\trequires " + REQUIRE_OR_ORIGINAL + ";"
-					+ getCompInfoForTerminal(terminalB)
-					);
+			if (modelInfo.isCoreFeature(getFeatureName(terminalB)))
+				newB.setBody( contractStyle.equals(METHOD_BASED_COMPOSITION) ? "\r\n\trequires " + COMPOSITION_EXPLICIT + "();" : "");
+			else
+				newB.setBody("\r\n\trequires " + REQUIRE_OR_ORIGINAL + ";"
+						+ (contractStyle.equals(METHOD_BASED_COMPOSITION) ? "\r\n\trequires " + COMPOSITION_EXPLICIT + "();" : "")
+						);
 			compose(terminalB,newB,newComp,nonterminalParent);
 			terminalB = newComp;
 		}
@@ -428,102 +541,26 @@ public class ContractCompositionMeta extends ContractComposition {
 	
 	@Override
 	public void preCompose(FSTTerminal terminal) {
-		// TODO
 		
 		String body = terminal.getBody();
-		terminal.setBody(
-				  "\\not_composed\r\n\trequires FM.FeatureModel." 
-				+ getFeatureState(terminal) 
-				+ " || " + REQUIRE_OR_ORIGINAL + ";\r\n\t" 
-				+ body);
+		if (modelInfo.isCoreFeature(getFeatureName(terminal)))
+			terminal.setBody(
+					  "\\not_composed\r\n\t" 
+					+ body.replaceAll("requires[\\s]+\\(*true\\)*;", "").replaceAll("requires[\\s]+\\(*true\\)*;", ""));
+		else
+			terminal.setBody(
+					  "\\not_composed\r\n\trequires FM.FeatureModel." 
+					+ getFeatureState(terminal) 
+					+ " || " + REQUIRE_OR_ORIGINAL + ";\r\n\t" 
+					+ body.replaceAll("requires[\\s]+\\(*true\\)*;", "").replaceAll("requires[\\s]+\\(*true\\)*;", ""));
 		return;
-		/*
-		String body = terminal.getBody();
-		body = body.replaceAll("\t", "");
-		body = body.replaceAll("\n", "\n\t @ ");
-		while (body.contains("  ")) {
-			body = body.replaceAll("  ", " ");
-		}
-
-		String result = "";
-		boolean added = false;
-		boolean open = false;
-		if (body.contains(";")) {
-			for (String s : body.split(";")) {
-				if (s.contains("ensures ")) {
-					if (open) {
-						result += ")";
-						open = false;
-					}
-					if (added) {
-						result += ";";
-					}
-					result = result + s.replace("ensures ", "ensures FM.FeatureModel." + getFeatureState(terminal) + " ==> (");
-					open = true;
-				} else if (s.contains("requires ")) {
-					if (open) {
-						result += ")";
-						open = false;
-					}
-					if (added) {
-						result += ";";
-					}
-					result = result + s.replace("requires ", "requires FM.FeatureModel." + getFeatureState(terminal) + " ==> (");
-					open = true;
-				} else if (s.contains("assignable ")) {
-					if (open) {
-						result += ")";
-						open = false;
-					}
-					if (added) {
-						result += ";";
-					}
-					result = result + s;
-				} else {
-					if (open) {
-						result += ")";
-						open = false;
-					}
-					if (added) {
-						result += ";";
-					}
-					result = result + s;
-				}
-				added = true;
-			}
-			if (open) {
-				result += ")";
-			}
-			if (added) {
-				result += ";";
-			}
-			body = result;
-		}
-	
-		int ensuresIndex = body.indexOf("ensures ");
-		int requiresIndex = body.indexOf("requires ");
-		int index = ensuresIndex < requiresIndex ? ensuresIndex : requiresIndex;
-		if (ensuresIndex == -1) {
-			if (requiresIndex == -1) {
-				index = 0;
-			} else {
-				index = requiresIndex;
-			}
-		} else if (requiresIndex == -1) {
-			index = ensuresIndex;
-		}
-		
-		String start = body.substring(0, index);
-		String end = body.substring(index);
-		terminal.setBody(start + "\\req FM.FeatureModel." + getFeatureState(terminal) + ORIGINAL_OR + ";\r\n\t @ " + end); */
 	}
 	 
 	@Override
 	public void postCompose(FSTTerminal terminal) {
-		// TODO
 		String body = terminal.getBody();
-		if (FSTGenComposerExtension.key && body.replaceAll("@", "").replaceAll("\\\\[req,nreq][^;]*;", "").trim().isEmpty()) {
-			terminal.setBody("");
+		if (FSTGenComposerExtension.key && body.replaceAll("@", "").trim().isEmpty()) { //replaceAll("\\\\[req,nreq][^;]*;", "").trim().isEmpty()) {
+			terminal.setBody("\r\n\t@ requires " + modelInfo.getValidClause() + ";");   //FM.FeatureModel.valid();");
 			return;
 		}
 		
@@ -536,19 +573,32 @@ public class ContractCompositionMeta extends ContractComposition {
 		body = body.replaceAll("\\" + ORIGINAL_KEYWORD, "true");
 		body = body.replaceAll("\\\\not_composed", "");
 		if (FSTGenComposerExtension.key) {
-			body = "\r\n\t @ requires FM.FeatureModel.valid();\r\n\t @ " + body;
+			body = "\r\n\t requires " + modelInfo.getValidClause() + ";\r\n\t" + body;
 		} else {
-			body = "\r\n\t @ " + body;
+			body = "\r\n\t " + body;
 		}
-		
-		if (!body.endsWith("\r\n\t")) {
-			body = body + "\r\n\t";
-		}
+
 		terminal.setBody(body);
 		
 		if (contractStyle.equals(METHOD_BASED_COMPOSITION)){
 			postComposeMethodBased(terminal);
 		}
+		
+		body = terminal.getBody();
+		
+		while (body.contains("  "))
+			body = body.replaceAll("  ", " ");
+		
+		while (body.contains("\r\n\t\r\n\t") || body.contains("\r\n\t \r\n\t"))
+			body = body.replaceAll("\r\n[\\s]*\r\n\t", "\r\n\t");
+
+		body = body.replaceAll("\r\n\t([\\w])", "\r\n\t $1");
+		body = body.replaceAll("\r\n\t([\\s]*)", "\r\n\t  @$1");
+		
+		if (!body.endsWith("\r\n\t ")) {
+			body = body + "\r\n\t ";
+		}
+		terminal.setBody(body);
 	}
 	
 	private void postComposeMethodBased(FSTTerminal terminal){
@@ -556,7 +606,9 @@ public class ContractCompositionMeta extends ContractComposition {
 		List<FSTTerminal> ensClauses = getEnsuresClauses(terminal);
 		
 		FeatureModelInfo originalModelInfo = modelInfo;
-		modelInfo = new MethodBasedModelInfoWrapper(modelInfo);
+		
+		
+		modelInfo = new MethodBasedModelInfoWrapper(modelInfo); 
 		
 		String[] currentCompInfo = {"","","",""};
 		String newBody = "";
@@ -629,355 +681,273 @@ public class ContractCompositionMeta extends ContractComposition {
 		terminal.setBody(newBody);
 	}
 	
+	// Changed to get Clauses without Semicolon, skip super-call if empty body (otherwise would get an error)
 	@Override
 	protected List<FSTTerminal> getRequiresClauses(FSTTerminal terminal){
+		return getRequiresClauses(terminal, false);
+	}
+	
+
+	protected List<FSTTerminal> getRequiresClauses(FSTTerminal terminal,boolean keepSemi){
 		if (terminal.getBody().replaceAll("\r","").replaceAll("\n","").replaceAll("\t","").trim().isEmpty())
 			return new ArrayList<FSTTerminal>();
-		try{
-			List<FSTTerminal> clauses = super.getRequiresClauses(terminal);
-			for (FSTTerminal clause : clauses) {
-				clause.setBody(clause.getBody().substring(0, clause.getBody().length() - 1));
-			}
+		List<FSTTerminal> clauses = super.getRequiresClauses(terminal);
+		if (keepSemi)
 			return clauses;
-		} catch (Exception ex){
-			System.out.println("-----------------------------------------------------------------------------------------------------------");
-			System.out.println("Failed to load RequiresClauses:");
-			System.out.println("Feature:      " + getFeatureName(terminal));
-			System.out.println("Class:        " + getClassName(terminal));
-			System.out.println("Method:       " + getMethodName(terminal));
-			System.out.println("TerminalBody: " + terminal.getBody());
-			System.out.println("-----------------------------------------------------------------------------------------------------------");
-			return new ArrayList<FSTTerminal>();
+		for (FSTTerminal clause : clauses) {
+			clause.setBody(clause.getBody().substring(0, clause.getBody().length() - 1));
 		}
+		return clauses;
+		
+		
 	}
-
+	
+	// Changed to get Clauses without Semicolon, skip super-call if empty body (otherwise would get an error)
 	@Override
 	protected List<FSTTerminal> getEnsuresClauses(FSTTerminal terminal){
+		return getEnsuresClauses(terminal,false);
+	}
+
+	protected List<FSTTerminal> getEnsuresClauses(FSTTerminal terminal, boolean keepSemi){
 		if (terminal.getBody().replaceAll("\r","").replaceAll("\n","").replaceAll("\t","").trim().isEmpty())
 			return new ArrayList<FSTTerminal>();
 		List<FSTTerminal> clauses = super.getEnsuresClauses(terminal);
+		if (keepSemi)
+			return clauses;
 		for (FSTTerminal clause : clauses) {
 			clause.setBody(clause.getBody().substring(0, clause.getBody().length() - 1));
 		}
 		return clauses;
 	}
+
+	/**
+	 * Adds Clauses to a Hash-Map. Hash-Map maps from composition information string to according clauses
+	 * @param clauses clauses to add
+	 * @param hashMap HashMap to add clauses to
+	 */
+	private void addClausesToHashMap(List<FSTTerminal> clauses,HashMap<String,List<FSTTerminal>> hashMap){
+		List<FSTTerminal> currentEntry = null;
+		for (FSTTerminal clause : clauses){
+			String clauseBody = clause.getBody();
+			if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
+				LinkedList<FSTTerminal> reqOrOriginal = new LinkedList<FSTTerminal>();
+				reqOrOriginal.add(clause);
+				hashMap.put(REQUIRE_OR_ORIGINAL, reqOrOriginal);
+				continue;
+			}
+			if (clauseBody.contains(COMPOSITION_CONJUNCTIVE) || clauseBody.contains(COMPOSITION_CONSECUTIVE) || clauseBody.contains(COMPOSITION_CUMULATIVE)
+					|| clauseBody.contains(COMPOSITION_EXPLICIT) || clauseBody.contains(COMPOSITION_PLAIN)){
+				//currentEntry = null;
+				currentEntry = hashMap.get(clauseBody.replaceAll("requires", "").replaceAll("ensures", "").trim());
+				if (currentEntry == null){
+					currentEntry = new LinkedList<FSTTerminal>();
+					hashMap.put(clauseBody.replaceAll("requires", "").replaceAll("ensures", "").trim(), currentEntry);
+				}
+				continue;
+			}
+			
+			if (currentEntry == null){
+				// TODO: Fehler, sowas sollte eigentlich nicht passieren
+				continue;
+			}
+			
+			currentEntry.add(clause);
+		}
+	}
 	
-	@Override
-	protected String joinClause(List<FSTTerminal> clauses, String clauseType) {
-		String result = super.joinClause(clauses, clauseType);
+	/**
+	 * writes clauses into a String-Array with length 2 (requires-clauses and ensures-clauses)
+	 * @param clauses to put into the Array
+	 * @return String-Array (requires-clauses and ensures-clauses)
+	 */
+	private String[] clauseListToStrings(List<FSTTerminal> clauses){
+		String[] result = {"",""};
 		
-		return result.substring(0,result.length() - 1);
+		for (FSTTerminal clause : clauses){
+			if (clause.getBody().contains(COMPOSITION_CONJUNCTIVE) || clause.getBody().contains(COMPOSITION_CONSECUTIVE) 
+				|| clause.getBody().contains(COMPOSITION_CUMULATIVE) || clause.getBody().contains(COMPOSITION_EXPLICIT) 
+				|| clause.getBody().contains(COMPOSITION_PLAIN))
+				continue;
+			if (clause.getBody().contains(REQUIRE_OR_ORIGINAL))
+				continue;
+			if (clause.getBody().contains("requires "))
+				result[0]+= clause.getBody() + ";\r\n\t";
+			else if (clause.getBody().contains("ensures "))
+				result[1] +=  clause.getBody() + ";\r\n\t";
+		}
+		
+		return result;
+	}
+	
+	private String getCompMethodByCompositionKey(String compositionKey){
+		if (compositionKey.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CONJUNCTIVE;
+		if (compositionKey.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CONSECUTIVE;
+		if (compositionKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CUMULATIVE;
+		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())|| compositionKey.equals(CompositionKeyword.FINAL_METHOD.getLabel()))
+			return COMPOSITION_PLAIN;
+		return COMPOSITION_EXPLICIT;
+	}
+	
+	private String getCompMethodForTerminal(FSTTerminal terminal){
+		String compositionKey = getCompositionKey(terminal);
+		if (compositionKey.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CONJUNCTIVE;
+		if (compositionKey.equals(CompositionKeyword.CONSECUTIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CONSECUTIVE;
+		if (compositionKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT.getLabel()))
+			return COMPOSITION_CUMULATIVE;
+		if (compositionKey.equals(CompositionKeyword.FINAL_CONTRACT.getLabel())|| compositionKey.equals(CompositionKeyword.FINAL_METHOD.getLabel()))
+			return COMPOSITION_PLAIN;
+		if (compositionKey.equals(CompositionKeyword.EXPLICIT_CONTRACT.getLabel()))
+			return COMPOSITION_EXPLICIT;
+		return "";
+	}
+	
+	private boolean newCompMethod(String[] compInfo, FSTTerminal terminal){
+		String compKey = getCompositionKey(terminal);
+		if (compKey.equals(""))
+			return false;
+		return !compInfo[0].equals(getCompMethodByCompositionKey(compKey));
+	}
+	
+	protected void composeByKey(FSTTerminal terminalA,
+			FSTTerminal terminalB, FSTTerminal terminalComp,
+			String compMethod) {
+		if (compMethod.equals(COMPOSITION_CONJUNCTIVE))
+			conjunctiveContracting(terminalA, terminalB, terminalComp);
+		else if (compMethod.equals(COMPOSITION_CONSECUTIVE))
+			consecutiveContracting(terminalA, terminalB, terminalComp);
+		else if (compMethod.equals(COMPOSITION_CUMULATIVE))
+			cumulativeContracting(terminalA, terminalB, terminalComp);
+		else if (compMethod.equals(COMPOSITION_PLAIN))
+			plainContracting(terminalA, terminalB, terminalComp);
+		else if (compMethod.equals(COMPOSITION_EXPLICIT))
+			explicitContracting(terminalA, terminalB, terminalComp);
+			
 	}
 	
 	protected void compositionByKeywords(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp,
 			FSTNonTerminal nonterminalParent) {
-
-		String compositionKeyA = getCompositionKey(terminalA);
-		//String compositionKeyB = getCompositionKey(terminalB);
-				
-		if (terminalA.getBody().contains("also"))
-			desugarAlso(terminalA);
-
+		
+		// first get all old Variants
+		
+		HashMap<String,List<FSTTerminal>> variants = new HashMap<String,List<FSTTerminal>>();
 		List<FSTTerminal> reqClausesB = getRequiresClauses(terminalB);
 		List<FSTTerminal> ensClausesB = getEnsuresClauses(terminalB);
+		String bodyA = terminalA.getBody();
+
+		addClausesToHashMap(reqClausesB,variants);
+		addClausesToHashMap(ensClausesB,variants);
+		
+		FeatureModelInfo originalModelInfo = modelInfo;
+		modelInfo = new MethodBasedModelInfoWrapper(originalModelInfo);
+		
+		FSTTerminal variantB = (FSTTerminal) terminalB.getDeepClone();
+		variantB.setParent(terminalB.getParent());
+		FSTTerminal variantComp = (FSTTerminal) terminalComp.getDeepClone();
+		variantComp.setParent(terminalComp.getParent());
+		
+		String newReqOrOriginal = "";
+		String compRequires = "";
+		String compEnsures = "";
 		
 		String featureName = getFeatureName(terminalA);
 		String featureState = getFeatureState(terminalA);
-		String compBodyRequires = "";
-		String compBodyEnsures = "";
 		
+		boolean obligatory = originalModelInfo.isMethodCoreFeature(getClassName(terminalA),getMethodName(terminalA),featureName);
 		
-		String[] explicitCompInfo = null;//{COMPOSITION_EXPLICIT,"","",""}; // fallback
-		String[] conjunctiveCompInfo = null;
-		String[] consecutiveCompInfo = null;
-		String[] cumulativeCompInfo = null;
-		String[] plainCompInfo = null;
-		
-		List<FSTTerminal> explicitClauses = new LinkedList<FSTTerminal>();
-		List<FSTTerminal> conjunctiveClauses = new LinkedList<FSTTerminal>();
-		List<FSTTerminal> consecutiveClauses = new LinkedList<FSTTerminal>();
-		List<FSTTerminal> cumulativeClauses = new LinkedList<FSTTerminal>();
-		List<FSTTerminal> plainClauses = new LinkedList<FSTTerminal>();
-		
-		List<FSTTerminal> currentClauseList = explicitClauses;
-		List<List<FSTTerminal>> filledClauseLists = new LinkedList<List<FSTTerminal>>();
-		filledClauseLists.add(explicitClauses);
-		CompositionKeyword lastRequiresCompType = null;
-		CompositionKeyword lastEnsuresCompType = null;
-				
-		for (FSTTerminal clause : reqClausesB){
-			if (clause.getBody().contains(REQUIRE_OR_ORIGINAL)){
-				compBodyRequires += getNewReqOrOriginal(clause.getBody(), getFeatureState(terminalA));
-				currentClauseList = explicitClauses;
+		for (Map.Entry<String,List<FSTTerminal>> variantEntry : variants.entrySet()){
+			if (variantEntry.getKey().contains(REQUIRE_OR_ORIGINAL)){
+				if (!originalModelInfo.isCoreFeature(featureName))
+					newReqOrOriginal = getNewReqOrOriginal(variantEntry.getValue().get(0).getBody(), getFeatureState(terminalA));
 				continue;
 			}
-			if (clause.getBody().contains(COMPOSITION_EXPLICIT)){
-				explicitCompInfo = extractCompositionInformation(clause.getBody(),"requires");
-				currentClauseList = conjunctiveClauses;
-				lastRequiresCompType = CompositionKeyword.EXPLICIT_CONTRACT;
-				continue;
+			String[] compInfo =  extractCompositionInformation(variantEntry.getKey());
+			String[] oldBodyStrings = clauseListToStrings(variantEntry.getValue());
+			setSelectedRejectedFromCompInfo((MethodBasedModelInfoWrapper)modelInfo, compInfo);
+			if (newCompMethod(compInfo,terminalA)){
+				// neues Kompositionsverfahren! -> FeatureState muss mit in die compInfo aufgenommen werden
+				// 1. Feature nicht vorhanden:
+				if (!obligatory && modelInfo.canBeEliminated(featureName)){
+					compRequires += "\r\n\trequires " + compInfo[0] + "(!" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");\r\n\t"
+							     +  oldBodyStrings[0];
+					compEnsures  += "\r\n\tensures "  + compInfo[0] + "(!" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");\r\n\t"
+							     +  oldBodyStrings[1];
+				}
+				// 2. Feature vorhanden
+				if (modelInfo.canBeSelected(featureName)) {
+					// Compose nach altem Verfahren
+					variantB.setBody(oldBodyStrings[0] + oldBodyStrings[1].trim());
+					variantComp.setBody("");
+					((MethodBasedModelInfoWrapper)modelInfo).setSelected(featureName);
+					composeByKey(terminalA,variantB,variantComp,compInfo[0]);
+					terminalA.setBody(bodyA);
+					
+					if (variantComp.getBody().trim().isEmpty())
+						continue;
+					
+					// neue CompInfo schreiben
+					String compMethod = getCompMethodForTerminal(terminalA);
+					compRequires += "\r\n\trequires " + compMethod + "(" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");";
+					compEnsures  += "\r\n\tensures "  + compMethod + "(" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");";
+					
+					// neue Klauseln schreiben
+					List<FSTTerminal> reqClausesComp = getRequiresClauses(variantComp);
+					List<FSTTerminal> ensClausesComp = getEnsuresClauses(variantComp);
+					for (FSTTerminal clause : reqClausesComp)
+						compRequires += "\r\n\t" + clause.getBody() + ";";
+					for (FSTTerminal clause : ensClausesComp)
+						compEnsures  += "\r\n\t" + clause.getBody() + ";";
+				}
+			} else {
+				// kein neues Kompositionsverfahren
+				// nur hinzufügen, wenn es selektioert werden kann, ansonsten ignorieren!
+				if (modelInfo.canBeSelected(featureName)){
+					// Komposition durchführen
+					variantB.setBody(oldBodyStrings[0] + oldBodyStrings[1].trim());
+					variantComp.setBody("");
+					composeByKey(terminalA,variantB,variantComp,compInfo[0]);
+					terminalA.setBody(bodyA);
+					
+					if (variantComp.getBody().trim().isEmpty())
+						continue;
+					
+					// Kompositionsverfahren in das Ergebnis schreiben
+					compRequires += "\r\n\trequires " + compInfo[0] + "(" + compInfo[1] + ");";
+					compEnsures  += "\r\n\tensures "  + compInfo[0] + "(" + compInfo[1] + ");";
+					
+					// neue Klauseln dem Ergebnis hinzufügen
+					List<FSTTerminal> reqClausesComp = getRequiresClauses(variantComp);
+					List<FSTTerminal> ensClausesComp = getEnsuresClauses(variantComp);
+					for (FSTTerminal clause : reqClausesComp)
+						compRequires += "\r\n\t" + clause.getBody() + ";";
+					for (FSTTerminal clause : ensClausesComp)
+						compEnsures  += "\r\n\t" + clause.getBody() + ";";
+				}
 			}
-			if (clause.getBody().contains(COMPOSITION_CONJUNCTIVE)){
-				conjunctiveCompInfo = extractCompositionInformation(clause.getBody(),"requires");
-				currentClauseList = conjunctiveClauses;
-				lastRequiresCompType = CompositionKeyword.CONJUNCTIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_CUMULATIVE)){
-				cumulativeCompInfo = extractCompositionInformation(clause.getBody(),"requires");
-				currentClauseList = cumulativeClauses;
-				lastRequiresCompType = CompositionKeyword.CUMULATIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_CONSECUTIVE)){
-				consecutiveCompInfo = extractCompositionInformation(clause.getBody(),"requires");
-				currentClauseList = consecutiveClauses;
-				lastRequiresCompType = CompositionKeyword.CONSECUTIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_PLAIN)){
-				plainCompInfo = extractCompositionInformation(clause.getBody(),"requires");
-				currentClauseList = plainClauses;
-				lastRequiresCompType = CompositionKeyword.FINAL_CONTRACT;
-				continue;
-			}
-			currentClauseList.add(clause);
 		}
 		
-		//currentClauseList = null;// explicitClauses;
-		
-
-		for (FSTTerminal clause : ensClausesB){
-			if (clause.getBody().contains(COMPOSITION_EXPLICIT)){
-				explicitCompInfo = extractCompositionInformation(clause.getBody(),"ensures");
-				currentClauseList = explicitClauses;
-				lastEnsuresCompType = CompositionKeyword.EXPLICIT_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_CONJUNCTIVE)){
-				conjunctiveCompInfo = extractCompositionInformation(clause.getBody(),"ensures");
-				currentClauseList = conjunctiveClauses;
-				lastEnsuresCompType = CompositionKeyword.CONJUNCTIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_CUMULATIVE)){
-				cumulativeCompInfo = extractCompositionInformation(clause.getBody(),"ensures");
-				currentClauseList = cumulativeClauses;
-				lastEnsuresCompType = CompositionKeyword.CUMULATIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_CONSECUTIVE)){
-				consecutiveCompInfo = extractCompositionInformation(clause.getBody(),"ensures");
-				currentClauseList = consecutiveClauses;
-				lastEnsuresCompType = CompositionKeyword.CONSECUTIVE_CONTRACT;
-				continue;
-			}
-			if (clause.getBody().contains(COMPOSITION_PLAIN)){
-				plainCompInfo = extractCompositionInformation(clause.getBody(),"ensures");
-				currentClauseList = plainClauses;
-				lastEnsuresCompType = CompositionKeyword.FINAL_CONTRACT;
-				continue;
-			}
-			currentClauseList.add(clause);
-		}
-		
-		boolean compMethodChanged = false;
-		
-		if (lastEnsuresCompType == null && lastRequiresCompType == null)
-			compMethodChanged = false; // dann ist irgenwas falsch
-		else if (lastEnsuresCompType == null)
-			compMethodChanged = (lastRequiresCompType.getLabel() == compositionKeyA);
-		else if (lastRequiresCompType == null)
-			compMethodChanged = (lastEnsuresCompType.getLabel() == compositionKeyA);
-		else if (lastRequiresCompType.getRank() > lastEnsuresCompType.getRank())
-			compMethodChanged = (lastEnsuresCompType.getLabel() == compositionKeyA);
-		else
-			compMethodChanged = (lastRequiresCompType.getLabel() == compositionKeyA);
-			
-		
-		
-		boolean isObligatory = modelInfo.isObligatoryForMethod(getClassName(terminalA), getMethodName(terminalA), featureName);
-				
-		if(compMethodChanged) {
-			if (!isObligatory){
-				if (explicitCompInfo != null){
-					compBodyRequires += "requires " + explicitCompInfo[0] + "(!" + featureState + (explicitCompInfo[1].isEmpty()?"":"," + explicitCompInfo[1]) + ");";
-					compBodyEnsures  += "ensures "  + explicitCompInfo[0] + "(!" + featureState + (explicitCompInfo[1].isEmpty()?"":"," + explicitCompInfo[1]) + ");";
-					for (FSTTerminal clause : explicitClauses){
-						if (clause.getBody().contains("requires"))
-							compBodyRequires += "\r\n\t" + clause.getBody() + ";";
-						else if (clause.getBody().contains("ensures"))
-							compBodyEnsures += "\r\n\t" + clause.getBody() + ";";
-					}
-				}
-				if (conjunctiveCompInfo != null){
-					compBodyRequires += "requires " + conjunctiveCompInfo[0] + "(!" + featureState + (conjunctiveCompInfo[1].isEmpty()?"":"," + conjunctiveCompInfo[1]) + ");";
-					compBodyEnsures += "ensures " + conjunctiveCompInfo[0] + "(!" + featureState + (conjunctiveCompInfo[1].isEmpty()?"":"," + conjunctiveCompInfo[1]) + ");";
-					for (FSTTerminal clause : conjunctiveClauses){
-						if (clause.getBody().contains("requires"))
-							compBodyRequires += "\r\n\t" + clause.getBody() + ";";
-						else if (clause.getBody().contains("ensures"))
-							compBodyEnsures += "\r\n\t" + clause.getBody() + ";";
-					}
-				}
-				if (consecutiveCompInfo != null){
-					compBodyRequires += "requires " + consecutiveCompInfo[0] + "(!" + featureState + (consecutiveCompInfo[1].isEmpty()?"":"," + consecutiveCompInfo[1]) + ");";
-					compBodyEnsures += "ensures " + consecutiveCompInfo[0] + "(!" + featureState + "," + consecutiveCompInfo[1] + ");";
-					for (FSTTerminal clause : consecutiveClauses){
-						if (clause.getBody().contains("requires"))
-							compBodyRequires += "\r\n\t" + clause.getBody() + ";";
-						else if (clause.getBody().contains("ensures"))
-							compBodyEnsures += "\r\n\t" + clause.getBody() + ";";
-					}
-				}
-				if (cumulativeCompInfo != null){
-					compBodyRequires += "requires " + cumulativeCompInfo[0] + "(!" + featureState + (cumulativeCompInfo[1].isEmpty()?"":"," + cumulativeCompInfo[1]) + ");";
-					compBodyEnsures += "ensures " + cumulativeCompInfo[0] + "(!" + featureState + "," + cumulativeCompInfo[1] + ");";
-					for (FSTTerminal clause : cumulativeClauses){
-						if (clause.getBody().contains("requires"))
-							compBodyRequires += "\r\n\t" + clause.getBody() + ";";
-						else if (clause.getBody().contains("ensures"))
-							compBodyEnsures += "\r\n\t" + clause.getBody() + ";";
-					}
-				}
-				if (plainCompInfo != null){ // hier dürften wir gar nicht rein kommen: wenns schon plain gibt, kann das Verfahren nicht mehr geändert werden
-					compBodyRequires += "requires " + plainCompInfo[0] + "(!" + featureState + (plainCompInfo[1].isEmpty()?"":"," + plainCompInfo[1]) + ");";
-					compBodyEnsures += "ensures " + plainCompInfo[0] + "(!" + featureState + "," + plainCompInfo[1] + ");";
-					for (FSTTerminal clause : plainClauses){
-						if (clause.getBody().contains("requires"))
-							compBodyRequires += "\r\n\t" + clause.getBody() + ";";
-						else if (clause.getBody().contains("ensures"))
-							compBodyEnsures += "\r\n\t" + clause.getBody() + ";";
-					}
-				}
-			} // if (!isObligatory) { ...
-			
-			String[] newCompInfo = createCompositionInfo(compositionKeyA,featureState);
-			compBodyRequires += "requires " + newCompInfo[0] + "(" + newCompInfo[1] + ");";
-			compBodyEnsures += "ensures " + newCompInfo[0] + "(" + newCompInfo[1] + ");";
-
-			List<FSTTerminal> newRequires = new LinkedList<FSTTerminal>();
-			List<FSTTerminal> newEnsures  = new LinkedList<FSTTerminal>();
-			
-			FeatureModelInfo originalModelInfo = modelInfo;
-			modelInfo = new MethodBasedModelInfoWrapper(originalModelInfo);
-			((MethodBasedModelInfoWrapper)modelInfo).setSelected(featureName);
-
-			getNewClauses(terminalA,terminalB,terminalComp,explicitCompInfo,explicitClauses,newRequires,newEnsures,true);
-			getNewClauses(terminalA,terminalB,terminalComp,conjunctiveCompInfo,conjunctiveClauses,newRequires,newEnsures,true);
-			getNewClauses(terminalA,terminalB,terminalComp,consecutiveCompInfo,consecutiveClauses,newRequires,newEnsures,true);
-			getNewClauses(terminalA,terminalB,terminalComp,cumulativeCompInfo,cumulativeClauses,newRequires,newEnsures,true);
-			getNewClauses(terminalA,terminalB,terminalComp,plainCompInfo,plainClauses,newRequires,newEnsures,true);
-			
-			modelInfo = originalModelInfo;
-			
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-		} else { // if (compMethodChanged) { ...
-			List<FSTTerminal> newRequires = new LinkedList<FSTTerminal>();
-			List<FSTTerminal> newEnsures = new LinkedList<FSTTerminal>();
-			MethodBasedModelInfoWrapper specialModelInfo = new MethodBasedModelInfoWrapper(modelInfo);
-			FeatureModelInfo originalModelInfo = modelInfo;
-			modelInfo = specialModelInfo;
-			setSelectedRejectedFromCompInfo(specialModelInfo,explicitCompInfo);
-			getNewClauses(terminalA,terminalB,terminalComp,explicitCompInfo,explicitClauses,newRequires,newEnsures,false);
-			if (newRequires.size() > 0)
-				compBodyRequires += "requires " + explicitCompInfo[0] + "(" + explicitCompInfo[1] + ");";
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			newRequires.clear();
-			if (newEnsures.size() > 0)
-				compBodyEnsures += "ensures " + explicitCompInfo[0] + "(" + explicitCompInfo[1] + ");";
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-			newEnsures.clear();
-			
-
-			setSelectedRejectedFromCompInfo(specialModelInfo,conjunctiveCompInfo);
-			getNewClauses(terminalA,terminalB,terminalComp,conjunctiveCompInfo,conjunctiveClauses,newRequires,newEnsures,false);
-			if (newRequires.size() > 0)
-				compBodyRequires += "requires " + conjunctiveCompInfo[0] + "(" + conjunctiveCompInfo[1] + ");";
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			newRequires.clear();
-			if (newEnsures.size() > 0)
-				compBodyEnsures += "ensures " + conjunctiveCompInfo[0] + "(" + conjunctiveCompInfo[1] + ");";
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-			newEnsures.clear();
-			
-
-			setSelectedRejectedFromCompInfo(specialModelInfo,consecutiveCompInfo);
-			getNewClauses(terminalA,terminalB,terminalComp,consecutiveCompInfo,consecutiveClauses,newRequires,newEnsures,false);
-			if (newRequires.size() > 0)
-				compBodyRequires += "requires " + consecutiveCompInfo[0] + "(" + consecutiveCompInfo[1] + ");";
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			newRequires.clear();
-			if (newEnsures.size() > 0)
-				compBodyEnsures += "ensures " + consecutiveCompInfo[0] + "(" + consecutiveCompInfo[1] + ");";
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-			newEnsures.clear();
-			
-
-			setSelectedRejectedFromCompInfo(specialModelInfo,cumulativeCompInfo);
-			getNewClauses(terminalA,terminalB,terminalComp,cumulativeCompInfo,cumulativeClauses,newRequires,newEnsures,false);
-			if (newRequires.size() > 0)
-				compBodyRequires += "requires " + cumulativeCompInfo[0] + "(" + cumulativeCompInfo[1] + ");";
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			newRequires.clear();
-			if (newEnsures.size() > 0)
-				compBodyEnsures += "ensures " + cumulativeCompInfo[0] + "(" + cumulativeCompInfo[1] + ");";
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-			newEnsures.clear();
-			
-
-			setSelectedRejectedFromCompInfo(specialModelInfo,plainCompInfo);
-			getNewClauses(terminalA,terminalB,terminalComp,plainCompInfo,plainClauses,newRequires,newEnsures,false);
-			if (newRequires.size() > 0)
-				compBodyRequires += "requires " + plainCompInfo[0] + "(" + plainCompInfo[1] + ");";
-			for (FSTTerminal requiresClause : newRequires){
-				compBodyRequires += "\r\n\t" + requiresClause.getBody() + ";";
-			}
-			newRequires.clear();
-			if (newEnsures.size() > 0)
-				compBodyEnsures += "ensures " + plainCompInfo[0] + "(" + plainCompInfo[1] + ");";
-			for (FSTTerminal ensuresClause : newEnsures){
-				compBodyEnsures += "\r\n\t" + ensuresClause.getBody() + ";";
-			}
-			newEnsures.clear();
-			modelInfo = originalModelInfo;
-		} // if (compMethodChanged) {} else { ...
-		
-		terminalComp.setBody(compBodyRequires + compBodyEnsures);
+		terminalComp.setBody(newReqOrOriginal + "\r\n\t" + compRequires + "\r\n\t" + compEnsures);
+		modelInfo = originalModelInfo;
 	}
-
+	
 	@Override
 	protected void plainContracting(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp) {
 		List<FSTTerminal> reqClausesB = getRequiresClauses(terminalB);
 		String newOrOriginal = "";
 		String oldOrOriginal = "";
+		String featureName = getFeatureName(terminalA);
 		for (FSTTerminal clause: reqClausesB){
 			if (clause.getBody().contains(REQUIRE_OR_ORIGINAL)){
-				oldOrOriginal = clause.getBody();
-				newOrOriginal = getNewReqOrOriginal(clause.getBody(), getFeatureState(terminalA));
+				if (!modelInfo.isCoreFeature(featureName)){
+					oldOrOriginal = clause.getBody();
+					newOrOriginal = getNewReqOrOriginal(clause.getBody(), getFeatureState(terminalA));
+				}
 				break;
 			}
 		}
@@ -988,16 +958,18 @@ public class ContractCompositionMeta extends ContractComposition {
 			return;
 		}
 
-		String featureName = getFeatureName(terminalA);
-		boolean isObligatory = modelInfo.isObligatoryForMethod(getClassName(terminalA), getMethodName(terminalA), featureName);
+		boolean isObligatory = modelInfo.isMethodCoreFeature(getClassName(terminalA), getMethodName(terminalA), featureName);
 		
 		if (isObligatory && terminalB.getBody().trim().isEmpty()){
-			terminalComp.setBody(
-						"require FM.FeatureModel." 
-					+ 	getFeatureState(terminalA)
-					+ 	" || " + REQUIRE_OR_ORIGINAL
-					+	";"
-					+	terminalA.getBody() 
+			if (!modelInfo.isCoreFeature(featureName))
+				terminalComp.setBody(
+							newOrOriginal
+						+	"\r\n\t "
+						+	terminalA.getBody() 
+						+	FINAL_CONTRACT);
+			else
+				terminalComp.setBody(
+						terminalA.getBody() 
 					+	FINAL_CONTRACT);
 			return;
 		}
@@ -1026,14 +998,15 @@ public class ContractCompositionMeta extends ContractComposition {
 		
 		for (FSTTerminal clause : reqClausesB){
 			if (clause.getBody().contains(REQUIRE_OR_ORIGINAL)){
-				bodyComp += newOrOriginal;
+				if (!modelInfo.isCoreFeature(featureName))
+					bodyComp += newOrOriginal;
 				continue;
 			}
-			bodyComp += "\r\n\trequires " + clause.getBody().replaceAll("requires ", "") + ";";
+			bodyComp += "\r\n\t " + clause.getBody() + ";";
 		}
 		
 		for (FSTTerminal clause : reqClausesA) {
-			bodyComp += "\r\n\trequires "
+			bodyComp += "\r\n\t requires "
 					 + pre
 					 + clause.getBody().replaceAll("requires ", "")
 					 + post
@@ -1041,11 +1014,11 @@ public class ContractCompositionMeta extends ContractComposition {
 		}
 		
 		for (FSTTerminal clause : ensClausesB){
-			bodyComp += "\r\n\tensures " + clause.getBody().replaceAll("ensures ", "") + ";";
+			bodyComp += "\r\n\t " + clause.getBody() + ";";
 		}
 		
 		for (FSTTerminal clause : ensClausesA) {
-			bodyComp += "\r\n\tensures "
+			bodyComp += "\r\n\t ensures "
 					 + pre
 					 + clause.getBody().replaceAll("ensures ", "")
 					 + post
@@ -1059,97 +1032,11 @@ public class ContractCompositionMeta extends ContractComposition {
 	protected void contractOverriding(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		
-		String featureNameA = getFeatureName(terminalA);
-		String featureStateA = getFeatureState(terminalA);
-
-		List<FSTTerminal> reqClaB = getRequiresClauses(terminalB);
+		// Spezialform von Explicit Contracting
+		// -> darf nur kein original enthalten
+		// muss das überprüft werden???
 		
-		if (modelInfo.isObligatoryForMethod(getClassName(terminalA),getMethodName(terminalA),featureNameA)){
-			// overrides in every product
-			String compBody = "";
-			for (FSTTerminal clause : reqClaB){
-				String clauseBody = clause.getBody();
-				if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
-					compBody = getNewReqOrOriginal(clauseBody,featureStateA);
-					break;
-				}
-			}
-			compBody += "\r\n\t" + terminalA.getBody();			
-			terminalComp.setBody(compBody);
-		} else {
-			// convert also, otherwise resulting contracts would not be correct
-			if (terminalA.getBody().contains("also")){
-				desugarAlso(terminalA);
-			}
-			if (terminalB.getBody().contains("also")){
-				desugarAlso(terminalB);
-			}
-			// overrides only if Feature is selected			
-			List<FSTTerminal> reqClaA = getRequiresClauses(terminalA);
-			List<FSTTerminal> ensClaB = getEnsuresClauses(terminalB);
-			List<FSTTerminal> ensClaA = getEnsuresClauses(terminalA);
-			
-			String terminalCompBody = "";
-			
-			// old requires-clauses
-			for (FSTTerminal requiresB : reqClaB){
-				
-				String requiresBody = requiresB.getBody();
-				
-				if (requiresBody.contains(REQUIRE_OR_ORIGINAL)){
-					terminalCompBody += getNewReqOrOriginal(requiresBody, featureNameA);
-					continue;
-				}
-				
-				
-				//List<String> selected = getSelectedFeatures(requiresBody);
-				//List<String> rejected = getRejectedFeatures(requiresBody);
-				modelInfo.reset();				
-				selectFeaturesFromClause(requiresBody);
-				rejectFeaturesFromClause(requiresBody);
-				
-				//rejected.add(featureNameA);
-				//if (modelInfo.hasValidProduct(selected, rejected)){
-				if (modelInfo.isRejectable(featureNameA)){
-					// only add if combination could be possible (allredy selected and rejected Features plus reject Feature of TerminalB can lead to a valid Product)
-					// TODO: prüfen, ib man das hier evtl. noch vereinfachen kann!
-					//		 möglicherweise lassen sich die Implikationen noch reduzieren 
-					//		 evtl ist auch die Klausel immer wahr, wenn Feature gewählt wurde, 
-					//		 aber !Feature nicht in die Klausel eingefügt wird (!Feature impliziert
-					//		 dass einer der Ausdrücke in den folgenden Implikationen immer flase ist...
-					terminalCompBody += "\r\n\t requires !FM.FeatureModel." + featureStateA + " ==> (" + requiresBody + ");";
-				}
-			}
-			
-			// new requires-clauses
-			for (FSTTerminal requiresA : reqClaA){
-				terminalCompBody += "\r\n\t requires FM.FeatureModel." + featureStateA + " ==> (" + requiresA.getBody() + ");";
-			}
-			
-			// old ensures-clauses
-			for (FSTTerminal ensuresB : ensClaB){
-				//List<String> selected = getSelectedFeatures(ensuresB.getBody());
-				//List<String> rejected = getRejectedFeatures(ensuresB.getBody());
-				modelInfo.reset();
-				selectFeaturesFromClause(ensuresB.getBody());
-				rejectFeaturesFromClause(ensuresB.getBody());
-				
-				//rejected.add(featureNameA);				
-				//if (modelInfo.hasValidProduct(selected, rejected)){
-				if (modelInfo.isRejectable(featureNameA)){
-					// only add if combination could be possible (allredy selected and rejected Features plus reject Feature of TerminalB can lead to a valid Product)
-					// TODO: siehe requires...
-					terminalCompBody += "\r\n\t requires !FM.FeatureModel." + featureStateA + " ==> (" + ensuresB.getBody() + ");";
-				}
-			}
-			
-			// new ensures-clauses
-			for (FSTTerminal ensuresA : ensClaA){
-				terminalCompBody += "\r\n\t requires FM.FeatureModel." + featureStateA + " ==> (" + ensuresA.getBody() + ");";
-			}
-			
-			terminalComp.setBody(terminalCompBody);
-		}
+		explicitContracting(terminalA, terminalB, terminalComp);
 		
 	}
 
@@ -1170,7 +1057,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		
 		String featureState = getFeatureState(terminalA);
 		String methodName = getMethodName(terminalA);
-		boolean isObligatory = modelInfo.isObligatoryForMethod(getClassName(terminalA), methodName,getFeatureName(terminalA));
+		boolean isObligatory = modelInfo.isMethodCoreFeature(getClassName(terminalA), methodName,getFeatureName(terminalA));
 		
 		String bodyComp = "";
 		
@@ -1178,7 +1065,8 @@ public class ContractCompositionMeta extends ContractComposition {
 			String clauseBody = clause.getBody();
 			if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
 				clause.setBody("");
-				bodyComp += getNewReqOrOriginal(clauseBody, featureState);
+				if (!modelInfo.isCoreFeature(getFeatureName(terminalA)))
+					bodyComp += getNewReqOrOriginal(clauseBody, featureState);
 				break;
 			}
 		}
@@ -1215,7 +1103,7 @@ public class ContractCompositionMeta extends ContractComposition {
 			for (FSTTerminal clause : originalClauses){
 				if (clause.getBody().trim().isEmpty())
 					continue;
-				String newClause = "\r\n\t"
+				String newClause = "\r\n\t "
 								+ type
 								+ " "
 								+ pre
@@ -1247,7 +1135,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		for (FSTTerminal clause : newClauses){
 			if (clause.getBody().trim().isEmpty())
 				continue;
-			result += "\r\n\t"
+			result += "\r\n\t "
 					+ type
 					+ " "
 					+ pre;
@@ -1294,16 +1182,18 @@ public class ContractCompositionMeta extends ContractComposition {
 		String postEnsures = "";
 		
 		// get all Clauses
-		List<FSTTerminal> reqClausesA = getRequiresClauses(terminalA);
-		List<FSTTerminal> reqClausesB = getRequiresClauses(terminalB);
-		List<FSTTerminal> ensClausesA = getEnsuresClauses(terminalA);
+		List<FSTTerminal> reqClausesA = getRequiresClauses(terminalA,true);
+		List<FSTTerminal> reqClausesB = getRequiresClauses(terminalB,true);
+		List<FSTTerminal> ensClausesA = getEnsuresClauses(terminalA); 
 		List<FSTTerminal> ensClausesB = getEnsuresClauses(terminalB);
 		
 		// Search for the REquires or original-Clause
 		for (FSTTerminal clause : reqClausesB){
 			String clauseBody = clause.getBody();
+			clauseBody = clauseBody.substring(0, clauseBody.length()-1);
 			if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
-				terminalCompBody = getNewReqOrOriginal(clauseBody, featureStateA);
+				if (!modelInfo.isCoreFeature(getFeatureName(terminalA)))
+					terminalCompBody = getNewReqOrOriginal(clauseBody, featureStateA);
 				reqClausesB.remove(clause);
 				break;
 			}
@@ -1318,7 +1208,7 @@ public class ContractCompositionMeta extends ContractComposition {
 			postEnsures =")";
 		}
 		
-		if (!modelInfo.isObligatoryForMethod(getClassName(terminalA), getMethodName(terminalA),getFeatureName(terminalA))){
+		if (!modelInfo.isMethodCoreFeature(getClassName(terminalA), getMethodName(terminalA),getFeatureName(terminalA))){
 			preRequires = "(FM.FeatureModel." + featureStateA + " && ";
 			postRequires = ")";
 			if (preEnsures.isEmpty()){ // no requires
@@ -1330,19 +1220,19 @@ public class ContractCompositionMeta extends ContractComposition {
 		}
 		
 		if (!terminalARequires.trim().isEmpty() && !terminalBRequires.trim().isEmpty()){
-			terminalCompBody += "\r\n\trequires " + terminalBRequires + "\r\n\t\t || " + preRequires + terminalARequires + postRequires + ";";
+			terminalCompBody += "\r\n\t requires " + terminalBRequires + "\r\n\t\t || " + preRequires + terminalARequires + postRequires + ";";
 		} else if (!terminalARequires.trim().isEmpty()){
-			terminalCompBody += "\r\n\trequires " + preRequires + terminalARequires + postRequires + ";";
+			terminalCompBody += "\r\n\t requires " + preRequires + terminalARequires + postRequires + ";";
 		} else if (!terminalBRequires.trim().isEmpty()) {
-			terminalCompBody += "\r\n\trequires " + terminalBRequires + ";";
+			terminalCompBody += "\r\n\t requires " + terminalBRequires + ";";
 		}
 		
 		for (FSTTerminal ensuresB : ensClausesB){
-			terminalCompBody += "\r\n\tensures " + ensuresB.getBody().replaceAll("ensures ","") + ";";
+			terminalCompBody += "\r\n\t " + ensuresB.getBody() + ";";
 		}
 		
 		for (FSTTerminal ensuresA : ensClausesA){
-			terminalCompBody += "\r\n\tensures "+ preEnsures + ensuresA.getBody().replaceAll("ensures ","") + postEnsures + ";";
+			terminalCompBody += "\r\n\t ensures "+ preEnsures + ensuresA.getBody().replaceAll("ensures ","") + postEnsures + ";";
 		}
 		
 		terminalComp.setBody(terminalCompBody);
@@ -1365,7 +1255,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		String postClause = "";
 		String featureState = getFeatureState(terminalA);
 		
-		if (!modelInfo.isObligatoryForMethod(getClassName(terminalA),getMethodName(terminalA),getFeatureName(terminalA))) {
+		if (!modelInfo.isMethodCoreFeature(getClassName(terminalA),getMethodName(terminalA),getFeatureName(terminalA))) {
 			preClause = "FM.FeatureModel." + featureState + " ==> (";
 			postClause = ")";
 		}
@@ -1373,22 +1263,23 @@ public class ContractCompositionMeta extends ContractComposition {
 		for (FSTTerminal requiresB : reqClaB){
 			String clauseBody = requiresB.getBody();
 			if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
-				terminalCompBody += getNewReqOrOriginal(clauseBody, featureState);
+				if (!modelInfo.isCoreFeature(getFeatureName(terminalA)))
+					terminalCompBody += getNewReqOrOriginal(clauseBody, featureState);
 				continue;
 			}
-			terminalCompBody += "\r\n\trequires " + requiresB.getBody().replaceAll("requires ","") + ";"; 
+			terminalCompBody += "\r\n\t " + requiresB.getBody() + ";"; 
 		}
 		
 		for (FSTTerminal requiresA : reqClaA){
-			terminalCompBody += "\r\n\trequires " + preClause + requiresA.getBody().replaceAll("requires ","") + postClause + ";";
+			terminalCompBody += "\r\n\t requires " + preClause + requiresA.getBody().replaceAll("requires ","") + postClause + ";";
 		}
 		
 		for (FSTTerminal ensuresB : ensClaB){
-			terminalCompBody += "\r\n\tensures " + ensuresB.getBody().replaceAll("ensures ","") + ";"; 
+			terminalCompBody += "\r\n\t " + ensuresB.getBody() + ";"; 
 		}
 		
 		for (FSTTerminal ensuresA : ensClaA){
-			terminalCompBody += "\r\n\tensures " + preClause + ensuresA.getBody().replaceAll("ensures ","") + postClause + ";";
+			terminalCompBody += "\r\n\t ensures " + preClause + ensuresA.getBody().replaceAll("ensures ","") + postClause + ";";
 		}
 		
 		terminalComp.setBody(terminalCompBody);
@@ -1418,7 +1309,8 @@ public class ContractCompositionMeta extends ContractComposition {
 		for (FSTTerminal clause : reqClaB){
 			String clauseBody = clause.getBody();
 			if (clauseBody.contains(REQUIRE_OR_ORIGINAL)){
-				terminalCompBody = getNewReqOrOriginal(clauseBody, featureState);
+				if (!modelInfo.isCoreFeature(getFeatureName(terminalA)))
+					terminalCompBody = getNewReqOrOriginal(clauseBody, featureState);
 				reqClaB.remove(clause);
 				break;
 			}
@@ -1428,7 +1320,7 @@ public class ContractCompositionMeta extends ContractComposition {
 		String requiresA = reqClaA.size() > 0 ? joinClause(reqClaA,"requires") : "";
 		String requiresB = reqClaB.size() > 0 ? joinClause(reqClaB,"requires") : "";
 		
-		if (!modelInfo.isObligatoryForMethod(getClassName(terminalA),getMethodName(terminalA),getFeatureName(terminalA))){
+		if (!modelInfo.isMethodCoreFeature(getClassName(terminalA),getMethodName(terminalA),getFeatureName(terminalA))){
 			preRequires = "FM.FeatureModel." + featureState + " && ";
 			postRequires = "";
 			preEnsures = "FM.FeatureModel." + featureState + " ==> (";
@@ -1436,19 +1328,19 @@ public class ContractCompositionMeta extends ContractComposition {
 		}
 		
 		if (!requiresA.trim().isEmpty() && !requiresB.trim().isEmpty()){
-			terminalCompBody += "\r\n\trequires " + requiresB + "\r\n\t\t || (" + preRequires + requiresA + postRequires + ");";
+			terminalCompBody += "\r\n\t requires " + requiresB + "\r\n\t\t || (" + preRequires + requiresA + postRequires + ");";
 		} else if (!requiresA.trim().isEmpty()){
-			terminalCompBody += "\r\n\trequires " + preRequires + requiresA + postRequires + ";";
+			terminalCompBody += "\r\n\t requires " + preRequires + requiresA + postRequires + ";";
 		} else if (!requiresB.trim().isEmpty()) {
-			terminalCompBody += "\r\n\trequires " + requiresB + ");";
+			terminalCompBody += "\r\n\t requires " + requiresB + ");";
 		}
 		
 		for (FSTTerminal ensuresB : ensClaB){
-			terminalCompBody += "\r\n\tensures " + ensuresB.getBody().replaceAll("ensures ","") + ";";
+			terminalCompBody += "\r\n\t " + ensuresB.getBody() + ";";
 		}
 		
 		for (FSTTerminal ensuresA : ensClaA){
-			terminalCompBody += "\r\n\tensures " + preEnsures + ensuresA.getBody().replaceAll("ensures ","") + postEnsures + ";";
+			terminalCompBody += "\r\n\t ensures " + preEnsures + ensuresA.getBody().replaceAll("ensures ","") + postEnsures + ";";
 		}
 		
 		terminalComp.setBody(terminalCompBody);
