@@ -199,9 +199,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	private void preProcessSubtree(FSTNode child) {
 		if (child instanceof FSTNonTerminal) {
 			if (child.getType().equals("MethodSpecification") && ((FSTNonTerminal) child).getChildren().isEmpty()) {
-				//FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
-				//((FSTNonTerminal) child).addChild(spec);
-				//(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "\\req FM.FeatureModel." + getFeatureName(spec) + "\\or_original;", "", "ContractComposition"));
+				FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
+				((FSTNonTerminal) child).addChild(spec);
+				(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "requires FM.FeatureModel." + getFeatureName(spec) + " || FM.Features.OrOriginal;", "", "ContractComposition"));
 			} else {
 				for (FSTNode node : ((FSTNonTerminal) child).getChildren()) {
 					preProcessSubtree(node);

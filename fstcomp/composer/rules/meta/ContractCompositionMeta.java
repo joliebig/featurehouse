@@ -26,6 +26,7 @@ import de.ovgu.cide.fstgen.ast.FSTTerminal;
 /**
  * TODO description
  * @author Jens Meinicke
+ * @author Matthias Praast
  *
  */
 public class ContractCompositionMeta extends ContractComposition {
@@ -295,7 +296,7 @@ public class ContractCompositionMeta extends ContractComposition {
 	 * <br>3 resulting suffix in specification
 	 */
 	private String[] extractCompositionInformation(String clause,String type){
-		String[] result = {"","","",""}; //Composition-Type, Parameters, resulting prefix, resulting suffix
+		String[] result = {"","","",""}; 
 		Pattern p = Pattern.compile(
 					type
 				+	" (" + COMPOSITION_CONJUNCTIVE + "|" + COMPOSITION_CONSECUTIVE + "|" + COMPOSITION_CUMULATIVE + "|"
@@ -331,7 +332,7 @@ public class ContractCompositionMeta extends ContractComposition {
 	 * <br>3 resulting suffix in specification
 	 */
 	private String[] extractCompositionInformation(String clause){
-		String[] result = {"","","",""}; //Composition-Type, Parameters, resulting prefix, resulting suffix
+		String[] result = {"","","",""}; 
 		Pattern p = Pattern.compile(
 					"(" + COMPOSITION_CONJUNCTIVE + "|" + COMPOSITION_CONSECUTIVE + "|" + COMPOSITION_CUMULATIVE + "|"
 						+ COMPOSITION_EXPLICIT + "|" + COMPOSITION_PLAIN + ")\\("
@@ -358,91 +359,6 @@ public class ContractCompositionMeta extends ContractComposition {
 	}
 	
 	/**
-	 * Creates a new composition information array for method based contract composition
-	 * @param compKey composition-type
-	 * @param featureState featurestate
-	 * @return composition-information array
-	 */
-	private String[] createCompositionInfo(String compKey, String featureState){
-		String[] result = new String[4];
-		if (compKey.equals(CompositionKeyword.CONJUNCTIVE_CONTRACT))
-			result[0] = COMPOSITION_CONJUNCTIVE;
-		else if (compKey.equals(CompositionKeyword.CONSECUTIVE_CONTRACT))
-			result[0] = COMPOSITION_CONSECUTIVE;
-		else if (compKey.equals(CompositionKeyword.CUMULATIVE_CONTRACT))
-			result[0] = COMPOSITION_CUMULATIVE;
-		else if (compKey.equals(CompositionKeyword.FINAL_CONTRACT) || compKey.equals(CompositionKeyword.FINAL_METHOD))
-			result[0] = COMPOSITION_PLAIN;
-		else
-			result[0] = COMPOSITION_EXPLICIT;
-		result[1] = featureState;
-		result[2] = "FM.FEatureMode." + featureState + " ==> (";
-		result[3] = ")";
-		return result;
-	}
-	
-	/**
-	 * Calculates new Clauses for method-based contract composition for a set of clauses for the given composition information 
-	 * @param terminalA {@link FSTTerminal} mit neuen Klauseln
-	 * @param terminalB altes {@link FSTTerminal}
-	 * @param terminalComp ziel {@link FSTTerminal}
-	 * @param compInfo composition information array
-	 * @param clausesB clauses of terminalB to compose
-	 * @param resultingRequires resulting requires-clauses
-	 * @param resultingEnsures resulting ensures-clauses
-	 * @param withCompInfoPrefix if true, the resulting clauses will contain the prefix and suffix defined in compInfo
-	 */
-	private void getNewClauses(FSTTerminal terminalA,FSTTerminal terminalB, FSTTerminal terminalComp,
-			String[] compInfo, List<FSTTerminal> clausesB,List<FSTTerminal> resultingRequires,List<FSTTerminal> resultingEnsures, boolean withCompInfoPrefix){
-		
-		if (clausesB == null)
-			return;
-		
-		if (compInfo == null)
-			return;
-		
-		// first get copies of the Terminals
-		FSTTerminal newTerminalA = (FSTTerminal)terminalA.getDeepClone();
-		FSTTerminal newTerminalB = (FSTTerminal)terminalA.getDeepClone();
-		FSTTerminal newTerminalComp = (FSTTerminal)terminalA.getDeepClone();
-		
-		newTerminalA.setParent(terminalA.getParent());
-		newTerminalB.setParent(terminalB.getParent());
-		newTerminalComp.setParent(terminalComp.getParent());
-		
-		newTerminalB.setBody("");
-		newTerminalComp.setBody("");
-		
-		// fill newTerminalB
-		String bodyB = "";
-		String pre = withCompInfoPrefix ? compInfo[2] : "";
-		String post = withCompInfoPrefix ? compInfo[3] : ""; 
-		
-		for (FSTTerminal clause : clausesB){
-			if (clause.getBody().contains("requires"))
-				bodyB += "requires " + pre + clause.getBody().replaceAll("requires ", "") + post + ";"; 
-			else if (clause.getBody().contains("ensures"))
-				bodyB += "ensures " + pre + clause.getBody().replaceAll("ensures ", "") + post + ";";
-		}
-		newTerminalB.setBody(bodyB);
-		
-		if (compInfo[0].equals(COMPOSITION_CONJUNCTIVE))
-			conjunctiveContracting(newTerminalA,newTerminalB,newTerminalComp);
-		else if (compInfo[0].equals(COMPOSITION_CONSECUTIVE))
-			consecutiveContracting(newTerminalA, newTerminalB, newTerminalComp);
-		else if (compInfo[0].equals(COMPOSITION_CUMULATIVE))
-			cumulativeContracting(newTerminalA, newTerminalB, newTerminalComp);
-		else if (compInfo[0].equals(COMPOSITION_PLAIN))
-			plainContracting(newTerminalA, newTerminalB, newTerminalComp);
-		else
-			explicitContracting(newTerminalA, newTerminalB, newTerminalComp);
-		
-		resultingRequires.addAll(getRequiresClauses(newTerminalComp));
-		resultingEnsures.addAll(getEnsuresClauses(newTerminalComp));
-		
-	}
-	
-	/**
 	 * selects/unselects Features in a {@link FeatureModelInfo} from a composition information array
 	 * @param specialModelInfo object of {@link FeatureModelInfo} to select/unselect features
 	 * @param compInfo composition information array
@@ -460,55 +376,6 @@ public class ContractCompositionMeta extends ContractComposition {
 			else
 				specialModelInfo.setSelected(stateToFeatureName(status));
 		}
-	}
-	
-	@Override
-	@Deprecated
- 	protected String getReplacementString(FSTTerminal terminalA,
-			FSTTerminal terminalB) {
-		String res = super.getReplacementString(terminalA, terminalB);
-		String[] baseCases = terminalB.getBody().trim().split("also");
-		String orOriginal = "";
-		for (String caseB : baseCases) {
-			String[] clasesB = caseB.trim().split(";");
-			for (String clauseB : clasesB) {
-				if (!clauseB.trim().isEmpty()) {
-					if (clauseB.contains(ORIGINAL_OR)) {
-						orOriginal = clauseB.substring(clauseB.indexOf("\\req "));
-						orOriginal = orOriginal.replaceAll("\\\\req ", "");
-						clauseB = clauseB.substring(0, clauseB.indexOf("\\req "));
-						res += clauseB;
-					} else {
-						clauseB = clauseB.replaceAll("requires ", "requires !FM.FeatureModel." + getFeatureState(terminalA) + " ==> ");
-						clauseB = clauseB.replaceAll("ensures ", "ensures !FM.FeatureModel." + getFeatureState(terminalA) + " ==> ");
-						if (clauseB.contains("requires ")) {
-							res = res.replaceFirst("requires ", Matcher.quoteReplacement(clauseB) + ";\nrequires ");
-						} else if (clauseB.contains("ensures ")) {
-							res = res.replaceFirst("ensures ", Matcher.quoteReplacement(clauseB) + ";\nensures ");
-						} else {
-							res += clauseB + ";";
-						}
-					}
-				}
-			}
-		}
-		res = res.toString().replaceAll("\r", "");
-		res = res.replaceAll("@", "");
-		res = res.replaceAll("\\n", "");
-		res = res.replaceAll("\\t", "");
-		while (res.contains("  ")) {
-			res = res.replaceAll("  ", " ");
-		}
-		String[] allClauses = res.split(";");
-		StringBuilder result = new StringBuilder();
-		for (int i  = 0; i < allClauses.length;i++) {
-			result.append(allClauses[i].replaceAll("\\t", " ").replaceAll("  ", " ").trim());
-			result.append(";\r\n\t");
-			if (i < allClauses.length - 1) {
-				result.append(" @ ");
-			}
-		}
-		return result.toString().replace(ORIGINAL_OR, " || " + orOriginal.replaceAll("@", ""));
 	}
 
 	@Override
@@ -546,36 +413,37 @@ public class ContractCompositionMeta extends ContractComposition {
 		if (modelInfo.isCoreFeature(getFeatureName(terminal)))
 			terminal.setBody(
 					  "\\not_composed\r\n\t" 
-					+ body.replaceAll("requires[\\s]+\\(*true\\)*;", "").replaceAll("requires[\\s]+\\(*true\\)*;", ""));
+					+ body);
 		else
 			terminal.setBody(
 					  "\\not_composed\r\n\trequires FM.FeatureModel." 
 					+ getFeatureState(terminal) 
 					+ " || " + REQUIRE_OR_ORIGINAL + ";\r\n\t" 
-					+ body.replaceAll("requires[\\s]+\\(*true\\)*;", "").replaceAll("requires[\\s]+\\(*true\\)*;", ""));
+					+ body);
 		return;
 	}
 	 
 	@Override
 	public void postCompose(FSTTerminal terminal) {
 		String body = terminal.getBody();
-		if (FSTGenComposerExtension.key && body.replaceAll("@", "").trim().isEmpty()) { //replaceAll("\\\\[req,nreq][^;]*;", "").trim().isEmpty()) {
-			terminal.setBody("\r\n\t@ requires " + modelInfo.getValidClause() + ";");   //FM.FeatureModel.valid();");
+		if (removeRequireOrOriginal(body).trim().isEmpty()) {
+			terminal.setBody("");
 			return;
 		}
 		
-		body = body.replaceAll("\\\\req", "requires");
-		body = body.replaceAll("\\\\nreq", "requires");
-		body = body.replaceAll("\\" + ORIGINAL_OR, "");
+		if (FSTGenComposerExtension.key && body.replaceAll("@", "").trim().isEmpty()) { 
+			return;
+		}
+		
 		body = body.replaceAll(" \\|\\| " + REQUIRE_OR_ORIGINAL, "");
 		body = body.replaceAll(FINAL_CONTRACT, "");
 		body = body.replaceAll("requires  \\|\\| ", "");
 		body = body.replaceAll("\\" + ORIGINAL_KEYWORD, "true");
 		body = body.replaceAll("\\\\not_composed", "");
 		if (FSTGenComposerExtension.key) {
-			body = "\r\n\t requires " + modelInfo.getValidClause() + ";\r\n\t" + body;
+			body = "  @ requires " + modelInfo.getValidClause() + ";\r\n\t" + body;
 		} else {
-			body = "\r\n\t " + body;
+			body = "  @ " + body;
 		}
 
 		terminal.setBody(body);
@@ -1080,7 +948,6 @@ public class ContractCompositionMeta extends ContractComposition {
 		
 			
 		terminalComp.setBody(bodyComp);
-		//terminalComp.setBody(getReplacementString(terminalA, terminalB));
 	}
 	
 	private String explicitComposeClauses(List<FSTTerminal> originalClauses, List<FSTTerminal> newClauses, 
@@ -1111,9 +978,6 @@ public class ContractCompositionMeta extends ContractComposition {
 								+ post
 								+ ";";
 				// Klausel nicht hinzufügen, falls Featurekombination nicht möglich ist
-				//List<String> selected = getSelectedFeatures(newClause);
-				//List<String> rejected = getRejectedFeatures(newClause);
-				//if (modelInfo.hasValidProduct(selected, rejected))
 				modelInfo.reset();
 				selectFeaturesFromClause(newClause);
 				rejectFeaturesFromClause(newClause);
