@@ -22,9 +22,11 @@ import composer.rules.Replacement;
 import composer.rules.StringConcatenation;
 import composer.rules.meta.ConstructorConcatenationMeta;
 import composer.rules.meta.ContractCompositionMeta;
+import composer.rules.meta.FeatureModelInfo;
 import composer.rules.meta.FieldOverridingMeta;
 import composer.rules.meta.InvariantCompositionMeta;
 import composer.rules.meta.JavaMethodOverridingMeta;
+import composer.rules.meta.MinimalFeatureModelInfo;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
@@ -44,12 +46,21 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 	
 	public static boolean key = false;
 	public static boolean metaproduct = false;
+	private FeatureModelInfo modelInfo = new MinimalFeatureModelInfo();
 	
-	
+
 	public FSTGenComposerExtension() {
 		super();
 	}
+
+	public FSTGenComposerExtension(FeatureModelInfo modelInfo) {
+		super();
+		this.modelInfo = modelInfo;
+	}
 	
+	public void setModelInfo(FeatureModelInfo infoObject){
+		this.modelInfo = infoObject;
+	}
 	/**
 	 * Builds the full FST of the project without composition.
 	 * @param args Default build parameters
@@ -87,7 +98,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			compositionRules.add(new JavaMethodOverridingMeta());
 		}
 		compositionRules.add(new InvariantCompositionMeta());
-		compositionRules.add(new ContractCompositionMeta(cmd.contract_style));
+		compositionRules.add(new ContractCompositionMeta(cmd.contract_style,modelInfo));
 		compositionRules.add(new StringConcatenation());
 		compositionRules.add(new ImplementsListMerging());
 		compositionRules.add(new CSharpMethodOverriding());
@@ -130,6 +141,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 				for (FSTNonTerminal feature : features) {
 					meta.addFeature(feature.getName());
 				}
+				modelInfo.clearFeatureNodes();
+				if (features.size() > 0)
+					modelInfo.addFeatureNodes(features);
 				
 				if (compose) {
 					FSTNode composition = composeMeta(features);
@@ -187,7 +201,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			if (child.getType().equals("MethodSpecification") && ((FSTNonTerminal) child).getChildren().isEmpty()) {
 				FSTNonTerminal spec = new FSTNonTerminal("Specification", "-");
 				((FSTNonTerminal) child).addChild(spec);
-				(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "\\req FM.FeatureModel." + getFeatureName(spec) + "\\or_original;", "", "ContractComposition"));
+				(spec).addChild(new FSTTerminal("SpecCaseSeq", "-", "requires FM.FeatureModel." + getFeatureName(spec) + " || FM.Features.OrOriginal;", "", "ContractComposition"));
 			} else {
 				for (FSTNode node : ((FSTNonTerminal) child).getChildren()) {
 					preProcessSubtree(node);

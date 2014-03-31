@@ -14,13 +14,13 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	public final static String COMPOSITION_RULE_NAME = "ContractComposition";
 
-	private static final String PLAIN_CONTRACTING = "plain_contracting";
-	private static final String CONSECUTIVE_CONTRACTING = "consecutive_contracting";
-	private static final String EXPLICIT_CONTRACTING = "explicit_contracting";
-	private static final String CONTRACT_OVERRIDING = "contract_overriding";
-	private static final String CUMULATIVE_CONTRACTING = "cumulative_contracting";
-	private static final String CONJUNCTIVE_CONTRACTING = "conjunctive_contracting";
-	private static final String METHOD_BASED_COMPOSITION = "method_based";
+	protected static final String PLAIN_CONTRACTING = "plain_contracting";
+	protected static final String CONSECUTIVE_CONTRACTING = "consecutive_contracting";
+	protected static final String EXPLICIT_CONTRACTING = "explicit_contracting";
+	protected static final String CONTRACT_OVERRIDING = "contract_overriding";
+	protected static final String CUMULATIVE_CONTRACTING = "cumulative_contracting";
+	protected static final String CONJUNCTIVE_CONTRACTING = "conjunctive_contracting";
+	protected static final String METHOD_BASED_COMPOSITION = "method_based";
 
 	protected static final String ORIGINAL_KEYWORD_CLAUSE = "\\original_clause";
 	protected static final String ORIGINAL_SPEC_KEYWORD = "\\original_spec";
@@ -28,7 +28,7 @@ public class ContractComposition extends AbstractCompositionRule {
 	protected static final String ORIGINAL_KEYWORD = "\\original";
 	protected static final String ORIGINAL_OR = "\\or_original";
 
-	private String contractStyle = PLAIN_CONTRACTING;
+	protected String contractStyle = PLAIN_CONTRACTING;
 	private ContractReader contractReader;
 
 	public ContractComposition(String contract_style) {
@@ -68,7 +68,7 @@ public class ContractComposition extends AbstractCompositionRule {
 	}
 
 	// Check Keywords in Method-Based Contract Composition
-	private void compositionByKeywords(FSTTerminal terminalA,
+	protected void compositionByKeywords(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp,
 			FSTNonTerminal nonterminalParent) {
 		String compositionKey = "";
@@ -98,28 +98,28 @@ public class ContractComposition extends AbstractCompositionRule {
 		}
 	}
 
-	private void plainContracting(FSTTerminal terminalA, FSTTerminal terminalB,
+	protected void plainContracting(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp) {
 		terminalComp.setBody(terminalB.getBody());
 	}
 
-	private void contractOverriding(FSTTerminal terminalA,
+	protected void contractOverriding(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		terminalComp.setBody(terminalA.getBody());
 	}
 
-	private void explicitContracting(FSTTerminal terminalA,
+	protected void explicitContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		terminalComp.setBody(getReplacementString(terminalA, terminalB));
 	}
 
-	private void consecutiveContracting(FSTTerminal terminalA,
+	protected void consecutiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		terminalComp.setBody(terminalB.getBody() + "\n\talso\n\t "
 				+ terminalA.getBody());
 	}
 
-	private void conjunctiveContracting(FSTTerminal terminalA,
+	protected void conjunctiveContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		if (terminalB.getBody().contains("also"))
 			desugarAlso(terminalB);
@@ -134,7 +134,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				+ "\n\t " + joinClauses(ensClaB, ensClaA, "ensures", "&&"));
 	}
 
-	private void cumulativeContracting(FSTTerminal terminalA,
+	protected void cumulativeContracting(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		if (terminalB.getBody().contains("also"))
 			desugarAlso(terminalB);
@@ -150,7 +150,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				+ "\n\t " + joinClauses(ensClaB, ensClaA, "ensures", "&&"));
 	}
 
-	private void desugarAlso(FSTTerminal terminal) {
+	protected void desugarAlso(FSTTerminal terminal) {
 		String[] baseCases = terminal.getBody().trim().split("also");
 
 		StringBuilder reqBuilder = new StringBuilder("requires ");
@@ -187,7 +187,7 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	// joins Either Requires or Ensures clauses (claustaype)
 	// joins them using the operationtype (&& or ||)
-	private String joinClauses(List<FSTTerminal> reqOrEnsClaB,
+	protected String joinClauses(List<FSTTerminal> reqOrEnsClaB,
 			List<FSTTerminal> reqOrEnsClaA, String clauseType,
 			String operationType) {
 		operationType = "\n\t\t " + operationType + " ";
@@ -211,7 +211,7 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	// Joins all Requires or Ensures clauses with an AND Operator of one
 	// contract
-	private String joinClause(List<FSTTerminal> clauses, String clauseType) {
+	protected String joinClause(List<FSTTerminal> clauses, String clauseType) {
 		StringBuilder builder = new StringBuilder("");
 		String operationType = " && ";
 
@@ -238,12 +238,12 @@ public class ContractComposition extends AbstractCompositionRule {
 
 	}
 
-	private List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {
+	protected List<FSTTerminal> getRequiresClauses(FSTTerminal terminal) {
 		contractReader = new ContractReader(terminal);
 		return contractReader.getRequiresClauses();
 	}
 
-	private List<FSTTerminal> getEnsuresClauses(FSTTerminal terminal) {
+	protected List<FSTTerminal> getEnsuresClauses(FSTTerminal terminal) {
 		contractReader = new ContractReader(terminal);
 		return contractReader.getEnsuresClauses();
 	}
@@ -302,7 +302,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		return result.toString().trim();
 	}
 
-	private String replaceOriginal(String[] baseCases, String string,
+	protected String replaceOriginal(String[] baseCases, String string,
 			int caseId, String prefix) {
 		String orig_repl = getOriginalReplacement(baseCases, caseId, prefix);
 		if (orig_repl.isEmpty()) {
@@ -318,7 +318,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				.replace(ORIGINAL_CASE_KEYWORD, orig_case_repl);
 	}
 
-	private String getOriginalSpecReplacement(String[] baseCases) {
+	protected String getOriginalSpecReplacement(String[] baseCases) {
 		StringBuffer buf = new StringBuffer();
 		boolean append = false;
 		for (String s : baseCases) {
@@ -331,12 +331,12 @@ public class ContractComposition extends AbstractCompositionRule {
 		return buf.toString();
 	}
 
-	private String getOriginalCaseReplacement(String[] baseCases, int caseId) {
+	protected String getOriginalCaseReplacement(String[] baseCases, int caseId) {
 
 		return baseCases[caseId];
 	}
 
-	private String getOriginalReplacement(String[] baseCases, int caseId,
+	protected String getOriginalReplacement(String[] baseCases, int caseId,
 			String prefix) {
 
 		StringBuffer result = new StringBuffer();
@@ -380,7 +380,7 @@ public class ContractComposition extends AbstractCompositionRule {
 		System.out.println("baseCases(id)= " + baseCases[caseId]);
 		Pattern p = Pattern
 				.compile(
-						".*\\(\\\\(forall|exists|max|min|num_of|product|sum).*(;).*(;).*\\).*",
+						".*\\(\\\\(forall|exists|max|min|num_of|product|sum)[^;]*(;)[^;]*(;).*\\).*",
 						Pattern.DOTALL);
 
 		Matcher m = p.matcher(baseCases[caseId]);
@@ -391,6 +391,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				sb.setCharAt(m.start(i), '#');
 				baseCases[caseId] = sb.toString();
 			}
+			m = p.matcher(baseCases[caseId]);
 			System.out.println("XX " + baseCases[caseId]);
 		}
 		String[] clausesA = baseCases[caseId].trim().split(";");
