@@ -901,7 +901,7 @@ public class ContractCompositionMeta extends ContractComposition {
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		
 		// special case of explicit Contracting
-		// -> only no \originaö
+		// -> only no \original
 		// maybe should be checked...
 		
 		explicitContracting(terminalA, terminalB, terminalComp);
