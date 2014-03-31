@@ -615,7 +615,7 @@ public class ContractCompositionMeta extends ContractComposition {
 			}
 			
 			if (currentEntry == null){
-				// TODO: Fehler, sowas sollte eigentlich nicht passieren
+				// should not happen
 				continue;
 			}
 			
@@ -738,17 +738,17 @@ public class ContractCompositionMeta extends ContractComposition {
 			String[] oldBodyStrings = clauseListToStrings(variantEntry.getValue());
 			setSelectedRejectedFromCompInfo((MethodBasedModelInfoWrapper)modelInfo, compInfo);
 			if (newCompMethod(compInfo,terminalA)){
-				// neues Kompositionsverfahren! -> FeatureState muss mit in die compInfo aufgenommen werden
-				// 1. Feature nicht vorhanden:
+				// new Compositions-Method -> FeatureState must be inserted into compInfo
+				// 1. Feature not selected:
 				if (!obligatory && modelInfo.canBeEliminated(featureName)){
 					compRequires += "\r\n\trequires " + compInfo[0] + "(!" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");\r\n\t"
 							     +  oldBodyStrings[0];
 					compEnsures  += "\r\n\tensures "  + compInfo[0] + "(!" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");\r\n\t"
 							     +  oldBodyStrings[1];
 				}
-				// 2. Feature vorhanden
+				// 2. Feature selected
 				if (modelInfo.canBeSelected(featureName)) {
-					// Compose nach altem Verfahren
+					// Compose with old method
 					variantB.setBody(oldBodyStrings[0] + oldBodyStrings[1].trim());
 					variantComp.setBody("");
 					((MethodBasedModelInfoWrapper)modelInfo).setSelected(featureName);
@@ -758,12 +758,12 @@ public class ContractCompositionMeta extends ContractComposition {
 					if (variantComp.getBody().trim().isEmpty())
 						continue;
 					
-					// neue CompInfo schreiben
+					// write new Composition-Method
 					String compMethod = getCompMethodForTerminal(terminalA);
 					compRequires += "\r\n\trequires " + compMethod + "(" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");";
 					compEnsures  += "\r\n\tensures "  + compMethod + "(" + featureState + (compInfo[1].isEmpty()?"":"," + compInfo[1]) + ");";
 					
-					// neue Klauseln schreiben
+					// write new Clauses
 					List<FSTTerminal> reqClausesComp = getRequiresClauses(variantComp);
 					List<FSTTerminal> ensClausesComp = getEnsuresClauses(variantComp);
 					for (FSTTerminal clause : reqClausesComp)
@@ -772,10 +772,10 @@ public class ContractCompositionMeta extends ContractComposition {
 						compEnsures  += "\r\n\t" + clause.getBody() + ";";
 				}
 			} else {
-				// kein neues Kompositionsverfahren
-				// nur hinzufügen, wenn es selektioert werden kann, ansonsten ignorieren!
+				// no new Coposition-Method
+				// only add, when Feature can be selected, otherwise ignore
 				if (modelInfo.canBeSelected(featureName)){
-					// Komposition durchführen
+					// call composition
 					variantB.setBody(oldBodyStrings[0] + oldBodyStrings[1].trim());
 					variantComp.setBody("");
 					composeByKey(terminalA,variantB,variantComp,compInfo[0]);
@@ -784,11 +784,11 @@ public class ContractCompositionMeta extends ContractComposition {
 					if (variantComp.getBody().trim().isEmpty())
 						continue;
 					
-					// Kompositionsverfahren in das Ergebnis schreiben
+					// write compostion-Method to Result
 					compRequires += "\r\n\trequires " + compInfo[0] + "(" + compInfo[1] + ");";
 					compEnsures  += "\r\n\tensures "  + compInfo[0] + "(" + compInfo[1] + ");";
 					
-					// neue Klauseln dem Ergebnis hinzufügen
+					// Add new Clauses to result
 					List<FSTTerminal> reqClausesComp = getRequiresClauses(variantComp);
 					List<FSTTerminal> ensClausesComp = getEnsuresClauses(variantComp);
 					for (FSTTerminal clause : reqClausesComp)
@@ -900,9 +900,9 @@ public class ContractCompositionMeta extends ContractComposition {
 	protected void contractOverriding(FSTTerminal terminalA,
 			FSTTerminal terminalB, FSTTerminal terminalComp) {
 		
-		// Spezialform von Explicit Contracting
-		// -> darf nur kein original enthalten
-		// muss das überprüft werden???
+		// special case of explicit Contracting
+		// -> only no \originaö
+		// maybe should be checked...
 		
 		explicitContracting(terminalA, terminalB, terminalComp);
 		
@@ -957,15 +957,15 @@ public class ContractCompositionMeta extends ContractComposition {
 		String pre = "";
 		String post = "";
 		boolean andOriginal = removeAndOriginal(newClauses, type);
-		// Implikation nur, wenn Spezifikation nicht erweitert (nicht "requires \original"; oder vergleichbare Klausel enthält
+		// only implication, when not extended (no "requires \original"; or similar)
 		if (!andOriginal){
 			pre = "!FM.FeatureModel." + featureState + " ==> (";
 			post = ")";
 			
 		}
 		
-		// Originale Klauseln überspringen, wenn FeatureA obligatoisch ist
-		// ausnahme: FeatureA ist zwar obligatorisch, erweitert aber die Spezifikation
+		// skip original clauses if Feature is obligatory for the method
+		// except: FeatureA is obligatory but extends the spezification
 		if (!isObligatory || andOriginal) {
 			for (FSTTerminal clause : originalClauses){
 				if (clause.getBody().trim().isEmpty())
@@ -977,7 +977,7 @@ public class ContractCompositionMeta extends ContractComposition {
 								+ clause.getBody().replace(type + " ", "")
 								+ post
 								+ ";";
-				// Klausel nicht hinzufügen, falls Featurekombination nicht möglich ist
+				// don't add Clause if feature-combination is not possible
 				modelInfo.reset();
 				selectFeaturesFromClause(newClause);
 				rejectFeaturesFromClause(newClause);
@@ -986,8 +986,8 @@ public class ContractCompositionMeta extends ContractComposition {
 			}
 		}
 		
-		// neue Klauseln immer hinzufügen.
-		// wenn nicht obligatorisch, dann inkl. Implikation
+		// always add new clauses
+		// when not obligatory: with implications
 		pre = "";
 		post = "";
 		if (!isObligatory){
