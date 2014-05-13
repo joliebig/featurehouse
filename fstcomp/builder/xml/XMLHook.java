@@ -9,17 +9,17 @@ public class XMLHook extends XMLNode {
 		String attribute = commentText.replace("@start ", "").trim();
 		
 		if ( attribute.matches("(?s).*\\s*before\\s*.*")) {
-			this.setType("xml:before");
+			this.setType("before");
 			attribute = attribute.replace("before", "").trim();
 		} else if (attribute.matches("(?s).*\\s*after\\s*.*")) {
-			this.setType("xml:after");
+			this.setType("after");
 			attribute = attribute.replace("after", "").trim();
 		}
 		
         attribute = attribute.replace("android:id=", "");
         attribute = attribute.replaceAll("\"", "");
         this.setName(attribute);
-		//setNodeAttribute("android:id", attribute);		
+		setNodeAttribute("android:id", attribute);		
 	}
 
 

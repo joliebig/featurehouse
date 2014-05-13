@@ -395,7 +395,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 								}
 							}
 							
-							if (childA.getType().equalsIgnoreCase("xml:before")){
+							if (childA.getType().equalsIgnoreCase("before")){
 								int beforeOrAfter=0;
 								
 								
@@ -403,21 +403,25 @@ public class FSTGenComposer extends FSTGenProcessor {
 									int i = children.indexOf(beforeOrAfterNode);
 
 									for (FSTNode xmlchild : xmlchildren){
-										nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
-										i++;
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
+											i++;
+										}
 									}
 								} else {
 									nonterminalComp.addChild(newChildA, 0);
 								}
-							} else if (childA.getType().equalsIgnoreCase("xml:after")) {
+							} else if (childA.getType().equalsIgnoreCase("after")) {
 								int beforeOrAfter=1;
 								
 								if (beforeOrAfterNode!=null) {
 									int i = children.indexOf(beforeOrAfterNode);
 
 									for (FSTNode xmlchild : xmlchildren){
-										nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
-										i++;
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
+											i++;
+										}
 									}
 								} else {
 									nonterminalComp.addChild(rewriteSubtree(childA));
