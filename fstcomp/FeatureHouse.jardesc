@@ -34,6 +34,7 @@
         <javaElement handleIdentifier="=fstcomp/&lt;builder.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.haskell"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.xmi"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.xml"/>
         <javaElement handleIdentifier="=fstcomp/&lt;metadata"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.textm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.sdf"/>
@@ -45,6 +46,7 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.sdf"/>
         <javaElement handleIdentifier="=fstmerge/&lt;builder.csharpm"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.xmi"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.xml"/>
         <javaElement handleIdentifier="=fstmerge/&lt;merger"/>
         <javaElement handleIdentifier="=fstcomp/&lt;composer.rules.meta"/>
         <javaElement handleIdentifier="=fstmerge/&lt;printer.textm"/>
