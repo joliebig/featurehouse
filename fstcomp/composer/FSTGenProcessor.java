@@ -21,6 +21,7 @@ import printer.sdf.SDFPrintVisitor;
 import printer.str.STRPrintVisitor;
 import printer.text.TextPrintVisitor;
 import printer.xmi.XMIPrintVisitor;
+import printer.xml.XMLPrintVisitor;
 import processor.capprox.CIncludeGuardGenerator;
 import builder.ArtifactBuilderInterface;
 import builder.alloy.AlloyBuilder;
@@ -36,6 +37,7 @@ import builder.sdf.SDFBuilder;
 import builder.str.STRBuilder;
 import builder.text.TextBuilder;
 import builder.xmi.XMIBuilder;
+import builder.xml.XMLBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTVisitor;
 
@@ -59,6 +61,7 @@ public class FSTGenProcessor {
 		registerArtifactBuilder(new JavaCCBuilder());
 		registerArtifactBuilder(new JCopBuilder());
 		registerArtifactBuilder(new XMIBuilder());
+		registerArtifactBuilder(new XMLBuilder());
 		registerArtifactBuilder(new SDFBuilder());
 		registerArtifactBuilder(new STRBuilder());
 		registerArtifactBuilder(new TextBuilder(".properties"));
@@ -78,6 +81,7 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new JavaCCPrintVisitor());
 		registerPrintVisitor(new HaskellPrintVisitor());
 		registerPrintVisitor(new XMIPrintVisitor());
+		registerPrintVisitor(new XMLPrintVisitor());
 		registerPrintVisitor(new SDFPrintVisitor());
 		registerPrintVisitor(new STRPrintVisitor());
 		registerPrintVisitor(new TextPrintVisitor(".properties"));
