@@ -50,7 +50,7 @@ public class ParseableTest {
 	CSharpMethod csNew = new CSharpMethod(
 		"public int method(){original();something();}");
 
-	FSTNode par = new FSTNonTerminal("nonterminal", "parent");
+	FSTNonTerminal par = new FSTNonTerminal("nonterminal", "parent");
 
 	System.out.println((new FSTGenComposer())
 		.compose(csNew.getFST(), csOldFST, par).getParent());

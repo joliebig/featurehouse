@@ -201,7 +201,7 @@ public class FSTGenMerger extends FSTGenProcessor {
 		return merge(nodeA, nodeB, null, firstPass);
 	}
 
-	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, FSTNode compParent, boolean firstPass) {
+	public static FSTNode merge(FSTNode nodeA, FSTNode nodeB, FSTNonTerminal compParent, boolean firstPass) {
 		
 		//System.err.println("nodeA: " + nodeA.getName() + " index: " + nodeA.index);
 		//System.err.println("nodeB: " + nodeB.getName() + " index: " + nodeB.index);
