@@ -3,7 +3,7 @@ package de.ovgu.cide.fstgen.ast;
 public abstract class FSTNode {
 	private String name;
 	private String type;
-	private FSTNode parent = null;
+	private FSTNonTerminal parent = null;
 	public int index = -1;
 
 	protected FSTNode(String type, String name) {
@@ -27,11 +27,11 @@ public abstract class FSTNode {
 		return type;
 	}
 
-	public void setParent(FSTNode parent) {
+	public void setParent(FSTNonTerminal parent) {
 		this.parent = parent;
 	}
 
-	public FSTNode getParent() {
+	public FSTNonTerminal getParent() {
 		return parent;
 	}
 	

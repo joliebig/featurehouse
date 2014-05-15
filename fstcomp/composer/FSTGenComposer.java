@@ -341,7 +341,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	}
 
 	public FSTNode compose(FSTNode nodeA, FSTNode nodeB,
-			FSTNode compParent) {
+			FSTNonTerminal compParent) {
 
 		if (nodeA.compatibleWith(nodeB)) {
 			FSTNode compNode = nodeA.getShallowClone();
