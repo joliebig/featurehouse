@@ -47,6 +47,11 @@ public class FSTNonTerminal extends FSTNode {
 	child.setParent(this);
 	children.add(child);
     }
+    
+    public void addChild(FSTNode child, int index) {
+    	child.setParent(this);
+    	children.add(index, child);
+    }
 
     public FSTNode getCompatibleChild(FSTNode node) {
 	for (FSTNode child : getChildren()) {

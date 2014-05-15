@@ -13,6 +13,8 @@ import printer.PrintVisitorException;
 import builder.ArtifactBuilderInterface;
 import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
+import builder.xml.XMLHook;
+import builder.xml.XMLNode;
 import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.CompositionRule;
@@ -375,20 +377,95 @@ public class FSTGenComposer extends FSTGenProcessor {
 						// no compatible child, FST-node only in A
 						//nonterminalComp.addChild(childA.getDeepClone());
 						FSTNode newChildA = rewriteSubtree(childA);
-						if (cmd.featureAnnotation) {
-							if (newChildA instanceof FSTNonTerminal) {
-								addAnnotationToChildrenMethods(newChildA, childA.getFeatureName());
-							} else if (newChildA instanceof FSTTerminal) {
-								if ("MethodDecl".equals(newChildA.getType()) ||
-										"ConstructorDecl".equals(newChildA.getType())) {
-									FSTTerminal termNewChildA = (FSTTerminal) newChildA;
-									String body = termNewChildA.getBody();
-									String feature = termNewChildA.getOriginalFeatureName();
-									termNewChildA.setBody(JavaMethodOverriding.featureAnnotationPrefix + feature +"\")\n" + body);
+						
+						/*
+						 * Handles before|after hooks in XML
+						 * If an android:id is present in the Hook, all containing
+						 * widgets will be placed before|after that widget. If no id is
+						 * found, they will either be prepended, or appended to the branch.
+						 */
+						if(childA instanceof XMLHook) {
+							
+							String beforeOrAfterId  = ((XMLNode) childA).getName().toString();
+							List<FSTNode> xmlchildren = ((FSTNonTerminal)childA).getChildren();
+							List<FSTNode> children = nonterminalComp.getChildren();
+							FSTNode beforeOrAfterNode = null;
+							
+							for (FSTNode c : children) {
+								if (c.getName().equalsIgnoreCase(beforeOrAfterId)) {
+									beforeOrAfterNode = c;
+									break;
 								}
 							}
+							
+							if (childA.getType().equalsIgnoreCase("before")){
+								int beforeOrAfter=0;
+								
+								
+								if (beforeOrAfterNode!=null) {
+									int i = children.indexOf(beforeOrAfterNode);
+
+									for (FSTNode xmlchild : xmlchildren){
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
+											i++;
+										}
+									}
+								} else {
+									
+									int i=0;
+									
+									for (FSTNode xmlchild : xmlchildren){
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild), i);
+											i++;
+										}
+									}
+								}
+							} else if (childA.getType().equalsIgnoreCase("after")) {
+								int beforeOrAfter=1;
+								
+								if (beforeOrAfterNode!=null) {
+									int i = children.indexOf(beforeOrAfterNode);
+
+									for (FSTNode xmlchild : xmlchildren){
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild), i + beforeOrAfter);
+											i++;
+										}
+									}
+									
+								} else {
+									
+									for (FSTNode xmlchild : xmlchildren){
+										if (xmlchild instanceof FSTNonTerminal){
+											nonterminalComp.addChild(rewriteSubtree(xmlchild));
+										}
+									}
+									
+								}
+							} else {
+								nonterminalComp.addChild(newChildA);
+							}
+							
+						} else {
+							
+							if (cmd.featureAnnotation) {
+								if (newChildA instanceof FSTNonTerminal) {
+									addAnnotationToChildrenMethods(newChildA, childA.getFeatureName());
+								} else if (newChildA instanceof FSTTerminal) {
+									if ("MethodDecl".equals(newChildA.getType()) ||
+											"ConstructorDecl".equals(newChildA.getType())) {
+										FSTTerminal termNewChildA = (FSTTerminal) newChildA;
+										String body = termNewChildA.getBody();
+										String feature = termNewChildA.getOriginalFeatureName();
+										termNewChildA.setBody(JavaMethodOverriding.featureAnnotationPrefix + feature +"\")\n" + body);
+									}
+								}
+							}
+							nonterminalComp.addChild(newChildA);
 						}
-						nonterminalComp.addChild(newChildA);
+						
 					}
 				}
 				return nonterminalComp;
