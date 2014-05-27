@@ -377,73 +377,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				FSTTerminal terminalB = (FSTTerminal) nodeB;
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 				FSTNonTerminal nonterminalParent = (FSTNonTerminal) compParent;
-/*
-				if (terminalA.getCompositionMechanism().equals(
-						Replacement.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Terminal replacement: " +
-					// terminalA.toString() + " replaces " +
-					// terminalB.toString());
-				} else if (terminalA.getCompositionMechanism().equals(
-						StringConcatenation.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Terminal concatenation: " +
-					// terminalA.toString() + " is concatenated to " +
-					// terminalB.toString());
-					StringConcatenation.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ImplementsListMerging.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Implements list merging: " +
-					// terminalA.toString() + " extends " +
-					// terminalB.toString());
-					ImplementsListMerging.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						JavaMethodOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Java method overriding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					(new JavaMethodOverriding()).compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						CSharpMethodOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("C# method overriding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					CSharpMethodOverriding.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ConstructorConcatenation.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Constructor concatenation: " +
-					// terminalA.toString() + " extends " +
-					// terminalB.toString());
-					ConstructorConcatenation.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
-					 // System.out.println("Modifier list specialization: " +
-					 // terminalA.toString() + " specializes " +
-					 // terminalB.toString());
-					ModifierListSpecialization.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						FieldOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Field overiding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					FieldOverriding.compose(terminalA, terminalB, terminalComp,
-							nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ExpansionOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Expansion overiding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					ExpansionOverriding.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						CompositionError.COMPOSITION_RULE_NAME)) {
-					CompositionError.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-*/
+
 				CompositionRule applicableRule = null;
 				//get applicable rule from compositionRules
 				for (CompositionRule rule: compositionRules) {
