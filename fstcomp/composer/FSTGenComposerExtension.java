@@ -30,11 +30,9 @@ import composer.rules.meta.MinimalFeatureModelInfo;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
-import composer.rules.rtcomp.c.CRuntimeSubtreeIntegration;
 import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
-import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
 
 import counter.Counter;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
@@ -85,11 +83,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			if (cmd.lifting_language.equals("c")) { 
 				compositionRules.add(new CRuntimeReplacement());
 				compositionRules.add(new CRuntimeFunctionRefinement());			
-				subtreeRewriterC = new CRuntimeSubtreeIntegration();
 			} else if (cmd.lifting_language.equals("java")) {
 				compositionRules.add(new JavaRuntimeReplacement());
 				compositionRules.add(new JavaRuntimeFunctionRefinement());
-				subtreeRewriterJava = new JavaRuntimeSubtreeIntegration();
 			} else {
 				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
 			}

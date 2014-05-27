@@ -29,11 +29,9 @@ import composer.rules.StringConcatenation;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
-import composer.rules.rtcomp.c.CRuntimeSubtreeIntegration;
 import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
-import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
 import counter.Counter;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -46,8 +44,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 	
 	protected CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 	protected List<CompositionRule> compositionRules;
-	protected CRuntimeSubtreeIntegration subtreeRewriterC = null;
-	protected JavaRuntimeSubtreeIntegration subtreeRewriterJava = null;
 	
 	public FSTGenComposer() {
 		super();
@@ -62,22 +58,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 		}
 	}
 	
-	private FSTNode rewriteSubtree(FSTNode n) {
-		meta.discoverFuncIntroductions(n);	
-		if (cmd.lifting) {
-			if (cmd.lifting_language.equals("c")) { 
-				return subtreeRewriterC.rewrite(n.getDeepClone());
-			} else if (cmd.lifting_language.equals("java")) {
-				return subtreeRewriterJava.rewrite(n.getDeepClone());
-			} else {
-				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
-			}
-		} else {
-			return n.getDeepClone();
-		}
-	}
-	
-
 	public void run(String[] args) {
 		meta.clearFeatures();
 		cmd.parseCmdLineArguments(args);
@@ -90,11 +70,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 			if (cmd.lifting_language.equals("c")) { 
 				compositionRules.add(new CRuntimeReplacement());
 				compositionRules.add(new CRuntimeFunctionRefinement());			
-				subtreeRewriterC = new CRuntimeSubtreeIntegration();
 			} else if (cmd.lifting_language.equals("java")) {
 				compositionRules.add(new JavaRuntimeReplacement());
 				compositionRules.add(new JavaRuntimeFunctionRefinement());
-				subtreeRewriterJava = new JavaRuntimeSubtreeIntegration();
 			} else {
 				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
 			}
@@ -362,8 +340,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					// root)
 					if (childA == null) {
 						// no compatible child, FST-node only in B
-						//nonterminalComp.addChild(childB.getDeepClone());
-						nonterminalComp.addChild(rewriteSubtree(childB));
+						meta.discoverFuncIntroductions(childB);
+						nonterminalComp.addChild(childB.getDeepClone());
 					} else {
 						nonterminalComp.addChild(compose(childA, childB,
 								nonterminalComp));
@@ -373,8 +351,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
 						// no compatible child, FST-node only in A
-						//nonterminalComp.addChild(childA.getDeepClone());
-						FSTNode newChildA = rewriteSubtree(childA);
+						meta.discoverFuncIntroductions(childA);
+						FSTNode newChildA = childA.getDeepClone();
 						if (cmd.featureAnnotation) {
 							if (newChildA instanceof FSTNonTerminal) {
 								addAnnotationToChildrenMethods(newChildA, childA.getFeatureName());
