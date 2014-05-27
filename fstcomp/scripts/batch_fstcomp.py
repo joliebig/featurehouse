@@ -73,6 +73,12 @@ def batch_compose_from_cmdline(composition_plan):
 
     if len(sys.argv) != 4:
         print 'Usage: %s <path_to_featurehouse_jar> <source_dir> <output_dir>' % sys.argv[0]
+        print
+        if '__main__' in sys.modules:
+            main_module = sys.modules['__main__']
+            if hasattr(main_module, '__doc__'):
+                print main_module.__doc__
+
     else:
 
         jar_path = sys.argv[1]
