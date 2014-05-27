@@ -121,17 +121,12 @@ public class FSTGenComposer extends FSTGenProcessor {
 						counter.writeFile(new File(cmd.equationFileName + ".rsf"));
 				}
 				
-				/*for (FSTNonTerminal feature : features) {
-					System.out.println(feature.toString());
-				}*/
 				for (FSTNonTerminal feature : features) {
 					meta.addFeature(feature.getName());
 				}
 				FSTNode composition = compose(features);
 //				modify(composition);
 
-//				if(composition != null)
-//					System.err.println(composition.toString());
 				
 				
 				/* 
@@ -161,21 +156,10 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 			}
 			try {
-				//System.out.println(outputDir + "features/roles.meta");
-				
-				//was passiert hier?!
-				// outputDir: /home/rhein/FeatureHouseWS/Test_Features/features
-				// equationFileName: Selection.features
-				// -> exp = Selection.feat
-				
-				//meta.saveToFile(outputDir + "/" + exp + "/roles.meta");
 				meta.saveToFile(outputDir + File.separator + "roles.meta");
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
 					System.err.println("cnfFile:" + cnfFile.getAbsolutePath());
-					//hier auch geändert.
-					// wollte in /home/rhein/FeatureHouseWS/Test_Features/featuresfeatures/featureselect.h speichern
-					//new RuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + "features/featureselect");
 					if (cmd.lifting_language.equals("c")) {
 						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
 					} else if (cmd.lifting_language.equals("java")) {
