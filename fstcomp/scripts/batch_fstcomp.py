@@ -1,3 +1,12 @@
+'''
+
+batch_fstcomp.py
+
+batch compose products using fstcomp, e.g. for regression tests.
+
+See compose_examples.py and compose_regrtest.py for examples on how to use this.
+'''
+
 import os
 import sys
 
@@ -5,7 +14,20 @@ DEFAULT_SOURCE_DIR = '../examples'
 DEFAULT_OUTPUT_DIR = './output'
 
 def products(productlist, product_filter=None, output_prefix='', extra_args='', base_dir=None):
+    '''
+    construct a list of products to compose from a list of product configuration files;
+    the result is a list containing a dict per product that encapsulates product configuration and composer configuration options.
 
+    productlist - list of paths to product configuration files
+
+    product_filter - callable that is applied to each item of productlist; can be used to select a subset of products
+
+    output_prefix - prefix output directory of products: this is usefull if the same product is composed multiple times e.g. using different composer configuration options
+
+    extra_args - pass extra arguments to fstcomposer when composing those products
+
+    base_dir - specify a base-directory; leave this empty to use the directory the product configuration file is located
+    '''
     result = []
 
     for productfile in productlist:
@@ -26,12 +48,25 @@ def products(productlist, product_filter=None, output_prefix='', extra_args='', 
 
 
 def fstcomp(jar_path, args):
+    '''
+    call fstcomp with args using the jar specified by jar_path
+    '''
     cmdline = 'java -cp %s composer.FSTGenComposer %s' % (jar_path, args)
     print ' ### CALLING : ' + cmdline
     os.system(cmdline)
 
 
 def batch_compose(jar_path, composition_plan, source_dir=None, out_dir=None):
+    '''
+    batch compose products specified by composition_plan using the selected fstcomp jar
+
+    jar_path - path to featureHouse jar
+    composition_plan - list of product dicts in the format returned by products
+
+    source_dir - all product configuration files are relative to this directory
+
+    out_dir - directory where composed products will be placed
+    '''
 
     if not source_dir:
         source_dir = DEFAULT_SOURCE_DIR
@@ -70,6 +105,11 @@ def batch_compose(jar_path, composition_plan, source_dir=None, out_dir=None):
 
 
 def batch_compose_from_cmdline(composition_plan):
+    '''
+    batch compose products specified by composition_plan (in the format returned by products)
+
+    path to featurehouse jar, source_dir and out_dir are assumed to be given on the command line
+    '''
 
     if len(sys.argv) != 4:
         print 'Usage: %s <path_to_featurehouse_jar> <source_dir> <output_dir>' % sys.argv[0]

@@ -1,3 +1,21 @@
+'''
+
+composes fstcomp examples
+
+You may have to run `ant jar` beforehand, to create the featurehouse jar file.
+Make sure, you have the featurehouse_fstcomp_examples checked out at fstcomp/examples.
+
+Run the script from the scripts directory:
+
+$ cd fstcomp/scripts
+$ python compose_examples.py ../../jar/featurehouse_xxx.jar ../examples ./output
+
+
+This will compose some of the examples in a directory named output that will be created in the scripts folder.
+
+'''
+
+
 from batch_fstcomp import *
 
 EXAMPLES = """Java/GameOfLife/GameOfLifeComp.features
