@@ -29,11 +29,9 @@ import composer.rules.StringConcatenation;
 import composer.rules.rtcomp.c.CRuntimeFeatureSelection;
 import composer.rules.rtcomp.c.CRuntimeFunctionRefinement;
 import composer.rules.rtcomp.c.CRuntimeReplacement;
-import composer.rules.rtcomp.c.CRuntimeSubtreeIntegration;
 import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
-import composer.rules.rtcomp.java.JavaRuntimeSubtreeIntegration;
 import counter.Counter;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
@@ -46,8 +44,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 	
 	protected CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 	protected List<CompositionRule> compositionRules;
-	protected CRuntimeSubtreeIntegration subtreeRewriterC = null;
-	protected JavaRuntimeSubtreeIntegration subtreeRewriterJava = null;
 	
 	public FSTGenComposer() {
 		super();
@@ -62,22 +58,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 		}
 	}
 	
-	private FSTNode rewriteSubtree(FSTNode n) {
-		meta.discoverFuncIntroductions(n);	
-		if (cmd.lifting) {
-			if (cmd.lifting_language.equals("c")) { 
-				return subtreeRewriterC.rewrite(n.getDeepClone());
-			} else if (cmd.lifting_language.equals("java")) {
-				return subtreeRewriterJava.rewrite(n.getDeepClone());
-			} else {
-				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
-			}
-		} else {
-			return n.getDeepClone();
-		}
-	}
-	
-
 	public void run(String[] args) {
 		meta.clearFeatures();
 		cmd.parseCmdLineArguments(args);
@@ -90,11 +70,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 			if (cmd.lifting_language.equals("c")) { 
 				compositionRules.add(new CRuntimeReplacement());
 				compositionRules.add(new CRuntimeFunctionRefinement());			
-				subtreeRewriterC = new CRuntimeSubtreeIntegration();
 			} else if (cmd.lifting_language.equals("java")) {
 				compositionRules.add(new JavaRuntimeReplacement());
 				compositionRules.add(new JavaRuntimeFunctionRefinement());
-				subtreeRewriterJava = new JavaRuntimeSubtreeIntegration();
 			} else {
 				throw new InternalError("lifting language \"" + cmd.lifting_language + "\" is not implemented.");
 			}
@@ -143,17 +121,12 @@ public class FSTGenComposer extends FSTGenProcessor {
 						counter.writeFile(new File(cmd.equationFileName + ".rsf"));
 				}
 				
-				/*for (FSTNonTerminal feature : features) {
-					System.out.println(feature.toString());
-				}*/
 				for (FSTNonTerminal feature : features) {
 					meta.addFeature(feature.getName());
 				}
 				FSTNode composition = compose(features);
 //				modify(composition);
 
-//				if(composition != null)
-//					System.err.println(composition.toString());
 				
 				
 				/* 
@@ -183,21 +156,10 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 			}
 			try {
-				//System.out.println(outputDir + "features/roles.meta");
-				
-				//was passiert hier?!
-				// outputDir: /home/rhein/FeatureHouseWS/Test_Features/features
-				// equationFileName: Selection.features
-				// -> exp = Selection.feat
-				
-				//meta.saveToFile(outputDir + "/" + exp + "/roles.meta");
 				meta.saveToFile(outputDir + File.separator + "roles.meta");
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
 					System.err.println("cnfFile:" + cnfFile.getAbsolutePath());
-					//hier auch geändert.
-					// wollte in /home/rhein/FeatureHouseWS/Test_Features/featuresfeatures/featureselect.h speichern
-					//new RuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + "features/featureselect");
 					if (cmd.lifting_language.equals("c")) {
 						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
 					} else if (cmd.lifting_language.equals("java")) {
@@ -362,8 +324,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					// root)
 					if (childA == null) {
 						// no compatible child, FST-node only in B
-						//nonterminalComp.addChild(childB.getDeepClone());
-						nonterminalComp.addChild(rewriteSubtree(childB));
+						meta.discoverFuncIntroductions(childB);
+						nonterminalComp.addChild(childB.getDeepClone());
 					} else {
 						nonterminalComp.addChild(compose(childA, childB,
 								nonterminalComp));
@@ -373,8 +335,8 @@ public class FSTGenComposer extends FSTGenProcessor {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
 						// no compatible child, FST-node only in A
-						//nonterminalComp.addChild(childA.getDeepClone());
-						FSTNode newChildA = rewriteSubtree(childA);
+						meta.discoverFuncIntroductions(childA);
+						FSTNode newChildA = childA.getDeepClone();
 						if (cmd.featureAnnotation) {
 							if (newChildA instanceof FSTNonTerminal) {
 								addAnnotationToChildrenMethods(newChildA, childA.getFeatureName());
@@ -399,73 +361,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				FSTTerminal terminalB = (FSTTerminal) nodeB;
 				FSTTerminal terminalComp = (FSTTerminal) compNode;
 				FSTNonTerminal nonterminalParent = (FSTNonTerminal) compParent;
-/*
-				if (terminalA.getCompositionMechanism().equals(
-						Replacement.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Terminal replacement: " +
-					// terminalA.toString() + " replaces " +
-					// terminalB.toString());
-				} else if (terminalA.getCompositionMechanism().equals(
-						StringConcatenation.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Terminal concatenation: " +
-					// terminalA.toString() + " is concatenated to " +
-					// terminalB.toString());
-					StringConcatenation.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ImplementsListMerging.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Implements list merging: " +
-					// terminalA.toString() + " extends " +
-					// terminalB.toString());
-					ImplementsListMerging.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						JavaMethodOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Java method overriding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					(new JavaMethodOverriding()).compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						CSharpMethodOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("C# method overriding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					CSharpMethodOverriding.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ConstructorConcatenation.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Constructor concatenation: " +
-					// terminalA.toString() + " extends " +
-					// terminalB.toString());
-					ConstructorConcatenation.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ModifierListSpecialization.COMPOSITION_RULE_NAME)) {
-					 // System.out.println("Modifier list specialization: " +
-					 // terminalA.toString() + " specializes " +
-					 // terminalB.toString());
-					ModifierListSpecialization.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						FieldOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Field overiding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					FieldOverriding.compose(terminalA, terminalB, terminalComp,
-							nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						ExpansionOverriding.COMPOSITION_RULE_NAME)) {
-					// System.out.println("Expansion overiding: " +
-					// terminalA.toString() + " overrides " +
-					// terminalB.toString());
-					ExpansionOverriding.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-				} else if (terminalA.getCompositionMechanism().equals(
-						CompositionError.COMPOSITION_RULE_NAME)) {
-					CompositionError.compose(terminalA, terminalB,
-							terminalComp, nonterminalParent);
-*/
+
 				CompositionRule applicableRule = null;
 				//get applicable rule from compositionRules
 				for (CompositionRule rule: compositionRules) {
