@@ -1,6 +1,6 @@
 [submodule "fstcomp/examples"]
 	path = fstcomp/examples
-	url = https://github.com:joliebig/featurehouse_fstcomp_examples.git
+	url = https://github.com/joliebig/featurehouse_fstcomp_examples.git
 [submodule "fstmerge/examples"]
 	path = fstmerge/examples
-	url = https://github.com:joliebig/featurehouse_fstmerge_examples.git
+	url = https://github.com/joliebig/featurehouse_fstmerge_examples.git
