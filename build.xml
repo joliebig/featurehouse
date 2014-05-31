@@ -60,7 +60,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-fstcomp" depends="test-compile-fstcomp">
     <mkdir dir="${result-dir}/fstcomp" />
     <mkdir dir="${result-dir}/fstcomp/output" />
-    <junit printsummary="yes" haltonfailure="no">
+    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
         <pathelement location="${test-dir}/fstcomp-build" />
@@ -74,6 +74,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
         </fileset>
       </batchtest>
     </junit>
+    <fail message="Some tests failed!" if="test.failed" />
   </target>
 
   <target name="test-compile-fstgen">
@@ -90,7 +91,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
 
   <target name="test-fstgen" depends="test-compile-fstgen">
     <mkdir dir="${result-dir}/fstgen" />
-    <junit printsummary="yes" haltonfailure="no">
+    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
         <pathelement location="${test-dir}/fstgen-build" />
@@ -104,6 +105,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
         </fileset>
       </batchtest>
     </junit>
+    <fail message="Some tests failed!" if="test.failed" />
   </target>
 
   <target name="test-compile" depends="test-compile-fstgen,test-compile-fstcomp">
