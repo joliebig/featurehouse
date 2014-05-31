@@ -2,3 +2,8 @@
 **/bin
 *.*~
 .pydevproject
+/.metadata/
+/build/
+/jar/
+/test/
+/result/
