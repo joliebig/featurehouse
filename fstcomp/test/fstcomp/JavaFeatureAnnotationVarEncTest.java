@@ -9,10 +9,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class JavaFeatureAnnotationVarEncTest {
 
+	@Ignore
 	@Test
 	public void testFeatureAnnotatedVarEncComposition() throws IOException {
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("test/fstcomp/Java/GPL/model.cnf"));
