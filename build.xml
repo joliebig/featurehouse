@@ -38,9 +38,49 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </jar>
   </target>
 
-  <target name="test-compile">
+
+  <target name="test-compile-fstcomp">
     <mkdir dir="${test-dir}" />
-    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}" srcdir="./fstgen/test/" />
+    <mkdir dir="${test-dir}/fstcomp-build" />
+    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstcomp}" destdir="${test-dir}/fstcomp-build" srcdir="./fstcomp/test/" excludes="*testfiles/**"/>
+
+    <copy todir="${test-dir}/fstcomp">
+      <fileset dir="./fstcomp/test/">
+        <include name="*testfiles/**" />
+      </fileset>
+    </copy>
+
+    <copy todir="${test-dir}/fstcomp">
+      <fileset dir="./fstcomp/examples/">
+        <include name="Java/GPL/**" />
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="test-fstcomp" depends="test-compile-fstcomp">
+    <mkdir dir="${result-dir}/fstcomp" />
+    <mkdir dir="${result-dir}/fstcomp/output" />
+    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
+      <classpath>
+        <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
+        <pathelement location="${test-dir}/fstcomp-build" />
+      </classpath>
+      <formatter type="plain" />
+
+      <batchtest fork="yes" todir="${result-dir}/fstcomp">
+        <!--formatter type="plain" usefile="false"/-->
+        <fileset dir="${test-dir}/fstcomp-build" >
+          <include name="fstcomp/**Test.class" />
+        </fileset>
+      </batchtest>
+    </junit>
+    <fail message="Some tests failed!" if="test.failed" />
+  </target>
+
+  <target name="test-compile-fstgen">
+    <mkdir dir="${test-dir}" />
+    <mkdir dir="${test-dir}/fstgen-build" />
+    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}/fstgen-build" srcdir="./fstgen/test/" />
 
     <copy todir="${test-dir}">
       <fileset dir="./fstgen/test/">
@@ -49,23 +89,29 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </copy>
   </target>
 
-  <target name="test" depends="test-compile">
-  
-    <mkdir dir="${result-dir}" />
-    <junit printsummary="yes" haltonfailure="yes">
+  <target name="test-fstgen" depends="test-compile-fstgen">
+    <mkdir dir="${result-dir}/fstgen" />
+    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
-        <pathelement location="${test-dir}" />
+        <pathelement location="${test-dir}/fstgen-build" />
       </classpath>
+      <formatter type="plain" />
 
-      <formatter type="plain"/>
-
-      <batchtest fork="yes" todir="${result-dir}">
-        <fileset dir="${test-dir}" >
-	  <include name="*Test.class" />
-	</fileset>
+      <batchtest fork="yes" todir="${result-dir}/fstgen">
+        <!--formatter type="plain" usefile="false"/-->
+        <fileset dir="${test-dir}/fstgen-build" >
+          <include name="*Test.class" />
+        </fileset>
       </batchtest>
     </junit>
+    <fail message="Some tests failed!" if="test.failed" />
+  </target>
+
+  <target name="test-compile" depends="test-compile-fstgen,test-compile-fstcomp">
+  </target>
+
+  <target name="test" depends="test-compile,test-fstgen,test-fstcomp">
   </target>
 
   <target name="clean" description="clean up" >
