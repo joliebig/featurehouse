@@ -8,6 +8,7 @@ import modification.traversalLanguageParser.addressManagement.DuplicateFreeLinke
 import printer.FeaturePrintVisitor;
 import printer.PrintVisitorInterface;
 import printer.alloy.AlloyPrintVisitor;
+import printer.asmetal.AsmetaLPrintVisitor;
 import printer.binary.BinaryPrintVisitor;
 import printer.capprox.CApproxHeaderPrintVisitor;
 import printer.capprox.CApproxPrintVisitor;
@@ -24,6 +25,7 @@ import printer.xmi.XMIPrintVisitor;
 import processor.capprox.CIncludeGuardGenerator;
 import builder.ArtifactBuilderInterface;
 import builder.alloy.AlloyBuilder;
+import builder.asmetal.AsmetaLBuilder; 
 import builder.binary.BinaryBuilder;
 import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;
@@ -55,6 +57,7 @@ public class FSTGenProcessor {
 		registerArtifactBuilder(new JavaBuilder());
 		registerArtifactBuilder(new CSharpBuilder());
 		registerArtifactBuilder(new CApproxBuilder());
+		registerArtifactBuilder(new AsmetaLBuilder());		
 		registerArtifactBuilder(new HaskellBuilder());
 		registerArtifactBuilder(new JavaCCBuilder());
 		registerArtifactBuilder(new JCopBuilder());
@@ -76,6 +79,7 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new CApproxPrintVisitor());
 		registerPrintVisitor(new CApproxHeaderPrintVisitor());
 		registerPrintVisitor(new JavaCCPrintVisitor());
+		registerPrintVisitor(new AsmetaLPrintVisitor());
 		registerPrintVisitor(new HaskellPrintVisitor());
 		registerPrintVisitor(new XMIPrintVisitor());
 		registerPrintVisitor(new SDFPrintVisitor());
