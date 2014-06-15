@@ -66,21 +66,11 @@ definitions:
 		(forall $p in Place with isInputPlace($p, $t) implies tokens($p) >= inArcWeight($p, $t))
 
 	rule r_fire($t in Transition) =
-		//it can be divided in the three cases
-		/*par
-			forall $i in Place with isInputPlace($i, $t) and not(isOutputPlace($i, $t)) do
-				tokens($i) := tokens($i) - inArcWeight($i, $t)
-			forall $o in Place with isOutputPlace($o, $t) and not(isInputPlace($o, $t)) do
-				tokens($o) := tokens($o) + outArcWeight($t, $o)
-			forall $k in Place with isOutputPlace($k, $t) and isInputPlace($k, $t) do
-				tokens($k) := tokens($k) - inArcWeight($k, $t) + outArcWeight($t, $k)
-		endpar*/
-		//but it can also be written with a single forall
-		//if a place is neither an inputPlace nor an outputPlace, its number of
-		//tokens does not change since inWeight($p, $t) and outWeight($p, $t)
-		//are 0
-		forall $p in Place with true do
-			tokens($p) := tokens($p) - inArcWeight($p, $t) + outArcWeight($t, $p)
+		par
+			@original($t)
+			forall $p in Place with true do
+				tokens($p) := tokens($p) - inArcWeight($p, $t) + outArcWeight($t, $p)
+		endpar
 
 	invariant inv_abc over tokens: (forall $p in Place with tokens($p) >= 0)
 

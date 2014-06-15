@@ -71,6 +71,7 @@ MORE:
 <DEFAULT> TOKEN : {
 	  <ASM: "asm"> : GENERIC_ID
 	| <MODULE: "module"> : GENERIC_ID
+	| <ORIGINAL: "@original">	
 	| <ASYNCR: "asyncr">
 	| <IMPORT: "import"> : MODULE_ID
 	| <EXPORT: "export">
@@ -283,9 +284,9 @@ FunctionDefinition:
 
 
 RuleDeclaration: 
-@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration")
+@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
 	MacroDeclaration @! | 
-@FSTTerminal(name="{TurboDeclaration}",type="RuleDeclaration")
+@FSTTerminal(name="{TurboDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
 	TurboDeclaration @!;
 
 @FSTExportName("{ID_RULE}")
@@ -625,13 +626,17 @@ Rule:
 		ChooseRule:	<CHOOSE> VariableInTermList <WITH> Term <DO> Rule ( IfNoneRule )?;
 		ForallRule:	<FORALL> VariableInTermList ( WithTerm )? <DO> Rule;
 		LetRule:	<LET> "(" VariableTermEqualsTermList ")" <IN> Rule <ENDLET>;
-		MacroCallRule:	ID_RULE "[" TermList "]";
+		
+		MacroCallRule:	ID_RULE "[" TermList "]" |
+						<ORIGINAL>	"[" TermList "]";
+		
 		ExtendRule:	<EXTEND> ID_DOMAIN <WITH> VariableTerm ( "," VariableTerm )* <DO> Rule;
 
 	TurboRule:	 SeqRule | IterateRule | TurboCallRule | TurboLocalStateRule ;
 		SeqRule:	<seq> Rule ( Rule )+ <ENDSEQ>;
 		IterateRule:	<ITERATE> Rule <ENDITERATE>;
-		TurboCallRule:	ID_RULE "(" TermList ")";
+		TurboCallRule:	ID_RULE "(" TermList ")" |
+						<ORIGINAL> "(" TermList ")";
 		TurboLocalStateRule:	( LocalFunctionRule)+ Rule;
 			LocalFunctionRule: LocalFunction "[" Rule "]";
 

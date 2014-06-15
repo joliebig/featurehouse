@@ -71,6 +71,7 @@ MORE:
 <DEFAULT> TOKEN : {
 	  <ASM: "asm"> : GENERIC_ID
 	| <MODULE: "module"> : GENERIC_ID
+	| <ORIGINAL: "@original">	
 	| <ASYNCR: "asyncr">
 	| <IMPORT: "import"> : MODULE_ID
 	| <EXPORT: "export">
@@ -342,9 +343,9 @@ FSTInfo FunctionDefinition(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo RuleDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","Replacement","Default",first,token);}
+	n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
  |
-	n=TurboDeclaration(true){ replaceName("TurboDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{TurboDeclaration}","{TurboDeclaration}","Replacement","Default",first,token);}
+	n=TurboDeclaration(true){ replaceName("TurboDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{TurboDeclaration}","{TurboDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
 
  )  }
 
@@ -1232,7 +1233,9 @@ FSTInfo LetRule(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo MacroCallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=ID_RULE(true){ replaceName(n);} "[" n=TermList(true){ replaceName(n);} "]" {return productionEndTerminal("MacroCallRule","-","-","Replacement","Default",first,token);}
+	n=ID_RULE(true){ replaceName(n);} "[" n=TermList(true){ replaceName(n);} "]" {return productionEndTerminal("MacroCallRule1","-","-","Replacement","Default",first,token);}
+ |
+	<ORIGINAL> "[" n=TermList(true){ replaceName(n);} "]" {return productionEndTerminal("MacroCallRule2","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1268,7 +1271,9 @@ FSTInfo IterateRule(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo TurboCallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=ID_RULE(true){ replaceName(n);} "(" n=TermList(true){ replaceName(n);} ")" {return productionEndTerminal("TurboCallRule","-","-","Replacement","Default",first,token);}
+	n=ID_RULE(true){ replaceName(n);} "(" n=TermList(true){ replaceName(n);} ")" {return productionEndTerminal("TurboCallRule1","-","-","Replacement","Default",first,token);}
+ |
+	<ORIGINAL> "(" n=TermList(true){ replaceName(n);} ")" {return productionEndTerminal("TurboCallRule2","-","-","Replacement","Default",first,token);}
 
  )  }
 

@@ -211,6 +211,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("RelAddicitiveExpr2") && expectedType.equals("RelAddicitiveExpr")) return true;
 		if (type.equals("StructuredTD5") && expectedType.equals("StructuredTD")) return true;
 		if (type.equals("signpowerExpr1") && expectedType.equals("signpowerExpr")) return true;
+		if (type.equals("MacroCallRule1") && expectedType.equals("MacroCallRule")) return true;
 		if (type.equals("DomainOrFunctionIDOrRule3") && expectedType.equals("DomainOrFunctionIDOrRule")) return true;
 		if (type.equals("basicExpr3") && expectedType.equals("basicExpr")) return true;
 		if (type.equals("CollectionTerm3") && expectedType.equals("CollectionTerm")) return true;
@@ -228,6 +229,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("signunaryExpr2") && expectedType.equals("signunaryExpr")) return true;
 		if (type.equals("ConstantTerm9") && expectedType.equals("ConstantTerm")) return true;
 		if (type.equals("BasicRule5") && expectedType.equals("BasicRule")) return true;
+		if (type.equals("TurboCallRule2") && expectedType.equals("TurboCallRule")) return true;
+		if (type.equals("MacroCallRule2") && expectedType.equals("MacroCallRule")) return true;
 		if (type.equals("AsmOrModule1") && expectedType.equals("AsmOrModule")) return true;
 		if (type.equals("StructuredTD4") && expectedType.equals("StructuredTD")) return true;
 		if (type.equals("ExtendedTerm3") && expectedType.equals("ExtendedTerm")) return true;
@@ -246,6 +249,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("BasicRule6") && expectedType.equals("BasicRule")) return true;
 		if (type.equals("ArrowTermAdditionalArrowTerm2") && expectedType.equals("ArrowTermAdditionalArrowTerm")) return true;
 		if (type.equals("RuleDeclaration") && expectedType.equals("MainMacroDeclaration")) return true;
+		if (type.equals("TurboCallRule1") && expectedType.equals("TurboCallRule")) return true;
 		if (type.equals("Rule5") && expectedType.equals("Rule")) return true;
 		if (type.equals("Term2") && expectedType.equals("Term")) return true;
 		if (type.equals("StructuredTD3") && expectedType.equals("StructuredTD")) return true;
