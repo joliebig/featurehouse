@@ -91,22 +91,31 @@ public interface AsmetaLParserConstants {
   int MULT = 94;
   int DIV = 95;
   int PWR = 96;
-  int NUMBER = 97;
-  int NATNUMBER = 98;
-  int REAL_NUMBER = 99;
-  int COMPLEX_NUMBER = 100;
-  int ID_VARIABLE = 101;
-  int ID_ENUM = 102;
-  int ID_DOMAIN = 103;
-  int ID_RULE = 104;
-  int ID_INVARIANT = 105;
-  int ID_FUNCTION = 106;
-  int LETTER = 107;
-  int DIGIT = 108;
-  int CHAR_LITERAL = 109;
-  int STRING_LITERAL = 110;
-  int ID = 111;
-  int MOD_ID = 112;
+  int AND = 97;
+  int NOT = 98;
+  int OR = 99;
+  int XOR = 100;
+  int IMPLIES = 101;
+  int MOD = 102;
+  int NOTIN = 103;
+  int IFF = 104;
+  int CTLSPEC = 105;
+  int NUMBER = 106;
+  int NATNUMBER = 107;
+  int REAL_NUMBER = 108;
+  int COMPLEX_NUMBER = 109;
+  int ID_VARIABLE = 110;
+  int ID_ENUM = 111;
+  int ID_DOMAIN = 112;
+  int ID_RULE = 113;
+  int ID_INVARIANT = 114;
+  int ID_FUNCTION = 115;
+  int LETTER = 116;
+  int DIGIT = 117;
+  int CHAR_LITERAL = 118;
+  int STRING_LITERAL = 119;
+  int ID = 120;
+  int MOD_ID = 121;
 
   int DEFAULT = 0;
   int GENERIC_ID = 1;
@@ -213,6 +222,15 @@ public interface AsmetaLParserConstants {
     "\"*\"",
     "\"/\"",
     "\"^\"",
+    "\"and\"",
+    "\"not\"",
+    "\"or\"",
+    "\"xor\"",
+    "\"implies\"",
+    "\"mod\"",
+    "\"notin\"",
+    "\"iff\"",
+    "\"CTLSPEC\"",
     "<NUMBER>",
     "<NATNUMBER>",
     "<REAL_NUMBER>",

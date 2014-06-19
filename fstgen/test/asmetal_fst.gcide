@@ -2,7 +2,7 @@ options {
   JAVA_UNICODE_ESCAPE = false;
   ERROR_REPORTING = true;
   STATIC = false;
-  LOOKAHEAD = 9;  
+  LOOKAHEAD = 7;  
 }
 
 
@@ -153,7 +153,16 @@ MORE:
 	| <MULT: "*">
 	| <DIV: "/">
 	| <PWR: "^">
-}
+	| <AND: "and">
+	| <NOT: "not">
+	| <OR: "or">
+	| <XOR: "xor">
+	| <IMPLIES: "implies">
+	| <MOD: "mod">
+	| <NOTIN: "notin">
+	| <IFF: "iff">
+	| <CTLSPEC: "CTLSPEC">	
+	}
 
 
 /* IDENTIFIERS AND NUMBERS */
@@ -272,7 +281,7 @@ AgentInitialization:	<AGENT> ID_DOMAIN ":" MacroCallRule @!;
 DefinitionsCommand: <DEFINITIONS> ":";
 
 @FSTNonTerminal(name="Body")
-Body:	DefinitionsCommand ( DomainDefinition )* ( FunctionDefinition )* ( RuleDeclaration )* ( Invariant )*;
+Body:	DefinitionsCommand ( DomainDefinition )* ( FunctionDefinition )* ( RuleDeclaration )* (CTLSPECS)* ( Invariant )*;
 
 @FSTTerminal(name="{ID_DOMAIN}")
 DomainDefinition:	<DOMAIN> ID_DOMAIN "=" Term @!;
@@ -316,6 +325,8 @@ DomainOrFunctionIDOrRule:
 DomainOrFunctionIDOrRuleList:
 	&LI DomainOrFunctionIDOrRule ( "," &LI DomainOrFunctionIDOrRule )*
 ;
+
+CTLSPECS: <CTLSPEC> Term;
 
 @FSTTerminal(name="{ID_INVARIANT}",compose="")
 Invariant:	
@@ -437,86 +448,76 @@ MonitoredFunction:	( <DYNAMIC> )? <MONITORED> ID_FUNCTION ":" ( getDomainByID "-
 @FSTExportName("{ID_FUNCTION}")
 OutFunction:	( <DYNAMIC> )? <OUT> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-Term:	Expression | ExtendedTerm;
+Term: Expression | ExtendedTerm;
 
-
-Func_or_xorLogicExpr:
-	<ID_FUNCTION> or_xorLogicExpr
-;
-Expression:	
-	or_xorLogicExpr (Func_or_xorLogicExpr)*
-;
-
-Func_andLogicExpr:
-	<ID_FUNCTION> andLogicExpr 
-;
-
-or_xorLogicExpr:	andLogicExpr (Func_andLogicExpr)*;
-
-Func_notLogicExpr: <ID_FUNCTION> notLogicExpr;
-
-andLogicExpr:	notLogicExpr ( Func_notLogicExpr )*;
-
-Func_includesExpr: <ID_FUNCTION> includesExpr;
-
-notLogicExpr:	Func_includesExpr | includesExpr;
-
-Func_relationalExpr: <ID_FUNCTION> relationalExpr;
-
-includesExpr:	
-	relationalExpr 
-	[Func_relationalExpr ]
-;
-
-RelAddicitiveExpr: <EQ> additiveExpr | <NEQ> additiveExpr | <LT> additiveExpr | <LE> additiveExpr | <GT> additiveExpr | <GE> additiveExpr;
-
+Expression:
+	B_BExpression (BXB_BExpression)*;
+	
+BXB_BExpression:
+	<IN> B_BExpression | <NOTIN> B_BExpression | <AND> B_BExpression | <OR> B_BExpression | <XOR> B_BExpression | <IMPLIES> B_BExpression | <IFF> B_BExpression;
+	
+B_BExpression:
+	<NOT> relationalExpr | relationalExpr;
+	
 relationalExpr:	
-	additiveExpr ( RelAddicitiveExpr )*
+	additiveExpr ( ReladditiveExpr )*
 ;
 
-PlusMinusMultiExpr: <PLUS> multiplicativeExpr | <MINUS> multiplicativeExpr;
+ReladditiveExpr: <EQ> additiveExpr | <NEQ> additiveExpr | <LT> additiveExpr | <LE> additiveExpr | <GT> additiveExpr | <GE> additiveExpr;
 
 additiveExpr:	multiplicativeExpr ( PlusMinusMultiExpr )*;
 
-signpowerExpr: <MULT> powerExpr | <DIV> powerExpr | <ID_FUNCTION> powerExpr;
+PlusMinusMultiExpr: <PLUS> multiplicativeExpr | <MINUS> multiplicativeExpr;
 
 multiplicativeExpr:	
 	powerExpr 
 	(signpowerExpr)*
 ;
 
-pwrunaryExpr: <PWR> unaryExpr;
+signpowerExpr: <MOD> powerExpr | <MULT> powerExpr | <DIV> powerExpr;
 
 powerExpr:	unaryExpr ( pwrunaryExpr )*;
 
-signunaryExpr: <PLUS> unaryExpr | <MINUS> unaryExpr; 
+pwrunaryExpr: <PWR> unaryExpr;
 
 unaryExpr:	signunaryExpr | basicExpr;
 
-BracketedExpression: "(" Expression ")";
+signunaryExpr: <PLUS> unaryExpr | <MINUS> unaryExpr; 
 
 basicExpr:	 BasicTerm | DomainTerm | FiniteQuantificationTerm | BracketedExpression;
-BasicTerm:	ConstantTerm | VariableTerm | FunctionTerm ;
-FunctionTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
-LocationTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
-VariableTerm:	ID_VARIABLE;
-ConstantTerm:	ComplexTerm | RealTerm | IntegerTerm | NaturalTerm | CharTerm | StringTerm | BooleanTerm | UndefTerm | EnumTerm;
-ComplexTerm:	<COMPLEX_NUMBER>;
-RealTerm:	 <REAL_NUMBER> ;
-IntegerTerm:	<NUMBER>;
-NaturalTerm:	<NATNUMBER>;
-CharTerm:	<CHAR_LITERAL>;
-StringTerm:	<STRING_LITERAL>;
-BooleanTerm:	 <TRUE> | <FALSE> ;
-UndefTerm:	<UNDEF>;
-EnumTerm:	ID_ENUM;
+
+	BasicTerm:	ConstantTerm | VariableTerm | FunctionTerm ;
+		ConstantTerm:	ComplexTerm | RealTerm | IntegerTerm | NaturalTerm | CharTerm | StringTerm | BooleanTerm | UndefTerm | EnumTerm;
+			ComplexTerm:	<COMPLEX_NUMBER>;
+			RealTerm:	 <REAL_NUMBER> ;
+			IntegerTerm:	<NUMBER>;
+			NaturalTerm:	<NATNUMBER>;
+			CharTerm:	<CHAR_LITERAL>;
+			StringTerm:	<STRING_LITERAL>;
+			BooleanTerm:	 <TRUE> | <FALSE> ;
+			UndefTerm:	<UNDEF>;
+			EnumTerm:	ID_ENUM;			
+		VariableTerm:	ID_VARIABLE;
+		FunctionTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
+		
+	DomainTerm:	getDomainByID;
+
+	FiniteQuantificationTerm:	 ForallTerm | ExistUniqueTerm | ExistTerm ;
+		ForallTerm:	"(" <FORALL> VariableInTermList ( WithTerm )? ")";
+			VariableInTermList: &LI VariableInTerm ( "," &LI VariableInTerm )*;
+				VariableInTerm: VariableTerm <IN> Term;
+			WithTerm: <WITH> Term;
+					
+		ExistUniqueTerm: "(" <EXIST> <UNIQUE>  VariableInTermList ( WithTerm )? ")";
+		ExistTerm:	"(" <EXIST> VariableInTermList ( WithTerm )? ")";
+		
+	BracketedExpression: "(" Expression ")";
+
 ExtendedTerm:	 ConditionalTerm | CaseTerm | TupleTerm | VariableBindingTerm | CollectionTerm | RuleAsTerm | DomainTerm ;
+	ConditionalTerm: <IF> Term <THEN> Term (ElseTerm )? <ENDIF>;
+		ElseTerm:  <ELSE> Term;
 
-ElseTerm:  <ELSE> Term;
-
-ConditionalTerm:	
-	<IF> Term <THEN> Term (ElseTerm )? <ENDIF>
-;
+LocationTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
 
 CaseTermTerm: <CASE> Term ":" Term ;
 
@@ -526,7 +527,10 @@ CaseTerm:
 	<SWITCH> Term (CaseTermTerm )+ ( OtherwiseTerm )? <END_SWITCH>
 ;
 
-TupleTerm:	"(" Term ( "," Term )* ")";
+TupleTerm:	"(" Term ( PunctationTerm )* ")";
+
+PunctationTerm: "," Term;
+
 CollectionTerm:	 SequenceTerm | MapTerm | SetTerm | BagTerm ;
 
 AdditionalTerm:  "," Term;
@@ -562,23 +566,16 @@ MapTerm:	"{" ArrowTermAdditionalArrowTerm "}";
 BagTerm:	"<" [TermTermOrSequenceTerm] ">";
 
 VariableBindingTerm:	 LetTerm | FiniteQuantificationTerm | ComprehensionTerm ;
-FiniteQuantificationTerm:	 ForallTerm | ExistUniqueTerm | ExistTerm ;
 
-VariableInTerm: VariableTerm <IN> Term;
 
-VariableInTermList: &LI VariableInTerm ( "," &LI VariableInTerm )*;
 
-WithTerm: <WITH> Term;
 
-ExistTerm:	"(" <EXIST> VariableInTermList ( WithTerm )? ")";
 
-ExistUniqueTerm: 
-	"(" <EXIST> <UNIQUE>  VariableInTermList ( WithTerm )? ")"
-;
+
 
 TermList: &LI Term ( "," &LI Term )*;
 
-ForallTerm:	"(" <FORALL> VariableInTermList ( WithTerm )? ")";
+
 
 VariableTermEqualsTerm: VariableTerm "=" Term;
 
@@ -598,7 +595,7 @@ BagCT:	"<" VariableInTermList ( OrTerm )? ":" Term ">";
 
 getDomainByIDList: &LI getDomainByID ( "," &LI getDomainByID )*;
 
-DomainTerm:	getDomainByID;
+
 RuleAsTerm:	"<<" ID_RULE ( "(" getDomainByIDList ")" )? ">>";
 LocationOrVariableTerm: LocationTerm | VariableTerm;
 ElseRule: <ELSE> Rule;
@@ -621,19 +618,19 @@ Rule:
 
 	BasicRule:	 SkipRule | MacroCallRule | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule ;
 		SkipRule:	<Skip>;
-		BlockRule:	<PAR> Rule ( Rule )+ <ENDPAR>;
+		BlockRule:	<PAR> Rule (Rule)+ <ENDPAR>;
 		ConditionalRule:	<IF> Term <THEN> Rule ( ElseRule )? <ENDIF>;
 		ChooseRule:	<CHOOSE> VariableInTermList <WITH> Term <DO> Rule ( IfNoneRule )?;
 		ForallRule:	<FORALL> VariableInTermList ( WithTerm )? <DO> Rule;
 		LetRule:	<LET> "(" VariableTermEqualsTermList ")" <IN> Rule <ENDLET>;
 		
-		MacroCallRule:	ID_RULE "[" TermList "]" |
-						<ORIGINAL>	"[" TermList "]";
+		MacroCallRule:	ID_RULE "[" [TermList] "]" |
+						<ORIGINAL>	"[" [TermList] "]";
 		
 		ExtendRule:	<EXTEND> ID_DOMAIN <WITH> VariableTerm ( "," VariableTerm )* <DO> Rule;
 
 	TurboRule:	 SeqRule | IterateRule | TurboCallRule | TurboLocalStateRule ;
-		SeqRule:	<seq> Rule ( Rule )+ <ENDSEQ>;
+		SeqRule:	<seq> Rule (Rule)+ <ENDSEQ>;
 		IterateRule:	<ITERATE> Rule <ENDITERATE>;
 		TurboCallRule:	ID_RULE "(" TermList ")" |
 						<ORIGINAL> "(" TermList ")";
