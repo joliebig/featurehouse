@@ -11,7 +11,13 @@ public class AsmetaLRuleOverriding extends AbstractCompositionRule {
 
     public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 	    FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) 
-    {    	
+    {   
+    	if (terminalB.getBody().contains("@final_rule"))
+    	{
+    		//THROW ERROR!
+    		terminalComp.setBody(terminalB.getBody());
+    		return;
+    	}    	
     	if (terminalA.getBody().contains("@original"))
     	{
     		String newBodyA = terminalA.getBody().replace("@original", terminalA.getName() + "_" + terminalA.getFeatureName() + "__wrapee__");
@@ -28,12 +34,5 @@ public class AsmetaLRuleOverriding extends AbstractCompositionRule {
     		terminalComp.setBody(newBodyB + newBodyA);    		
     	}    	
 		
-    }
-
-    private static String getFeatureName(FSTNode node) {
-	if (node.getType().equals("Feature"))
-	    return node.getName();
-	else
-	    return getFeatureName(node.getParent());
     }
 }

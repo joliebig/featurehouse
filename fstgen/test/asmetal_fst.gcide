@@ -71,7 +71,10 @@ MORE:
 <DEFAULT> TOKEN : {
 	  <ASM: "asm"> : GENERIC_ID
 	| <MODULE: "module"> : GENERIC_ID
-	| <ORIGINAL: "@original">	
+	| <ORIGINAL: "@original">
+	| <FINALRULE: "@final_rule">
+	| <FINALINVARIANT: "@final_invariant">
+	| <CONJUNCT: "@conjunct">
 	| <ASYNCR: "asyncr">
 	| <IMPORT: "import"> : MODULE_ID
 	| <EXPORT: "export">
@@ -270,7 +273,7 @@ TermInDomainList:
  	"(" &LI TermInDomain ( "," &LI TermInDomain )* ")"
 ;
 
-@FSTTerminal(name="{ID_FUNCTION}")
+@FSTTerminal(name="{ID_FUNCTION}", compose="AsmetaLFunctionOverriding")
 FunctionInitialization:
 	<FUNCTION> ID_FUNCTION [TermInDomainList] "=" Term @!
 ;
@@ -286,7 +289,7 @@ Body:	DefinitionsCommand ( DomainDefinition )* ( FunctionDefinition )* ( RuleDec
 @FSTTerminal(name="{ID_DOMAIN}")
 DomainDefinition:	<DOMAIN> ID_DOMAIN "=" Term @!;
 
-@FSTTerminal(name="{ID_FUNCTION}")
+@FSTTerminal(name="{ID_FUNCTION}", compose="AsmetaLFunctionOverriding")
 FunctionDefinition:
 	<FUNCTION> ID_FUNCTION [TermInDomainList] "=" Term @!
 ;
@@ -294,9 +297,9 @@ FunctionDefinition:
 
 RuleDeclaration: 
 @FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
-	MacroDeclaration @! | 
+	[<FINALRULE>] MacroDeclaration @! | 
 @FSTTerminal(name="{TurboDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
-	TurboDeclaration @!;
+	[<FINALRULE>] TurboDeclaration @!;
 
 @FSTExportName("{ID_RULE}")
 MacroDeclaration:	
@@ -328,9 +331,29 @@ DomainOrFunctionIDOrRuleList:
 
 CTLSPECS: <CTLSPEC> Term;
 
-@FSTTerminal(name="{ID_INVARIANT}",compose="")
-Invariant:	
-	<INVARIANT> [ID_INVARIANT] <OVER> 
+InvariantRefinement:
+<FINALINVARIANT> <CONJUNCT> |
+<CONJUNCT> <FINALINVARIANT> |
+<FINALINVARIANT> |
+<CONJUNCT>
+;
+
+
+
+UnnamedInvariant:
+	<INVARIANT> <OVER> 
+	DomainOrFunctionIDOrRuleList
+	  ":" Term @!
+	  ;
+
+Invariant:
+	UnnamedInvariant |
+@FSTTerminal(name="{ID_INVARIANT}",compose="AsmetaLInvariantConjunction")
+	NamedInvariant;
+	
+@FSTExportName("{ID_INVARIANT}")
+NamedInvariant:	
+	<INVARIANT> ID_INVARIANT [InvariantRefinement] <OVER> 
 	DomainOrFunctionIDOrRuleList
 	  ":" Term @!
 ;
@@ -482,11 +505,19 @@ pwrunaryExpr: <PWR> unaryExpr;
 
 unaryExpr:	signunaryExpr | basicExpr;
 
-signunaryExpr: <PLUS> unaryExpr | <MINUS> unaryExpr; 
+signunaryExpr: <PLUS> unaryExpr | <MINUS> unaryExpr;
 
-basicExpr:	 BasicTerm | DomainTerm | FiniteQuantificationTerm | BracketedExpression;
+VariableList: 
+&LI <ID_VARIABLE> ( "," &LI <ID_VARIABLE> )*;
 
-	BasicTerm:	ConstantTerm | VariableTerm | FunctionTerm ;
+
+FunctionOriginalCall:
+<ORIGINAL> ["(" VariableList ")"]
+;
+
+basicExpr:	 FunctionOriginalCall | BasicTerm | DomainTerm | FiniteQuantificationTerm | BracketedExpression;
+
+	BasicTerm:	ConstantTerm | VariableTerm | FunctionTerm;
 		ConstantTerm:	ComplexTerm | RealTerm | IntegerTerm | NaturalTerm | CharTerm | StringTerm | BooleanTerm | UndefTerm | EnumTerm;
 			ComplexTerm:	<COMPLEX_NUMBER>;
 			RealTerm:	 <REAL_NUMBER> ;
@@ -616,7 +647,7 @@ Rule:
 	DerivedRule 
 ;	
 
-	BasicRule:	 SkipRule | MacroCallRule | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule ;
+	BasicRule:	 SkipRule | MacroCallRule | MacroCallRuleOriginal | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule ;
 		SkipRule:	<Skip>;
 		BlockRule:	<PAR> Rule (Rule)+ <ENDPAR>;
 		ConditionalRule:	<IF> Term <THEN> Rule ( ElseRule )? <ENDIF>;
@@ -624,8 +655,8 @@ Rule:
 		ForallRule:	<FORALL> VariableInTermList ( WithTerm )? <DO> Rule;
 		LetRule:	<LET> "(" VariableTermEqualsTermList ")" <IN> Rule <ENDLET>;
 		
-		MacroCallRule:	ID_RULE "[" [TermList] "]" |
-						<ORIGINAL>	"[" [TermList] "]";
+		MacroCallRule:	ID_RULE "[" [TermList] "]";
+		MacroCallRuleOriginal:	<ORIGINAL>	"[" [TermList] "]";
 		
 		ExtendRule:	<EXTEND> ID_DOMAIN <WITH> VariableTerm ( "," VariableTerm )* <DO> Rule;
 
@@ -668,6 +699,9 @@ OtherwiseRule: <OTHERWISE> Rule;
 
 @FSTExportName("{<ID_RULE>}")
 ID_RULE:	<ID_RULE>;
+
+
+
 
 @FSTExportName("{<ID_INVARIANT>}")
 ID_INVARIANT:	<ID_INVARIANT>;
