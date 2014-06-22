@@ -202,25 +202,33 @@ AsmOrModule:
 	<ASM> | <MODULE> @!
 ;
 
+
+DefaultCommand: <Default>;
+
+@FSTNonTerminal()
+DefaultInitialization:
+DefaultCommand Initialization;
+
+@FSTNonTerminal()
 Initializations:
-	( Initialization )* <Default> Initialization ( Initialization )* @!; 
+	( Initialization )* DefaultInitialization ( Initialization )* @!; 
 
 
 MainCommand: <MAIN>;
 
-@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration")
+@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
 MainMacroDeclaration: MainCommand MacroDeclaration @!;
 
 @FSTNonTerminal("{ModuleDeclaration}")
 ModuleDeclaration:
-	ID @! Header @! Body @! [MainMacroDeclaration] @!;
+	ID @! Header @! Body @! [MainMacroDeclaration] @! [Initializations];
 
 @FSTNonTerminal()
 CompilationUnit:	
 	[<ASYNCR>]
 	AsmOrModule
-	ModuleDeclaration	
-	[Initializations]
+	ModuleDeclaration
+	
 <EOF>;
   
 
@@ -263,7 +271,7 @@ SignatureCommand: <SIGNATURE> ":";
 @FSTNonTerminal(name="{<SIGNATURE>}")
 Signature:	SignatureCommand ( Domain )* ( Function )* @!; 
 
-@FSTNonTerminal("{Initialization:}")
+@FSTTerminal(name="{ID}")
 Initialization:	<INIT> ID ":" ( DomainInitialization )* ( FunctionInitialization )* ( AgentInitialization )* @!;
 
 @FSTTerminal(name="{ID_DOMAIN}")
@@ -347,8 +355,9 @@ UnnamedInvariant:
 	  ;
 
 Invariant:
+@FSTNonTerminal(name="UnnamedInvariant", type = "Invariant")
 	UnnamedInvariant |
-@FSTTerminal(name="{ID_INVARIANT}",compose="AsmetaLInvariantConjunction")
+@FSTTerminal(name="{NamedInvariant}", type = "Invariant")
 	NamedInvariant;
 	
 @FSTExportName("{ID_INVARIANT}")

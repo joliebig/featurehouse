@@ -203,9 +203,21 @@ FSTInfo AsmOrModule(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
+FSTInfo DefaultCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<Default> {return productionEndTerminal("DefaultCommand","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DefaultInitialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DefaultCommand(inTerminal){ replaceName(n);} n=Initialization(inTerminal){ replaceName(n);} {return productionEndNonTerminal("DefaultInitialization","-","-");}
+
+ )  }
+
 FSTInfo Initializations(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	(n=Initialization(true){ replaceName(n);})* <Default> n=Initialization(true){ replaceName(n);} (n=Initialization(true){ replaceName(n);})* {return productionEndTerminal("Initializations","-","-","Replacement","Default",first,token);}
+	(n=Initialization(inTerminal){ replaceName(n);})* n=DefaultInitialization(inTerminal){ replaceName(n);} (n=Initialization(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Initializations","-","-");}
 
  )  }
 
@@ -217,19 +229,19 @@ FSTInfo MainCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo MainMacroDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=MainCommand(true){ replaceName(n);} n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","Replacement","Default",first,token);}
+	n=MainCommand(true){ replaceName(n);} n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
 
  )  }
 
 FSTInfo ModuleDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=ID(inTerminal){ replaceName(n);} n=Header(inTerminal){ replaceName(n);} n=Body(inTerminal){ replaceName(n);} [n=MainMacroDeclaration(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("ModuleDeclaration","-","-");}
+	n=ID(inTerminal){ replaceName(n);} n=Header(inTerminal){ replaceName(n);} n=Body(inTerminal){ replaceName(n);} [n=MainMacroDeclaration(inTerminal){ replaceName(n);}] [n=Initializations(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("ModuleDeclaration","-","-");}
 
  )  }
 
 FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<ASYNCR>] n=AsmOrModule(inTerminal){ replaceName(n);} n=ModuleDeclaration(inTerminal){ replaceName(n);} [n=Initializations(inTerminal){ replaceName(n);}] <EOF> {return productionEndNonTerminal("CompilationUnit","-","-");}
+	[<ASYNCR>] n=AsmOrModule(inTerminal){ replaceName(n);} n=ModuleDeclaration(inTerminal){ replaceName(n);} <EOF> {return productionEndNonTerminal("CompilationUnit","-","-");}
 
  )  }
 
@@ -301,7 +313,7 @@ FSTInfo Signature(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Initialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<INIT> n=ID(inTerminal){ replaceName(n);} ":" (n=DomainInitialization(inTerminal){ replaceName(n);})* (n=FunctionInitialization(inTerminal){ replaceName(n);})* (n=AgentInitialization(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Initialization","-","-");}
+	<INIT> n=ID(true){ replaceName("ID", n);}{ replaceName(n);} ":" (n=DomainInitialization(true){ replaceName(n);})* (n=FunctionInitialization(true){ replaceName(n);})* (n=AgentInitialization(true){ replaceName(n);})* {return productionEndTerminal("Initialization","{ID}","{ID}","Replacement","Default",first,token);}
 
  )  }
 
@@ -427,9 +439,9 @@ FSTInfo UnnamedInvariant(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo Invariant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	n=UnnamedInvariant(true){ replaceName(n);} {return productionEndTerminal("Invariant1","-","-","Replacement","Default",first,token);}
+	n=UnnamedInvariant(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Invariant","UnnamedInvariant","UnnamedInvariant");}
  |
-	n=NamedInvariant(true){ replaceName(n);} {return productionEndTerminal("Invariant2","{ID_INVARIANT}","{ID_INVARIANT}","AsmetaLInvariantConjunction","Default",first,token);}
+	n=NamedInvariant(true){ replaceName("NamedInvariant", n);}{ replaceName(n);} {return productionEndTerminal("Invariant","{NamedInvariant}","{NamedInvariant}","Replacement","Default",first,token);}
 
  )  }
 

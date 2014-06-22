@@ -27,6 +27,25 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     throw new Error("Missing return statement in function");
   }
 
+  final public FSTInfo DefaultCommand(boolean inTerminal) throws ParseException {
+                                               Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    jj_consume_token(Default);
+                   {if (true) return productionEndTerminal("DefaultCommand","-","-","Replacement","Default",first,token);}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public FSTInfo DefaultInitialization(boolean inTerminal) throws ParseException {
+                                                      Token first=null,t;FSTInfo n;
+     first=getToken(1); productionStart(inTerminal);
+    n = DefaultCommand(inTerminal);
+                                      replaceName(n);
+    n = Initialization(inTerminal);
+                                                                                     replaceName(n);
+                                                                                                       {if (true) return productionEndNonTerminal("DefaultInitialization","-","-");}
+    throw new Error("Missing return statement in function");
+  }
+
   final public FSTInfo Initializations(boolean inTerminal) throws ParseException {
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
@@ -37,12 +56,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       } else {
         break label_1;
       }
-      n = Initialization(true);
-                                 replaceName(n);
+      n = Initialization(inTerminal);
+                                       replaceName(n);
     }
-    jj_consume_token(Default);
-    n = Initialization(true);
-                                                                                      replaceName(n);
+    n = DefaultInitialization(inTerminal);
+                                                                                               replaceName(n);
     label_2:
     while (true) {
       if (jj_2_4(7)) {
@@ -50,10 +68,10 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       } else {
         break label_2;
       }
-      n = Initialization(true);
-                                                                                                                                replaceName(n);
+      n = Initialization(inTerminal);
+                                                                                                                                               replaceName(n);
     }
-                                                                                                                                                    {if (true) return productionEndTerminal("Initializations","-","-","Replacement","Default",first,token);}
+                                                                                                                                                                   {if (true) return productionEndNonTerminal("Initializations","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -73,7 +91,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     n = MacroDeclaration(true);
                                                                         replaceName("MacroDeclaration", n);
                                                                                                               replaceName(n);
-                                                                                                                                {if (true) return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","Replacement","Default",first,token);}
+                                                                                                                                {if (true) return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -92,14 +110,20 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     } else {
       ;
     }
-                                                                                                                                                                               {if (true) return productionEndNonTerminal("ModuleDeclaration","-","-");}
+    if (jj_2_6(7)) {
+      n = Initializations(inTerminal);
+                                                                                                                                                                                                              replaceName(n);
+    } else {
+      ;
+    }
+                                                                                                                                                                                                                                 {if (true) return productionEndNonTerminal("ModuleDeclaration","-","-");}
     throw new Error("Missing return statement in function");
   }
 
   final public FSTInfo CompilationUnit(boolean inTerminal) throws ParseException {
                                                 Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
-    if (jj_2_6(7)) {
+    if (jj_2_7(7)) {
       jj_consume_token(ASYNCR);
     } else {
       ;
@@ -108,14 +132,8 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
                                               replaceName(n);
     n = ModuleDeclaration(inTerminal);
                                                                                                 replaceName(n);
-    if (jj_2_7(7)) {
-      n = Initializations(inTerminal);
-                                                                                                                                                 replaceName(n);
-    } else {
-      ;
-    }
     jj_consume_token(0);
-                                                                                                                                                                          {if (true) return productionEndNonTerminal("CompilationUnit","-","-");}
+                                                                                                                        {if (true) return productionEndNonTerminal("CompilationUnit","-","-");}
     throw new Error("Missing return statement in function");
   }
 
@@ -305,8 +323,9 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
                                                Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     jj_consume_token(INIT);
-    n = ID(inTerminal);
-                                 replaceName(n);
+    n = ID(true);
+                           replaceName("ID", n);
+                                                   replaceName(n);
     jj_consume_token(128);
     label_8:
     while (true) {
@@ -315,8 +334,8 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       } else {
         break label_8;
       }
-      n = DomainInitialization(inTerminal);
-                                                                                           replaceName(n);
+      n = DomainInitialization(true);
+                                                                                                       replaceName(n);
     }
     label_9:
     while (true) {
@@ -325,8 +344,8 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       } else {
         break label_9;
       }
-      n = FunctionInitialization(inTerminal);
-                                                                                                                                                     replaceName(n);
+      n = FunctionInitialization(true);
+                                                                                                                                                           replaceName(n);
     }
     label_10:
     while (true) {
@@ -335,10 +354,10 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       } else {
         break label_10;
       }
-      n = AgentInitialization(inTerminal);
+      n = AgentInitialization(true);
                                                                                                                                                                                                             replaceName(n);
     }
-                                                                                                                                                                                                                                {if (true) return productionEndNonTerminal("Initialization","-","-");}
+                                                                                                                                                                                                                                {if (true) return productionEndTerminal("Initialization","{ID}","{ID}","Replacement","Default",first,token);}
     throw new Error("Missing return statement in function");
   }
 
@@ -716,13 +735,14 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
                                           Token first=null,t;FSTInfo n;
      first=getToken(1); productionStart(inTerminal);
     if (jj_2_48(7)) {
-      n = UnnamedInvariant(true);
-                                  replaceName(n);
-                                                    {if (true) return productionEndTerminal("Invariant1","-","-","Replacement","Default",first,token);}
+      n = UnnamedInvariant(inTerminal);
+                                        replaceName(n);
+                                                          {if (true) return productionEndNonTerminal("Invariant","UnnamedInvariant","UnnamedInvariant");}
     } else if (jj_2_49(7)) {
       n = NamedInvariant(true);
-                                replaceName(n);
-                                                  {if (true) return productionEndTerminal("Invariant2","{ID_INVARIANT}","{ID_INVARIANT}","AsmetaLInvariantConjunction","Default",first,token);}
+                                replaceName("NamedInvariant", n);
+                                                                    replaceName(n);
+                                                                                      {if (true) return productionEndTerminal("Invariant","{NamedInvariant}","{NamedInvariant}","Replacement","Default",first,token);}
     } else {
       jj_consume_token(-1);
       throw new ParseException();
@@ -4907,38 +4927,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     finally { jj_save(232, xla); }
   }
 
-  final private boolean jj_3_116() {
-    if (jj_3R_103()) return true;
-    return false;
-  }
-
-  final private boolean jj_3R_105() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_123()) {
-    jj_scanpos = xsp;
-    if (jj_3_124()) {
-    jj_scanpos = xsp;
-    if (jj_3_125()) {
-    jj_scanpos = xsp;
-    if (jj_3_126()) {
-    jj_scanpos = xsp;
-    if (jj_3_127()) return true;
-    }
-    }
-    }
-    }
-    return false;
-  }
-
-  final private boolean jj_3R_108() {
-    if (jj_scan_token(ORIGINAL)) return true;
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3_122()) jj_scanpos = xsp;
-    return false;
-  }
-
   final private boolean jj_3R_107() {
     if (jj_scan_token(ID_VARIABLE)) return true;
     Token xsp;
@@ -5115,7 +5103,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_194() {
+  final private boolean jj_3R_195() {
     if (jj_scan_token(MOD_ID)) return true;
     return false;
   }
@@ -5213,7 +5201,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_198() {
+  final private boolean jj_3R_199() {
     if (jj_scan_token(ID_INVARIANT)) return true;
     return false;
   }
@@ -5357,7 +5345,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_199() {
+  final private boolean jj_3R_200() {
     if (jj_scan_token(ID_ENUM)) return true;
     return false;
   }
@@ -5372,7 +5360,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_200() {
+  final private boolean jj_3R_201() {
     if (jj_scan_token(ID_VARIABLE)) return true;
     return false;
   }
@@ -5533,7 +5521,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_207() {
+  final private boolean jj_3R_208() {
     if (jj_scan_token(SWITCH)) return true;
     if (jj_3R_153()) return true;
     Token xsp;
@@ -5567,7 +5555,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   }
 
   final private boolean jj_3R_186() {
-    if (jj_3R_207()) return true;
+    if (jj_3R_208()) return true;
     return false;
   }
 
@@ -5672,7 +5660,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   }
 
   final private boolean jj_3R_165() {
-    if (jj_3R_206()) return true;
+    if (jj_3R_207()) return true;
     if (jj_scan_token(140)) return true;
     if (jj_3R_183()) return true;
     return false;
@@ -5695,7 +5683,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   }
 
   final private boolean jj_3R_164() {
-    if (jj_3R_206()) return true;
+    if (jj_3R_207()) return true;
     if (jj_scan_token(139)) return true;
     if (jj_3R_153()) return true;
     return false;
@@ -6031,20 +6019,20 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   final private boolean jj_3R_175() {
     if (jj_scan_token(LET)) return true;
     if (jj_scan_token(125)) return true;
-    if (jj_3R_205()) return true;
+    if (jj_3R_206()) return true;
     if (jj_scan_token(127)) return true;
     if (jj_scan_token(IN)) return true;
     return false;
   }
 
   final private boolean jj_3R_77() {
-    if (jj_3R_199()) return true;
+    if (jj_3R_200()) return true;
     return false;
   }
 
   final private boolean jj_3R_174() {
     if (jj_scan_token(FORALL)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_214()) jj_scanpos = xsp;
@@ -6076,7 +6064,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_173() {
     if (jj_scan_token(CHOOSE)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     if (jj_scan_token(WITH)) return true;
     if (jj_3R_153()) return true;
     if (jj_scan_token(DO)) return true;
@@ -6112,6 +6100,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
+  final private boolean jj_3_22() {
+    if (jj_3R_54()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_171() {
     if (jj_scan_token(PAR)) return true;
     if (jj_3R_177()) return true;
@@ -6133,11 +6126,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3_58() {
     if (jj_3R_76()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_22() {
-    if (jj_3R_54()) return true;
     return false;
   }
 
@@ -6368,12 +6356,12 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_68() {
     if (jj_scan_token(INVARIANT)) return true;
-    if (jj_3R_198()) return true;
+    if (jj_3R_199()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_50()) jj_scanpos = xsp;
     if (jj_scan_token(OVER)) return true;
-    if (jj_3R_197()) return true;
+    if (jj_3R_198()) return true;
     if (jj_scan_token(128)) return true;
     if (jj_3R_153()) return true;
     return false;
@@ -6452,10 +6440,15 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
+  final private boolean jj_3_21() {
+    if (jj_3R_53()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_67() {
     if (jj_scan_token(INVARIANT)) return true;
     if (jj_scan_token(OVER)) return true;
-    if (jj_3R_197()) return true;
+    if (jj_3R_198()) return true;
     if (jj_scan_token(128)) return true;
     if (jj_3R_153()) return true;
     return false;
@@ -6499,11 +6492,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3_21() {
-    if (jj_3R_53()) return true;
-    return false;
-  }
-
   final private boolean jj_3R_69() {
     Token xsp;
     xsp = jj_scanpos;
@@ -6520,7 +6508,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_206() {
+  final private boolean jj_3R_207() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_194()) {
@@ -6551,7 +6539,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_197() {
+  final private boolean jj_3R_198() {
     if (jj_3R_66()) return true;
     Token xsp;
     while (true) {
@@ -6579,6 +6567,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3_42() {
     if (jj_3R_44()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_6() {
+    if (jj_3R_41()) return true;
     return false;
   }
 
@@ -6612,7 +6605,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_158() {
     if (jj_scan_token(LT)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_191()) jj_scanpos = xsp;
@@ -6637,7 +6630,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_157() {
     if (jj_scan_token(135)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_190()) jj_scanpos = xsp;
@@ -6658,7 +6651,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_156() {
     if (jj_scan_token(129)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_189()) jj_scanpos = xsp;
@@ -6675,7 +6668,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_37()) jj_scanpos = xsp;
-    if (jj_3R_196()) return true;
+    if (jj_3R_197()) return true;
     if (jj_scan_token(EQ)) return true;
     if (jj_3R_177()) return true;
     return false;
@@ -6683,7 +6676,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_155() {
     if (jj_scan_token(129)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_188()) jj_scanpos = xsp;
@@ -6693,7 +6686,12 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_196() {
+  final private boolean jj_3_20() {
+    if (jj_3R_52()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_197() {
     if (jj_scan_token(IN)) return true;
     if (jj_3R_64()) return true;
     return false;
@@ -6726,6 +6724,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
+  final private boolean jj_3_186() {
+    if (jj_3R_157()) return true;
+    return false;
+  }
+
   final private boolean jj_3_32() {
     if (jj_scan_token(FINALRULE)) return true;
     return false;
@@ -6741,11 +6744,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     if (jj_3_36()) jj_scanpos = xsp;
     if (jj_scan_token(EQ)) return true;
     if (jj_3R_177()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_186() {
-    if (jj_3R_157()) return true;
     return false;
   }
 
@@ -6812,11 +6810,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3_20() {
-    if (jj_3R_52()) return true;
-    return false;
-  }
-
   final private boolean jj_3_18() {
     if (jj_3R_50()) return true;
     return false;
@@ -6836,7 +6829,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   final private boolean jj_3R_151() {
     if (jj_scan_token(LET)) return true;
     if (jj_scan_token(125)) return true;
-    if (jj_3R_205()) return true;
+    if (jj_3R_206()) return true;
     if (jj_scan_token(127)) return true;
     if (jj_scan_token(IN)) return true;
     return false;
@@ -6850,18 +6843,13 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_205() {
+  final private boolean jj_3R_206() {
     if (jj_3R_154()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
       if (jj_3_183()) { jj_scanpos = xsp; break; }
     }
-    return false;
-  }
-
-  final private boolean jj_3_7() {
-    if (jj_3R_41()) return true;
     return false;
   }
 
@@ -6945,6 +6933,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
+  final private boolean jj_3_4() {
+    if (jj_3R_39()) return true;
+    return false;
+  }
+
   final private boolean jj_3R_144() {
     if (jj_scan_token(LT)) return true;
     Token xsp;
@@ -6974,7 +6967,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_142() {
     if (jj_scan_token(129)) return true;
-    if (jj_3R_202()) return true;
+    if (jj_3R_203()) return true;
     if (jj_scan_token(131)) return true;
     return false;
   }
@@ -6989,11 +6982,6 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3_177() {
     if (jj_3R_150()) return true;
-    return false;
-  }
-
-  final private boolean jj_3_4() {
-    if (jj_3R_39()) return true;
     return false;
   }
 
@@ -7032,7 +7020,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_202() {
+  final private boolean jj_3R_203() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_176()) {
@@ -7054,7 +7042,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_150() {
     if (jj_3R_153()) return true;
-    if (jj_3R_204()) return true;
+    if (jj_3R_205()) return true;
     Token xsp;
     while (true) {
       xsp = jj_scanpos;
@@ -7070,7 +7058,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_149() {
     if (jj_3R_145()) return true;
-    if (jj_3R_204()) return true;
+    if (jj_3R_205()) return true;
     return false;
   }
 
@@ -7086,7 +7074,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_204() {
+  final private boolean jj_3R_205() {
     if (jj_scan_token(132)) return true;
     if (jj_3R_153()) return true;
     return false;
@@ -7099,7 +7087,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_46() {
     if (jj_scan_token(EXPORT)) return true;
-    if (jj_3R_195()) return true;
+    if (jj_3R_196()) return true;
     return false;
   }
 
@@ -7154,7 +7142,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_195() {
+  final private boolean jj_3R_196() {
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_15()) {
@@ -7191,7 +7179,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3R_45() {
     if (jj_scan_token(IMPORT)) return true;
-    if (jj_3R_194()) return true;
+    if (jj_3R_195()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_14()) jj_scanpos = xsp;
@@ -7236,14 +7224,14 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   }
 
   final private boolean jj_3R_146() {
-    if (jj_3R_203()) return true;
+    if (jj_3R_204()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_168()) jj_scanpos = xsp;
     return false;
   }
 
-  final private boolean jj_3R_203() {
+  final private boolean jj_3R_204() {
     if (jj_scan_token(134)) return true;
     if (jj_3R_153()) return true;
     return false;
@@ -7275,7 +7263,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3_6() {
+  final private boolean jj_3_7() {
     if (jj_scan_token(ASYNCR)) return true;
     return false;
   }
@@ -7389,17 +7377,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
       xsp = jj_scanpos;
       if (jj_3_3()) { jj_scanpos = xsp; break; }
     }
-    if (jj_scan_token(Default)) return true;
-    if (jj_3R_39()) return true;
+    if (jj_3R_194()) return true;
     while (true) {
       xsp = jj_scanpos;
       if (jj_3_4()) { jj_scanpos = xsp; break; }
     }
-    return false;
-  }
-
-  final private boolean jj_3_2() {
-    if (jj_scan_token(MODULE)) return true;
     return false;
   }
 
@@ -7409,8 +7391,9 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3_1() {
-    if (jj_scan_token(ASM)) return true;
+  final private boolean jj_3R_194() {
+    if (jj_3R_209()) return true;
+    if (jj_3R_39()) return true;
     return false;
   }
 
@@ -7428,6 +7411,16 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
+  final private boolean jj_3R_209() {
+    if (jj_scan_token(Default)) return true;
+    return false;
+  }
+
+  final private boolean jj_3_2() {
+    if (jj_scan_token(MODULE)) return true;
+    return false;
+  }
+
   final private boolean jj_3R_161() {
     Token xsp;
     xsp = jj_scanpos;
@@ -7435,6 +7428,11 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     if (jj_3R_43()) return true;
     xsp = jj_scanpos;
     if (jj_3_160()) jj_scanpos = xsp;
+    return false;
+  }
+
+  final private boolean jj_3_1() {
+    if (jj_scan_token(ASM)) return true;
     return false;
   }
 
@@ -7542,7 +7540,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   final private boolean jj_3R_129() {
     if (jj_scan_token(125)) return true;
     if (jj_scan_token(EXIST)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_150()) jj_scanpos = xsp;
@@ -7554,7 +7552,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     if (jj_scan_token(125)) return true;
     if (jj_scan_token(EXIST)) return true;
     if (jj_scan_token(UNIQUE)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_149()) jj_scanpos = xsp;
@@ -7575,7 +7573,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
     return false;
   }
 
-  final private boolean jj_3R_201() {
+  final private boolean jj_3R_202() {
     if (jj_3R_131()) return true;
     Token xsp;
     while (true) {
@@ -7588,7 +7586,7 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   final private boolean jj_3R_127() {
     if (jj_scan_token(125)) return true;
     if (jj_scan_token(FORALL)) return true;
-    if (jj_3R_201()) return true;
+    if (jj_3R_202()) return true;
     Token xsp;
     xsp = jj_scanpos;
     if (jj_3_147()) jj_scanpos = xsp;
@@ -7646,12 +7644,12 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
   }
 
   final private boolean jj_3R_114() {
-    if (jj_3R_200()) return true;
+    if (jj_3R_201()) return true;
     return false;
   }
 
   final private boolean jj_3R_124() {
-    if (jj_3R_199()) return true;
+    if (jj_3R_200()) return true;
     return false;
   }
 
@@ -7849,6 +7847,38 @@ public class AsmetaLParser extends AbstractFSTParser implements AsmetaLParserCon
 
   final private boolean jj_3_123() {
     if (jj_3R_108()) return true;
+    return false;
+  }
+
+  final private boolean jj_3_116() {
+    if (jj_3R_103()) return true;
+    return false;
+  }
+
+  final private boolean jj_3R_105() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_123()) {
+    jj_scanpos = xsp;
+    if (jj_3_124()) {
+    jj_scanpos = xsp;
+    if (jj_3_125()) {
+    jj_scanpos = xsp;
+    if (jj_3_126()) {
+    jj_scanpos = xsp;
+    if (jj_3_127()) return true;
+    }
+    }
+    }
+    }
+    return false;
+  }
+
+  final private boolean jj_3R_108() {
+    if (jj_scan_token(ORIGINAL)) return true;
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3_122()) jj_scanpos = xsp;
     return false;
   }
 

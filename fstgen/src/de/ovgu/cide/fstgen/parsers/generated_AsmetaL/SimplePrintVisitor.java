@@ -17,6 +17,41 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		super(); generateSpaces=true;
 	}
 	public boolean visit(FSTNonTerminal nonTerminal) {
+		if (nonTerminal.getType().equals("DefaultInitialization")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "DefaultCommand");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "Initialization");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Initializations")) {
+			printFeatures(nonTerminal,true);
+			for (FSTNode v : getChildren(nonTerminal,"Initialization")) {
+				v.accept(this);
+			}
+			{
+				FSTNode v=getChild(nonTerminal, "DefaultInitialization");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
+			for (FSTNode v : getChildren(nonTerminal,"Initialization")) {
+				v.accept(this);
+			}
+			hintNewLine();
+			printFeatures(nonTerminal,false);
+			return false;
+		}
 		if (nonTerminal.getType().equals("ModuleDeclaration")) {
 			printFeatures(nonTerminal,true);
 			{
@@ -47,6 +82,12 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 				}
 			}
 			hintNewLine();
+			{
+				FSTNode v=getChild(nonTerminal, "Initializations");
+				if (v!=null) {
+					v.accept(this);
+				}
+			}
 			printFeatures(nonTerminal,false);
 			return false;
 		}
@@ -60,12 +101,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			{
 				FSTNode v=getChild(nonTerminal, "ModuleDeclaration");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			{
-				FSTNode v=getChild(nonTerminal, "Initializations");
 				if (v!=null) {
 					v.accept(this);
 				}
@@ -111,28 +146,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			printFeatures(nonTerminal,false);
 			return false;
 		}
-		if (nonTerminal.getType().equals("Initialization")) {
-			printFeatures(nonTerminal,true);
-			{
-				FSTNode v=getChild(nonTerminal, "ID");
-				if (v!=null) {
-					v.accept(this);
-				}
-			}
-			printToken(":");
-			for (FSTNode v : getChildren(nonTerminal,"DomainInitialization")) {
-				v.accept(this);
-			}
-			for (FSTNode v : getChildren(nonTerminal,"FunctionInitialization")) {
-				v.accept(this);
-			}
-			for (FSTNode v : getChildren(nonTerminal,"AgentInitialization")) {
-				v.accept(this);
-			}
-			hintNewLine();
-			printFeatures(nonTerminal,false);
-			return false;
-		}
 		if (nonTerminal.getType().equals("Body")) {
 			printFeatures(nonTerminal,true);
 			{
@@ -155,6 +168,17 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 			}
 			for (FSTNode v : getChildren(nonTerminal,"Invariant")) {
 				v.accept(this);
+			}
+			printFeatures(nonTerminal,false);
+			return false;
+		}
+		if (nonTerminal.getType().equals("Invariant")) {
+			printFeatures(nonTerminal,true);
+			{
+				FSTNode v=getChild(nonTerminal, "UnnamedInvariant");
+				if (v!=null) {
+					v.accept(this);
+				}
 			}
 			printFeatures(nonTerminal,false);
 			return false;
@@ -205,8 +229,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("LocationOrVariableTerm1") && expectedType.equals("LocationOrVariableTerm")) return true;
 		if (type.equals("basicExpr2") && expectedType.equals("basicExpr")) return true;
 		if (type.equals("DomainOrFunctionOrRule1") && expectedType.equals("DomainOrFunctionOrRule")) return true;
-		if (type.equals("TermOrSequenceTerm2") && expectedType.equals("TermOrSequenceTerm")) return true;
 		if (type.equals("ExtendedTerm2") && expectedType.equals("ExtendedTerm")) return true;
+		if (type.equals("TermOrSequenceTerm2") && expectedType.equals("TermOrSequenceTerm")) return true;
 		if (type.equals("ConstantTerm1") && expectedType.equals("ConstantTerm")) return true;
 		if (type.equals("InvariantRefinement1") && expectedType.equals("InvariantRefinement")) return true;
 		if (type.equals("getDomainByID2") && expectedType.equals("getDomainByID")) return true;
@@ -239,8 +263,8 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("BasicRule5") && expectedType.equals("BasicRule")) return true;
 		if (type.equals("TurboCallRule2") && expectedType.equals("TurboCallRule")) return true;
 		if (type.equals("ReladditiveExpr2") && expectedType.equals("ReladditiveExpr")) return true;
-		if (type.equals("StructuredTD4") && expectedType.equals("StructuredTD")) return true;
 		if (type.equals("AsmOrModule1") && expectedType.equals("AsmOrModule")) return true;
+		if (type.equals("StructuredTD4") && expectedType.equals("StructuredTD")) return true;
 		if (type.equals("ExtendedTerm3") && expectedType.equals("ExtendedTerm")) return true;
 		if (type.equals("Rule6") && expectedType.equals("Rule")) return true;
 		if (type.equals("ExportBodyOrAst1") && expectedType.equals("ExportBodyOrAst")) return true;
@@ -270,7 +294,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("InvariantRefinement4") && expectedType.equals("InvariantRefinement")) return true;
 		if (type.equals("TurboRule2") && expectedType.equals("TurboRule")) return true;
 		if (type.equals("DynamicFunction2") && expectedType.equals("DynamicFunction")) return true;
-		if (type.equals("Invariant1") && expectedType.equals("Invariant")) return true;
 		if (type.equals("DomainOrFunctionOrRule2") && expectedType.equals("DomainOrFunctionOrRule")) return true;
 		if (type.equals("FiniteQuantificationTerm1") && expectedType.equals("FiniteQuantificationTerm")) return true;
 		if (type.equals("ComprehensionTerm1") && expectedType.equals("ComprehensionTerm")) return true;
@@ -286,7 +309,6 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("BXB_BExpression3") && expectedType.equals("BXB_BExpression")) return true;
 		if (type.equals("CollectionTerm4") && expectedType.equals("CollectionTerm")) return true;
 		if (type.equals("TurboRule1") && expectedType.equals("TurboRule")) return true;
-		if (type.equals("Invariant2") && expectedType.equals("Invariant")) return true;
 		if (type.equals("DynamicFunction1") && expectedType.equals("DynamicFunction")) return true;
 		if (type.equals("ComprehensionTerm2") && expectedType.equals("ComprehensionTerm")) return true;
 		if (type.equals("VariableBindingTerm3") && expectedType.equals("VariableBindingTerm")) return true;
