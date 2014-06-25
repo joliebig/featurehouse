@@ -38,7 +38,8 @@ public class JavaRuntimeFeatureSelection {
 		
 		// a global variable per feature
 		HashSet<String> processedFeatures = new HashSet<String>();
-		for (String feature: meta.getFeatures()) {
+		Set<String> featureSet = new HashSet<String>(meta.getFeatures());
+		for (String feature: featureSet) {
 			if (!processedFeatures.contains(feature)) {
 				processedFeatures.add(feature);
 				//javaFileContents += "@FilterField\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
