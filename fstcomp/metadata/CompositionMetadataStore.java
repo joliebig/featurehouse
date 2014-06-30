@@ -33,7 +33,8 @@ public final class CompositionMetadataStore {
 	private List<String> features = new ArrayList<String>();
 	
 	public void addFeature(String feature) {
-		features.add(feature);
+		if (! features.contains(feature))
+			features.add(feature);
 	}
 	
 	
@@ -220,6 +221,11 @@ public final class CompositionMetadataStore {
 		return instance;
 	}
 
+	/**
+	 * Returns a list of all feature names of the subject system. 
+	 * Each name occurs only once in the list.
+	 * We chose a List instead of a Set because the order of the features is important (same order as in the expression file).
+	 */
 	public List<String> getFeatures() {
 		return new ArrayList<String>(features);
 	}

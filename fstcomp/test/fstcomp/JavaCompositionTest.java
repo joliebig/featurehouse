@@ -17,7 +17,7 @@ public class JavaCompositionTest {
 		
 		compose(expression, outputDir, null, null);
 		
-		assertEquals("9A493CC96B042D988A88F0B367CF4CE3", Checksum.calculateChecksum(new File(outputDir)));
+		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir)));
 	}
 
 }

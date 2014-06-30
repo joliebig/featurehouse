@@ -24,7 +24,7 @@ public class JavaVarEncTest {
 		
 		compose(expression, outputDir, null, new String[] {"--liftJava"});
 		
-		assertEquals("F1E61C56834E9B0601E67A664BFAA0B6", Checksum.calculateChecksum(new File(outputDir)));
+		assertEquals("42824B643B026350F43183420909C113", Checksum.calculateChecksum(new File(outputDir)));
 	}
 
 }

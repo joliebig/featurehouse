@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import integrationtests.Checksum;
 
 import java.io.File;
+
 import org.junit.Test;
 
 public class JavaFeatureAnnotationTest {
@@ -15,6 +16,6 @@ public class JavaFeatureAnnotationTest {
 		
 		compose(expression, outputDir, null, new String[] {"--featureAnnotationJava"});
 		
-		assertEquals("24FB3D6609701028E31F44CE38CF5721", Checksum.calculateChecksum(new File(outputDir)));
+		assertEquals("EB588B1D28757BBCF3F611CA7DBC1BED", Checksum.calculateChecksum(new File(outputDir)));
 	}
 }
