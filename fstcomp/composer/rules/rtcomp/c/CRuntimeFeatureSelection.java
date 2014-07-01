@@ -35,7 +35,8 @@ public class CRuntimeFeatureSelection {
 				"";
 		
 		// a global variable per feature
-		for (String feature: meta.getFeatures()) {
+		Set<String> featureSet = new HashSet<String>(meta.getFeatures());
+		for (String feature: featureSet) {
 			headerContents += "int __SELECTED_FEATURE_" + feature + ";\n\n";
 		}
 
@@ -50,8 +51,7 @@ public class CRuntimeFeatureSelection {
 			"int select_one() {if (__VERIFIER_nondet_int()) return 1; else return 0;}\n" +
 			"\n\n" +
 			"void select_features() {\n";
-		
-		for (String feature: meta.getFeatures()) {
+		for (String feature: featureSet) {
 			cFileContents += "\t__SELECTED_FEATURE_" + feature + " = select_one();\n";
 		}
 		

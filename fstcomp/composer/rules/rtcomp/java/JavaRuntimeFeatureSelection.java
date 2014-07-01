@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -37,20 +39,17 @@ public class JavaRuntimeFeatureSelection {
 			"\n";
 		
 		// a global variable per feature
-		HashSet<String> processedFeatures = new HashSet<String>();
-		for (String feature: meta.getFeatures()) {
-			if (!processedFeatures.contains(feature)) {
-				processedFeatures.add(feature);
-				//javaFileContents += "@FilterField\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
-				if (addJPF_BDD_Annotation)
-					javaFileContents += "@gov.nasa.jpf.bdd.TrackWithBDD\n";
-				javaFileContents += "public static boolean __SELECTED_FEATURE_" + feature + ";\n";
-				//javaFileContents += "@Symbolic(\"true\")\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
-			}
+		List<String> features = meta.getFeatures();
+		for (String feature: features) {
+			//javaFileContents += "@FilterField\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
+			if (addJPF_BDD_Annotation)
+				javaFileContents += "@gov.nasa.jpf.bdd.TrackWithBDD\n";
+			javaFileContents += "public static boolean __SELECTED_FEATURE_" + feature + ";\n";
+			//javaFileContents += "@Symbolic(\"true\")\npublic static boolean __SELECTED_FEATURE_" + feature + ";\n";
 		}
 		javaFileContents += "public static String getSelectedFeaturesAsNames() {\n" +
 				"StringBuilder sb = new StringBuilder();\n";
-		for (String feature: processedFeatures) {
+		for (String feature: features) {
 			javaFileContents += "\tif (__SELECTED_FEATURE_" + feature + ") sb.append(\""+feature+";\");\n";
 		}
 		javaFileContents += "return sb.toString();\n" +
@@ -59,7 +58,7 @@ public class JavaRuntimeFeatureSelection {
 	
 		javaFileContents += "public static void select_features() {\n";
 		
-		for (String feature : processedFeatures) {
+		for (String feature : features) {
 			javaFileContents += "\t__SELECTED_FEATURE_" + feature + " = verificationClasses.SPLModelChecker.getBoolean();\n";
 		}
 		

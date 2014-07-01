@@ -2,8 +2,8 @@ package fstcomp;
 
 import static fstcomp.ComposerTestUtil.compose;
 import static org.junit.Assert.assertEquals;
-
 import integrationtests.Checksum;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
