@@ -43,8 +43,6 @@ public class XMLNode extends FSTNonTerminal {
 	private boolean copyMode;
 	
 	private XMLHook hook = null;
-	
-	private boolean noname = true;
 
 	/**
 	 * Creates a new XMLNode
@@ -62,13 +60,9 @@ public class XMLNode extends FSTNonTerminal {
 		this.ignoreID = ignoreID;
 		this.copyMode = copyMode;
 
-		String name = "";
-		String type = "";
+		String nameValue = "";
+		String nameType = "";
 		String id = "";
-		String ref = "";
-
-
-		type = node.getNodeName();
 
 		NamedNodeMap map = node.getAttributes();
 		
@@ -86,19 +80,12 @@ public class XMLNode extends FSTNonTerminal {
 					// nodeValue);//node.getNodeName() + xmiName);
 					// setName(nodeValue);
 					id = nodeValue;
-				} else if (nodeName.equals("xmi.idref")) {
-					// setNodeAttribute("xmi.idref", node.getNodeName() +
-					// IdToElement(nodeValue, node.getNodeName()));
-					ref = nodeValue;
-				} else if (nodeName.equals("android:name")) {
-					// setNodeAttribute("name", nodeValue);
-					name = nodeValue;
-					noname = true;
-				} else if (nodeName.equals("name") || nodeName.equals("key") || nodeName.equals("id")) {
-					name = nodeValue;
-				} else {
-					setNodeAttribute(nodeName, nodeValue);
-				}
+				} else if (nodeName.equals("android:name") || nodeName.equals("name") || nodeName.equals("key") || nodeName.equals("id")) {
+					nameValue = nodeValue;
+					nameType = nodeName;
+				} 
+				
+				setNodeAttribute(nodeName, nodeValue);
 			}
 
 
@@ -113,41 +100,23 @@ public class XMLNode extends FSTNonTerminal {
 				if (!id.isEmpty()) {
 					setNodeAttribute("android:id", id);
 					setName(id);
-				}
-
-				if (!name.isEmpty()) {
-					setNodeAttribute("android:name", name);
-				}
-
-				if (!ref.isEmpty()) {
-					setNodeAttribute("android:idref", type + IdToElement(ref, type));
-				}
-
-			} else {
-
-			if (name.equals("")) {
-				if (!id.equals("")) {
-					if (!ignoreID) {
-						setNodeAttribute("android:id", id);
-						setName(id);
-					}
-
-				}
-			} else {
-				setName(name);
-				setNodeAttribute("name", name);
-				if (!id.equals("")) {
-					setNodeAttribute("android:id",  type + name);
-				}
-			}
-
-			if (!ref.equals("")) {
-				String newRef = IdToElement(ref, type);
-				if (newRef.equals("")) {
-					setNodeAttribute("android:idref", ref);
 				} else {
-					setNodeAttribute("android:idref", type + newRef);
+					if (!nameValue.isEmpty()) {
+						setNodeAttribute(nameType, nameValue);
+					}
 				}
+
+			} else {
+
+			if (id.equals("")) {
+				if (!nameValue.equals("")) {
+					if (!ignoreID) {
+						setNodeAttribute(nameType, nameValue);
+						setName(nameValue);
+					}
+				}
+			} else {
+				setName(id);
 			}
 
 			}
@@ -164,7 +133,6 @@ public class XMLNode extends FSTNonTerminal {
 		int len = children.getLength();
 		for (int i = 0; i < len; i++) {
 			Node child = children.item(i);
-			//System.out.println(child.getNodeName() + " " + child.getTextContent());
 			if (child.getNodeName().equals("#comment")){
 				extractComment(child);
 			} else if (!child.getNodeName().equals("#text")) {
