@@ -53,8 +53,7 @@ public class XMLNode extends FSTNonTerminal {
 	 */
 	public XMLNode(Node node, Node root, boolean ignoreID, boolean copyMode) {
 		super(node.getNodeName(), "");
-		//super(node.getNodeName(), "", root);
-		//this.type = node.getNodeName();
+		
 		this.root = root;
 		this.node = node;
 		this.ignoreID = ignoreID;
@@ -76,9 +75,6 @@ public class XMLNode extends FSTNonTerminal {
 				String nodeValue = subNode.getNodeValue();
 
 				if (nodeName.equals("android:id")) {
-					// setNodeAttribute("xmi.id",
-					// nodeValue);//node.getNodeName() + xmiName);
-					// setName(nodeValue);
 					id = nodeValue;
 				} else if (nodeName.equals("android:name") || nodeName.equals("name") || nodeName.equals("key") || nodeName.equals("id")) {
 					nameValue = nodeValue;
@@ -87,14 +83,6 @@ public class XMLNode extends FSTNonTerminal {
 				
 				setNodeAttribute(nodeName, nodeValue);
 			}
-
-
-
-
-			/*if (ignoreID && (!id.equals("")) && (!name.equals(""))) {
-
-				System.out.println(type + " " + ignoreID);
-			} else*/
 
 			if (copyMode) {
 				if (!id.isEmpty()) {
@@ -152,7 +140,6 @@ public class XMLNode extends FSTNonTerminal {
 	
 	private void extractComment(Node node) {
 		String commentText = node.getTextContent();
-		//System.out.println( commentText );
 		if (commentText.matches("(?s).*\\s*@start\\s*.*")) {
 			hook = new XMLHook(node, root, ignoreID, copyMode, commentText);
 			addChild(hook);
@@ -189,14 +176,6 @@ public class XMLNode extends FSTNonTerminal {
 
 		Element node = doc.createElement(getType());
 
-	/*	Map<String, String> attributes = getAttributes();
-		String text = attributes.remove("#text");
-		node.setTextContent(text);
-		
-		for (String key : attributes.keySet()) {
-			node.setAttribute(key, attributes.get(key));
-		} */
-
 		for (FSTNode fstnode : getChildren()) {
 			if (fstnode instanceof XMLNode) {
 				XMLNode xmlnode = (XMLNode) fstnode;
@@ -208,7 +187,6 @@ public class XMLNode extends FSTNonTerminal {
 			} else {
 				FSTTerminal xmlAttr = (FSTTerminal) fstnode;
 				if (xmlAttr.getType().equals("attribute")) {
-					//System.out.println(xmlAttr.getName() + " + " + xmlAttr.getBody());
 					node.setAttribute(xmlAttr.getName(), xmlAttr.getBody());
 				} else if (xmlAttr.getType().equals("#text")) {
 					String text = xmlAttr.getBody().trim();
@@ -299,7 +277,6 @@ public class XMLNode extends FSTNonTerminal {
 		int len = dataTypes.getLength();
 		for (int i = 0; i < len; i++) {
 			Element dataType = (Element) dataTypes.item(i);
-			//System.out.println(dataType.getParentNode().toString());
 			if (dataType.getAttribute("android:id").equals(id)) {
 				return dataType.getAttribute("name");
 			}
