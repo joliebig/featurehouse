@@ -319,7 +319,7 @@ public class JavaMethodOverriding extends AbstractCompositionRule {
 				} else if (!modifier.equals("public")
 						&& !modifier.equals("protected")
 						&& !modifier.equals("private")) {
-					if (modifier.equals("abstract")) {
+					if (modifier.equals("abstract") && !isAbstract) {
 						isAbstract = true;
 						removedDuplicates = removedDuplicates.replaceAll(
 								"final", "");
