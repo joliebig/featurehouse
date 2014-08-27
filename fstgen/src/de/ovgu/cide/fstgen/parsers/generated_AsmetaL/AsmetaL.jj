@@ -311,9 +311,15 @@ FSTInfo Signature(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
  )  }
 
+FSTInfo OriginalInit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> "()" {return productionEndTerminal("OriginalInit","-","-","Replacement","Default",first,token);}
+
+ )  }
+
 FSTInfo Initialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<INIT> n=ID(true){ replaceName("ID", n);}{ replaceName(n);} ":" (n=DomainInitialization(true){ replaceName(n);})* (n=FunctionInitialization(true){ replaceName(n);})* (n=AgentInitialization(true){ replaceName(n);})* {return productionEndTerminal("Initialization","{ID}","{ID}","Replacement","Default",first,token);}
+	<INIT> n=ID(true){ replaceName("ID", n);}{ replaceName(n);} ":" [n=OriginalInit(true){ replaceName(n);}] (n=DomainInitialization(true){ replaceName(n);})* (n=FunctionInitialization(true){ replaceName(n);})* (n=AgentInitialization(true){ replaceName(n);})* [n=OriginalInit(true){ replaceName(n);}] {return productionEndTerminal("Initialization","{ID}","{ID}","AsmetaLInitializationConcatenation","Default",first,token);}
 
  )  }
 
@@ -441,7 +447,7 @@ FSTInfo Invariant(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 } { {first=getToken(1); productionStart(inTerminal); } (
 	n=UnnamedInvariant(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Invariant","UnnamedInvariant","UnnamedInvariant");}
  |
-	n=NamedInvariant(true){ replaceName("NamedInvariant", n);}{ replaceName(n);} {return productionEndTerminal("Invariant","{NamedInvariant}","{NamedInvariant}","Replacement","Default",first,token);}
+	n=NamedInvariant(true){ replaceName("NamedInvariant", n);}{ replaceName(n);} {return productionEndTerminal("Invariant","{NamedInvariant}","{NamedInvariant}","AsmetaLInvariantConjunction","Default",first,token);}
 
  )  }
 
@@ -579,13 +585,13 @@ FSTInfo BasicFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo DerivedFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<DERIVED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("DerivedFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	<DERIVED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("DerivedFunction","-","derived {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo StaticFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<STATIC> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("StaticFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	<STATIC> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("StaticFunction","-","static {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
@@ -605,31 +611,31 @@ FSTInfo DynamicFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo LocalFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<DYNAMIC>] <LOCAL> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("LocalFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	[<DYNAMIC>] <LOCAL> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("LocalFunction","-","local {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo ControlledFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<DYNAMIC>] <CONTROLLED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("ControlledFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	[<DYNAMIC>] <CONTROLLED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("ControlledFunction","-","controlled {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo SharedFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<DYNAMIC>] <SHARED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("SharedFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	[<DYNAMIC>] <SHARED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("SharedFunction","-","shared {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo MonitoredFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<DYNAMIC>] <MONITORED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("MonitoredFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	[<DYNAMIC>] <MONITORED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("MonitoredFunction","-","monitored {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
 FSTInfo OutFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	[<DYNAMIC>] <OUT> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("OutFunction","-","{ID_FUNCTION}","Replacement","Default",first,token);}
+	[<DYNAMIC>] <OUT> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("OutFunction","-","out {ID_FUNCTION}","Replacement","Default",first,token);}
 
  )  }
 
@@ -1240,6 +1246,8 @@ FSTInfo BasicRule(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 	n=LetRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule8","-","-","Replacement","Default",first,token);}
  |
 	n=ExtendRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule9","-","-","Replacement","Default",first,token);}
+ |
+	n=CallRuleOriginalSub(true){ replaceName(n);} {return productionEndTerminal("BasicRule10","-","-","Replacement","Default",first,token);}
 
  )  }
 
@@ -1288,6 +1296,12 @@ FSTInfo MacroCallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 FSTInfo MacroCallRuleOriginal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
 	<ORIGINAL> "[" [n=TermList(true){ replaceName(n);}] "]" {return productionEndTerminal("MacroCallRuleOriginal","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CallRuleOriginalSub(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> "#" <ID_FUNCTION> {return productionEndTerminal("CallRuleOriginalSub","-","-","Replacement","Default",first,token);}
 
  )  }
 

@@ -297,6 +297,7 @@ public class SimplePrintVisitor extends AbstractFSTPrintVisitor  {
 		if (type.equals("DomainOrFunctionOrRule2") && expectedType.equals("DomainOrFunctionOrRule")) return true;
 		if (type.equals("FiniteQuantificationTerm1") && expectedType.equals("FiniteQuantificationTerm")) return true;
 		if (type.equals("ComprehensionTerm1") && expectedType.equals("ComprehensionTerm")) return true;
+		if (type.equals("BasicRule10") && expectedType.equals("BasicRule")) return true;
 		if (type.equals("BasicRule3") && expectedType.equals("BasicRule")) return true;
 		if (type.equals("ReladditiveExpr4") && expectedType.equals("ReladditiveExpr")) return true;
 		if (type.equals("unaryExpr1") && expectedType.equals("unaryExpr")) return true;
