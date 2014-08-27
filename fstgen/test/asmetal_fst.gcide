@@ -271,8 +271,11 @@ SignatureCommand: <SIGNATURE> ":";
 @FSTNonTerminal(name="{<SIGNATURE>}")
 Signature:	SignatureCommand ( Domain )* ( Function )* @!; 
 
-@FSTTerminal(name="{ID}")
-Initialization:	<INIT> ID ":" ( DomainInitialization )* ( FunctionInitialization )* ( AgentInitialization )* @!;
+OriginalInit:
+<ORIGINAL> "()";
+
+@FSTTerminal(name="{ID}", compose="AsmetaLInitializationConcatenation")
+Initialization:	<INIT> ID ":" [OriginalInit] ( DomainInitialization )* ( FunctionInitialization )* ( AgentInitialization )* [OriginalInit] @!;
 
 @FSTTerminal(name="{ID_DOMAIN}")
 DomainInitialization:	<DOMAIN> ID_DOMAIN "=" Term @!;
@@ -357,7 +360,7 @@ UnnamedInvariant:
 Invariant:
 @FSTNonTerminal(name="UnnamedInvariant", type = "Invariant")
 	UnnamedInvariant |
-@FSTTerminal(name="{NamedInvariant}", type = "Invariant")
+@FSTTerminal(name="{NamedInvariant}", type = "Invariant", compose="AsmetaLInvariantConjunction")
 	NamedInvariant;
 	
 @FSTExportName("{ID_INVARIANT}")
@@ -446,10 +449,10 @@ BasicFunction:
 @FSTExportName("{DynamicFunction}")
 	DynamicFunction;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("derived {ID_FUNCTION}")
 DerivedFunction:	<DERIVED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("static {ID_FUNCTION}")
 StaticFunction:	<STATIC> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
 
@@ -465,19 +468,19 @@ ControlledFunction |
 @FSTExportName("{LocalFunction}")
 LocalFunction ;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("local {ID_FUNCTION}")
 LocalFunction:	( <DYNAMIC> )? <LOCAL> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("controlled {ID_FUNCTION}")
 ControlledFunction:	( <DYNAMIC> )? <CONTROLLED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("shared {ID_FUNCTION}")
 SharedFunction:	( <DYNAMIC> )? <SHARED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("monitored {ID_FUNCTION}")
 MonitoredFunction:	( <DYNAMIC> )? <MONITORED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
-@FSTExportName("{ID_FUNCTION}")
+@FSTExportName("out {ID_FUNCTION}")
 OutFunction:	( <DYNAMIC> )? <OUT> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
 
 Term: Expression | ExtendedTerm;
@@ -521,8 +524,10 @@ VariableList:
 
 
 FunctionOriginalCall:
-<ORIGINAL> ["(" VariableList ")"]
+<ORIGINAL> ["(" VariableList ")"] 
 ;
+
+
 
 basicExpr:	 FunctionOriginalCall | BasicTerm | DomainTerm | FiniteQuantificationTerm | BracketedExpression;
 
@@ -653,10 +658,10 @@ Rule:
 @FSTTerminal(name="{Rule}")
 	TermAsRule | 
 @FSTTerminal(name="{Rule}")
-	DerivedRule 
+	DerivedRule	 
 ;	
 
-	BasicRule:	 SkipRule | MacroCallRule | MacroCallRuleOriginal | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule ;
+	BasicRule:	 SkipRule | MacroCallRule | MacroCallRuleOriginal | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule | CallRuleOriginalSub;
 		SkipRule:	<Skip>;
 		BlockRule:	<PAR> Rule (Rule)+ <ENDPAR>;
 		ConditionalRule:	<IF> Term <THEN> Rule ( ElseRule )? <ENDIF>;
@@ -665,7 +670,8 @@ Rule:
 		LetRule:	<LET> "(" VariableTermEqualsTermList ")" <IN> Rule <ENDLET>;
 		
 		MacroCallRule:	ID_RULE "[" [TermList] "]";
-		MacroCallRuleOriginal:	<ORIGINAL>	"[" [TermList] "]";
+		MacroCallRuleOriginal:	<ORIGINAL>	"[" [TermList] "]";		
+		CallRuleOriginalSub:	<ORIGINAL> "#" <ID_FUNCTION>;
 		
 		ExtendRule:	<EXTEND> ID_DOMAIN <WITH> VariableTerm ( "," VariableTerm )* <DO> Rule;
 
