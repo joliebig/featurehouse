@@ -37,6 +37,7 @@ public class ComposerTestUtil {
 		System.out.print("FSTComposer ");
 		System.out.println(Arrays.toString(arguments.toArray()));
 
+		metadata.CompositionMetadataStore.reinitialize();
 		FSTGenComposer.main(arguments.toArray(new String[0]));
 
 	}

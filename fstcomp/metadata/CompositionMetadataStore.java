@@ -37,6 +37,14 @@ public final class CompositionMetadataStore {
 			features.add(feature);
 	}
 	
+	/**
+	 * This creates a new CompositionMetadataStore.
+	 * Useful if FSTGenComposer is used multiple times in the same VM.
+	 * This method must be called BEFORE the second/third/fourth/... call to FSTGenComposer.main()!
+	 */
+	public static void reinitialize() {
+		instance = new CompositionMetadataStore();
+	}
 	
 	/**
 	 * adds a method/function mapping to the meta data
