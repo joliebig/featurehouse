@@ -60,7 +60,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-fstcomp" depends="test-compile-fstcomp">
     <mkdir dir="${result-dir}/fstcomp" />
     <mkdir dir="${result-dir}/fstcomp/output" />
-    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
+    <junit printsummary="withOutAndErr" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
         <pathelement location="${test-dir}/fstcomp-build" />
