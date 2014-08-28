@@ -18,17 +18,24 @@ public class JavaCompositionTest {
 
 	@Test
 	public void testDefaultComposition() {
-		
+		try {
 		String expression = "test/fstcomp/Java/GPL/GPLComp.features";
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__Default";
 		
 		compose(expression, outputDir, null, null);
 		
 		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir)));
+		System.out.println("testDefaultComposition finished without error")
+		} catch (Throwable t) {
+			System.err.println(t.getMessage());
+			t.printStackTrace();
+			throw t;
+		}
 	}
 	
 	@Test
 	public void testAbstractKeywordComposition() throws IOException {
+		try {
 		// setup this minimal project in a tmp directory
 		List<Feature> features = new ArrayList<Feature>();
 		Feature a = new Feature("A"); features.add(a);
@@ -44,6 +51,12 @@ public class JavaCompositionTest {
 				"6992C64EB9E7F9F288FBEDB5C91381B6", Checksum.calculateChecksum(outputDir));
 		// if we arrive at this point, we can delete the tmp dir
 		deleteDirWithContents(mainDir);
+		System.out.println("testAbstractKeywordComposition finished without error")
+		} catch (Throwable t) {
+			System.err.println(t.getMessage());
+			t.printStackTrace();
+			throw t;
+		}
 	}
 
 }
