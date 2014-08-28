@@ -51,9 +51,7 @@ public class Checksum {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		String checksum = toHex(md.digest());
-		System.out.println("File checksum: " + file.getAbsolutePath() + " -- " + checksum);
-		return checksum;
+		return toHex(md.digest());
 	}
 
 	private static String calculateChecksumOfDirectory(File file) {
@@ -65,9 +63,7 @@ public class Checksum {
 			toHash += '#' + item + ':' + calculateChecksum(new File(file, item));
 		}
 		toHash += ']';
-		String checksum = calculateChecksum(toHash);
-		System.out.println("Dir checksum: " + file.getAbsolutePath() + " -- " + checksum);
-		return checksum;
+		return calculateChecksum(toHash);
 	}
 
 	private static MessageDigest getMessageDigest() {
