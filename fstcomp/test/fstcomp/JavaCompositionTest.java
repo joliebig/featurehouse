@@ -25,7 +25,7 @@ public class JavaCompositionTest {
 		compose(expression, outputDir, null, null);
 		
 		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir)));
-		System.out.println("testDefaultComposition finished without error")
+		System.out.println("testDefaultComposition finished without error");
 		} catch (Throwable t) {
 			System.err.println(t.getMessage());
 			t.printStackTrace();
@@ -51,7 +51,7 @@ public class JavaCompositionTest {
 				"6992C64EB9E7F9F288FBEDB5C91381B6", Checksum.calculateChecksum(outputDir));
 		// if we arrive at this point, we can delete the tmp dir
 		deleteDirWithContents(mainDir);
-		System.out.println("testAbstractKeywordComposition finished without error")
+		System.out.println("testAbstractKeywordComposition finished without error");
 		} catch (Throwable t) {
 			System.err.println(t.getMessage());
 			t.printStackTrace();
