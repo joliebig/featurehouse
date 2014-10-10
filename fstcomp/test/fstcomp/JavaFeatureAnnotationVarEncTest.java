@@ -14,7 +14,6 @@ import org.junit.Test;
 
 public class JavaFeatureAnnotationVarEncTest {
 
-	@Ignore
 	@Test
 	public void testFeatureAnnotatedVarEncComposition() throws IOException {
 		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("test/fstcomp/Java/GPL/model.cnf"));
@@ -25,7 +24,6 @@ public class JavaFeatureAnnotationVarEncTest {
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__FeaAnnVarEnc";
 		
 		compose(expression, outputDir, null, new String[] {"--liftJava", "--featureAnnotationJava"});
-		
-		assertEquals("E9292CBAD6EF0D6E732BE680E2E94F50", Checksum.calculateChecksum(new File(outputDir)));
+		assertEquals("26FAA65CEA5763CF61275D0A8CC3C31C", Checksum.calculateChecksum(new File(outputDir)));
 	}
 }
