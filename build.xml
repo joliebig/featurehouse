@@ -60,12 +60,12 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-fstcomp" depends="test-compile-fstcomp">
     <mkdir dir="${result-dir}/fstcomp" />
     <mkdir dir="${result-dir}/fstcomp/output" />
-    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
+    <junit printsummary="off" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
         <pathelement location="${test-dir}/fstcomp-build" />
       </classpath>
-      <formatter type="plain" />
+      <formatter type="brief"  usefile="false"/>
 
       <batchtest fork="yes" todir="${result-dir}/fstcomp">
         <!--formatter type="plain" usefile="false"/-->
@@ -76,7 +76,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </junit>
     <fail message="Some tests failed!" if="test.failed" />
   </target>
-
+  
   <target name="test-compile-fstgen">
     <mkdir dir="${test-dir}" />
     <mkdir dir="${test-dir}/fstgen-build" />
@@ -91,12 +91,12 @@ FeatureHouse: Automatic, language-independent software composition and merging
 
   <target name="test-fstgen" depends="test-compile-fstgen">
     <mkdir dir="${result-dir}/fstgen" />
-    <junit printsummary="yes" haltonfailure="no" failureproperty="test.failed">
+    <junit printsummary="off" haltonfailure="no" failureproperty="test.failed">
       <classpath>
         <pathelement location="./fstgen/lib/junit-4.8.2.jar" />
         <pathelement location="${test-dir}/fstgen-build" />
       </classpath>
-      <formatter type="plain" />
+      <formatter type="brief" usefile="false"/>
 
       <batchtest fork="yes" todir="${result-dir}/fstgen">
         <!--formatter type="plain" usefile="false"/-->
@@ -107,10 +107,10 @@ FeatureHouse: Automatic, language-independent software composition and merging
     </junit>
     <fail message="Some tests failed!" if="test.failed" />
   </target>
-
+  
   <target name="test-compile" depends="test-compile-fstgen,test-compile-fstcomp">
   </target>
-
+  
   <target name="test" depends="test-compile,test-fstgen,test-fstcomp">
   </target>
 
