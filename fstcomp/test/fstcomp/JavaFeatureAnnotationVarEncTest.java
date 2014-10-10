@@ -24,6 +24,9 @@ public class JavaFeatureAnnotationVarEncTest {
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__FeaAnnVarEnc";
 		
 		compose(expression, outputDir, null, new String[] {"--liftJava", "--featureAnnotationJava"});
-		assertEquals("26FAA65CEA5763CF61275D0A8CC3C31C", Checksum.calculateChecksum(new File(outputDir)));
+		String expectedChecksum = "26FAA65CEA5763CF61275D0A8CC3C31C";
+		String actualChecksum = Checksum.calculateChecksum(new File(outputDir));
+		assertEquals("actual checksum " + actualChecksum + " did not match expected Checksum " + expectedChecksum, 
+				expectedChecksum, actualChecksum);
 	}
 }

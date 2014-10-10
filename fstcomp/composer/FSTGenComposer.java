@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,6 +47,12 @@ public class FSTGenComposer extends FSTGenProcessor {
 	
 	protected CompositionMetadataStore meta = CompositionMetadataStore.getInstance();
 	protected List<CompositionRule> compositionRules;
+
+	/* 
+	 * Stream to which all output should be directed. 
+	 * Normally this is set to System.out, but sometimes we want to handle output differently (e.g. unit tests).
+	 */
+	public static PrintStream outStream = System.out;
 	
 	public FSTGenComposer() {
 		super();
@@ -161,7 +168,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 				meta.saveToFile(outputDir + File.separator + "roles.meta");
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
-					System.err.println("cnfFile:" + cnfFile.getAbsolutePath());
+					FSTGenComposer.outStream.println("cnfFile:" + cnfFile.getAbsolutePath());
 					if (cmd.lifting_language.equals("c")) {
 						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
 					} else if (cmd.lifting_language.equals("java")) {
@@ -179,7 +186,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	private void saveFeatureAnnotationFile(File srcDir) {
 		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureAnnotation.java");
 		f.getParentFile().mkdirs();
-		System.out.println("writing FeatureAnnotation to file " +  f.getAbsolutePath());
+		FSTGenComposer.outStream.println("writing FeatureAnnotation to file " +  f.getAbsolutePath());
 		FileWriter fw = null;
 		try  {
 			fw = new FileWriter(f);
@@ -212,7 +219,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	private void saveSwitchIDAnnotationFile(File srcDir) {
 		File f = new File(srcDir+File.separator+"featureHouse"+File.separator, "FeatureSwitchID.java");
 		f.getParentFile().mkdirs();
-		System.out.println("writing FeatureSwitchID to file " +  f.getAbsolutePath());
+		FSTGenComposer.outStream.println("writing FeatureSwitchID to file " +  f.getAbsolutePath());
 		FileWriter fw = null; 
 		try {
 			fw = new FileWriter(f);
@@ -248,7 +255,11 @@ public class FSTGenComposer extends FSTGenProcessor {
 		FSTGenComposer composer = new FSTGenComposer();
 		composer.run(args);
 	}
-
+	public static void composeWithPrintStream(String[] args, PrintStream out) {
+		FSTGenComposer composer = new FSTGenComposer();
+		FSTGenComposer.outStream = out;
+		composer.run(args);
+	}
 	private FSTNode compose(List<FSTNonTerminal> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {

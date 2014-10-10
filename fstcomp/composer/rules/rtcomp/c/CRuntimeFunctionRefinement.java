@@ -2,8 +2,8 @@ package composer.rules.rtcomp.c;
 
 import java.util.StringTokenizer;
 
+import composer.FSTGenComposer;
 import composer.rules.AbstractCompositionRule;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -36,8 +36,6 @@ public class CRuntimeFunctionRefinement extends AbstractCompositionRule {
 			String newBody2 = replaceFunctionName(beforeFunctionName, sigB.name, terminalComp2.getBody());			
 			terminalComp2.setBody(newBody2);
 			terminalComp2.setName(beforeFunctionName);
-			
-			System.out.println(terminalA.getName());
 			
 			String switchIdentifier = "__SELECTED_FEATURE_" + featureName;
 			String newBody3 = "";

@@ -12,6 +12,8 @@ public class FJParserTest {
 	public void runParser() throws FileNotFoundException, ParseException {
 		FJParser p = new FJParser(new OffsetCharStream( new FileInputStream("test/fj_testfiles/Pair.fj")));
 		p.TypeDeclaration(false);
-		System.out.println(p.getRoot().printFST(0));
+		//System.out.println(p.getRoot().printFST(0));
+		// no output in JUnit test
+		p.getRoot().printFST(0);
 	}
 }

@@ -86,9 +86,7 @@ public class JavaRuntimeFeatureSelection {
 		try {
 			scanner = new Scanner(cnfFile);
 		} catch (FileNotFoundException e) {
-			System.out.println("model restrictions file not found!");
-			System.out.println("looked in: " + cnfFile);
-			throw new RuntimeException();
+			throw new RuntimeException("model restrictions file not found! Looked in: " + cnfFile);
 		}
 		
 		scanner.useDelimiter("\\A");
@@ -116,8 +114,7 @@ public class JavaRuntimeFeatureSelection {
 		Set<String> nonterminals = new HashSet<String>();
 		
 		if (!matcher.find()) {
-			System.out.println("Expected at least one production in cnfFile, none found!!");
-			throw new RuntimeException();
+			throw new RuntimeException("Expected at least one production in cnfFile, none found!!");
 		}
 		matcher.reset();// start from the beginning again
 		// Find all matches

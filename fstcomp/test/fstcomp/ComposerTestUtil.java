@@ -2,6 +2,14 @@ package fstcomp;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.nio.charset.spi.CharsetProvider;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,12 +42,16 @@ public class ComposerTestUtil {
 		}
 
 		//print arguments to stdout so they appear in the test output
-		System.out.print("FSTComposer ");
-		System.out.println(Arrays.toString(arguments.toArray()));
+		//System.out.print("FSTComposer Arguments:");
+		//System.out.println(Arrays.toString(arguments.toArray()));
 
 		metadata.CompositionMetadataStore.reinitialize();
-		FSTGenComposer.main(arguments.toArray(new String[0]));
-
+		PrintStream ps = new PrintStream(new OutputStream() {
+			@Override
+			public void write(int b) throws IOException {/* ignore all output */}
+		});
+		FSTGenComposer.composeWithPrintStream(arguments.toArray(new String[0]), ps);
+		ps.close();
 	}
 
 	/**
