@@ -12,8 +12,8 @@ import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
-	
-	private final String SWITCH_METHOD_ANNOTATION = JavaMethodOverriding.featureAnnotationPrefix + "featureSwitch\")\n";
+	private final String SWITCH_METHOD_ANNOTATION_NAME = "featureSwitch";
+	private final String SWITCH_METHOD_ANNOTATION = JavaMethodOverriding.featureAnnotationPrefix + SWITCH_METHOD_ANNOTATION_NAME + "\")\n";
 	private final String SWITCH_ID_ANNOTATION = "@featureHouse.FeatureSwitchID(id=";
 	private static int generatedSwitchMethods = 0;
 	
@@ -115,11 +115,20 @@ public class JavaRuntimeFunctionRefinement extends AbstractCompositionRule {
 
 	private String extractMethodOriginFeature(String signature) {
 		int annotationEnd = JavaMethodOverriding.extractMethodAnnotationsEnd(signature);
-		signature = signature.replaceAll("\\s+\\(", "("); // removing all whitespace chars before opening parenthese
+		signature = signature.replaceAll("\\s+\\(", "("); // removing all whitespace chars before opening parentheses
 		int featureAnnotationBegin=signature.substring(0,annotationEnd).indexOf(JavaMethodOverriding.featureAnnotationPrefix);
 		int featureNameBegin = featureAnnotationBegin+JavaMethodOverriding.featureAnnotationPrefix.length();
 		int featureNameEnd = signature.substring(featureNameBegin, annotationEnd).indexOf("\"") + featureNameBegin;
 		assert featureNameBegin < featureNameEnd;
+		String originFeature = signature.substring(featureNameBegin, featureNameEnd);
+		if (! originFeature.equals(SWITCH_METHOD_ANNOTATION_NAME))
+			return originFeature;
+		// search for SwitchMethodAnnotation instead and use the thenbranch attribute
+		String annotationPrefix = SWITCH_METHOD_ANNOTATION + SWITCH_ID_ANNOTATION;
+		featureAnnotationBegin=signature.substring(0,annotationEnd).indexOf(annotationPrefix);
+		String attributePrefix = "thenFeature=\"";
+		featureNameBegin = signature.substring(featureAnnotationBegin, annotationEnd).indexOf(attributePrefix) + featureAnnotationBegin + attributePrefix.length();
+		featureNameEnd = signature.substring(featureNameBegin, annotationEnd).indexOf("\"") + featureNameBegin;
 		return signature.substring(featureNameBegin, featureNameEnd);
 	}
 
