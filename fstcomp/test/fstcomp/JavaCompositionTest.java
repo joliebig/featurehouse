@@ -24,7 +24,7 @@ public class JavaCompositionTest {
 		
 		compose(expression, outputDir, null, null);
 		
-		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir)));
+		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir), null));
 		} catch (Throwable t) {
 			System.err.println(t.getMessage());
 			throw t;
@@ -46,7 +46,7 @@ public class JavaCompositionTest {
 		compose(new File(mainDir, "features.exp").getAbsolutePath(), outputDir.getAbsolutePath(), new File(mainDir, "features").getAbsolutePath(), null);
 		// verify checksum of result
 		assertEquals("Checksum did not match. Generated files in " + mainDir.getAbsolutePath(),
-				"6992C64EB9E7F9F288FBEDB5C91381B6", Checksum.calculateChecksum(outputDir));
+				"6992C64EB9E7F9F288FBEDB5C91381B6", Checksum.calculateChecksum(outputDir, null));
 		// if we arrive at this point, we can delete the tmp dir
 		deleteDirWithContents(mainDir);
 		} catch (Throwable t) {
