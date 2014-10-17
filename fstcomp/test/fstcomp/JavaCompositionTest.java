@@ -8,6 +8,7 @@ import fstcomp.ComposerTestUtil.Feature;
 import integrationtests.Checksum;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,13 @@ public class JavaCompositionTest {
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__Default";
 		
 		compose(expression, outputDir, null, null);
-		
-		assertEquals("9F4BC38FA03480D2C1144C1260A04E2A", Checksum.calculateChecksum(new File(outputDir), null));
+		String actualChecksum = Checksum.calculateChecksum(new File(outputDir),new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return (name.endsWith(".java") || name.endsWith(".aj"));
+			}
+		});
+		assertEquals("D751713988987E9331980363E24189CE", actualChecksum);
 		} catch (Throwable t) {
 			System.err.println(t.getMessage());
 			throw t;
@@ -45,8 +51,14 @@ public class JavaCompositionTest {
 		// compose with FH
 		compose(new File(mainDir, "features.exp").getAbsolutePath(), outputDir.getAbsolutePath(), new File(mainDir, "features").getAbsolutePath(), null);
 		// verify checksum of result
+		String actualChecksum = Checksum.calculateChecksum(outputDir,new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return (name.endsWith(".java") || name.endsWith(".aj"));
+			}
+		});
 		assertEquals("Checksum did not match. Generated files in " + mainDir.getAbsolutePath(),
-				"6992C64EB9E7F9F288FBEDB5C91381B6", Checksum.calculateChecksum(outputDir, null));
+				"D751713988987E9331980363E24189CE", actualChecksum);
 		// if we arrive at this point, we can delete the tmp dir
 		deleteDirWithContents(mainDir);
 		} catch (Throwable t) {
