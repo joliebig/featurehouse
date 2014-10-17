@@ -190,7 +190,7 @@ public class CmdLineInterpreter {
 						+ INPUT_OPTION_BASE_DIRECTORY
 						+ "' defines the working directory, which is the search path for the input features/components.");
 		FSTGenComposer.outStream.println("The option `" + INPUT_OPTION_LIFTING
-				+ "' can currently only be used with C Code. It composes the "
+				+ "' can currently only be used with C or Java Code. It composes the "
 				+ "sources in a way that allows feature selection at runtime");
 
 	}
