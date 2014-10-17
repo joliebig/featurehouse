@@ -131,7 +131,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 				
 				for (FSTNonTerminal feature : features) {
+					setOriginalFeatureName(feature, feature.getName());
 					meta.addFeature(feature.getName());
+					meta.discoverFuncIntroductions(feature);
 				}
 				FSTNode composition = compose(features);
 //				modify(composition);
@@ -175,7 +177,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 						new JavaRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator);
 					}
 				}
-			} catch (IOException e) {			
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e1) {
@@ -263,6 +265,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	private FSTNode compose(List<FSTNonTerminal> tl) {
 		FSTNode composed = null;
 		for (FSTNode current : tl) {
+			// Several features will be merged in this node. Therefore its original feature is removed.
 			setOriginalFeatureName((FSTNonTerminal)current, "");
 			if (composed != null) {
 				composed = compose(current, composed);
@@ -337,7 +340,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 					// root)
 					if (childA == null) {
 						// no compatible child, FST-node only in B
-						meta.discoverFuncIntroductions(childB);
 						nonterminalComp.addChild(childB.getDeepClone());
 					} else {
 						nonterminalComp.addChild(compose(childA, childB,
@@ -348,7 +350,6 @@ public class FSTGenComposer extends FSTGenProcessor {
 					FSTNode childB = nonterminalB.getCompatibleChild(childA);
 					if (childB == null) {
 						// no compatible child, FST-node only in A
-						meta.discoverFuncIntroductions(childA);
 						handleChildWithoutCompatibleSiblings(childA, nonterminalComp);
 					}
 				}
