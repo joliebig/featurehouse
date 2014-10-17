@@ -16,6 +16,6 @@ public class JavaFeatureAnnotationTest {
 		
 		compose(expression, outputDir, null, new String[] {"--featureAnnotationJava"});
 		
-		assertEquals("35D9C6CEC4F96A6EBFAA0599A813B5CB", Checksum.calculateChecksum(new File(outputDir), null));
+		assertEquals("EB588B1D28757BBCF3F611CA7DBC1BED", Checksum.calculateChecksum(new File(outputDir), null));
 	}
 }
