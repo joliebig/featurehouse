@@ -85,12 +85,16 @@ public final class CompositionMetadataStore {
 	 * @param n FSTNode to be searched for `Func` nodes
 	 */
 	public void discoverFuncIntroductions(FSTNode n) {
-		if (n.getType().equals("Func")) {
+		if (n.getType().equals("Func")) { // This is for features implemented in C
 			String funcName = getMethodName(n);
 			putMapping(funcName, getFeatureName(n), funcName);
 			return;
 		}
-		
+		if (n.getType().equals("MethodDecl")) { // This is for features implemented in Java
+			String funcName = getJavaMethodName(n);
+			putMapping(funcName, getFeatureName(n), funcName);
+			return;
+		}
 		if (n instanceof FSTNonTerminal) {
 			FSTNonTerminal nt = (FSTNonTerminal) n;
 			for (FSTNode child: nt.getChildren()) {
@@ -126,6 +130,32 @@ public final class CompositionMetadataStore {
 	 * 				the method name e.g. "main"
 	 */
 	public String getMethodName(FSTNode node) {
+		String methodName = node.getName();
+
+		StringTokenizer st = new StringTokenizer(methodName, "(");
+		if (st.hasMoreTokens()) {
+			methodName = st.nextToken();
+		}
+		st = new StringTokenizer(methodName, " ");
+
+		while (st.hasMoreTokens()) {
+			methodName = st.nextToken();
+		}
+		
+		return methodName;
+	}
+
+	/**
+	 * extracts the method name from the node (Java)
+	 * 
+	 * this assumes the node is a `MethodDecl` node.
+	 * 
+	 * @param node 
+	 * 				a `MethodDecl` node.
+	 * @return
+	 * 				the method name e.g. "main"
+	 */
+	public String getJavaMethodName(FSTNode node) {
 		String methodName = node.getName();
 
 		StringTokenizer st = new StringTokenizer(methodName, "(");
