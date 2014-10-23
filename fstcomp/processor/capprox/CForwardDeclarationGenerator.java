@@ -1,5 +1,7 @@
 package processor.capprox;
 
+import composer.FSTGenComposer;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 import de.ovgu.cide.fstgen.ast.FSTVisitor;
@@ -12,13 +14,13 @@ public class CForwardDeclarationGenerator extends FSTVisitor {
 	// System.out.println(s);
 	if (terminal.getType() == "Func")
 	    if (terminal.getBody().matches(s)) {
-		System.out.println(terminal);
+	    	FSTGenComposer.outStream.println(terminal);
 		
 		FSTTerminal forwardDeclaration = new FSTTerminal("Func",
 			terminal.getName(), terminal.getBody().replaceAll(
 				"(?s)(?m)\\{.*", ";"), "", terminal
 				.getCompositionMechanism());
-		System.out.println(forwardDeclaration);
+		FSTGenComposer.outStream.println(forwardDeclaration);
 		
 		 ((FSTNonTerminal) terminal.getParent())
 		 .addChild(forwardDeclaration);
@@ -28,7 +30,7 @@ public class CForwardDeclarationGenerator extends FSTVisitor {
 
     public boolean visit(FSTNonTerminal nonTerminal) {
 	if (nonTerminal.getType() == "Feature")
-	    System.out.println(nonTerminal);
+		FSTGenComposer.outStream.println(nonTerminal);
 	return true;
     }
 

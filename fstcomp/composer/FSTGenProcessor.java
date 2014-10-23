@@ -22,6 +22,7 @@ import printer.sdf.SDFPrintVisitor;
 import printer.str.STRPrintVisitor;
 import printer.text.TextPrintVisitor;
 import printer.xmi.XMIPrintVisitor;
+import printer.xml.XMLPrintVisitor;
 import processor.capprox.CIncludeGuardGenerator;
 import builder.ArtifactBuilderInterface;
 import builder.alloy.AlloyBuilder;
@@ -38,6 +39,7 @@ import builder.sdf.SDFBuilder;
 import builder.str.STRBuilder;
 import builder.text.TextBuilder;
 import builder.xmi.XMIBuilder;
+import builder.xml.XMLBuilder;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTVisitor;
 
@@ -92,6 +94,9 @@ public class FSTGenProcessor {
 		registerPrintVisitor(new BinaryPrintVisitor(".wav"));
 		registerPrintVisitor(new BinaryPrintVisitor(".aj"));
 
+		registerArtifactBuilder(new XMLBuilder());
+		registerPrintVisitor(new XMLPrintVisitor());
+		
 		errorFiles = new DuplicateFreeLinkedList<File>();
 		
 		registerFSTVisitor(new CIncludeGuardGenerator());

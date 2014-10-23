@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import composer.CompositionException;
-
+import composer.FSTGenComposer;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
@@ -377,7 +377,7 @@ public class ContractComposition extends AbstractCompositionRule {
 			baseCases[caseId] = baseCase;
 		}
 
-		System.out.println("baseCases(id)= " + baseCases[caseId]);
+		FSTGenComposer.outStream.println("baseCases(id)= " + baseCases[caseId]);
 		Pattern p = Pattern
 				.compile(
 						".*\\(\\\\(forall|exists|max|min|num_of|product|sum)[^;]*(;)[^;]*(;).*\\).*",
@@ -392,7 +392,7 @@ public class ContractComposition extends AbstractCompositionRule {
 				baseCases[caseId] = sb.toString();
 			}
 			m = p.matcher(baseCases[caseId]);
-			System.out.println("XX " + baseCases[caseId]);
+			FSTGenComposer.outStream.println("XX " + baseCases[caseId]);
 		}
 		String[] clausesA = baseCases[caseId].trim().split(";");
 

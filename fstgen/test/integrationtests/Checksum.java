@@ -2,6 +2,7 @@ package integrationtests;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
@@ -28,13 +29,15 @@ public class Checksum {
 	 * calculate checksum of file
 	 * 
 	 * If file is a directory, the checksum is calculated over all the contents of the directory
-	 * 
+	 * that satisfy the filter criterium.
+	 * If filter is null, all non-hidden files are included.
+	 * hidden files starting with . are always excluded.
 	 * @param file
 	 * @return checksum of file
 	 */
-	public static String calculateChecksum(File file) {
+	public static String calculateChecksum(File file, FilenameFilter filter) {
 		if (file.isDirectory()) {
-			return calculateChecksumOfDirectory(file);
+			return calculateChecksumOfDirectory(file, filter);
 		} else {
 			return calculateChecksumOfFile(file);
 		}
@@ -54,13 +57,14 @@ public class Checksum {
 		return toHex(md.digest());
 	}
 
-	private static String calculateChecksumOfDirectory(File file) {
+	private static String calculateChecksumOfDirectory(File file, FilenameFilter filter) {
 		//simple hash tree
 		String toHash = "[";
-		String[] filelist = file.list();
+		String[] filelist = file.list(filter);
 		Arrays.sort(filelist);
 		for (String item : filelist) {
-			toHash += '#' + item + ':' + calculateChecksum(new File(file, item));
+			if (!file.getName().startsWith(".")) // ignore hidden files and directories
+				toHash += '#' + item + ':' + calculateChecksum(new File(file, item), filter);
 		}
 		toHash += ']';
 		return calculateChecksum(toHash);

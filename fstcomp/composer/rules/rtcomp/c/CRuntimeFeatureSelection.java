@@ -35,7 +35,8 @@ public class CRuntimeFeatureSelection {
 				"";
 		
 		// a global variable per feature
-		for (String feature: meta.getFeatures()) {
+		Set<String> featureSet = new HashSet<String>(meta.getFeatures());
+		for (String feature: featureSet) {
 			headerContents += "int __SELECTED_FEATURE_" + feature + ";\n\n";
 		}
 
@@ -50,8 +51,7 @@ public class CRuntimeFeatureSelection {
 			"int select_one() {if (__VERIFIER_nondet_int()) return 1; else return 0;}\n" +
 			"\n\n" +
 			"void select_features() {\n";
-		
-		for (String feature: meta.getFeatures()) {
+		for (String feature: featureSet) {
 			cFileContents += "\t__SELECTED_FEATURE_" + feature + " = select_one();\n";
 		}
 		
@@ -100,9 +100,7 @@ public class CRuntimeFeatureSelection {
 		try {
 			scanner = new Scanner(cnfFile);
 		} catch (FileNotFoundException e) {
-			System.out.println("model restrictions file not found!");
-			System.out.println("looked in: " + cnfFile);
-			throw new RuntimeException();
+			throw new RuntimeException("model restrictions file not found! Looked in: " + cnfFile);
 
 		}
 		
@@ -132,8 +130,7 @@ public class CRuntimeFeatureSelection {
 		Set<String> nonterminals = new HashSet<String>();
 		
 		if (!matcher.find()) {
-			System.out.println("Expected at least one production in cnfFile, none found!!");
-			throw new RuntimeException();
+			throw new RuntimeException("Expected at least one production in cnfFile, none found!!");
 		}
 		matcher.reset();// start from the beginning again
 		// Find all matches

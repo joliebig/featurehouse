@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import integrationtests.Checksum;
 
 import java.io.File;
+import java.io.FilenameFilter;
+
 import org.junit.Test;
 
 public class JavaFeatureAnnotationTest {
@@ -14,7 +16,12 @@ public class JavaFeatureAnnotationTest {
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__FeaAnn";
 		
 		compose(expression, outputDir, null, new String[] {"--featureAnnotationJava"});
-		
-		assertEquals("24FB3D6609701028E31F44CE38CF5721", Checksum.calculateChecksum(new File(outputDir)));
+		String actualChecksum = Checksum.calculateChecksum(new File(outputDir),new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return (name.endsWith(".java") || name.endsWith(".aj"));
+			}
+		});
+		assertEquals("D751713988987E9331980363E24189CE", actualChecksum);
 	}
 }

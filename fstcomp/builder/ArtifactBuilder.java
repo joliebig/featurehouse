@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
+import composer.FSTGenComposer;
+
 import cide.gparser.ParseException;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTFeatureNode;
@@ -110,7 +112,7 @@ public abstract class ArtifactBuilder implements ArtifactBuilderInterface {
 	 */
 	public void processFile(File inputFile) throws FileNotFoundException,
 			ParseException {
-		System.out.println("processing: " + inputFile.getPath());
+		FSTGenComposer.outStream.println("processing: " + inputFile.getPath());
 		FSTNonTerminal parent = null;
 		StringTokenizer st = new StringTokenizer(inputFile.getPath(),
 				File.separator);

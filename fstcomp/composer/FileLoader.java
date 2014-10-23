@@ -124,9 +124,9 @@ public class FileLoader {
 			if (features == null) {
 				features = equationFileContent.split("\\s");
 			}
-			System.out.println("Found the following features:");
+			FSTGenComposer.outStream.println("Found the following features in expression file:");
 			for (String s : features)
-				System.out.println(s);
+				FSTGenComposer.outStream.println(s);
 
 			// if (features.length == 0) {
 			// features = equationFileContent.split(" ");
@@ -147,7 +147,9 @@ public class FileLoader {
 				if (features[i].trim().length() > 0) {
 					File feature = new File(equationBaseDirectoryName
 							+ features[i]);
-					
+					if (!feature.exists()) {
+						FSTGenComposer.outStream.println("Did not find feature directory " + feature.getAbsolutePath() + "; treating it as empty feature.");
+					}
 					// Initialize each ArtifactBuilder with the current feature features[i].
 					// If we do not initialize it FSTGenMerger fails, because a feature might
 					// be empty and does not contain any code artifacts for merging.

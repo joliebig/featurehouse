@@ -1,5 +1,7 @@
 package composer.rules;
 
+import composer.FSTGenComposer;
+
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
@@ -9,7 +11,7 @@ public class Replacement extends AbstractCompositionRule {
 	public void compose(FSTTerminal terminalA, FSTTerminal terminalB,
 			FSTTerminal terminalComp, FSTNonTerminal nonterminalParent) {
 		
-		System.out.println("Terminal replacement: " +
+		FSTGenComposer.outStream.println("Terminal replacement: " +
 				 terminalA.toString() + " replaces " +
 				 terminalB.toString());
 		

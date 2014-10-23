@@ -178,19 +178,19 @@ public class CmdLineInterpreter {
 		if (errorOccured) {
 			System.out.println("Incorrect command line parameters!");
 		}
-		System.out.println("Use `java -jar FeatureHouse.jar "
+		FSTGenComposer.outStream.println("Use `java -jar FeatureHouse.jar "
 				+ INPUT_OPTION_EQUATIONFILE + " <file name> ["
 				+ INPUT_OPTION_BASE_DIRECTORY + " <directory name>]'");
-		System.out
+		FSTGenComposer.outStream
 				.println("The option `"
 						+ INPUT_OPTION_EQUATIONFILE
 						+ "' defines the name of the file that lists the input features/components.");
-		System.out
+		FSTGenComposer.outStream
 				.println("The option `"
 						+ INPUT_OPTION_BASE_DIRECTORY
 						+ "' defines the working directory, which is the search path for the input features/components.");
-		System.out.println("The option `" + INPUT_OPTION_LIFTING
-				+ "' can currently only be used with C Code. It composes the "
+		FSTGenComposer.outStream.println("The option `" + INPUT_OPTION_LIFTING
+				+ "' can currently only be used with C or Java Code. It composes the "
 				+ "sources in a way that allows feature selection at runtime");
 
 	}

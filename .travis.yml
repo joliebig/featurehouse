@@ -1,2 +1,4 @@
 language: java
 install: ant jar
+#ant test is the default target, but I want to make it explicit
+script: ant test

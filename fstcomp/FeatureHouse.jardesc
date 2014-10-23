@@ -81,5 +81,7 @@
         <javaElement handleIdentifier="=fstgen/src"/>
         <javaElement handleIdentifier="=fstmerge/&lt;jargs.gnu"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.alloy"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.xml"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.xml"/>
     </selectedElements>
 </jardesc>

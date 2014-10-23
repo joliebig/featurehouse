@@ -161,7 +161,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 				meta.saveToFile(outputDir + File.separator + "roles.meta");
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
-					System.err.println("cnfFile:" + cnfFile.getAbsolutePath());
+					FSTGenComposer.outStream.println("cnfFile:" + cnfFile.getAbsolutePath());
 					if (cmd.lifting_language.equals("c")) {
 						new CRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + "features/featureselect");
 					} else if (cmd.lifting_language.equals("java")) {
@@ -181,6 +181,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			if (metaproduct) {
 				preProcessSubtree(current);
 			}
+			setOriginalFeatureName((FSTNonTerminal) current, "");
 			if (composed != null) {
 				composed = compose(current, composed);
 			} else

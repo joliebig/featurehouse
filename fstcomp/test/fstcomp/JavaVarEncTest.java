@@ -7,6 +7,7 @@ import integrationtests.Checksum;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -23,8 +24,13 @@ public class JavaVarEncTest {
 		String outputDir = "result/fstcomp/output/Java_GPL_GPLComp__VarEnc";
 		
 		compose(expression, outputDir, null, new String[] {"--liftJava"});
-		
-		assertEquals("F1E61C56834E9B0601E67A664BFAA0B6", Checksum.calculateChecksum(new File(outputDir)));
+		String actualChecksum = Checksum.calculateChecksum(new File(outputDir),new FilenameFilter() {
+			@Override
+			public boolean accept(File dir, String name) {
+				return (name.endsWith(".java") || name.endsWith(".aj"));
+			}
+		});
+		assertEquals("96F9FB420E1CDB6C609BBD32D3B340EF", actualChecksum);
 	}
 
 }

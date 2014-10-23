@@ -10,6 +10,7 @@ import java.util.StringTokenizer;
 
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
+import de.ovgu.cide.fstgen.ast.FSTTerminal;
 
 /**
  * 
@@ -33,9 +34,18 @@ public final class CompositionMetadataStore {
 	private List<String> features = new ArrayList<String>();
 	
 	public void addFeature(String feature) {
-		features.add(feature);
+		if (! features.contains(feature))
+			features.add(feature);
 	}
 	
+	/**
+	 * This creates a new CompositionMetadataStore.
+	 * Useful if FSTGenComposer is used multiple times in the same VM.
+	 * This method must be called BEFORE the second/third/fourth/... call to FSTGenComposer.main()!
+	 */
+	public static void reinitialize() {
+		instance = new CompositionMetadataStore();
+	}
 	
 	/**
 	 * adds a method/function mapping to the meta data
@@ -76,34 +86,21 @@ public final class CompositionMetadataStore {
 	 * @param n FSTNode to be searched for `Func` nodes
 	 */
 	public void discoverFuncIntroductions(FSTNode n) {
-		if (n.getType().equals("Func")) {
-			String funcName = getMethodName(n);
-			putMapping(funcName, getFeatureName(n), funcName);
-			return;
-		}
-		
-		if (n instanceof FSTNonTerminal) {
+		if (n instanceof FSTTerminal) {
+			FSTTerminal nTerm = (FSTTerminal)n;
+			if (n.getType().equals("Func")) { // This is for features implemented in C
+				String funcName = getMethodName(n);
+				putMapping(funcName, nTerm.getOriginalFeatureName(), funcName);
+			} else if (n.getType().equals("MethodDecl")) { // This is for features implemented in Java
+				String funcName = getJavaMethodName(n);
+				putMapping(funcName, nTerm.getOriginalFeatureName(), funcName);
+			}
+		} else if (n instanceof FSTNonTerminal) {
 			FSTNonTerminal nt = (FSTNonTerminal) n;
 			for (FSTNode child: nt.getChildren()) {
 				discoverFuncIntroductions(child);
-			}			
+			}
 		}
-	}
-	
-	
-	/**
-	 * extracts the feature name
-	 * 
-	 * @param node
-	 * 			`Feature` node or descendant of a `Feature` node.
-	 * @return
-	 * 		name of the feature this node is a descendant of, e.g. "Base".
-	 */
-	public String getFeatureName(FSTNode node) {
-		if (node.getType().equals("Feature"))
-			return node.getName();
-		else
-			return getFeatureName(node.getParent());
 	}
 	
 	/**
@@ -117,6 +114,32 @@ public final class CompositionMetadataStore {
 	 * 				the method name e.g. "main"
 	 */
 	public String getMethodName(FSTNode node) {
+		String methodName = node.getName();
+
+		StringTokenizer st = new StringTokenizer(methodName, "(");
+		if (st.hasMoreTokens()) {
+			methodName = st.nextToken();
+		}
+		st = new StringTokenizer(methodName, " ");
+
+		while (st.hasMoreTokens()) {
+			methodName = st.nextToken();
+		}
+		
+		return methodName;
+	}
+
+	/**
+	 * extracts the method name from the node (Java)
+	 * 
+	 * this assumes the node is a `MethodDecl` node.
+	 * 
+	 * @param node 
+	 * 				a `MethodDecl` node.
+	 * @return
+	 * 				the method name e.g. "main"
+	 */
+	public String getJavaMethodName(FSTNode node) {
 		String methodName = node.getName();
 
 		StringTokenizer st = new StringTokenizer(methodName, "(");
@@ -220,6 +243,11 @@ public final class CompositionMetadataStore {
 		return instance;
 	}
 
+	/**
+	 * Returns a list of all feature names of the subject system. 
+	 * Each name occurs only once in the list.
+	 * We chose a List instead of a Set because the order of the features is important (same order as in the expression file).
+	 */
 	public List<String> getFeatures() {
 		return new ArrayList<String>(features);
 	}
