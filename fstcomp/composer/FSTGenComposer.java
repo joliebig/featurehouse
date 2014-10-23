@@ -283,7 +283,7 @@ public class FSTGenComposer extends FSTGenProcessor {
 	 * Set the original feature of FSTTerminals, because the tree is composed and this
 	 * information would be lost.
 	 */
-	private void setOriginalFeatureName(FSTNonTerminal node, String feature) {
+	protected void setOriginalFeatureName(FSTNonTerminal node, String feature) {
 		if (node.getType().equals("Feature")) {
 			feature = node.getName();
 		}

@@ -181,6 +181,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			if (metaproduct) {
 				preProcessSubtree(current);
 			}
+			setOriginalFeatureName((FSTNonTerminal) current, "");
 			if (composed != null) {
 				composed = compose(current, composed);
 			} else
