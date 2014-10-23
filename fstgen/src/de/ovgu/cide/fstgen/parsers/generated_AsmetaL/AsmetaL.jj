@@ -1,0 +1,1489 @@
+options {
+  JAVA_UNICODE_ESCAPE = false;
+  ERROR_REPORTING = true;
+  STATIC = false;
+  LOOKAHEAD = 7;  
+}
+
+
+PARSER_BEGIN(AsmetaLParser)
+package de.ovgu.cide.fstgen.parsers.generated_AsmetaL;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+
+public class AsmetaLParser extends AbstractFSTParser
+{
+ 	public AsmetaLParser(){}
+}
+
+PARSER_END(AsmetaLParser)
+
+<DEFAULT,GENERIC_ID,MODULE_ID> SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+MORE:
+{
+  "//": IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); }: IN_FORMAL_COMMENT
+|
+  "/*": IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN:
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" >: DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN:
+{
+  <FORMAL_COMMENT: "*/" >: DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN:
+{
+  <MULTI_LINE_COMMENT: "*/" >: DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE:
+{
+  < ~[] >
+}
+
+
+/* RESERVED WORDS AND LITERALS */
+
+<DEFAULT> TOKEN : {
+	  <ASM: "asm"> : GENERIC_ID
+	| <MODULE: "module"> : GENERIC_ID
+	| <ORIGINAL: "@original">
+	| <FINALRULE: "@final_rule">
+	| <FINALINVARIANT: "@final_invariant">
+	| <CONJUNCT: "@conjunct">
+	| <ASYNCR: "asyncr">
+	| <IMPORT: "import"> : MODULE_ID
+	| <EXPORT: "export">
+	| <SIGNATURE: "signature">
+	| <INIT: "init"> : GENERIC_ID
+	| <Default: "default">
+	| <AGENT: "agent">
+	| <INVARIANT: "invariant">
+	| <OVER: "over">
+	| <DEFINITIONS: "definitions">
+	| <FUNCTION: "function">
+	| <STATIC: "static">
+	| <DYNAMIC: "dynamic">
+	| <DERIVED: "derived">
+	| <MONITORED: "monitored">
+	| <CONTROLLED: "controlled">
+	| <SHARED: "shared">
+	| <OUT: "out">
+	| <DOMAIN: "domain">
+	| <ANYDOMAIN: "anydomain">
+	| <BASIC: "basic">
+	| <ABSTRACT: "abstract">
+	| <ENUM: "enum">
+	| <SUBSETOF: "subsetof">
+	| <PROD: "Prod">
+	| <SEQ: "Seq">
+	| <POWERSET: "Powerset">
+	| <BAG: "Bag">
+	| <MAP: "Map">
+	| <RULEDOM: "Rule">
+	| <TRUE: "true">
+	| <FALSE: "false">
+	| <UNDEF: "undef">
+	| <IM_PART: "i">
+	| <IF: "if">
+	| <THEN: "then">
+	| <ELSE: "else">
+	| <ENDIF: "endif">
+	| <SWITCH: "switch">
+	| <END_SWITCH: "endswitch">
+	| <CASE: "case">
+	| <OTHERWISE: "otherwise">
+	| <ENDCASE: "endcase">
+	| <LET: "let">
+	| <ENDLET: "endlet">
+	| <EXIST: "exist">
+	| <UNIQUE: "unique">
+	| <WITH: "with">
+	| <FORALL: "forall">
+	| <Skip: "skip">
+	| <RULE: "rule">
+	| <MACRO: "macro">
+	| <TURBO: "turbo">
+	| <MAIN: "main">
+	| <PAR: "par">
+	| <ENDPAR: "endpar">
+	| <CHOOSE: "choose">
+	| <DO: "do">
+	| <IFNONE: "ifnone">
+	| <EXTEND: "extend">
+	| <seq: "seq">
+	| <ENDSEQ: "endseq">
+	| <ITERATE: "iterate">
+	| <ENDITERATE: "enditerate">
+	| <LOCAL: "local">
+	| <TRY: "try">
+	| <CATCH: "catch">
+	| <WHILE: "while">
+	| <WHILEREC: "whilerec">
+	| <IN: "in">
+	| <EQ: "=">
+	| <LT: "<">
+	| <LE: "<=">
+	| <GT: ">">
+	| <GE: ">=">
+	| <NEQ: "!=">
+	| <PLUS: "+">
+	| <MINUS: "-">
+	| <MULT: "*">
+	| <DIV: "/">
+	| <PWR: "^">
+	| <AND: "and">
+	| <NOT: "not">
+	| <OR: "or">
+	| <XOR: "xor">
+	| <IMPLIES: "implies">
+	| <MOD: "mod">
+	| <NOTIN: "notin">
+	| <IFF: "iff">
+	| <CTLSPEC: "CTLSPEC">	
+	}
+
+
+/* IDENTIFIERS AND NUMBERS */
+<DEFAULT> TOKEN: 
+{
+      <NUMBER: (<DIGIT>)+>
+	| <NATNUMBER: (<DIGIT>)+ "n">
+	| <REAL_NUMBER: (<DIGIT>)+ "." (<DIGIT>)+>
+	| <COMPLEX_NUMBER: ((["+","-"])? (<DIGIT>)+ ("." (<DIGIT>)+)?)? (["+","-"])? "i" ((<DIGIT>)+ ("." (<DIGIT>)+)?)?>
+	| <ID_VARIABLE: "$" <LETTER> (<LETTER> | <DIGIT>)*>
+	| <ID_ENUM: ["A"-"Z"] ["A"-"Z"] ("_" | ["A"-"Z"] | <DIGIT>)*>
+	| <ID_DOMAIN: ["A"-"Z"] ("_" | ["a"-"z"] | ["A"-"Z"] | <DIGIT>)*>
+	| <ID_RULE: "r_" (<LETTER> | <DIGIT>)+>
+	| <ID_INVARIANT: "inv_" (<LETTER> | <DIGIT>)+>
+	| <ID_FUNCTION: ["a"-"z"] (<LETTER> | <DIGIT>)*>
+	| <#LETTER: ["_","a"-"z","A"-"Z"]>
+	| <#DIGIT: ["0"-"9"]>
+	| <CHAR_LITERAL: "\'" (~["\'","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\'">
+	| <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
+}
+
+<GENERIC_ID> TOKEN : {
+<ID: <LETTER> (<LETTER> | <DIGIT>)*> : DEFAULT
+}
+
+   
+<MODULE_ID> TOKEN : {
+<MOD_ID: (<LETTER> | "." | "/" | "\\") (<LETTER> | <DIGIT> | "." | "/" | "\\" | ":")*> : DEFAULT
+}
+FSTInfo AsmOrModule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ASM> {return productionEndTerminal("AsmOrModule1","-","-","Replacement","Default",first,token);}
+ |
+	<MODULE> {return productionEndTerminal("AsmOrModule2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DefaultCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<Default> {return productionEndTerminal("DefaultCommand","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DefaultInitialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DefaultCommand(inTerminal){ replaceName(n);} n=Initialization(inTerminal){ replaceName(n);} {return productionEndNonTerminal("DefaultInitialization","-","-");}
+
+ )  }
+
+FSTInfo Initializations(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=Initialization(inTerminal){ replaceName(n);})* n=DefaultInitialization(inTerminal){ replaceName(n);} (n=Initialization(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Initializations","-","-");}
+
+ )  }
+
+FSTInfo MainCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<MAIN> {return productionEndTerminal("MainCommand","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MainMacroDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=MainCommand(true){ replaceName(n);} n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
+
+ )  }
+
+FSTInfo ModuleDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID(inTerminal){ replaceName(n);} n=Header(inTerminal){ replaceName(n);} n=Body(inTerminal){ replaceName(n);} [n=MainMacroDeclaration(inTerminal){ replaceName(n);}] [n=Initializations(inTerminal){ replaceName(n);}] {return productionEndNonTerminal("ModuleDeclaration","-","-");}
+
+ )  }
+
+FSTInfo CompilationUnit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<ASYNCR>] n=AsmOrModule(inTerminal){ replaceName(n);} n=ModuleDeclaration(inTerminal){ replaceName(n);} <EOF> {return productionEndNonTerminal("CompilationUnit","-","-");}
+
+ )  }
+
+FSTInfo DomainOrFunctionOrRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_DOMAIN(true){ replaceName(n);} {return productionEndTerminal("DomainOrFunctionOrRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=ID_FUNCTION(true){ replaceName(n);} {return productionEndTerminal("DomainOrFunctionOrRule2","-","-","Replacement","Default",first,token);}
+ |
+	n=ID_RULE(true){ replaceName(n);} {return productionEndTerminal("DomainOrFunctionOrRule3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Header(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=ImportClause(inTerminal){ replaceName(n);})* [n=ExportClause(inTerminal){ replaceName(n);}] n=Signature(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Header","-","-");}
+
+ )  }
+
+FSTInfo ImportBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=DomainOrFunctionOrRule(true){ replaceName(n);} ("," n=DomainOrFunctionOrRule(true){ replaceName(n);})* ")" {return productionEndTerminal("ImportBody","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ImportClause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IMPORT> n=MOD_ID(true){ replaceName(n);} [n=ImportBody(true){ replaceName(n);}] {return productionEndTerminal("ImportClause","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExportBodyOrAst(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ExportBody(true){ replaceName(n);} {return productionEndTerminal("ExportBodyOrAst1","-","-","Replacement","Default",first,token);}
+ |
+	"*"  {return productionEndTerminal("ExportBodyOrAst2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExportBody(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DomainOrFunctionOrRule(true){ replaceName(n);} ("," n=DomainOrFunctionOrRule(true){ replaceName(n);})* {return productionEndTerminal("ExportBody","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExportClause(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<EXPORT> n=ExportBodyOrAst(true){ replaceName(n);} {return productionEndTerminal("ExportClause","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermInDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VariableTerm(true){ replaceName(n);} <IN> n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("TermInDomain","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SignatureCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<SIGNATURE> ":" {return productionEndTerminal("SignatureCommand","{SignatureCommand}","{SignatureCommand}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Signature(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SignatureCommand(inTerminal){ replaceName(n);} (n=Domain(inTerminal){ replaceName(n);})* (n=Function(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Signature","{<SIGNATURE>}","{<SIGNATURE>}");}
+
+ )  }
+
+FSTInfo OriginalInit(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> "()" {return productionEndTerminal("OriginalInit","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Initialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<INIT> n=ID(true){ replaceName("ID", n);}{ replaceName(n);} ":" [n=OriginalInit(true){ replaceName(n);}] (n=DomainInitialization(true){ replaceName(n);})* (n=FunctionInitialization(true){ replaceName(n);})* (n=AgentInitialization(true){ replaceName(n);})* [n=OriginalInit(true){ replaceName(n);}] {return productionEndTerminal("Initialization","{ID}","{ID}","AsmetaLInitializationConcatenation","Default",first,token);}
+
+ )  }
+
+FSTInfo DomainInitialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} "=" n=Term(true){ replaceName(n);} {return productionEndTerminal("DomainInitialization","{ID_DOMAIN}","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermInDomainList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=TermInDomain(true){ replaceName(n);} ("," n=TermInDomain(true){ replaceName(n);})* ")" {return productionEndTerminal("TermInDomainList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionInitialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<FUNCTION> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} [n=TermInDomainList(true){ replaceName(n);}] "=" n=Term(true){ replaceName(n);} {return productionEndTerminal("FunctionInitialization","{ID_FUNCTION}","{ID_FUNCTION}","AsmetaLFunctionOverriding","Default",first,token);}
+
+ )  }
+
+FSTInfo AgentInitialization(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<AGENT> n=ID_DOMAIN(true){ replaceName(n);} ":" n=MacroCallRule(true){ replaceName(n);} {return productionEndTerminal("AgentInitialization","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DefinitionsCommand(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<DEFINITIONS> ":" {return productionEndTerminal("DefinitionsCommand","{DefinitionsCommand}","{DefinitionsCommand}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Body(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DefinitionsCommand(inTerminal){ replaceName(n);} (n=DomainDefinition(inTerminal){ replaceName(n);})* (n=FunctionDefinition(inTerminal){ replaceName(n);})* (n=RuleDeclaration(inTerminal){ replaceName(n);})* (n=CTLSPECS(inTerminal){ replaceName(n);})* (n=Invariant(inTerminal){ replaceName(n);})* {return productionEndNonTerminal("Body","Body","Body");}
+
+ )  }
+
+FSTInfo DomainDefinition(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} "=" n=Term(true){ replaceName(n);} {return productionEndTerminal("DomainDefinition","{ID_DOMAIN}","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionDefinition(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<FUNCTION> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} [n=TermInDomainList(true){ replaceName(n);}] "=" n=Term(true){ replaceName(n);} {return productionEndTerminal("FunctionDefinition","{ID_FUNCTION}","{ID_FUNCTION}","AsmetaLFunctionOverriding","Default",first,token);}
+
+ )  }
+
+FSTInfo RuleDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<FINALRULE>] n=MacroDeclaration(true){ replaceName("MacroDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{MacroDeclaration}","{MacroDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
+ |
+	[<FINALRULE>] n=TurboDeclaration(true){ replaceName("TurboDeclaration", n);}{ replaceName(n);} {return productionEndTerminal("RuleDeclaration","{TurboDeclaration}","{TurboDeclaration}","AsmetaLRuleOverriding","Default",first,token);}
+
+ )  }
+
+FSTInfo MacroDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<MACRO>] <RULE> n=ID_RULE(true){ replaceName("ID_RULE", n);}{ replaceName(n);} [n=TermInDomainList(true){ replaceName(n);}] "=" n=Rule(true){ replaceName(n);} {return productionEndTerminal("MacroDeclaration","-","{ID_RULE}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboDeclarationDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IN> n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("TurboDeclarationDomain","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboDeclaration(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<TURBO> <RULE> n=ID_RULE(true){ replaceName("ID_RULE", n);}{ replaceName(n);} [n=TermInDomainList(true){ replaceName(n);}] n=TurboDeclarationDomain(true){ replaceName(n);} "=" n=Rule(true){ replaceName(n);} {return productionEndTerminal("TurboDeclaration","-","{ID_RULE}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo getDomainByIDBrackets(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" [n=getDomainByID(true){ replaceName(n);}] ")" {return productionEndTerminal("getDomainByIDBrackets","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DomainOrFunctionIDOrRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_DOMAIN(true){ replaceName(n);} {return productionEndTerminal("DomainOrFunctionIDOrRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=ID_FUNCTION(true){ replaceName(n);} [n=getDomainByIDBrackets(true){ replaceName(n);}] {return productionEndTerminal("DomainOrFunctionIDOrRule2","-","-","Replacement","Default",first,token);}
+ |
+	n=ID_RULE(true){ replaceName(n);} {return productionEndTerminal("DomainOrFunctionIDOrRule3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DomainOrFunctionIDOrRuleList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DomainOrFunctionIDOrRule(true){ replaceName(n);} ("," n=DomainOrFunctionIDOrRule(true){ replaceName(n);})* {return productionEndTerminal("DomainOrFunctionIDOrRuleList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CTLSPECS(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<CTLSPEC> n=Term(true){ replaceName(n);} {return productionEndTerminal("CTLSPECS","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo InvariantRefinement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<FINALINVARIANT> <CONJUNCT> {return productionEndTerminal("InvariantRefinement1","-","-","Replacement","Default",first,token);}
+ |
+	<CONJUNCT> <FINALINVARIANT> {return productionEndTerminal("InvariantRefinement2","-","-","Replacement","Default",first,token);}
+ |
+	<FINALINVARIANT> {return productionEndTerminal("InvariantRefinement3","-","-","Replacement","Default",first,token);}
+ |
+	<CONJUNCT> {return productionEndTerminal("InvariantRefinement4","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo UnnamedInvariant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<INVARIANT> <OVER> n=DomainOrFunctionIDOrRuleList(true){ replaceName(n);} ":" n=Term(true){ replaceName(n);} {return productionEndTerminal("UnnamedInvariant","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Invariant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=UnnamedInvariant(inTerminal){ replaceName(n);} {return productionEndNonTerminal("Invariant","UnnamedInvariant","UnnamedInvariant");}
+ |
+	n=NamedInvariant(true){ replaceName("NamedInvariant", n);}{ replaceName(n);} {return productionEndTerminal("Invariant","{NamedInvariant}","{NamedInvariant}","AsmetaLInvariantConjunction","Default",first,token);}
+
+ )  }
+
+FSTInfo NamedInvariant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<INVARIANT> n=ID_INVARIANT(true){ replaceName("ID_INVARIANT", n);}{ replaceName(n);} [n=InvariantRefinement(true){ replaceName(n);}] <OVER> n=DomainOrFunctionIDOrRuleList(true){ replaceName(n);} ":" n=Term(true){ replaceName(n);} {return productionEndTerminal("NamedInvariant","-","{ID_INVARIANT}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Domain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ConcreteDomain(true){ replaceName("ConcreteDomain", n);}{ replaceName(n);} {return productionEndTerminal("Domain","{ConcreteDomain}","{ConcreteDomain}","Replacement","Default",first,token);}
+ |
+	n=TypeDomain(true){ replaceName("TypeDomain", n);}{ replaceName(n);} {return productionEndTerminal("Domain","{TypeDomain}","{TypeDomain}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ConcreteDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} <SUBSETOF> n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("ConcreteDomain","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TypeDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=AnyDomain(true){ replaceName("AnyDomain", n);}{ replaceName(n);} {return productionEndTerminal("TypeDomain1","-","{AnyDomain}","Replacement","Default",first,token);}
+ |
+	n=StructuredTD(true){ replaceName("StructuredTD", n);}{ replaceName(n);} {return productionEndTerminal("TypeDomain2","-","{StructuredTD}","Replacement","Default",first,token);}
+ |
+	n=EnumTD(true){ replaceName("EnumTD", n);}{ replaceName(n);} {return productionEndTerminal("TypeDomain3","-","{EnumTD}","Replacement","Default",first,token);}
+ |
+	n=AbstractTD(true){ replaceName("AbstractTD", n);}{ replaceName(n);} {return productionEndTerminal("TypeDomain4","-","{AbstractTD}","Replacement","Default",first,token);}
+ |
+	n=BasicTD(true){ replaceName("BasicTD", n);}{ replaceName(n);} {return productionEndTerminal("TypeDomain5","-","{BasicTD}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AnyDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ANYDOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} {return productionEndTerminal("AnyDomain","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BasicTD(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<BASIC> <DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} {return productionEndTerminal("BasicTD","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AbstractTD(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <ABSTRACT> <DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} {return productionEndTerminal("AbstractTD","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo EnumTD(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ENUM> <DOMAIN> n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} "=" "{" n=EnumElement(true){ replaceName(n);} ("|" n=EnumElement(true){ replaceName(n);})* "}" {return productionEndTerminal("EnumTD","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo EnumElement(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_ENUM(true){ replaceName("ID_ENUM", n);}{ replaceName(n);} {return productionEndTerminal("EnumElement","-","{ID_ENUM}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo StructuredTD(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ProductDomain(true){ replaceName("ProductDomain", n);}{ replaceName(n);} {return productionEndTerminal("StructuredTD1","-","{ProductDomain}","Replacement","Default",first,token);}
+ |
+	n=SequenceDomain(true){ replaceName("SequenceDomain", n);}{ replaceName(n);} {return productionEndTerminal("StructuredTD2","-","{SequenceDomain}","Replacement","Default",first,token);}
+ |
+	n=PowersetDomain(true){ replaceName("PowersetDomain", n);}{ replaceName(n);} {return productionEndTerminal("StructuredTD3","-","{PowersetDomain}","Replacement","Default",first,token);}
+ |
+	n=BagDomain(true){ replaceName("BagDomain", n);}{ replaceName(n);} {return productionEndTerminal("StructuredTD4","-","{BagDomain}","Replacement","Default",first,token);}
+ |
+	n=MapDomain(true){ replaceName("MapDomain", n);}{ replaceName(n);} {return productionEndTerminal("StructuredTD5","-","{MapDomain}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ProductDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<PROD> "(" n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} ("," n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);})+ ")" {return productionEndTerminal("ProductDomain","-","{getDomainByID}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SequenceDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<SEQ> "(" n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} ")" {return productionEndTerminal("SequenceDomain","-","{getDomainByID}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PowersetDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<POWERSET> "(" n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} ")" {return productionEndTerminal("PowersetDomain","-","{getDomainByID}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BagDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<BAG> "(" n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} ")" {return productionEndTerminal("BagDomain","-","{getDomainByID}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MapDomain(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<MAP> "(" n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} "," n=getDomainByID(true){ replaceName("getDomainByID", n);}{ replaceName(n);} ")" {return productionEndTerminal("MapDomain","-","{getDomainByID}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo getDomainByID(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_DOMAIN(true){ replaceName("ID_DOMAIN", n);}{ replaceName(n);} {return productionEndTerminal("getDomainByID1","-","{ID_DOMAIN}","Replacement","Default",first,token);}
+ |
+	n=StructuredTD(true){ replaceName("StructuredTD", n);}{ replaceName(n);} {return productionEndTerminal("getDomainByID2","-","{StructuredTD}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Function(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=BasicFunction(true){ replaceName("BasicFunction", n);}{ replaceName(n);} {return productionEndTerminal("Function","{BasicFunction}","{BasicFunction}","Replacement","Default",first,token);}
+ |
+	n=DerivedFunction(true){ replaceName("DerivedFunction", n);}{ replaceName(n);} {return productionEndTerminal("Function","{DerivedFunction}","{DerivedFunction}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BasicFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=StaticFunction(true){ replaceName("StaticFunction", n);}{ replaceName(n);} {return productionEndTerminal("BasicFunction1","-","{StaticFunction}","Replacement","Default",first,token);}
+ |
+	n=DynamicFunction(true){ replaceName("DynamicFunction", n);}{ replaceName(n);} {return productionEndTerminal("BasicFunction2","-","{DynamicFunction}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DerivedFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<DERIVED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("DerivedFunction","-","derived {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo StaticFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<STATIC> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("StaticFunction","-","static {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DynamicFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=OutFunction(true){ replaceName("OutFunction", n);}{ replaceName(n);} {return productionEndTerminal("DynamicFunction1","-","{OutFunction}","Replacement","Default",first,token);}
+ |
+	n=MonitoredFunction(true){ replaceName("MonitoredFunction", n);}{ replaceName(n);} {return productionEndTerminal("DynamicFunction2","-","{MonitoredFunction}","Replacement","Default",first,token);}
+ |
+	n=SharedFunction(true){ replaceName("SharedFunction", n);}{ replaceName(n);} {return productionEndTerminal("DynamicFunction3","-","{SharedFunction}","Replacement","Default",first,token);}
+ |
+	n=ControlledFunction(true){ replaceName("ControlledFunction", n);}{ replaceName(n);} {return productionEndTerminal("DynamicFunction4","-","{ControlledFunction}","Replacement","Default",first,token);}
+ |
+	n=LocalFunction(true){ replaceName("LocalFunction", n);}{ replaceName(n);} {return productionEndTerminal("DynamicFunction5","-","{LocalFunction}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LocalFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <LOCAL> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("LocalFunction","-","local {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ControlledFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <CONTROLLED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("ControlledFunction","-","controlled {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SharedFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <SHARED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("SharedFunction","-","shared {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MonitoredFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <MONITORED> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("MonitoredFunction","-","monitored {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo OutFunction(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[<DYNAMIC>] <OUT> n=ID_FUNCTION(true){ replaceName("ID_FUNCTION", n);}{ replaceName(n);} ":" [n=getDomainByID(true){ replaceName(n);} "->"] n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("OutFunction","-","out {ID_FUNCTION}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Term(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Expression(true){ replaceName(n);} {return productionEndTerminal("Term1","-","-","Replacement","Default",first,token);}
+ |
+	n=ExtendedTerm(true){ replaceName(n);} {return productionEndTerminal("Term2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Expression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=B_BExpression(true){ replaceName(n);} (n=BXB_BExpression(true){ replaceName(n);})* {return productionEndTerminal("Expression","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BXB_BExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IN> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression1","-","-","Replacement","Default",first,token);}
+ |
+	<NOTIN> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression2","-","-","Replacement","Default",first,token);}
+ |
+	<AND> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression3","-","-","Replacement","Default",first,token);}
+ |
+	<OR> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression4","-","-","Replacement","Default",first,token);}
+ |
+	<XOR> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression5","-","-","Replacement","Default",first,token);}
+ |
+	<IMPLIES> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression6","-","-","Replacement","Default",first,token);}
+ |
+	<IFF> n=B_BExpression(true){ replaceName(n);} {return productionEndTerminal("BXB_BExpression7","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo B_BExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<NOT> n=relationalExpr(true){ replaceName(n);} {return productionEndTerminal("B_BExpression1","-","-","Replacement","Default",first,token);}
+ |
+	n=relationalExpr(true){ replaceName(n);} {return productionEndTerminal("B_BExpression2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo relationalExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=additiveExpr(true){ replaceName(n);} (n=ReladditiveExpr(true){ replaceName(n);})* {return productionEndTerminal("relationalExpr","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ReladditiveExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<EQ> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr1","-","-","Replacement","Default",first,token);}
+ |
+	<NEQ> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr2","-","-","Replacement","Default",first,token);}
+ |
+	<LT> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr3","-","-","Replacement","Default",first,token);}
+ |
+	<LE> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr4","-","-","Replacement","Default",first,token);}
+ |
+	<GT> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr5","-","-","Replacement","Default",first,token);}
+ |
+	<GE> n=additiveExpr(true){ replaceName(n);} {return productionEndTerminal("ReladditiveExpr6","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo additiveExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=multiplicativeExpr(true){ replaceName(n);} (n=PlusMinusMultiExpr(true){ replaceName(n);})* {return productionEndTerminal("additiveExpr","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PlusMinusMultiExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<PLUS> n=multiplicativeExpr(true){ replaceName(n);} {return productionEndTerminal("PlusMinusMultiExpr1","-","-","Replacement","Default",first,token);}
+ |
+	<MINUS> n=multiplicativeExpr(true){ replaceName(n);} {return productionEndTerminal("PlusMinusMultiExpr2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo multiplicativeExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=powerExpr(true){ replaceName(n);} (n=signpowerExpr(true){ replaceName(n);})* {return productionEndTerminal("multiplicativeExpr","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo signpowerExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<MOD> n=powerExpr(true){ replaceName(n);} {return productionEndTerminal("signpowerExpr1","-","-","Replacement","Default",first,token);}
+ |
+	<MULT> n=powerExpr(true){ replaceName(n);} {return productionEndTerminal("signpowerExpr2","-","-","Replacement","Default",first,token);}
+ |
+	<DIV> n=powerExpr(true){ replaceName(n);} {return productionEndTerminal("signpowerExpr3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo powerExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=unaryExpr(true){ replaceName(n);} (n=pwrunaryExpr(true){ replaceName(n);})* {return productionEndTerminal("powerExpr","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo pwrunaryExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<PWR> n=unaryExpr(true){ replaceName(n);} {return productionEndTerminal("pwrunaryExpr","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo unaryExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=signunaryExpr(true){ replaceName(n);} {return productionEndTerminal("unaryExpr1","-","-","Replacement","Default",first,token);}
+ |
+	n=basicExpr(true){ replaceName(n);} {return productionEndTerminal("unaryExpr2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo signunaryExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<PLUS> n=unaryExpr(true){ replaceName(n);} {return productionEndTerminal("signunaryExpr1","-","-","Replacement","Default",first,token);}
+ |
+	<MINUS> n=unaryExpr(true){ replaceName(n);} {return productionEndTerminal("signunaryExpr2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ID_VARIABLE> ("," <ID_VARIABLE>)* {return productionEndTerminal("VariableList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionOriginalCall(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> ["(" n=VariableList(true){ replaceName(n);} ")"] {return productionEndTerminal("FunctionOriginalCall","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo basicExpr(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=FunctionOriginalCall(true){ replaceName(n);} {return productionEndTerminal("basicExpr1","-","-","Replacement","Default",first,token);}
+ |
+	n=BasicTerm(true){ replaceName(n);} {return productionEndTerminal("basicExpr2","-","-","Replacement","Default",first,token);}
+ |
+	n=DomainTerm(true){ replaceName(n);} {return productionEndTerminal("basicExpr3","-","-","Replacement","Default",first,token);}
+ |
+	n=FiniteQuantificationTerm(true){ replaceName(n);} {return productionEndTerminal("basicExpr4","-","-","Replacement","Default",first,token);}
+ |
+	n=BracketedExpression(true){ replaceName(n);} {return productionEndTerminal("basicExpr5","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BasicTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ConstantTerm(true){ replaceName(n);} {return productionEndTerminal("BasicTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=VariableTerm(true){ replaceName(n);} {return productionEndTerminal("BasicTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=FunctionTerm(true){ replaceName(n);} {return productionEndTerminal("BasicTerm3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ConstantTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ComplexTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=RealTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=IntegerTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm3","-","-","Replacement","Default",first,token);}
+ |
+	n=NaturalTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm4","-","-","Replacement","Default",first,token);}
+ |
+	n=CharTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm5","-","-","Replacement","Default",first,token);}
+ |
+	n=StringTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm6","-","-","Replacement","Default",first,token);}
+ |
+	n=BooleanTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm7","-","-","Replacement","Default",first,token);}
+ |
+	n=UndefTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm8","-","-","Replacement","Default",first,token);}
+ |
+	n=EnumTerm(true){ replaceName(n);} {return productionEndTerminal("ConstantTerm9","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ComplexTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<COMPLEX_NUMBER> {return productionEndTerminal("ComplexTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo RealTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<REAL_NUMBER> {return productionEndTerminal("RealTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IntegerTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<NUMBER> {return productionEndTerminal("IntegerTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo NaturalTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<NATNUMBER> {return productionEndTerminal("NaturalTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CharTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<CHAR_LITERAL> {return productionEndTerminal("CharTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo StringTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<STRING_LITERAL> {return productionEndTerminal("StringTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BooleanTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<TRUE> {return productionEndTerminal("BooleanTerm1","-","-","Replacement","Default",first,token);}
+ |
+	<FALSE> {return productionEndTerminal("BooleanTerm2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo UndefTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<UNDEF> {return productionEndTerminal("UndefTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo EnumTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_ENUM(true){ replaceName(n);} {return productionEndTerminal("EnumTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_VARIABLE(true){ replaceName(n);} {return productionEndTerminal("VariableTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FunctionTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[n=ID_AGENT(true){ replaceName(n);} "."] n=ID_FUNCTION(true){ replaceName(n);} [n=TupleTerm(true){ replaceName(n);}] {return productionEndTerminal("FunctionTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DomainTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=getDomainByID(true){ replaceName(n);} {return productionEndTerminal("DomainTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo FiniteQuantificationTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ForallTerm(true){ replaceName(n);} {return productionEndTerminal("FiniteQuantificationTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=ExistUniqueTerm(true){ replaceName(n);} {return productionEndTerminal("FiniteQuantificationTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=ExistTerm(true){ replaceName(n);} {return productionEndTerminal("FiniteQuantificationTerm3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ForallTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" <FORALL> n=VariableInTermList(true){ replaceName(n);} [n=WithTerm(true){ replaceName(n);}] ")" {return productionEndTerminal("ForallTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableInTermList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VariableInTerm(true){ replaceName(n);} ("," n=VariableInTerm(true){ replaceName(n);})* {return productionEndTerminal("VariableInTermList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableInTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VariableTerm(true){ replaceName(n);} <IN> n=Term(true){ replaceName(n);} {return productionEndTerminal("VariableInTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo WithTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<WITH> n=Term(true){ replaceName(n);} {return productionEndTerminal("WithTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExistUniqueTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" <EXIST> <UNIQUE> n=VariableInTermList(true){ replaceName(n);} [n=WithTerm(true){ replaceName(n);}] ")" {return productionEndTerminal("ExistUniqueTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExistTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" <EXIST> n=VariableInTermList(true){ replaceName(n);} [n=WithTerm(true){ replaceName(n);}] ")" {return productionEndTerminal("ExistTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BracketedExpression(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=Expression(true){ replaceName(n);} ")" {return productionEndTerminal("BracketedExpression","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExtendedTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ConditionalTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=CaseTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=TupleTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm3","-","-","Replacement","Default",first,token);}
+ |
+	n=VariableBindingTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm4","-","-","Replacement","Default",first,token);}
+ |
+	n=CollectionTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm5","-","-","Replacement","Default",first,token);}
+ |
+	n=RuleAsTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm6","-","-","Replacement","Default",first,token);}
+ |
+	n=DomainTerm(true){ replaceName(n);} {return productionEndTerminal("ExtendedTerm7","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ConditionalTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IF> n=Term(true){ replaceName(n);} <THEN> n=Term(true){ replaceName(n);} [n=ElseTerm(true){ replaceName(n);}] <ENDIF> {return productionEndTerminal("ConditionalTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ElseTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ELSE> n=Term(true){ replaceName(n);} {return productionEndTerminal("ElseTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LocationTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	[n=ID_AGENT(true){ replaceName(n);} "."] n=ID_FUNCTION(true){ replaceName(n);} [n=TupleTerm(true){ replaceName(n);}] {return productionEndTerminal("LocationTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CaseTermTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<CASE> n=Term(true){ replaceName(n);} ":" n=Term(true){ replaceName(n);} {return productionEndTerminal("CaseTermTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo OtherwiseTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<OTHERWISE> n=Term(true){ replaceName(n);} {return productionEndTerminal("OtherwiseTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CaseTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<SWITCH> n=Term(true){ replaceName(n);} (n=CaseTermTerm(true){ replaceName(n);})+ [n=OtherwiseTerm(true){ replaceName(n);}] <END_SWITCH> {return productionEndTerminal("CaseTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TupleTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"(" n=Term(true){ replaceName(n);} (n=PunctationTerm(true){ replaceName(n);})* ")" {return productionEndTerminal("TupleTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo PunctationTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"," n=Term(true){ replaceName(n);} {return productionEndTerminal("PunctationTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CollectionTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SequenceTerm(true){ replaceName(n);} {return productionEndTerminal("CollectionTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=MapTerm(true){ replaceName(n);} {return productionEndTerminal("CollectionTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=SetTerm(true){ replaceName(n);} {return productionEndTerminal("CollectionTerm3","-","-","Replacement","Default",first,token);}
+ |
+	n=BagTerm(true){ replaceName(n);} {return productionEndTerminal("CollectionTerm4","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AdditionalTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"," n=Term(true){ replaceName(n);} {return productionEndTerminal("AdditionalTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DotsTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	".." n=Term(true){ replaceName(n);} {return productionEndTerminal("DotsTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DotsOrAdditionalTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=DotsTerm(true){ replaceName(n);} [n=AdditionalTerm(true){ replaceName(n);}] {return productionEndTerminal("DotsOrAdditionalTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermOrSequenceTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=AdditionalTerm(true){ replaceName(n);})+ {return productionEndTerminal("TermOrSequenceTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=DotsOrAdditionalTerm(true){ replaceName(n);} {return productionEndTerminal("TermOrSequenceTerm2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermTermOrSequenceTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Term(true){ replaceName(n);} [n=TermOrSequenceTerm(true){ replaceName(n);}] {return productionEndTerminal("TermTermOrSequenceTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SequenceTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"[" [n=TermTermOrSequenceTerm(true){ replaceName(n);}] "]" {return productionEndTerminal("SequenceTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SetTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" [n=TermTermOrSequenceTerm(true){ replaceName(n);}] "}" {return productionEndTerminal("SetTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ArrowTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"->" n=Term(true){ replaceName(n);} {return productionEndTerminal("ArrowTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo AdditionalArrowTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=AdditionalTerm(true){ replaceName(n);} n=ArrowTerm(true){ replaceName(n);} {return productionEndTerminal("AdditionalArrowTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermAdditionalArrowTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Term(true){ replaceName(n);} n=ArrowTerm(true){ replaceName(n);} (n=AdditionalArrowTerm(true){ replaceName(n);})* {return productionEndTerminal("TermAdditionalArrowTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ArrowTermAdditionalArrowTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"->"  {return productionEndTerminal("ArrowTermAdditionalArrowTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=TermAdditionalArrowTerm(true){ replaceName(n);} {return productionEndTerminal("ArrowTermAdditionalArrowTerm2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MapTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" n=ArrowTermAdditionalArrowTerm(true){ replaceName(n);} "}" {return productionEndTerminal("MapTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BagTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" [n=TermTermOrSequenceTerm(true){ replaceName(n);}] ">" {return productionEndTerminal("BagTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableBindingTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=LetTerm(true){ replaceName(n);} {return productionEndTerminal("VariableBindingTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=FiniteQuantificationTerm(true){ replaceName(n);} {return productionEndTerminal("VariableBindingTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=ComprehensionTerm(true){ replaceName(n);} {return productionEndTerminal("VariableBindingTerm3","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=Term(true){ replaceName(n);} ("," n=Term(true){ replaceName(n);})* {return productionEndTerminal("TermList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableTermEqualsTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VariableTerm(true){ replaceName(n);} "=" n=Term(true){ replaceName(n);} {return productionEndTerminal("VariableTermEqualsTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo VariableTermEqualsTermList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=VariableTermEqualsTerm(true){ replaceName(n);} ("," n=VariableTermEqualsTerm(true){ replaceName(n);})* {return productionEndTerminal("VariableTermEqualsTermList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LetTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<LET> "(" n=VariableTermEqualsTermList(true){ replaceName(n);} ")" <IN> n=Term(true){ replaceName(n);} <ENDLET> {return productionEndTerminal("LetTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ComprehensionTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SetCT(true){ replaceName(n);} {return productionEndTerminal("ComprehensionTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=MapCT(true){ replaceName(n);} {return productionEndTerminal("ComprehensionTerm2","-","-","Replacement","Default",first,token);}
+ |
+	n=SequenceCT(true){ replaceName(n);} {return productionEndTerminal("ComprehensionTerm3","-","-","Replacement","Default",first,token);}
+ |
+	n=BagCT(true){ replaceName(n);} {return productionEndTerminal("ComprehensionTerm4","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo OrTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"|" n=Term(true){ replaceName(n);} {return productionEndTerminal("OrTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SetCT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" n=VariableInTermList(true){ replaceName(n);} [n=OrTerm(true){ replaceName(n);}] ":" n=Term(true){ replaceName(n);} "}" {return productionEndTerminal("SetCT","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MapCT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"{" n=VariableInTermList(true){ replaceName(n);} [n=OrTerm(true){ replaceName(n);}] ":" n=Term(true){ replaceName(n);} "->" n=Term(true){ replaceName(n);} "|" "}" {return productionEndTerminal("MapCT","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SequenceCT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"[" n=VariableInTermList(true){ replaceName(n);} [n=OrTerm(true){ replaceName(n);}] ":" n=Term(true){ replaceName(n);} "]" {return productionEndTerminal("SequenceCT","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BagCT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<" n=VariableInTermList(true){ replaceName(n);} [n=OrTerm(true){ replaceName(n);}] ":" n=Term(true){ replaceName(n);} ">" {return productionEndTerminal("BagCT","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo getDomainByIDList(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=getDomainByID(true){ replaceName(n);} ("," n=getDomainByID(true){ replaceName(n);})* {return productionEndTerminal("getDomainByIDList","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo RuleAsTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	"<<" n=ID_RULE(true){ replaceName(n);} ["(" n=getDomainByIDList(true){ replaceName(n);} ")"] ">>" {return productionEndTerminal("RuleAsTerm","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LocationOrVariableTerm(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=LocationTerm(true){ replaceName(n);} {return productionEndTerminal("LocationOrVariableTerm1","-","-","Replacement","Default",first,token);}
+ |
+	n=VariableTerm(true){ replaceName(n);} {return productionEndTerminal("LocationOrVariableTerm2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ElseRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ELSE> n=Rule(true){ replaceName(n);} {return productionEndTerminal("ElseRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IfNoneRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IFNONE> n=Rule(true){ replaceName(n);} {return productionEndTerminal("IfNoneRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo Rule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=BasicRule(true){ replaceName(n);} {return productionEndTerminal("Rule1","{Rule}","{Rule}","Replacement","Default",first,token);}
+ |
+	n=TurboRule(true){ replaceName(n);} {return productionEndTerminal("Rule2","{Rule}","{Rule}","Replacement","Default",first,token);}
+ |
+	n=UpdateRule(true){ replaceName(n);} {return productionEndTerminal("Rule3","{Rule}","{Rule}","Replacement","Default",first,token);}
+ |
+	n=TurboReturnRule(true){ replaceName(n);} {return productionEndTerminal("Rule4","{Rule}","{Rule}","Replacement","Default",first,token);}
+ |
+	n=TermAsRule(true){ replaceName(n);} {return productionEndTerminal("Rule5","{Rule}","{Rule}","Replacement","Default",first,token);}
+ |
+	n=DerivedRule(true){ replaceName(n);} {return productionEndTerminal("Rule6","{Rule}","{Rule}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BasicRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SkipRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=MacroCallRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule2","-","-","Replacement","Default",first,token);}
+ |
+	n=MacroCallRuleOriginal(true){ replaceName(n);} {return productionEndTerminal("BasicRule3","-","-","Replacement","Default",first,token);}
+ |
+	n=BlockRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule4","-","-","Replacement","Default",first,token);}
+ |
+	n=ConditionalRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule5","-","-","Replacement","Default",first,token);}
+ |
+	n=ChooseRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule6","-","-","Replacement","Default",first,token);}
+ |
+	n=ForallRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule7","-","-","Replacement","Default",first,token);}
+ |
+	n=LetRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule8","-","-","Replacement","Default",first,token);}
+ |
+	n=ExtendRule(true){ replaceName(n);} {return productionEndTerminal("BasicRule9","-","-","Replacement","Default",first,token);}
+ |
+	n=CallRuleOriginalSub(true){ replaceName(n);} {return productionEndTerminal("BasicRule10","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SkipRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<Skip> {return productionEndTerminal("SkipRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BlockRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<PAR> n=Rule(true){ replaceName(n);} (n=Rule(true){ replaceName(n);})+ <ENDPAR> {return productionEndTerminal("BlockRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ConditionalRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<IF> n=Term(true){ replaceName(n);} <THEN> n=Rule(true){ replaceName(n);} [n=ElseRule(true){ replaceName(n);}] <ENDIF> {return productionEndTerminal("ConditionalRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ChooseRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<CHOOSE> n=VariableInTermList(true){ replaceName(n);} <WITH> n=Term(true){ replaceName(n);} <DO> n=Rule(true){ replaceName(n);} [n=IfNoneRule(true){ replaceName(n);}] {return productionEndTerminal("ChooseRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ForallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<FORALL> n=VariableInTermList(true){ replaceName(n);} [n=WithTerm(true){ replaceName(n);}] <DO> n=Rule(true){ replaceName(n);} {return productionEndTerminal("ForallRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LetRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<LET> "(" n=VariableTermEqualsTermList(true){ replaceName(n);} ")" <IN> n=Rule(true){ replaceName(n);} <ENDLET> {return productionEndTerminal("LetRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MacroCallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_RULE(true){ replaceName(n);} "[" [n=TermList(true){ replaceName(n);}] "]" {return productionEndTerminal("MacroCallRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MacroCallRuleOriginal(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> "[" [n=TermList(true){ replaceName(n);}] "]" {return productionEndTerminal("MacroCallRuleOriginal","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CallRuleOriginalSub(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ORIGINAL> "#" <ID_FUNCTION> {return productionEndTerminal("CallRuleOriginalSub","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ExtendRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<EXTEND> n=ID_DOMAIN(true){ replaceName(n);} <WITH> n=VariableTerm(true){ replaceName(n);} ("," n=VariableTerm(true){ replaceName(n);})* <DO> n=Rule(true){ replaceName(n);} {return productionEndTerminal("ExtendRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=SeqRule(true){ replaceName(n);} {return productionEndTerminal("TurboRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=IterateRule(true){ replaceName(n);} {return productionEndTerminal("TurboRule2","-","-","Replacement","Default",first,token);}
+ |
+	n=TurboCallRule(true){ replaceName(n);} {return productionEndTerminal("TurboRule3","-","-","Replacement","Default",first,token);}
+ |
+	n=TurboLocalStateRule(true){ replaceName(n);} {return productionEndTerminal("TurboRule4","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo SeqRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<seq> n=Rule(true){ replaceName(n);} (n=Rule(true){ replaceName(n);})+ <ENDSEQ> {return productionEndTerminal("SeqRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IterateRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<ITERATE> n=Rule(true){ replaceName(n);} <ENDITERATE> {return productionEndTerminal("IterateRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboCallRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=ID_RULE(true){ replaceName(n);} "(" n=TermList(true){ replaceName(n);} ")" {return productionEndTerminal("TurboCallRule1","-","-","Replacement","Default",first,token);}
+ |
+	<ORIGINAL> "(" n=TermList(true){ replaceName(n);} ")" {return productionEndTerminal("TurboCallRule2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboLocalStateRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	(n=LocalFunctionRule(true){ replaceName(n);})+ n=Rule(true){ replaceName(n);} {return productionEndTerminal("TurboLocalStateRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo LocalFunctionRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=LocalFunction(true){ replaceName(n);} "[" n=Rule(true){ replaceName(n);} "]" {return productionEndTerminal("LocalFunctionRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo UpdateRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=LocationOrVariableTerm(true){ replaceName(n);} ":=" n=Term(true){ replaceName(n);} {return productionEndTerminal("UpdateRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboReturnRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=LocationOrVariableTerm(true){ replaceName(n);} "<-" n=TurboCallRule(true){ replaceName(n);} {return productionEndTerminal("TurboReturnRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TermAsRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=FunctionTerm(true){ replaceName(n);} {return productionEndTerminal("TermAsRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=VariableTerm(true){ replaceName(n);} {return productionEndTerminal("TermAsRule2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo DerivedRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=BasicDerivedRule(true){ replaceName(n);} {return productionEndTerminal("DerivedRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=TurboDerivedRule(true){ replaceName(n);} {return productionEndTerminal("DerivedRule2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo BasicDerivedRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=CaseRule(true){ replaceName(n);} {return productionEndTerminal("BasicDerivedRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CaseRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<SWITCH> n=Term(true){ replaceName(n);} (n=CaseTermRule(true){ replaceName(n);})+ [n=OtherwiseRule(true){ replaceName(n);}] <END_SWITCH> {return productionEndTerminal("CaseRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TurboDerivedRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	n=RecursiveWhileRule(true){ replaceName(n);} {return productionEndTerminal("TurboDerivedRule1","-","-","Replacement","Default",first,token);}
+ |
+	n=IterativeWhileRule(true){ replaceName(n);} {return productionEndTerminal("TurboDerivedRule2","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo RecursiveWhileRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<WHILEREC> n=Term(true){ replaceName(n);} <DO> n=Rule(true){ replaceName(n);} {return productionEndTerminal("RecursiveWhileRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo IterativeWhileRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<WHILE> n=Term(true){ replaceName(n);} <DO> n=Rule(true){ replaceName(n);} {return productionEndTerminal("IterativeWhileRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo TryCatchRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<TRY> n=Rule(true){ replaceName(n);} <CATCH> n=TermList(true){ replaceName(n);} n=Rule(true){ replaceName(n);} {return productionEndTerminal("TryCatchRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_VARIABLE(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_VARIABLE>{ replaceName(new FSTInfo("<ID_VARIABLE>",t.image));} {return productionEndTerminal("ID_VARIABLE","-","{<ID_VARIABLE>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_ENUM(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_ENUM>{ replaceName(new FSTInfo("<ID_ENUM>",t.image));} {return productionEndTerminal("ID_ENUM","-","{<ID_ENUM>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_DOMAIN(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_DOMAIN>{ replaceName(new FSTInfo("<ID_DOMAIN>",t.image));} {return productionEndTerminal("ID_DOMAIN","-","{<ID_DOMAIN>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo CaseTermRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<CASE> n=Term(true){ replaceName(n);} ":" n=Rule(true){ replaceName(n);} {return productionEndTerminal("CaseTermRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo OtherwiseRule(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	<OTHERWISE> n=Rule(true){ replaceName(n);} {return productionEndTerminal("OtherwiseRule","-","-","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_RULE(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_RULE>{ replaceName(new FSTInfo("<ID_RULE>",t.image));} {return productionEndTerminal("ID_RULE","-","{<ID_RULE>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_INVARIANT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_INVARIANT>{ replaceName(new FSTInfo("<ID_INVARIANT>",t.image));} {return productionEndTerminal("ID_INVARIANT","-","{<ID_INVARIANT>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_FUNCTION(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_FUNCTION>{ replaceName(new FSTInfo("<ID_FUNCTION>",t.image));} {return productionEndTerminal("ID_FUNCTION","-","{<ID_FUNCTION>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID_AGENT(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID_FUNCTION>{ replaceName(new FSTInfo("<ID_FUNCTION>",t.image));} {return productionEndTerminal("ID_AGENT","-","{<ID_FUNCTION>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo ID(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<ID>{ replaceName(new FSTInfo("<ID>",t.image));} {return productionEndTerminal("ID","-","{<ID>}","Replacement","Default",first,token);}
+
+ )  }
+
+FSTInfo MOD_ID(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
+} { {first=getToken(1); productionStart(inTerminal); } (
+	t=<MOD_ID>{ replaceName(new FSTInfo("<MOD_ID>",t.image));} {return productionEndTerminal("MOD_ID","-","{<MOD_ID>}","Replacement","Default",first,token);}
+
+ )  }
+

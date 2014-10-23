@@ -24,6 +24,7 @@
         <file path="/fstgen/.project"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.csharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.capprox"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;builder.asmetal"/>        
         <javaElement handleIdentifier="=fstcomp/&lt;counter"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.content.Parseables.CSharp"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.haskell"/>
@@ -61,6 +62,7 @@
         <javaElement handleIdentifier="=fstcomp/&lt;printer.fj"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.capprox"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.text"/>
+        <javaElement handleIdentifier="=fstcomp/&lt;printer.asmetal"/>
         <javaElement handleIdentifier="=fstcomp/&lt;modification.traversalLanguageParser.addressManagement"/>
         <javaElement handleIdentifier="=fstcomp/&lt;builder.binary"/>
         <javaElement handleIdentifier="=fstcomp/&lt;printer.javacc"/>
