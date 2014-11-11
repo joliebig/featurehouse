@@ -1,0 +1,731 @@
+options {
+  JAVA_UNICODE_ESCAPE = false;
+  ERROR_REPORTING = true;
+  STATIC = false;
+  LOOKAHEAD = 7;  
+}
+
+
+PARSER_BEGIN(AsmetaLParser)
+package de.ovgu.cide.fstgen.parsers.generated_AsmetaL;
+
+import java.io.*;
+import java.util.*;
+import cide.gast.*;
+import cide.gparser.*;
+import de.ovgu.cide.fstgen.ast.*;
+
+
+public class AsmetaLParser extends AbstractFSTParser
+{
+ 	public AsmetaLParser(){}
+}
+
+PARSER_END(AsmetaLParser)
+
+<DEFAULT,GENERIC_ID,MODULE_ID> SPECIAL_TOKEN :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| "\f"
+}
+
+MORE:
+{
+  "//": IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); }: IN_FORMAL_COMMENT
+|
+  "/*": IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN:
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" >: DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN:
+{
+  <FORMAL_COMMENT: "*/" >: DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN:
+{
+  <MULTI_LINE_COMMENT: "*/" >: DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE:
+{
+  < ~[] >
+}
+
+
+/* RESERVED WORDS AND LITERALS */
+
+<DEFAULT> TOKEN : {
+	  <ASM: "asm"> : GENERIC_ID
+	| <MODULE: "module"> : GENERIC_ID
+	| <ORIGINAL: "@original">
+	| <FINALRULE: "@final_rule">
+	| <FINALINVARIANT: "@final_invariant">
+	| <CONJUNCT: "@conjunct">
+	| <ASYNCR: "asyncr">
+	| <IMPORT: "import"> : MODULE_ID
+	| <EXPORT: "export">
+	| <SIGNATURE: "signature">
+	| <INIT: "init"> : GENERIC_ID
+	| <Default: "default">
+	| <AGENT: "agent">
+	| <INVARIANT: "invariant">
+	| <OVER: "over">
+	| <DEFINITIONS: "definitions">
+	| <FUNCTION: "function">
+	| <STATIC: "static">
+	| <DYNAMIC: "dynamic">
+	| <DERIVED: "derived">
+	| <MONITORED: "monitored">
+	| <CONTROLLED: "controlled">
+	| <SHARED: "shared">
+	| <OUT: "out">
+	| <DOMAIN: "domain">
+	| <ANYDOMAIN: "anydomain">
+	| <BASIC: "basic">
+	| <ABSTRACT: "abstract">
+	| <ENUM: "enum">
+	| <SUBSETOF: "subsetof">
+	| <PROD: "Prod">
+	| <SEQ: "Seq">
+	| <POWERSET: "Powerset">
+	| <BAG: "Bag">
+	| <MAP: "Map">
+	| <RULEDOM: "Rule">
+	| <TRUE: "true">
+	| <FALSE: "false">
+	| <UNDEF: "undef">
+	| <IM_PART: "i">
+	| <IF: "if">
+	| <THEN: "then">
+	| <ELSE: "else">
+	| <ENDIF: "endif">
+	| <SWITCH: "switch">
+	| <END_SWITCH: "endswitch">
+	| <CASE: "case">
+	| <OTHERWISE: "otherwise">
+	| <ENDCASE: "endcase">
+	| <LET: "let">
+	| <ENDLET: "endlet">
+	| <EXIST: "exist">
+	| <UNIQUE: "unique">
+	| <WITH: "with">
+	| <FORALL: "forall">
+	| <Skip: "skip">
+	| <RULE: "rule">
+	| <MACRO: "macro">
+	| <TURBO: "turbo">
+	| <MAIN: "main">
+	| <PAR: "par">
+	| <ENDPAR: "endpar">
+	| <CHOOSE: "choose">
+	| <DO: "do">
+	| <IFNONE: "ifnone">
+	| <EXTEND: "extend">
+	| <seq: "seq">
+	| <ENDSEQ: "endseq">
+	| <ITERATE: "iterate">
+	| <ENDITERATE: "enditerate">
+	| <LOCAL: "local">
+	| <TRY: "try">
+	| <CATCH: "catch">
+	| <WHILE: "while">
+	| <WHILEREC: "whilerec">
+	| <IN: "in">
+	| <EQ: "=">
+	| <LT: "<">
+	| <LE: "<=">
+	| <GT: ">">
+	| <GE: ">=">
+	| <NEQ: "!=">
+	| <PLUS: "+">
+	| <MINUS: "-">
+	| <MULT: "*">
+	| <DIV: "/">
+	| <PWR: "^">
+	| <AND: "and">
+	| <NOT: "not">
+	| <OR: "or">
+	| <XOR: "xor">
+	| <IMPLIES: "implies">
+	| <MOD: "mod">
+	| <NOTIN: "notin">
+	| <IFF: "iff">
+	| <CTLSPEC: "CTLSPEC">	
+	}
+
+
+/* IDENTIFIERS AND NUMBERS */
+<DEFAULT> TOKEN: 
+{
+      <NUMBER: (<DIGIT>)+>
+	| <NATNUMBER: (<DIGIT>)+ "n">
+	| <REAL_NUMBER: (<DIGIT>)+ "." (<DIGIT>)+>
+	| <COMPLEX_NUMBER: ((["+","-"])? (<DIGIT>)+ ("." (<DIGIT>)+)?)? (["+","-"])? "i" ((<DIGIT>)+ ("." (<DIGIT>)+)?)?>
+	| <ID_VARIABLE: "$" <LETTER> (<LETTER> | <DIGIT>)*>
+	| <ID_ENUM: ["A"-"Z"] ["A"-"Z"] ("_" | ["A"-"Z"] | <DIGIT>)*>
+	| <ID_DOMAIN: ["A"-"Z"] ("_" | ["a"-"z"] | ["A"-"Z"] | <DIGIT>)*>
+	| <ID_RULE: "r_" (<LETTER> | <DIGIT>)+>
+	| <ID_INVARIANT: "inv_" (<LETTER> | <DIGIT>)+>
+	| <ID_FUNCTION: ["a"-"z"] (<LETTER> | <DIGIT>)*>
+	| <#LETTER: ["_","a"-"z","A"-"Z"]>
+	| <#DIGIT: ["0"-"9"]>
+	| <CHAR_LITERAL: "\'" (~["\'","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\'">
+	| <STRING_LITERAL: "\"" (~["\"","\\","\n","\r"] | "\\" (["n","t","b","r","f","\\","\'","\""] | ["0"-"7"] (["0"-"7"])? | ["0"-"3"] ["0"-"7"] ["0"-"7"]))* "\"">
+}
+
+<GENERIC_ID> TOKEN : {
+<ID: <LETTER> (<LETTER> | <DIGIT>)*> : DEFAULT
+}
+
+   
+<MODULE_ID> TOKEN : {
+<MOD_ID: (<LETTER> | "." | "/" | "\\") (<LETTER> | <DIGIT> | "." | "/" | "\\" | ":")*> : DEFAULT
+}
+
+GRAMMARSTART
+
+AsmOrModule:
+	<ASM> | <MODULE> @!
+;
+
+
+DefaultCommand: <Default>;
+
+@FSTNonTerminal()
+DefaultInitialization:
+DefaultCommand Initialization;
+
+@FSTNonTerminal()
+Initializations:
+	( Initialization )* DefaultInitialization ( Initialization )* @!; 
+
+
+MainCommand: <MAIN>;
+
+@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
+MainMacroDeclaration: MainCommand MacroDeclaration @!;
+
+@FSTNonTerminal("{ModuleDeclaration}")
+ModuleDeclaration:
+	ID @! Header @! Body @! [MainMacroDeclaration] @! [Initializations];
+
+@FSTNonTerminal()
+CompilationUnit:	
+	[<ASYNCR>]
+	AsmOrModule
+	ModuleDeclaration
+	
+<EOF>;
+  
+
+DomainOrFunctionOrRule:  
+   ID_DOMAIN | ID_FUNCTION | ID_RULE 
+  ;
+  
+@FSTNonTerminal("{Header}") 
+Header:	( ImportClause )* ( ExportClause )? Signature;
+
+ImportBody:
+ "(" DomainOrFunctionOrRule ( "," DomainOrFunctionOrRule )* ")" 
+;
+
+ImportClause:	
+	<IMPORT> 
+	MOD_ID 
+	[ImportBody]
+;
+
+ExportBodyOrAst:
+ ExportBody | "*" 
+;
+
+ExportBody:
+ DomainOrFunctionOrRule ( "," DomainOrFunctionOrRule )* 
+;
+
+ExportClause:	
+	<EXPORT> ExportBodyOrAst
+;
+
+TermInDomain:
+VariableTerm <IN> getDomainByID
+;
+
+@FSTTerminal(name="{SignatureCommand}")
+SignatureCommand: <SIGNATURE> ":";
+
+@FSTNonTerminal(name="{<SIGNATURE>}")
+Signature:	SignatureCommand ( Domain )* ( Function )* @!; 
+
+OriginalInit:
+<ORIGINAL> "()";
+
+@FSTTerminal(name="{ID}", compose="AsmetaLInitializationConcatenation")
+Initialization:	<INIT> ID ":" [OriginalInit] ( DomainInitialization )* ( FunctionInitialization )* ( AgentInitialization )* [OriginalInit] @!;
+
+@FSTTerminal(name="{ID_DOMAIN}")
+DomainInitialization:	<DOMAIN> ID_DOMAIN "=" Term @!;
+
+TermInDomainList:
+ 	"(" &LI TermInDomain ( "," &LI TermInDomain )* ")"
+;
+
+@FSTTerminal(name="{ID_FUNCTION}", compose="AsmetaLFunctionOverriding")
+FunctionInitialization:
+	<FUNCTION> ID_FUNCTION [TermInDomainList] "=" Term @!
+;
+
+AgentInitialization:	<AGENT> ID_DOMAIN ":" MacroCallRule @!;
+
+@FSTTerminal(name="{DefinitionsCommand}")
+DefinitionsCommand: <DEFINITIONS> ":";
+
+@FSTNonTerminal(name="Body")
+Body:	DefinitionsCommand ( DomainDefinition )* ( FunctionDefinition )* ( RuleDeclaration )* (CTLSPECS)* ( Invariant )*;
+
+@FSTTerminal(name="{ID_DOMAIN}")
+DomainDefinition:	<DOMAIN> ID_DOMAIN "=" Term @!;
+
+@FSTTerminal(name="{ID_FUNCTION}", compose="AsmetaLFunctionOverriding")
+FunctionDefinition:
+	<FUNCTION> ID_FUNCTION [TermInDomainList] "=" Term @!
+;
+
+
+RuleDeclaration: 
+@FSTTerminal(name="{MacroDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
+	[<FINALRULE>] MacroDeclaration @! | 
+@FSTTerminal(name="{TurboDeclaration}",type="RuleDeclaration", compose="AsmetaLRuleOverriding")
+	[<FINALRULE>] TurboDeclaration @!;
+
+@FSTExportName("{ID_RULE}")
+MacroDeclaration:	
+	( <MACRO> )? <RULE> ID_RULE [TermInDomainList] "=" Rule
+;
+
+TurboDeclarationDomain:
+	<IN> getDomainByID
+;
+
+@FSTExportName("{ID_RULE}")
+TurboDeclaration:	
+	<TURBO> <RULE> ID_RULE [TermInDomainList] TurboDeclarationDomain "=" Rule @!
+;
+
+getDomainByIDBrackets:
+	"(" [getDomainByID] ")"
+;
+
+DomainOrFunctionIDOrRule:
+	ID_DOMAIN | 
+	ID_FUNCTION [ getDomainByIDBrackets ] | 
+	ID_RULE  
+;
+
+DomainOrFunctionIDOrRuleList:
+	&LI DomainOrFunctionIDOrRule ( "," &LI DomainOrFunctionIDOrRule )*
+;
+
+CTLSPECS: <CTLSPEC> Term;
+
+InvariantRefinement:
+<FINALINVARIANT> <CONJUNCT> |
+<CONJUNCT> <FINALINVARIANT> |
+<FINALINVARIANT> |
+<CONJUNCT>
+;
+
+
+
+UnnamedInvariant:
+	<INVARIANT> <OVER> 
+	DomainOrFunctionIDOrRuleList
+	  ":" Term @!
+	  ;
+
+Invariant:
+@FSTNonTerminal(name="UnnamedInvariant", type = "Invariant")
+	UnnamedInvariant |
+@FSTTerminal(name="{NamedInvariant}", type = "Invariant", compose="AsmetaLInvariantConjunction")
+	NamedInvariant;
+	
+@FSTExportName("{ID_INVARIANT}")
+NamedInvariant:	
+	<INVARIANT> ID_INVARIANT [InvariantRefinement] <OVER> 
+	DomainOrFunctionIDOrRuleList
+	  ":" Term @!
+;
+
+
+Domain:
+@FSTTerminal(name="{ConcreteDomain}", type="Domain")
+ConcreteDomain @! | 
+@FSTTerminal(name="{TypeDomain}", type="Domain")
+TypeDomain @!;
+
+@FSTExportName("{ID_DOMAIN}")
+ConcreteDomain:	( <DYNAMIC> )? <DOMAIN> ID_DOMAIN <SUBSETOF> getDomainByID @!;
+
+TypeDomain:	 
+@FSTExportName("{AnyDomain}")
+AnyDomain @! | 
+@FSTExportName("{StructuredTD}")
+StructuredTD @! | 
+@FSTExportName("{EnumTD}")
+EnumTD @! | 
+@FSTExportName("{AbstractTD}")
+AbstractTD @! | 
+@FSTExportName("{BasicTD}")
+BasicTD @!;
+
+@FSTExportName("{ID_DOMAIN}")
+AnyDomain:	<ANYDOMAIN> ID_DOMAIN;
+
+@FSTExportName("{ID_DOMAIN}")
+BasicTD:	<BASIC> <DOMAIN> ID_DOMAIN;
+
+@FSTExportName("{ID_DOMAIN}")
+AbstractTD:	( <DYNAMIC> )? <ABSTRACT> <DOMAIN> ID_DOMAIN;
+
+@FSTExportName("{ID_DOMAIN}")
+EnumTD:	<ENUM> <DOMAIN> ID_DOMAIN "=" "{" EnumElement ( "|" EnumElement )* "}";
+
+@FSTExportName("{ID_ENUM}")
+EnumElement:	ID_ENUM;
+
+StructuredTD:	 
+@FSTExportName("{ProductDomain}")
+ProductDomain | 
+@FSTExportName("{SequenceDomain}")
+SequenceDomain | 
+@FSTExportName("{PowersetDomain}")
+PowersetDomain | 
+@FSTExportName("{BagDomain}")
+BagDomain | 
+@FSTExportName("{MapDomain}")
+MapDomain ;
+
+@FSTExportName("{getDomainByID}")
+ProductDomain:	<PROD> "(" getDomainByID ( "," getDomainByID )+ ")";
+@FSTExportName("{getDomainByID}")
+SequenceDomain:	<SEQ> "(" getDomainByID ")";
+@FSTExportName("{getDomainByID}")
+PowersetDomain:	<POWERSET> "(" getDomainByID ")";
+@FSTExportName("{getDomainByID}")
+BagDomain:	<BAG> "(" getDomainByID ")";
+@FSTExportName("{getDomainByID}")
+MapDomain:	<MAP> "(" getDomainByID "," getDomainByID ")";
+
+getDomainByID:	
+@FSTExportName("{ID_DOMAIN}")
+ID_DOMAIN | 
+@FSTExportName("{StructuredTD}")
+StructuredTD;
+
+
+Function:	
+@FSTTerminal(name="{BasicFunction}",type="Function")
+	BasicFunction @!| 
+@FSTTerminal(name="{DerivedFunction}",type="Function")
+	DerivedFunction @!;
+
+BasicFunction:	
+@FSTExportName("{StaticFunction}")
+	StaticFunction | 
+@FSTExportName("{DynamicFunction}")
+	DynamicFunction;
+
+@FSTExportName("derived {ID_FUNCTION}")
+DerivedFunction:	<DERIVED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+@FSTExportName("static {ID_FUNCTION}")
+StaticFunction:	<STATIC> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+
+DynamicFunction:	
+@FSTExportName("{OutFunction}")
+OutFunction | 
+@FSTExportName("{MonitoredFunction}")
+MonitoredFunction | 
+@FSTExportName("{SharedFunction}")
+SharedFunction | 
+@FSTExportName("{ControlledFunction}")
+ControlledFunction | 
+@FSTExportName("{LocalFunction}")
+LocalFunction ;
+
+@FSTExportName("local {ID_FUNCTION}")
+LocalFunction:	( <DYNAMIC> )? <LOCAL> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+@FSTExportName("controlled {ID_FUNCTION}")
+ControlledFunction:	( <DYNAMIC> )? <CONTROLLED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+@FSTExportName("shared {ID_FUNCTION}")
+SharedFunction:	( <DYNAMIC> )? <SHARED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+@FSTExportName("monitored {ID_FUNCTION}")
+MonitoredFunction:	( <DYNAMIC> )? <MONITORED> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+@FSTExportName("out {ID_FUNCTION}")
+OutFunction:	( <DYNAMIC> )? <OUT> ID_FUNCTION ":" ( getDomainByID "->" )? getDomainByID;
+
+Term: Expression | ExtendedTerm;
+
+Expression:
+	B_BExpression (BXB_BExpression)*;
+	
+BXB_BExpression:
+	<IN> B_BExpression | <NOTIN> B_BExpression | <AND> B_BExpression | <OR> B_BExpression | <XOR> B_BExpression | <IMPLIES> B_BExpression | <IFF> B_BExpression;
+	
+B_BExpression:
+	<NOT> relationalExpr | relationalExpr;
+	
+relationalExpr:	
+	additiveExpr ( ReladditiveExpr )*
+;
+
+ReladditiveExpr: <EQ> additiveExpr | <NEQ> additiveExpr | <LT> additiveExpr | <LE> additiveExpr | <GT> additiveExpr | <GE> additiveExpr;
+
+additiveExpr:	multiplicativeExpr ( PlusMinusMultiExpr )*;
+
+PlusMinusMultiExpr: <PLUS> multiplicativeExpr | <MINUS> multiplicativeExpr;
+
+multiplicativeExpr:	
+	powerExpr 
+	(signpowerExpr)*
+;
+
+signpowerExpr: <MOD> powerExpr | <MULT> powerExpr | <DIV> powerExpr;
+
+powerExpr:	unaryExpr ( pwrunaryExpr )*;
+
+pwrunaryExpr: <PWR> unaryExpr;
+
+unaryExpr:	signunaryExpr | basicExpr;
+
+signunaryExpr: <PLUS> unaryExpr | <MINUS> unaryExpr;
+
+VariableList: 
+&LI <ID_VARIABLE> ( "," &LI <ID_VARIABLE> )*;
+
+
+FunctionOriginalCall:
+<ORIGINAL> ["(" VariableList ")"] 
+;
+
+
+
+basicExpr:	 FunctionOriginalCall | BasicTerm | DomainTerm | FiniteQuantificationTerm | BracketedExpression;
+
+	BasicTerm:	ConstantTerm | VariableTerm | FunctionTerm;
+		ConstantTerm:	ComplexTerm | RealTerm | IntegerTerm | NaturalTerm | CharTerm | StringTerm | BooleanTerm | UndefTerm | EnumTerm;
+			ComplexTerm:	<COMPLEX_NUMBER>;
+			RealTerm:	 <REAL_NUMBER> ;
+			IntegerTerm:	<NUMBER>;
+			NaturalTerm:	<NATNUMBER>;
+			CharTerm:	<CHAR_LITERAL>;
+			StringTerm:	<STRING_LITERAL>;
+			BooleanTerm:	 <TRUE> | <FALSE> ;
+			UndefTerm:	<UNDEF>;
+			EnumTerm:	ID_ENUM;			
+		VariableTerm:	ID_VARIABLE;
+		FunctionTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
+		
+	DomainTerm:	getDomainByID;
+
+	FiniteQuantificationTerm:	 ForallTerm | ExistUniqueTerm | ExistTerm ;
+		ForallTerm:	"(" <FORALL> VariableInTermList ( WithTerm )? ")";
+			VariableInTermList: &LI VariableInTerm ( "," &LI VariableInTerm )*;
+				VariableInTerm: VariableTerm <IN> Term;
+			WithTerm: <WITH> Term;
+					
+		ExistUniqueTerm: "(" <EXIST> <UNIQUE>  VariableInTermList ( WithTerm )? ")";
+		ExistTerm:	"(" <EXIST> VariableInTermList ( WithTerm )? ")";
+		
+	BracketedExpression: "(" Expression ")";
+
+ExtendedTerm:	 ConditionalTerm | CaseTerm | TupleTerm | VariableBindingTerm | CollectionTerm | RuleAsTerm | DomainTerm ;
+	ConditionalTerm: <IF> Term <THEN> Term (ElseTerm )? <ENDIF>;
+		ElseTerm:  <ELSE> Term;
+
+LocationTerm:	( ID_AGENT "." )? ID_FUNCTION ( TupleTerm )?;
+
+CaseTermTerm: <CASE> Term ":" Term ;
+
+OtherwiseTerm: <OTHERWISE> Term;
+
+CaseTerm:	
+	<SWITCH> Term (CaseTermTerm )+ ( OtherwiseTerm )? <END_SWITCH>
+;
+
+TupleTerm:	"(" Term ( PunctationTerm )* ")";
+
+PunctationTerm: "," Term;
+
+CollectionTerm:	 SequenceTerm | MapTerm | SetTerm | BagTerm ;
+
+AdditionalTerm:  "," Term;
+
+DotsTerm: ".." Term;
+
+DotsOrAdditionalTerm: DotsTerm [ AdditionalTerm ];
+
+TermOrSequenceTerm:  (AdditionalTerm)+ | DotsOrAdditionalTerm 	;
+
+TermTermOrSequenceTerm: Term [TermOrSequenceTerm];
+
+SequenceTerm:	
+	"[" 
+	[TermTermOrSequenceTerm] 
+	"]"
+;
+
+SetTerm:	
+	"{" ( TermTermOrSequenceTerm )? "}"
+;
+
+ArrowTerm: "->" Term;
+
+AdditionalArrowTerm: AdditionalTerm ArrowTerm;
+
+TermAdditionalArrowTerm: Term ArrowTerm ( AdditionalArrowTerm )* ;
+
+ArrowTermAdditionalArrowTerm: "->" | TermAdditionalArrowTerm;
+
+MapTerm:	"{" ArrowTermAdditionalArrowTerm "}";
+
+BagTerm:	"<" [TermTermOrSequenceTerm] ">";
+
+VariableBindingTerm:	 LetTerm | FiniteQuantificationTerm | ComprehensionTerm ;
+
+
+
+
+
+
+
+TermList: &LI Term ( "," &LI Term )*;
+
+
+
+VariableTermEqualsTerm: VariableTerm "=" Term;
+
+VariableTermEqualsTermList: &LI VariableTermEqualsTerm ( "," &LI VariableTermEqualsTerm )*;
+
+LetTerm:
+	<LET> "(" VariableTermEqualsTermList ")" <IN> Term <ENDLET>
+;
+ComprehensionTerm:	SetCT | MapCT | SequenceCT | BagCT;
+
+OrTerm:  "|" Term;
+
+SetCT:	"{" VariableInTermList ( OrTerm )? ":" Term "}";
+MapCT:	"{" VariableInTermList ( OrTerm )? ":" Term "->" Term "|" "}";
+SequenceCT:	"[" VariableInTermList ( OrTerm )? ":" Term "]";
+BagCT:	"<" VariableInTermList ( OrTerm )? ":" Term ">";
+
+getDomainByIDList: &LI getDomainByID ( "," &LI getDomainByID )*;
+
+
+RuleAsTerm:	"<<" ID_RULE ( "(" getDomainByIDList ")" )? ">>";
+LocationOrVariableTerm: LocationTerm | VariableTerm;
+ElseRule: <ELSE> Rule;
+IfNoneRule: <IFNONE> Rule;
+
+Rule:	 
+@FSTTerminal(name="{Rule}")
+	BasicRule | 
+@FSTTerminal(name="{Rule}")
+	TurboRule | 
+@FSTTerminal(name="{Rule}")
+	UpdateRule | 
+@FSTTerminal(name="{Rule}")
+	TurboReturnRule | 
+@FSTTerminal(name="{Rule}")
+	TermAsRule | 
+@FSTTerminal(name="{Rule}")
+	DerivedRule	 
+;	
+
+	BasicRule:	 SkipRule | MacroCallRule | MacroCallRuleOriginal | BlockRule | ConditionalRule | ChooseRule | ForallRule | LetRule | ExtendRule | CallRuleOriginalSub;
+		SkipRule:	<Skip>;
+		BlockRule:	<PAR> Rule (Rule)+ <ENDPAR>;
+		ConditionalRule:	<IF> Term <THEN> Rule ( ElseRule )? <ENDIF>;
+		ChooseRule:	<CHOOSE> VariableInTermList <WITH> Term <DO> Rule ( IfNoneRule )?;
+		ForallRule:	<FORALL> VariableInTermList ( WithTerm )? <DO> Rule;
+		LetRule:	<LET> "(" VariableTermEqualsTermList ")" <IN> Rule <ENDLET>;
+		
+		MacroCallRule:	ID_RULE "[" [TermList] "]";
+		MacroCallRuleOriginal:	<ORIGINAL>	"[" [TermList] "]";		
+		CallRuleOriginalSub:	<ORIGINAL> "#" <ID_FUNCTION>;
+		
+		ExtendRule:	<EXTEND> ID_DOMAIN <WITH> VariableTerm ( "," VariableTerm )* <DO> Rule;
+
+	TurboRule:	 SeqRule | IterateRule | TurboCallRule | TurboLocalStateRule ;
+		SeqRule:	<seq> Rule (Rule)+ <ENDSEQ>;
+		IterateRule:	<ITERATE> Rule <ENDITERATE>;
+		TurboCallRule:	ID_RULE "(" TermList ")" |
+						<ORIGINAL> "(" TermList ")";
+		TurboLocalStateRule:	( LocalFunctionRule)+ Rule;
+			LocalFunctionRule: LocalFunction "[" Rule "]";
+
+	UpdateRule:	LocationOrVariableTerm ":=" Term;
+
+	TurboReturnRule:	 LocationOrVariableTerm  "<-" TurboCallRule;
+
+	TermAsRule:	 FunctionTerm | VariableTerm ;
+	
+	DerivedRule:	 BasicDerivedRule | TurboDerivedRule;
+		BasicDerivedRule:	CaseRule;
+			CaseRule:	<SWITCH> Term ( CaseTermRule )+ [OtherwiseRule] <END_SWITCH>;
+		TurboDerivedRule:	 RecursiveWhileRule | IterativeWhileRule ;		
+			RecursiveWhileRule:	<WHILEREC> Term <DO> Rule;
+			IterativeWhileRule:	<WHILE> Term <DO> Rule;
+
+
+
+
+	TryCatchRule:	<TRY> Rule <CATCH> TermList Rule;
+
+@FSTExportName("{<ID_VARIABLE>}")
+ID_VARIABLE:	<ID_VARIABLE>;
+@FSTExportName("{<ID_ENUM>}")
+ID_ENUM:	<ID_ENUM>;
+@FSTExportName("{<ID_DOMAIN>}")
+ID_DOMAIN:	<ID_DOMAIN>;
+
+CaseTermRule: <CASE> Term ":" Rule;
+
+OtherwiseRule: <OTHERWISE> Rule;
+
+@FSTExportName("{<ID_RULE>}")
+ID_RULE:	<ID_RULE>;
+
+
+
+
+@FSTExportName("{<ID_INVARIANT>}")
+ID_INVARIANT:	<ID_INVARIANT>;
+
+@FSTExportName("{<ID_FUNCTION>}")
+ID_FUNCTION:	<ID_FUNCTION>;
+@FSTExportName("{<ID_FUNCTION>}")
+ID_AGENT:	<ID_FUNCTION>;
+@FSTExportName("{<ID>}")
+ID:	 <ID> ;
+@FSTExportName("{<MOD_ID>}")
+MOD_ID:	 <MOD_ID> ;

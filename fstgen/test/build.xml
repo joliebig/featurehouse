@@ -7,7 +7,7 @@
 
      ckaestne
      ====================================================================== -->
-<project name="test_fstgen" default="testContract">
+<project name="test_fstgen" default="testAsmetaL">
 	<echo>${java.class.path}</echo>
 	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
@@ -206,7 +206,17 @@
 			<param name="testFile" value="Test.sdf" />
 		</antcall>
 	</target>
-
+	
+	<target name="testAsmetaL">
+		<antcall target="testGrammar">
+			<param name="language" value="AsmetaL" />
+			<param name="parserClass" value="AsmetaLParser" />
+			<param name="mainProduction" value="CompilationUnit" />
+			<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
+			<param name="testFile" value="Test.asm" />
+	</antcall>
+	</target>
+	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/generated_${language}" />
 
