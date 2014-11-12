@@ -7,7 +7,6 @@ import java.util.List;
 import cide.gparser.CharStream;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
-
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;

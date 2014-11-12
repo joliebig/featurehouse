@@ -26,7 +26,7 @@ import printer.xml.XMLPrintVisitor;
 import processor.capprox.CIncludeGuardGenerator;
 import builder.ArtifactBuilderInterface;
 import builder.alloy.AlloyBuilder;
-import builder.asmetal.AsmetaLBuilder; 
+import builder.asmetal.AsmetaLBuilder;
 import builder.binary.BinaryBuilder;
 import builder.capprox.CApproxBuilder;
 import builder.csharp.CSharpBuilder;

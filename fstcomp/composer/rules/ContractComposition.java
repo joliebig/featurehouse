@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 import composer.CompositionException;
 import composer.FSTGenComposer;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;

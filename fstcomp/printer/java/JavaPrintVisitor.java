@@ -6,7 +6,6 @@ import java.io.PrintStream;
 
 import printer.ArtifactPrintVisitor;
 import printer.PrintVisitorException;
-
 import de.ovgu.cide.fstgen.ast.AbstractFSTPrintVisitor;
 import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNode;

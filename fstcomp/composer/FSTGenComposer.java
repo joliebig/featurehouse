@@ -16,11 +16,12 @@ import builder.capprox.CApproxBuilder;
 import builder.java.JavaBuilder;
 import builder.xml.XMLHook;
 import builder.xml.XMLNode;
-import composer.rules.CSharpMethodOverriding;
+
 import composer.rules.AsmetaLFunctionOverriding;
 import composer.rules.AsmetaLInitializationConcatenation;
-import composer.rules.AsmetaLRuleOverriding;
 import composer.rules.AsmetaLInvariantConjunction;
+import composer.rules.AsmetaLRuleOverriding;
+import composer.rules.CSharpMethodOverriding;
 import composer.rules.CompositionError;
 import composer.rules.CompositionRule;
 import composer.rules.ConstructorConcatenation;
@@ -39,6 +40,7 @@ import composer.rules.rtcomp.c.CRuntimeReplacement;
 import composer.rules.rtcomp.java.JavaRuntimeFeatureSelection;
 import composer.rules.rtcomp.java.JavaRuntimeFunctionRefinement;
 import composer.rules.rtcomp.java.JavaRuntimeReplacement;
+
 import counter.Counter;
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;

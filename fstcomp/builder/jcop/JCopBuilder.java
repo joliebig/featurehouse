@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.StringTokenizer;
 
-
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;

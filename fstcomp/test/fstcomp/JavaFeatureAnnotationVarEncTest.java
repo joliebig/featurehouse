@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class JavaFeatureAnnotationVarEncTest {

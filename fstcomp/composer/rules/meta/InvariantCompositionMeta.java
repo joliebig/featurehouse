@@ -2,6 +2,7 @@ package composer.rules.meta;
 
 import composer.FSTGenComposerExtension;
 import composer.rules.AbstractCompositionRule;
+
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.ast.FSTTerminal;

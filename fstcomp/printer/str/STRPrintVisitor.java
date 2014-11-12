@@ -3,11 +3,12 @@ package printer.str;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+
+import printer.ArtifactPrintVisitor;
+import printer.PrintVisitorException;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.parsers.generated_stratego.SimplePrintVisitor;
-import printer.ArtifactPrintVisitor;
-import printer.PrintVisitorException;
 
 public class STRPrintVisitor extends ArtifactPrintVisitor {
 

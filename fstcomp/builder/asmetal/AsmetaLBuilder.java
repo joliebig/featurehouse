@@ -8,7 +8,6 @@ import java.util.StringTokenizer;
 import builder.ArtifactBuilder;
 import cide.gparser.OffsetCharStream;
 import cide.gparser.ParseException;
-import de.ovgu.cide.fstgen.ast.CommandLineParameterHelper;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 import de.ovgu.cide.fstgen.parsers.generated_AsmetaL.AsmetaLParser;
 
