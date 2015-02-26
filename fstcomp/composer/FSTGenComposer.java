@@ -177,7 +177,9 @@ public class FSTGenComposer extends FSTGenProcessor {
 				}
 			}
 			try {
-				meta.saveToFile(outputDir + File.separator + "roles.meta");
+				if (cmd.exportRolesInJSONformat) {
+					meta.saveToFile(outputDir + File.separator + "roles.meta");
+				}
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
 					FSTGenComposer.outStream.println("cnfFile:" + cnfFile.getAbsolutePath());

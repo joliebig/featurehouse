@@ -35,6 +35,8 @@ public class CmdLineInterpreter {
 	public static final String INPUT_OPTION_LIFTING = "--lift";
 	
 	public static final String INPUT_OPTION_ANNOTATION = "--featureAnnotationJava";
+	
+	public static final String INPUT_OPTION_EXPORT_ROLES_IN_JSON_FORMAT = "--export_roles_json";
 
 	public boolean verbose = false;
 
@@ -67,6 +69,8 @@ public class CmdLineInterpreter {
 	public String lifting_language = "";
 	
 	public boolean featureAnnotation = false;
+	
+	public boolean exportRolesInJSONformat = false;
 
 	public void parseCmdLineArguments(String[] args) {
 		boolean jml = false;
@@ -157,9 +161,9 @@ public class CmdLineInterpreter {
 						throw new IllegalArgumentException(
 								"Unknown contract style. Please choose from: plain_contracting, explicit_contracting, consecutive_contracting, method_based");
 					}
-				}
-
-				else {
+				} else if (args[i].equals(INPUT_OPTION_EXPORT_ROLES_IN_JSON_FORMAT)) {
+					exportRolesInJSONformat=true;
+				} else {
 					errorOccured = true;
 				}
 			}
@@ -191,8 +195,12 @@ public class CmdLineInterpreter {
 						+ "' defines the working directory, which is the search path for the input features/components.");
 		FSTGenComposer.outStream.println("The option `" + INPUT_OPTION_LIFTING
 				+ "' can currently only be used with C or Java Code. It composes the "
-				+ "sources in a way that allows feature selection at runtime");
-
+				+ "sources in a way that allows feature selection at runtime. "
+				+ "Use " + INPUT_OPTION_LIFTING + "Java or " + INPUT_OPTION_LIFTING + "C depending on the language.");
+		FSTGenComposer.outStream.println("The option `" + INPUT_OPTION_ANNOTATION
+				+ "Adds an annotation to each method stating from which feature the method originates. Only for Java.");
+		FSTGenComposer.outStream.println("The option `" + INPUT_OPTION_EXPORT_ROLES_IN_JSON_FORMAT
+				+ "Exports a mapping from features to code files in JSON format to file roles.meta.");
 	}
 
 	private static String getDirectoryName(File file) {

@@ -157,8 +157,9 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 			try {
 				String exp = new File(cmd.equationFileName).getName();
 				exp = exp.substring(0, exp.length() - 4);
-				
-				meta.saveToFile(outputDir + File.separator + "roles.meta");
+				if (cmd.exportRolesInJSONformat) {
+					meta.saveToFile(outputDir + File.separator + "roles.meta");
+				}
 				if (cmd.lifting) {
 					File cnfFile = new File(cmd.equationBaseDirectoryName, "model.cnf");
 					FSTGenComposer.outStream.println("cnfFile:" + cnfFile.getAbsolutePath());
@@ -168,7 +169,7 @@ public class FSTGenComposerExtension extends FSTGenComposer {
 						new JavaRuntimeFeatureSelection(meta, cnfFile).saveTo(outputDir + File.separator + cmd.equationFileName + File.separator);
 					}
 				}
-			} catch (IOException e) {			
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} catch (FileNotFoundException e1) {
