@@ -414,7 +414,7 @@ CodeUnit_InBlock:
 	Statement :: Stmt;	
 
 
-@FSTTerminal(name="{TOSTRING}")		
+@FSTTerminal(name="{AnyStmtToken}^.")
 Statement:
 	(AnyStmtToken)*  ";" @!;
 	
@@ -454,31 +454,45 @@ PPDefineStatement:
 	LL(2) "#" "define" JAVATOKEN(findLineEnd)@! |
 	LL(2) "#" "undef" JAVATOKEN(findLineEnd)@!;
 
-@FSTExportName("{IfDefLine}")
+@FSTExportName("{IfDefTopLevelBlock}")
 @FSTNonTerminal
 PPIfDef_TopLevel:
-	IfDefLine  @+
-	Sequence_CodeUnit_TopLevel
+	 IfDefTopLevelBlock  @+	
 	(LL(2) IfElseIf_TopLevel)*
-	[ LL(2) @- "#" "else" @+! Sequence_CodeUnit_TopLevel ] 
-	@- "#" "endif" @!;
+	[ LL(2) @- "#" "else" @+! IfDefBlock ]
+	@- "#endif" @!;
 
+@FSTExportName("{IfDefBlockLevelBlock}")
 PPIfDef_BlockLevel:
-	IfDefLine @+
-	Sequence_CodeUnit_InBlock
+	IfDefBlockLevelBlock @+	
 	(LL(2) IfElseIf_BlockLevel)*
-	[ LL(2)@- "#" "else" @+! Sequence_CodeUnit_InBlock @!] 
+	[ LL(2)@- "#" "else" @+! IfDefBlock @!]
 	@-"#" "endif"@!;
 
 //@FSTExportName("{TOSTRING}")
 PPOtherIgnore:
 	"line" | "pragma" |"error";
 	
-@FSTExportName("{TOSTRING}")
-//@FSTTerminal(compose="CMethodOverriding")	
-IfDefLine:
-	LL(2) "#" "ifdef" <IDENTIFIER> @!| LL(2)  "#" "ifndef" <IDENTIFIER>@! | "#" "if" JAVATOKEN(findLineEnd)@!;
+
+@FSTNonTerminal(name="{IfDefHeader}-{IfDefBlock}")
+IfDefTopLevelBlock:
+	LL(2) IfDefHeader IfDefBlock @! 
+	| LL(2)  "#" "ifndef" Id@! IfDefBlock 
+	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefBlock;
 	
+@FSTExportName("{Id}")
+IfDefHeader:
+	"#ifdef" Id;
+
+@FSTNonTerminal(name="{CodeUnit_TopLevel}")
+IfDefBlock:
+	(LL(2) CodeUnit_TopLevel @!)*;
+	
+@FSTExportName("{Id}")
+@FSTNonTerminal
+IfDefBlockLevelBlock:
+	LL(2) "#ifdef" Id Sequence_CodeUnit_InBlock @! | LL(2)  "#" "ifndef" Id@! Sequence_CodeUnit_InBlock | "#" "if" JAVATOKEN(findLineEnd)@! Sequence_CodeUnit_InBlock;
+
 IfElseIf:
 	LL(2) "#" "elif" <NONE> | "#" "elsif"<NONE>;
 	
@@ -544,9 +558,14 @@ Cast:
 	"(" FunctionReturnType ")";
 	
 AnyTypeDefToken: LL(1) "{" <NONE> | "}" | AnyStmtToken;
-	
+
+@FSTExportName("{TOSTRING}")
+StarSign:
+	"*";
+
+@FSTExportName("{<IDENTIFIER>}")
 AnyStmtToken:  <IDENTIFIER> | <LITERAL>  | <OTHER> | "," | "|" | "<" | ">" | "(" | ")" | 
-	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | "*" |
+	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | StarSign  |
 	LL("\"=\" [Cast()]\"{\"") BlockAssignment | "=" | ":"  
 	| Modifier  
 	|  "ifdef" | "ifndef" | "define" | "include" | "elif" | "elsif" | PPOtherIgnore
