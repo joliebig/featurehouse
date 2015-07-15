@@ -393,7 +393,7 @@ CodeUnit_TopLevel:
 	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
 	@FSTTerminal(name="{ExternDecl}") LL(3) ExternDecl :: ExternDec |
 	@FSTNonTerminal(name="{Id}") LL(3) "struct" Id "{" (Statement)* "}" ";" :: StructDec |
-	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
+	@FSTTerminal(name="{Statement}",compose="FieldOverriding") Statement :: StmtTL;
 	
 @FSTTerminal(name="{<IDENTIFIER>}")
 Id:  <IDENTIFIER>;
