@@ -463,11 +463,12 @@ PPIfDef_TopLevel:
 	@- "#endif" @!;
 
 @FSTExportName("{IfDefBlockLevelBlock}")
+@FSTNonTerminal
 PPIfDef_BlockLevel:
 	IfDefBlockLevelBlock @+	
 	(LL(2) IfElseIf_BlockLevel)*
-	[ LL(2)@- "#" "else" @+! IfDefBlock @!]
-	@-"#" "endif"@!;
+	[ LL(2)@- "#" "else" @+! IfDefInBlock @!]
+	@-"#endif"@!;
 
 //@FSTExportName("{TOSTRING}")
 PPOtherIgnore:
@@ -479,6 +480,13 @@ IfDefTopLevelBlock:
 	LL(2) IfDefHeader IfDefBlock @! 
 	| LL(2)  "#" "ifndef" Id@! IfDefBlock 
 	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefBlock;
+
+@FSTExportName("{Id}")
+@FSTNonTerminal
+IfDefBlockLevelBlock:
+	LL(2) IfDefHeader IfDefInBlock @! 
+	| LL(2)  "#" "ifndef" Id@! IfDefInBlock 
+	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefInBlock;
 	
 @FSTExportName("{Id}")
 IfDefHeader:
@@ -488,10 +496,17 @@ IfDefHeader:
 IfDefBlock:
 	(LL(2) CodeUnit_TopLevel @!)*;
 	
-@FSTExportName("{Id}")
+@FSTNonTerminal(name="{CodeUnit_InBlock}")
+IfDefInBlock:
+   (LL(2) CodeUnit_InBlock @! )*;
+   
+/*@FSTExportName("{Id}")
 @FSTNonTerminal
 IfDefBlockLevelBlock:
 	LL(2) "#ifdef" Id Sequence_CodeUnit_InBlock @! | LL(2)  "#" "ifndef" Id@! Sequence_CodeUnit_InBlock | "#" "if" JAVATOKEN(findLineEnd)@! Sequence_CodeUnit_InBlock;
+*/
+
+
 
 IfElseIf:
 	LL(2) "#" "elif" <NONE> | "#" "elsif"<NONE>;
