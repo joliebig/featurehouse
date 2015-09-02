@@ -443,7 +443,7 @@ FSTInfo EnumBodyInternal(boolean inTerminal) : { Token first=null,t;FSTInfo n;
 
 FSTInfo EnumConstant(boolean inTerminal) : { Token first=null,t;FSTInfo n; 
 } { {first=getToken(1); productionStart(inTerminal); } (
-	<IDENTIFIER> [n=Arguments(true){ replaceName(n);}] [n=ClassOrInterfaceBody(true){ replaceName(n);}] {return productionEndTerminal("EnumConstant1","-","-","Replacement","Default",first,token);}
+	t=<IDENTIFIER>{ replaceName(new FSTInfo("<IDENTIFIER>",t.image));} [n=Arguments(true){ replaceName(n);}] [n=ClassOrInterfaceBody(true){ replaceName(n);}] {return productionEndTerminal("EnumConstant1","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement","Default",first,token);}
  |
 	 {return productionEndTerminal("EnumConstant2","-","-","Replacement","Default",first,token);}
 
