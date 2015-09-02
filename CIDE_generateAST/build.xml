@@ -9,104 +9,104 @@
 	<target name="antlr">
 		<antcall target="createlang">
 			<param name="language" value="antlr" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_ANTLR\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_ANTLR${file.separator}src" />
 		</antcall>
 	</target>
 
 	<target name="bali">
 		<antcall target="createlang">
 			<param name="language" value="bali" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Bali\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Bali${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="c">
 		<antcall target="createlang">
 			<param name="language" value="c" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_C\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_C${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="capprox">
 		<antcall target="createlang">
 			<param name="language" value="capprox" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_CApprox\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_CApprox${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="cs">
 		<antcall target="createlang">
 			<param name="language" value="cs" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_CS\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_CS${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="ecmascript">
 		<antcall target="createlang">
 			<param name="language" value="ecmascript" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_ECMAScript\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_ECMAScript${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="fj">
 		<antcall target="createlang">
 			<param name="language" value="fj" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_FJ\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_FJ${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="gcide">
 		<antcall target="createlang">
 			<param name="language" value="gcide" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_gCIDE\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_gCIDE${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="haskell">
 		<antcall target="createlang">
 			<param name="language" value="haskell" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Haskell\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Haskell${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="phaskell">
 		<antcall target="createlang">
 			<param name="language" value="phaskell" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Haskell\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Haskell${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="java15">
 		<antcall target="createlang">
 			<param name="language" value="java15" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Java\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Java${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="javacc">
 		<antcall target="createlang">
 			<param name="language" value="javacc" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_JavaCC\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_JavaCC${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="properties">
 		<antcall target="createlang">
 			<param name="language" value="property" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Properties\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Properties${file.separator}src" />
 		</antcall>
 	</target>
 	<target name="simple">
 		<antcall target="createlang">
 			<param name="language" value="simple" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_Simple\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_Simple${file.separator}src" />
 		</antcall>
 	</target>
 		<target name="xml">
 			<antcall target="createlang">
 				<param name="language" value="xml" />
-				<param name="directory" value="${basedir}\..\CIDE_Language_XML_Plain\src" />
+				<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_XML_Plain${file.separator}src" />
 			</antcall>
 		</target>
 	<target name="html">
 		<antcall target="createlang">
 			<param name="language" value="html" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_XML_Plain\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_XML_Plain${file.separator}src" />
 		</antcall>
 	</target>
 	<!-- <target name="xhtml">
 		<antcall target="createlang">
 			<param name="language" value="xhtml" />
-			<param name="directory" value="${basedir}\..\CIDE_Language_XML_concrete\src" />
+			<param name="directory" value="${basedir}${file.separator}..${file.separator}CIDE_Language_XML_concrete${file.separator}src" />
 		</antcall>
 	</target> -->
 
@@ -124,7 +124,7 @@
 
 	<target name="clean">
 		<delete failonerror="false">
-			<fileset dir="${directory}/tmp/generated_${language}">
+			<fileset dir="${directory}${file.separator}tmp${file.separator}generated_${language}">
 				<include name="*.java" />
 				<include name="*.class" />
 			</fileset>
@@ -134,8 +134,8 @@
 	<target name="astgen">
 		<echo>Generating Language Extension for ${language}...</echo>
 		<antcall target="clean" />
-		<mkdir dir="${directory}/tmp/generated_${language}" />
-		<astgen grammarFileName="${directory}/${language}.gcide" targetDirectory="${directory}/tmp/generated_${language}" targetPackage="tmp.generated_${language}" />
-		<jcc grammarFileName="${directory}/tmp/generated_${language}/${language}.jj" targetDirectory="${directory}/tmp/generated_${language}" />
+		<mkdir dir="${directory}${file.separator}tmp${file.separator}generated_${language}" />
+		<astgen grammarFileName="${directory}${file.separator}${language}.gcide" targetDirectory="${directory}${file.separator}tmp${file.separator}generated_${language}" targetPackage="tmp.generated_${language}" />
+		<jcc grammarFileName="${directory}${file.separator}tmp${file.separator}generated_${language}${file.separator}${language}.jj" targetDirectory="${directory}${file.separator}tmp${file.separator}generated_${language}" />
 	</target>
 </project>

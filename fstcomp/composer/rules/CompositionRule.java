@@ -20,7 +20,12 @@ public interface CompositionRule {
 	
 	
 	/**
-	 * composes terminal nodes.
+	 * composes terminal nodes terminalA and terminalB.
+	 * The result must be stored in terminalComp (usually of the same type as terminalA and terminalB).
+	 * If you want to keep both, add one to nonterminalParent and return the other as composition result.
+	 * 
+	 * If you don't do anything the result will be terminalA 
+	 * (<code>terminalComp=terminalA.getShallowClone();</code> in <code>composer.FSTGenComposer.compose(...)</code>)
 	 * 
 	 * @param terminalA
 	 * @param terminalB

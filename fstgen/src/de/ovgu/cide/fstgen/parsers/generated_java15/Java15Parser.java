@@ -628,7 +628,8 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
      first=getToken(1); productionStart(inTerminal);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case IDENTIFIER:
-      jj_consume_token(IDENTIFIER);
+      t = jj_consume_token(IDENTIFIER);
+      replaceName(new FSTInfo("<IDENTIFIER>",t.image));
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case LPAREN:
         n = Arguments(true);
@@ -647,7 +648,7 @@ public class Java15Parser extends AbstractFSTParser implements Java15ParserConst
         jj_la1[26] = jj_gen;
         ;
       }
-                                                                                                             {if (true) return productionEndTerminal("EnumConstant1","-","-","Replacement","Default",first,token);}
+                                                                                                             {if (true) return productionEndTerminal("EnumConstant1","{<IDENTIFIER>}","{<IDENTIFIER>}","Replacement","Default",first,token);}
       break;
     default:
       jj_la1[27] = jj_gen;
