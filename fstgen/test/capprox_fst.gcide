@@ -393,7 +393,7 @@ CodeUnit_TopLevel:
 	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
 	@FSTTerminal(name="{ExternDecl}") LL(3) ExternDecl :: ExternDec |
 	@FSTNonTerminal(name="{Id}") LL(3) "struct" Id "{" (Statement)* "}" ";" :: StructDec |
-	@FSTTerminal(name="{Statement}",compose="FieldOverriding") Statement :: StmtTL;
+	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
 	
 @FSTTerminal(name="{<IDENTIFIER>}")
 Id:  <IDENTIFIER>;
@@ -476,21 +476,33 @@ PPOtherIgnore:
 	
 
 @FSTNonTerminal(name="{IfDefHeader}-{IfDefBlock}")
+//@FSTNonTerminal
 IfDefTopLevelBlock:
-	LL(2) IfDefHeader IfDefBlock @! 
+	LL(2) IfDefHeader @! IfDefBlock @! 
 	| LL(2)  "#" "ifndef" Id@! IfDefBlock 
-	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefBlock;
+	| LL(2) IfDefineHeader /*JAVATOKEN(findLineEnd)*/ @! IfDefBlock;
 
 @FSTExportName("{Id}")
 @FSTNonTerminal
 IfDefBlockLevelBlock:
-	LL(2) IfDefHeader IfDefInBlock @! 
+	LL(2) IfDefHeader @! IfDefInBlock @! 
 	| LL(2)  "#" "ifndef" Id@! IfDefInBlock 
 	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefInBlock;
 	
 @FSTExportName("{Id}")
 IfDefHeader:
 	"#ifdef" Id;
+
+IfDefineHeader:
+	"#" "if" JAVATOKEN(findLineEnd);
+	//| LL(2) "#" "if" (AnyStmtToken)* "||" (AnyStmtToken)*; 
+
+@FSTNonTerminal
+IfDefine:
+	/*"defined(" Id ")"
+	| LL(2) "!defined(" Id ")"
+	| LL(3)*/ (AnyStmtToken)*;
+
 
 @FSTNonTerminal(name="{CodeUnit_TopLevel}")
 IfDefBlock:
@@ -574,13 +586,10 @@ Cast:
 	
 AnyTypeDefToken: LL(1) "{" <NONE> | "}" | AnyStmtToken;
 
-@FSTExportName("{TOSTRING}")
-StarSign:
-	"*";
 
 @FSTExportName("{<IDENTIFIER>}")
 AnyStmtToken:  <IDENTIFIER> | <LITERAL>  | <OTHER> | "," | "|" | "<" | ">" | "(" | ")" | 
-	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | StarSign  |
+	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | "*"  |
 	LL("\"=\" [Cast()]\"{\"") BlockAssignment | "=" | ":"  
 	| Modifier  
 	|  "ifdef" | "ifndef" | "define" | "include" | "elif" | "elsif" | PPOtherIgnore
