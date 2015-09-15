@@ -1,8 +1,13 @@
-#include <stdio.h>
+#ifdef HAVE_FTRUNCATE
 
-struct X {
-	int x;
-	int z;
-};
+int __db_find_free(dbc, type, size, bstart, freep)
+	DBC *dbc;
+	u_int32_t type;
+	u_int32_t size;
+	db_pgno_t bstart, *freep;
+{
 
-int main( void ) { printf( "Hallo!\n" ); }
+
+	return (ret);
+}
+#endif

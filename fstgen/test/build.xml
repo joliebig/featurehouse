@@ -7,7 +7,7 @@
 
      ckaestne
      ====================================================================== -->
-<project name="test_fstgen" default="testAsmetaL">
+<project name="test_fstgen" default="testC">
 	<echo>${java.class.path}</echo>
 	<eclipse.convertPath resourcePath="fstgen" property="fstgen_dir" />
 	<eclipse.convertPath resourcePath="CIDE2_ast/bin" property="ast_dir" />
