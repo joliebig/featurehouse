@@ -15,6 +15,6 @@ do
 	mkdir -p `dirname $mergeDir$stripDir`
 	
 	#apply merge	
-	merge -p -q $f $2$stripDir $3$stripDir > $mergeDir$stripDir
+	git merge-file -p -q $f $2$stripDir $3$stripDir > $mergeDir$stripDir
 	#echo $f $2$stripDir $3$stripDir $mergeDir$stripDir	
 done
