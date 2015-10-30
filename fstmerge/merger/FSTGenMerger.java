@@ -4,6 +4,10 @@ import jargs.gnu.CmdLineParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,10 +26,7 @@ import builder.java.JavaBuilder;
 import builder.javam.JavaMergeBuilder;
 import builder.pythonm.PythonMergeBuilder;
 import builder.textm.TextMergeBuilder;
-
-
 import composer.FSTGenProcessor;
-
 import de.ovgu.cide.fstgen.ast.AbstractFSTParser;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
@@ -113,11 +114,21 @@ public class FSTGenMerger extends FSTGenProcessor {
 		fileLoader.setPreprocessFiles(preprocessfilesval);
 		Boolean filemergeval = (Boolean)cmdparser.getOptionValue(filemerge);
 		String expressionval = (String)cmdparser.getOptionValue(expression);
-		if (null == expressionval && null == filemergeval) {
-			printUsage();
-			System.exit(2);
-		}
 		String basedirval = (String)cmdparser.getOptionValue(basedir);
+
+		if (null == expressionval) {
+			if (null == filemergeval || cmdparser.getRemainingArgs().length != 3) {
+				printUsage();
+				System.exit(2);
+			} else {
+				String config[] = generateExpressionFile(cmdparser.getRemainingArgs());
+				expressionval = config[0];
+				basedirval = config[1];
+			}
+		}
+
+		assert expressionval != null : "Expression file must not be null!";
+
 		if (null == basedirval) {
 			basedirval = (new File(expressionval)).getAbsoluteFile().getParentFile().getPath();
 		}
@@ -310,4 +321,66 @@ public class FSTGenMerger extends FSTGenProcessor {
 			}
 		}
 	}
+
+	/**
+	 * Returns the common, leading part of a set of directory paths.
+	 *
+	 * @param paths set of directory paths
+	 * @return common leading path
+	 */
+	private static String getCommonPath(String... paths) {
+		String common = "";
+		String dirs[][] = new String[paths.length][];
+
+		for (int i = 0; i < paths.length; i++) {
+			dirs[i] = paths[i].split(File.separator);
+		}
+
+		for (int j = 0; j < dirs[0].length; j++) {
+			String dir = dirs[0][j];
+
+			for (int i = 1; i < paths.length; i++) {
+				if (dirs[i].length <= j || !dirs[i][j].equals(dir))
+					return common;
+			}
+
+			common += dir + File.separator;
+		}
+
+		return common;
+	}
+
+    /**
+     * Takes three variants and generates a temporary expression file.
+     *
+     * Returns the filename of the expression file and the value of the base directory.
+     *
+     * @param variants [mine, base, other]
+     * @return [expressionFile, baseDir]
+     */
+    private static String[] generateExpressionFile(String[] variants) {
+        assert variants.length == 3 : "Exactly three variants (mine, base, other) have to be specified.";
+
+        String expressionval = null;
+        String basedirval = null;
+
+        try {
+            File configFile = File.createTempFile("fstmerge", null);
+            configFile.deleteOnExit();
+            expressionval = configFile.getAbsolutePath();
+            Path basePath = Paths.get(getCommonPath(variants));
+            basedirval = basePath.toString();
+
+            PrintWriter writer = new PrintWriter(configFile);
+            for (String variant : variants)
+                writer.println(basePath.relativize(Paths.get(variant)));
+
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new String[] {expressionval, basedirval};
+    }
 }
