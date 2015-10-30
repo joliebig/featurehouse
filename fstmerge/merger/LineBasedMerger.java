@@ -91,9 +91,9 @@ public class LineBasedMerger implements MergerInterface {
 
 	        String mergeCmd = ""; 
 	        if(System.getProperty("os.name").contains("Windows"))
-	        	mergeCmd = "C:\\Programme\\cygwin\\bin\\merge.exe -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
+	        	mergeCmd = "C:\\Programme\\cygwin\\bin\\git.exe --merge-file -q -p " + "\"" + fileVar1.getPath() + "\"" + " " + "\"" + fileBase.getPath() + "\"" + " " + "\"" + fileVar2.getPath() + "\"";// + " > " + fileVar1.getName() + "_output";
 	        else
-	        	mergeCmd = "merge -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
+	        	mergeCmd = "git merge-file -q -p " + fileVar1.getPath() + " " + fileBase.getPath() + " " + fileVar2.getPath();// + " > " + fileVar1.getName() + "_output";
 	        Runtime run = Runtime.getRuntime();
 			Process pr = run.exec(mergeCmd);
 
