@@ -1,4 +1,16 @@
+sudo: required
+
 language: java
-install: ant jar
+
+jdk:
+    - oraclejdk7
+
+addons:
+    apt:
+        packages:
+            - ant
+            - git
+
 #ant test is the default target, but I want to make it explicit
-script: ant test
+script:
+    - ant test
