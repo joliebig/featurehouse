@@ -9,7 +9,7 @@ all dependencies between the projects are allready set.
 
 requirements:
   - openjdk jre
-  - rcs (ubuntu: aptitude install rcs)
+  - git (ubuntu: apt-get install git)
   - R (for evaluation of fstmerge results;
     ubuntu: aptitude install r-recommended)
 
