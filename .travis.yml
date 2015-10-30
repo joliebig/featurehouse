@@ -9,7 +9,7 @@ addons:
     apt:
         packages:
             - ant
-            - rcs
+            - git
 
 #ant test is the default target, but I want to make it explicit
 script:
