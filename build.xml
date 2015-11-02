@@ -11,7 +11,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <property name="test-dir" location="test" />
   <property name="result-dir" location="result" />
 
-  <presetdef name="javac">
+  <presetdef name="my.javac">
     <javac includeantruntime="false" />
   </presetdef>
 
@@ -21,12 +21,12 @@ FeatureHouse: Automatic, language-independent software composition and merging
 
   <target name="fstcomp">
     <mkdir dir="${build-dir}"/>
-    <javac sourcepath="${srcfstcomp}" destdir="${build-dir}" srcdir="./fstcomp/composer/"/>
+    <my.javac sourcepath="${srcfstcomp}" destdir="${build-dir}" srcdir="./fstcomp/composer/"/>
   </target>
 
   <target name="fstmerge">
      <mkdir dir="${build-dir}"/>
-     <javac sourcepath="${srcfstmerge}" destdir="${build-dir}" srcdir="./fstmerge/merger/"/>
+     <my.javac sourcepath="${srcfstmerge}" destdir="${build-dir}" srcdir="./fstmerge/merger/"/>
   </target>
 
   <target name="jar" depends="fstcomp,fstmerge" description="generate featurehouse.jar" >
@@ -42,7 +42,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-compile-fstcomp">
     <mkdir dir="${test-dir}" />
     <mkdir dir="${test-dir}/fstcomp-build" />
-    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstcomp}" destdir="${test-dir}/fstcomp-build" srcdir="./fstcomp/test/" excludes="*testfiles/**"/>
+    <my.javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstcomp}" destdir="${test-dir}/fstcomp-build" srcdir="./fstcomp/test/" excludes="*testfiles/**"/>
 
     <copy todir="${test-dir}/fstcomp">
       <fileset dir="./fstcomp/test/">
@@ -80,7 +80,7 @@ FeatureHouse: Automatic, language-independent software composition and merging
   <target name="test-compile-fstgen">
     <mkdir dir="${test-dir}" />
     <mkdir dir="${test-dir}/fstgen-build" />
-    <javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}/fstgen-build" srcdir="./fstgen/test/" />
+    <my.javac classpath="./fstgen/lib/junit-4.8.2.jar" sourcepath="${srcfstgen}" destdir="${test-dir}/fstgen-build" srcdir="./fstgen/test/" />
 
     <copy todir="${test-dir}">
       <fileset dir="./fstgen/test/">
