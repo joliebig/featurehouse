@@ -23,7 +23,7 @@ public class CmdLineInterpreter {
 	public static final String INPUT_OPTION_FILE_OUTPUT = "--write";
 
 	public static final String INPUT_OPTION_OUTPUT_DIRECTORY = "--output-directory";
-	public static final String INPUT_OPTION_CREATE_CONFIG_OUTPUT_DIR = "--create-config-output-dir";
+	public static final String INPUT_OPTION_NO_CONFIG_OUTPUT_DIR = "--no-config-output-dir";
 	
 	public static final String INPUT_OPTION_CONTRACT_STYLE = "--contract-style";
 
@@ -165,15 +165,8 @@ public class CmdLineInterpreter {
 					}
 				} else if (args[i].equals(INPUT_OPTION_EXPORT_ROLES_IN_JSON_FORMAT)) {
 					exportRolesInJSONformat=true;
-				} else if (args[i].equals(INPUT_OPTION_CREATE_CONFIG_OUTPUT_DIR)) {
-					i++;
-					try {
-						CREATE_FEATURE_OUTPUT_DIR = Boolean.parseBoolean(args[i]);
-					} catch (Exception e) {
-						System.out.println("Error occured option: "
-								+ INPUT_OPTION_CREATE_CONFIG_OUTPUT_DIR);
-						errorOccured = true;
-					}
+				} else if (args[i].equals(INPUT_OPTION_NO_CONFIG_OUTPUT_DIR)) {
+					CREATE_FEATURE_OUTPUT_DIR = false;
 				} else {
 					errorOccured = true;
 				}
