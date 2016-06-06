@@ -54,8 +54,6 @@ public class FeaturePrintVisitor {
 		visit(root, null, null, null);
 	}
 	
-	static boolean createConfigurationFolder = false;
-	
 	private void visit(FSTNonTerminal nonterminal, File featurePath, File folderPath, File oldFolderPath) throws PrintVisitorException {
 		if(nonterminal != null) {
 			if(nonterminal.getType().equals("Feature")) {
