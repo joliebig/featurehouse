@@ -2,6 +2,7 @@ package printer;
 import java.io.File;
 import java.util.LinkedList;
 
+import composer.CmdLineInterpreter;
 import de.ovgu.cide.fstgen.ast.FSTNode;
 import de.ovgu.cide.fstgen.ast.FSTNonTerminal;
 
@@ -56,10 +57,14 @@ public class FeaturePrintVisitor {
 	private void visit(FSTNonTerminal nonterminal, File featurePath, File folderPath, File oldFolderPath) throws PrintVisitorException {
 		if(nonterminal != null) {
 			if(nonterminal.getType().equals("Feature")) {
-				StringBuffer sb = new StringBuffer(getExpressionName());
-				sb.setLength(sb.lastIndexOf("."));
-				sb.delete(0, sb.lastIndexOf(File.separator) + 1);
-				featurePath = new File(getWorkingDir() + File.separator + sb.toString());
+				if (CmdLineInterpreter.CREATE_FEATURE_OUTPUT_DIR) {
+					StringBuffer sb = new StringBuffer(getExpressionName());
+					sb.setLength(sb.lastIndexOf("."));
+					sb.delete(0, sb.lastIndexOf(File.separator) + 1);
+					featurePath = new File(getWorkingDir() + File.separator + sb.toString());
+				} else {
+					featurePath = new File(getWorkingDir());
+				}
 				featurePath.mkdir();
 				folderPath = featurePath;
 				for(FSTNode child : nonterminal.getChildren()) {
