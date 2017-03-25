@@ -217,6 +217,16 @@
 	</antcall>
 	</target>
 	
+	<target name="testGroovy">
+			<antcall target="testGrammar">
+				<param name="language" value="groovy" />
+				<param name="parserClass" value="GroovyParser" />
+				<param name="mainProduction" value="CompilationUnit" />
+				<param name="directory" value="${fstgen_dir}/src/de/ovgu/cide/fstgen/parsers" />
+				<param name="testFile" value="Test.groovy" />
+			</antcall>
+	</target>	
+	
 	<target name="testGrammar" description="--> description">
 		<mkdir dir="${directory}/generated_${language}" />
 
