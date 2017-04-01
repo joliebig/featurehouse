@@ -387,7 +387,7 @@ Sequence_CodeUnit_TopLevel:
 CodeUnit_TopLevel:
 	@FSTTerminal(name="{PPIncludeStatement}") LL(2) PPIncludeStatement :: Include | 
 	@FSTTerminal(name="{PPDefineStatement}") LL(2) PPDefineStatement :: Define | 
-	@FSTTerminal(name="{PPIfDef_TopLevel}") LL(2) PPIfDef_TopLevel :: IfDefTL |
+	@FSTNonTerminal(name="{PPIfDef_TopLevel}") LL(2) PPIfDef_TopLevel :: IfDefTL|
 	@FSTTerminal(name="{PPOtherIgnore}") LL(2) "#" PPOtherIgnore JAVATOKEN(findLineEnd) @! :: Preprocessor | 
 	@FSTTerminal(name="{Function}",compose="JavaMethodOverriding") LL("FunctionHeader()") Function :: Func | 
 	@FSTTerminal(name="{TypeDef}") TypeDef :: TypeDef_ |
@@ -396,7 +396,8 @@ CodeUnit_TopLevel:
 	@FSTTerminal(name="{Statement}") Statement :: StmtTL;
 	
 @FSTTerminal(name="{<IDENTIFIER>}")
-Id: <IDENTIFIER>;
+Id:  <IDENTIFIER>;
+
 
 CodeUnit_InBlock:
 	LL(2) PPIfDef_BlockLevel :: IfDefBL |
@@ -412,9 +413,10 @@ CodeUnit_InBlock:
 	LL(1) Block :: Blck |
 	Statement :: Stmt;	
 
-@FSTTerminal(name="{TOSTRING}")		
+
+@FSTTerminal(name="{AnyStmtToken}^.")
 Statement:
-	(AnyStmtToken)* ";" @!;
+	(AnyStmtToken)*  ";" @!;
 	
 IfStatement:
 	"if" "(" JAVATOKEN(findEndCB) BlockOrSingleStatement [ LL(1) ElseBlock ];
@@ -452,32 +454,80 @@ PPDefineStatement:
 	LL(2) "#" "define" JAVATOKEN(findLineEnd)@! |
 	LL(2) "#" "undef" JAVATOKEN(findLineEnd)@!;
 
-@FSTExportName("{TOSTRING}")	
+@FSTExportName("{IfDefTopLevelBlock}")
+@FSTNonTerminal
 PPIfDef_TopLevel:
-	IfDefLine  @+
-	Sequence_CodeUnit_TopLevel
+	 IfDefTopLevelBlock  @+	
 	(LL(2) IfElseIf_TopLevel)*
-	[ LL(2) @- "#" "else" @+! Sequence_CodeUnit_TopLevel ] 
-	@- "#" "endif" @!;
+	[ LL(2) @- "#" "else" @+! IfDefBlock ]
+	@- "#endif" @!;
 
+@FSTExportName("{IfDefBlockLevelBlock}")
+@FSTNonTerminal
 PPIfDef_BlockLevel:
-	IfDefLine @+
-	Sequence_CodeUnit_InBlock
+	IfDefBlockLevelBlock @+	
 	(LL(2) IfElseIf_BlockLevel)*
-	[ LL(2)@- "#" "else" @+! Sequence_CodeUnit_InBlock @!] 
-	@-"#" "endif"@!;
+	[ LL(2)@- "#" "else" @+! IfDefInBlock @!]
+	@-"#endif"@!;
 
-@FSTExportName("{TOSTRING}")
+//@FSTExportName("{TOSTRING}")
 PPOtherIgnore:
 	"line" | "pragma" |"error";
 	
-IfDefLine:
-	LL(2) "#" "ifdef" <IDENTIFIER> @!| LL(2)  "#" "ifndef" <IDENTIFIER>@! | "#" "if" JAVATOKEN(findLineEnd)@!;
+
+@FSTNonTerminal(name="{IfDefHeader}-{IfDefBlock}")
+//@FSTNonTerminal
+IfDefTopLevelBlock:
+	LL(2) IfDefHeader @! IfDefBlock @! 
+	| LL(2)  "#" "ifndef" Id@! IfDefBlock 
+	| LL(2) IfDefineHeader /*JAVATOKEN(findLineEnd)*/ @! IfDefBlock;
+
+@FSTExportName("{Id}")
+@FSTNonTerminal
+IfDefBlockLevelBlock:
+	LL(2) IfDefHeader @! IfDefInBlock @! 
+	| LL(2)  "#" "ifndef" Id@! IfDefInBlock 
+	| "#" "if" JAVATOKEN(findLineEnd)@! IfDefInBlock;
+	
+@FSTExportName("{Id}")
+IfDefHeader:
+	"#ifdef" Id;
+
+IfDefineHeader:
+	"#" "if" JAVATOKEN(findLineEnd);
+	//| LL(2) "#" "if" (AnyStmtToken)* "||" (AnyStmtToken)*; 
+
+@FSTNonTerminal
+IfDefine:
+	/*"defined(" Id ")"
+	| LL(2) "!defined(" Id ")"
+	| LL(3)*/ (AnyStmtToken)*;
+
+
+@FSTNonTerminal(name="{CodeUnit_TopLevel}")
+IfDefBlock:
+	(LL(2) CodeUnit_TopLevel @!)*;
+	
+@FSTNonTerminal(name="{CodeUnit_InBlock}")
+IfDefInBlock:
+   (LL(2) CodeUnit_InBlock @! )*;
+   
+/*@FSTExportName("{Id}")
+@FSTNonTerminal
+IfDefBlockLevelBlock:
+	LL(2) "#ifdef" Id Sequence_CodeUnit_InBlock @! | LL(2)  "#" "ifndef" Id@! Sequence_CodeUnit_InBlock | "#" "if" JAVATOKEN(findLineEnd)@! Sequence_CodeUnit_InBlock;
+*/
+
+
+
 IfElseIf:
 	LL(2) "#" "elif" <NONE> | "#" "elsif"<NONE>;
+	
 IfElseIf_BlockLevel:
 	@- IfElseIf JAVATOKEN(findLineEnd) @+!
 	Sequence_CodeUnit_InBlock;
+	
+
 IfElseIf_TopLevel:
 	IfElseIf JAVATOKEN(findLineEnd)@!
 	Sequence_CodeUnit_TopLevel;
@@ -535,9 +585,11 @@ Cast:
 	"(" FunctionReturnType ")";
 	
 AnyTypeDefToken: LL(1) "{" <NONE> | "}" | AnyStmtToken;
-	
-AnyStmtToken: <IDENTIFIER> | <LITERAL>  | <OTHER> | "," | "|" | "<" | ">" | "(" | ")" | 
-	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | "*" |
+
+
+@FSTExportName("{<IDENTIFIER>}")
+AnyStmtToken:  <IDENTIFIER> | <LITERAL>  | <OTHER> | "," | "|" | "<" | ">" | "(" | ")" | 
+	Block | "if" | "else" | "for" | "while" | LL(3) EnumBlock | "enum" | "*"  |
 	LL("\"=\" [Cast()]\"{\"") BlockAssignment | "=" | ":"  
 	| Modifier  
 	|  "ifdef" | "ifndef" | "define" | "include" | "elif" | "elsif" | PPOtherIgnore
